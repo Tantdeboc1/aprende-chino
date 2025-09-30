@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aprende caracteres chinos HSK-1 con ejercicios interactivos">
+    <title>学习中文 - Aprende Chino HSK-1</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Iconos SVG
+        const BookOpen = ({className = ""}) => (
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+        );
+
+        const Calendar = ({className = ""}) => (
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+            </svg>
+        );
+
+        const ArrowLeft = ({className = ""}) => (
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" x2="5" y1="12" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+        );
+
+        const Info = ({className = ""}) => (
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4"/>
+                <path d="M12 8h.01"/>
+            </svg>
+        );
+
+        const Dumbbell = ({className = ""}) => (
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m6.5 6.5 11 11"/>
+                <path d="m21 21-1-1"/>
+                <path d="m3 3 1 1"/>
+                <path d="m18 22 4-4"/>
+                <path d="m2 6 4-4"/>
+                <path d="m3 10 7-7"/>
+                <path d="m14 21 7-7"/>
+            </svg>
+        );
+
+        const ChineseApp = () => {
+            const [screen, setScreen] = useState('welcome');
+            const [userName, setUserName] = useState('');
+            const [inputName, setInputName] = useState('');
+            const [exerciseType, setExerciseType] = useState(null);
+            const [quizIndex, setQuizIndex] = useState(0);
+            const [quizScore, setQuizScore] = useState(0);
+            const [quizQuestions, setQuizQuestions] = useState([]);
+            const [selectedAnswer, setSelectedAnswer] = useState(null);
+            const [showResult, setShowResult] = useState(false);
+            const [matchingPairs, setMatchingPairs] = useState([]);
+            const [selectedMatching, setSelectedMatching] = useState([]);
+            const [matchedPairs, setMatchedPairs] = useState([]);
+            const [dailyComplete, setDailyComplete] = useState(false);
+            const [dailyChar, setDailyChar] = useState(null);
+            const [dailyGuess, setDailyGuess] = useState('');
+            const [dailyAttempts, setDailyAttempts] = useState(0);
+            const [searchTerm, setSearchTerm] = useState('');
+            const [infoSection, setInfoSection] = useState(null);
+
+            const characters = [
+                { char: '人', radical: '人', pinyin: 'rén', meaning: 'persona, gente' },
+                { char: '我', radical: '戈', pinyin: 'wǒ', meaning: 'yo' },
+                { char: '你', radical: '亻', pinyin: 'nǐ', meaning: 'tú' },
+                { char: '好', radical: '女', pinyin: 'hǎo', meaning: 'bueno, bien' },
+                { char: '大', radical: '大', pinyin: 'dà', meaning: 'grande' },
+                { char: '小', radical: '小', pinyin: 'xiǎo', meaning: 'pequeño' },
+                { char: '中', radical: '丨', pinyin: 'zhōng', meaning: 'centro, medio' },
+                { char: '国', radical: '囗', pinyin: 'guó', meaning: 'país' },
+                { char: '一', radical: '一', pinyin: 'yī', meaning: 'uno' },
+                { char: '二', radical: '二', pinyin: 'èr', meaning: 'dos' },
+                { char: '三', radical: '一', pinyin: 'sān', meaning: 'tres' },
+                { char: '四', radical: '囗', pinyin: 'sì', meaning: 'cuatro' },
+                { char: '五', radical: '二', pinyin: 'wǔ', meaning: 'cinco' },
+                { char: '六', radical: '八', pinyin: 'liù', meaning: 'seis' },
+                { char: '七', radical: '一', pinyin: 'qī', meaning: 'siete' },
+                { char: '八', radical: '八', pinyin: 'bā', meaning: 'ocho' },
+                { char: '九', radical: '丿', pinyin: 'jiǔ', meaning: 'nueve' },
+                { char: '十', radical: '十', pinyin: 'shí', meaning: 'diez' },
+                { char: '天', radical: '大', pinyin: 'tiān', meaning: 'cielo, día' },
+                { char: '水', radical: '水', pinyin: 'shuǐ', meaning: 'agua' },
+                { char: '火', radical: '火', pinyin: 'huǒ', meaning: 'fuego' },
+                { char: '山', radical: '山', pinyin: 'shān', meaning: 'montaña' },
+                { char: '木', radical: '木', pinyin: 'mù', meaning: 'árbol, madera' },
+                { char: '日', radical: '日', pinyin: 'rì', meaning: 'sol, día' },
+                { char: '月', radical: '月', pinyin: 'yuè', meaning: 'luna, mes' },
+                { char: '年', radical: '丿', pinyin: 'nián', meaning: 'año' },
+                { char: '今', radical: '人', pinyin: 'jīn', meaning: 'ahora, hoy' },
+                { char: '明', radical: '日', pinyin: 'míng', meaning: 'brillante, claro' },
+                { char: '上', radical: '一', pinyin: 'shàng', meaning: 'arriba, subir' },
+                { char: '下', radical: '一', pinyin: 'xià', meaning: 'abajo, bajar' },
+                { char: '前', radical: '刀', pinyin: 'qián', meaning: 'delante, antes' },
+                { char: '后', radical: '口', pinyin: 'hòu', meaning: 'detrás, después' },
+                { char: '左', radical: '工', pinyin: 'zuǒ', meaning: 'izquierda' },
+                { char: '右', radical: '口', pinyin: 'yòu', meaning: 'derecha' },
+                { char: '东', radical: '一', pinyin: 'dōng', meaning: 'este' },
+                { char: '西', radical: '襾', pinyin: 'xī', meaning: 'oeste' },
+                { char: '南', radical: '十', pinyin: 'nán', meaning: 'sur' },
+                { char: '北', radical: '匕', pinyin: 'běi', meaning: 'norte' },
+                { char: '来', radical: '木', pinyin: 'lái', meaning: 'venir' },
+                { char: '去', radical: '厶', pinyin: 'qù', meaning: 'ir' },
+                { char: '有', radical: '月', pinyin: 'yǒu', meaning: 'tener, haber' },
+                { char: '无', radical: '一', pinyin: 'wú', meaning: 'no tener, sin' },
+                { char: '是', radical: '日', pinyin: 'shì', meaning: 'ser, estar' },
+                { char: '在', radical: '土', pinyin: 'zài', meaning: 'estar en, existir' },
+                { char: '他', radical: '亻', pinyin: 'tā', meaning: 'él' },
+                { char: '她', radical: '女', pinyin: 'tā', meaning: 'ella' },
+                { char: '们', radical: '亻', pinyin: 'men', meaning: 'plural (nosotros, ellos)' },
+                { char: '不', radical: '一', pinyin: 'bù', meaning: 'no, negación' },
+                { char: '的', radical: '白', pinyin: 'de', meaning: 'partícula posesiva' },
+                { char: '了', radical: '乙', pinyin: 'le', meaning: 'partícula de cambio' },
+            ];
+
+            useEffect(() => {
+                const today = new Date().toDateString();
+                const lastPlayed = localStorage.getItem('lastDailyPlayed');
+                
+                if (lastPlayed !== today) {
+                    setDailyComplete(false);
+                    const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                    setDailyChar(randomChar);
+                } else {
+                    setDailyComplete(true);
+                }
+            }, []);
+
+            const generateQuizQuestions = () => {
+                const shuffled = [...characters].sort(() => Math.random() - 0.5).slice(0, 10);
+                return shuffled.map(correctChar => {
+                    const wrongChars = characters
+                        .filter(c => c.char !== correctChar.char)
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 3);
+                    
+                    const options = [correctChar, ...wrongChars]
+                        .sort(() => Math.random() - 0.5);
+                    
+                    return { correct: correctChar, options };
+                });
+            };
+
+            const initializeMatching = () => {
+                const shuffledChars = [...characters].sort(() => Math.random() - 0.5).slice(0, 6);
+                const chars = shuffledChars.map((c, i) => ({ id: `char-${i}`, type: 'char', content: c.char, match: i }));
+                const meanings = shuffledChars.map((c, i) => ({ id: `meaning-${i}`, type: 'meaning', content: c.meaning, match: i }));
+                
+                const shuffledMeanings = meanings.sort(() => Math.random() - 0.5);
+                
+                setMatchingPairs([...chars, ...shuffledMeanings]);
+                setSelectedMatching([]);
+                setMatchedPairs([]);
+            };
+
+            const handleWelcome = () => {
+                if (inputName.trim()) {
+                    setUserName(inputName.trim());
+                    setScreen('menu');
+                }
+            };
+
+            const handleQuizAnswer = (option) => {
+                const question = quizQuestions[quizIndex];
+                setSelectedAnswer(option);
+                setShowResult(true);
+                
+                if (option.char === question.correct.char) {
+                    setQuizScore(quizScore + 1);
+                }
+            };
+
+            const nextQuizQuestion = () => {
+                setQuizIndex(quizIndex + 1);
+                setSelectedAnswer(null);
+                setShowResult(false);
+            };
+
+            const handleMatchingClick = (item) => {
+                if (matchedPairs.includes(item.match)) return;
+                
+                if (selectedMatching.length === 0) {
+                    setSelectedMatching([item]);
+                } else if (selectedMatching.length === 1) {
+                    const first = selectedMatching[0];
+                    if (first.id === item.id) {
+                        setSelectedMatching([]);
+                        return;
+                    }
+                    
+                    if (first.match === item.match && first.type !== item.type) {
+                        setMatchedPairs([...matchedPairs, item.match]);
+                        setSelectedMatching([]);
+                    } else {
+                        setTimeout(() => setSelectedMatching([]), 500);
+                    }
+                }
+            };
+
+            const handleDailyGuess = () => {
+                setDailyAttempts(dailyAttempts + 1);
+                
+                if (dailyGuess.toLowerCase() === dailyChar.meaning.toLowerCase() || 
+                    dailyGuess.toLowerCase() === dailyChar.pinyin.toLowerCase()) {
+                    setDailyComplete(true);
+                    const today = new Date().toDateString();
+                    localStorage.setItem('lastDailyPlayed', today);
+                }
+            };
+
+            const filteredChars = characters.filter(c => 
+                c.char.includes(searchTerm) || 
+                c.pinyin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                c.meaning.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            // Welcome Screen
+            if (screen === 'welcome') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+                            <div className="text-center mb-8">
+                                <div className="text-6xl mb-4">🇨🇳</div>
+                                <h1 className="text-3xl font-bold text-gray-800 mb-2">学习中文</h1>
+                                <p className="text-xl text-gray-600 mb-1">Xuéxí Zhōngwén</p>
+                                <p className="text-gray-500">Aprende Chino - HSK 1</p>
+                            </div>
+                            
+                            <div className="space-y-4">
+                                <input
+                                    type="text"
+                                    placeholder="Escribe tu nombre..."
+                                    value={inputName}
+                                    onChange={(e) => setInputName(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleWelcome()}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
+                                />
+                                <button
+                                    onClick={handleWelcome}
+                                    className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+                                >
+                                    ¡Comenzar!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Main Menu
+            if (screen === 'menu') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-5xl mx-auto pt-8">
+                            <div className="text-center mb-8">
+                                <h1 className="text-4xl font-bold text-gray-800 mb-2">你好，{userName}! 👋</h1>
+                                <p className="text-xl text-gray-600 mb-3">Nǐ hǎo, {userName}!</p>
+                                <p className="text-2xl text-gray-800 font-semibold">¿Qué quieres hacer hoy?</p>
+                                <p className="text-gray-500 mt-1">今天你想做什么？</p>
+                                <p className="text-lg text-gray-600">Jīntiān nǐ xiǎng zuò shénme?</p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <button
+                                    onClick={() => { setScreen('exercises'); setExerciseType(null); }}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="mx-auto mb-4 text-blue-500 flex items-center justify-center">
+                                        <Dumbbell />
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-2">练习</h2>
+                                    <p className="text-lg text-gray-600 mb-1">Liànxí</p>
+                                    <p className="text-gray-500">Ejercicios variados</p>
+                                </button>
+
+                                <button
+                                    onClick={() => setScreen('daily')}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="mx-auto mb-4 text-green-500 flex items-center justify-center">
+                                        <Calendar />
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-2">每日挑战</h2>
+                                    <p className="text-lg text-gray-600 mb-1">Měi rì tiǎozhàn</p>
+                                    <p className="text-gray-500">Desafío diario</p>
+                                    {dailyComplete && <span className="inline-block mt-2 text-green-600 font-semibold">✓ Completado</span>}
+                                </button>
+
+                                <button
+                                    onClick={() => setScreen('dictionary')}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="mx-auto mb-4 text-purple-500 flex items-center justify-center">
+                                        <BookOpen />
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-2">词典</h2>
+                                    <p className="text-lg text-gray-600 mb-1">Cídiǎn</p>
+                                    <p className="text-gray-500">Diccionario</p>
+                                </button>
+
+                                <button
+                                    onClick={() => { setScreen('info'); setInfoSection(null); }}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="mx-auto mb-4 text-orange-500 flex items-center justify-center">
+                                        <Info />
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-2">中国信息</h2>
+                                    <p className="text-lg text-gray-600 mb-1">Zhōngguó xìnxī</p>
+                                    <p className="text-gray-500">Información sobre China</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Exercises Menu
+            if (screen === 'exercises' && !exerciseType) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-4xl mx-auto pt-8">
+                            <div className="mb-6">
+                                <button
+                                    onClick={() => setScreen('menu')}
+                                    className="flex items-center text-gray-600 hover:text-gray-800"
+                                >
+                                    <ArrowLeft className="mr-2" />
+                                    Menú
+                                </button>
+                            </div>
+
+                            <div className="text-center mb-8">
+                                <h2 className="text-4xl font-bold text-gray-800 mb-2">选择练习</h2>
+                                <p className="text-xl text-gray-600">Xuǎnzé liànxí</p>
+                                <p className="text-gray-500 mt-1">Elige un ejercicio</p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                                <button
+                                    onClick={() => { setExerciseType('quiz'); setQuizIndex(0); setQuizScore(0); setQuizQuestions(generateQuizQuestions()); }}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="text-5xl mb-4">❓</div>
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-2">测验</h3>
+                                    <p className="text-lg text-gray-600 mb-1">Cèyàn</p>
+                                    <p className="text-gray-500">Quiz de opción múltiple</p>
+                                </button>
+
+                                <button
+                                    onClick={() => { setExerciseType('matching'); initializeMatching(); }}
+                                    className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                >
+                                    <div className="text-5xl mb-4">🔗</div>
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-2">配对</h3>
+                                    <p className="text-lg text-gray-600 mb-1">Pèiduì</p>
+                                    <p className="text-gray-500">Relacionar parejas</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Quiz Exercise
+            if (screen === 'exercises' && exerciseType === 'quiz') {
+                if (quizIndex >= quizQuestions.length) {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+                                <div className="text-6xl mb-4">🎉</div>
+                                <h2 className="text-3xl font-bold text-gray-800 mb-4">¡Quiz Completado!</h2>
+                                <p className="text-5xl font-bold text-red-500 mb-6">{quizScore}/10</p>
+                                <p className="text-gray-600 mb-6">
+                                    {quizScore >= 8 ? '¡Excelente trabajo!' : quizScore >= 6 ? '¡Bien hecho!' : '¡Sigue practicando!'}
+                                </p>
+                                <button
+                                    onClick={() => setScreen('menu')}
+                                    className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+                                >
+                                    Volver al Menú
+                                </button>
+                            </div>
+                        </div>
+                    );
+                }
+
+                const question = quizQuestions[quizIndex];
+                
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-2xl mx-auto pt-8">
+                            <div className="mb-6 flex justify-between items-center">
+                                <button
+                                    onClick={() => { setExerciseType(null); }}
+                                    className="flex items-center text-gray-600 hover:text-gray-800"
+                                >
+                                    <ArrowLeft className="mr-2" />
+                                    Ejercicios
+                                </button>
+                                <span className="text-gray-600 font-semibold">Pregunta {quizIndex + 1}/10 | Puntos: {quizScore}</span>
+                            </div>
+
+                            <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                <div className="text-center mb-8">
+                                    <p className="text-gray-600 mb-4">¿Qué significa este carácter?</p>
+                                    <div className="text-9xl font-bold text-gray-800 mb-2">{question.correct.char}</div>
+                                    <p className="text-2xl text-gray-500">{question.correct.pinyin}</p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    {question.options.map((option, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => !showResult && handleQuizAnswer(option)}
+                                            disabled={showResult}
+                                            className={`p-4 rounded-lg text-lg font-semibold transition ${
+                                                showResult
+                                                    ? option.char === question.correct.char
+                                                        ? 'bg-green-500 text-white'
+                                                        : option === selectedAnswer
+                                                        ? 'bg-red-500 text-white'
+                                                        : 'bg-gray-100 text-gray-400'
+                                                    : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                                            }`}
+                                        >
+                                            {option.meaning}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {showResult && (
+                                    <button
+                                        onClick={nextQuizQuestion}
+                                        className="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
+                                    >
+                                        Siguiente
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Matching Exercise
+            if (screen === 'exercises' && exerciseType === 'matching') {
+                if (matchedPairs.length === 6) {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+                                <div className="text-6xl mb-4">🎊</div>
+                                <h2 className="text-3xl font-bold text-gray-800 mb-4">¡Perfecto!</h2>
+                                <p className="text-gray-600 mb-6">Has relacionado todas las parejas correctamente</p>
+                                <div className="flex gap-4">
+                                    <button
+                                        onClick={() => initializeMatching()}
+                                        className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
+                                    >
+                                        Jugar de nuevo
+                                    </button>
+                                    <button
+                                        onClick={() => setExerciseType(null)}
+                                        className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+                                    >
+                                        Ejercicios
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+
+                const charItems = matchingPairs.filter(item => item.type === 'char');
+                const meaningItems = matchingPairs.filter(item => item.type === 'meaning');
+
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-4xl mx-auto pt-8">
+                            <div className="mb-6 flex justify-between items-center">
+                                <button
+                                    onClick={() => setExerciseType(null)}
+                                    className="flex items-center text-gray-600 hover:text-gray-800"
+                                >
+                                    <ArrowLeft className="mr-2" />
+                                    Ejercicios
+                                </button>
+                                <span className="text-gray-600 font-semibold">Parejas: {matchedPairs.length}/6</span>
+                            </div>
+
+                            <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                <div className="text-center mb-8">
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Relaciona los caracteres con sus significados</h3>
+                                    <p className="text-gray-600">Haz click en un carácter y luego en su significado</p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div className="space-y-4">
+                                        <h4 className="text-center font-bold text-gray-700 mb-4">Caracteres</h4>
+                                        {charItems.map((item) => {
+                                            const isSelected = selectedMatching.some(s => s.id === item.id);
+                                            const isMatched = matchedPairs.includes(item.match);
+                                            
+                                            return (
+                                                <button
+                                                    key={item.id}
+                                                    onClick={() => handleMatchingClick(item)}
+                                                    disabled={isMatched}
+                                                    className={`w-full p-6 rounded-lg font-semibold transition ${
+                                                        isMatched
+                                                            ? 'bg-green-200 text-green-800 cursor-not-allowed'
+                                                            : isSelected
+                                                            ? 'bg-blue-500 text-white transform scale-105'
+                                                            : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                                                    }`}
+                                                >
+                                                    <div className="text-4xl">{item.content}</div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <h4 className="text-center font-bold text-gray-700 mb-4">Significados</h4>
+                                        {meaningItems.map((item) => {
+                                            const isSelected = selectedMatching.some(s => s.id === item.id);
+                                            const isMatched = matchedPairs.includes(item.match);
+                                            
+                                            return (
+                                                <button
+                                                    key={item.id}
+                                                    onClick={() => handleMatchingClick(item)}
+                                                    disabled={isMatched}
+                                                    className={`w-full p-6 rounded-lg font-semibold transition ${
+                                                        isMatched
+                                                            ? 'bg-green-200 text-green-800 cursor-not-allowed'
+                                                            : isSelected
+                                                            ? 'bg-blue-500 text-white transform scale-105'
+                                                            : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                                                    }`}
+                                                >
+                                                    <div className="text-lg">{item.content}</div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Daily Challenge Screen
+            if (screen === 'daily') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-2xl mx-auto pt-8">
+                            <div className="mb-6">
+                                <button
+                                    onClick={() => setScreen('menu')}
+                                    className="flex items-center text-gray-600 hover:text-gray-800"
+                                >
+                                    <ArrowLeft className="mr-2" />
+                                    Menú
+                                </button>
+                            </div>
+
+                            <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                <div className="text-center mb-8">
+                                    <h2 className="text-3xl font-bold text-gray-800 mb-2">每日挑战</h2>
+                                    <p className="text-xl text-gray-600">Měi rì tiǎozhàn</p>
+                                    <p className="text-gray-500 mt-1">Desafío Diario</p>
+                                </div>
+
+                                {dailyComplete ? (
+                                    <div className="text-center">
+                                        <div className="text-6xl mb-4">✅</div>
+                                        <h3 className="text-2xl font-bold text-green-600 mb-4">¡Ya completaste el desafío de hoy!</h3>
+                                        <p className="text-gray-600 mb-6">Vuelve mañana para un nuevo carácter</p>
+                                        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                            <div className="text-7xl mb-2">{dailyChar?.char}</div>
+                                            <p className="text-xl text-gray-600">{dailyChar?.pinyin}</p>
+                                            <p className="text-lg text-gray-700 font-semibold">{dailyChar?.meaning}</p>
+                                        </div>
+                                        <button
+                                            onClick={() => setScreen('menu')}
+                                            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-lg transition"
+                                        >
+                                            Volver al Menú
+                                        </button>
+                                    </div>
+                                ) : dailyChar ? (
+                                    <div className="text-center">
+                                        <div className="text-9xl font-bold text-gray-800 mb-6">{dailyChar.char}</div>
+                                        <p className="text-gray-600 mb-4">Adivina el significado o el pinyin</p>
+                                        <p className="text-sm text-gray-500 mb-6">Intentos: {dailyAttempts}</p>
+                                        
+                                        <div className="space-y-4">
+                                            <input
+                                                type="text"
+                                                value={dailyGuess}
+                                                onChange={(e) => setDailyGuess(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && handleDailyGuess()}
+                                                placeholder="Tu respuesta..."
+                                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
+                                            />
+                                            <button
+                                                onClick={handleDailyGuess}
+                                                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition"
+                                            >
+                                                Comprobar
+                                            </button>
+                                        </div>
+
+                                        {dailyAttempts >= 3 && (
+                                            <div className="mt-6 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4">
+                                                <p className="text-yellow-800 font-semibold">💡 Pista:</p>
+                                                <p className="text-yellow-700">Radical: {dailyChar.radical}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-600">Cargando desafío...</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Dictionary Screen
+            if (screen === 'dictionary') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                        <div className="max-w-4xl mx-auto pt-8 pb-8">
+                            <div className="mb-6">
+                                <button
+                                    onClick={() => setScreen('menu')}
+                                    className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+                                >
+                                    <ArrowLeft className="mr-2" />
+                                    Menú
+                                </button>
+                                
+                                <h2 className="text-3xl font-bold text-gray-800 mb-1">词典 HSK-1</h2>
+                                <p className="text-xl text-gray-600 mb-4">Cídiǎn HSK-1</p>
+                                
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por carácter, pinyin o significado..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
+                                />
+                            </div>
+
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {filteredChars.map((char, idx) => (
+                                    <div key={idx} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+                                        <div className="text-6xl text-center mb-3">{char.char}</div>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-gray-500 font-semibold">Radical:</span>
+                                                <span className="text-2xl">{char.radical}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-gray-500 font-semibold">Pinyin:</span>
+                                                <span className="text-lg text-gray-700">{char.pinyin}</span>
+                                            </div>
+                                            <div className="pt-2 border-t">
+                                                <p className="text-gray-800 font-semibold text-center">{char.meaning}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {filteredChars.length === 0 && (
+                                <div className="text-center text-gray-500 mt-8">
+                                    <p className="text-xl">No se encontraron caracteres</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+
+            // Info Screen
+            if (screen === 'info') {
+                if (!infoSection) {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                            <div className="max-w-4xl mx-auto pt-8">
+                                <div className="mb-6">
+                                    <button
+                                        onClick={() => setScreen('menu')}
+                                        className="flex items-center text-gray-600 hover:text-gray-800"
+                                    >
+                                        <ArrowLeft className="mr-2" />
+                                        Menú
+                                    </button>
+                                </div>
+
+                                <div className="text-center mb-8">
+                                    <h2 className="text-4xl font-bold text-gray-800 mb-2">中国信息</h2>
+                                    <p className="text-xl text-gray-600">Zhōngguó xìnxī</p>
+                                    <p className="text-gray-500 mt-1">Información sobre China</p>
+                                </div>
+
+                                <div className="grid md:grid-cols-3 gap-6">
+                                    <button
+                                        onClick={() => setInfoSection('history')}
+                                        className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                    >
+                                        <div className="text-5xl mb-4">🏛️</div>
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-2">历史</h3>
+                                        <p className="text-lg text-gray-600 mb-1">Lìshǐ</p>
+                                        <p className="text-gray-500">Historia de China</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => setInfoSection('curiosities')}
+                                        className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                    >
+                                        <div className="text-5xl mb-4">✨</div>
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-2">趣事</h3>
+                                        <p className="text-lg text-gray-600 mb-1">Qùshì</p>
+                                        <p className="text-gray-500">Curiosidades del idioma</p>
+                                    </button>
+
+                                    <button
+                                        onClick={() => setInfoSection('hsk')}
+                                        className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-1"
+                                    >
+                                        <div className="text-5xl mb-4">📚</div>
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-2">HSK</h3>
+                                        <p className="text-lg text-gray-600 mb-1">Hànyǔ Shuǐpíng Kǎoshì</p>
+                                        <p className="text-gray-500">Información sobre HSK</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+
+                // History Section
+                if (infoSection === 'history') {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                            <div className="max-w-4xl mx-auto pt-8 pb-8">
+                                <div className="mb-6">
+                                    <button
+                                        onClick={() => setInfoSection(null)}
+                                        className="flex items-center text-gray-600 hover:text-gray-800"
+                                    >
+                                        <ArrowLeft className="mr-2" />
+                                        Información
+                                    </button>
+                                </div>
+
+                                <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                    <div className="text-center mb-8">
+                                        <div className="text-6xl mb-4">🏛️</div>
+                                        <h2 className="text-3xl font-bold text-gray-800 mb-2">Historia de China</h2>
+                                    </div>
+
+                                    <div className="space-y-6 text-gray-700">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">China Antigua</h3>
+                                            <p className="leading-relaxed">China posee una de las civilizaciones más antiguas del mundo, con más de 5.000 años de historia documentada. Las primeras dinastías como la Xia, Shang y Zhou establecieron las bases de la cultura china.</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">Las Dinastías Imperiales</h3>
+                                            <p className="leading-relaxed">Durante milenios, China estuvo gobernada por diferentes dinastías. Algunas de las más importantes fueron: la Qin (que unificó China), la Han (edad dorada cultural), la Tang (apogeo cultural), la Ming (Gran Muralla) y la Qing (última dinastía imperial).</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">Grandes Inventos</h3>
+                                            <p className="leading-relaxed">China es responsable de algunos de los inventos más importantes de la humanidad: el papel, la imprenta, la pólvora y la brújula. También desarrolló la seda, la porcelana y complejos sistemas de irrigación.</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">La Gran Muralla</h3>
+                                            <p className="leading-relaxed">Construida durante varios siglos para proteger las fronteras del imperio, la Gran Muralla China es una de las estructuras más impresionantes jamás construidas, con más de 21.000 kilómetros de longitud.</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">China Moderna</h3>
+                                            <p className="leading-relaxed">La República Popular China fue fundada en 1949. En las últimas décadas, China ha experimentado un crecimiento económico espectacular, convirtiéndose en una de las principales potencias mundiales.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+
+                // Curiosities Section  
+                if (infoSection === 'curiosities') {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                            <div className="max-w-4xl mx-auto pt-8 pb-8">
+                                <div className="mb-6">
+                                    <button
+                                        onClick={() => setInfoSection(null)}
+                                        className="flex items-center text-gray-600 hover:text-gray-800"
+                                    >
+                                        <ArrowLeft className="mr-2" />
+                                        Información
+                                    </button>
+                                </div>
+
+                                <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                    <div className="text-center mb-8">
+                                        <div className="text-6xl mb-4">✨</div>
+                                        <h2 className="text-3xl font-bold text-gray-800 mb-2">Curiosidades del Idioma Chino</h2>
+                                    </div>
+
+                                    <div className="space-y-6 text-gray-700">
+                                        <div className="bg-blue-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">🔢 Miles de Caracteres</h3>
+                                            <p className="leading-relaxed">El diccionario chino más completo contiene más de 100.000 caracteres, aunque solo necesitas conocer unos 3.000-4.000 para leer un periódico. Los 1.000 caracteres más comunes cubren el 90% del lenguaje cotidiano.</p>
+                                        </div>
+
+                                        <div className="bg-green-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">🎵 Los Tonos Cambian Todo</h3>
+                                            <p className="leading-relaxed">El chino mandarín tiene 4 tonos principales (más un tono neutro). La misma sílaba con diferente tono puede significar cosas completamente diferentes. Por ejemplo: "mā" (madre), "má" (cáñamo), "mǎ" (caballo), "mà" (regañar).</p>
+                                        </div>
+
+                                        <div className="bg-yellow-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">📝 Sistema de Escritura Antiguo</h3>
+                                            <p className="leading-relaxed">El chino es uno de los sistemas de escritura más antiguos que todavía se usa hoy en día. Algunos caracteres tienen más de 3.000 años y aún se reconocen. Los caracteres evolucionaron de pictogramas (dibujos simples de objetos).</p>
+                                        </div>
+
+                                        <div className="bg-purple-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">🗣️ El Idioma Más Hablado</h3>
+                                            <p className="leading-relaxed">Con más de 1.300 millones de hablantes nativos, el chino mandarín es el idioma más hablado del mundo. Sin embargo, existen muchos dialectos chinos que pueden ser mutuamente ininteligibles al hablarlos, pero se escriben igual.</p>
+                                        </div>
+
+                                        <div className="bg-red-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">🧩 Radicales: Las Piezas del Puzzle</h3>
+                                            <p className="leading-relaxed">Los caracteres chinos están compuestos de radicales (部首 bùshǒu), que son componentes básicos que a menudo dan pistas sobre el significado o pronunciación. Hay 214 radicales tradicionales que se combinan de infinitas maneras.</p>
+                                        </div>
+
+                                        <div className="bg-pink-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">🌐 Simplificado vs Tradicional</h3>
+                                            <p className="leading-relaxed">Existen dos sistemas de escritura: caracteres tradicionales (usados en Taiwán, Hong Kong y Macao) y simplificados (usados en China continental y Singapur). Los simplificados fueron creados en los años 50 para aumentar la alfabetización.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+
+                // HSK Section
+                if (infoSection === 'hsk') {
+                    return (
+                        <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 p-4">
+                            <div className="max-w-4xl mx-auto pt-8 pb-8">
+                                <div className="mb-6">
+                                    <button
+                                        onClick={() => setInfoSection(null)}
+                                        className="flex items-center text-gray-600 hover:text-gray-800"
+                                    >
+                                        <ArrowLeft className="mr-2" />
+                                        Información
+                                    </button>
+                                </div>
+
+                                <div className="bg-white rounded-2xl shadow-2xl p-8">
+                                    <div className="text-center mb-8">
+                                        <div className="text-6xl mb-4">📚</div>
+                                        <h2 className="text-3xl font-bold text-gray-800 mb-2">Información sobre HSK</h2>
+                                        <p className="text-gray-600">汉语水平考试 - Hànyǔ Shuǐpíng Kǎoshì</p>
+                                    </div>
+
+                                    <div className="space-y-6 text-gray-700">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">¿Qué es el HSK?</h3>
+                                            <p className="leading-relaxed">El HSK (Hanyu Shuiping Kaoshi) es el examen oficial de chino mandarín para hablantes no nativos. Es administrado por Hanban, una organización afiliada al Ministerio de Educación de China. Es reconocido internacionalmente y requerido para estudiar en universidades chinas.</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">Los 6 Niveles del HSK</h3>
+                                            <div className="space-y-4 mt-4">
+                                                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                                                    <h4 className="font-bold text-green-800 mb-2">HSK 1 - Principiante</h4>
+                                                    <p className="text-sm">150 palabras | Frases básicas y conversaciones simples</p>
+                                                </div>
+                                                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                                                    <h4 className="font-bold text-blue-800 mb-2">HSK 2 - Elemental</h4>
+                                                    <p className="text-sm">300 palabras | Comunicación simple en situaciones cotidianas</p>
+                                                </div>
+                                                <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                                                    <h4 className="font-bold text-yellow-800 mb-2">HSK 3 - Intermedio Bajo</h4>
+                                                    <p className="text-sm">600 palabras | Conversaciones sobre vida diaria, trabajo y estudio</p>
+                                                </div>
+                                                <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded">
+                                                    <h4 className="font-bold text-orange-800 mb-2">HSK 4 - Intermedio</h4>
+                                                    <p className="text-sm">1.200 palabras | Discutir temas variados con relativa fluidez</p>
+                                                </div>
+                                                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                                                    <h4 className="font-bold text-red-800 mb-2">HSK 5 - Intermedio Alto</h4>
+                                                    <p className="text-sm">2.500 palabras | Leer periódicos y entender películas en chino</p>
+                                                </div>
+                                                <div className="bg-purple-50 border-l-4 border-purple-500 p-4 rounded">
+                                                    <h4 className="font-bold text-purple-800 mb-2">HSK 6 - Avanzado</h4>
+                                                    <p className="text-sm">5.000+ palabras | Comprender y expresarse con fluidez en cualquier situación</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">Estructura del Examen HSK 1</h3>
+                                            <p className="leading-relaxed mb-3">El HSK 1 es el nivel más básico y evalúa:</p>
+                                            <ul className="list-disc list-inside space-y-2 ml-4">
+                                                <li><strong>Comprensión auditiva:</strong> 20 preguntas (15 minutos)</li>
+                                                <li><strong>Comprensión lectora:</strong> 20 preguntas (15 minutos)</li>
+                                                <li><strong>Total:</strong> 40 preguntas en aproximadamente 35 minutos</li>
+                                            </ul>
+                                            <p className="mt-3 leading-relaxed">Para aprobar necesitas al menos 120 puntos de 200 posibles (60%).</p>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">¿Por Qué Tomar el HSK?</h3>
+                                            <ul className="list-disc list-inside space-y-2 ml-4">
+                                                <li>Certificación oficial reconocida internacionalmente</li>
+                                                <li>Requisito para estudiar en universidades chinas</li>
+                                                <li>Ventaja en el mercado laboral</li>
+                                                <li>Medir tu progreso en el aprendizaje del chino</li>
+                                                <li>Becas del gobierno chino requieren ciertos niveles HSK</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="bg-blue-50 rounded-lg p-6">
+                                            <h3 className="text-xl font-bold text-gray-800 mb-3">💡 Consejo</h3>
+                                            <p className="leading-relaxed">Esta app cubre todo el vocabulario necesario para el HSK 1. Practica regularmente con los ejercicios y el desafío diario. ¡Con constancia, estarás listo para el examen en pocos meses!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+            }
+
+            return null;
+        };
+
+        ReactDOM.render(<ChineseApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
