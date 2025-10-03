@@ -1,0 +1,58 @@
+[
+  {
+    "char": "你",
+    "radical": "亻",
+    "pinyin": "nǐ",
+    "meaning": "tú",
+    "pos": "pron"
+  },
+  {
+    "char": "好",
+    "radical": "女",
+    "pinyin": "hǎo",
+    "meaning": "bien; bueno",
+    "pos": "adj"
+  },
+  {
+    "char": "我",
+    "radical": "戈",
+    "pinyin": "wǒ",
+    "meaning": "yo",
+    "pos": "pron"
+  },
+  {
+    "char": "是",
+    "radical": "日",
+    "pinyin": "shì",
+    "meaning": "ser",
+    "pos": "verb"
+  },
+  {
+    "char": "人",
+    "radical": "人",
+    "pinyin": "rén",
+    "meaning": "persona",
+    "pos": "noun"
+  },
+  {
+    "char": "说",
+    "radical": "讠",
+    "pinyin": "shuō",
+    "meaning": "hablar; decir",
+    "pos": "verb"
+  },
+  {
+    "char": "喝",
+    "radical": "口",
+    "pinyin": "hē",
+    "meaning": "beber",
+    "pos": "verb"
+  },
+  {
+    "char": "吃",
+    "radical": "口",
+    "pinyin": "chī",
+    "meaning": "comer",
+    "pos": "verb"
+  }
+]
