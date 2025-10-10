@@ -94,9 +94,10 @@ function Menu({ userName, navigateTo, dailyComplete }) {
               <Info />
             </div>
             
-              <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">学习</h2>
-              <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Xuéxí</p>
-              <p className="text-gray-500 dark:text-gray-400 text-sm">Aprende caracteres y tonos</p>
+            {/* TEXTO CORREGIDO */}
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">信息</h2>
+            <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Xìnxī</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Información sobre China</p>
           </Button>
         </div>
       </Container>
