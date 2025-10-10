@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>404</title>
+    <meta http-equiv="refresh" content="0; url=./">
+    <script>
+      // SPA fallback: redirige a index preservando la ruta para routers tipo hash/history
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirigiendo…</p>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+📘 GUÍA RÁPIDA: SUBIR CAMBIOS A GITHUB DESDE VS CODE
+
+Proyecto: aprende-chino
+Rama principal: main
+Hosting: GitHub Pages
+
+──────────────────────────────
+🔹 1. Guardar los archivos
+──────────────────────────────
+Antes de nada, asegúrate de guardar todo en VS Code.
+Atajo:  Ctrl + S   (o "Archivo → Guardar todo")
+
+──────────────────────────────
+🔹 2. Abrir la terminal
+──────────────────────────────
+En VS Code:  Ctrl + ñ   o  Ver → Terminal
+
+──────────────────────────────
+🔹 3. Comprobar el estado del repositorio
+──────────────────────────────
+git status
+→ Muestra qué archivos han cambiado.
+
+──────────────────────────────
+🔹 4. Añadir todos los cambios
+──────────────────────────────
+git add .
+
+(El punto añade todos los archivos modificados.)
+
+──────────────────────────────
+🔹 5. Crear un commit con descripción
+──────────────────────────────
+git commit -m "Actualización: limpieza App y TTS externo"
+
+(Usa un mensaje breve y claro.)
+
+──────────────────────────────
+🔹 6. Subir los cambios a GitHub
+──────────────────────────────
+git push origin main
+
+→ Esto enviará todo al repositorio remoto.
+
+──────────────────────────────
+🔹 7. Verificar en GitHub Pages
+──────────────────────────────
+Abre tu repositorio:
+https://github.com/Tantdeboc1/aprende-chino
+
+Luego tu web (espera 1‑2 minutos):
+https://tantdeboc1.github.io/aprende-chino/
+
+──────────────────────────────
+⚠️ SI DA ERROR “rejected” o “fetch first”
+──────────────────────────────
+Significa que hay cambios nuevos en GitHub que tú no tienes.
+Solución rápida:
+
+git pull origin main --rebase
+git push origin main
+
+──────────────────────────────
+💡 CONSEJOS
+──────────────────────────────
+• Haz commits pequeños y frecuentes.
+• Evita mensajes genéricos tipo "update" o "cambios".
+• Comprueba siempre en GitHub que se ha subido bien.
+• Si modificas la estructura (por ejemplo public/, src/), revisa la web tras el push.
+
+──────────────────────────────
+🧩 FIN
+──────────────────────────────
+
+
+Arrancar el server: npm run dev

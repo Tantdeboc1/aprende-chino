@@ -1,0 +1,1271 @@
+{
+  "characters": [
+    {
+      "char": "人",
+      "radical": "人",
+      "pinyin": "rén",
+      "meaning": "persona, gente"
+    },
+    {
+      "char": "我",
+      "radical": "戈",
+      "pinyin": "wǒ",
+      "meaning": "yo"
+    },
+    {
+      "char": "你",
+      "radical": "亻",
+      "pinyin": "nǐ",
+      "meaning": "tú"
+    },
+    {
+      "char": "好",
+      "radical": "女",
+      "pinyin": "hǎo",
+      "meaning": "bueno, bien"
+    },
+    {
+      "char": "大",
+      "radical": "大",
+      "pinyin": "dà",
+      "meaning": "grande"
+    },
+    {
+      "char": "小",
+      "radical": "小",
+      "pinyin": "xiǎo",
+      "meaning": "pequeño"
+    },
+    {
+      "char": "中",
+      "radical": "丨",
+      "pinyin": "zhōng",
+      "meaning": "centro, medio"
+    },
+    {
+      "char": "国",
+      "radical": "囗",
+      "pinyin": "guó",
+      "meaning": "país"
+    },
+    {
+      "char": "一",
+      "radical": "一",
+      "pinyin": "yī",
+      "meaning": "uno"
+    },
+    {
+      "char": "二",
+      "radical": "二",
+      "pinyin": "èr",
+      "meaning": "dos"
+    },
+    {
+      "char": "三",
+      "radical": "一",
+      "pinyin": "sān",
+      "meaning": "tres"
+    },
+    {
+      "char": "四",
+      "radical": "囗",
+      "pinyin": "sì",
+      "meaning": "cuatro"
+    },
+    {
+      "char": "五",
+      "radical": "二",
+      "pinyin": "wǔ",
+      "meaning": "cinco"
+    },
+    {
+      "char": "六",
+      "radical": "八",
+      "pinyin": "liù",
+      "meaning": "seis"
+    },
+    {
+      "char": "七",
+      "radical": "一",
+      "pinyin": "qī",
+      "meaning": "siete"
+    },
+    {
+      "char": "八",
+      "radical": "八",
+      "pinyin": "bā",
+      "meaning": "ocho"
+    },
+    {
+      "char": "九",
+      "radical": "丿",
+      "pinyin": "jiǔ",
+      "meaning": "nueve"
+    },
+    {
+      "char": "十",
+      "radical": "十",
+      "pinyin": "shí",
+      "meaning": "diez"
+    },
+    {
+      "char": "天",
+      "radical": "大",
+      "pinyin": "tiān",
+      "meaning": "cielo, día"
+    },
+    {
+      "char": "水",
+      "radical": "水",
+      "pinyin": "shuǐ",
+      "meaning": "agua"
+    },
+    {
+      "char": "火",
+      "radical": "火",
+      "pinyin": "huǒ",
+      "meaning": "fuego"
+    },
+    {
+      "char": "山",
+      "radical": "山",
+      "pinyin": "shān",
+      "meaning": "montaña"
+    },
+    {
+      "char": "木",
+      "radical": "木",
+      "pinyin": "mù",
+      "meaning": "árbol, madera"
+    },
+    {
+      "char": "日",
+      "radical": "日",
+      "pinyin": "rì",
+      "meaning": "sol, día"
+    },
+    {
+      "char": "月",
+      "radical": "月",
+      "pinyin": "yuè",
+      "meaning": "luna, mes"
+    },
+    {
+      "char": "年",
+      "radical": "丿",
+      "pinyin": "nián",
+      "meaning": "año"
+    },
+    {
+      "char": "今",
+      "radical": "人",
+      "pinyin": "jīn",
+      "meaning": "ahora, hoy"
+    },
+    {
+      "char": "明",
+      "radical": "日",
+      "pinyin": "míng",
+      "meaning": "brillante, claro"
+    },
+    {
+      "char": "上",
+      "radical": "一",
+      "pinyin": "shàng",
+      "meaning": "arriba, subir"
+    },
+    {
+      "char": "下",
+      "radical": "一",
+      "pinyin": "xià",
+      "meaning": "abajo, bajar"
+    },
+    {
+      "char": "前",
+      "radical": "刀",
+      "pinyin": "qián",
+      "meaning": "delante, antes"
+    },
+    {
+      "char": "后",
+      "radical": "口",
+      "pinyin": "hòu",
+      "meaning": "detrás, después"
+    },
+    {
+      "char": "左",
+      "radical": "工",
+      "pinyin": "zuǒ",
+      "meaning": "izquierda"
+    },
+    {
+      "char": "右",
+      "radical": "口",
+      "pinyin": "yòu",
+      "meaning": "derecha"
+    },
+    {
+      "char": "东",
+      "radical": "一",
+      "pinyin": "dōng",
+      "meaning": "este"
+    },
+    {
+      "char": "西",
+      "radical": "襾",
+      "pinyin": "xī",
+      "meaning": "oeste"
+    },
+    {
+      "char": "南",
+      "radical": "十",
+      "pinyin": "nán",
+      "meaning": "sur"
+    },
+    {
+      "char": "北",
+      "radical": "匕",
+      "pinyin": "běi",
+      "meaning": "norte"
+    },
+    {
+      "char": "来",
+      "radical": "木",
+      "pinyin": "lái",
+      "meaning": "venir"
+    },
+    {
+      "char": "去",
+      "radical": "厶",
+      "pinyin": "qù",
+      "meaning": "ir"
+    },
+    {
+      "char": "有",
+      "radical": "月",
+      "pinyin": "yǒu",
+      "meaning": "tener, haber"
+    },
+    {
+      "char": "无",
+      "radical": "一",
+      "pinyin": "wú",
+      "meaning": "no tener, sin"
+    },
+    {
+      "char": "是",
+      "radical": "日",
+      "pinyin": "shì",
+      "meaning": "ser, estar"
+    },
+    {
+      "char": "在",
+      "radical": "土",
+      "pinyin": "zài",
+      "meaning": "estar en, existir"
+    },
+    {
+      "char": "他",
+      "radical": "亻",
+      "pinyin": "tā",
+      "meaning": "él"
+    },
+    {
+      "char": "她",
+      "radical": "女",
+      "pinyin": "tā",
+      "meaning": "ella"
+    },
+    {
+      "char": "们",
+      "radical": "亻",
+      "pinyin": "men",
+      "meaning": "plural (nosotros, ellos)"
+    },
+    {
+      "char": "不",
+      "radical": "一",
+      "pinyin": "bù",
+      "meaning": "no, negación"
+    },
+    {
+      "char": "的",
+      "radical": "白",
+      "pinyin": "de",
+      "meaning": "partícula posesiva"
+    },
+    {
+      "char": "了",
+      "radical": "乙",
+      "pinyin": "le",
+      "meaning": "partícula de cambio"
+    },
+    {
+      "char": "它",
+      "pinyin": "tā",
+      "meaning": "eso (no humano)"
+    },
+    {
+      "char": "很",
+      "pinyin": "hěn",
+      "meaning": "muy"
+    },
+    {
+      "char": "也",
+      "pinyin": "yě",
+      "meaning": "también"
+    },
+    {
+      "char": "都",
+      "pinyin": "dōu",
+      "meaning": "todos; ambos"
+    },
+    {
+      "char": "和",
+      "pinyin": "hé",
+      "meaning": "y; con"
+    },
+    {
+      "char": "到",
+      "pinyin": "dào",
+      "meaning": "llegar; a"
+    },
+    {
+      "char": "回",
+      "pinyin": "huí",
+      "meaning": "volver; regresar"
+    },
+    {
+      "char": "看",
+      "pinyin": "kàn",
+      "meaning": "ver; mirar; leer"
+    },
+    {
+      "char": "见",
+      "pinyin": "jiàn",
+      "meaning": "ver; encontrarse"
+    },
+    {
+      "char": "听",
+      "pinyin": "tīng",
+      "meaning": "oír; escuchar"
+    },
+    {
+      "char": "说",
+      "pinyin": "shuō",
+      "meaning": "hablar; decir"
+    },
+    {
+      "char": "读",
+      "pinyin": "dú",
+      "meaning": "leer; estudiar"
+    },
+    {
+      "char": "写",
+      "pinyin": "xiě",
+      "meaning": "escribir"
+    },
+    {
+      "char": "做",
+      "pinyin": "zuò",
+      "meaning": "hacer"
+    },
+    {
+      "char": "吃",
+      "pinyin": "chī",
+      "meaning": "comer",
+      "radical": "口"
+    },
+    {
+      "char": "喝",
+      "pinyin": "hē",
+      "meaning": "beber",
+      "radical": "口"
+    },
+    {
+      "char": "想",
+      "pinyin": "xiǎng",
+      "meaning": "pensar; querer; echar de menos"
+    },
+    {
+      "char": "要",
+      "pinyin": "yào",
+      "meaning": "querer; necesitar"
+    },
+    {
+      "char": "会",
+      "pinyin": "huì",
+      "meaning": "saber (habilidad); poder"
+    },
+    {
+      "char": "能",
+      "pinyin": "néng",
+      "meaning": "poder; ser capaz"
+    },
+    {
+      "char": "可以",
+      "pinyin": "kěyǐ",
+      "meaning": "poder; permitido"
+    },
+    {
+      "char": "给",
+      "pinyin": "gěi",
+      "meaning": "dar; para"
+    },
+    {
+      "char": "用",
+      "pinyin": "yòng",
+      "meaning": "usar"
+    },
+    {
+      "char": "找",
+      "pinyin": "zhǎo",
+      "meaning": "buscar"
+    },
+    {
+      "char": "住",
+      "pinyin": "zhù",
+      "meaning": "vivir; residir"
+    },
+    {
+      "char": "坐",
+      "pinyin": "zuò",
+      "meaning": "sentarse; viajar en (transporte)"
+    },
+    {
+      "char": "走",
+      "pinyin": "zǒu",
+      "meaning": "andar; irse"
+    },
+    {
+      "char": "开",
+      "pinyin": "kāi",
+      "meaning": "abrir; conducir",
+      "radical": "一"
+    },
+    {
+      "char": "关",
+      "pinyin": "guān",
+      "meaning": "cerrar; apagar"
+    },
+    {
+      "char": "买",
+      "pinyin": "mǎi",
+      "meaning": "comprar"
+    },
+    {
+      "char": "卖",
+      "pinyin": "mài",
+      "meaning": "vender"
+    },
+    {
+      "char": "对",
+      "pinyin": "duì",
+      "meaning": "correcto; hacia"
+    },
+    {
+      "char": "错",
+      "pinyin": "cuò",
+      "meaning": "equivocado; error"
+    },
+    {
+      "char": "让",
+      "pinyin": "ràng",
+      "meaning": "dejar; permitir"
+    },
+    {
+      "char": "叫",
+      "pinyin": "jiào",
+      "meaning": "llamarse; llamar",
+      "radical": "口"
+    },
+    {
+      "char": "姓",
+      "pinyin": "xìng",
+      "meaning": "apellidarse"
+    },
+    {
+      "char": "名",
+      "pinyin": "míng",
+      "meaning": "nombre; fama",
+      "radical": "口"
+    },
+    {
+      "char": "字",
+      "pinyin": "zì",
+      "meaning": "carácter; letra"
+    },
+    {
+      "char": "请",
+      "pinyin": "qǐng",
+      "meaning": "por favor; invitar"
+    },
+    {
+      "char": "谢",
+      "pinyin": "xiè",
+      "meaning": "agradecer"
+    },
+    {
+      "char": "对不起",
+      "pinyin": "duìbuqǐ",
+      "meaning": "lo siento"
+    },
+    {
+      "char": "没关系",
+      "pinyin": "méiguānxi",
+      "meaning": "no pasa nada"
+    },
+    {
+      "char": "不好",
+      "pinyin": "bù hǎo",
+      "meaning": "mal; no bien"
+    },
+    {
+      "char": "多",
+      "pinyin": "duō",
+      "meaning": "mucho; muchos"
+    },
+    {
+      "char": "少",
+      "pinyin": "shǎo",
+      "meaning": "poco; pocos",
+      "radical": "小"
+    },
+    {
+      "char": "高",
+      "pinyin": "gāo",
+      "meaning": "alto"
+    },
+    {
+      "char": "低",
+      "pinyin": "dī",
+      "meaning": "bajo (altura/sonido)"
+    },
+    {
+      "char": "长",
+      "pinyin": "cháng",
+      "meaning": "largo"
+    },
+    {
+      "char": "短",
+      "pinyin": "duǎn",
+      "meaning": "corto"
+    },
+    {
+      "char": "远",
+      "pinyin": "yuǎn",
+      "meaning": "lejos"
+    },
+    {
+      "char": "近",
+      "pinyin": "jìn",
+      "meaning": "cerca"
+    },
+    {
+      "char": "冷",
+      "pinyin": "lěng",
+      "meaning": "frío",
+      "radical": "冫"
+    },
+    {
+      "char": "热",
+      "pinyin": "rè",
+      "meaning": "caliente",
+      "radical": "灬"
+    },
+    {
+      "char": "新",
+      "pinyin": "xīn",
+      "meaning": "nuevo"
+    },
+    {
+      "char": "旧",
+      "pinyin": "jiù",
+      "meaning": "viejo (objeto)"
+    },
+    {
+      "char": "忙",
+      "pinyin": "máng",
+      "meaning": "ocupado",
+      "radical": "忄"
+    },
+    {
+      "char": "累",
+      "pinyin": "lèi",
+      "meaning": "cansado"
+    },
+    {
+      "char": "贵",
+      "pinyin": "guì",
+      "meaning": "caro"
+    },
+    {
+      "char": "便宜",
+      "pinyin": "piányi",
+      "meaning": "barato"
+    },
+    {
+      "char": "漂亮",
+      "pinyin": "piàoliang",
+      "meaning": "bonito; guapa"
+    },
+    {
+      "char": "好吃",
+      "pinyin": "hǎochī",
+      "meaning": "rico (comida)"
+    },
+    {
+      "char": "好喝",
+      "pinyin": "hǎohē",
+      "meaning": "rico (bebida)"
+    },
+    {
+      "char": "中国",
+      "pinyin": "Zhōngguó",
+      "meaning": "China"
+    },
+    {
+      "char": "中国人",
+      "pinyin": "Zhōngguó rén",
+      "meaning": "chino/a (persona)"
+    },
+    {
+      "char": "汉语",
+      "pinyin": "Hànyǔ",
+      "meaning": "chino mandarín"
+    },
+    {
+      "char": "中文",
+      "pinyin": "Zhōngwén",
+      "meaning": "chino (lengua escrita)"
+    },
+    {
+      "char": "北京",
+      "pinyin": "Běijīng",
+      "meaning": "Pekín"
+    },
+    {
+      "char": "上海",
+      "pinyin": "Shànghǎi",
+      "meaning": "Shanghái"
+    },
+    {
+      "char": "学校",
+      "pinyin": "xuéxiào",
+      "meaning": "colegio; escuela"
+    },
+    {
+      "char": "老师",
+      "pinyin": "lǎoshī",
+      "meaning": "profesor/a"
+    },
+    {
+      "char": "学生",
+      "pinyin": "xuésheng",
+      "meaning": "estudiante"
+    },
+    {
+      "char": "同学",
+      "pinyin": "tóngxué",
+      "meaning": "compañero de clase"
+    },
+    {
+      "char": "朋友",
+      "pinyin": "péngyou",
+      "meaning": "amigo/a"
+    },
+    {
+      "char": "家",
+      "pinyin": "jiā",
+      "meaning": "casa; familia"
+    },
+    {
+      "char": "爸爸",
+      "pinyin": "bàba",
+      "meaning": "papá"
+    },
+    {
+      "char": "妈妈",
+      "pinyin": "māma",
+      "meaning": "mamá"
+    },
+    {
+      "char": "儿子",
+      "pinyin": "érzi",
+      "meaning": "hijo"
+    },
+    {
+      "char": "女儿",
+      "pinyin": "nǚ’ér",
+      "meaning": "hija"
+    },
+    {
+      "char": "先生",
+      "pinyin": "xiānsheng",
+      "meaning": "señor; marido"
+    },
+    {
+      "char": "小姐",
+      "pinyin": "xiǎojiě",
+      "meaning": "señorita"
+    },
+    {
+      "char": "女士",
+      "pinyin": "nǚshì",
+      "meaning": "señora"
+    },
+    {
+      "char": "名字",
+      "pinyin": "míngzi",
+      "meaning": "nombre"
+    },
+    {
+      "char": "昨天",
+      "pinyin": "zuótiān",
+      "meaning": "ayer"
+    },
+    {
+      "char": "今天",
+      "pinyin": "jīntiān",
+      "meaning": "hoy"
+    },
+    {
+      "char": "明天",
+      "pinyin": "míngtiān",
+      "meaning": "mañana"
+    },
+    {
+      "char": "现在",
+      "pinyin": "xiànzài",
+      "meaning": "ahora"
+    },
+    {
+      "char": "点",
+      "pinyin": "diǎn",
+      "meaning": "en punto; hora"
+    },
+    {
+      "char": "分钟",
+      "pinyin": "fēnzhōng",
+      "meaning": "minuto"
+    },
+    {
+      "char": "时候",
+      "pinyin": "shíhou",
+      "meaning": "tiempo; momento"
+    },
+    {
+      "char": "号",
+      "pinyin": "hào",
+      "meaning": "día (del mes); número"
+    },
+    {
+      "char": "星期",
+      "pinyin": "xīngqī",
+      "meaning": "semana"
+    },
+    {
+      "char": "早上",
+      "pinyin": "zǎoshang",
+      "meaning": "por la mañana"
+    },
+    {
+      "char": "中午",
+      "pinyin": "zhōngwǔ",
+      "meaning": "mediodía"
+    },
+    {
+      "char": "晚上",
+      "pinyin": "wǎnshang",
+      "meaning": "por la noche"
+    },
+    {
+      "char": "这",
+      "pinyin": "zhè",
+      "meaning": "este/esta/esto"
+    },
+    {
+      "char": "那",
+      "pinyin": "nà",
+      "meaning": "ese/esa/eso; aquel/aquella"
+    },
+    {
+      "char": "哪",
+      "pinyin": "nǎ",
+      "meaning": "cuál; qué (interrogativo)"
+    },
+    {
+      "char": "谁",
+      "pinyin": "shéi",
+      "meaning": "quién"
+    },
+    {
+      "char": "什么",
+      "pinyin": "shénme",
+      "meaning": "qué"
+    },
+    {
+      "char": "多少",
+      "pinyin": "duōshao",
+      "meaning": "cuánto(s)"
+    },
+    {
+      "char": "几",
+      "pinyin": "jǐ",
+      "meaning": "cuántos (pocos)"
+    },
+    {
+      "char": "怎么",
+      "pinyin": "zěnme",
+      "meaning": "cómo"
+    },
+    {
+      "char": "怎么样",
+      "pinyin": "zěnmeyàng",
+      "meaning": "qué tal"
+    },
+    {
+      "char": "吗",
+      "pinyin": "ma",
+      "meaning": "partícula interrogativa",
+      "radical": "口"
+    },
+    {
+      "char": "呢",
+      "pinyin": "ne",
+      "meaning": "partícula enfática/interrogativa",
+      "radical": "口"
+    },
+    {
+      "char": "吧",
+      "pinyin": "ba",
+      "meaning": "partícula modal (sugerencia)",
+      "radical": "口"
+    },
+    {
+      "char": "喜欢",
+      "pinyin": "xǐhuan",
+      "meaning": "gustar"
+    },
+    {
+      "char": "爱",
+      "pinyin": "ài",
+      "meaning": "amar; amor",
+      "radical": "心"
+    },
+    {
+      "char": "觉得",
+      "pinyin": "juéde",
+      "meaning": "parecer; pensar"
+    },
+    {
+      "char": "认识",
+      "pinyin": "rènshi",
+      "meaning": "conocer (a alguien)"
+    },
+    {
+      "char": "知道",
+      "pinyin": "zhīdào",
+      "meaning": "saber (hecho)"
+    },
+    {
+      "char": "问题",
+      "pinyin": "wèntí",
+      "meaning": "pregunta; problema"
+    },
+    {
+      "char": "没",
+      "pinyin": "méi",
+      "meaning": "no; no tener"
+    },
+    {
+      "char": "非常",
+      "pinyin": "fēicháng",
+      "meaning": "muy; extremadamente"
+    },
+    {
+      "char": "真",
+      "pinyin": "zhēn",
+      "meaning": "real; realmente"
+    },
+    {
+      "char": "一点儿",
+      "pinyin": "yìdiǎnr",
+      "meaning": "un poco"
+    },
+    {
+      "char": "东西",
+      "pinyin": "dōngxi",
+      "meaning": "cosa; objeto"
+    },
+    {
+      "char": "钱",
+      "pinyin": "qián",
+      "meaning": "dinero"
+    },
+    {
+      "char": "杯子",
+      "pinyin": "bēizi",
+      "meaning": "vaso; taza"
+    },
+    {
+      "char": "茶",
+      "pinyin": "chá",
+      "meaning": "té",
+      "radical": "艹"
+    },
+    {
+      "char": "米饭",
+      "pinyin": "mǐfàn",
+      "meaning": "arroz cocido; comida"
+    },
+    {
+      "char": "面条",
+      "pinyin": "miàntiáo",
+      "meaning": "fideos"
+    },
+    {
+      "char": "苹果",
+      "pinyin": "píngguǒ",
+      "meaning": "manzana"
+    },
+    {
+      "char": "水果",
+      "pinyin": "shuǐguǒ",
+      "meaning": "fruta"
+    },
+    {
+      "char": "菜",
+      "pinyin": "cài",
+      "meaning": "plato; verdura",
+      "radical": "艹"
+    },
+    {
+      "char": "饭馆",
+      "pinyin": "fànguǎn",
+      "meaning": "restaurante"
+    },
+    {
+      "char": "医生",
+      "pinyin": "yīshēng",
+      "meaning": "médico"
+    },
+    {
+      "char": "医院",
+      "pinyin": "yīyuàn",
+      "meaning": "hospital"
+    },
+    {
+      "char": "商店",
+      "pinyin": "shāngdiàn",
+      "meaning": "tienda"
+    },
+    {
+      "char": "飞机",
+      "pinyin": "fēijī",
+      "meaning": "avión"
+    },
+    {
+      "char": "出租车",
+      "pinyin": "chūzūchē",
+      "meaning": "taxi"
+    },
+    {
+      "char": "车",
+      "pinyin": "chē",
+      "meaning": "coche; vehículo",
+      "radical": "车"
+    },
+    {
+      "char": "火车站",
+      "pinyin": "huǒchēzhàn",
+      "meaning": "estación de tren"
+    },
+    {
+      "char": "前面",
+      "pinyin": "qiánmiàn",
+      "meaning": "delante"
+    },
+    {
+      "char": "后面",
+      "pinyin": "hòumiàn",
+      "meaning": "detrás"
+    },
+    {
+      "char": "里面",
+      "pinyin": "lǐmiàn",
+      "meaning": "dentro"
+    },
+    {
+      "char": "外面",
+      "pinyin": "wàimiàn",
+      "meaning": "fuera"
+    },
+    {
+      "char": "左边",
+      "pinyin": "zuǒbian",
+      "meaning": "izquierda"
+    },
+    {
+      "char": "右边",
+      "pinyin": "yòubian",
+      "meaning": "derecha"
+    },
+    {
+      "char": "中间",
+      "pinyin": "zhōngjiān",
+      "meaning": "medio; entre"
+    },
+    {
+      "char": "桌子",
+      "pinyin": "zhuōzi",
+      "meaning": "mesa"
+    },
+    {
+      "char": "椅子",
+      "pinyin": "yǐzi",
+      "meaning": "silla"
+    },
+    {
+      "char": "书",
+      "pinyin": "shū",
+      "meaning": "libro"
+    },
+    {
+      "char": "本",
+      "pinyin": "běn",
+      "meaning": "clasificador de libros",
+      "radical": "木"
+    },
+    {
+      "char": "个",
+      "pinyin": "gè",
+      "meaning": "clasificador general",
+      "radical": "人"
+    },
+    {
+      "char": "块",
+      "pinyin": "kuài",
+      "meaning": "trozo; unidad de dinero (yuan)"
+    },
+    {
+      "char": "件",
+      "pinyin": "jiàn",
+      "meaning": "pieza; clasificador de ropa/asuntos"
+    },
+    {
+      "char": "张",
+      "pinyin": "zhāng",
+      "meaning": "clasificador para papeles/mesas"
+    },
+    {
+      "char": "只",
+      "pinyin": "zhī",
+      "meaning": "clasificador de animales"
+    }
+  ],
+  "vowels": [
+    {
+      "char": "a",
+      "tone1": "ā",
+      "tone2": "á",
+      "tone3": "ǎ",
+      "tone4": "à"
+    },
+    {
+      "char": "e",
+      "tone1": "ē",
+      "tone2": "é",
+      "tone3": "ě",
+      "tone4": "è"
+    },
+    {
+      "char": "i",
+      "tone1": "ī",
+      "tone2": "í",
+      "tone3": "ǐ",
+      "tone4": "ì"
+    },
+    {
+      "char": "o",
+      "tone1": "ō",
+      "tone2": "ó",
+      "tone3": "ǒ",
+      "tone4": "ò"
+    },
+    {
+      "char": "u",
+      "tone1": "ū",
+      "tone2": "ú",
+      "tone3": "ǔ",
+      "tone4": "ù"
+    },
+    {
+      "char": "ü",
+      "tone1": "ǖ",
+      "tone2": "ǘ",
+      "tone3": "ǚ",
+      "tone4": "ǜ"
+    }
+  ],
+  "consonants": [
+    {
+      "pinyin": "b",
+      "sound": "como \"b\" en \"bar\""
+    },
+    {
+      "pinyin": "p",
+      "sound": "como \"p\" aspirada"
+    },
+    {
+      "pinyin": "m",
+      "sound": "como \"m\" en \"mamá\""
+    },
+    {
+      "pinyin": "f",
+      "sound": "como \"f\" en \"foto\""
+    },
+    {
+      "pinyin": "d",
+      "sound": "como \"d\" en \"día\""
+    },
+    {
+      "pinyin": "t",
+      "sound": "como \"t\" aspirada"
+    },
+    {
+      "pinyin": "n",
+      "sound": "como \"n\" en \"noche\""
+    },
+    {
+      "pinyin": "l",
+      "sound": "como \"l\" en \"luz\""
+    },
+    {
+      "pinyin": "g",
+      "sound": "como \"g\" en \"gato\""
+    },
+    {
+      "pinyin": "k",
+      "sound": "como \"k\" aspirada"
+    },
+    {
+      "pinyin": "h",
+      "sound": "como \"j\" en \"jamón\""
+    },
+    {
+      "pinyin": "j",
+      "sound": "como \"y\" en \"yo\""
+    },
+    {
+      "pinyin": "q",
+      "sound": "como \"ch\" suave"
+    },
+    {
+      "pinyin": "x",
+      "sound": "como \"sh\" suave"
+    },
+    {
+      "pinyin": "zh",
+      "sound": "como \"ch\" en \"chino\""
+    },
+    {
+      "pinyin": "ch",
+      "sound": "como \"ch\" aspirada"
+    },
+    {
+      "pinyin": "sh",
+      "sound": "como \"sh\" en inglés"
+    },
+    {
+      "pinyin": "r",
+      "sound": "entre \"r\" y \"zh\""
+    },
+    {
+      "pinyin": "z",
+      "sound": "como \"ds\" en inglés"
+    },
+    {
+      "pinyin": "c",
+      "sound": "como \"ts\" aspirada"
+    },
+    {
+      "pinyin": "s",
+      "sound": "como \"s\" en \"sol\""
+    },
+    {
+      "pinyin": "y",
+      "sound": "semivocal cercana a 'i' inicial; ej. yī (衣)"
+    },
+    {
+      "pinyin": "w",
+      "sound": "semivocal cercana a 'u' inicial; ej. wū (屋)"
+    }
+  ],
+  "specialSyllables": [
+    {
+      "pinyin": "zhi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "chi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "shi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "ri",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "zi",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "ci",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "si",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "yi",
+      "sound": "inicial 'y' + 'i' (yī)"
+    },
+    {
+      "pinyin": "wu",
+      "sound": "inicial 'w' + 'u' (wū)"
+    },
+    {
+      "pinyin": "yu",
+      "sound": "inicial 'y' + 'ü' (yu)"
+    },
+    {
+      "pinyin": "ye",
+      "sound": "variante con 'y' + 'e' (ye)"
+    },
+    {
+      "pinyin": "yue",
+      "sound": "variante con 'y' + 'üe' (yue)"
+    },
+    {
+      "pinyin": "yuan",
+      "sound": "variante con 'y' + 'üan' (yuan)"
+    },
+    {
+      "pinyin": "yin",
+      "sound": "variante con 'y' + 'in' (yin)"
+    },
+    {
+      "pinyin": "yun",
+      "sound": "variante con 'y' + 'ün' (yun)"
+    },
+    {
+      "pinyin": "ying",
+      "sound": "variante con 'y' + 'ing' (ying)"
+    }
+  ]
+}

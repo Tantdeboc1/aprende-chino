@@ -1,0 +1,9 @@
+/* src/index.css */
+@import "tailwindcss";
+
+body {
+  background: linear-gradient(135deg, #1f2937, #374151);
+  min-height: 100vh;
+}
+
+/* Elimina todas las clases dark: */

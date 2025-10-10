@@ -1,0 +1,529 @@
+{
+  "history": {
+    "overview": "Panorama histórico de China desde los orígenes legendarios hasta la era contemporánea.",
+    "timeline": [
+      {
+        "title": "Orígenes y cultura neolítica",
+        "years": "c. 5000–2000 a.C.",
+        "desc": "Culturas como Yangshao y Longshan desarrollan agricultura, cerámica y asentamientos complejos. Estas culturas sentaron pautas de organización social y técnicas que facilitaron la aparición de estados tempranos y rituales compartidos."
+      },
+      {
+        "title": "Dinastía Xia (mítica)",
+        "years": "c. 2070–1600 a.C.",
+        "desc": "Tradicionalmente considerada la primera dinastía; su historicidad es debatida. Más allá de su historicidad, su relato funciona como marco moral para entender el ascenso y caída de las dinastías posteriores."
+      },
+      {
+        "title": "Dinastía Shang",
+        "years": "c. 1600–1046 a.C.",
+        "desc": "Bronce avanzado, oráculos grabados en huesos y caparazones con caracteres arcaicos. Los talleres y centros rituales muestran una élite especializada y redes de intercambio regional."
+      },
+      {
+        "title": "Dinastía Zhou (Occidental)",
+        "years": "1046–771 a.C.",
+        "desc": "Sistema feudal; legitimidad mediante el 'Mandato del Cielo' (天命). Los ritos y parentescos estructuraron la vida política, definiendo deberes y jerarquías."
+      },
+      {
+        "title": "Zhou (Oriental): Primaveras y Otoños",
+        "years": "770–476 a.C.",
+        "desc": "Fragmentación política; florecimiento intelectual: Confucio, Laozi, Sunzi. Maestros itinerantes asesoraban a los reinos, dejando textos fundamentales para la filosofía china."
+      },
+      {
+        "title": "Zhou (Oriental): Reinos Combatientes",
+        "years": "475–221 a.C.",
+        "desc": "Estados poderosos compiten por la hegemonía; innovación militar y administrativa. La competencia aceleró la profesionalización de la burocracia y la estandarización legal."
+      },
+      {
+        "title": "Unificación Qin",
+        "years": "221–206 a.C.",
+        "desc": "Qin Shi Huang unifica China; estandariza escritura, monedas y medidas; inicio de grandes obras defensivas. La centralización permitió grandes obras públicas, aunque la dureza de las políticas generó resistencias."
+      },
+      {
+        "title": "Dinastía Han (Occidental)",
+        "years": "206 a.C.–9 d.C.",
+        "desc": "Consolidación imperial; apertura de la Ruta de la Seda; burocracia confuciana. Se consolidaron instituciones duraderas y una cultura letrada que influiría en todo Asia oriental."
+      },
+      {
+        "title": "Interregno Xin y restauración Han (Oriental)",
+        "years": "9–220",
+        "desc": "Breve dinastía Xin; posterior restauración Han; auge cultural y científico. La administración se adaptó a nuevas realidades sociales y económicas tras las crisis."
+      },
+      {
+        "title": "Tres Reinos",
+        "years": "220–280",
+        "desc": "Wei, Shu y Wu compiten; época mitificada en la literatura clásica. La memoria popular de esta época influyó en teatro, ópera y relatos posteriores."
+      },
+      {
+        "title": "Jin y Dinastías del Norte y del Sur",
+        "years": "265–589",
+        "desc": "Alternancia de control; sinización de pueblos no han; desarrollo del budismo chino. El encuentro entre tradiciones han y no han impulsó innovaciones artísticas y religiosas."
+      },
+      {
+        "title": "Dinastía Sui",
+        "years": "581–618",
+        "desc": "Reunificación; Gran Canal; reformas administrativas que allanan el camino a Tang. El Gran Canal integró economías regionales y facilitó el abastecimiento de la capital."
+      },
+      {
+        "title": "Dinastía Tang",
+        "years": "618–907",
+        "desc": "Edad dorada de poesía y artes; Chang’an como metrópolis cosmopolita; examen imperial (科举) se consolida. Las rutas terrestres y marítimas conectaron China con Asia Central, India y el mundo islámico."
+      },
+      {
+        "title": "Cinco Dinastías y Diez Reinos",
+        "years": "907–960",
+        "desc": "Ciclo de estados efímeros y regionalismos tras la caída de Tang. La fragmentación política no impidió el avance urbano y comercial en varias regiones."
+      },
+      {
+        "title": "Dinastía Song (Norte y Sur)",
+        "years": "960–1279",
+        "desc": "Innovaciones: pólvora, brújula, imprenta; auge mercantil; refinamiento artístico. La administración civil ganó peso frente al militar y se expandió la educación privada."
+      },
+      {
+        "title": "Dominio mongol: Dinastía Yuan",
+        "years": "1271–1368",
+        "desc": "Integración eurasiática bajo los mongoles; contactos intensos con Occidente. La movilidad de artesanos y astrónomos propició transferencias tecnológicas y científicas."
+      },
+      {
+        "title": "Dinastía Ming",
+        "years": "1368–1644",
+        "desc": "Restauración han; viajes de Zheng He; fortificación de la Gran Muralla; esplendor artesanal. La producción artesanal y las redes comerciales internas alcanzaron gran escala."
+      },
+      {
+        "title": "Dinastía Qing (manchú)",
+        "years": "1644–1912",
+        "desc": "Expansión territorial; encuentros desiguales con potencias occidentales; reformas tardías. Las reformas tardías introdujeron ferrocarriles, industrias y nuevas instituciones educativas."
+      },
+      {
+        "title": "República de China",
+        "years": "1912–1949",
+        "desc": "Fin del sistema imperial; conflictos internos y guerra sino-japonesa; modernización dispareja. El debate intelectual renovó lengua, literatura y educación, buscando modernizar el país."
+      },
+      {
+        "title": "República Popular China: primeras décadas",
+        "years": "1949–1978",
+        "desc": "Industrialización; campañas políticas; complejos desafíos económicos y sociales. La alfabetización y la salud pública avanzaron, pese a vaivenes políticos."
+      },
+      {
+        "title": "Reformas y apertura",
+        "years": "desde 1978",
+        "desc": "Crecimiento acelerado; urbanización; integración en la economía global; avances científicos y tecnológicos. Crecieron las ciudades y la movilidad social, a la vez que surgieron desafíos de desigualdad y sostenibilidad."
+      }
+    ],
+    "glossary": [
+      {
+        "term": "Mandato del Cielo (天命)",
+        "desc": "Principio de legitimidad política basado en la virtud del gobernante. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "term": "Examen imperial (科举)",
+        "desc": "Sistema meritocrático de acceso a la administración, vigente por siglos. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "term": "Ruta de la Seda",
+        "desc": "Red de intercambios comerciales y culturales entre China, Asia Central, Oriente Próximo y Europa. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      }
+    ],
+    "suggestedReading": [
+      {
+        "title": "Cambridge History of China (selecciones)",
+        "note": "Obra académica de referencia por períodos."
+      },
+      {
+        "title": "Historia de China (J. Gernet)",
+        "note": "Síntesis clásica con enfoque cultural y social."
+      }
+    ]
+  },
+  "language": {
+    "facts": [
+      {
+        "title": "Tonos",
+        "desc": "El mandarín estándar tiene 4 tonos y tono neutro; el contorno tonal cambia el significado. Estos aspectos ayudan a entender por qué el aprendizaje del chino combina escritura, sonido y contexto."
+      },
+      {
+        "title": "Escritura logográfica",
+        "desc": "Cada carácter (汉字) representa una sílaba y un morfema; se combinan para formar palabras. Cada carácter suele corresponder a una sílaba con significado; combinarlos permite formar nuevas palabras y matices."
+      },
+      {
+        "title": "Pinyin",
+        "desc": "Sistema de transcripción al alfabeto latino para aprender pronunciación y teclear. Dominar tono y rima en pinyin mejora la pronunciación y facilita buscar y teclear en dispositivos."
+      },
+      {
+        "title": "Simplificación",
+        "desc": "Desde mediados del s. XX se simplificaron muchos trazos para acelerar la alfabetización. En la práctica conviven caracteres simplificados y tradicionales según la región y el contexto cultural."
+      },
+      {
+        "title": "Dialectos",
+        "desc": "‘Chino’ agrupa familias como mandarín, cantonés, wu, min… con diferencias grandes. Comparten una base escrita común, pero la inteligibilidad oral puede ser muy baja entre familias distintas."
+      }
+    ],
+    "toneExamples": [
+      {
+        "char": "妈",
+        "pinyin": "mā",
+        "meaning": "mamá (1º tono)"
+      },
+      {
+        "char": "麻",
+        "pinyin": "má",
+        "meaning": "cáñamo (2º tono)"
+      },
+      {
+        "char": "马",
+        "pinyin": "mǎ",
+        "meaning": "caballo (3º tono)"
+      },
+      {
+        "char": "骂",
+        "pinyin": "mà",
+        "meaning": "regañar/insultar (4º tono)"
+      }
+    ],
+    "scripts": {
+      "simplifiedExamples": [
+        {
+          "trad": "學",
+          "simp": "学",
+          "meaning": "estudiar"
+        },
+        {
+          "trad": "國",
+          "simp": "国",
+          "meaning": "país"
+        },
+        {
+          "trad": "門",
+          "simp": "门",
+          "meaning": "puerta"
+        },
+        {
+          "trad": "體",
+          "simp": "体",
+          "meaning": "cuerpo"
+        }
+      ]
+    }
+  },
+  "hsk": {
+    "levels": [
+      {
+        "level": 1,
+        "desc": "Frases simples, presentación personal, números, tiempo y lugar. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~150 palabras"
+      },
+      {
+        "level": 2,
+        "desc": "Rutinas, descripciones básicas, necesidades diarias. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~300 palabras"
+      },
+      {
+        "level": 3,
+        "desc": "Vida escolar/laboral, gustos, comparaciones sencillas. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~600 palabras"
+      },
+      {
+        "level": 4,
+        "desc": "Opiniones, narraciones, temas sociales comunes. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~1000+ palabras"
+      },
+      {
+        "level": 5,
+        "desc": "Textos largos; noticias, temas culturales y técnicos. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~1500+ palabras"
+      },
+      {
+        "level": 6,
+        "desc": "Alta competencia; matices, registros formales, lectura extensiva. Se recomienda reforzar vocabulario de alta frecuencia y practicar con tareas reales del nivel para ganar soltura.",
+        "estimateVocab": "~2500+ palabras"
+      }
+    ],
+    "tips": [
+      {
+        "tip": "Practica escucha diaria",
+        "desc": "Podcasts lentos, diálogos y canciones ayudan a fijar estructuras. Combina estudio activo (repetición espaciada) con exposición comprensible y autoevaluaciones periódicas."
+      },
+      {
+        "tip": "Listas de frecuencia",
+        "desc": "Prioriza vocabulario de uso alto y revisiones espaciadas (SRS). Combina estudio activo (repetición espaciada) con exposición comprensible y autoevaluaciones periódicas."
+      },
+      {
+        "tip": "Simulacros",
+        "desc": "Cronometra tareas reales de examen para entrenar ritmo. Combina estudio activo (repetición espaciada) con exposición comprensible y autoevaluaciones periódicas."
+      }
+    ]
+  },
+  "cuisine": {
+    "regions": [
+      {
+        "name": "Sichuan (川)",
+        "flavor": "picante, numbing (má là)",
+        "dishes": [
+          {
+            "name": "Mapo Tofu",
+            "desc": "Tofu con carne y doubanjiang, pimienta de Sichuan. Característico de Sichuan (川); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Hot Pot",
+            "desc": "Caldo rojo picante para cocer carnes y verduras. Característico de Sichuan (川); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Kung Pao Chicken",
+            "desc": "Pollo salteado con cacahuetes y chiles secos. Característico de Sichuan (川); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          }
+        ]
+      },
+      {
+        "name": "Cantón (粤)",
+        "flavor": "suave, fresco, umami",
+        "dishes": [
+          {
+            "name": "Dim Sum",
+            "desc": "Bocados al vapor/horno para brunch. Característico de Cantón (粤); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Char Siu",
+            "desc": "Cerdo asado dulce con miel y soja. Característico de Cantón (粤); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Congee",
+            "desc": "Gachas de arroz reconfortantes, múltiples toppings. Característico de Cantón (粤); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          }
+        ]
+      },
+      {
+        "name": "Pekín (京)",
+        "flavor": "graso aromático, horno",
+        "dishes": [
+          {
+            "name": "Pato laqueado",
+            "desc": "Piel crujiente, crepes, cebolleta y salsa dulce. Característico de Pekín (京); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Zhajiangmian",
+            "desc": "Fideos con salsa de soja fermentada y carne picada. Característico de Pekín (京); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          }
+        ]
+      },
+      {
+        "name": "Shanghái (沪)",
+        "flavor": "dulce-salado",
+        "dishes": [
+          {
+            "name": "Xiaolongbao",
+            "desc": "Dumplings con caldo en su interior. Característico de Shanghái (沪); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          },
+          {
+            "name": "Hong Shao Rou",
+            "desc": "Panceta estofada agridulce braseada lentamente. Característico de Shanghái (沪); busca el equilibrio de texturas y un perfil de sabores típico de la zona."
+          }
+        ]
+      }
+    ]
+  },
+  "traditions": {
+    "festivals": [
+      {
+        "name": "Año Nuevo Chino",
+        "when": "1º día del 1º mes lunar",
+        "customs": "Reunión familiar, sobres rojos, fuegos artificiales."
+      },
+      {
+        "name": "Festival del Medio Otoño",
+        "when": "15º día del 8º mes lunar",
+        "customs": "Pasteles de luna, farolillos, contemplar la luna."
+      },
+      {
+        "name": "Festival del Barco del Dragón",
+        "when": "5º día del 5º mes lunar",
+        "customs": "Regatas de dragones, zongzi (arroz envuelto)."
+      },
+      {
+        "name": "Festival Qingming",
+        "when": "abril (calendario solar)",
+        "customs": "Honrar a los ancestros limpiando tumbas; excursiones primaverales."
+      }
+    ],
+    "etiquette": [
+      {
+        "title": "Cortesía y modestia",
+        "desc": "Evitar alardes; respeto a mayores; intercambio de tarjetas con ambas manos. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Regalos",
+        "desc": "Evitar relojes y paraguas; números pares son bienvenidos. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      }
+    ]
+  },
+  "modernChina": {
+    "topics": [
+      {
+        "title": "Tecnología",
+        "desc": "Gigantes digitales, pagos móviles, IA y hardware puntero. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Transporte",
+        "desc": "Red de alta velocidad ferroviaria líder y movilidad urbana eficiente. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Ciudades inteligentes",
+        "desc": "Servicios urbanos conectados, bicicletas compartidas, pagos sin efectivo. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Medio ambiente",
+        "desc": "Transición energética, retos de contaminación y gestión hídrica. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Educación e I+D",
+        "desc": "Universidades en ascenso y producción científica creciente. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      }
+    ]
+  },
+  "geography": {
+    "regions": [
+      {
+        "name": "Norte",
+        "highlights": "Inviernos fríos; capital Pekín; llanura del norte de China."
+      },
+      {
+        "name": "Sur",
+        "highlights": "Clima húmedo; Cantón, Guangxi; arrozales y karst."
+      },
+      {
+        "name": "Costa Este",
+        "highlights": "Cinturón económico; Shanghai, Jiangsu, Zhejiang."
+      },
+      {
+        "name": "Interior/Occidente",
+        "highlights": "Meseta tibetana, Xinjiang, desiertos y minorías étnicas."
+      }
+    ],
+    "landmarks": [
+      {
+        "name": "La Gran Muralla",
+        "region": "Norte",
+        "note": "Tramos restaurados cerca de Pekín como Badaling y Mutianyu."
+      },
+      {
+        "name": "Guillin y Yangshuo",
+        "region": "Sur",
+        "note": "Paisajes kársticos icónicos."
+      },
+      {
+        "name": "Bund de Shanghái",
+        "region": "Costa Este",
+        "note": "Arquitectura colonial frente al skyline de Pudong."
+      }
+    ]
+  },
+  "musicCinema": {
+    "music": [
+      {
+        "type": "pop",
+        "title": "Jay Chou (周杰伦)",
+        "year": 2000,
+        "note": "Icono del Mandopop."
+      },
+      {
+        "type": "folk",
+        "title": "Li Jian (李健)",
+        "year": 2003,
+        "note": "Baladas melódicas y poéticas."
+      },
+      {
+        "type": "indie",
+        "title": "Omnipotent Youth Society",
+        "year": 2010,
+        "note": "Rock alternativo de Hebei."
+      }
+    ],
+    "cinema": [
+      {
+        "title": "Héroe (英雄)",
+        "year": 2002,
+        "note": "Zhang Yimou; estética de color y wuxia."
+      },
+      {
+        "title": "The Grandmaster (一代宗师)",
+        "year": 2013,
+        "note": "Wong Kar-wai; biografía estilizada de Ip Man."
+      },
+      {
+        "title": "Largo viaje hacia la noche (地球最后的夜晚)",
+        "year": 2018,
+        "note": "Bi Gan; onirismo y plano secuencia."
+      }
+    ]
+  },
+  "philosophy": {
+    "schools": [
+      {
+        "name": "Confucianismo",
+        "coreIdeas": [
+          "Ética de las relaciones",
+          "Ritual (礼) y armonía social",
+          "Gobierno virtuoso"
+        ],
+        "figures": [
+          "Confucio",
+          "Mencio",
+          "Xunzi"
+        ]
+      },
+      {
+        "name": "Taoísmo",
+        "coreIdeas": [
+          "Wu wei (no forzar)",
+          "Armonía con el Dao",
+          "Simplicidad y naturalidad"
+        ],
+        "figures": [
+          "Laozi",
+          "Zhuangzi"
+        ]
+      },
+      {
+        "name": "Budismo chino",
+        "coreIdeas": [
+          "Compasión",
+          "Iluminación",
+          "Escuelas Chan/Zen"
+        ],
+        "figures": [
+          "Bodhidharma",
+          "Huìnéng"
+        ]
+      },
+      {
+        "name": "Legalismo",
+        "coreIdeas": [
+          "Leyes estrictas",
+          "Control y meritocracia",
+          "Orden por encima de moral personal"
+        ],
+        "figures": [
+          "Han Feizi",
+          "Shang Yang"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "topics": [
+      {
+        "title": "Gaokao",
+        "desc": "Examen nacional de acceso a la universidad; alta competitividad. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Primaria y secundaria",
+        "desc": "Fuerte foco en matemáticas y ciencias; deberes diarios. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Extraescolares",
+        "desc": "Música, caligrafía, artes marciales, olimpíadas académicas. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      },
+      {
+        "title": "Universidad",
+        "desc": "Creciente internacionalización; investigación y colaboración global. Este punto aporta contexto adicional para comprender mejor su uso en la práctica."
+      }
+    ]
+  }
+}
