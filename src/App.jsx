@@ -26,6 +26,25 @@ const ArrowLeft = ({className = ""}) => (
 );
 
 export default function App() {
+  // 🔥 FORZAR MODO OSCURO SIEMPRE
+  useEffect(() => {
+    // Forzar la clase 'dark' en el elemento html
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    
+    // Prevenir que el sistema operativo cambie el tema
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const handleChange = () => {
+      document.documentElement.classList.add('dark');
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
+
   // Global data
   const [appData, setAppData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

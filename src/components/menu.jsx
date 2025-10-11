@@ -36,12 +36,12 @@ function Menu({ userName, navigateTo, dailyComplete }) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 dark:from-gray-800 dark:to-gray-900 p-4">
+    <div className="min-h-screen p-4">
       <Container>
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">你好，{userName}! 👋</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-3">Nǐ hǎo, {userName}!</p>
-          <p className="text-2xl text-gray-800 dark:text-white font-semibold">¿Qué quieres hacer hoy?</p>
+          <h1 className="text-4xl font-bold text-white mb-2">你好，{userName}! 👋</h1>
+          <p className="text-xl text-gray-300 mb-3">Nǐ hǎo, {userName}!</p>
+          <p className="text-2xl text-white font-semibold">¿Qué quieres hacer hoy?</p>
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -53,9 +53,9 @@ function Menu({ userName, navigateTo, dailyComplete }) {
             <div className="mx-auto mb-2 text-blue-500 flex items-center justify-center">
               <GraduationCap />
             </div>
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">学习</h2>
-            <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Xuéxí</p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Aprende caracteres y tonos</p>
+            <h2 className="text-xl font-bold text-white mb-1">学习</h2>
+            <p className="text-md text-gray-300 mb-1">Xuéxí</p>
+            <p className="text-gray-400 text-sm">Aprende caracteres y tonos</p>
           </Button>
 
           <Button 
@@ -66,10 +66,10 @@ function Menu({ userName, navigateTo, dailyComplete }) {
             <div className="mx-auto mb-2 text-green-500 flex items-center justify-center">
               <Calendar />
             </div>
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">每日挑战</h2>
-            <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Měi rì tiǎozhàn</p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Desafío diario</p>
-            {dailyComplete && <span className="inline-block mt-1 text-green-600 font-semibold text-sm">✓ Completado</span>}
+            <h2 className="text-xl font-bold text-white mb-1">每日挑战</h2>
+            <p className="text-md text-gray-300 mb-1">Měi rì tiǎozhàn</p>
+            <p className="text-gray-400 text-sm">Desafío diario</p>
+            {dailyComplete && <span className="inline-block mt-1 text-green-400 font-semibold text-sm">✓ Completado</span>}
           </Button>
 
           <Button 
@@ -80,9 +80,9 @@ function Menu({ userName, navigateTo, dailyComplete }) {
             <div className="mx-auto mb-2 text-purple-500 flex items-center justify-center">
               <BookOpen />
             </div>
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">词典</h2>
-            <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Cídiǎn</p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Busca caracteres HSK1</p>
+            <h2 className="text-xl font-bold text-white mb-1">词典</h2>
+            <p className="text-md text-gray-300 mb-1">Cídiǎn</p>
+            <p className="text-gray-400 text-sm">Busca caracteres HSK1</p>
           </Button>
 
           <Button 
@@ -94,9 +94,9 @@ function Menu({ userName, navigateTo, dailyComplete }) {
               <Info />
             </div>
             
-              <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">学习</h2>
-              <p className="text-md text-gray-600 dark:text-gray-300 mb-1">Xuéxí</p>
-              <p className="text-gray-500 dark:text-gray-400 text-sm">Aprende caracteres y tonos</p>
+            <h2 className="text-xl font-bold text-white mb-1">信息</h2>
+            <p className="text-md text-gray-300 mb-1">Xìnxī</p>
+            <p className="text-gray-400 text-sm">Información sobre China</p>
           </Button>
         </div>
       </Container>

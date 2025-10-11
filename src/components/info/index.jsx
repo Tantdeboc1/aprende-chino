@@ -32,17 +32,17 @@ export default function InfoIndex({ goBack }) {
     ];
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 dark:from-gray-800 dark:to-gray-900 p-4">
+      <div className="min-h-screen p-4">
         <Container>
           <div className="mb-6">
-            <button onClick={goBack} className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white">
               <ArrowLeft className="mr-2" /> Volver al Menú
             </button>
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">中国信息</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">Zhōngguó xìnxī - Información sobre China</p>
+            <h1 className="text-4xl font-bold text-white mb-2">中国信息</h1>
+            <p className="text-xl text-gray-300">Zhōngguó xìnxī - Información sobre China</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,11 +51,11 @@ export default function InfoIndex({ goBack }) {
                 key={s.key}
                 variant="card"
                 onClick={() => setInfoSection(s.key)}
-                className="min-h-[180px] text-left hover:shadow-xl transition bg-white dark:bg-gray-800"
+                className="min-h-[180px] text-left hover:shadow-xl transition bg-gray-800 border border-gray-700 hover:border-gray-600"
               >
                 <div className="text-5xl mb-3">{s.emoji}</div>
-                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-1">{s.title}</h2>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">{s.description}</p>
+                <h2 className="text-xl font-bold text-white mb-1">{s.title}</h2>
+                <p className="text-gray-400 text-sm">{s.description}</p>
               </Button>
             ))}
           </div>
