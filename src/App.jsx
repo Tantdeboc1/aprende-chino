@@ -81,13 +81,68 @@ export default function App() {
 
   // Load data (HSK1, tones, etc.)
   useEffect(() => {
+    // Helpers para enriquecer el dataset de caracteres sin modificar el JSON original
+    const toNumberedFromMarked = (s) => {
+      if (!s) return '';
+      const parts = String(s).split(/\s+/).filter(Boolean);
+      return parts.map(normalizeSyllableToNumbered).join(' ');
+    };
+    const toPlain = (s) => {
+      return String(s || '')
+        .toLowerCase()
+        .replace(/Ǭ/g, 'v')
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .replace(/[1-4]/g, '')
+        .trim();
+    };
+    const toneFromNumeric = (s) => {
+      const m = String(s || '').trim().match(/([1-4])$/);
+      return m ? Number(m[1]) : 0;
+    };
+    const audioKeysFromNumeric = (s) => {
+      const key = String(s || '').toLowerCase().replace(/\s+/g, '_');
+      const m = key.match(/^([a-zv_]+?)([1-4])$/);
+      if (!m) return [key];
+      const base = m[1];
+      const t = m[2];
+      return [
+        `${base}${t}`,
+        `${base}-${t}`,
+        `${base}_${t}`,
+        base
+      ];
+    };
+    const enrichCharacters = (arr) => {
+      if (!Array.isArray(arr)) return [];
+      return arr.map((it) => {
+        const p = it.pinyin || '';
+        const pNum = toNumberedFromMarked(p);
+        const pPlain = toPlain(pNum || p);
+        const tone = toneFromNumeric(pNum);
+        const audioKeys = audioKeysFromNumeric(pNum || pPlain);
+        return {
+          ...it,
+          pinyinNumeric: pNum,
+          pinyinPlain: pPlain,
+          tone,
+          audioKeys
+        };
+      });
+    };
+
     async function loadData() {
       try {
         setIsLoading(true);
         const res = await fetch(assetUrl('data/hsk1-data.json'));
         if (!res.ok) throw new Error('No se pudo cargar hsk1-data.json');
         const data = await res.json();
-        setAppData(data);
+        // Unificar y enriquecer personajes HSK1 sin romper compatibilidad
+        const baseChars = Array.isArray(data?.characters)
+          ? data.characters
+          : (Array.isArray(data?.hsk1?.characters) ? data.hsk1.characters : []);
+        const charactersEnriched = enrichCharacters(baseChars);
+        setAppData({ ...data, characters: charactersEnriched });
       } catch (e) {
         console.error('Error al cargar datos:', e);
       } finally {

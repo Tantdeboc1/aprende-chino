@@ -1,16 +1,38 @@
-# React + Vite
+# 🈶 Aprende Chino - App Educativa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una aplicación web interactiva para aprender caracteres chinos HSK-1 con audio nativo real.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📚 **150+ caracteres HSK-1** con radicales y significados
+- 🔊 **Audio nativo real** - 1600+ archivos MP3 de alta calidad
+- 🎯 **Sistema de quizzes** interactivos
+- 🎵 **Práctica de tonos** con ejercicios de audio real
+- 📖 **Diccionario completo** con función de búsqueda
+- 📱 **Diseño responsive** para móvil y desktop
+- 🌙 **Modo oscuro** unificado
 
-## React Compiler
+## 🛠️ Tecnologías
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React + Vite
+- **Estilos:** Tailwind CSS  
+- **Audio:** Archivos MP3 nativos + sistema de reproducción optimizado
+- **Despliegue:** GitHub Pages
 
-## Expanding the ESLint configuration
+## 🎮 Cómo usar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Visita: [https://tantdeboc1.github.io/aprende-chino/](https://tantdeboc1.github.io/aprende-chino/)
+2. Regístrate con tu nombre
+3. Explora las diferentes secciones de aprendizaje
+4. ¡Practica diariamente!
+
+## 🎯 Próximas características
+
+- [ ] Sistema de progreso y logros
+- [ ] Más niveles HSK
+- [ ] Modo escritura de caracteres
+- [ ] Estadísticas de aprendizaje
+
+---
+
+**Nota:** Esta app utiliza grabaciones de audio reales, no síntesis de voz (TTS), para una pronunciación auténtica.

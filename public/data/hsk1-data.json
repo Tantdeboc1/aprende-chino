@@ -4,1064 +4,2656 @@
       "char": "人",
       "radical": "人",
       "pinyin": "rén",
-      "meaning": "persona, gente"
+      "meaning": "persona, gente",
+      "pinyinNumeric": "ren2",
+      "pinyinPlain": "ren",
+      "tone": 2,
+      "audioKeys": [
+        "ren"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "我",
       "radical": "戈",
       "pinyin": "wǒ",
-      "meaning": "yo"
+      "meaning": "yo",
+      "pinyinNumeric": "wo3",
+      "pinyinPlain": "wo",
+      "tone": 3,
+      "audioKeys": [
+        "wo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "你",
       "radical": "亻",
       "pinyin": "nǐ",
-      "meaning": "tú"
+      "meaning": "tú",
+      "pinyinNumeric": "ni3",
+      "pinyinPlain": "ni",
+      "tone": 3,
+      "audioKeys": [
+        "ni"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "好",
       "radical": "女",
       "pinyin": "hǎo",
-      "meaning": "bueno, bien"
+      "meaning": "bueno, bien",
+      "pinyinNumeric": "hao3",
+      "pinyinPlain": "hao",
+      "tone": 3,
+      "audioKeys": [
+        "hao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "大",
       "radical": "大",
       "pinyin": "dà",
-      "meaning": "grande"
+      "meaning": "grande",
+      "pinyinNumeric": "da4",
+      "pinyinPlain": "da",
+      "tone": 4,
+      "audioKeys": [
+        "da"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "小",
       "radical": "小",
       "pinyin": "xiǎo",
-      "meaning": "pequeño"
+      "meaning": "pequeño",
+      "pinyinNumeric": "xiao3",
+      "pinyinPlain": "xiao",
+      "tone": 3,
+      "audioKeys": [
+        "xiao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中",
       "radical": "丨",
       "pinyin": "zhōng",
-      "meaning": "centro, medio"
+      "meaning": "centro, medio",
+      "pinyinNumeric": "zhong1",
+      "pinyinPlain": "zhong",
+      "tone": 1,
+      "audioKeys": [
+        "zhong"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "国",
       "radical": "囗",
       "pinyin": "guó",
-      "meaning": "país"
+      "meaning": "país",
+      "pinyinNumeric": "guo2",
+      "pinyinPlain": "guo",
+      "tone": 2,
+      "audioKeys": [
+        "guo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "一",
       "radical": "一",
       "pinyin": "yī",
-      "meaning": "uno"
+      "meaning": "uno",
+      "pinyinNumeric": "yi1",
+      "pinyinPlain": "yi",
+      "tone": 1,
+      "audioKeys": [
+        "yi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "二",
       "radical": "二",
       "pinyin": "èr",
-      "meaning": "dos"
+      "meaning": "dos",
+      "pinyinNumeric": "er4",
+      "pinyinPlain": "er",
+      "tone": 4,
+      "audioKeys": [
+        "er"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "三",
       "radical": "一",
       "pinyin": "sān",
-      "meaning": "tres"
+      "meaning": "tres",
+      "pinyinNumeric": "san1",
+      "pinyinPlain": "san",
+      "tone": 1,
+      "audioKeys": [
+        "san"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "四",
       "radical": "囗",
       "pinyin": "sì",
-      "meaning": "cuatro"
+      "meaning": "cuatro",
+      "pinyinNumeric": "si4",
+      "pinyinPlain": "si",
+      "tone": 4,
+      "audioKeys": [
+        "si"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "五",
       "radical": "二",
       "pinyin": "wǔ",
-      "meaning": "cinco"
+      "meaning": "cinco",
+      "pinyinNumeric": "wu3",
+      "pinyinPlain": "wu",
+      "tone": 3,
+      "audioKeys": [
+        "wu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "六",
       "radical": "八",
       "pinyin": "liù",
-      "meaning": "seis"
+      "meaning": "seis",
+      "pinyinNumeric": "liu4",
+      "pinyinPlain": "liu",
+      "tone": 4,
+      "audioKeys": [
+        "liu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "七",
       "radical": "一",
       "pinyin": "qī",
-      "meaning": "siete"
+      "meaning": "siete",
+      "pinyinNumeric": "qi1",
+      "pinyinPlain": "qi",
+      "tone": 1,
+      "audioKeys": [
+        "qi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "八",
       "radical": "八",
       "pinyin": "bā",
-      "meaning": "ocho"
+      "meaning": "ocho",
+      "pinyinNumeric": "ba1",
+      "pinyinPlain": "ba",
+      "tone": 1,
+      "audioKeys": [
+        "ba"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "九",
       "radical": "丿",
       "pinyin": "jiǔ",
-      "meaning": "nueve"
+      "meaning": "nueve",
+      "pinyinNumeric": "jiu3",
+      "pinyinPlain": "jiu",
+      "tone": 3,
+      "audioKeys": [
+        "jiu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "十",
       "radical": "十",
       "pinyin": "shí",
-      "meaning": "diez"
+      "meaning": "diez",
+      "pinyinNumeric": "shi2",
+      "pinyinPlain": "shi",
+      "tone": 2,
+      "audioKeys": [
+        "shi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "天",
       "radical": "大",
       "pinyin": "tiān",
-      "meaning": "cielo, día"
+      "meaning": "cielo, día",
+      "pinyinNumeric": "tian1",
+      "pinyinPlain": "tian",
+      "tone": 1,
+      "audioKeys": [
+        "tian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "水",
       "radical": "水",
       "pinyin": "shuǐ",
-      "meaning": "agua"
+      "meaning": "agua",
+      "pinyinNumeric": "shui3",
+      "pinyinPlain": "shui",
+      "tone": 3,
+      "audioKeys": [
+        "shui"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "火",
       "radical": "火",
       "pinyin": "huǒ",
-      "meaning": "fuego"
+      "meaning": "fuego",
+      "pinyinNumeric": "huo3",
+      "pinyinPlain": "huo",
+      "tone": 3,
+      "audioKeys": [
+        "huo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "山",
       "radical": "山",
       "pinyin": "shān",
-      "meaning": "montaña"
+      "meaning": "montaña",
+      "pinyinNumeric": "shan1",
+      "pinyinPlain": "shan",
+      "tone": 1,
+      "audioKeys": [
+        "shan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "木",
       "radical": "木",
       "pinyin": "mù",
-      "meaning": "árbol, madera"
+      "meaning": "árbol, madera",
+      "pinyinNumeric": "mu4",
+      "pinyinPlain": "mu",
+      "tone": 4,
+      "audioKeys": [
+        "mu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "日",
       "radical": "日",
       "pinyin": "rì",
-      "meaning": "sol, día"
+      "meaning": "sol, día",
+      "pinyinNumeric": "ri4",
+      "pinyinPlain": "ri",
+      "tone": 4,
+      "audioKeys": [
+        "ri"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "月",
       "radical": "月",
       "pinyin": "yuè",
-      "meaning": "luna, mes"
+      "meaning": "luna, mes",
+      "pinyinNumeric": "yue4",
+      "pinyinPlain": "yue",
+      "tone": 4,
+      "audioKeys": [
+        "yue"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "年",
       "radical": "丿",
       "pinyin": "nián",
-      "meaning": "año"
+      "meaning": "año",
+      "pinyinNumeric": "nian2",
+      "pinyinPlain": "nian",
+      "tone": 2,
+      "audioKeys": [
+        "nian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "今",
       "radical": "人",
       "pinyin": "jīn",
-      "meaning": "ahora, hoy"
+      "meaning": "ahora, hoy",
+      "pinyinNumeric": "jin1",
+      "pinyinPlain": "jin",
+      "tone": 1,
+      "audioKeys": [
+        "jin"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "明",
       "radical": "日",
       "pinyin": "míng",
-      "meaning": "brillante, claro"
+      "meaning": "brillante, claro",
+      "pinyinNumeric": "ming2",
+      "pinyinPlain": "ming",
+      "tone": 2,
+      "audioKeys": [
+        "ming"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "上",
       "radical": "一",
       "pinyin": "shàng",
-      "meaning": "arriba, subir"
+      "meaning": "arriba, subir",
+      "pinyinNumeric": "shang4",
+      "pinyinPlain": "shang",
+      "tone": 4,
+      "audioKeys": [
+        "shang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "下",
       "radical": "一",
       "pinyin": "xià",
-      "meaning": "abajo, bajar"
+      "meaning": "abajo, bajar",
+      "pinyinNumeric": "xia4",
+      "pinyinPlain": "xia",
+      "tone": 4,
+      "audioKeys": [
+        "xia"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "前",
       "radical": "刀",
       "pinyin": "qián",
-      "meaning": "delante, antes"
+      "meaning": "delante, antes",
+      "pinyinNumeric": "qian2",
+      "pinyinPlain": "qian",
+      "tone": 2,
+      "audioKeys": [
+        "qian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "后",
       "radical": "口",
       "pinyin": "hòu",
-      "meaning": "detrás, después"
+      "meaning": "detrás, después",
+      "pinyinNumeric": "hou4",
+      "pinyinPlain": "hou",
+      "tone": 4,
+      "audioKeys": [
+        "hou"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "左",
       "radical": "工",
       "pinyin": "zuǒ",
-      "meaning": "izquierda"
+      "meaning": "izquierda",
+      "pinyinNumeric": "zuo3",
+      "pinyinPlain": "zuo",
+      "tone": 3,
+      "audioKeys": [
+        "zuo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "右",
       "radical": "口",
       "pinyin": "yòu",
-      "meaning": "derecha"
+      "meaning": "derecha",
+      "pinyinNumeric": "you4",
+      "pinyinPlain": "you",
+      "tone": 4,
+      "audioKeys": [
+        "you"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "东",
       "radical": "一",
       "pinyin": "dōng",
-      "meaning": "este"
+      "meaning": "este",
+      "pinyinNumeric": "dong1",
+      "pinyinPlain": "dong",
+      "tone": 1,
+      "audioKeys": [
+        "dong"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "西",
       "radical": "襾",
       "pinyin": "xī",
-      "meaning": "oeste"
+      "meaning": "oeste",
+      "pinyinNumeric": "xi1",
+      "pinyinPlain": "xi",
+      "tone": 1,
+      "audioKeys": [
+        "xi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "南",
       "radical": "十",
       "pinyin": "nán",
-      "meaning": "sur"
+      "meaning": "sur",
+      "pinyinNumeric": "nan2",
+      "pinyinPlain": "nan",
+      "tone": 2,
+      "audioKeys": [
+        "nan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "北",
       "radical": "匕",
       "pinyin": "běi",
-      "meaning": "norte"
+      "meaning": "norte",
+      "pinyinNumeric": "bei3",
+      "pinyinPlain": "bei",
+      "tone": 3,
+      "audioKeys": [
+        "bei"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "来",
       "radical": "木",
       "pinyin": "lái",
-      "meaning": "venir"
+      "meaning": "venir",
+      "pinyinNumeric": "lai2",
+      "pinyinPlain": "lai",
+      "tone": 2,
+      "audioKeys": [
+        "lai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "去",
       "radical": "厶",
       "pinyin": "qù",
-      "meaning": "ir"
+      "meaning": "ir",
+      "pinyinNumeric": "qu4",
+      "pinyinPlain": "qu",
+      "tone": 4,
+      "audioKeys": [
+        "qu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "有",
       "radical": "月",
       "pinyin": "yǒu",
-      "meaning": "tener, haber"
+      "meaning": "tener, haber",
+      "pinyinNumeric": "you3",
+      "pinyinPlain": "you",
+      "tone": 3,
+      "audioKeys": [
+        "you"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "无",
       "radical": "一",
       "pinyin": "wú",
-      "meaning": "no tener, sin"
+      "meaning": "no tener, sin",
+      "pinyinNumeric": "wu2",
+      "pinyinPlain": "wu",
+      "tone": 2,
+      "audioKeys": [
+        "wu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "是",
       "radical": "日",
       "pinyin": "shì",
-      "meaning": "ser, estar"
+      "meaning": "ser, estar",
+      "pinyinNumeric": "shi4",
+      "pinyinPlain": "shi",
+      "tone": 4,
+      "audioKeys": [
+        "shi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "在",
       "radical": "土",
       "pinyin": "zài",
-      "meaning": "estar en, existir"
+      "meaning": "estar en, existir",
+      "pinyinNumeric": "zai4",
+      "pinyinPlain": "zai",
+      "tone": 4,
+      "audioKeys": [
+        "zai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "他",
       "radical": "亻",
       "pinyin": "tā",
-      "meaning": "él"
+      "meaning": "él",
+      "pinyinNumeric": "ta1",
+      "pinyinPlain": "ta",
+      "tone": 1,
+      "audioKeys": [
+        "ta"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "她",
       "radical": "女",
       "pinyin": "tā",
-      "meaning": "ella"
+      "meaning": "ella",
+      "pinyinNumeric": "ta1",
+      "pinyinPlain": "ta",
+      "tone": 1,
+      "audioKeys": [
+        "ta"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "们",
       "radical": "亻",
       "pinyin": "men",
-      "meaning": "plural (nosotros, ellos)"
+      "meaning": "plural (nosotros, ellos)",
+      "pinyinNumeric": "men",
+      "pinyinPlain": "men",
+      "tone": 0,
+      "audioKeys": [
+        "men"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "不",
       "radical": "一",
       "pinyin": "bù",
-      "meaning": "no, negación"
+      "meaning": "no, negación",
+      "pinyinNumeric": "bu4",
+      "pinyinPlain": "bu",
+      "tone": 4,
+      "audioKeys": [
+        "bu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "的",
       "radical": "白",
       "pinyin": "de",
-      "meaning": "partícula posesiva"
+      "meaning": "partícula posesiva",
+      "pinyinNumeric": "de",
+      "pinyinPlain": "de",
+      "tone": 0,
+      "audioKeys": [
+        "de"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "了",
       "radical": "乙",
       "pinyin": "le",
-      "meaning": "partícula de cambio"
+      "meaning": "partícula de cambio",
+      "pinyinNumeric": "le",
+      "pinyinPlain": "le",
+      "tone": 0,
+      "audioKeys": [
+        "le"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "它",
       "pinyin": "tā",
-      "meaning": "eso (no humano)"
+      "meaning": "eso (no humano)",
+      "pinyinNumeric": "ta1",
+      "pinyinPlain": "ta",
+      "tone": 1,
+      "audioKeys": [
+        "ta"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "很",
       "pinyin": "hěn",
-      "meaning": "muy"
+      "meaning": "muy",
+      "pinyinNumeric": "hen3",
+      "pinyinPlain": "hen",
+      "tone": 3,
+      "audioKeys": [
+        "hen"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "也",
       "pinyin": "yě",
-      "meaning": "también"
+      "meaning": "también",
+      "pinyinNumeric": "ye3",
+      "pinyinPlain": "ye",
+      "tone": 3,
+      "audioKeys": [
+        "ye"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "都",
       "pinyin": "dōu",
-      "meaning": "todos; ambos"
+      "meaning": "todos; ambos",
+      "pinyinNumeric": "dou1",
+      "pinyinPlain": "dou",
+      "tone": 1,
+      "audioKeys": [
+        "dou"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "和",
       "pinyin": "hé",
-      "meaning": "y; con"
+      "meaning": "y; con",
+      "pinyinNumeric": "he2",
+      "pinyinPlain": "he",
+      "tone": 2,
+      "audioKeys": [
+        "he"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "到",
       "pinyin": "dào",
-      "meaning": "llegar; a"
+      "meaning": "llegar; a",
+      "pinyinNumeric": "dao4",
+      "pinyinPlain": "dao",
+      "tone": 4,
+      "audioKeys": [
+        "dao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "回",
       "pinyin": "huí",
-      "meaning": "volver; regresar"
+      "meaning": "volver; regresar",
+      "pinyinNumeric": "hui2",
+      "pinyinPlain": "hui",
+      "tone": 2,
+      "audioKeys": [
+        "hui"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "看",
       "pinyin": "kàn",
-      "meaning": "ver; mirar; leer"
+      "meaning": "ver; mirar; leer",
+      "pinyinNumeric": "kan4",
+      "pinyinPlain": "kan",
+      "tone": 4,
+      "audioKeys": [
+        "kan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "见",
       "pinyin": "jiàn",
-      "meaning": "ver; encontrarse"
+      "meaning": "ver; encontrarse",
+      "pinyinNumeric": "jian4",
+      "pinyinPlain": "jian",
+      "tone": 4,
+      "audioKeys": [
+        "jian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "听",
       "pinyin": "tīng",
-      "meaning": "oír; escuchar"
+      "meaning": "oír; escuchar",
+      "pinyinNumeric": "ting1",
+      "pinyinPlain": "ting",
+      "tone": 1,
+      "audioKeys": [
+        "ting"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "说",
       "pinyin": "shuō",
-      "meaning": "hablar; decir"
+      "meaning": "hablar; decir",
+      "pinyinNumeric": "shuo1",
+      "pinyinPlain": "shuo",
+      "tone": 1,
+      "audioKeys": [
+        "shuo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "读",
       "pinyin": "dú",
-      "meaning": "leer; estudiar"
+      "meaning": "leer; estudiar",
+      "pinyinNumeric": "du2",
+      "pinyinPlain": "du",
+      "tone": 2,
+      "audioKeys": [
+        "du"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "写",
       "pinyin": "xiě",
-      "meaning": "escribir"
+      "meaning": "escribir",
+      "pinyinNumeric": "xie3",
+      "pinyinPlain": "xie",
+      "tone": 3,
+      "audioKeys": [
+        "xie"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "做",
       "pinyin": "zuò",
-      "meaning": "hacer"
+      "meaning": "hacer",
+      "pinyinNumeric": "zuo4",
+      "pinyinPlain": "zuo",
+      "tone": 4,
+      "audioKeys": [
+        "zuo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "吃",
       "pinyin": "chī",
       "meaning": "comer",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "chi1",
+      "pinyinPlain": "chi",
+      "tone": 1,
+      "audioKeys": [
+        "chi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "喝",
       "pinyin": "hē",
       "meaning": "beber",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "he1",
+      "pinyinPlain": "he",
+      "tone": 1,
+      "audioKeys": [
+        "he"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "想",
       "pinyin": "xiǎng",
-      "meaning": "pensar; querer; echar de menos"
+      "meaning": "pensar; querer; echar de menos",
+      "pinyinNumeric": "xiang3",
+      "pinyinPlain": "xiang",
+      "tone": 3,
+      "audioKeys": [
+        "xiang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "要",
       "pinyin": "yào",
-      "meaning": "querer; necesitar"
+      "meaning": "querer; necesitar",
+      "pinyinNumeric": "yao4",
+      "pinyinPlain": "yao",
+      "tone": 4,
+      "audioKeys": [
+        "yao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "会",
       "pinyin": "huì",
-      "meaning": "saber (habilidad); poder"
+      "meaning": "saber (habilidad); poder",
+      "pinyinNumeric": "hui4",
+      "pinyinPlain": "hui",
+      "tone": 4,
+      "audioKeys": [
+        "hui"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "能",
       "pinyin": "néng",
-      "meaning": "poder; ser capaz"
+      "meaning": "poder; ser capaz",
+      "pinyinNumeric": "neng2",
+      "pinyinPlain": "neng",
+      "tone": 2,
+      "audioKeys": [
+        "neng"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "可以",
       "pinyin": "kěyǐ",
-      "meaning": "poder; permitido"
+      "meaning": "poder; permitido",
+      "pinyinNumeric": "keyi3",
+      "pinyinPlain": "keyi",
+      "tone": 3,
+      "audioKeys": [
+        "keyi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "给",
       "pinyin": "gěi",
-      "meaning": "dar; para"
+      "meaning": "dar; para",
+      "pinyinNumeric": "gei3",
+      "pinyinPlain": "gei",
+      "tone": 3,
+      "audioKeys": [
+        "gei"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "用",
       "pinyin": "yòng",
-      "meaning": "usar"
+      "meaning": "usar",
+      "pinyinNumeric": "yong4",
+      "pinyinPlain": "yong",
+      "tone": 4,
+      "audioKeys": [
+        "yong"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "找",
       "pinyin": "zhǎo",
-      "meaning": "buscar"
+      "meaning": "buscar",
+      "pinyinNumeric": "zhao3",
+      "pinyinPlain": "zhao",
+      "tone": 3,
+      "audioKeys": [
+        "zhao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "住",
       "pinyin": "zhù",
-      "meaning": "vivir; residir"
+      "meaning": "vivir; residir",
+      "pinyinNumeric": "zhu4",
+      "pinyinPlain": "zhu",
+      "tone": 4,
+      "audioKeys": [
+        "zhu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "坐",
       "pinyin": "zuò",
-      "meaning": "sentarse; viajar en (transporte)"
+      "meaning": "sentarse; viajar en (transporte)",
+      "pinyinNumeric": "zuo4",
+      "pinyinPlain": "zuo",
+      "tone": 4,
+      "audioKeys": [
+        "zuo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "走",
       "pinyin": "zǒu",
-      "meaning": "andar; irse"
+      "meaning": "andar; irse",
+      "pinyinNumeric": "zou3",
+      "pinyinPlain": "zou",
+      "tone": 3,
+      "audioKeys": [
+        "zou"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "开",
       "pinyin": "kāi",
       "meaning": "abrir; conducir",
-      "radical": "一"
+      "radical": "一",
+      "pinyinNumeric": "kai1",
+      "pinyinPlain": "kai",
+      "tone": 1,
+      "audioKeys": [
+        "kai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "关",
       "pinyin": "guān",
-      "meaning": "cerrar; apagar"
+      "meaning": "cerrar; apagar",
+      "pinyinNumeric": "guan1",
+      "pinyinPlain": "guan",
+      "tone": 1,
+      "audioKeys": [
+        "guan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "买",
       "pinyin": "mǎi",
-      "meaning": "comprar"
+      "meaning": "comprar",
+      "pinyinNumeric": "mai3",
+      "pinyinPlain": "mai",
+      "tone": 3,
+      "audioKeys": [
+        "mai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "卖",
       "pinyin": "mài",
-      "meaning": "vender"
+      "meaning": "vender",
+      "pinyinNumeric": "mai4",
+      "pinyinPlain": "mai",
+      "tone": 4,
+      "audioKeys": [
+        "mai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "对",
       "pinyin": "duì",
-      "meaning": "correcto; hacia"
+      "meaning": "correcto; hacia",
+      "pinyinNumeric": "dui4",
+      "pinyinPlain": "dui",
+      "tone": 4,
+      "audioKeys": [
+        "dui"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "错",
       "pinyin": "cuò",
-      "meaning": "equivocado; error"
+      "meaning": "equivocado; error",
+      "pinyinNumeric": "cuo4",
+      "pinyinPlain": "cuo",
+      "tone": 4,
+      "audioKeys": [
+        "cuo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "让",
       "pinyin": "ràng",
-      "meaning": "dejar; permitir"
+      "meaning": "dejar; permitir",
+      "pinyinNumeric": "rang4",
+      "pinyinPlain": "rang",
+      "tone": 4,
+      "audioKeys": [
+        "rang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "叫",
       "pinyin": "jiào",
       "meaning": "llamarse; llamar",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "jiao4",
+      "pinyinPlain": "jiao",
+      "tone": 4,
+      "audioKeys": [
+        "jiao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "姓",
       "pinyin": "xìng",
-      "meaning": "apellidarse"
+      "meaning": "apellidarse",
+      "pinyinNumeric": "xing4",
+      "pinyinPlain": "xing",
+      "tone": 4,
+      "audioKeys": [
+        "xing"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "名",
       "pinyin": "míng",
       "meaning": "nombre; fama",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "ming2",
+      "pinyinPlain": "ming",
+      "tone": 2,
+      "audioKeys": [
+        "ming"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "字",
       "pinyin": "zì",
-      "meaning": "carácter; letra"
+      "meaning": "carácter; letra",
+      "pinyinNumeric": "zi4",
+      "pinyinPlain": "zi",
+      "tone": 4,
+      "audioKeys": [
+        "zi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "请",
       "pinyin": "qǐng",
-      "meaning": "por favor; invitar"
+      "meaning": "por favor; invitar",
+      "pinyinNumeric": "qing3",
+      "pinyinPlain": "qing",
+      "tone": 3,
+      "audioKeys": [
+        "qing"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "谢",
       "pinyin": "xiè",
-      "meaning": "agradecer"
+      "meaning": "agradecer",
+      "pinyinNumeric": "xie4",
+      "pinyinPlain": "xie",
+      "tone": 4,
+      "audioKeys": [
+        "xie"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "对不起",
       "pinyin": "duìbuqǐ",
-      "meaning": "lo siento"
+      "meaning": "lo siento",
+      "pinyinNumeric": "duibuqi3",
+      "pinyinPlain": "duibuqi",
+      "tone": 3,
+      "audioKeys": [
+        "duibuqi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "没关系",
       "pinyin": "méiguānxi",
-      "meaning": "no pasa nada"
+      "meaning": "no pasa nada",
+      "pinyinNumeric": "meiguanxi1",
+      "pinyinPlain": "meiguanxi",
+      "tone": 1,
+      "audioKeys": [
+        "meiguanxi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "不好",
       "pinyin": "bù hǎo",
-      "meaning": "mal; no bien"
+      "meaning": "mal; no bien",
+      "pinyinNumeric": "bu4 hao3",
+      "pinyinPlain": "bu hao",
+      "tone": 4,
+      "audioKeys": [
+        "bu_hao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "多",
       "pinyin": "duō",
-      "meaning": "mucho; muchos"
+      "meaning": "mucho; muchos",
+      "pinyinNumeric": "duo1",
+      "pinyinPlain": "duo",
+      "tone": 1,
+      "audioKeys": [
+        "duo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "少",
       "pinyin": "shǎo",
       "meaning": "poco; pocos",
-      "radical": "小"
+      "radical": "小",
+      "pinyinNumeric": "shao3",
+      "pinyinPlain": "shao",
+      "tone": 3,
+      "audioKeys": [
+        "shao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "高",
       "pinyin": "gāo",
-      "meaning": "alto"
+      "meaning": "alto",
+      "pinyinNumeric": "gao1",
+      "pinyinPlain": "gao",
+      "tone": 1,
+      "audioKeys": [
+        "gao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "低",
       "pinyin": "dī",
-      "meaning": "bajo (altura/sonido)"
+      "meaning": "bajo (altura/sonido)",
+      "pinyinNumeric": "di1",
+      "pinyinPlain": "di",
+      "tone": 1,
+      "audioKeys": [
+        "di"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "长",
       "pinyin": "cháng",
-      "meaning": "largo"
+      "meaning": "largo",
+      "pinyinNumeric": "chang2",
+      "pinyinPlain": "chang",
+      "tone": 2,
+      "audioKeys": [
+        "chang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "短",
       "pinyin": "duǎn",
-      "meaning": "corto"
+      "meaning": "corto",
+      "pinyinNumeric": "duan3",
+      "pinyinPlain": "duan",
+      "tone": 3,
+      "audioKeys": [
+        "duan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "远",
       "pinyin": "yuǎn",
-      "meaning": "lejos"
+      "meaning": "lejos",
+      "pinyinNumeric": "yuan3",
+      "pinyinPlain": "yuan",
+      "tone": 3,
+      "audioKeys": [
+        "yuan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "近",
       "pinyin": "jìn",
-      "meaning": "cerca"
+      "meaning": "cerca",
+      "pinyinNumeric": "jin4",
+      "pinyinPlain": "jin",
+      "tone": 4,
+      "audioKeys": [
+        "jin"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "冷",
       "pinyin": "lěng",
       "meaning": "frío",
-      "radical": "冫"
+      "radical": "冫",
+      "pinyinNumeric": "leng3",
+      "pinyinPlain": "leng",
+      "tone": 3,
+      "audioKeys": [
+        "leng"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "热",
       "pinyin": "rè",
       "meaning": "caliente",
-      "radical": "灬"
+      "radical": "灬",
+      "pinyinNumeric": "re4",
+      "pinyinPlain": "re",
+      "tone": 4,
+      "audioKeys": [
+        "re"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "新",
       "pinyin": "xīn",
-      "meaning": "nuevo"
+      "meaning": "nuevo",
+      "pinyinNumeric": "xin1",
+      "pinyinPlain": "xin",
+      "tone": 1,
+      "audioKeys": [
+        "xin"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "旧",
       "pinyin": "jiù",
-      "meaning": "viejo (objeto)"
+      "meaning": "viejo (objeto)",
+      "pinyinNumeric": "jiu4",
+      "pinyinPlain": "jiu",
+      "tone": 4,
+      "audioKeys": [
+        "jiu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "忙",
       "pinyin": "máng",
       "meaning": "ocupado",
-      "radical": "忄"
+      "radical": "忄",
+      "pinyinNumeric": "mang2",
+      "pinyinPlain": "mang",
+      "tone": 2,
+      "audioKeys": [
+        "mang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "累",
       "pinyin": "lèi",
-      "meaning": "cansado"
+      "meaning": "cansado",
+      "pinyinNumeric": "lei4",
+      "pinyinPlain": "lei",
+      "tone": 4,
+      "audioKeys": [
+        "lei"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "贵",
       "pinyin": "guì",
-      "meaning": "caro"
+      "meaning": "caro",
+      "pinyinNumeric": "gui4",
+      "pinyinPlain": "gui",
+      "tone": 4,
+      "audioKeys": [
+        "gui"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "便宜",
       "pinyin": "piányi",
-      "meaning": "barato"
+      "meaning": "barato",
+      "pinyinNumeric": "pianyi2",
+      "pinyinPlain": "pianyi",
+      "tone": 2,
+      "audioKeys": [
+        "pianyi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "漂亮",
       "pinyin": "piàoliang",
-      "meaning": "bonito; guapa"
+      "meaning": "bonito; guapa",
+      "pinyinNumeric": "piaoliang4",
+      "pinyinPlain": "piaoliang",
+      "tone": 4,
+      "audioKeys": [
+        "piaoliang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "好吃",
       "pinyin": "hǎochī",
-      "meaning": "rico (comida)"
+      "meaning": "rico (comida)",
+      "pinyinNumeric": "haochi1",
+      "pinyinPlain": "haochi",
+      "tone": 1,
+      "audioKeys": [
+        "haochi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "好喝",
       "pinyin": "hǎohē",
-      "meaning": "rico (bebida)"
+      "meaning": "rico (bebida)",
+      "pinyinNumeric": "haohe1",
+      "pinyinPlain": "haohe",
+      "tone": 1,
+      "audioKeys": [
+        "haohe"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中国",
       "pinyin": "Zhōngguó",
-      "meaning": "China"
+      "meaning": "China",
+      "pinyinNumeric": "zhongguo2",
+      "pinyinPlain": "zhongguo",
+      "tone": 2,
+      "audioKeys": [
+        "zhongguo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中国人",
       "pinyin": "Zhōngguó rén",
-      "meaning": "chino/a (persona)"
+      "meaning": "chino/a (persona)",
+      "pinyinNumeric": "zhongguo2 ren2",
+      "pinyinPlain": "zhongguo ren",
+      "tone": 2,
+      "audioKeys": [
+        "zhongguo_ren"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "汉语",
       "pinyin": "Hànyǔ",
-      "meaning": "chino mandarín"
+      "meaning": "chino mandarín",
+      "pinyinNumeric": "hanyu3",
+      "pinyinPlain": "hanyu",
+      "tone": 3,
+      "audioKeys": [
+        "hanyu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中文",
       "pinyin": "Zhōngwén",
-      "meaning": "chino (lengua escrita)"
+      "meaning": "chino (lengua escrita)",
+      "pinyinNumeric": "zhongwen2",
+      "pinyinPlain": "zhongwen",
+      "tone": 2,
+      "audioKeys": [
+        "zhongwen"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "北京",
       "pinyin": "Běijīng",
-      "meaning": "Pekín"
+      "meaning": "Pekín",
+      "pinyinNumeric": "beijing1",
+      "pinyinPlain": "beijing",
+      "tone": 1,
+      "audioKeys": [
+        "beijing"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "上海",
       "pinyin": "Shànghǎi",
-      "meaning": "Shanghái"
+      "meaning": "Shanghái",
+      "pinyinNumeric": "shanghai3",
+      "pinyinPlain": "shanghai",
+      "tone": 3,
+      "audioKeys": [
+        "shanghai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "学校",
       "pinyin": "xuéxiào",
-      "meaning": "colegio; escuela"
+      "meaning": "colegio; escuela",
+      "pinyinNumeric": "xuexiao4",
+      "pinyinPlain": "xuexiao",
+      "tone": 4,
+      "audioKeys": [
+        "xuexiao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "老师",
       "pinyin": "lǎoshī",
-      "meaning": "profesor/a"
+      "meaning": "profesor/a",
+      "pinyinNumeric": "laoshi1",
+      "pinyinPlain": "laoshi",
+      "tone": 1,
+      "audioKeys": [
+        "laoshi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "学生",
       "pinyin": "xuésheng",
-      "meaning": "estudiante"
+      "meaning": "estudiante",
+      "pinyinNumeric": "xuesheng2",
+      "pinyinPlain": "xuesheng",
+      "tone": 2,
+      "audioKeys": [
+        "xuesheng"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "同学",
       "pinyin": "tóngxué",
-      "meaning": "compañero de clase"
+      "meaning": "compañero de clase",
+      "pinyinNumeric": "tongxue2",
+      "pinyinPlain": "tongxue",
+      "tone": 2,
+      "audioKeys": [
+        "tongxue"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "朋友",
       "pinyin": "péngyou",
-      "meaning": "amigo/a"
+      "meaning": "amigo/a",
+      "pinyinNumeric": "pengyou2",
+      "pinyinPlain": "pengyou",
+      "tone": 2,
+      "audioKeys": [
+        "pengyou"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "家",
       "pinyin": "jiā",
-      "meaning": "casa; familia"
+      "meaning": "casa; familia",
+      "pinyinNumeric": "jia1",
+      "pinyinPlain": "jia",
+      "tone": 1,
+      "audioKeys": [
+        "jia"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "爸爸",
       "pinyin": "bàba",
-      "meaning": "papá"
+      "meaning": "papá",
+      "pinyinNumeric": "baba4",
+      "pinyinPlain": "baba",
+      "tone": 4,
+      "audioKeys": [
+        "baba"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "妈妈",
       "pinyin": "māma",
-      "meaning": "mamá"
+      "meaning": "mamá",
+      "pinyinNumeric": "mama1",
+      "pinyinPlain": "mama",
+      "tone": 1,
+      "audioKeys": [
+        "mama"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "儿子",
       "pinyin": "érzi",
-      "meaning": "hijo"
+      "meaning": "hijo",
+      "pinyinNumeric": "erzi2",
+      "pinyinPlain": "erzi",
+      "tone": 2,
+      "audioKeys": [
+        "erzi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "女儿",
       "pinyin": "nǚ’ér",
-      "meaning": "hija"
+      "meaning": "hija",
+      "pinyinNumeric": "nv’er2",
+      "pinyinPlain": "nv’er",
+      "tone": 2,
+      "audioKeys": [
+        "nu’er"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "先生",
       "pinyin": "xiānsheng",
-      "meaning": "señor; marido"
+      "meaning": "señor; marido",
+      "pinyinNumeric": "xiansheng1",
+      "pinyinPlain": "xiansheng",
+      "tone": 1,
+      "audioKeys": [
+        "xiansheng"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "小姐",
       "pinyin": "xiǎojiě",
-      "meaning": "señorita"
+      "meaning": "señorita",
+      "pinyinNumeric": "xiaojie3",
+      "pinyinPlain": "xiaojie",
+      "tone": 3,
+      "audioKeys": [
+        "xiaojie"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "女士",
       "pinyin": "nǚshì",
-      "meaning": "señora"
+      "meaning": "señora",
+      "pinyinNumeric": "nvshi4",
+      "pinyinPlain": "nvshi",
+      "tone": 4,
+      "audioKeys": [
+        "nushi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "名字",
       "pinyin": "míngzi",
-      "meaning": "nombre"
+      "meaning": "nombre",
+      "pinyinNumeric": "mingzi2",
+      "pinyinPlain": "mingzi",
+      "tone": 2,
+      "audioKeys": [
+        "mingzi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "昨天",
       "pinyin": "zuótiān",
-      "meaning": "ayer"
+      "meaning": "ayer",
+      "pinyinNumeric": "zuotian1",
+      "pinyinPlain": "zuotian",
+      "tone": 1,
+      "audioKeys": [
+        "zuotian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "今天",
       "pinyin": "jīntiān",
-      "meaning": "hoy"
+      "meaning": "hoy",
+      "pinyinNumeric": "jintian1",
+      "pinyinPlain": "jintian",
+      "tone": 1,
+      "audioKeys": [
+        "jintian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "明天",
       "pinyin": "míngtiān",
-      "meaning": "mañana"
+      "meaning": "mañana",
+      "pinyinNumeric": "mingtian1",
+      "pinyinPlain": "mingtian",
+      "tone": 1,
+      "audioKeys": [
+        "mingtian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "现在",
       "pinyin": "xiànzài",
-      "meaning": "ahora"
+      "meaning": "ahora",
+      "pinyinNumeric": "xianzai4",
+      "pinyinPlain": "xianzai",
+      "tone": 4,
+      "audioKeys": [
+        "xianzai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "点",
       "pinyin": "diǎn",
-      "meaning": "en punto; hora"
+      "meaning": "en punto; hora",
+      "pinyinNumeric": "dian3",
+      "pinyinPlain": "dian",
+      "tone": 3,
+      "audioKeys": [
+        "dian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "分钟",
       "pinyin": "fēnzhōng",
-      "meaning": "minuto"
+      "meaning": "minuto",
+      "pinyinNumeric": "fenzhong1",
+      "pinyinPlain": "fenzhong",
+      "tone": 1,
+      "audioKeys": [
+        "fenzhong"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "时候",
       "pinyin": "shíhou",
-      "meaning": "tiempo; momento"
+      "meaning": "tiempo; momento",
+      "pinyinNumeric": "shihou2",
+      "pinyinPlain": "shihou",
+      "tone": 2,
+      "audioKeys": [
+        "shihou"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "号",
       "pinyin": "hào",
-      "meaning": "día (del mes); número"
+      "meaning": "día (del mes); número",
+      "pinyinNumeric": "hao4",
+      "pinyinPlain": "hao",
+      "tone": 4,
+      "audioKeys": [
+        "hao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "星期",
       "pinyin": "xīngqī",
-      "meaning": "semana"
+      "meaning": "semana",
+      "pinyinNumeric": "xingqi1",
+      "pinyinPlain": "xingqi",
+      "tone": 1,
+      "audioKeys": [
+        "xingqi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "早上",
       "pinyin": "zǎoshang",
-      "meaning": "por la mañana"
+      "meaning": "por la mañana",
+      "pinyinNumeric": "zaoshang3",
+      "pinyinPlain": "zaoshang",
+      "tone": 3,
+      "audioKeys": [
+        "zaoshang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中午",
       "pinyin": "zhōngwǔ",
-      "meaning": "mediodía"
+      "meaning": "mediodía",
+      "pinyinNumeric": "zhongwu3",
+      "pinyinPlain": "zhongwu",
+      "tone": 3,
+      "audioKeys": [
+        "zhongwu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "晚上",
       "pinyin": "wǎnshang",
-      "meaning": "por la noche"
+      "meaning": "por la noche",
+      "pinyinNumeric": "wanshang3",
+      "pinyinPlain": "wanshang",
+      "tone": 3,
+      "audioKeys": [
+        "wanshang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "这",
       "pinyin": "zhè",
-      "meaning": "este/esta/esto"
+      "meaning": "este/esta/esto",
+      "pinyinNumeric": "zhe4",
+      "pinyinPlain": "zhe",
+      "tone": 4,
+      "audioKeys": [
+        "zhe"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "那",
       "pinyin": "nà",
-      "meaning": "ese/esa/eso; aquel/aquella"
+      "meaning": "ese/esa/eso; aquel/aquella",
+      "pinyinNumeric": "na4",
+      "pinyinPlain": "na",
+      "tone": 4,
+      "audioKeys": [
+        "na"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "哪",
       "pinyin": "nǎ",
-      "meaning": "cuál; qué (interrogativo)"
+      "meaning": "cuál; qué (interrogativo)",
+      "pinyinNumeric": "na3",
+      "pinyinPlain": "na",
+      "tone": 3,
+      "audioKeys": [
+        "na"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "谁",
       "pinyin": "shéi",
-      "meaning": "quién"
+      "meaning": "quién",
+      "pinyinNumeric": "shei2",
+      "pinyinPlain": "shei",
+      "tone": 2,
+      "audioKeys": [
+        "shei"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "什么",
       "pinyin": "shénme",
-      "meaning": "qué"
+      "meaning": "qué",
+      "pinyinNumeric": "shenme2",
+      "pinyinPlain": "shenme",
+      "tone": 2,
+      "audioKeys": [
+        "shenme"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "多少",
       "pinyin": "duōshao",
-      "meaning": "cuánto(s)"
+      "meaning": "cuánto(s)",
+      "pinyinNumeric": "duoshao1",
+      "pinyinPlain": "duoshao",
+      "tone": 1,
+      "audioKeys": [
+        "duoshao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "几",
       "pinyin": "jǐ",
-      "meaning": "cuántos (pocos)"
+      "meaning": "cuántos (pocos)",
+      "pinyinNumeric": "ji3",
+      "pinyinPlain": "ji",
+      "tone": 3,
+      "audioKeys": [
+        "ji"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "怎么",
       "pinyin": "zěnme",
-      "meaning": "cómo"
+      "meaning": "cómo",
+      "pinyinNumeric": "zenme3",
+      "pinyinPlain": "zenme",
+      "tone": 3,
+      "audioKeys": [
+        "zenme"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "怎么样",
       "pinyin": "zěnmeyàng",
-      "meaning": "qué tal"
+      "meaning": "qué tal",
+      "pinyinNumeric": "zenmeyang4",
+      "pinyinPlain": "zenmeyang",
+      "tone": 4,
+      "audioKeys": [
+        "zenmeyang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "吗",
       "pinyin": "ma",
       "meaning": "partícula interrogativa",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "ma",
+      "pinyinPlain": "ma",
+      "tone": 0,
+      "audioKeys": [
+        "ma"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "呢",
       "pinyin": "ne",
       "meaning": "partícula enfática/interrogativa",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "ne",
+      "pinyinPlain": "ne",
+      "tone": 0,
+      "audioKeys": [
+        "ne"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "吧",
       "pinyin": "ba",
       "meaning": "partícula modal (sugerencia)",
-      "radical": "口"
+      "radical": "口",
+      "pinyinNumeric": "ba",
+      "pinyinPlain": "ba",
+      "tone": 0,
+      "audioKeys": [
+        "ba"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "喜欢",
       "pinyin": "xǐhuan",
-      "meaning": "gustar"
+      "meaning": "gustar",
+      "pinyinNumeric": "xihuan3",
+      "pinyinPlain": "xihuan",
+      "tone": 3,
+      "audioKeys": [
+        "xihuan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "爱",
       "pinyin": "ài",
       "meaning": "amar; amor",
-      "radical": "心"
+      "radical": "心",
+      "pinyinNumeric": "ai4",
+      "pinyinPlain": "ai",
+      "tone": 4,
+      "audioKeys": [
+        "ai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "觉得",
       "pinyin": "juéde",
-      "meaning": "parecer; pensar"
+      "meaning": "parecer; pensar",
+      "pinyinNumeric": "juede2",
+      "pinyinPlain": "juede",
+      "tone": 2,
+      "audioKeys": [
+        "juede"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "认识",
       "pinyin": "rènshi",
-      "meaning": "conocer (a alguien)"
+      "meaning": "conocer (a alguien)",
+      "pinyinNumeric": "renshi4",
+      "pinyinPlain": "renshi",
+      "tone": 4,
+      "audioKeys": [
+        "renshi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "知道",
       "pinyin": "zhīdào",
-      "meaning": "saber (hecho)"
+      "meaning": "saber (hecho)",
+      "pinyinNumeric": "zhidao4",
+      "pinyinPlain": "zhidao",
+      "tone": 4,
+      "audioKeys": [
+        "zhidao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "问题",
       "pinyin": "wèntí",
-      "meaning": "pregunta; problema"
+      "meaning": "pregunta; problema",
+      "pinyinNumeric": "wenti2",
+      "pinyinPlain": "wenti",
+      "tone": 2,
+      "audioKeys": [
+        "wenti"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "没",
       "pinyin": "méi",
-      "meaning": "no; no tener"
+      "meaning": "no; no tener",
+      "pinyinNumeric": "mei2",
+      "pinyinPlain": "mei",
+      "tone": 2,
+      "audioKeys": [
+        "mei"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "非常",
       "pinyin": "fēicháng",
-      "meaning": "muy; extremadamente"
+      "meaning": "muy; extremadamente",
+      "pinyinNumeric": "feichang2",
+      "pinyinPlain": "feichang",
+      "tone": 2,
+      "audioKeys": [
+        "feichang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "真",
       "pinyin": "zhēn",
-      "meaning": "real; realmente"
+      "meaning": "real; realmente",
+      "pinyinNumeric": "zhen1",
+      "pinyinPlain": "zhen",
+      "tone": 1,
+      "audioKeys": [
+        "zhen"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "一点儿",
       "pinyin": "yìdiǎnr",
-      "meaning": "un poco"
+      "meaning": "un poco",
+      "pinyinNumeric": "yidianr3",
+      "pinyinPlain": "yidianr",
+      "tone": 3,
+      "audioKeys": [
+        "yidianr"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "东西",
       "pinyin": "dōngxi",
-      "meaning": "cosa; objeto"
+      "meaning": "cosa; objeto",
+      "pinyinNumeric": "dongxi1",
+      "pinyinPlain": "dongxi",
+      "tone": 1,
+      "audioKeys": [
+        "dongxi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "钱",
       "pinyin": "qián",
-      "meaning": "dinero"
+      "meaning": "dinero",
+      "pinyinNumeric": "qian2",
+      "pinyinPlain": "qian",
+      "tone": 2,
+      "audioKeys": [
+        "qian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "杯子",
       "pinyin": "bēizi",
-      "meaning": "vaso; taza"
+      "meaning": "vaso; taza",
+      "pinyinNumeric": "beizi1",
+      "pinyinPlain": "beizi",
+      "tone": 1,
+      "audioKeys": [
+        "beizi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "茶",
       "pinyin": "chá",
       "meaning": "té",
-      "radical": "艹"
+      "radical": "艹",
+      "pinyinNumeric": "cha2",
+      "pinyinPlain": "cha",
+      "tone": 2,
+      "audioKeys": [
+        "cha"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "米饭",
       "pinyin": "mǐfàn",
-      "meaning": "arroz cocido; comida"
+      "meaning": "arroz cocido; comida",
+      "pinyinNumeric": "mifan4",
+      "pinyinPlain": "mifan",
+      "tone": 4,
+      "audioKeys": [
+        "mifan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "面条",
       "pinyin": "miàntiáo",
-      "meaning": "fideos"
+      "meaning": "fideos",
+      "pinyinNumeric": "miantiao2",
+      "pinyinPlain": "miantiao",
+      "tone": 2,
+      "audioKeys": [
+        "miantiao"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "苹果",
       "pinyin": "píngguǒ",
-      "meaning": "manzana"
+      "meaning": "manzana",
+      "pinyinNumeric": "pingguo3",
+      "pinyinPlain": "pingguo",
+      "tone": 3,
+      "audioKeys": [
+        "pingguo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "水果",
       "pinyin": "shuǐguǒ",
-      "meaning": "fruta"
+      "meaning": "fruta",
+      "pinyinNumeric": "shuiguo3",
+      "pinyinPlain": "shuiguo",
+      "tone": 3,
+      "audioKeys": [
+        "shuiguo"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "菜",
       "pinyin": "cài",
       "meaning": "plato; verdura",
-      "radical": "艹"
+      "radical": "艹",
+      "pinyinNumeric": "cai4",
+      "pinyinPlain": "cai",
+      "tone": 4,
+      "audioKeys": [
+        "cai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "饭馆",
       "pinyin": "fànguǎn",
-      "meaning": "restaurante"
+      "meaning": "restaurante",
+      "pinyinNumeric": "fanguan3",
+      "pinyinPlain": "fanguan",
+      "tone": 3,
+      "audioKeys": [
+        "fanguan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "医生",
       "pinyin": "yīshēng",
-      "meaning": "médico"
+      "meaning": "médico",
+      "pinyinNumeric": "yisheng1",
+      "pinyinPlain": "yisheng",
+      "tone": 1,
+      "audioKeys": [
+        "yisheng"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "医院",
       "pinyin": "yīyuàn",
-      "meaning": "hospital"
+      "meaning": "hospital",
+      "pinyinNumeric": "yiyuan4",
+      "pinyinPlain": "yiyuan",
+      "tone": 4,
+      "audioKeys": [
+        "yiyuan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "商店",
       "pinyin": "shāngdiàn",
-      "meaning": "tienda"
+      "meaning": "tienda",
+      "pinyinNumeric": "shangdian4",
+      "pinyinPlain": "shangdian",
+      "tone": 4,
+      "audioKeys": [
+        "shangdian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "飞机",
       "pinyin": "fēijī",
-      "meaning": "avión"
+      "meaning": "avión",
+      "pinyinNumeric": "feiji1",
+      "pinyinPlain": "feiji",
+      "tone": 1,
+      "audioKeys": [
+        "feiji"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "出租车",
       "pinyin": "chūzūchē",
-      "meaning": "taxi"
+      "meaning": "taxi",
+      "pinyinNumeric": "chuzuche1",
+      "pinyinPlain": "chuzuche",
+      "tone": 1,
+      "audioKeys": [
+        "chuzuche"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "车",
       "pinyin": "chē",
       "meaning": "coche; vehículo",
-      "radical": "车"
+      "radical": "车",
+      "pinyinNumeric": "che1",
+      "pinyinPlain": "che",
+      "tone": 1,
+      "audioKeys": [
+        "che"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "火车站",
       "pinyin": "huǒchēzhàn",
-      "meaning": "estación de tren"
+      "meaning": "estación de tren",
+      "pinyinNumeric": "huochezhan4",
+      "pinyinPlain": "huochezhan",
+      "tone": 4,
+      "audioKeys": [
+        "huochezhan"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "前面",
       "pinyin": "qiánmiàn",
-      "meaning": "delante"
+      "meaning": "delante",
+      "pinyinNumeric": "qianmian4",
+      "pinyinPlain": "qianmian",
+      "tone": 4,
+      "audioKeys": [
+        "qianmian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "后面",
       "pinyin": "hòumiàn",
-      "meaning": "detrás"
+      "meaning": "detrás",
+      "pinyinNumeric": "houmian4",
+      "pinyinPlain": "houmian",
+      "tone": 4,
+      "audioKeys": [
+        "houmian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "里面",
       "pinyin": "lǐmiàn",
-      "meaning": "dentro"
+      "meaning": "dentro",
+      "pinyinNumeric": "limian4",
+      "pinyinPlain": "limian",
+      "tone": 4,
+      "audioKeys": [
+        "limian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "外面",
       "pinyin": "wàimiàn",
-      "meaning": "fuera"
+      "meaning": "fuera",
+      "pinyinNumeric": "waimian4",
+      "pinyinPlain": "waimian",
+      "tone": 4,
+      "audioKeys": [
+        "waimian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "左边",
       "pinyin": "zuǒbian",
-      "meaning": "izquierda"
+      "meaning": "izquierda",
+      "pinyinNumeric": "zuobian3",
+      "pinyinPlain": "zuobian",
+      "tone": 3,
+      "audioKeys": [
+        "zuobian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "右边",
       "pinyin": "yòubian",
-      "meaning": "derecha"
+      "meaning": "derecha",
+      "pinyinNumeric": "youbian4",
+      "pinyinPlain": "youbian",
+      "tone": 4,
+      "audioKeys": [
+        "youbian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "中间",
       "pinyin": "zhōngjiān",
-      "meaning": "medio; entre"
+      "meaning": "medio; entre",
+      "pinyinNumeric": "zhongjian1",
+      "pinyinPlain": "zhongjian",
+      "tone": 1,
+      "audioKeys": [
+        "zhongjian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "桌子",
       "pinyin": "zhuōzi",
-      "meaning": "mesa"
+      "meaning": "mesa",
+      "pinyinNumeric": "zhuozi1",
+      "pinyinPlain": "zhuozi",
+      "tone": 1,
+      "audioKeys": [
+        "zhuozi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "椅子",
       "pinyin": "yǐzi",
-      "meaning": "silla"
+      "meaning": "silla",
+      "pinyinNumeric": "yizi3",
+      "pinyinPlain": "yizi",
+      "tone": 3,
+      "audioKeys": [
+        "yizi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "书",
       "pinyin": "shū",
-      "meaning": "libro"
+      "meaning": "libro",
+      "pinyinNumeric": "shu1",
+      "pinyinPlain": "shu",
+      "tone": 1,
+      "audioKeys": [
+        "shu"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "本",
       "pinyin": "běn",
       "meaning": "clasificador de libros",
-      "radical": "木"
+      "radical": "木",
+      "pinyinNumeric": "ben3",
+      "pinyinPlain": "ben",
+      "tone": 3,
+      "audioKeys": [
+        "ben"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "个",
       "pinyin": "gè",
       "meaning": "clasificador general",
-      "radical": "人"
+      "radical": "人",
+      "pinyinNumeric": "ge4",
+      "pinyinPlain": "ge",
+      "tone": 4,
+      "audioKeys": [
+        "ge"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "块",
       "pinyin": "kuài",
-      "meaning": "trozo; unidad de dinero (yuan)"
+      "meaning": "trozo; unidad de dinero (yuan)",
+      "pinyinNumeric": "kuai4",
+      "pinyinPlain": "kuai",
+      "tone": 4,
+      "audioKeys": [
+        "kuai"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "件",
       "pinyin": "jiàn",
-      "meaning": "pieza; clasificador de ropa/asuntos"
+      "meaning": "pieza; clasificador de ropa/asuntos",
+      "pinyinNumeric": "jian4",
+      "pinyinPlain": "jian",
+      "tone": 4,
+      "audioKeys": [
+        "jian"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "张",
       "pinyin": "zhāng",
-      "meaning": "clasificador para papeles/mesas"
+      "meaning": "clasificador para papeles/mesas",
+      "pinyinNumeric": "zhang1",
+      "pinyinPlain": "zhang",
+      "tone": 1,
+      "audioKeys": [
+        "zhang"
+      ],
+      "hskLevel": 1,
+      "tags": []
     },
     {
       "char": "只",
       "pinyin": "zhī",
-      "meaning": "clasificador de animales"
+      "meaning": "clasificador de animales",
+      "pinyinNumeric": "zhi1",
+      "pinyinPlain": "zhi",
+      "tone": 1,
+      "audioKeys": [
+        "zhi"
+      ],
+      "hskLevel": 1,
+      "tags": []
     }
   ],
   "vowels": [

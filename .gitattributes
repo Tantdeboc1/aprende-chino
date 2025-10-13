@@ -1,0 +1,27 @@
+# Normalize text files and enforce LF line endings
+* text=auto eol=lf
+
+# Treat media as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.ogg binary
+*.webm binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+
+# Common data/assets considered text
+*.js text
+*.jsx text
+*.ts text
+*.tsx text
+*.css text
+*.html text
+*.json text
+*.md text
+*.svg text

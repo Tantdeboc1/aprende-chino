@@ -1,5 +1,5 @@
 // src/components/Dictionary.jsx
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Volume2, Search } from "lucide-react";
 import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
@@ -12,17 +12,73 @@ export default function Dictionary({
   searchTerm,
   setSearchTerm,
 }) {
+  // Normalización (tono-agnóstica y sin diacríticos)
+  const mapUmlautToV = (s) => (s || "").replace(/u\u0308|ü/gi, "v");
+  const normalizeBase = (s) =>
+    mapUmlautToV(String(s || ""))
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .trim();
+  const normalizeToneAgnostic = (s) =>
+    normalizeBase(s)
+      .replace(/[\s_\-]/g, "")
+      .replace(/[1-4]/g, "");
+
+  // Debounce y sincronización con el estado externo
+  const [rawQuery, setRawQuery] = useState(searchTerm || "");
+  const [debouncedQuery, setDebouncedQuery] = useState(rawQuery);
+
+  useEffect(() => {
+    setRawQuery(searchTerm || "");
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setDebouncedQuery(rawQuery);
+      if (typeof setSearchTerm === 'function') setSearchTerm(rawQuery);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [rawQuery, setSearchTerm]);
   const filteredChars = useMemo(() => {
-    const q = (searchTerm || "").toLowerCase().trim();
-    if (!q) return characters;
+    const qRaw = (debouncedQuery || '').trim();
+    const qNorm = normalizeToneAgnostic(qRaw);
+    if (!qNorm) return characters;
+
+    // Heurística: si el query parece pinyin (solo letras/ü/v/dígitos/espacios/guiones)
+    const pinyinLike = /^[a-zA-Züǖǘǚǜv\s_\-0-9]+$/.test(qRaw);
+
     return characters.filter((c) => {
       const ch = String(c.char || "");
-      const py = String(c.pinyin || "").toLowerCase();
-      const me = String(c.meaning || "").toLowerCase();
-      const rad = String(c.radical || "").toLowerCase();
-      return ch.includes(q) || py.includes(q) || me.includes(q) || rad.includes(q);
+      if (pinyinLike) {
+        const py = normalizeToneAgnostic(c.pinyin);
+        // Prefijo en pinyin para evitar falsos positivos como "ni"→"kuai"
+        return py.startsWith(qNorm);
+      }
+      const me = normalizeBase(c.meaning);
+      const rad = normalizeBase(c.radical);
+      return ch.includes(qRaw) || me.includes(qNorm) || rad.includes(qNorm);
     });
-  }, [characters, searchTerm]);
+  }, [characters, debouncedQuery]);
+
+  // Lista filtrada con fallback: si parece pinyin pero no hay resultados,
+  // se buscan coincidencias en significado/radical/hanzi.
+  const filtered = useMemo(() => {
+    const qRaw = (debouncedQuery || '').trim();
+    const qNorm = normalizeToneAgnostic(qRaw);
+    if (!qNorm) return characters;
+    const pinyinLike = /[1-4]|[\u00FCv]|[\s_\-]/.test(qRaw);
+    if (pinyinLike) {
+      const results = characters.filter((c) => normalizeToneAgnostic(c.pinyin).startsWith(qNorm));
+      if (results.length) return results;
+    }
+    return characters.filter((c) => {
+      const ch = String(c.char || '');
+      const me = normalizeBase(c.meaning);
+      const rad = normalizeBase(c.radical);
+      return ch.includes(qRaw) || me.includes(qNorm) || rad.includes(qNorm);
+    });
+  }, [characters, debouncedQuery]);
 
   const handleSpeak = (char) => {
     console.log('🎯 Dictionary: Botón Escuchar clickeado', { char });
@@ -52,15 +108,15 @@ export default function Dictionary({
             <input
               type="text"
               placeholder="Buscar por carácter, pinyin, significado o radical..."
-              value={searchTerm || ""}
-              onChange={(e) => setSearchTerm?.(e.target.value)}
+              value={rawQuery}
+              onChange={(e) => setRawQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
             />
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredChars.map((char, idx) => (
+          {filtered.map((char, idx) => (
             <Card key={idx} className="text-center hover:shadow-xl transition bg-gray-800 border border-gray-700">
               <div className="text-7xl text-center mb-4 text-white">{char.char}</div>
               <div className="space-y-3">
@@ -77,6 +133,7 @@ export default function Dictionary({
                     <span className="text-sm text-gray-400 font-semibold">Pronunciación:</span>
                     <Button
                       onClick={() => handleSpeak(char.char)}
+                      aria-label={`Escuchar ${char.char} (${char.pinyin || 'sin pinyin'})`}
                       className="!w-auto !px-2 !py-1 !bg-green-500 !hover:bg-green-600 !text-white !text-xs"
                     >
                       Escuchar
