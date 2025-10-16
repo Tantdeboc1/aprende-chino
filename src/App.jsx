@@ -416,6 +416,7 @@ export default function App() {
         inputName={inputName}
         setInputName={setInputName}
         handleWelcome={handleWelcome}
+        onAudioInit={initializeAudio}
       />
     );
   }
