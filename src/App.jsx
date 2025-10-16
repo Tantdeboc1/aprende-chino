@@ -1,4 +1,4 @@
-// === src/App.jsx (VERSIÓN COMPLETA CON LAYOUT) ===
+// === src/App.jsx (VERSIÓN COMPLETA CON FIX DE iOS) ===
 import { assetUrl } from './utils/assets';
 import { useState, useEffect, useMemo } from "react";
 import Welcome from './components/welcome';
@@ -15,7 +15,7 @@ import Daily from './components/Daily.jsx';
 import SpecialSyllables from './components/learn/Tones/SpecialSyllables.jsx';
 import QuizTone from './components/learn/Tones/QuizTone.jsx';
 import QuizPronunciation from './components/learn/Tones/QuizPronunciation.jsx';
-import { playAudioSmart } from './utils/audio';
+import { playAudioSmart, initAudioForIOS } from './utils/audio';
 import Layout from "@/components/ui/Layout.jsx";
 
 const ArrowLeft = ({className = ""}) => (
@@ -31,15 +31,15 @@ export default function App() {
     // Forzar la clase 'dark' en el elemento html
     document.documentElement.classList.add('dark');
     document.documentElement.classList.remove('light');
-    
+
     // Prevenir que el sistema operativo cambie el tema
     const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
     const handleChange = () => {
       document.documentElement.classList.add('dark');
     };
-    
+
     mediaQuery.addEventListener('change', handleChange);
-    
+
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
@@ -65,6 +65,7 @@ export default function App() {
 
   // Audio state
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [audioInitialized, setAudioInitialized] = useState(false);
 
   const navigateTo = (screenName) => {
     setScreen(screenName);
@@ -79,6 +80,20 @@ export default function App() {
     setScreen('dictionary');
   };
 
+  // 🔥 FUNCIÓN PARA INICIALIZAR AUDIO EN iOS
+  const initializeAudio = async () => {
+    if (!audioInitialized) {
+      console.log('🎵 Inicializando audio para iOS...');
+      try {
+        await initAudioForIOS();
+        setAudioInitialized(true);
+        console.log('✅ Audio inicializado correctamente');
+      } catch (error) {
+        console.error('❌ Error inicializando audio:', error);
+      }
+    }
+  };
+
   // Load data (HSK1, tones, etc.)
   useEffect(() => {
     // Helpers para enriquecer el dataset de caracteres sin modificar el JSON original
@@ -90,7 +105,7 @@ export default function App() {
     const toPlain = (s) => {
       return String(s || '')
         .toLowerCase()
-        .replace(/Ǭ/g, 'v')
+        .replace(/ǚ/g, 'v')
         .normalize('NFD')
         .replace(/\p{Diacritic}/gu, '')
         .replace(/[1-4]/g, '')
@@ -160,7 +175,7 @@ export default function App() {
   // Hanzi -> Pinyin map COMPLETO (incluye specialSyllables, vowels, consonants)
   const hanziToPinyin = useMemo(() => {
     const map = new Map();
-    
+
     // 1. Mapear CHARACTERS (汉字)
     const charsArray = characters || [];
     charsArray.forEach((ch) => {
@@ -170,7 +185,7 @@ export default function App() {
         map.set(hanzi, pinyin);
       }
     });
-    
+
     // 2. Mapear SPECIAL SYLLABLES (音节 especiales)
     const specialArray = specialSyllables || [];
     specialArray.forEach((syllable) => {
@@ -179,7 +194,7 @@ export default function App() {
         map.set(pinyinKey, pinyinKey);
       }
     });
-    
+
     // 3. Mapear VOWELS (元音)
     const vowelsArray = vowels || [];
     vowelsArray.forEach((vowel) => {
@@ -188,8 +203,8 @@ export default function App() {
         map.set(vowelChar, vowelChar);
       }
     });
-    
-    // 4. Mapear CONSONANTS (辅音)  
+
+    // 4. Mapear CONSONANTS (辅音)
     const consonantsArray = consonants || [];
     consonantsArray.forEach((consonant) => {
       const consonantPinyin = consonant.pinyin;
@@ -199,7 +214,7 @@ export default function App() {
     });
 
     console.log('✅ Mapa hanziToPinyin construido con', map.size, 'entradas');
-    
+
     return map;
   }, [characters, specialSyllables, vowels, consonants]);
 
@@ -268,8 +283,13 @@ export default function App() {
     return Array.from(forms);
   }
 
-  // 📣 FUNCIÓN SPEAK CORREGIDA - BUSCA PINYIN NORMALIZADO EN MANIFEST
+  // 🔣 FUNCIÓN SPEAK CORREGIDA - BUSCA PINYIN NORMALIZADO EN MANIFEST
   const speak = async (keyOrText, opts = {}) => {
+    // 🔥 ASEGURAR QUE EL AUDIO ESTÉ INICIALIZADO
+    if (!audioInitialized) {
+      await initializeAudio();
+    }
+
     // 🔥 PROTECCIÓN: Si ya está hablando, no hacer nada
     if (isSpeaking) {
       console.log('🔇 Ya está hablando, ignorando nueva petición');
@@ -284,7 +304,7 @@ export default function App() {
       // 1) Determinar el texto a pronunciar y SI es hanzi
       let textToSpeak = '';
       let isHanziInput = false;
-      
+
       if (typeof keyOrText === 'string') {
         isHanziInput = /^[\u4e00-\u9fff]+$/.test(keyOrText);
         if (isHanziInput) {
@@ -292,7 +312,7 @@ export default function App() {
           const chars = Array.from(keyOrText);
           const mapped = chars.map(ch => hanziToPinyin.get(ch)).filter(Boolean);
           textToSpeak = mapped.join(' ');
-          
+
           // Si no encontramos pinyin, usar el hanzi original para TTS
           if (!textToSpeak) {
             textToSpeak = keyOrText;
@@ -311,15 +331,15 @@ export default function App() {
         return;
       }
 
-      console.log('🔊 Procesando:', { 
-        input: keyOrText, 
-        output: textToSpeak, 
-        isHanziInput 
+      console.log('🔊 Procesando:', {
+        input: keyOrText,
+        output: textToSpeak,
+        isHanziInput
       });
 
       // 2) Procesar sílabas
       const syls = textToSpeak
-        .replace(/[,.;:!?，。；：！？]/g, ' ')
+        .replace(/[,.;:!?。，；：！？]/g, ' ')
         .split(/\s+|-/)
         .map(s => s.trim())
         .filter(Boolean);
@@ -327,29 +347,29 @@ export default function App() {
       // 3) Reproducir cada sílaba
       for (const syl of syls) {
         let played = false;
-        
+
         // 🔥 CORRECCIÓN CLAVE: Normalizar la sílaba para buscar en manifest
         const normalizedSyl = normalizeSyllableToNumbered(syl);
-        console.log('🔡 Sílaba normalizada:', { original: syl, normalized: normalizedSyl });
-        
+        console.log('📡 Sílaba normalizada:', { original: syl, normalized: normalizedSyl });
+
         // Probar variantes de MP3 con la sílaba NORMALIZADA
         const allCandidates = candidatesForAudioKey(normalizedSyl);
         console.log('🔍 Candidatos a probar:', allCandidates);
-        
+
         for (const key of allCandidates) {
           try {
             console.log('🔊 Probando key en manifest:', key);
             const ok = await playAudioSmart(category, key, null);
-            if (ok) { 
-              played = true; 
+            if (ok) {
+              played = true;
               console.log('✅ MP3 reproducido con éxito para:', key);
-              break; 
+              break;
             }
           } catch (error) {
             console.error('Error reproduciendo MP3:', error);
           }
         }
-        
+
         // Si no se encontró MP3, usar TTS con la sílaba ORIGINAL
         if (!played) {
           console.log('🎯 Ningún MP3 funcionó, usando TTS para:', syl);
@@ -368,8 +388,11 @@ export default function App() {
     }
   };
 
-  const handleWelcome = () => {
+  const handleWelcome = async () => {
     if (inputName.trim()) {
+      // 🔥 INICIALIZAR AUDIO DESDE INTERACCIÓN DE USUARIO
+      await initializeAudio();
+
       setUserName(inputName.trim());
       setScreen('menu');
     }
@@ -399,7 +422,7 @@ export default function App() {
 
   if (screen === 'menu') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -416,7 +439,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === null) {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -433,7 +456,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'characters' && characterSection === null) {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -450,7 +473,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'characters' && characterSection === 'lessons') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -467,7 +490,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'characters' && characterSection === 'quiz') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -484,7 +507,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'characters' && characterSection === 'matching') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -500,7 +523,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'tones' && toneSection === null) {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -518,7 +541,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'tones' && toneSection === 'quizTone') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -531,7 +554,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'tones' && toneSection === 'quizPronunciation') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -544,7 +567,7 @@ export default function App() {
 
   if (screen === 'learn' && learnSection === 'tones' && toneSection === 'specialSyllables') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -557,7 +580,7 @@ export default function App() {
 
   if (screen === 'dictionary') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -576,7 +599,7 @@ export default function App() {
 
   if (screen === 'info') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >
@@ -589,7 +612,7 @@ export default function App() {
 
   if (screen === 'daily') {
     return (
-      <Layout 
+      <Layout
         onDictionaryClick={handleHeaderDictionaryClick}
         onNavigate={navigateTo}
       >

@@ -1,4 +1,4 @@
-// src/utils/audio.js (VERSIÓN EQUILIBRADA)
+// src/utils/audio.js (VERSIÓN COMPLETA CON FIX PARA iOS)
 import { speakChinese } from "./tts";
 
 // ---- Carga perezosa del manifiesto ----
@@ -20,34 +20,66 @@ async function loadManifest() {
   return manifestSet;
 }
 
-// ---- Sistema de Audio EQUILIBRADO ----
+// ---- Sistema de Audio CON FIX PARA iOS ----
 class AudioCompressor {
   constructor() {
     this.audioContext = null;
     this.compressor = null;
     this.gainNode = null;
     this.volumeCache = new Map();
+    this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    this.audioContextUnlocked = false;
+  }
+
+  // 🔥 NUEVO: Método para desbloquear audio en iOS
+  async unlockAudioContext() {
+    if (this.audioContextUnlocked || !this.isIOS) return;
+
+    if (!this.audioContext) {
+      await this.init();
+    }
+
+    if (this.audioContext && this.audioContext.state === 'suspended') {
+      console.log('🔓 Desbloqueando AudioContext para iOS...');
+      try {
+        await this.audioContext.resume();
+
+        // Reproducir un buffer silencioso para activar completamente el audio
+        const buffer = this.audioContext.createBuffer(1, 1, 22050);
+        const source = this.audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
+
+        this.audioContextUnlocked = true;
+        console.log('✅ AudioContext desbloqueado para iOS');
+      } catch (error) {
+        console.warn('⚠️ Error desbloqueando AudioContext:', error);
+      }
+    }
   }
 
   async init() {
     if (this.audioContext) return;
-    
+
     try {
       this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      
+
       // ✅ COMPRESIÓN EQUILIBRADA
       this.compressor = this.audioContext.createDynamicsCompressor();
-      this.compressor.threshold.value = -25;    // Punto medio
-      this.compressor.knee.value = 15;          // Punto medio
-      this.compressor.ratio.value = 6;          // Punto medio
-      this.compressor.attack.value = 0.003;     // Punto medio
-      this.compressor.release.value = 0.2;      // Punto medio
-      
+      this.compressor.threshold.value = -25;
+      this.compressor.knee.value = 15;
+      this.compressor.ratio.value = 6;
+      this.compressor.attack.value = 0.003;
+      this.compressor.release.value = 0.2;
+
       this.gainNode = this.audioContext.createGain();
-      this.gainNode.gain.value = 0.8;           // ✅ VOLUMEN BASE NORMAL
-      
+      this.gainNode.gain.value = 0.8;
+
       this.compressor.connect(this.gainNode);
       this.gainNode.connect(this.audioContext.destination);
+
+      console.log('🎵 AudioContext creado, estado:', this.audioContext.state);
     } catch (error) {
       console.warn('⚠️ AudioContext no disponible, usando audio normal');
     }
@@ -55,32 +87,47 @@ class AudioCompressor {
 
   async playCompressedAudio(src, audioKey) {
     await this.init();
-    
+
+    // 🔥 CRÍTICO PARA iOS: Desbloquear antes de reproducir
+    if (this.isIOS && !this.audioContextUnlocked) {
+      await this.unlockAudioContext();
+    }
+
     if (!this.audioContext || !this.compressor) {
       return this.playNormalAudio(src, audioKey);
+    }
+
+    // 🔥 Si el contexto está suspendido, intentar reanudar
+    if (this.audioContext.state === 'suspended') {
+      console.log('⏸️ AudioContext suspendido, intentando reanudar...');
+      try {
+        await this.audioContext.resume();
+      } catch (error) {
+        console.warn('⚠️ No se pudo reanudar AudioContext, usando audio normal');
+        return this.playNormalAudio(src, audioKey);
+      }
     }
 
     try {
       const response = await fetch(src);
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-      
+
       const volume = this.analyzeVolume(audioBuffer);
       this.volumeCache.set(audioKey, volume);
-      
-      console.log('📊', audioKey, '-> Volumen:', volume.toFixed(3));
-      
-      // ✅ FÓRMULA EQUILIBRADA
+
+      console.log('🔊', audioKey, '-> Volumen:', volume.toFixed(3));
+
       let volumeMultiplier = this.calculateVolumeMultiplier(volume);
-      
+
       this.gainNode.gain.value = volumeMultiplier;
-      
+
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;
       source.connect(this.compressor);
-      
+
       source.start(0);
-      
+
       return new Promise((resolve) => {
         source.onended = () => resolve(true);
         setTimeout(() => resolve(true), 5000);
@@ -93,65 +140,77 @@ class AudioCompressor {
 
   analyzeVolume(audioBuffer) {
     const data = audioBuffer.getChannelData(0);
-    
-    // Método equilibrado: 50% pico, 50% RMS
+
     let peak = 0;
     let sumSquares = 0;
     const samplesToAnalyze = Math.min(44100, data.length);
-    
+
     for (let i = 0; i < samplesToAnalyze; i++) {
       const absValue = Math.abs(data[i]);
       peak = Math.max(peak, absValue);
       sumSquares += data[i] * data[i];
     }
-    
+
     const rms = Math.sqrt(sumSquares / samplesToAnalyze);
-    
-    // Combinación equilibrada
+
     return (peak * 0.5) + (rms * 0.5);
   }
 
-  // ✅ FÓRMULA EQUILIBRADA - PUNTO MEDIO
   calculateVolumeMultiplier(volume) {
     if (volume > 0.25) {
       console.log('🔇🔇 ARCHIVO MUY ALTO - Reducción fuerte');
-      return 0.25; // 25% - Fuerte pero no exagerado
+      return 0.25;
     } else if (volume > 0.18) {
       console.log('🔇 Archivo alto - Reducción media-fuerte');
-      return 0.40; // 40% - Media-fuerte
+      return 0.40;
     } else if (volume > 0.12) {
       console.log('🔈 Archivo medio-alto - Reducción media');
-      return 0.60; // 60% - Media
+      return 0.60;
     } else if (volume > 0.07) {
       console.log('🔉 Archivo normal');
-      return 0.85; // 85% - Casi normal (ligera reducción)
+      return 0.85;
     } else if (volume > 0.03) {
-      return 1.0; // 100% - Completo
+      return 1.0;
     } else {
       console.log('🔊 Archivo muy bajo - Pequeño boost');
-      return 1.1; // 110% - Boost mínimo
+      return 1.1;
     }
   }
 
   playNormalAudio(src, audioKey) {
     return new Promise((resolve, reject) => {
       const audio = new Audio();
-      
-      // ✅ VOLUMEN EQUILIBRADO EN FALLBACK
+
       const cachedVolume = this.volumeCache.get(audioKey);
       if (cachedVolume !== undefined) {
         const multiplier = this.calculateVolumeMultiplier(cachedVolume);
         audio.volume = Math.min(0.8, multiplier * 0.8);
         console.log('🎚️ Fallback con volumen:', audioKey, '->', audio.volume.toFixed(2));
       } else {
-        audio.volume = 0.7; // ✅ VOLUMEN POR DEFECTO EQUILIBRADO
+        audio.volume = 0.7;
       }
-      
+
       audio.onended = () => resolve(true);
-      audio.onerror = () => reject(new Error(`No se pudo reproducir ${src}`));
-      
+      audio.onerror = () => {
+        console.error('❌ Error reproduciendo audio:', src);
+        reject(new Error(`No se pudo reproducir ${src}`));
+      };
+
       audio.src = src;
-      audio.play().catch(reject);
+
+      // 🔥 iOS requiere manejar la promesa de play()
+      const playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('✅ Audio reproduciéndose:', audioKey);
+          })
+          .catch(error => {
+            console.error('❌ Error en play():', error);
+            reject(error);
+          });
+      }
     });
   }
 }
@@ -159,17 +218,27 @@ class AudioCompressor {
 // Instancia global del compresor
 const audioCompressor = new AudioCompressor();
 
-// ---- El resto del código IGUAL ----
-const toneMap = {
-  'ā':'a1','á':'a2','ǎ':'a3','à':'a4',
-  'ē':'e1','é':'e2','ě':'e3','è':'e4',
-  'ī':'i1','í':'i2','ǐ':'i3','ì':'i4',
-  'ō':'o1','ó':'o2','ǒ':'o3','ò':'o4',
-  'ū':'u1','ú':'u2','ǔ':'u3','ù':'u4',
-  'ǖ':'v1','ǘ':'v2','ǚ':'v3','ǜ':'v4',
-  'ü': 'v0',
-};
+// 🔥 NUEVO: Función para inicializar audio desde un evento de usuario
+export async function initAudioForIOS() {
+  await audioCompressor.unlockAudioContext();
+}
 
+// ---- Mapeo de tonos ----
+const toneMap = {
+  // Vocal A
+  'ā':'a1', 'á':'a2', 'ǎ':'a3', 'à':'a4',
+  // Vocal E
+  'ē':'e1', 'é':'e2', 'ě':'e3', 'è':'e4',
+  // Vocal I
+  'ī':'i1', 'í':'i2', 'ǐ':'i3', 'ì':'i4',
+  // Vocal O
+  'ō':'o1', 'ó':'o2', 'ǒ':'o3', 'ò':'o4',
+  // Vocal U
+  'ū':'u1', 'ú':'u2', 'ǔ':'u3', 'ù':'u4',
+  // Vocal Ü (v)
+  'ǖ':'v1', 'ǘ':'v2', 'ǚ':'v3', 'ǜ':'v4',
+  'ü':'v',
+};
 function toneMarkedToNumber(pinyin) {
   if (!pinyin) return { base: "", tone: 0 };
   let tone = 0;
@@ -188,7 +257,7 @@ function toneMarkedToNumber(pinyin) {
 
 function variantsFor(key) {
   key = (key || "").toLowerCase().trim();
-  
+
   const m = key.match(/^([a-züv_]+)([1-4])$/i);
   if (m) {
     const base = m[1].replace("ü", "v");
@@ -201,7 +270,7 @@ function variantsFor(key) {
       base.replace(/_/g, "")
     ];
   }
-  
+
   const t = toneMarkedToNumber(key);
   const base = t.base;
   const tone = t.tone;
@@ -227,7 +296,7 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
 
   for (const name of variants) {
     const candidate = `audio/${category}/${name}.mp3`;
-    
+
     if (set.has(name)) {
       try {
         await audioCompressor.playCompressedAudio(`${base}${candidate}`, name);
@@ -250,7 +319,7 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
       }, 500);
     }
   }
-  
+
   return false;
 }
 
