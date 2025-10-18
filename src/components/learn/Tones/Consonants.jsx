@@ -2,11 +2,6 @@ import { assetUrl } from '../../../utils/assets';
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 
-/**
- * CORREGIDO: Ahora envía pinyin con tono directamente
- * para que encuentre los archivos MP3
- */
-
 export default function Consonants({ goBack, speakChinese }) {
   const [rawConsonants, setRawConsonants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +46,7 @@ export default function Consonants({ goBack, speakChinese }) {
   const playConsonant = (consonantPinyin) => {
     // Crear una sílaba válida según la consonante
     let syllable = '';
-    
+
     // Mapeo de consonantes a sílabas válidas que existen en tu manifest
     const consonantToSyllable = {
       'b': 'ba1',   // 巴
@@ -78,11 +73,11 @@ export default function Consonants({ goBack, speakChinese }) {
       'y': 'yi1',   // 衣
       'w': 'wu1',   // 屋
     };
-    
+
     syllable = consonantToSyllable[consonantPinyin] || consonantPinyin;
-    
+
     console.log('🔊 Consonantes - Reproduciendo:', { consonant: consonantPinyin, syllable });
-    
+
     if (speakChinese) {
       speakChinese(syllable, { category: 'pronunciation' });
     }
@@ -100,7 +95,7 @@ export default function Consonants({ goBack, speakChinese }) {
     <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
       <div className="max-w-4xl mx-auto pt-8 pb-8">
         <div className="mb-6">
-          <button onClick={() => goBack()} className="flex items-center text-gray-300 hover:text-white">
+          <button onClick={() => goBack && goBack()} className="flex items-center text-gray-300 hover:text-white">
             <ArrowLeft className="mr-2" />
             Tonos
           </button>
@@ -114,7 +109,7 @@ export default function Consonants({ goBack, speakChinese }) {
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">Consonantes en Pinyin</h2>
+            <h2 className="text-3xl font-bold text-white mb-1">Consonantes en Pinyin</h2>
             <p className="text-gray-300">Haz click para escuchar un ejemplo</p>
           </div>
 

@@ -1,5 +1,5 @@
-// src/components/learn/Tones/QuizPronunciation.jsx
 import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { playAudioSmart } from "../../../utils/audio";
 
 /**
@@ -118,6 +118,7 @@ export default function QuizPronunciation({ goBack }) {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const initQuiz = () => {
     setQuestions(buildQuiz());
@@ -126,9 +127,58 @@ export default function QuizPronunciation({ goBack }) {
     setSelected(null);
     setShowResult(false);
     setPlaying(false);
+    setQuizStarted(true);
   };
 
-  useEffect(() => { initQuiz(); }, []);
+  // PANTALLA DE INSTRUCCIONES
+  if (!quizStarted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="mb-8">
+            <button
+              onClick={goBack}
+              className="flex items-center text-gray-300 hover:text-white transition mb-4"
+            >
+              <ArrowLeft className="mr-2" />
+              Volver a Pronunciación
+            </button>
+            <h1 className="text-3xl font-bold text-white text-center">Quiz de Pronunciación</h1>
+            <p className="text-gray-400 text-center">Identificación Auditiva</p>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
+            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <div className="space-y-3 text-gray-300">
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <p>Escucha el sonido de la consonante o vocal</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <p>Selecciona la opción correcta entre las 4 disponibles</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <p><strong>10 preguntas</strong> en total</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <p>¡Pon a prueba tu oído para el chino!</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={initQuiz}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
+          >
+            🎵 Comenzar Quiz
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!questions.length) return null;
   const q = questions[idx];
@@ -191,14 +241,14 @@ export default function QuizPronunciation({ goBack }) {
           <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white text-sm">
             ← Volver a Pronunciación
           </button>
-          
+
           <div className="text-center">
             <span className="text-gray-300 font-semibold text-base block">
               {idx + 1}/{questions.length} | Puntos: {score}
             </span>
             {/* Barra de progreso */}
             <div className="w-32 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
-              <div 
+              <div
                 className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${((idx + 1) / questions.length) * 100}%` }}
               />

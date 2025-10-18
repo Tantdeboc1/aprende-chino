@@ -21,6 +21,7 @@ export default function Quiz({
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
 
   const initQuiz = () => {
     if (!Array.isArray(characters) || characters.length < 4) return;
@@ -37,11 +38,67 @@ export default function Quiz({
     setScore(0);
     setSelected(null);
     setShowResult(false);
+    setShowInstructions(false);
   };
 
   useEffect(() => {
-    initQuiz();
-  }, [characters]);
+    if (!showInstructions) {
+      initQuiz();
+    }
+  }, [characters, showInstructions]);
+
+  // Pantalla de instrucciones
+  if (showInstructions) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="mb-8">
+            <button
+              onClick={goBack}
+              className="flex items-center text-gray-300 hover:text-white transition mb-4"
+            >
+              ← Volver a Caracteres
+            </button>
+            <h1 className="text-3xl font-bold text-white text-center">Quiz de Caracteres</h1>
+            <p className="text-gray-400 text-center">Identifica el significado de los caracteres</p>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
+            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <div className="space-y-3 text-gray-300">
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <p>Observa el carácter chino mostrado en pantalla</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <p>Selecciona el significado correcto entre las 4 opciones</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <p>Las respuestas correctas se volverán <span className="text-green-400">verdes</span></p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <p>Los errores se mostrarán en <span className="text-red-400">rojo</span></p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">5</div>
+                <p>Completa 10 preguntas para finalizar el quiz</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={initQuiz}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
+          >
+            🎯 Comenzar Quiz
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!questions.length) {
     return (
@@ -86,7 +143,7 @@ export default function Quiz({
           </p>
           <div className="flex gap-3">
             <button
-              onClick={initQuiz}
+              onClick={() => setShowInstructions(true)}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
             >
               Jugar otra vez
@@ -113,23 +170,23 @@ export default function Quiz({
           >
             ← Volver a Caracteres
           </button>
-          
+
           <div className="text-center">
             <span className="text-gray-300 font-semibold text-base block">
               {index + 1}/{questions.length} | Puntos: {score}
             </span>
             {/* Barra de progreso */}
             <div className="w-32 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
-              <div 
+              <div
                 className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${((index + 1) / questions.length) * 100}%` }}
               />
             </div>
           </div>
 
-          {/* Botón de reiniciar - AHORA EN AZUL */}
+          {/* Botón de reiniciar */}
           <button
-            onClick={initQuiz}
+            onClick={() => setShowInstructions(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
             Reiniciar

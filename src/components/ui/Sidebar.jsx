@@ -1,78 +1,225 @@
-// src/components/ui/Sidebar.jsx
-import { X, Home, GraduationCap, Calendar, BookOpen, Info } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { APP_VERSION } from '@/utils/version';  // ← AÑADIDO: Import de la versión
 
-export default function Sidebar({ isOpen, onClose, onNavigate }) {
-  const sidebarRef = useRef(null);
-
-  const menuItems = [
-    { icon: Home, label: "Inicio", screen: "menu" },
-    { icon: GraduationCap, label: "Aprender", screen: "learn" },
-    { icon: Calendar, label: "Desafío Diario", screen: "daily" },
-    { icon: BookOpen, label: "Diccionario", screen: "dictionary" },
-    { icon: Info, label: "Información", screen: "info" },
-  ];
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        onClose();
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
-
+const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithSection, onWritingClick }) => {
   if (!isOpen) return null;
 
   return (
     <>
-      <div 
-        ref={sidebarRef}
-        className="fixed top-0 left-0 h-full w-64 bg-gray-800 shadow-xl z-50 border-r border-gray-700"
-      >
-        <div className="p-4 border-b border-gray-700 bg-gray-800">
+      {/* Sidebar sin overlay - solo el panel lateral */}
+      <div className="fixed left-0 top-0 bottom-0 w-64 bg-white dark:bg-gray-800 shadow-xl z-50 overflow-y-auto rounded-r-2xl">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="bg-red-500 w-8 h-8 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">学</span>
-              </div>
-              <span className="text-lg font-bold text-white">Navegación</span>
-            </div>
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
+              Navegación
+            </h2>
             <button
               onClick={onClose}
-              className="p-1 hover:bg-gray-700 rounded transition"
+              className="p-1 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <X className="w-5 h-5 text-gray-300" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
 
-        <nav className="p-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            return (
+        <nav className="p-4">
+          <ul className="space-y-2">
+            {/* Inicio */}
+            <li>
               <button
-                key={item.screen}
                 onClick={() => {
-                  onNavigate(item.screen);
+                  onNavigate('menu');
                   onClose();
                 }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-700 rounded-lg transition border border-transparent hover:border-gray-600 text-gray-200"
+                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
-                <Icon className="w-5 h-5 text-red-400" />
-                <span className="font-medium">{item.label}</span>
+                <span className="flex items-center space-x-3">
+                  <span>🏠</span>
+                  <span>Inicio</span>
+                </span>
               </button>
-            );
-          })}
+            </li>
+
+            {/* Aprender - CON ESCRITURA INTEGRADA */}
+            <li>
+              <button
+                onClick={() => {
+                  onNavigate('learn');
+                  onClose();
+                }}
+                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <span className="flex items-center space-x-3">
+                  <span>📚</span>
+                  <span>Aprender</span>
+                </span>
+              </button>
+              <ul className="ml-4 mt-1 space-y-1">
+                <li>
+                  <button
+                    onClick={() => {
+                      onLearnWithSection('characters');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🈷️</span>
+                      <span>Caracteres</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      onLearnWithSection('tones');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🎵</span>
+                      <span>Tonos</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      onLearnWithSection('radicals');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🔠</span>
+                      <span>Radicales</span>
+                    </span>
+                  </button>
+                </li>
+                {/* ESCRITURA INTEGRADA EN APRENDER - CORREGIDO */}
+                <li>
+                  <button
+                    onClick={() => {
+                      onWritingClick(); // USA LA FUNCIÓN ESPECÍFICA
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>✍️</span>
+                      <span>Escritura</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </li>
+
+            {/* Desafíos Diarios */}
+            <li>
+              <button
+                onClick={() => {
+                  onNavigate('daily');
+                  onClose();
+                }}
+                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <span className="flex items-center space-x-3">
+                  <span>🎯</span>
+                  <span>Desafíos Diarios</span>
+                </span>
+              </button>
+              <ul className="ml-4 mt-1 space-y-1">
+                <li>
+                  <button
+                    onClick={() => {
+                      onDailyWithSection('characters');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🈷️</span>
+                      <span>Caracteres</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      onDailyWithSection('radicals');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🔠</span>
+                      <span>Radicales</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      onDailyWithSection('tones');
+                      onClose();
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span>🎵</span>
+                      <span>Tonos</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </li>
+
+            {/* Diccionario */}
+            <li>
+              <button
+                onClick={() => {
+                  onNavigate('dictionary');
+                  onClose();
+                }}
+                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <span className="flex items-center space-x-3">
+                  <span>📖</span>
+                  <span>Diccionario</span>
+                </span>
+              </button>
+            </li>
+
+            {/* Información */}
+            <li>
+              <button
+                onClick={() => {
+                  onNavigate('info');
+                  onClose();
+                }}
+                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <span className="flex items-center space-x-3">
+                  <span>ℹ️</span>
+                  <span>Información</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+
+          {/* VERSIÓN - MINIMALISTA */}
+          <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="text-center text-xs text-gray-500 dark:text-gray-400">
+              <div>中文学习 {APP_VERSION}</div>  {/* ← CAMBIADO: v0.1 por {APP_VERSION} */}
+              <div className="mt-1">Aprende Chino</div>
+            </div>
+          </div>
         </nav>
       </div>
     </>
   );
-}
+};
+
+export default Sidebar;

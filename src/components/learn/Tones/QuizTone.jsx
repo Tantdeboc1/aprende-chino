@@ -30,8 +30,8 @@ const TONE_OPTIONS = [
   { num: 4, label: "Cuarto tono ˋ" },
 ];
 
-function rand(arr) { 
-  return arr[Math.floor(Math.random() * arr.length)]; 
+function rand(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function buildQuiz(n = MAX_Q) {
@@ -41,10 +41,10 @@ function buildQuiz(n = MAX_Q) {
     const tone = 1 + Math.floor(Math.random() * 4);
     // 🔥 CORRECCIÓN: Construir pinyin con tono (ma1, ba2, etc.)
     const pinyinToSpeak = `${item.base}${tone}`;
-    out.push({ 
-      base: item.base, 
-      tone, 
-      pinyinToSpeak 
+    out.push({
+      base: item.base,
+      tone,
+      pinyinToSpeak
     });
   }
   return out;
@@ -56,6 +56,7 @@ export default function QuizTone({ goBack, speakChinese }) {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const initQuiz = () => {
     setQuestions(buildQuiz(MAX_Q));
@@ -63,11 +64,58 @@ export default function QuizTone({ goBack, speakChinese }) {
     setScore(0);
     setSelected(null);
     setShowResult(false);
+    setQuizStarted(true);
   };
 
-  useEffect(() => {
-    initQuiz();
-  }, []);
+  // PANTALLA DE INSTRUCCIONES
+  if (!quizStarted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="mb-8">
+            <button
+              onClick={goBack}
+              className="flex items-center text-gray-300 hover:text-white transition mb-4"
+            >
+              <ArrowLeft className="mr-2" />
+              Volver a Tonos
+            </button>
+            <h1 className="text-3xl font-bold text-white text-center">Quiz de Tonos</h1>
+            <p className="text-gray-400 text-center">Identificación Auditiva</p>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
+            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <div className="space-y-3 text-gray-300">
+              <div className="flex items-start">
+                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <p>Escucha la sílaba y identifica su tono</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <p>Selecciona entre los 4 tonos posibles</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <p><strong>10 preguntas</strong> en total</p>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <p>¡Aguza tu oído para los tonos del chino!</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={initQuiz}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
+          >
+            🎵 Comenzar Quiz
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!questions.length) {
     return (
@@ -113,7 +161,7 @@ export default function QuizTone({ goBack, speakChinese }) {
           <h2 className="text-3xl font-bold text-white mb-4">¡Quiz de tonos completado!</h2>
           <p className="text-5xl font-bold text-red-400 mb-6">{score}/{questions.length}</p>
           <p className="text-gray-300 mb-6">
-            {score === questions.length ? "¡Perfecto! 🌟" : 
+            {score === questions.length ? "¡Perfecto! 🌟" :
              score >= questions.length * 0.7 ? "¡Muy bien! 👏" :
              "Sigue practicando 💪"}
           </p>
@@ -124,8 +172,8 @@ export default function QuizTone({ goBack, speakChinese }) {
             >
               Jugar otra vez
             </button>
-            <button 
-              onClick={goBack} 
+            <button
+              onClick={goBack}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
             >
               Volver
@@ -144,14 +192,14 @@ export default function QuizTone({ goBack, speakChinese }) {
             <ArrowLeft className="mr-2" />
             Volver a Tonos
           </button>
-          
+
           <div className="text-center">
             <span className="text-gray-300 font-semibold text-base block">
               {idx + 1}/{questions.length} | Puntos: {score}
             </span>
             {/* Barra de progreso */}
             <div className="w-32 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
-              <div 
+              <div
                 className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${((idx + 1) / questions.length) * 100}%` }}
               />
@@ -173,8 +221,8 @@ export default function QuizTone({ goBack, speakChinese }) {
             Pulsa el botón para oír la sílaba. No se muestra pinyin ni caracteres.
           </p>
 
-          <button 
-            onClick={listen} 
+          <button
+            onClick={listen}
             className="mx-auto mb-8 px-8 py-5 rounded-xl bg-green-500 hover:bg-green-600 text-white text-xl font-bold shadow-lg transition transform hover:scale-105"
           >
             🔊 Escuchar
@@ -192,10 +240,10 @@ export default function QuizTone({ goBack, speakChinese }) {
                 else cls = "bg-gray-600 text-gray-400";
               }
               return (
-                <button 
-                  key={opt.num} 
-                  onClick={() => answer(opt.num)} 
-                  disabled={showResult} 
+                <button
+                  key={opt.num}
+                  onClick={() => answer(opt.num)}
+                  disabled={showResult}
                   className={`${base} ${cls}`}
                 >
                   {opt.label}
@@ -213,8 +261,8 @@ export default function QuizTone({ goBack, speakChinese }) {
                   <span className="text-red-400 font-bold">✗ Era el {q.tone}º tono</span>
                 )}
               </p>
-              <button 
-                onClick={next} 
+              <button
+                onClick={next}
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
               >
                 {idx + 1 >= questions.length ? 'Ver Resultado' : 'Siguiente'}

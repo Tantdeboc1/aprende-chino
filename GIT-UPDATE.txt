@@ -21,6 +21,8 @@ En VS Code:  Ctrl + ñ   o  Ver → Terminal
 git status
 → Muestra qué archivos han cambiado.
 
+npm version minor
+
 ──────────────────────────────
 🔹 4. Añadir todos los cambios
 ──────────────────────────────

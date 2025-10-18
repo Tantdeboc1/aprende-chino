@@ -22,8 +22,9 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
           <p className="text-xl text-gray-300">Xuéxí - Aprender</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Button 
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Caracteres */}
+          <Button
             variant="card"
             onClick={() => {
               setLearnSection("characters");
@@ -37,7 +38,38 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             <p className="text-gray-400">Caracteres Chinos</p>
           </Button>
 
-          <Button 
+          {/* Escritura - NUEVO */}
+          <Button
+            variant="card"
+            onClick={() => {
+              setLearnSection("writing");
+              if (setToneSection) setToneSection(null);
+            }}
+            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+          >
+            <div className="text-5xl mb-4">✍️</div>
+            <h3 className="text-2xl font-bold text-white mb-2">书写</h3>
+            <p className="text-lg text-gray-300 mb-1">Shūxiě</p>
+            <p className="text-gray-400">Escritura China</p>
+          </Button>
+
+          {/* Radicales */}
+          <Button
+            variant="card"
+            onClick={() => {
+              setLearnSection("radicals");
+              if (setToneSection) setToneSection(null);
+            }}
+            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+          >
+            <div className="text-5xl mb-4">🔠</div>
+            <h3 className="text-2xl font-bold text-white mb-2">部首</h3>
+            <p className="text-lg text-gray-300 mb-1">Bùshǒu</p>
+            <p className="text-gray-400">Radicales Chinos</p>
+          </Button>
+
+          {/* Tonos */}
+          <Button
             variant="card"
             onClick={() => {
               setLearnSection("tones");
@@ -51,6 +83,8 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             <p className="text-gray-400">Tonos del Chino</p>
           </Button>
         </div>
+
+        {/* 🔥 ELIMINADO: La sección "¿Por qué aprender radicales?" */}
       </Container>
     </div>
   );

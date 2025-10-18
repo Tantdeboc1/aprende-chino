@@ -88,6 +88,12 @@ class AudioCompressor {
   async playCompressedAudio(src, audioKey) {
     await this.init();
 
+    // 🔥 EN iOS, USAR SIEMPRE AUDIO NORMAL (MÁS COMPATIBLE)
+    if (this.isIOS) {
+      console.log('📱 iOS detectado - usando Audio() directo');
+      return this.playNormalAudio(src, audioKey);
+    }
+
     // 🔥 CRÍTICO PARA iOS: Desbloquear antes de reproducir
     if (this.isIOS && !this.audioContextUnlocked) {
       await this.unlockAudioContext();
@@ -179,7 +185,13 @@ class AudioCompressor {
 
   playNormalAudio(src, audioKey) {
     return new Promise((resolve, reject) => {
+      console.log('🎵 Intentando reproducir audio normal:', src);
+
       const audio = new Audio();
+
+      // 🔥 CONFIGURAR ANTES DE ASIGNAR SRC
+      audio.preload = 'auto';
+      audio.crossOrigin = 'anonymous';
 
       const cachedVolume = this.volumeCache.get(audioKey);
       if (cachedVolume !== undefined) {
@@ -187,30 +199,55 @@ class AudioCompressor {
         audio.volume = Math.min(0.8, multiplier * 0.8);
         console.log('🎚️ Fallback con volumen:', audioKey, '->', audio.volume.toFixed(2));
       } else {
-        audio.volume = 0.7;
+        audio.volume = 0.8; // 🔥 VOLUMEN MÁS ALTO PARA iOS
       }
 
-      audio.onended = () => resolve(true);
-      audio.onerror = () => {
-        console.error('❌ Error reproduciendo audio:', src);
+      let hasEnded = false;
+
+      audio.onended = () => {
+        console.log('✅ Audio terminado:', audioKey);
+        hasEnded = true;
+        resolve(true);
+      };
+
+      audio.onerror = (e) => {
+        console.error('❌ Error reproduciendo audio:', src, e);
         reject(new Error(`No se pudo reproducir ${src}`));
       };
 
+      audio.oncanplaythrough = () => {
+        console.log('📥 Audio cargado y listo:', audioKey);
+      };
+
+      // 🔥 ASIGNAR SRC Y REPRODUCIR
       audio.src = src;
+      audio.load(); // Forzar carga
 
-      // 🔥 iOS requiere manejar la promesa de play()
-      const playPromise = audio.play();
+      // 🔥 ESPERAR UN POCO ANTES DE REPRODUCIR (CRÍTICO EN iOS)
+      setTimeout(() => {
+        const playPromise = audio.play();
 
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('✅ Audio reproduciéndose:', audioKey);
-          })
-          .catch(error => {
-            console.error('❌ Error en play():', error);
-            reject(error);
-          });
-      }
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('▶️ Audio reproduciéndose:', audioKey);
+              // Timeout de seguridad
+              setTimeout(() => {
+                if (!hasEnded) {
+                  console.log('⏱️ Timeout - considerando audio terminado');
+                  resolve(true);
+                }
+              }, 5000);
+            })
+            .catch(error => {
+              console.error('❌ Error en play():', error.name, error.message);
+              reject(error);
+            });
+        } else {
+          // Navegadores antiguos
+          setTimeout(() => resolve(true), 2000);
+        }
+      }, 50); // Pequeño delay para iOS
     });
   }
 }
@@ -239,6 +276,7 @@ const toneMap = {
   'ǖ':'v1', 'ǘ':'v2', 'ǚ':'v3', 'ǜ':'v4',
   'ü':'v',
 };
+
 function toneMarkedToNumber(pinyin) {
   if (!pinyin) return { base: "", tone: 0 };
   let tone = 0;
