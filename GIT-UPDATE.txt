@@ -40,7 +40,7 @@ git commit -m "Actualización: limpieza App y TTS externo"
 ──────────────────────────────
 🔹 6. Subir los cambios a GitHub
 ──────────────────────────────
-git push origin main
+git push origin main --tags
 
 → Esto enviará todo al repositorio remoto.
 
