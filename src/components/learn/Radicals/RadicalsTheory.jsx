@@ -1,8 +1,10 @@
 // src/components/learn/Radicals/RadicalsTheory.jsx
 import { useState } from "react";
 import { ArrowLeft, Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function RadicalsTheory({ goBack, radicals }) {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRadical, setSelectedRadical] = useState(null);
 
@@ -59,12 +61,12 @@ export default function RadicalsTheory({ goBack, radicals }) {
             className="flex items-center text-gray-300 hover:text-white transition"
           >
             <ArrowLeft className="mr-2" />
-            Volver a Radicales
+            {t('radicals_back_to_radicals')}
           </button>
 
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white">Teoría de Radicales</h1>
-            <p className="text-gray-400">Aprende los componentes básicos del chino</p>
+            <h1 className="text-3xl font-bold text-white">{t('radicals_theory_title_long')}</h1>
+            <p className="text-gray-400">{t('radicals_theory_subtitle')}</p>
           </div>
 
           <div className="w-32"></div>
@@ -76,7 +78,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Buscar radical, carácter, pinyin o significado..."
+              placeholder={t('radicals_search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
@@ -91,39 +93,37 @@ export default function RadicalsTheory({ goBack, radicals }) {
             )}
           </div>
           <p className="text-center text-gray-500 text-sm mt-2">
-            {filteredRadicals.length} radicales encontrados
+            {t('radicals_found_count', { count: filteredRadicals.length })}
           </p>
         </div>
 
         {/* Información introductoria */}
         <div className="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
-          <h2 className="text-2xl font-bold text-white mb-4">¿Qué son los radicales?</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('radicals_what_are_radicals')}</h2>
           <div className="grid md:grid-cols-2 gap-6 text-gray-300">
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2">Definición</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">{t('radicals_definition_title')}</h3>
               <p className="mb-4">
-                Los radicales (部首 bùshǒu) son componentes básicos de los caracteres chinos.
-                Cada carácter está compuesto por uno o más radicales que aportan pistas sobre
-                su significado o pronunciación.
+                {t('radicals_definition_text')}
               </p>
-              <h3 className="text-lg font-semibold text-white mb-2">Importancia</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">{t('radicals_importance_title')}</h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <span className="text-green-400 mr-2">•</span>
-                  Ayudan a memorizar caracteres
+                  {t('radicals_importance_point1')}
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-400 mr-2">•</span>
-                  Facilitan la búsqueda en diccionarios
+                  {t('radicals_importance_point2')}
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-400 mr-2">•</span>
-                  Revelan relaciones entre caracteres
+                  {t('radicals_importance_point3')}
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2">Ejemplo práctico</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">{t('radicals_example_title')}</h3>
               <div className="bg-gray-700 rounded-lg p-4">
                 <div className="flex items-center justify-center space-x-4 mb-3">
                   <div className="text-4xl font-bold text-white">女</div>
@@ -136,7 +136,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                   <span className="text-gray-400">女 (mujer)</span> + <span className="text-gray-400">子 (hijo)</span> = <span className="text-blue-400">好 (bueno)</span>
                 </p>
                 <p className="text-xs text-gray-500 text-center mt-2">
-                  "Una mujer con un hijo se considera algo bueno"
+                  {t('radicals_example_explanation')}
                 </p>
               </div>
             </div>
@@ -149,9 +149,9 @@ export default function RadicalsTheory({ goBack, radicals }) {
             <div key={groupName} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                 <span className="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                {groupName}
+                {t('radicals_stroke_group', { count: groupName.replace('Trazo ', '') })}
                 <span className="ml-2 text-sm text-gray-400 bg-gray-700 px-2 py-1 rounded">
-                  {groupRadicals.length} radical{groupRadicals.length !== 1 ? 'es' : ''}
+                  {groupRadicals.length} {groupRadicals.length !== 1 ? 'radicales' : 'radical'}
                 </span>
               </h3>
 
@@ -173,7 +173,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                           </div>
                         )}
                         <div className="text-xs text-gray-400 bg-gray-800 px-2 py-1 rounded">
-                          {radical.examples?.length || 0} ejemplos
+                          {t('radicals_example_count', { count: radical.examples?.length || 0 })}
                         </div>
                       </div>
                     </div>
@@ -206,14 +206,14 @@ export default function RadicalsTheory({ goBack, radicals }) {
                     {selectedRadical?.radical === radical.radical && (
                       <div className="mt-4 pt-4 border-t border-gray-600">
                         <h4 className="text-sm font-semibold text-white mb-2">
-                          Caracteres que usan este radical ({radical.examples?.length || 0}):
+                          {t('radicals_characters_using_radical', { count: radical.examples?.length || 0 })}
                         </h4>
                         <div className="space-y-2 max-h-40 overflow-y-auto">
                           {radical.examples?.map((exampleChar, charIndex) => (
                             <div key={charIndex} className="flex items-center space-x-3 text-sm">
                               <span className="text-lg font-bold text-white">{exampleChar}</span>
                               <span className="text-gray-400 text-xs">
-                                (más información en el diccionario)
+                                {t('radicals_more_info_in_dictionary')}
                               </span>
                             </div>
                           ))}
@@ -223,12 +223,12 @@ export default function RadicalsTheory({ goBack, radicals }) {
                         <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                           {radical.frequency && (
                             <div className="text-gray-400">
-                              Frecuencia: <span className="text-white">{radical.frequency}</span>
+                              {t('radicals_frequency')} <span className="text-white">{radical.frequency}</span>
                             </div>
                           )}
                           {radical.variants && radical.variants.length > 0 && (
                             <div className="text-gray-400">
-                              Variantes: <span className="text-white">{radical.variants.join(', ')}</span>
+                              {t('radicals_variants')} <span className="text-white">{radical.variants.join(', ')}</span>
                             </div>
                           )}
                         </div>
@@ -245,19 +245,18 @@ export default function RadicalsTheory({ goBack, radicals }) {
         {filteredRadicals.length === 0 && searchTerm && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-bold text-white mb-2">No se encontraron radicales</h3>
+            <h3 className="text-xl font-bold text-white mb-2">{t('radicals_no_radicals_found_title')}</h3>
             <p className="text-gray-400">
-              No hay radicales que coincidan con "{searchTerm}". Intenta con otro término.
+              {t('radicals_no_radicals_found_text', { searchTerm })}
             </p>
           </div>
         )}
 
         {/* Resumen final */}
         <div className="bg-blue-900/20 rounded-xl p-6 mt-8 border border-blue-700/30">
-          <h3 className="text-xl font-bold text-white mb-3">💡 Consejo de estudio</h3>
+          <h3 className="text-xl font-bold text-white mb-3">💡 {t('radicals_study_tip_title')}</h3>
           <p className="text-blue-200">
-            Estudia 3-5 radicales por día y trata de identificar los caracteres que los contienen.
-            Con el tiempo, podrás descomponer caracteres complejos en partes reconocibles.
+            {t('radicals_study_tip_text')}
           </p>
         </div>
 
@@ -267,13 +266,13 @@ export default function RadicalsTheory({ goBack, radicals }) {
             onClick={goBack}
             className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition"
           >
-            Volver
+            {t('radicals_back_button')}
           </button>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition"
           >
-            ↑ Volver arriba
+            ↑ {t('radicals_back_to_top_button')}
           </button>
         </div>
       </div>

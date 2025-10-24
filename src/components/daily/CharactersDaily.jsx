@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import Card from "@/components/ui/Card.jsx";
+import { useTranslation } from "react-i18next";
 
 // === Self-contained Daily.jsx (MODO OSCURO) ===
 const MAX_ATTEMPTS = 5;
@@ -87,18 +88,18 @@ function saveIndex(dateKey, idx) {
   } catch {}
 }
 
-function getHint(attempt, charData) {
+function getHint(attempt, charData, t) {
   if (!charData) return null;
   const { pinyin, meaning, radical } = charData;
   const safePinyin = typeof pinyin === "string" && pinyin.length ? pinyin : null;
   const safeMeaning = typeof meaning === "string" && meaning.length ? meaning : null;
   const safeRadical = typeof radical === "string" && radical.length ? radical : null;
   const hints = [
-    { label: "Pista 1", content: safePinyin ? `El pinyin empieza por: “${safePinyin[0]}…”` : "Es un carácter muy común del HSK1." },
-    { label: "Pista 2", content: safeMeaning ? `El significado empieza por: “${safeMeaning[0].toUpperCase()}…”` : "Su significado es básico (pronombres, números, direcciones…)." },
-    { label: "Pista 3", content: safeRadical ? `Radical: ${safeRadical}` : "El radical es sencillo." },
-    { label: "Pista 4", content: "Lo verías en frases cortas del nivel inicial." },
-    { label: "Pista 5", content: "¡Última pista! Está entre los primeros 50 más comunes." },
+    { label: t('daily_hint_label', { count: 1 }), content: safePinyin ? t('daily_hint_1_pinyin', { char: safePinyin[0] }) : t('daily_hint_1_common') },
+    { label: t('daily_hint_label', { count: 2 }), content: safeMeaning ? t('daily_hint_2_meaning', { char: safeMeaning[0].toUpperCase() }) : t('daily_hint_2_basic') },
+    { label: t('daily_hint_label', { count: 3 }), content: safeRadical ? t('daily_hint_3_radical', { radical: safeRadical }) : t('daily_hint_3_simple') },
+    { label: t('daily_hint_label', { count: 4 }), content: t('daily_hint_4') },
+    { label: t('daily_hint_label', { count: 5 }), content: t('daily_hint_5') },
   ];
   const idx = Math.min(Math.max(1, attempt), hints.length) - 1;
   return hints[idx];
@@ -106,6 +107,7 @@ function getHint(attempt, charData) {
 
 // ---------- component ----------
 function Daily({ goBack }) {
+  const { t } = useTranslation();
   // loading
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -129,7 +131,12 @@ function Daily({ goBack }) {
         const res = await fetch(`${BASE}data/hsk1-data.json`, { cache: 'no-cache' });
         if (!res.ok) throw new Error('No se pudo cargar /data/hsk1-data.json');
         const data = await res.json();
-        const arr = Array.isArray(data?.characters) ? data.characters : [];
+
+        const arr = Object.entries(data.characters).map(([char, details]) => ({
+          char,
+          ...details
+        }));
+
         if (mounted) setDictionary(arr);
       } catch (e) {
         if (mounted) setError(e.message || 'Error al cargar el diccionario');
@@ -207,16 +214,16 @@ function Daily({ goBack }) {
     }
   };
 
-  if (loading) return <p className="text-center text-gray-400 p-6">Cargando HSK1…</p>;
-  if (error) return <p className="text-center text-red-400 p-6">Error: {error}</p>;
+  if (loading) return <p className="text-center text-gray-400 p-6">{t('daily_loading_hsk1')}</p>;
+  if (error) return <p className="text-center text-red-400 p-6">{t('daily_error_loading_dictionary')}: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       <Container>
         <div className="mb-6">
           <button onClick={handleBack} className="flex items-center text-gray-300 hover:text-white">
             <ArrowLeft className="mr-2" />
-            Menú
+            {t('daily_back_to_challenges')}
           </button>
         </div>
 
@@ -224,7 +231,7 @@ function Daily({ goBack }) {
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-2">每日挑战</h2>
             <p className="text-xl text-gray-300">Měi rì tiǎozhàn</p>
-            <p className="text-gray-400 mt-1">Desafío Diario</p>
+            <p className="text-gray-400 mt-1">{t('daily_challenge_title')}</p>
           </div>
 
           {dailyChar ? (
@@ -244,9 +251,9 @@ function Daily({ goBack }) {
 
               {!isBlocked ? (
                 <>
-                  <p className="text-gray-300 mb-2">Adivina el significado o el pinyin</p>
+                  <p className="text-gray-300 mb-2">{t('daily_guess_meaning_or_pinyin')}</p>
                   <p className="text-sm text-gray-400 mb-6">
-                    Te quedan {remaining} intento{remaining !== 1 ? 's' : ''}
+                    {remaining === 1 ? t('daily_attempts_left', { count: remaining }) : t('daily_attempts_left_plural', { count: remaining })}
                   </p>
 
                   <div className="space-y-4 mb-6">
@@ -255,7 +262,7 @@ function Daily({ goBack }) {
                       value={guess}
                       onChange={(e) => setGuess(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && tryGuess()}
-                      placeholder="Tu respuesta..."
+                      placeholder={t('daily_your_answer_placeholder')}
                       className="w-full px-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
                       autoFocus
                       disabled={isBlocked}
@@ -265,14 +272,14 @@ function Daily({ goBack }) {
                       onClick={tryGuess}
                       disabled={isBlocked}
                     >
-                      Comprobar
+                      {t('daily_check_button')}
                     </Button>
                   </div>
 
                   {dailyAttempts > 0 && (
                     <div className="space-y-3">
                       {[...Array(Math.min(dailyAttempts, MAX_ATTEMPTS))].map((_, i) => {
-                        const hint = getHint(i + 1, dailyChar);
+                        const hint = getHint(i + 1, dailyChar, t);
                         return hint ? (
                           <div key={i} className="bg-yellow-900 border-2 border-yellow-700 rounded-lg p-4 text-left">
                             <p className="text-yellow-300 font-semibold">{hint.label}</p>
@@ -287,27 +294,27 @@ function Daily({ goBack }) {
                 <div className="space-y-4">
                   <div className="text-6xl mb-2">{dailyComplete ? '✅' : '😔'}</div>
                   <h3 className={'text-2xl font-bold ' + (dailyComplete ? 'text-green-400' : 'text-red-400') }>
-                    {dailyComplete ? '¡Completado!' : '¡Se acabaron los intentos!'}
+                    {dailyComplete ? t('daily_completed_title') : t('daily_out_of_attempts_title')}
                   </h3>
                   {!dailyComplete && (
                     <>
-                      <p className="text-gray-300 mb-4">La respuesta correcta era:</p>
+                      <p className="text-gray-300 mb-4">{t('daily_correct_answer_was')}</p>
                       <div className="bg-gray-700 rounded-lg p-6 mb-2">
-                        <p className="text-xl text-gray-300 mb-1"><strong>Pinyin:</strong> {dailyChar.pinyin}</p>
-                        <p className="text-lg text-gray-200 font-semibold"><strong>Significado:</strong> {dailyChar.meaning}</p>
+                        <p className="text-xl text-gray-300 mb-1"><strong>{t('daily_pinyin_label')}</strong> {dailyChar.pinyin}</p>
+                        <p className="text-lg text-gray-200 font-semibold"><strong>{t('daily_meaning_label')}</strong> {dailyChar.meaning}</p>
                       </div>
                     </>
                   )}
                   <div className="flex gap-3 justify-center">
                     <button onClick={resetToday} className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-3 px-6 rounded-lg transition">
-                      Reiniciar de hoy (nuevo carácter)
+                      {t('daily_reset_button')}
                     </button>
                   </div>
                 </div>
               )}
             </div>
           ) : (
-            <p className="text-center text-gray-400">No hay datos en HSK1 (characters vacío).</p>
+            <p className="text-center text-gray-400">{t('daily_no_hsk1_data')}</p>
           )}
         </Card>
       </Container>

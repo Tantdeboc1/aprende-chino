@@ -6,20 +6,39 @@ import Layout from "@/components/ui/Layout.jsx";
 import { useNavigation } from './utils/navigation.js';
 
 export default function App() {
-  // FORZAR MODO OSCURO SIEMPRE
+  // FORZAR MODO OSCURO SIEMPRE - VERSIÓN MEJORADA
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-    document.documentElement.classList.remove('light');
+    // Función para forzar modo oscuro
+    const forceDarkMode = () => {
+      // Eliminar cualquier clase de modo claro
+      document.documentElement.classList.remove('light');
+      // Forzar clase de modo oscuro
+      document.documentElement.classList.add('dark');
+      // Establecer atributo data-theme para mayor seguridad
+      document.documentElement.setAttribute('data-theme', 'dark');
+      // Forzar también el color de fondo del body
+      document.body.classList.add('bg-gray-900', 'text-white');
+      document.body.style.backgroundColor = '#111827';
+      document.body.style.color = '#ffffff';
+    };
 
+    // Aplicar inmediatamente
+    forceDarkMode();
+
+    // Prevenir cualquier cambio futuro del sistema
     const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
     const handleChange = () => {
-      document.documentElement.classList.add('dark');
+      forceDarkMode();
     };
 
     mediaQuery.addEventListener('change', handleChange);
 
+    // También aplicar en intervalos por si hay algún script que intente cambiar el tema
+    const interval = setInterval(forceDarkMode, 1000);
+
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
+      clearInterval(interval);
     };
   }, []);
 
@@ -111,20 +130,6 @@ export default function App() {
 
   // Load data (HSK1 Y RADICALES)
   useEffect(() => {
-    const toNumberedFromMarked = (s) => {
-      if (!s) return '';
-      const parts = String(s).split(/\s+/).filter(Boolean);
-      return parts.map(normalizeSyllableToNumbered).join(' ');
-    };
-    const toPlain = (s) => {
-      return String(s || '')
-        .toLowerCase()
-        .replace(/ǚ/g, 'v')
-        .normalize('NFD')
-        .replace(/\p{Diacritic}/gu, '')
-        .replace(/[1-4]/g, '')
-        .trim();
-    };
     const toneFromNumeric = (s) => {
       const m = String(s || '').trim().match(/([1-4])$/);
       return m ? Number(m[1]) : 0;
@@ -142,44 +147,80 @@ export default function App() {
         base
       ];
     };
-    const enrichCharacters = (arr) => {
-      if (!Array.isArray(arr)) return [];
-      return arr.map((it) => {
-        const p = it.pinyin || '';
-        const pNum = toNumberedFromMarked(p);
-        const pPlain = toPlain(pNum || p);
-        const tone = toneFromNumeric(pNum);
-        const audioKeys = audioKeysFromNumeric(pNum || pPlain);
-        return {
-          ...it,
-          pinyinNumeric: pNum,
-          pinyinPlain: pPlain,
-          tone,
-          audioKeys
-        };
-      });
-    };
 
     async function loadData() {
       try {
         setIsLoading(true);
 
-        // CARGAR DATOS HSK1
+        const fromNumericToMarked = (pinyinNum) => {
+            if (!pinyinNum) return '';
+            const VOWELS = "aeiouvü";
+            const TONE_MAP = {
+                'a': ['ā', 'á', 'ǎ', 'à'], 'e': ['ē', 'é', 'ě', 'è'],
+                'i': ['ī', 'í', 'ǐ', 'ì'], 'o': ['ō', 'ó', 'ǒ', 'ò'],
+                'u': ['ū', 'ú', 'ǔ', 'ù'], 'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ'],
+                'v': ['ǖ', 'ǘ', 'ǚ', 'ǜ']
+            };
+
+            const match = String(pinyinNum).toLowerCase().match(/^([a-z_]+[a-z])([1-4])$/);
+            if (!match) return pinyinNum.replace(/[0-5]/g, '');
+
+            let base = match[1].replace('v', 'ü');
+            const tone = parseInt(match[2]) - 1;
+
+            let vowelIndex = -1;
+            if (base.includes('a') || base.includes('e')) {
+                vowelIndex = base.indexOf('a') !== -1 ? base.indexOf('a') : base.indexOf('e');
+            } else if (base.includes('ou')) {
+                vowelIndex = base.indexOf('o');
+            } else {
+                for (let i = base.length - 1; i >= 0; i--) {
+                    if (VOWELS.includes(base[i])) {
+                        vowelIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (vowelIndex !== -1 && TONE_MAP[base[vowelIndex]]) {
+                const vowel = base[vowelIndex];
+                const markedVowel = TONE_MAP[vowel][tone];
+                return base.substring(0, vowelIndex) + markedVowel + base.substring(vowelIndex + 1);
+            }
+
+            return base;
+        };
+
         const res = await fetch(assetUrl('data/hsk1-data.json'));
         if (!res.ok) throw new Error('No se pudo cargar hsk1-data.json');
         const data = await res.json();
-        const baseChars = Array.isArray(data?.characters)
-          ? data.characters
-          : (Array.isArray(data?.hsk1?.characters) ? data.hsk1.characters : []);
-        const charactersEnriched = enrichCharacters(baseChars);
 
-        // CARGAR DATOS DE RADICALES
+        const charactersEnriched = Object.entries(data.characters).map(([char, details]) => {
+          const pNum = details.pinyin || '';
+          return {
+            char,
+            radical: details.radical,
+            meaning: details.meaning,
+            tags: details.tags || [],
+            pinyin: fromNumericToMarked(pNum),
+            pinyinNumeric: pNum,
+            pinyinPlain: pNum.replace(/[1-4]/g, ''),
+            tone: toneFromNumeric(pNum),
+            audioKeys: audioKeysFromNumeric(pNum),
+            hskLevel: data.hskLevel,
+          };
+        });
+
         const radicalsRes = await fetch(assetUrl('data/radicals-data.json'));
         if (!radicalsRes.ok) throw new Error('No se pudo cargar radicals-data.json');
-        const radicalsData = await radicalsRes.json();
+        const radicalsDataRaw = await radicalsRes.json();
+        const radicalsEnriched = Object.entries(radicalsDataRaw.radicals).map(([radical, details]) => ({
+          radical,
+          ...details
+        }));
 
         setAppData({ ...data, characters: charactersEnriched });
-        setRadicalsData(radicalsData.radicals || radicalsData || []);
+        setRadicalsData(radicalsEnriched);
 
       } catch (e) {
         console.error('Error al cargar datos:', e);
@@ -190,7 +231,7 @@ export default function App() {
     loadData();
   }, []);
 
-  const characters = appData ? (appData.characters || appData.hsk1?.characters || []) : [];
+  const characters = appData?.characters || [];
   const radicals = radicalsData;
 
   // Hanzi -> Pinyin map COMPLETO
@@ -271,7 +312,7 @@ export default function App() {
     return Array.from(forms);
   }
 
-  // FUNCIÓN SPEAK
+  // FUNCIÓN SPEAK MEJORADA Y ROBUSTA
   const speak = async (keyOrText, opts = {}) => {
     if (!audioInitialized) {
       await initializeAudio();
@@ -287,79 +328,17 @@ export default function App() {
     try {
       setIsSpeaking(true);
 
-      let textToSpeak = '';
-      let isHanziInput = false;
-
-      if (typeof keyOrText === 'string') {
-        isHanziInput = /^[\u4e00-\u9fff]+$/.test(keyOrText);
-        if (isHanziInput) {
-          const chars = Array.from(keyOrText);
-          const mapped = chars.map(ch => hanziToPinyin.get(ch)).filter(Boolean);
-          textToSpeak = mapped.join(' ');
-
-          if (!textToSpeak) {
-            textToSpeak = keyOrText;
-          }
-        } else {
-          textToSpeak = keyOrText;
-        }
-      } else if (keyOrText && typeof keyOrText === 'object') {
-        textToSpeak = keyOrText.pinyin || keyOrText.hanzi || '';
-        isHanziInput = /^[\u4e00-\u9fff]+$/.test(textToSpeak);
-      }
-
-      if (!textToSpeak) {
-        console.log('❌ Texto vacío, no se puede reproducir');
-        return;
-      }
-
-      console.log('🔊 Procesando:', {
+      console.log('🔊 Llamando sistema de audio mejorado:', {
         input: keyOrText,
-        output: textToSpeak,
-        isHanziInput
+        category
       });
 
-      const syls = textToSpeak
-        .replace(/[,.;:!?。，；：！？]/g, ' ')
-        .split(/\s+|-/)
-        .map(s => s.trim())
-        .filter(Boolean);
-
-      for (const syl of syls) {
-        let played = false;
-
-        const normalizedSyl = normalizeSyllableToNumbered(syl);
-        console.log('📡 Sílaba normalizada:', { original: syl, normalized: normalizedSyl });
-
-        const allCandidates = candidatesForAudioKey(normalizedSyl);
-        console.log('🔍 Candidatos a probar:', allCandidates);
-
-        for (const key of allCandidates) {
-          try {
-            console.log('🔊 Probando key en manifest:', key);
-            const ok = await playAudioSmart(category, key, null);
-            if (ok) {
-              played = true;
-              console.log('✅ MP3 reproducido con éxito para:', key);
-              break;
-            }
-          } catch (error) {
-            console.error('Error reproduciendo MP3:', error);
-          }
-        }
-
-        if (!played) {
-          console.log('🎯 Ningún MP3 funcionó, usando TTS para:', syl);
-          try {
-            await playAudioSmart(category, syl, syl);
-          } catch (error) {
-            console.error('Error con TTS:', error);
-          }
-        }
-      }
+      // 🎯 USAR SISTEMA MEJORADO QUE SIEMPRE USA TTS COMO FALLBACK
+      const { speakChineseEnhanced } = await import('./utils/tts-enhanced.js');
+      await speakChineseEnhanced(keyOrText, { category });
 
     } catch (error) {
-      console.error('❌ Error grave en función speak:', error);
+      console.error('❌ Error en función speak:', error);
     } finally {
       setIsSpeaking(false);
     }
@@ -443,3 +422,4 @@ export default function App() {
 
   return null;
 }
+

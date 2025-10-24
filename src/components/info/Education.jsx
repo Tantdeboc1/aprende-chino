@@ -2,8 +2,10 @@ import { assetUrl } from '../../utils/assets';
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from "react-i18next";
 
 export default function Education({ goBack }) {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,40 +14,41 @@ export default function Education({ goBack }) {
     let alive = true;
     (async () => {
       try {
-        const res = await fetch(assetUrl('data/info.json'));
+        const lang = i18n.language || 'es';
+        const res = await fetch(assetUrl(`data/info.json`));
         const json = await res.json();
         if (!alive) return;
         setData(json);
       } catch (e) {
-        setError("No se pudo cargar /data/info.json");
+        setError(t('info_error_loading'));
       } finally {
         if (alive) setLoading(false);
       }
     })();
     return () => { alive = false; };
-  }, []);
+  }, [i18n.language, t]);
 
-  if (loading) return <div className="min-h-screen grid place-items-center bg-gradient-to-br from-gray-800 to-gray-900 text-gray-300">Cargando…</div>;
+  if (loading) return <div className="min-h-screen grid place-items-center bg-gray-900 text-gray-300">{t('info_loading')}</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       <Container>
         <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-6">
-          <ArrowLeft className="mr-2" /> Información
+          <ArrowLeft className="mr-2" /> {t('info_back_to_info')}
         </button>
 
         {error && <div className="bg-red-900 text-red-200 border border-red-700 rounded-md p-3 mb-4">{error}</div>}
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-          <h1 className="text-3xl font-bold text-white mb-2">🏫 Educación y Vida Estudiantil</h1>
-          <p className="text-gray-300 mb-6">Sistema educativo y rasgos distintivos.</p>
-          
+          <h1 className="text-3xl font-bold text-white mb-2">🏫 {t('info_education_student_life_title')}</h1>
+          <p className="text-gray-300 mb-6">{t('info_education_student_life_description')}</p>
+
           {data?.education?.topics && (
             <div className="space-y-4">
-              {data.education.topics.map((t, i) => (
+              {data.education.topics.map((topic, i) => (
                 <div key={i} className="rounded-xl border border-gray-600 p-4 hover:shadow-lg transition bg-gray-700">
-                  <div className="text-lg font-semibold text-white">{t.title}</div>
-                  <div className="text-gray-300">{t.desc}</div>
+                  <div className="text-lg font-semibold text-white">{topic.title}</div>
+                  <div className="text-gray-300">{topic.desc}</div>
                 </div>
               ))}
             </div>

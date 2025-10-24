@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import Menu from '@/components/menu';
 import Dictionary from '@/components/Dictionary.jsx';
 import InfoIndex from "@/components/info/index.jsx";
+import MiniGames from '@/components/MiniGames.jsx';
 import LearnMenu from "@/components/learn/LearnMenu.jsx";
 import DailyIndex from "@/components/daily/DailyIndex.jsx";
 import WritingMenu from "@/components/learn/Writing/index.jsx";
@@ -23,6 +24,9 @@ import SpecialSyllables from "@/components/learn/Tones/SpecialSyllables.jsx";
 import CharactersDaily from "@/components/daily/CharactersDaily.jsx";
 import RadicalsDaily from "@/components/daily/RadicalsDaily.jsx";
 import TonesDaily from "@/components/daily/TonesDaily.jsx";
+// ... existing imports ...
+import TimeRace from '@/components/minigames/TimeRace.jsx';
+import PinyinConnection from '@/components/minigames/PinyinConnection.jsx';
 
 export function useNavigation(
   screen,
@@ -81,6 +85,31 @@ export function useNavigation(
       Component = InfoIndex;
       props = {
         goBack: () => setScreen('menu')
+      };
+    }
+
+    // === NUEVA SECCIÓN: MINI-JUEGOS ===
+    if (screen === 'minigames') {
+      Component = MiniGames;
+      props = {
+        goBack: () => setScreen('menu'),
+        navigateTo
+      };
+    }
+
+    if (screen === 'time-race') {
+      Component = TimeRace;
+      props = {
+        goBack: () => setScreen('minigames'),
+        characters
+      };
+    }
+
+    if (screen === 'pinyin-connection') {
+      Component = PinyinConnection;
+      props = {
+        goBack: () => setScreen('minigames'),
+        characters
       };
     }
 
@@ -271,3 +300,4 @@ export function useNavigation(
 
   return { CurrentComponent, componentProps };
 }
+

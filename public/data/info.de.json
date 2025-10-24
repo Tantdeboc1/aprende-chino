@@ -1,0 +1,529 @@
+{
+  "history": {
+    "overview": "Historischer Überblick über China von den legendären Anfängen bis zur Gegenwart.",
+    "timeline": [
+      {
+        "title": "Ursprünge und neolithische Kultur",
+        "years": "ca. 5000–2000 v. Chr.",
+        "desc": "Kulturen wie Yangshao und Longshan entwickeln Landwirtschaft, Keramik und komplexe Siedlungen. Diese Kulturen schufen Muster sozialer Organisation und Techniken, die die Entstehung früher Staaten und gemeinsamer Rituale erleichterten."
+      },
+      {
+        "title": "Xia-Dynastie (mythisch)",
+        "years": "ca. 2070–1600 v. Chr.",
+        "desc": "Traditionell als erste Dynastie angesehen; ihre Historizität ist umstritten. Über ihre Historizität hinaus dient ihre Geschichte als moralischer Rahmen für das Verständnis des Aufstiegs und Falls späterer Dynastien."
+      },
+      {
+        "title": "Shang-Dynastie",
+        "years": "ca. 1600–1046 v. Chr.",
+        "desc": "Fortgeschrittene Bronze, Orakelknochen mit archaischen Schriftzeichen. Werkstätten und Ritualzentren zeugen von einer spezialisierten Elite und regionalen Austauschnetzwerken."
+      },
+      {
+        "title": "Zhou-Dynastie (Westliche)",
+        "years": "1046–771 v. Chr.",
+        "desc": "Feudalsystem; Legitimität durch das 'Mandat des Himmels' (天命). Riten und Verwandtschaftsbeziehungen strukturierten das politische Leben und definierten Pflichten und Hierarchien."
+      },
+      {
+        "title": "Zhou (Östliche): Frühlings- und Herbstperiode",
+        "years": "770–476 v. Chr.",
+        "desc": "Politische Zersplitterung; intellektuelle Blüte: Konfuzius, Laotse, Sunzi. Umherziehende Lehrer berieten die Königreiche und hinterließen grundlegende Texte für die chinesische Philosophie."
+      },
+      {
+        "title": "Zhou (Östliche): Zeit der Streitenden Reiche",
+        "years": "475–221 v. Chr.",
+        "desc": "Mächtige Staaten konkurrieren um die Hegemonie; militärische und administrative Innovationen. Der Wettbewerb beschleunigte die Professionalisierung der Bürokratie und die gesetzliche Standardisierung."
+      },
+      {
+        "title": "Qin-Einigung",
+        "years": "221–206 v. Chr.",
+        "desc": "Qin Shi Huang eint China; standardisiert Schrift, Währung und Maße; Beginn großer Verteidigungsanlagen. Die Zentralisierung ermöglichte große öffentliche Bauwerke, obwohl die Härte der Politik Widerstand hervorrief."
+      },
+      {
+        "title": "Han-Dynastie (Westliche)",
+        "years": "206 v. Chr.–9 n. Chr.",
+        "desc": "Kaiserliche Konsolidierung; Öffnung der Seidenstraße; konfuzianische Bürokratie. Dauerhafte Institutionen und eine literarische Kultur, die ganz Ostasien beeinflussen sollte, wurden gefestigt."
+      },
+      {
+        "title": "Xin-Interregnum und Wiederherstellung der Han (Östliche)",
+        "years": "9–220",
+        "desc": "Kurze Xin-Dynastie; spätere Wiederherstellung der Han; kultureller und wissenschaftlicher Aufschwung. Die Verwaltung passte sich nach den Krisen neuen sozialen und wirtschaftlichen Gegebenheiten an."
+      },
+      {
+        "title": "Drei Reiche",
+        "years": "220–280",
+        "desc": "Wei, Shu und Wu konkurrieren; eine in der klassischen Literatur mythologisierte Epoche. Das volkstümliche Gedenken an diese Zeit beeinflusste Theater, Oper und spätere Erzählungen."
+      },
+      {
+        "title": "Jin und Nördliche und Südliche Dynastien",
+        "years": "265–589",
+        "desc": "Wechselnde Kontrolle; Sinisierung von Nicht-Han-Völkern; Entwicklung des chinesischen Buddhismus. Die Begegnung zwischen Han- und Nicht-Han-Traditionen förderte künstlerische und religiöse Innovationen."
+      },
+      {
+        "title": "Sui-Dynastie",
+        "years": "581–618",
+        "desc": "Wiedervereinigung; Großer Kanal; Verwaltungsreformen, die den Weg für die Tang ebnen. Der Große Kanal integrierte regionale Volkswirtschaften und erleichterte die Versorgung der Hauptstadt."
+      },
+      {
+        "title": "Tang-Dynastie",
+        "years": "618–907",
+        "desc": "Goldenes Zeitalter der Poesie und Künste; Chang'an als kosmopolitische Metropole; die kaiserliche Prüfung (科举) wird konsolidiert. Land- und Seerouten verbanden China mit Zentralasien, Indien und der islamischen Welt."
+      },
+      {
+        "title": "Fünf Dynastien und Zehn Reiche",
+        "years": "907–960",
+        "desc": "Zyklus kurzlebiger Staaten und Regionalismen nach dem Fall der Tang. Die politische Zersplitterung verhinderte nicht den städtischen und kommerziellen Fortschritt in mehreren Regionen."
+      },
+      {
+        "title": "Song-Dynastie (Nördliche und Südliche)",
+        "years": "960–1279",
+        "desc": "Innovationen: Schießpulver, Kompass, Buchdruck; Handelsboom; künstlerische Verfeinerung. Die Zivilverwaltung gewann an Gewicht gegenüber dem Militär, und die private Bildung expandierte."
+      },
+      {
+        "title": "Mongolenherrschaft: Yuan-Dynastie",
+        "years": "1271–1368",
+        "desc": "Eurasische Integration unter den Mongolen; intensive Kontakte mit dem Westen. Die Mobilität von Handwerkern und Astronomen führte zu technologischen und wissenschaftlichen Transfers."
+      },
+      {
+        "title": "Ming-Dynastie",
+        "years": "1368–1644",
+        "desc": "Wiederherstellung der Han; Reisen von Zheng He; Befestigung der Großen Mauer; handwerkliche Pracht. Die handwerkliche Produktion und die internen Handelsnetze erreichten einen großen Umfang."
+      },
+      {
+        "title": "Qing-Dynastie (Mandschu)",
+        "years": "1644–1912",
+        "desc": "Territoriale Expansion; ungleiche Begegnungen mit westlichen Mächten; späte Reformen. Späte Reformen führten Eisenbahnen, Industrien und neue Bildungseinrichtungen ein."
+      },
+      {
+        "title": "Republik China",
+        "years": "1912–1949",
+        "desc": "Ende des kaiserlichen Systems; interne Konflikte und der Chinesisch-Japanische Krieg; ungleiche Modernisierung. Die intellektuelle Debatte erneuerte Sprache, Literatur und Bildung und strebte die Modernisierung des Landes an."
+      },
+      {
+        "title": "Volksrepublik China: frühe Jahrzehnte",
+        "years": "1949–1978",
+        "desc": "Industrialisierung; politische Kampagnen; komplexe wirtschaftliche und soziale Herausforderungen. Alphabetisierung und öffentliche Gesundheit machten trotz politischer Schwankungen Fortschritte."
+      },
+      {
+        "title": "Reformen und Öffnung",
+        "years": "seit 1978",
+        "desc": "Beschleunigtes Wachstum; Urbanisierung; Integration in die Weltwirtschaft; wissenschaftliche und technologische Fortschritte. Städte und soziale Mobilität wuchsen, während Herausforderungen der Ungleichheit und Nachhaltigkeit entstanden."
+      }
+    ],
+    "glossary": [
+      {
+        "term": "Mandat des Himmels (天命)",
+        "desc": "Prinzip der politischen Legitimität, das auf der Tugend des Herrschers beruht. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "term": "Kaiserliche Prüfung (科举)",
+        "desc": "Leistungsgesellschaftliches System für den Zugang zur Verwaltung, das jahrhundertelang in Kraft war. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "term": "Seidenstraße",
+        "desc": "Netzwerk von Handels- und Kulturaustausch zwischen China, Zentralasien, dem Nahen Osten und Europa. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      }
+    ],
+    "suggestedReading": [
+      {
+        "title": "Cambridge History of China (Auswahl)",
+        "note": "Akademisches Nachschlagewerk nach Perioden."
+      },
+      {
+        "title": "Geschichte Chinas (J. Gernet)",
+        "note": "Klassische Synthese mit kulturellem und sozialem Schwerpunkt."
+      }
+    ]
+  },
+  "language": {
+    "facts": [
+      {
+        "title": "Töne",
+        "desc": "Standard-Mandarin hat 4 Töne und einen neutralen Ton; die Tonkontur ändert die Bedeutung. Diese Aspekte helfen zu verstehen, warum das Chinesischlernen Schrift, Klang und Kontext kombiniert."
+      },
+      {
+        "title": "Logographische Schrift",
+        "desc": "Jedes Zeichen (汉字) repräsentiert eine Silbe und ein Morphem; sie werden kombiniert, um Wörter zu bilden. Jedes Zeichen entspricht normalerweise einer Silbe mit Bedeutung; ihre Kombination ermöglicht die Bildung neuer Wörter und Nuancen."
+      },
+      {
+        "title": "Pinyin",
+        "desc": "Transkriptionssystem in das lateinische Alphabet zum Erlernen der Aussprache und zum Tippen. Das Beherrschen von Ton und Reim im Pinyin verbessert die Aussprache und erleichtert die Suche und das Tippen auf Geräten."
+      },
+      {
+        "title": "Vereinfachung",
+        "desc": "Seit Mitte des 20. Jahrhunderts wurden viele Striche vereinfacht, um die Alphabetisierung zu beschleunigen. In der Praxis existieren vereinfachte und traditionelle Zeichen je nach Region und kulturellem Kontext nebeneinander."
+      },
+      {
+        "title": "Dialekte",
+        "desc": "„Chinesisch“ fasst Familien wie Mandarin, Kantonesisch, Wu, Min… mit großen Unterschieden zusammen. Sie teilen eine gemeinsame Schriftsprache, aber die mündliche Verständlichkeit kann zwischen verschiedenen Familien sehr gering sein."
+      }
+    ],
+    "toneExamples": [
+      {
+        "char": "妈",
+        "pinyin": "mā",
+        "meaning": "Mutter (1. Ton)"
+      },
+      {
+        "char": "麻",
+        "pinyin": "má",
+        "meaning": "Hanf (2. Ton)"
+      },
+      {
+        "char": "马",
+        "pinyin": "mǎ",
+        "meaning": "Pferd (3. Ton)"
+      },
+      {
+        "char": "骂",
+        "pinyin": "mà",
+        "meaning": "schimpfen/beleidigen (4. Ton)"
+      }
+    ],
+    "scripts": {
+      "simplifiedExamples": [
+        {
+          "trad": "學",
+          "simp": "学",
+          "meaning": "lernen"
+        },
+        {
+          "trad": "國",
+          "simp": "国",
+          "meaning": "Land"
+        },
+        {
+          "trad": "門",
+          "simp": "门",
+          "meaning": "Tür"
+        },
+        {
+          "trad": "體",
+          "simp": "体",
+          "meaning": "Körper"
+        }
+      ]
+    }
+  },
+  "hsk": {
+    "levels": [
+      {
+        "level": 1,
+        "desc": "Einfache Sätze, persönliche Vorstellung, Zahlen, Zeit und Ort. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~150 Wörter"
+      },
+      {
+        "level": 2,
+        "desc": "Routinen, grundlegende Beschreibungen, tägliche Bedürfnisse. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~300 Wörter"
+      },
+      {
+        "level": 3,
+        "desc": "Schul-/Arbeitsleben, Vorlieben, einfache Vergleiche. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~600 Wörter"
+      },
+      {
+        "level": 4,
+        "desc": "Meinungen, Erzählungen, allgemeine soziale Themen. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~1000+ Wörter"
+      },
+      {
+        "level": 5,
+        "desc": "Lange Texte; Nachrichten, kulturelle und technische Themen. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~1500+ Wörter"
+      },
+      {
+        "level": 6,
+        "desc": "Hohe Kompetenz; Nuancen, formale Register, umfangreiches Lesen. Es wird empfohlen, den hochfrequenten Wortschatz zu festigen und mit realen Aufgaben des Niveaus zu üben, um flüssiger zu werden.",
+        "estimateVocab": "~2500+ Wörter"
+      }
+    ],
+    "tips": [
+      {
+        "tip": "Tägliches Hören üben",
+        "desc": "Langsame Podcasts, Dialoge und Lieder helfen, Strukturen zu festigen. Kombinieren Sie aktives Lernen (verteilte Wiederholung) mit verständlicher Exposition und regelmäßigen Selbstbewertungen."
+      },
+      {
+        "tip": "Frequenzlisten",
+        "desc": "Priorisieren Sie hochfrequenten Wortschatz und verteilte Wiederholungen (SRS). Kombinieren Sie aktives Lernen (verteilte Wiederholung) mit verständlicher Exposition und regelmäßigen Selbstbewertungen."
+      },
+      {
+        "tip": "Probeklausuren",
+        "desc": "Stoppen Sie die Zeit bei echten Prüfungsaufgaben, um Ihr Tempo zu trainieren. Kombinieren Sie aktives Lernen (verteilte Wiederholung) mit verständlicher Exposition und regelmäßigen Selbstbewertungen."
+      }
+    ]
+  },
+  "cuisine": {
+    "regions": [
+      {
+        "name": "Sichuan (川)",
+        "flavor": "scharf, betäubend (má là)",
+        "dishes": [
+          {
+            "name": "Mapo Tofu",
+            "desc": "Tofu mit Fleisch und Doubanjiang, Sichuanpfeffer. Charakteristisch für Sichuan (川); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Hot Pot",
+            "desc": "Scharfe rote Brühe zum Kochen von Fleisch und Gemüse. Charakteristisch für Sichuan (川); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Kung Pao Chicken",
+            "desc": "Gebratenes Hühnchen mit Erdnüssen und getrockneten Chilis. Charakteristisch für Sichuan (川); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          }
+        ]
+      },
+      {
+        "name": "Kanton (粤)",
+        "flavor": "mild, frisch, umami",
+        "dishes": [
+          {
+            "name": "Dim Sum",
+            "desc": "Gedämpfte/gebackene Häppchen zum Brunch. Charakteristisch für Kanton (粤); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Char Siu",
+            "desc": "Süßes gebratenes Schweinefleisch mit Honig und Sojasauce. Charakteristisch für Kanton (粤); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Congee",
+            "desc": "Tröstlicher Reisbrei, verschiedene Toppings. Charakteristisch für Kanton (粤); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          }
+        ]
+      },
+      {
+        "name": "Peking (京)",
+        "flavor": "aromatisch fettig, im Ofen gebacken",
+        "dishes": [
+          {
+            "name": "Pekingente",
+            "desc": "Knusprige Haut, Pfannkuchen, Frühlingszwiebeln und süße Sauce. Charakteristisch für Peking (京); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Zhajiangmian",
+            "desc": "Nudeln mit fermentierter Sojabohnenpaste und Hackfleisch. Charakteristisch für Peking (京); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          }
+        ]
+      },
+      {
+        "name": "Shanghai (沪)",
+        "flavor": "süß-salzig",
+        "dishes": [
+          {
+            "name": "Xiaolongbao",
+            "desc": "Teigtaschen mit Brühe im Inneren. Charakteristisch für Shanghai (沪); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          },
+          {
+            "name": "Hong Shao Rou",
+            "desc": "Langsam geschmorter süß-saurer Schweinebauch. Charakteristisch für Shanghai (沪); sucht ein Gleichgewicht der Texturen und ein typisches Geschmacksprofil der Region."
+          }
+        ]
+      }
+    ]
+  },
+  "traditions": {
+    "festivals": [
+      {
+        "name": "Chinesisches Neujahr",
+        "when": "1. Tag des 1. Mondmonats",
+        "customs": "Familientreffen, rote Umschläge, Feuerwerk."
+      },
+      {
+        "name": "Mitte-Herbst-Fest",
+        "when": "15. Tag des 8. Mondmonats",
+        "customs": "Mondkuchen, Laternen, Mondbetrachtung."
+      },
+      {
+        "name": "Drachenbootfest",
+        "when": "5. Tag des 5. Mondmonats",
+        "customs": "Drachenbootrennen, Zongzi (eingewickelter Reis)."
+      },
+      {
+        "name": "Qingming-Fest",
+        "when": "April (Sonnenkalender)",
+        "customs": "Ahnen ehren durch Grabpflege; Frühlingsausflüge."
+      }
+    ],
+    "etiquette": [
+      {
+        "title": "Höflichkeit und Bescheidenheit",
+        "desc": "Angeberei vermeiden; Respekt vor Älteren; Visitenkarten mit beiden Händen austauschen. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Geschenke",
+        "desc": "Uhren und Regenschirme vermeiden; gerade Zahlen sind willkommen. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      }
+    ]
+  },
+  "modernChina": {
+    "topics": [
+      {
+        "title": "Technologie",
+        "desc": "Digitale Giganten, mobile Zahlungen, KI und modernste Hardware. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Transport",
+        "desc": "Führendes Hochgeschwindigkeits-Schienennetz und effiziente städtische Mobilität. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Intelligente Städte",
+        "desc": "Vernetzte städtische Dienstleistungen, geteilte Fahrräder, bargeldlose Zahlungen. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Umwelt",
+        "desc": "Energiewende, Umweltverschmutzung und Wasserwirtschaft. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Bildung und F&E",
+        "desc": "Aufstrebende Universitäten und wachsende wissenschaftliche Produktion. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      }
+    ]
+  },
+  "geography": {
+    "regions": [
+      {
+        "name": "Norden",
+        "highlights": "Kalte Winter; Hauptstadt Peking; Nordchinesische Ebene."
+      },
+      {
+        "name": "Süden",
+        "highlights": "Feuchtes Klima; Kanton, Guangxi; Reisfelder und Karstlandschaften."
+      },
+      {
+        "name": "Ostküste",
+        "highlights": "Wirtschaftsgürtel; Shanghai, Jiangsu, Zhejiang."
+      },
+      {
+        "name": "Binnenland/Westen",
+        "highlights": "Tibetisches Hochland, Xinjiang, Wüsten und ethnische Minderheiten."
+      }
+    ],
+    "landmarks": [
+      {
+        "name": "Die Große Mauer",
+        "region": "Norden",
+        "note": "Restaurierte Abschnitte in der Nähe von Peking wie Badaling und Mutianyu."
+      },
+      {
+        "name": "Guilin und Yangshuo",
+        "region": "Süden",
+        "note": "Ikonische Karstlandschaften."
+      },
+      {
+        "name": "Der Bund, Shanghai",
+        "region": "Ostküste",
+        "note": "Koloniale Architektur gegenüber der Skyline von Pudong."
+      }
+    ]
+  },
+  "musicCinema": {
+    "music": [
+      {
+        "type": "pop",
+        "title": "Jay Chou (周杰伦)",
+        "year": 2000,
+        "note": "Mandopop-Ikone."
+      },
+      {
+        "type": "folk",
+        "title": "Li Jian (李健)",
+        "year": 2003,
+        "note": "Melodische und poetische Balladen."
+      },
+      {
+        "type": "indie",
+        "title": "Omnipotent Youth Society",
+        "year": 2010,
+        "note": "Alternative Rock aus Hebei."
+      }
+    ],
+    "cinema": [
+      {
+        "title": "Hero (英雄)",
+        "year": 2002,
+        "note": "Zhang Yimou; Farbästhetik und Wuxia."
+      },
+      {
+        "title": "The Grandmaster (一代宗师)",
+        "year": 2013,
+        "note": "Wong Kar-wai; stilisierte Biographie von Ip Man."
+      },
+      {
+        "title": "Long Day's Journey into Night (地球最后的夜晚)",
+        "year": 2018,
+        "note": "Bi Gan; traumhaft und lange Einstellung."
+      }
+    ]
+  },
+  "philosophy": {
+    "schools": [
+      {
+        "name": "Konfuzianismus",
+        "coreIdeas": [
+          "Ethik der Beziehungen",
+          "Ritual (礼) und soziale Harmonie",
+          "Tugendhafte Regierung"
+        ],
+        "figures": [
+          "Konfuzius",
+          "Mencius",
+          "Xunzi"
+        ]
+      },
+      {
+        "name": "Taoismus",
+        "coreIdeas": [
+          "Wu wei (Nicht-Handeln)",
+          "Harmonie mit dem Dao",
+          "Einfachheit und Natürlichkeit"
+        ],
+        "figures": [
+          "Laotse",
+          "Zhuangzi"
+        ]
+      },
+      {
+        "name": "Chinesischer Buddhismus",
+        "coreIdeas": [
+          "Mitgefühl",
+          "Erleuchtung",
+          "Chan/Zen-Schulen"
+        ],
+        "figures": [
+          "Bodhidharma",
+          "Huineng"
+        ]
+      },
+      {
+        "name": "Legismus",
+        "coreIdeas": [
+          "Strenge Gesetze",
+          "Kontrolle und Meritokratie",
+          "Ordnung über persönliche Moral"
+        ],
+        "figures": [
+          "Han Feizi",
+          "Shang Yang"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "topics": [
+      {
+        "title": "Gaokao",
+        "desc": "Nationale Hochschulaufnahmeprüfung; stark wettbewerbsorientiert. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Grund- und Sekundarschule",
+        "desc": "Starker Fokus auf Mathematik und Naturwissenschaften; tägliche Hausaufgaben. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Außerschulische Aktivitäten",
+        "desc": "Musik, Kalligraphie, Kampfkünste, akademische Olympiaden. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      },
+      {
+        "title": "Universität",
+        "desc": "Zunehmende Internationalisierung; globale Forschung und Zusammenarbeit. Dieser Punkt liefert zusätzlichen Kontext, um seine Verwendung in der Praxis besser zu verstehen."
+      }
+    ]
+  }
+}

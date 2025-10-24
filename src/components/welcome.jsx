@@ -1,8 +1,10 @@
 // components/welcome.jsx - Versión simple con audio integrado en "Comenzar"
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
+  const { t, i18n } = useTranslation();
   const [isActivatingAudio, setIsActivatingAudio] = useState(false);
 
   const handleClick = async () => {
@@ -49,11 +51,34 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
     }
   };
 
+  const languages = [
+    { code: 'es', name: 'ES' },
+    { code: 'en', name: 'EN' },
+    { code: 'fr', name: 'FR' },
+    { code: 'de', name: 'DE' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center relative">
+      {/* Language Selector */}
+      <div className="absolute top-4 right-4 flex gap-2">
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            onClick={() => i18n.changeLanguage(lang.code)}
+            className={`px-3 py-1 text-sm font-bold rounded-md transition-colors ${
+              i18n.language === lang.code
+                ? 'bg-red-500 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {lang.name}
+          </button>
+        ))}
+      </div>
+
       <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full border border-gray-700">
         <div className="text-center mb-8">
-          {/* Bandera china como imagen desde servicio confiable */}
           <div className="flex justify-center mb-4">
             <img
               src="https://flagcdn.com/w160/cn.png"
@@ -61,14 +86,14 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
               className="w-24 h-16 object-cover rounded-sm shadow-lg"
             />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">学习中文</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">{t('welcome_title')}</h1>
           <p className="text-xl text-gray-300 mb-1">Xuéxí Zhōngwén</p>
           <p className="text-gray-400">Aprende Chino - HSK 1</p>
         </div>
         <div className="space-y-4">
           <input
             type="text"
-            placeholder="Escribe tu nombre..."
+            placeholder={t('welcome_placeholder')}
             value={inputName}
             onChange={(e) => setInputName(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -83,19 +108,18 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
             {isActivatingAudio ? (
               <>
                 <span className="animate-pulse">🔊</span>
-                <span>Activando audio...</span>
+                <span>{t('welcome_activating_audio')}</span>
               </>
             ) : (
               <>
-                <span>¡Comenzar!</span>
+                <span>{t('welcome_button')}</span>
               </>
             )}
           </button>
 
-          {/* Nota informativa solo para iOS */}
           {/iPad|iPhone|iPod/.test(navigator.userAgent) && (
             <p className="text-xs text-center text-gray-500 mt-2">
-              📱 Al presionar "Comenzar" se activará el audio
+              📱 {t('welcome_ios_note')}
             </p>
           )}
         </div>

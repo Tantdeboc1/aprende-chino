@@ -1,564 +1,1091 @@
 {
-  "radicals": [
-    {
-      "radical": "一",
+  "radicals": {
+    "一": {
       "meaning": "uno, línea horizontal",
       "strokeCount": 1,
       "pinyin": "yī",
       "variants": [],
       "explanation": "La línea horizontal más básica. Representa el número uno o una línea recta.",
       "frequency": "muy alta",
-      "examples": ["一", "七", "三", "上"]
+      "examples": [
+        "一",
+        "七",
+        "三",
+        "上"
+      ]
     },
-    {
-      "radical": "丨",
+    "丨": {
       "meaning": "línea vertical",
       "strokeCount": 1,
       "pinyin": "gǔn",
       "variants": [],
       "explanation": "Línea vertical. Representa algo que conecta arriba y abajo.",
       "frequency": "alta",
-      "examples": ["中", "十", "丰"]
+      "examples": [
+        "中",
+        "十",
+        "丰"
+      ]
     },
-    {
-      "radical": "丶",
+    "丶": {
       "meaning": "punto, gota",
       "strokeCount": 1,
       "pinyin": "zhǔ",
       "variants": [],
       "explanation": "Un punto o gota. Usado como acento o marca.",
       "frequency": "media",
-      "examples": ["丸", "主", "永"]
+      "examples": [
+        "丸",
+        "主",
+        "永"
+      ]
     },
-    {
-      "radical": "丿",
+    "丿": {
       "meaning": "trazo inclinado",
       "strokeCount": 1,
       "pinyin": "piě",
       "variants": [],
       "explanation": "Trazo que cae hacia la izquierda. Representa movimiento.",
       "frequency": "alta",
-      "examples": ["九", "乎", "年"]
+      "examples": [
+        "九",
+        "乎",
+        "年"
+      ]
     },
-    {
-      "radical": "乙",
+    "乙": {
       "meaning": "segundo, gancho",
       "strokeCount": 1,
       "pinyin": "yǐ",
-      "variants": ["乛", "㇆"],
+      "variants": [
+        "乛",
+        "㇆"
+      ],
       "explanation": "El segundo de los Diez Tallos Celestiales. Forma de gancho.",
       "frequency": "media",
-      "examples": ["乙", "飞", "乞"]
+      "examples": [
+        "乙",
+        "飞",
+        "乞"
+      ]
     },
-    {
-      "radical": "二",
+    "二": {
       "meaning": "dos",
       "strokeCount": 2,
       "pinyin": "èr",
       "variants": [],
       "explanation": "Dos líneas horizontales. Representa el número dos.",
       "frequency": "alta",
-      "examples": ["二", "五", "云", "些"]
+      "examples": [
+        "二",
+        "五",
+        "云",
+        "些"
+      ]
     },
-    {
-      "radical": "亠",
+    "亠": {
       "meaning": "cubierta, tapa",
       "strokeCount": 2,
       "pinyin": "tóu",
       "variants": [],
       "explanation": "Cubierta o tapa. Aparece en la parte superior de caracteres.",
       "frequency": "media",
-      "examples": ["京", "亭", "亮"]
+      "examples": [
+        "京",
+        "亭",
+        "亮"
+      ]
     },
-    {
-      "radical": "人",
+    "人": {
       "meaning": "persona, gente",
       "strokeCount": 2,
       "pinyin": "rén",
-      "variants": ["亻"],
+      "variants": [
+        "亻"
+      ],
       "explanation": "Persona de pie vista de lado. Uno de los radicales más comunes.",
       "frequency": "muy alta",
-      "examples": ["人", "你", "他", "们", "什", "今"]
+      "examples": [
+        "人",
+        "你",
+        "他",
+        "们",
+        "什",
+        "今"
+      ]
     },
-    {
-      "radical": "儿",
+    "儿": {
       "meaning": "niño, piernas",
       "strokeCount": 2,
       "pinyin": "ér",
       "variants": [],
       "explanation": "Representa las piernas de un niño o persona caminando.",
       "frequency": "alta",
-      "examples": ["儿", "兄", "先", "元"]
+      "examples": [
+        "儿",
+        "兄",
+        "先",
+        "元"
+      ]
     },
-    {
-      "radical": "入",
+    "入": {
       "meaning": "entrar",
       "strokeCount": 2,
       "pinyin": "rù",
       "variants": [],
       "explanation": "Representa entrar en un lugar.",
       "frequency": "media",
-      "examples": ["入", "内", "全"]
+      "examples": [
+        "入",
+        "内",
+        "全"
+      ]
     },
-    {
-      "radical": "八",
+    "八": {
       "meaning": "ocho, dividir",
       "strokeCount": 2,
       "pinyin": "bā",
       "variants": [],
       "explanation": "Originalmente representaba dividir. Ahora significa ocho.",
       "frequency": "alta",
-      "examples": ["八", "六", "公", "分"]
+      "examples": [
+        "八",
+        "六",
+        "公",
+        "分"
+      ]
     },
-    {
-      "radical": "冂",
+    "冂": {
       "meaning": "frontera, borde",
       "strokeCount": 2,
       "pinyin": "jiōng",
       "variants": [],
       "explanation": "Representa fronteras o límites territoriales.",
       "frequency": "media",
-      "examples": ["内", "用", "周"]
+      "examples": [
+        "内",
+        "用",
+        "周"
+      ]
     },
-    {
-      "radical": "冫",
+    "冫": {
       "meaning": "hielo, frío",
       "strokeCount": 2,
       "pinyin": "bīng",
       "variants": [],
       "explanation": "Dos gotas de agua representando hielo o frío.",
       "frequency": "media",
-      "examples": ["冰", "冷", "凉", "冬"]
+      "examples": [
+        "冰",
+        "冷",
+        "凉",
+        "冬"
+      ]
     },
-    {
-      "radical": "几",
+    "几": {
       "meaning": "mesa pequeña, casi",
       "strokeCount": 2,
       "pinyin": "jī",
       "variants": [],
       "explanation": "Representa una mesa pequeña o taburete.",
       "frequency": "media",
-      "examples": ["几", "机", "风"]
+      "examples": [
+        "几",
+        "机",
+        "风"
+      ]
     },
-    {
-      "radical": "凵",
+    "凵": {
       "meaning": "recipiente, contenedor",
       "strokeCount": 2,
       "pinyin": "qǔ",
       "variants": [],
       "explanation": "Representa un recipiente o contenedor abierto.",
       "frequency": "baja",
-      "examples": ["凶", "出", "画"]
+      "examples": [
+        "凶",
+        "出",
+        "画"
+      ]
     },
-    {
-      "radical": "刀",
+    "刀": {
       "meaning": "cuchillo, cortar",
       "strokeCount": 2,
       "pinyin": "dāo",
-      "variants": ["刂"],
+      "variants": [
+        "刂"
+      ],
       "explanation": "Representa un cuchillo. Usado en caracteres relacionados con cortar.",
       "frequency": "alta",
-      "examples": ["刀", "分", "到", "别", "前"]
+      "examples": [
+        "刀",
+        "分",
+        "到",
+        "别",
+        "前"
+      ]
     },
-    {
-      "radical": "力",
+    "力": {
       "meaning": "fuerza, poder",
       "strokeCount": 2,
       "pinyin": "lì",
       "variants": [],
       "explanation": "Representa un músculo o fuerza física.",
       "frequency": "alta",
-      "examples": ["力", "加", "动", "助"]
+      "examples": [
+        "力",
+        "加",
+        "动",
+        "助"
+      ]
     },
-    {
-      "radical": "勹",
+    "勹": {
       "meaning": "envolver, contener",
       "strokeCount": 2,
       "pinyin": "bāo",
       "variants": [],
       "explanation": "Representa envolver o contener algo.",
       "frequency": "media",
-      "examples": ["包", "勾", "勿"]
+      "examples": [
+        "包",
+        "勾",
+        "勿"
+      ]
     },
-    {
-      "radical": "匕",
+    "匕": {
       "meaning": "cuchara, cuchillo",
       "strokeCount": 2,
       "pinyin": "bǐ",
       "variants": [],
       "explanation": "Representa una cuchara o daga antigua.",
       "frequency": "media",
-      "examples": ["北", "化", "匙"]
+      "examples": [
+        "北",
+        "化",
+        "匙"
+      ]
     },
-    {
-      "radical": "匚",
+    "匚": {
       "meaning": "caja, contenedor",
       "strokeCount": 2,
       "pinyin": "fāng",
       "variants": [],
       "explanation": "Representa una caja o contenedor cuadrado.",
       "frequency": "baja",
-      "examples": ["区", "医", "匹"]
+      "examples": [
+        "区",
+        "医",
+        "匹"
+      ]
     },
-    {
-      "radical": "十",
+    "十": {
       "meaning": "diez, completo",
       "strokeCount": 2,
       "pinyin": "shí",
       "variants": [],
       "explanation": "Una cruz que representa el número diez o completitud.",
       "frequency": "alta",
-      "examples": ["十", "南", "古", "华"]
+      "examples": [
+        "十",
+        "南",
+        "古",
+        "华"
+      ]
     },
-    {
-      "radical": "卜",
+    "卜": {
       "meaning": "adivinación",
       "strokeCount": 2,
       "pinyin": "bǔ",
       "variants": [],
       "explanation": "Representa grietas en huesos usados para adivinación.",
       "frequency": "media",
-      "examples": ["卜", "占", "卦"]
+      "examples": [
+        "卜",
+        "占",
+        "卦"
+      ]
     },
-    {
-      "radical": "卩",
+    "卩": {
       "meaning": "sello, rodilla",
       "strokeCount": 2,
       "pinyin": "jié",
       "variants": [],
       "explanation": "Representa un sello oficial o una rodilla doblada.",
       "frequency": "media",
-      "examples": ["印", "却", "即"]
+      "examples": [
+        "印",
+        "却",
+        "即"
+      ]
     },
-    {
-      "radical": "厂",
+    "厂": {
       "meaning": "acantilado, fábrica",
       "strokeCount": 2,
       "pinyin": "hǎn",
       "variants": [],
       "explanation": "Representa un acantilado o precipicio.",
       "frequency": "media",
-      "examples": ["厂", "历", "压", "原"]
+      "examples": [
+        "厂",
+        "历",
+        "压",
+        "原"
+      ]
     },
-    {
-      "radical": "厶",
+    "厶": {
       "meaning": "privado, personal",
       "strokeCount": 2,
       "pinyin": "sī",
       "variants": [],
       "explanation": "Representa algo privado o personal.",
       "frequency": "media",
-      "examples": ["私", "去", "参"]
+      "examples": [
+        "私",
+        "去",
+        "参"
+      ]
     },
-    {
-      "radical": "又",
+    "又": {
       "meaning": "mano derecha, otra vez",
       "strokeCount": 2,
       "pinyin": "yòu",
       "variants": [],
       "explanation": "Representa una mano derecha. También significa 'otra vez'.",
       "frequency": "alta",
-      "examples": ["又", "友", "反", "取"]
+      "examples": [
+        "又",
+        "友",
+        "反",
+        "取"
+      ]
     },
-    {
-      "radical": "口",
+    "口": {
       "meaning": "boca, entrada",
       "strokeCount": 3,
       "pinyin": "kǒu",
       "variants": [],
       "explanation": "Representa una boca abierta. Uno de los radicales más comunes.",
       "frequency": "muy alta",
-      "examples": ["口", "叫", "吃", "喝", "吗", "呢", "吧", "右", "后", "名"]
+      "examples": [
+        "口",
+        "叫",
+        "吃",
+        "喝",
+        "吗",
+        "呢",
+        "吧",
+        "右",
+        "后",
+        "名"
+      ]
     },
-    {
-      "radical": "囗",
+    "囗": {
       "meaning": "recinto, cercado",
       "strokeCount": 3,
       "pinyin": "wéi",
       "variants": [],
       "explanation": "Representa un recinto amurallado o cercado.",
       "frequency": "media",
-      "examples": ["国", "四", "回", "园"]
+      "examples": [
+        "国",
+        "四",
+        "回",
+        "园"
+      ]
     },
-    {
-      "radical": "土",
+    "土": {
       "meaning": "tierra, suelo",
       "strokeCount": 3,
       "pinyin": "tǔ",
       "variants": [],
       "explanation": "Representa un montículo de tierra.",
       "frequency": "alta",
-      "examples": ["土", "地", "在", "场", "坐"]
+      "examples": [
+        "土",
+        "地",
+        "在",
+        "场",
+        "坐"
+      ]
     },
-    {
-      "radical": "士",
+    "士": {
       "meaning": "estudioso, caballero",
       "strokeCount": 3,
       "pinyin": "shì",
       "variants": [],
       "explanation": "Representa a un estudioso o caballero educado.",
       "frequency": "media",
-      "examples": ["士", "声", "壮", "吉"]
+      "examples": [
+        "士",
+        "声",
+        "壮",
+        "吉"
+      ]
     },
-    {
-      "radical": "夂",
+    "夂": {
       "meaning": "llegar, seguir",
       "strokeCount": 3,
       "pinyin": "zhǐ",
       "variants": [],
       "explanation": "Representa llegar o seguir desde atrás.",
       "frequency": "baja",
-      "examples": ["各", "条", "备"]
+      "examples": [
+        "各",
+        "条",
+        "备"
+      ]
     },
-    {
-      "radical": "夕",
+    "夕": {
       "meaning": "atardecer, noche",
       "strokeCount": 3,
       "pinyin": "xī",
       "variants": [],
       "explanation": "Representa la luna creciente al atardecer.",
       "frequency": "media",
-      "examples": ["夕", "多", "外", "夜"]
+      "examples": [
+        "夕",
+        "多",
+        "外",
+        "夜"
+      ]
     },
-    {
-      "radical": "大",
+    "大": {
       "meaning": "grande, adulto",
       "strokeCount": 3,
       "pinyin": "dà",
       "variants": [],
       "explanation": "Representa a una persona con los brazos extendidos, significando grande.",
       "frequency": "alta",
-      "examples": ["大", "天", "太", "头"]
+      "examples": [
+        "大",
+        "天",
+        "太",
+        "头"
+      ]
     },
-    {
-      "radical": "女",
+    "女": {
       "meaning": "mujer, femenino",
       "strokeCount": 3,
       "pinyin": "nǚ",
       "variants": [],
       "explanation": "Representa a una mujer arrodillada.",
       "frequency": "alta",
-      "examples": ["女", "好", "她", "妈", "姓", "要"]
+      "examples": [
+        "女",
+        "好",
+        "她",
+        "妈",
+        "姓",
+        "要"
+      ]
     },
-    {
-      "radical": "子",
+    "子": {
       "meaning": "niño, semilla",
       "strokeCount": 3,
       "pinyin": "zǐ",
       "variants": [],
       "explanation": "Representa a un niño o bebé.",
       "frequency": "alta",
-      "examples": ["子", "字", "学", "孩", "好"]
+      "examples": [
+        "子",
+        "字",
+        "学",
+        "孩",
+        "好"
+      ]
     },
-    {
-      "radical": "宀",
+    "宀": {
       "meaning": "techo, casa",
       "strokeCount": 3,
       "pinyin": "mián",
       "variants": [],
       "explanation": "Representa un techo o casa.",
       "frequency": "alta",
-      "examples": ["家", "安", "字", "宿", "宝"]
+      "examples": [
+        "家",
+        "安",
+        "字",
+        "宿",
+        "宝",
+        "它",
+        "写",
+        "家"
+      ]
     },
-    {
-      "radical": "寸",
+    "寸": {
       "meaning": "pulgada, medida",
       "strokeCount": 3,
       "pinyin": "cùn",
       "variants": [],
       "explanation": "Representa una mano mostrando el punto de pulso, usado como medida.",
       "frequency": "media",
-      "examples": ["寸", "对", "封", "导"]
+      "examples": [
+        "寸",
+        "对",
+        "封",
+        "导"
+      ]
     },
-    {
-      "radical": "小",
+    "小": {
       "meaning": "pequeño",
       "strokeCount": 3,
       "pinyin": "xiǎo",
       "variants": [],
       "explanation": "Representa partículas pequeñas o algo diminuto.",
       "frequency": "alta",
-      "examples": ["小", "少", "尔", "尘"]
+      "examples": [
+        "小",
+        "少",
+        "尔",
+        "尘"
+      ]
     },
-    {
-      "radical": "尢",
+    "尢": {
       "meaning": "cojo, débil",
       "strokeCount": 3,
       "pinyin": "wāng",
       "variants": [],
       "explanation": "Representa a una persona coja o débil.",
       "frequency": "baja",
-      "examples": ["尤", "就", "尴"]
+      "examples": [
+        "尤",
+        "就",
+        "尴"
+      ]
     },
-    {
-      "radical": "尸",
+    "尸": {
       "meaning": "cuerpo, cadáver",
       "strokeCount": 3,
       "pinyin": "shī",
       "variants": [],
       "explanation": "Representa un cuerpo reclinado o cadáver.",
       "frequency": "media",
-      "examples": ["尸", "尺", "居", "层"]
+      "examples": [
+        "尸",
+        "尺",
+        "居",
+        "层"
+      ]
     },
-    {
-      "radical": "屮",
+    "屮": {
       "meaning": "hierba brotando",
       "strokeCount": 3,
       "pinyin": "chè",
       "variants": [],
       "explanation": "Representa hierba brotando de la tierra.",
       "frequency": "baja",
-      "examples": ["草", "卉", "茻"]
+      "examples": [
+        "草",
+        "卉",
+        "茻"
+      ]
     },
-    {
-      "radical": "山",
+    "山": {
       "meaning": "montaña",
       "strokeCount": 3,
       "pinyin": "shān",
       "variants": [],
       "explanation": "Representa picos de montaña.",
       "frequency": "alta",
-      "examples": ["山", "岁", "岸", "峰"]
+      "examples": [
+        "山",
+        "岁",
+        "岸",
+        "峰"
+      ]
     },
-    {
-      "radical": "川",
+    "川": {
       "meaning": "río, corriente",
       "strokeCount": 3,
       "pinyin": "chuān",
       "variants": [],
       "explanation": "Representa el flujo de un río.",
       "frequency": "media",
-      "examples": ["川", "州", "顺"]
+      "examples": [
+        "川",
+        "州",
+        "顺"
+      ]
     },
-    {
-      "radical": "工",
+    "工": {
       "meaning": "trabajo, herramienta",
       "strokeCount": 3,
       "pinyin": "gōng",
       "variants": [],
       "explanation": "Representa una herramienta de carpintero o trabajo.",
       "frequency": "alta",
-      "examples": ["工", "左", "功", "式"]
+      "examples": [
+        "工",
+        "左",
+        "功",
+        "式"
+      ]
     },
-    {
-      "radical": "己",
+    "己": {
       "meaning": "uno mismo",
       "strokeCount": 3,
       "pinyin": "jǐ",
       "variants": [],
       "explanation": "Representa a uno mismo o identidad personal.",
       "frequency": "media",
-      "examples": ["己", "记", "起", "改"]
+      "examples": [
+        "己",
+        "记",
+        "起",
+        "改"
+      ]
     },
-    {
-      "radical": "巾",
+    "巾": {
       "meaning": "paño, tela",
       "strokeCount": 3,
       "pinyin": "jīn",
       "variants": [],
       "explanation": "Representa un trozo de tela colgando.",
       "frequency": "media",
-      "examples": ["巾", "市", "布", "帅"]
+      "examples": [
+        "巾",
+        "市",
+        "布",
+        "帅"
+      ]
     },
-    {
-      "radical": "干",
+    "干": {
       "meaning": "escudo, secar",
       "strokeCount": 3,
       "pinyin": "gān",
       "variants": [],
       "explanation": "Representa un escudo antiguo.",
       "frequency": "media",
-      "examples": ["干", "平", "年", "并"]
+      "examples": [
+        "干",
+        "平",
+        "年",
+        "并"
+      ]
     },
-    {
-      "radical": "幺",
+    "幺": {
       "meaning": "pequeño, fino",
       "strokeCount": 3,
       "pinyin": "yāo",
       "variants": [],
       "explanation": "Representa un hilo fino o algo muy pequeño.",
       "frequency": "media",
-      "examples": ["幺", "幼", "幻", "幽"]
+      "examples": [
+        "幺",
+        "幼",
+        "幻",
+        "幽"
+      ]
     },
-    {
-      "radical": "广",
+    "广": {
       "meaning": "estructura con techo",
       "strokeCount": 3,
       "pinyin": "guǎng",
       "variants": [],
       "explanation": "Representa un edificio con techo pero sin paredes laterales.",
       "frequency": "media",
-      "examples": ["广", "店", "床", "座"]
+      "examples": [
+        "广",
+        "店",
+        "床",
+        "座"
+      ]
     },
-    {
-      "radical": "廴",
+    "廴": {
       "meaning": "caminar largo",
       "strokeCount": 3,
       "pinyin": "yǐn",
       "variants": [],
       "explanation": "Representa caminar una larga distancia.",
       "frequency": "baja",
-      "examples": ["延", "建", "廷"]
+      "examples": [
+        "延",
+        "建",
+        "廷"
+      ]
     },
-    {
-      "radical": "廾",
+    "廾": {
       "meaning": "dos manos",
       "strokeCount": 3,
       "pinyin": "gǒng",
       "variants": [],
       "explanation": "Representa dos manos unidas sosteniendo algo.",
       "frequency": "baja",
-      "examples": ["开", "异", "弃"]
+      "examples": [
+        "开",
+        "异",
+        "弃"
+      ]
     },
-    {
-      "radical": "弋",
+    "弋": {
       "meaning": "arponear, atacar",
       "strokeCount": 3,
       "pinyin": "yì",
       "variants": [],
       "explanation": "Representa un arpón o lanza con cuerda.",
       "frequency": "baja",
-      "examples": ["弋", "式", "代", "试"]
+      "examples": [
+        "弋",
+        "式",
+        "代",
+        "试"
+      ]
     },
-    {
-      "radical": "弓",
+    "弓": {
       "meaning": "arco",
       "strokeCount": 3,
       "pinyin": "gōng",
       "variants": [],
       "explanation": "Representa un arco para disparar flechas.",
       "frequency": "media",
-      "examples": ["弓", "引", "张", "强"]
+      "examples": [
+        "弓",
+        "引",
+        "张",
+        "强"
+      ]
     },
-    {
-      "radical": "彐",
+    "彐": {
       "meaning": "cabeza de cerdo",
       "strokeCount": 3,
       "pinyin": "jì",
-      "variants": ["彑"],
+      "variants": [
+        "彑"
+      ],
       "explanation": "Representa la cabeza de un cerdo.",
       "frequency": "baja",
-      "examples": ["彐", "归", "当", "寻"]
+      "examples": [
+        "彐",
+        "归",
+        "当",
+        "寻"
+      ]
     },
-    {
-      "radical": "彡",
+    "彡": {
       "meaning": "pelo, decoración",
       "strokeCount": 3,
       "pinyin": "shān",
       "variants": [],
       "explanation": "Representa pelo o rayas decorativas.",
       "frequency": "media",
-      "examples": ["形", "彩", "影", "须"]
+      "examples": [
+        "形",
+        "彩",
+        "影",
+        "须"
+      ]
     },
-    {
-      "radical": "心",
+    "心": {
       "meaning": "corazón, mente",
       "strokeCount": 4,
       "pinyin": "xīn",
-      "variants": ["忄", "⺗"],
+      "variants": [
+        "忄",
+        "⺗"
+      ],
       "explanation": "Representa el corazón. Fundamental para emociones y pensamientos.",
       "frequency": "muy alta",
-      "examples": ["心", "想", "忙", "爱", "您", "意"]
+      "examples": [
+        "心",
+        "想",
+        "忙",
+        "爱",
+        "您",
+        "意"
+      ]
+    },
+    "戈": {
+      "meaning": "alabarda, lanza",
+      "strokeCount": 4,
+      "pinyin": "gē",
+      "variants": [],
+      "explanation": "Representa una alabarda o lanza antigua. Asociado con armas o guerra.",
+      "frequency": "media",
+      "examples": [
+        "我",
+        "或",
+        "战"
+      ]
+    },
+    "水": {
+      "meaning": "agua",
+      "strokeCount": 4,
+      "pinyin": "shuǐ",
+      "variants": [
+        "氵"
+      ],
+      "explanation": "Representa el agua que fluye. Esencial para caracteres relacionados con líquidos.",
+      "frequency": "muy alta",
+      "examples": [
+        "水",
+        "海",
+        "河",
+        "汁",
+        "汤"
+      ]
+    },
+    "火": {
+      "meaning": "fuego",
+      "strokeCount": 4,
+      "pinyin": "huǒ",
+      "variants": [
+        "灬"
+      ],
+      "explanation": "Representa una llama de fuego. Asociado con calor, luz y cocina.",
+      "frequency": "alta",
+      "examples": [
+        "火",
+        "灯",
+        "热",
+        "炒"
+      ]
+    },
+    "木": {
+      "meaning": "árbol, madera",
+      "strokeCount": 4,
+      "pinyin": "mù",
+      "variants": [],
+      "explanation": "Representa un árbol. Relacionado con plantas, madera y objetos de madera.",
+      "frequency": "alta",
+      "examples": [
+        "木",
+        "林",
+        "森",
+        "树",
+        "校"
+      ]
+    },
+    "日": {
+      "meaning": "sol, día",
+      "strokeCount": 4,
+      "pinyin": "rì",
+      "variants": [],
+      "explanation": "Representa el sol. Relacionado con el tiempo, la luz y la claridad.",
+      "frequency": "alta",
+      "examples": [
+        "日",
+        "明",
+        "是",
+        "时",
+        "晴"
+      ]
+    },
+    "月": {
+      "meaning": "luna, mes",
+      "strokeCount": 4,
+      "pinyin": "yuè",
+      "variants": [
+        "⺼"
+      ],
+      "explanation": "Representa la luna. También puede representar carne o partes del cuerpo.",
+      "frequency": "alta",
+      "examples": [
+        "月",
+        "有",
+        "明",
+        "期",
+        "服"
+      ]
+    },
+    "襾": {
+      "meaning": "cubrir, oeste",
+      "strokeCount": 6,
+      "pinyin": "yà",
+      "variants": [
+        "西"
+      ],
+      "explanation": "Representa algo que cubre. Es la forma tradicional del radical para 'oeste'.",
+      "frequency": "baja",
+      "examples": [
+        "西",
+        "要",
+        "覆"
+      ]
+    },
+    "白": {
+      "meaning": "blanco, claro",
+      "strokeCount": 5,
+      "pinyin": "bái",
+      "variants": [],
+      "explanation": "Representa el color blanco o la claridad. También puede significar 'en vano'.",
+      "frequency": "alta",
+      "examples": [
+        "白",
+        "的",
+        "百",
+        "皂"
+      ]
+    },
+    "艹": {
+      "meaning": "hierba, planta",
+      "strokeCount": 3,
+      "pinyin": "cǎo",
+      "variants": [],
+      "explanation": "Representa hierba o plantas. Aparece en la parte superior de los caracteres.",
+      "frequency": "muy alta",
+      "examples": [
+        "草",
+        "茶",
+        "菜",
+        "花",
+        "药"
+      ]
+    },
+    "车": {
+      "meaning": "carro, vehículo",
+      "strokeCount": 4,
+      "pinyin": "chē",
+      "variants": [],
+      "explanation": "Representa un carro visto desde arriba. Relacionado con vehículos y transporte.",
+      "frequency": "alta",
+      "examples": [
+        "车",
+        "军",
+        "轮",
+        "软"
+      ]
+    },
+    "讠": {
+      "meaning": "discurso",
+      "strokeCount": 2,
+      "pinyin": "yán",
+      "variants": [],
+      "explanation": "Radical relacionado con el habla y el lenguaje.",
+      "frequency": "alta",
+      "examples": [
+        "说",
+        "读",
+        "请",
+        "谢",
+        "让",
+        "谁"
+      ]
+    },
+    "辶": {
+      "meaning": "caminar",
+      "strokeCount": 3,
+      "pinyin": "chuò",
+      "variants": [],
+      "explanation": "Radical que indica movimiento o desplazamiento.",
+      "frequency": "alta",
+      "examples": [
+        "这",
+        "还",
+        "远",
+        "近"
+      ]
+    },
+    "扌": {
+      "meaning": "mano",
+      "strokeCount": 3,
+      "pinyin": "shǒu",
+      "variants": [],
+      "explanation": "Radical que representa la mano y acciones manuales.",
+      "frequency": "alta",
+      "examples": [
+        "找"
+      ]
+    },
+    "纟": {
+      "meaning": "seda",
+      "strokeCount": 3,
+      "pinyin": "sī",
+      "variants": [],
+      "explanation": "Radical relacionado con la seda o hilos.",
+      "frequency": "media",
+      "examples": [
+        "给"
+      ]
+    },
+    "钅": {
+      "meaning": "metal",
+      "strokeCount": 5,
+      "pinyin": "jīn",
+      "variants": [],
+      "explanation": "Radical que indica relación con metales.",
+      "frequency": "media",
+      "examples": [
+        "错",
+        "钱"
+      ]
+    },
+    "彳": {
+      "meaning": "paso",
+      "strokeCount": 3,
+      "pinyin": "chì",
+      "variants": [],
+      "explanation": "Radical que representa un paso o caminar.",
+      "frequency": "media",
+      "examples": [
+        "很"
+      ]
+    },
+    "禾": {
+      "meaning": "grano",
+      "strokeCount": 5,
+      "pinyin": "hé",
+      "variants": [],
+      "explanation": "Radical que representa cereales o grano.",
+      "frequency": "media",
+      "examples": [
+        "和"
+      ]
+    },
+    "目": {
+      "meaning": "ojo",
+      "strokeCount": 5,
+      "pinyin": "mù",
+      "variants": [],
+      "explanation": "Radical que representa el ojo o la visión.",
+      "frequency": "alta",
+      "examples": [
+        "看",
+        "真"
+      ]
+    },
+    "贝": {
+      "meaning": "concha",
+      "strokeCount": 4,
+      "pinyin": "bèi",
+      "variants": [],
+      "explanation": "Radical relacionado con conchas, dinero o objetos de valor.",
+      "frequency": "media",
+      "examples": [
+        "贵"
+      ]
+    },
+    "斤": {
+      "meaning": "hacha",
+      "strokeCount": 4,
+      "pinyin": "jīn",
+      "variants": [],
+      "explanation": "Radical que representa un hacha o una unidad de peso.",
+      "frequency": "media",
+      "examples": [
+        "新"
+      ]
+    },
+    "矢": {
+      "meaning": "flecha",
+      "strokeCount": 5,
+      "pinyin": "shǐ",
+      "variants": [],
+      "explanation": "Radical que representa una flecha.",
+      "frequency": "baja",
+      "examples": [
+        "短"
+      ]
+    },
+    "黑": {
+      "meaning": "negro",
+      "strokeCount": 12,
+      "pinyin": "hēi",
+      "variants": [],
+      "explanation": "Radical que representa el color negro.",
+      "frequency": "media",
+      "examples": [
+        "点"
+      ]
     }
-  ]
+  }
 }

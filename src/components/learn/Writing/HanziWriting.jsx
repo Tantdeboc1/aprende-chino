@@ -2,8 +2,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from "react-i18next";
 
 export default function HanziWriting({ goBack, characters, speakChinese }) {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeTab, setActiveTab] = useState('view');
@@ -153,7 +155,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
     return (
       <div className="min-h-screen p-4">
         <Container>
-          <div className="text-center text-white">No hay caracteres disponibles</div>
+          <div className="text-center text-white">{t('writing_no_characters_available')}</div>
         </Container>
       </div>
     );
@@ -168,7 +170,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
             className="flex items-center text-gray-300 hover:text-white"
           >
             <ArrowLeft className="mr-2" />
-            Escritura
+            {t('writing_back_to_writing')}
           </button>
         </div>
 
@@ -194,7 +196,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
                 : 'text-gray-400 hover:text-gray-300'
             }`}
           >
-            🎯 Ver Orden
+            🎯 {t('writing_view_order_tab')}
           </button>
           <button
             onClick={() => handleTabChange('practice')}
@@ -204,7 +206,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
                 : 'text-gray-400 hover:text-gray-300'
             }`}
           >
-            ✍️ Practicar
+            ✍️ {t('writing_practice_tab')}
           </button>
         </div>
 
@@ -231,14 +233,14 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
                 disabled={isPlaying}
                 className="bg-red-500 hover:bg-red-600 disabled:bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                {isPlaying ? 'Animando...' : 'Ver Orden de Trazos'}
+                {isPlaying ? t('writing_animating_button') : t('writing_view_stroke_order_button')}
               </button>
 
               <button
                 onClick={() => speakChinese(currentCharacter.char || currentCharacter.hanzi)}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                🔊 Pronunciar
+                🔊 {t('writing_pronounce_button')}
               </button>
             </div>
           ) : (
@@ -248,21 +250,21 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
                 disabled={isPlaying}
                 className="bg-green-500 hover:bg-green-600 disabled:bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                {isPlaying ? 'Practicando...' : 'Comenzar Práctica'}
+                {isPlaying ? t('writing_practicing_button') : t('writing_start_practice_button')}
               </button>
 
               <button
                 onClick={resetPractice}
                 className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                Reiniciar
+                {t('writing_reset_button')}
               </button>
 
               <button
                 onClick={() => speakChinese(currentCharacter.char || currentCharacter.hanzi)}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                🔊 Pronunciar
+                🔊 {t('writing_pronounce_button')}
               </button>
             </div>
           )}
@@ -275,7 +277,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
             disabled={currentIndex === 0}
             className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white px-6 py-2 rounded-lg transition-colors"
           >
-            ← Anterior
+            ← {t('writing_previous_button')}
           </button>
 
           <button
@@ -283,7 +285,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
             disabled={currentIndex === characters.length - 1}
             className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white px-6 py-2 rounded-lg transition-colors"
           >
-            Siguiente →
+            {t('writing_next_button')} →
           </button>
         </div>
       </Container>

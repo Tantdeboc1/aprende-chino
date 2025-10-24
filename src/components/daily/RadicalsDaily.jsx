@@ -1,6 +1,7 @@
 // src/components/daily/RadicalsDaily.jsx
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const TOTAL_QUESTIONS = 10;
 const TIME_LIMIT = 150; // 2.5 minutos en segundos
@@ -10,6 +11,7 @@ function rand(arr) {
 }
 
 export default function RadicalsDaily({ goBack, radicals }) {
+  const { t } = useTranslation();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -154,30 +156,30 @@ export default function RadicalsDaily({ goBack, radicals }) {
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              Volver a Desafíos
+              {t('daily_back_to_challenges')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">Desafío de Radicales</h1>
-            <p className="text-gray-400 text-center">Identificación Visual</p>
+            <h1 className="text-3xl font-bold text-white text-center">{t('daily_radicals_challenge_title')}</h1>
+            <p className="text-gray-400 text-center">{t('radicals_quiz_identification_title')}</p>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start">
                 <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>Observa el carácter chino mostrado</p>
+                <p>{t('daily_radicals_challenge_instructions_1')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>Identifica cuál de los radicales está presente en el carácter</p>
+                <p>{t('daily_radicals_challenge_instructions_2')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p><strong>150 segundos</strong> para completar 10 preguntas</p>
+                <p><strong>{t('daily_radicals_challenge_instructions_3')}</strong></p>
               </div>
               <div className="flex items-start">
                 <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>¡Encuentra el radical correcto antes de que se acabe el tiempo!</p>
+                <p>{t('daily_radicals_challenge_instructions_4')}</p>
               </div>
             </div>
           </div>
@@ -186,7 +188,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
             onClick={initQuiz}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            🧩 Comenzar Desafío
+            🧩 {t('daily_start_challenge_button')}
           </button>
         </div>
       </div>
@@ -208,32 +210,32 @@ export default function RadicalsDaily({ goBack, radicals }) {
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              Volver a Desafíos
+              {t('daily_back_to_challenges')}
             </button>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 text-center">
             <div className="text-6xl mb-4">🧩</div>
-            <h2 className="text-3xl font-bold text-white mb-4">Desafío Completado</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('daily_challenge_completed_title')}</h2>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-gray-700 rounded-lg p-4">
                 <div className="text-2xl font-bold text-white">{score}/10</div>
-                <div className="text-gray-400 text-sm">Preguntas correctas</div>
+                <div className="text-gray-400 text-sm">{t('daily_correct_questions_label')}</div>
               </div>
               <div className="bg-gray-700 rounded-lg p-4">
                 <div className="text-2xl font-bold text-white">
                   {minutes}:{seconds.toString().padStart(2, '0')}
                 </div>
-                <div className="text-gray-400 text-sm">Tiempo usado</div>
+                <div className="text-gray-400 text-sm">{t('daily_time_used_label')}</div>
               </div>
             </div>
 
             <div className="text-gray-400 mb-6">
-              {score === 10 ? "¡Perfecto! 🌟" :
-               score >= 7 ? "¡Excelente trabajo! 👏" :
-               score >= 5 ? "¡Buen intento! 💪" :
-               "Sigue practicando 🎯"}
+              {score === 10 ? t('daily_score_perfect') :
+               score >= 7 ? t('daily_score_excellent') :
+               score >= 5 ? t('daily_score_good_try') :
+               t('daily_score_keep_practicing')}
             </div>
 
             <div className="flex space-x-4 justify-center">
@@ -241,13 +243,13 @@ export default function RadicalsDaily({ goBack, radicals }) {
                 onClick={handleRestart}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
               >
-                🔄 Reintentar
+                🔄 {t('radicals_retry_button')}
               </button>
               <button
                 onClick={goBack}
                 className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition"
               >
-                ↩️ Volver
+                ↩️ {t('radicals_back_button')}
               </button>
             </div>
           </div>
@@ -261,7 +263,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
       <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4">📝</div>
-          <h2 className="text-xl font-bold text-white">Cargando preguntas...</h2>
+          <h2 className="text-xl font-bold text-white">{t('radicals_loading_questions')}</h2>
         </div>
       </div>
     );
@@ -279,11 +281,11 @@ export default function RadicalsDaily({ goBack, radicals }) {
             className="flex items-center text-gray-300 hover:text-white transition mb-4"
           >
             <ArrowLeft className="mr-2" />
-            Volver a Desafíos
+            {t('daily_back_to_challenges')}
           </button>
 
           <div className="flex justify-between items-center mb-2">
-            <h1 className="text-2xl font-bold text-white">Desafío de Radicales</h1>
+            <h1 className="text-2xl font-bold text-white">{t('daily_radicals_challenge_title')}</h1>
             <div className="flex items-center space-x-4">
               <div className="text-gray-400">
                 {currentQuestion + 1}/10
@@ -306,14 +308,14 @@ export default function RadicalsDaily({ goBack, radicals }) {
 
         {/* Pregunta */}
         <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-6 text-center">
-          <h3 className="text-lg text-gray-400 mb-4">¿Qué radical contiene este carácter?</h3>
+          <h3 className="text-lg text-gray-400 mb-4">{t('radicals_question_header')}</h3>
 
           {/* Carácter objetivo */}
           <div className="text-8xl font-bold text-white mb-8 py-4">
             {currentQ.targetChar}
           </div>
 
-          <h4 className="text-lg text-gray-400 mb-6">Selecciona el radical correcto:</h4>
+          <h4 className="text-lg text-gray-400 mb-6">{t('radicals_select_correct_radical')}</h4>
 
           {/* Opciones de respuesta */}
           <div className="grid grid-cols-2 gap-4">
@@ -351,16 +353,16 @@ export default function RadicalsDaily({ goBack, radicals }) {
             <div className="mt-6">
               <p className="text-lg mb-3">
                 {selectedAnswer === currentQ.correctAnswer ? (
-                  <span className="text-green-400 font-bold">✓ ¡Correcto! {currentQ.radicalMeaning}</span>
+                  <span className="text-green-400 font-bold">✓ {t('tones_quiz_correct')} {currentQ.radicalMeaning}</span>
                 ) : (
-                  <span className="text-red-400 font-bold">✗ Era {currentQ.correctAnswer} - {currentQ.radicalMeaning}</span>
+                  <span className="text-red-400 font-bold">✗ {t('tones_quiz_incorrect', { tone: '' })} {currentQ.correctAnswer} - {currentQ.radicalMeaning}</span>
                 )}
               </p>
               <button
                 onClick={handleNextQuestion}
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition"
               >
-                {currentQuestion < 9 ? 'Siguiente Pregunta →' : 'Ver Resultados'}
+                {currentQuestion < 9 ? t('radicals_next_question_button') : t('radicals_view_results_button')}
               </button>
             </div>
           )}

@@ -2,8 +2,10 @@
 import { ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/Button.jsx";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from 'react-i18next';
 
 export default function WritingMenu({ goBack, setWritingSection }) {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen p-4">
       <Container>
@@ -13,13 +15,13 @@ export default function WritingMenu({ goBack, setWritingSection }) {
             className="flex items-center text-gray-300 hover:text-white"
           >
             <ArrowLeft className="mr-2" />
-            Aprender
+            {t('writing_back_to_learn')}
           </button>
         </div>
 
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-white mb-2">书写</h2>
-          <p className="text-xl text-gray-300">Shūxiě - Escritura</p>
+          <p className="text-xl text-gray-300">Shūxiě - {t('writing_title')}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
@@ -32,7 +34,7 @@ export default function WritingMenu({ goBack, setWritingSection }) {
             <div className="text-5xl mb-4">🈷️</div>
             <h3 className="text-2xl font-bold text-white mb-2">汉字</h3>
             <p className="text-lg text-gray-300 mb-1">Hànzì</p>
-            <p className="text-gray-400">Caracteres Completos</p>
+            <p className="text-gray-400">{t('writing_hanzi_title')}</p>
           </Button>
 
           {/* Radicales Básicos */}
@@ -44,7 +46,7 @@ export default function WritingMenu({ goBack, setWritingSection }) {
             <div className="text-5xl mb-4">🔠</div>
             <h3 className="text-2xl font-bold text-white mb-2">部首</h3>
             <p className="text-lg text-gray-300 mb-1">Bùshǒu</p>
-            <p className="text-gray-400">Radicales Básicos</p>
+            <p className="text-gray-400">{t('writing_radicals_title')}</p>
           </Button>
         </div>
       </Container>

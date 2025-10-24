@@ -1,8 +1,10 @@
 import { assetUrl } from '../../../utils/assets';
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Consonants({ goBack, speakChinese }) {
+  const { t } = useTranslation();
   const [rawConsonants, setRawConsonants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +21,7 @@ export default function Consonants({ goBack, speakChinese }) {
         }
       } catch (e) {
         if (mounted) {
-          setError("No se pudieron cargar las consonantes desde /public/data/hsk1-data.json");
+          setError(t('tones_consonants_error'));
           setLoading(false);
         }
       }
@@ -85,19 +87,19 @@ export default function Consonants({ goBack, speakChinese }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4 grid place-items-center">
-        <div className="text-gray-300">Cargando consonantes…</div>
+      <div className="min-h-screen bg-gray-900 p-4 grid place-items-center">
+        <div className="text-gray-300">{t('tones_loading_consonants')}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-4xl mx-auto pt-8 pb-8">
         <div className="mb-6">
           <button onClick={() => goBack && goBack()} className="flex items-center text-gray-300 hover:text-white">
             <ArrowLeft className="mr-2" />
-            Tonos
+            {t('tones_back_to_tones')}
           </button>
         </div>
 
@@ -109,12 +111,12 @@ export default function Consonants({ goBack, speakChinese }) {
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-1">Consonantes en Pinyin</h2>
-            <p className="text-gray-300">Haz click para escuchar un ejemplo</p>
+            <h2 className="text-3xl font-bold text-white mb-1">{t('tones_pinyin_consonants_title')}</h2>
+            <p className="text-gray-300">{t('tones_click_to_listen_example')}</p>
           </div>
 
           {consonants.length === 0 ? (
-            <div className="text-center text-gray-400">No hay datos de consonantes en el JSON.</div>
+            <div className="text-center text-gray-400">{t('tones_no_consonant_data')}</div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {consonants.map((cons, idx) => {
@@ -123,7 +125,7 @@ export default function Consonants({ goBack, speakChinese }) {
                     key={idx}
                     onClick={() => playConsonant(cons.pinyin)}
                     className="bg-gradient-to-br from-gray-700 to-gray-600 rounded-xl p-6 hover:shadow-lg transition text-center border border-gray-600"
-                    title="Escuchar ejemplo"
+                    title={t('tones_listen_example_tooltip')}
                   >
                     <div className="text-5xl font-bold text-white mb-2">{cons.pinyin}</div>
                     <div className="text-gray-300 text-sm">{cons.sound}</div>

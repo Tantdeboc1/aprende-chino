@@ -1,20 +1,22 @@
-import { APP_VERSION } from '@/utils/version';  // ← AÑADIDO: Import de la versión
+import { APP_VERSION } from '@/utils/version';
+import { useTranslation } from "react-i18next";
 
 const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithSection, onWritingClick }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
     <>
       {/* Sidebar sin overlay - solo el panel lateral */}
-      <div className="fixed left-0 top-0 bottom-0 w-64 bg-white dark:bg-gray-800 shadow-xl z-50 overflow-y-auto rounded-r-2xl">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="fixed left-0 top-0 bottom-0 w-64 bg-gray-800 shadow-xl z-50 overflow-y-auto rounded-r-2xl">
+        <div className="p-4 border-b border-gray-700">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Navegación
+            <h2 className="text-lg font-semibold text-white">
+              {t('sidebar_navigation')}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="p-1 rounded-md text-gray-300 hover:bg-gray-700"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -32,11 +34,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                   onNavigate('menu');
                   onClose();
                 }}
-                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
               >
                 <span className="flex items-center space-x-3">
                   <span>🏠</span>
-                  <span>Inicio</span>
+                  <span>{t('sidebar_home')}</span>
                 </span>
               </button>
             </li>
@@ -48,11 +50,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                   onNavigate('learn');
                   onClose();
                 }}
-                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
               >
                 <span className="flex items-center space-x-3">
                   <span>📚</span>
-                  <span>Aprender</span>
+                  <span>{t('menu_learn_title')}</span>
                 </span>
               </button>
               <ul className="ml-4 mt-1 space-y-1">
@@ -62,11 +64,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onLearnWithSection('characters');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🈷️</span>
-                      <span>Caracteres</span>
+                      <span>{t('learn_characters_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -76,11 +78,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onLearnWithSection('tones');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🎵</span>
-                      <span>Tonos</span>
+                      <span>{t('learn_tones_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -90,11 +92,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onLearnWithSection('radicals');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🔠</span>
-                      <span>Radicales</span>
+                      <span>{t('learn_radicals_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -105,11 +107,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onWritingClick(); // USA LA FUNCIÓN ESPECÍFICA
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>✍️</span>
-                      <span>Escritura</span>
+                      <span>{t('learn_writing_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -123,11 +125,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                   onNavigate('daily');
                   onClose();
                 }}
-                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
               >
                 <span className="flex items-center space-x-3">
                   <span>🎯</span>
-                  <span>Desafíos Diarios</span>
+                  <span>{t('menu_daily_title')}</span>
                 </span>
               </button>
               <ul className="ml-4 mt-1 space-y-1">
@@ -137,11 +139,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onDailyWithSection('characters');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🈷️</span>
-                      <span>Caracteres</span>
+                      <span>{t('learn_characters_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -151,11 +153,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onDailyWithSection('radicals');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🔠</span>
-                      <span>Radicales</span>
+                      <span>{t('learn_radicals_title')}</span>
                     </span>
                   </button>
                 </li>
@@ -165,15 +167,31 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                       onDailyWithSection('tones');
                       onClose();
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                    className="w-full text-left px-4 py-2 rounded-lg text-gray-200 hover:bg-gray-700 transition-colors"
                   >
                     <span className="flex items-center space-x-3">
                       <span>🎵</span>
-                      <span>Tonos</span>
+                      <span>{t('learn_tones_title')}</span>
                     </span>
                   </button>
                 </li>
               </ul>
+            </li>
+
+            {/* Mini-juegos - NUEVA SECCIÓN */}
+            <li>
+              <button
+                onClick={() => {
+                  onNavigate('minigames');
+                  onClose();
+                }}
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
+              >
+                <span className="flex items-center space-x-3">
+                  <span>🎮</span>
+                  <span>{t('menu_minigames_title')}</span>
+                </span>
+              </button>
             </li>
 
             {/* Diccionario */}
@@ -183,11 +201,11 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                   onNavigate('dictionary');
                   onClose();
                 }}
-                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
               >
                 <span className="flex items-center space-x-3">
                   <span>📖</span>
-                  <span>Diccionario</span>
+                  <span>{t('menu_dictionary_title')}</span>
                 </span>
               </button>
             </li>
@@ -199,21 +217,21 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
                   onNavigate('info');
                   onClose();
                 }}
-                className="w-full text-left px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="w-full text-left px-4 py-3 rounded-xl text-white hover:bg-gray-700 transition-colors"
               >
                 <span className="flex items-center space-x-3">
                   <span>ℹ️</span>
-                  <span>Información</span>
+                  <span>{t('menu_info_title')}</span>
                 </span>
               </button>
             </li>
           </ul>
 
           {/* VERSIÓN - MINIMALISTA */}
-          <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <div className="text-center text-xs text-gray-500 dark:text-gray-400">
-              <div>中文学习 {APP_VERSION}</div>  {/* ← CAMBIADO: v0.1 por {APP_VERSION} */}
-              <div className="mt-1">Aprende Chino</div>
+          <div className="mt-8 pt-4 border-t border-gray-700">
+            <div className="text-center text-xs text-gray-300">
+              <div>中文学习 {APP_VERSION}</div>
+              <div className="mt-1">{t('welcome_title')}</div>
             </div>
           </div>
         </nav>

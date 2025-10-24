@@ -2,8 +2,10 @@ import { assetUrl } from '../../utils/assets';
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from "react-i18next";
 
 export default function History({ goBack }) {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,21 +14,22 @@ export default function History({ goBack }) {
     let alive = true;
     (async () => {
       try {
-        const res = await fetch(assetUrl('data/info.json'));
+        const lang = i18n.language || 'es';
+        const res = await fetch(assetUrl(`data/info.json`));
         const json = await res.json();
         if (!alive) return;
         setData(json?.history ?? {});
       } catch (e) {
-        setError("No se pudo cargar /data/info.json");
+        setError(t('info_error_loading'));
       } finally {
         if (alive) setLoading(false);
       }
     })();
     return () => { alive = false; };
-  }, []);
+  }, [i18n.language, t]);
 
   if (loading) {
-    return <div className="min-h-screen grid place-items-center bg-gradient-to-br from-gray-800 to-gray-900 text-gray-300">Cargando…</div>;
+    return <div className="min-h-screen grid place-items-center bg-gray-900 text-gray-300">{t('info_loading')}</div>;
   }
 
   const timeline = data?.timeline ?? [];
@@ -35,10 +38,10 @@ export default function History({ goBack }) {
   const overview = data?.overview ?? "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       <Container>
         <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-6">
-          <ArrowLeft className="mr-2" /> Información
+          <ArrowLeft className="mr-2" /> {t('info_back_to_info')}
         </button>
 
         {error && (
@@ -48,19 +51,17 @@ export default function History({ goBack }) {
         )}
 
         <div className="grid gap-6">
-          {/* Overview */}
           <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h1 className="text-3xl font-bold text-white mb-2">🏯 Historia de China</h1>
-            <p className="text-gray-300 mb-4">Panorama general y etapas clave.</p>
+            <h1 className="text-3xl font-bold text-white mb-2">🏯 {t('info_history_title')}</h1>
+            <p className="text-gray-300 mb-4">{t('info_history_subtitle')}</p>
             {overview && <p className="text-white leading-relaxed">{overview}</p>}
           </section>
 
-          {/* Timeline */}
           <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-2">Línea del tiempo</h2>
-            <p className="text-gray-300 mb-4">De los orígenes a la era contemporánea.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('info_timeline_title')}</h2>
+            <p className="text-gray-300 mb-4">{t('info_timeline_subtitle')}</p>
             {timeline.length === 0 ? (
-              <div className="text-gray-400">No hay elementos en la cronología.</div>
+              <div className="text-gray-400">{t('info_no_timeline_items')}</div>
             ) : (
               <div className="space-y-4">
                 {timeline.map((it, i) => (
@@ -74,12 +75,11 @@ export default function History({ goBack }) {
             )}
           </section>
 
-          {/* Glossary */}
           <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-2">Glosario</h2>
-            <p className="text-gray-300 mb-4">Conceptos clave para entender la historia china.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('info_glossary_title')}</h2>
+            <p className="text-gray-300 mb-4">{t('info_glossary_subtitle')}</p>
             {glossary.length === 0 ? (
-              <div className="text-gray-400">No hay términos en el glosario.</div>
+              <div className="text-gray-400">{t('info_no_glossary_terms')}</div>
             ) : (
               <ul className="space-y-3">
                 {glossary.map((g, i) => (
@@ -92,12 +92,11 @@ export default function History({ goBack }) {
             )}
           </section>
 
-          {/* Suggested reading */}
           <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-2">Lecturas sugeridas</h2>
-            <p className="text-gray-300 mb-4">Para profundizar más.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('info_suggested_reading_title')}</h2>
+            <p className="text-gray-300 mb-4">{t('info_suggested_reading_subtitle')}</p>
             {reading.length === 0 ? (
-              <div className="text-gray-400">No hay recomendaciones por ahora.</div>
+              <div className="text-gray-400">{t('info_no_recommendations')}</div>
             ) : (
               <ul className="list-disc pl-6 space-y-2 text-white">
                 {reading.map((r, i) => (

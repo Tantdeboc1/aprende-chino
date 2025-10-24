@@ -1,11 +1,13 @@
 // src/components/ui/Header.jsx
 import { Menu, BookOpen } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Header({
   onSidebarToggle,
   onDictionaryClick,
   onHomeClick, // ← NUEVA PROP
 }) {
+  const { t } = useTranslation();
   return (
     <header className="bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-50 border-b border-gray-700 rounded-b-2xl">
       <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between">
@@ -28,7 +30,7 @@ export default function Header({
             <span className="text-white font-bold text-lg">学</span>
           </div>
           <span className="text-lg font-bold text-white group-hover:text-gray-200 transition-colors">
-            Aprende Chino
+            {t('welcome_title')}
           </span>
         </div>
 
@@ -36,7 +38,7 @@ export default function Header({
           onClick={onDictionaryClick}
           className="px-3 py-1 hover:bg-gray-700 rounded-lg transition text-gray-300 font-medium"
         >
-          Diccionario
+          {t('menu_dictionary_title')}
         </button>
       </div>
     </header>

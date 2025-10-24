@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { playAudioSmart } from "../../../utils/audio";
+import { useTranslation } from "react-i18next";
 
 /**
  * Quiz de pronunciación (consonantes y vocales)
@@ -112,6 +113,7 @@ function buildQuiz() {
 }
 
 export default function QuizPronunciation({ goBack }) {
+  const { t } = useTranslation();
   const [questions, setQuestions] = useState([]);
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -133,7 +135,7 @@ export default function QuizPronunciation({ goBack }) {
   // PANTALLA DE INSTRUCCIONES
   if (!quizStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+      <div className="min-h-screen bg-gray-900 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
@@ -141,30 +143,30 @@ export default function QuizPronunciation({ goBack }) {
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              Volver a Pronunciación
+              {t('tones_back_to_pronunciation')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">Quiz de Pronunciación</h1>
-            <p className="text-gray-400 text-center">Identificación Auditiva</p>
+            <h1 className="text-3xl font-bold text-white text-center">{t('tones_pronunciation_quiz_title')}</h1>
+            <p className="text-gray-400 text-center">{t('tones_quiz_auditory_identification')}</p>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>Escucha el sonido de la consonante o vocal</p>
+                <p>{t('tones_pronunciation_quiz_instructions_1')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>Selecciona la opción correcta entre las 4 disponibles</p>
+                <p>{t('tones_pronunciation_quiz_instructions_2')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p><strong>10 preguntas</strong> en total</p>
+                <p><strong>{t('tones_pronunciation_quiz_instructions_3')}</strong></p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>¡Pon a prueba tu oído para el chino!</p>
+                <p>{t('tones_pronunciation_quiz_instructions_4')}</p>
               </div>
             </div>
           </div>
@@ -173,7 +175,7 @@ export default function QuizPronunciation({ goBack }) {
             onClick={initQuiz}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            🎵 Comenzar Quiz
+            🎵 {t('radicals_start_quiz_button')}
           </button>
         </div>
       </div>
@@ -217,17 +219,17 @@ export default function QuizPronunciation({ goBack }) {
   // Fin del quiz
   if (idx >= questions.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border border-gray-700">
           <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-bold text-white mb-4">¡Quiz completado!</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">{t('tones_quiz_completed_pronunciation_title')}</h2>
           <p className="text-5xl font-bold text-red-400 mb-6">{score}/{questions.length}</p>
           <div className="flex gap-3">
             <button
               onClick={initQuiz}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
-            >Jugar otra vez</button>
-            <button onClick={goBack} className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition">Volver</button>
+            >{t('tones_play_again_button')}</button>
+            <button onClick={goBack} className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition">{t('radicals_back_button')}</button>
           </div>
         </div>
       </div>
@@ -235,16 +237,17 @@ export default function QuizPronunciation({ goBack }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto pt-8">
         <div className="mb-6 flex justify-between items-center">
           <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white text-sm">
-            ← Volver a Pronunciación
+            <ArrowLeft className="mr-2" />
+            {t('tones_back_to_pronunciation')}
           </button>
 
           <div className="text-center">
             <span className="text-gray-300 font-semibold text-base block">
-              {idx + 1}/{questions.length} | Puntos: {score}
+              {idx + 1}/{questions.length} | {t('quiz_score_label', { score })}
             </span>
             {/* Barra de progreso */}
             <div className="w-32 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
@@ -260,16 +263,16 @@ export default function QuizPronunciation({ goBack }) {
             onClick={initQuiz}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
-            Reiniciar
+            {t('matching_reset_button')}
           </button>
         </div>
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 text-center border border-gray-700">
-          <h2 className="text-2xl font-bold text-white mb-4">¿Qué sonido escuchas?</h2>
-          <p className="text-gray-300 mb-6">Pulsa el botón para escuchar. Elige la consonante o vocal correcta.</p>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('tones_what_sound_do_you_hear')}</h2>
+          <p className="text-gray-300 mb-6">{t('tones_pronunciation_quiz_prompt')}</p>
 
           <button onClick={listen} disabled={playing} className="mx-auto mb-8 px-8 py-5 rounded-xl bg-green-500 hover:bg-green-600 disabled:bg-gray-600 text-white text-xl font-bold shadow-lg transition">
-            🔊 Escuchar
+            🔊 {t('tones_listen_button')}
           </button>
 
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
@@ -293,7 +296,7 @@ export default function QuizPronunciation({ goBack }) {
 
           {showResult && (
             <button onClick={next} className="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition">
-              {idx + 1 >= questions.length ? 'Ver Resultado' : 'Siguiente'}
+              {idx + 1 >= questions.length ? t('radicals_view_results_button') : t('radicals_next_question_button')}
             </button>
           )}
         </div>

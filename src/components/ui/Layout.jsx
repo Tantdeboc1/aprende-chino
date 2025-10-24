@@ -34,7 +34,7 @@ export default function Layout({
         onWritingClick={onWritingClick} // NUEVO PROP PASADO AL SIDEBAR
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800 pt-16">
+      <div className="min-h-screen bg-gray-900 text-white pt-16">
         {children}
       </div>
     </>

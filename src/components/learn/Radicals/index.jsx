@@ -2,8 +2,10 @@
 import { ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/Button.jsx";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from 'react-i18next';
 
 export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen p-4">
       <Container>
@@ -13,13 +15,13 @@ export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
             className="flex items-center text-gray-300 hover:text-white"
           >
             <ArrowLeft className="mr-2" />
-            Volver a Aprender
+            {t('radicals_back_to_learn')}
           </button>
         </div>
 
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-2">部首</h2>
-          <p className="text-xl text-gray-300">Bùshǒu - Radicales Chinos</p>
+          <p className="text-xl text-gray-300">Bùshǒu - {t('radicals_title')}</p>
         </div>
 
         {/* TRES botones principales - TEORÍA + 2 QUIZZES */}
@@ -31,8 +33,8 @@ export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
             className="bg-gray-800 border border-gray-700 hover:border-blue-500 h-48"
           >
             <div className="text-5xl mb-4">📚</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Teoría</h3>
-            <p className="text-lg text-gray-300">Aprende los conceptos</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('radicals_theory_title')}</h3>
+            <p className="text-lg text-gray-300">{t('radicals_theory_description')}</p>
           </Button>
 
           {/* Quiz 1 - Identificación Visual */}
@@ -42,8 +44,8 @@ export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
             className="bg-gray-800 border border-gray-700 hover:border-green-500 h-48"
           >
             <div className="text-5xl mb-4">👁️</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Identificar</h3>
-            <p className="text-lg text-gray-300">Encuentra radicales</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('radicals_quiz1_title')}</h3>
+            <p className="text-md text-gray-300">{t('radicals_quiz1_description')}</p>
           </Button>
 
           {/* Quiz 2 - Significados */}
@@ -53,8 +55,8 @@ export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
             className="bg-gray-800 border border-gray-700 hover:border-purple-500 h-48"
           >
             <div className="text-5xl mb-4">📖</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Significados</h3>
-            <p className="text-lg text-gray-300">Aprende significados</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('radicals_quiz2_title')}</h3>
+            <p className="text-md text-gray-300">{t('radicals_quiz2_description')}</p>
           </Button>
         </div>
 

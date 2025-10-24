@@ -1,5 +1,6 @@
 // src/components/learn/Characters/Matching.jsx
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function pickN(arr, n) {
   const copy = [...arr];
@@ -15,6 +16,7 @@ export default function Matching({
   goBack,
   characters = []
 }) {
+  const { t } = useTranslation();
   const [pairs, setPairs] = useState([]);
   const [selected, setSelected] = useState([]);
   const [matched, setMatched] = useState([]);
@@ -88,41 +90,41 @@ export default function Matching({
   // Pantalla de instrucciones
   if (showInstructions) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+      <div className="min-h-screen bg-gray-900 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
-              ← Volver a Caracteres
+              ← {t('quiz_back_button')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">Juego de Emparejar</h1>
-            <p className="text-gray-400 text-center">Relaciona caracteres con sus significados</p>
+            <h1 className="text-3xl font-bold text-white text-center">{t('matching_title')}</h1>
+            <p className="text-gray-400 text-center">{t('matching_subtitle')}</p>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>Encuentra las parejas entre caracteres chinos y sus significados</p>
+                <p>{t('matching_instructions_1')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>Haz clic en un carácter y luego en su significado correspondiente</p>
+                <p>{t('matching_instructions_2')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p>Las parejas correctas se volverán <span className="text-green-400">verdes</span></p>
+                <p dangerouslySetInnerHTML={{ __html: t('matching_instructions_3', { 1: '<span class="text-green-400">', '/1': '</span>' }) }} />
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>Los errores se mostrarán en <span className="text-red-400">rojo</span> momentáneamente</p>
+                <p dangerouslySetInnerHTML={{ __html: t('matching_instructions_4', { 1: '<span class="text-red-400">', '/1': '</span>' }) }} />
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">5</div>
-                <p>¡Empareja todos los caracteres con sus significados!</p>
+                <p>{t('matching_instructions_5')}</p>
               </div>
             </div>
           </div>
@@ -131,7 +133,7 @@ export default function Matching({
             onClick={init}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            🎯 Comenzar Juego
+            🎯 {t('matching_start_button')}
           </button>
         </div>
       </div>
@@ -139,15 +141,15 @@ export default function Matching({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+          <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-5xl mx-auto pt-6">
         <div className="mb-4 flex justify-between items-center">
           <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white transition text-sm">
-            ← Volver a Caracteres
+            ← {t('quiz_back_button')}
           </button>
           <div className="text-center">
             <span className="text-gray-300 font-semibold text-base">
-              Parejas: {matched.length}/{pairs.length / 2 || 0}
+              {t('matching_pairs_header')} {matched.length}/{pairs.length / 2 || 0}
             </span>
             <div className="w-24 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
               <div
@@ -160,7 +162,7 @@ export default function Matching({
             onClick={init}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
-            Reiniciar
+            {t('matching_reset_button')}
           </button>
         </div>
 
@@ -168,20 +170,20 @@ export default function Matching({
           {done ? (
             <div className="text-center py-8">
               <div className="text-5xl mb-4">🎊</div>
-              <h2 className="text-2xl font-bold text-white mb-2">¡Perfecto!</h2>
-              <p className="text-gray-300 text-lg mb-6">Has relacionado todas las parejas correctamente</p>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('matching_completed_title')}</h2>
+              <p className="text-gray-300 text-lg mb-6">{t('matching_completed_subtitle')}</p>
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={init}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition text-base"
                 >
-                  Jugar de nuevo
+                  {t('quiz_play_again_button')}
                 </button>
                 <button
                   onClick={goBack}
                   className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition text-base"
                 >
-                  Volver
+                  {t('quiz_back_button')}
                 </button>
               </div>
             </div>
@@ -189,7 +191,7 @@ export default function Matching({
             <div className="grid grid-cols-2 gap-6">
               {/* Columna Caracteres */}
               <div className="space-y-3">
-                <h4 className="text-center font-bold text-gray-300 mb-4 text-lg">Caracteres 汉字</h4>
+                <h4 className="text-center font-bold text-gray-300 mb-4 text-lg">{t('matching_characters_header')}</h4>
                 {pairs.filter(p => p.type === 'char').map((item) => {
                   const state = getCardState(item);
                   return (
@@ -217,7 +219,7 @@ export default function Matching({
 
               {/* Columna Significados */}
               <div className="space-y-3">
-                <h4 className="text-center font-bold text-gray-300 mb-4 text-lg">Significados</h4>
+                <h4 className="text-center font-bold text-gray-300 mb-4 text-lg">{t('matching_meanings_header')}</h4>
                 {pairs.filter(p => p.type === 'meaning').map((item) => {
                   const state = getCardState(item);
                   return (

@@ -1,8 +1,10 @@
 // src/components/learn/Radicals/RadicalsQuiz2.jsx
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function RadicalsQuiz2({ goBack, radicals }) {
+  const { t } = useTranslation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -96,45 +98,45 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
           <div className="mb-8">
             <button
               onClick={goBack}
-              className="flex items-center text-gray-300 hover:text-white transition mb-4"
-            >
-              <ArrowLeft className="mr-2" />
-              Volver a Radicales
-            </button>
-            <h1 className="text-3xl font-bold text-white text-center">Quiz de Radicales</h1>
-            <p className="text-gray-400 text-center">Significados</p>
-          </div>
+                          className="flex items-center text-gray-300 hover:text-white transition mb-4"
+          >
+            <ArrowLeft className="mr-2" />
+            {t('radicals_back_to_radicals')}
+          </button>
+          <h1 className="text-3xl font-bold text-white text-center">{t('radicals_title')}</h1>
+          <p className="text-gray-400 text-center">{t('radicals_quiz_meanings_title')}</p>
+        </div>
 
-          {/* Instrucciones */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
-            <div className="space-y-3 text-gray-300">
-              <div className="flex items-start">
-                <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>Se te mostrará un radical chino</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>Identifica cuál es su significado correcto</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p>Selecciona la respuesta correcta entre las 4 opciones</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>Completa 10 preguntas para finalizar el quiz</p>
-              </div>
+        {/* Instrucciones */}
+        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
+          <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
+          <div className="space-y-3 text-gray-300">
+            <div className="flex items-start">
+              <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+              <p>{t('radicals_quiz_meaning_instructions_1')}</p>
+            </div>
+            <div className="flex items-start">
+              <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+              <p>{t('radicals_quiz_meaning_instructions_2')}</p>
+            </div>
+            <div className="flex items-start">
+              <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+              <p>{t('radicals_quiz_instructions_3')}</p>
+            </div>
+            <div className="flex items-start">
+              <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+              <p>{t('radicals_quiz_instructions_4')}</p>
             </div>
           </div>
+        </div>
 
-          {/* Botón empezar */}
-          <button
-            onClick={startQuiz}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
-          >
-            📚 Empezar Quiz
-          </button>
+        {/* Botón empezar */}
+        <button
+          onClick={startQuiz}
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
+        >
+          📚 {t('radicals_start_quiz_button')}
+        </button>
         </div>
       </div>
     );
@@ -151,23 +153,23 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              Volver a Radicales
+              {t('radicals_back_to_radicals')}
             </button>
           </div>
 
           {/* Resultados */}
           <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 text-center">
             <div className="text-6xl mb-4">🎓</div>
-            <h2 className="text-3xl font-bold text-white mb-4">Quiz Completado</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('radicals_quiz_completed_title')}</h2>
 
             <div className="bg-gray-700 rounded-lg p-6 mb-6">
               <div className="text-4xl font-bold text-white mb-2">
                 {score}/10
               </div>
               <div className="text-gray-400">
-                {score >= 8 ? "¡Dominas los radicales! 🏆" :
-                 score >= 6 ? "¡Buen conocimiento! 👍" :
-                 "Sigue estudiando 💪"}
+                {score >= 8 ? t('radicals_quiz_meanings_completed_excellent') :
+                 score >= 6 ? t('radicals_quiz_meanings_completed_good') :
+                 t('radicals_quiz_meanings_completed_practice')}
               </div>
             </div>
 
@@ -176,13 +178,13 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
                 onClick={handleRestartQuiz}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
               >
-                🔄 Reintentar
+                🔄 {t('radicals_retry_button')}
               </button>
               <button
                 onClick={goBack}
                 className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition"
               >
-                ↩️ Volver
+                ↩️ {t('radicals_back_button')}
               </button>
             </div>
           </div>
@@ -196,7 +198,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
       <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4">📝</div>
-          <h2 className="text-xl font-bold text-white">Cargando preguntas...</h2>
+          <h2 className="text-xl font-bold text-white">{t('radicals_loading_questions')}</h2>
         </div>
       </div>
     );
@@ -214,11 +216,11 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
             className="flex items-center text-gray-300 hover:text-white transition mb-4"
           >
             <ArrowLeft className="mr-2" />
-            Volver a Radicales
+            {t('radicals_back_to_radicals')}
           </button>
 
           <div className="flex justify-between items-center mb-2">
-            <h1 className="text-2xl font-bold text-white">Significados de Radicales</h1>
+            <h1 className="text-2xl font-bold text-white">{t('radicals_meanings_of_radicals_title')}</h1>
             <div className="text-gray-400">
               {currentQuestion + 1}/10
             </div>
@@ -235,7 +237,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
         {/* Pregunta */}
         <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-6 text-center">
-          <h3 className="text-lg text-gray-400 mb-4">¿Qué significa este radical?</h3>
+          <h3 className="text-lg text-gray-400 mb-4">{t('radicals_meaning_question_header')}</h3>
 
           {/* Radical objetivo */}
           <div className="text-8xl font-bold text-white mb-4 py-4">
@@ -249,7 +251,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
             </div>
           )}
 
-          <h4 className="text-lg text-gray-400 mb-6">Selecciona el significado correcto:</h4>
+          <h4 className="text-lg text-gray-400 mb-6">{t('radicals_select_correct_meaning')}</h4>
 
           {/* Opciones de respuesta */}
           <div className="space-y-3">
@@ -289,7 +291,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
             onClick={handleNextQuestion}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            {currentQuestion < 9 ? "Siguiente Pregunta →" : "Ver Resultados"}
+            {currentQuestion < 9 ? t('radicals_next_question_button') : t('radicals_view_results_button')}
           </button>
         )}
       </div>

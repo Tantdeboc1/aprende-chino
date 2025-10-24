@@ -13,22 +13,24 @@ import Philosophy from "./Philosophy.jsx";
 import Education from "./Education.jsx";
 import Button from "@/components/ui/Button.jsx";
 import Container from "@/components/ui/Container.jsx";
+import { useTranslation } from "react-i18next";
 
 export default function InfoIndex({ goBack }) {
+  const { t } = useTranslation();
   const [infoSection, setInfoSection] = useState(null);
 
   if (infoSection === null) {
     const sections = [
-      { key: "history", title: "Historia de China", emoji: "🏯", description: "5.000 años de civilización" },
-      { key: "language", title: "Curiosidades del idioma", emoji: "🈶", description: "Caracteres, tonos y más" },
-      { key: "hsk", title: "Exámenes HSK", emoji: "🧠", description: "Certificación oficial" },
-      { key: "cuisine", title: "Gastronomía y cultura", emoji: "🍜", description: "Comida tradicional china" },
-      { key: "traditions", title: "Tradiciones y festividades", emoji: "🎎", description: "Fiestas y costumbres" },
-      { key: "modernChina", title: "China moderna", emoji: "🏙️", description: "China contemporánea" },
-      { key: "geography", title: "Geografía y regiones", emoji: "🧭", description: "Ríos, montañas y ciudades" },
-      { key: "musicCinema", title: "Música y cine", emoji: "🎶", description: "Arte y entretenimiento" },
-      { key: "philosophy", title: "Filosofía y pensamiento", emoji: "🧘‍♂️", description: "Confucionismo, Taoísmo" },
-      { key: "education", title: "Educación y vida estudiantil", emoji: "🏫", description: "Sistema educativo chino" }
+      { key: "history", title: t('info_history_title'), emoji: "🏯", description: t('info_history_description') },
+      { key: "language", title: t('info_language_curiosities_title'), emoji: "🈶", description: t('info_language_curiosities_description') },
+      { key: "hsk", title: t('info_hsk_exams_title'), emoji: "🧠", description: t('info_hsk_exams_description') },
+      { key: "cuisine", title: t('info_cuisine_culture_title'), emoji: "🍜", description: t('info_cuisine_culture_description') },
+      { key: "traditions", title: t('info_traditions_festivities_title'), emoji: "🎎", description: t('info_traditions_festivities_description') },
+      { key: "modernChina", title: t('info_modern_china_title'), emoji: "🏙️", description: t('info_modern_china_description') },
+      { key: "geography", title: t('info_geography_regions_title'), emoji: "🧭", description: t('info_geography_regions_description') },
+      { key: "musicCinema", title: t('info_music_cinema_title'), emoji: "🎶", description: t('info_music_cinema_description') },
+      { key: "philosophy", title: t('info_philosophy_thought_title'), emoji: "🧘‍♂️", description: t('info_philosophy_thought_description') },
+      { key: "education", title: t('info_education_student_life_title'), emoji: "🏫", description: t('info_education_student_life_description') }
     ];
 
     return (
@@ -36,13 +38,13 @@ export default function InfoIndex({ goBack }) {
         <Container>
           <div className="mb-6">
             <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white">
-              <ArrowLeft className="mr-2" /> Volver al Menú
+              <ArrowLeft className="mr-2" /> {t('daily_back_to_menu')}
             </button>
           </div>
 
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">中国信息</h1>
-            <p className="text-xl text-gray-300">Zhōngguó xìnxī - Información sobre China</p>
+            <p className="text-xl text-gray-300">{t('info_title_main')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

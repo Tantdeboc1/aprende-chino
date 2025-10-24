@@ -1,5 +1,6 @@
 // src/components/learn/Characters/Quiz.jsx
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function pickN(arr, n) {
   const copy = [...arr];
@@ -16,6 +17,7 @@ export default function Quiz({
   characters = [],
   speakChinese
 }) {
+  const { t } = useTranslation();
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -50,41 +52,41 @@ export default function Quiz({
   // Pantalla de instrucciones
   if (showInstructions) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+      <div className="min-h-screen bg-gray-900 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
               className="flex items-center text-gray-300 hover:text-white transition mb-4"
             >
-              ← Volver a Caracteres
+              ← {t('quiz_back_button')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">Quiz de Caracteres</h1>
-            <p className="text-gray-400 text-center">Identifica el significado de los caracteres</p>
+            <h1 className="text-3xl font-bold text-white text-center">{t('quiz_title')}</h1>
+            <p className="text-gray-400 text-center">{t('quiz_subtitle')}</p>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">Instrucciones</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>Observa el carácter chino mostrado en pantalla</p>
+                <p>{t('quiz_instructions_1')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>Selecciona el significado correcto entre las 4 opciones</p>
+                <p>{t('quiz_instructions_2')}</p>
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p>Las respuestas correctas se volverán <span className="text-green-400">verdes</span></p>
+                <p dangerouslySetInnerHTML={{ __html: t('quiz_instructions_3', { 1: '<span class="text-green-400">', '/1': '</span>' }) }} />
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>Los errores se mostrarán en <span className="text-red-400">rojo</span></p>
+                <p dangerouslySetInnerHTML={{ __html: t('quiz_instructions_4', { 1: '<span class="text-red-400">', '/1': '</span>' }) }} />
               </div>
               <div className="flex items-start">
                 <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">5</div>
-                <p>Completa 10 preguntas para finalizar el quiz</p>
+                <p>{t('quiz_instructions_5')}</p>
               </div>
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function Quiz({
             onClick={initQuiz}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            🎯 Comenzar Quiz
+            🎯 {t('quiz_start_button')}
           </button>
         </div>
       </div>
@@ -104,9 +106,9 @@ export default function Quiz({
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4 flex items-center justify-center">
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border border-gray-700">
-          <p className="text-gray-300 mb-6">No hay suficientes datos para el quiz.</p>
+          <p className="text-gray-300 mb-6">{t('dictionary_no_results')}</p>
           <button onClick={goBack} className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg transition">
-            Volver
+            {t('quiz_back_button')}
           </button>
         </div>
       </div>
@@ -136,7 +138,7 @@ export default function Quiz({
       <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center p-4">
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border border-gray-700">
           <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-bold text-white mb-4">¡Quiz Completado!</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">{t('quiz_completed_title')}</h2>
           <p className="text-5xl font-bold text-red-400 mb-6">{score}/{questions.length}</p>
           <p className="text-gray-300 mb-6">
             {score >= 8 ? '¡Excelente trabajo!' : score >= 6 ? '¡Bien hecho!' : '¡Sigue practicando!'}
@@ -146,13 +148,13 @@ export default function Quiz({
               onClick={() => setShowInstructions(true)}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
             >
-              Jugar otra vez
+              {t('quiz_play_again_button')}
             </button>
             <button
               onClick={goBack}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
             >
-              Volver
+              {t('quiz_back_button')}
             </button>
           </div>
         </div>
@@ -161,14 +163,14 @@ export default function Quiz({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+          <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto pt-8">
         <div className="mb-6 flex justify-between items-center">
           <button
             onClick={goBack}
             className="flex items-center text-gray-300 hover:text-white text-sm"
           >
-            ← Volver a Caracteres
+            ← {t('quiz_back_button')}
           </button>
 
           <div className="text-center">
@@ -195,7 +197,7 @@ export default function Quiz({
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
           <div className="text-center mb-8">
-            <p className="text-gray-300 mb-4">¿Qué significa este carácter?</p>
+            <p className="text-gray-300 mb-4">{t('quiz_question_header')}</p>
             <div className="text-9xl font-bold text-white mb-2">{question.correct.char}</div>
             <p className="text-2xl text-gray-400">{question.correct.pinyin}</p>
           </div>
@@ -226,7 +228,7 @@ export default function Quiz({
               onClick={next}
               className="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
             >
-              {index + 1 >= questions.length ? 'Ver Resultado' : 'Siguiente'}
+              {index + 1 >= questions.length ? t('quiz_results_button') : t('quiz_next_button')}
             </button>
           )}
         </div>

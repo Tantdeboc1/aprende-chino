@@ -1,9 +1,68 @@
-/* src/index.css */
+/* src/index.css - TEMA OSCURO PERMANENTE */
 @import "tailwindcss";
 
-body {
-  background: linear-gradient(135deg, #1f2937, #374151);
-  min-height: 100vh;
+/* Forzar tema oscuro en todos los elementos */
+:root {
+  color-scheme: dark;
 }
 
-/* Elimina todas las clases dark: */
+html {
+  color-scheme: dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: #111827 !important;
+  color: #ffffff !important;
+  min-height: 100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Clases para el efecto 3D de las Flashcards */
+.perspective {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari */
+}
+
+/* Asegurar que todos los componentes tengan fondo oscuro por defecto */
+* {
+  box-sizing: border-box;
+}
+
+/* Override para cualquier elemento que intente usar colores claros */
+.bg-white {
+  background-color: #1f2937 !important;
+}
+
+.text-black {
+  color: #ffffff !important;
+}
+
+.text-gray-800 {
+  color: #e5e7eb !important;
+}
+
+.bg-gray-50 {
+  background-color: #111827 !important;
+}
+
+.bg-gray-100 {
+  background-color: #1f2937 !important;
+}
