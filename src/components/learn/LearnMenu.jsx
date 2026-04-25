@@ -19,12 +19,12 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
           </button>
         </div>
 
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-white mb-2">学习</h2>
-          <p className="text-xl text-gray-300">Xuéxí - {t('learn_title')}</p>
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">学习</h2>
+          <p className="text-lg sm:text-xl text-gray-300">Xuéxí - {t('learn_title')}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Caracteres */}
           <Button
             variant="card"
@@ -34,9 +34,9 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             }}
             className="bg-gray-800 border border-gray-700 hover:border-gray-600"
           >
-            <div className="text-5xl mb-4">🈶</div>
-            <h3 className="text-2xl font-bold text-white mb-2">汉字</h3>
-            <p className="text-lg text-gray-300 mb-1">Hànzì</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🈶</div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">汉字</h3>
+            <p className="text-sm sm:text-lg text-gray-300 mb-1">Hànzì</p>
             <p className="text-gray-400">{t('learn_characters_title')}</p>
           </Button>
 
@@ -49,9 +49,9 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             }}
             className="bg-gray-800 border border-gray-700 hover:border-gray-600"
           >
-            <div className="text-5xl mb-4">✍️</div>
-            <h3 className="text-2xl font-bold text-white mb-2">书写</h3>
-            <p className="text-lg text-gray-300 mb-1">Shūxiě</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">✍️</div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">书写</h3>
+            <p className="text-sm sm:text-lg text-gray-300 mb-1">Shūxiě</p>
             <p className="text-gray-400">{t('learn_writing_title')}</p>
           </Button>
 
@@ -64,9 +64,9 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             }}
             className="bg-gray-800 border border-gray-700 hover:border-gray-600"
           >
-            <div className="text-5xl mb-4">🔠</div>
-            <h3 className="text-2xl font-bold text-white mb-2">部首</h3>
-            <p className="text-lg text-gray-300 mb-1">Bùshǒu</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🔠</div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">部首</h3>
+            <p className="text-sm sm:text-lg text-gray-300 mb-1">Bùshǒu</p>
             <p className="text-gray-400">{t('learn_radicals_title')}</p>
           </Button>
 
@@ -79,9 +79,9 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
             }}
             className="bg-gray-800 border border-gray-700 hover:border-gray-600"
           >
-            <div className="text-5xl mb-4">🎵</div>
-            <h3 className="text-2xl font-bold text-white mb-2">声调</h3>
-            <p className="text-lg text-gray-300 mb-1">Shēngdiào</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🎵</div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">声调</h3>
+            <p className="text-sm sm:text-lg text-gray-300 mb-1">Shēngdiào</p>
             <p className="text-gray-400">{t('learn_tones_title')}</p>
           </Button>
         </div>

@@ -8,11 +8,12 @@ import { useTranslation } from "react-i18next";
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 // --- Componente Principal ---
-export default function PinyinConnection({ goBack, characters = [] }) {
+export default function PinyinConnection({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
   const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
+  const timeLeftRef = useRef(60);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -29,6 +30,7 @@ export default function PinyinConnection({ goBack, characters = [] }) {
     setCurrentQuestion({
       character: correctChar.char,
       correctPinyin: correctChar.pinyin,
+      charObj: correctChar,
       options: shuffleArray(options),
     });
     setFeedback(null);
@@ -38,7 +40,7 @@ export default function PinyinConnection({ goBack, characters = [] }) {
   // Iniciar el juego
   const startGame = () => {
     setScore(0);
-    setTimeLeft(60);
+    setTimeLeft(60); timeLeftRef.current = 60;
     setGameState('playing');
     generateQuestion();
   };
@@ -49,16 +51,19 @@ export default function PinyinConnection({ goBack, characters = [] }) {
 
     setSelectedAnswer(selectedPinyin);
 
-    if (selectedPinyin === currentQuestion.correctPinyin) {
+    const isCorrect = selectedPinyin === currentQuestion.correctPinyin;
+    if (isCorrect) {
       setScore(s => s + 10);
       setFeedback('correct');
     } else {
-      setTimeLeft(t => Math.max(0, t - 2));
+      setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; });
       setFeedback('incorrect');
     }
+    onTrackResult?.(currentQuestion.charObj, isCorrect);
 
+    const capturedTime = timeLeftRef.current;
     setTimeout(() => {
-      if (timeLeft > 0) {
+      if (capturedTime > 0) {
         generateQuestion();
       }
     }, 800);
@@ -74,7 +79,7 @@ export default function PinyinConnection({ goBack, characters = [] }) {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft(t => t - 1);
+      setTimeLeft(t => { const next = t - 1; timeLeftRef.current = next; return next; });
     }, 1000);
 
     return () => clearInterval(timer);

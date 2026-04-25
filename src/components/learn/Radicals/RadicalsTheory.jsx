@@ -158,7 +158,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {groupRadicals.map((radical, index) => (
                   <div
-                    key={index}
+                    key={radical.radical}
                     className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition cursor-pointer border border-gray-600"
                     onClick={() => setSelectedRadical(selectedRadical?.radical === radical.radical ? null : radical)}
                   >

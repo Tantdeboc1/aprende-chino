@@ -237,7 +237,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
               </button>
 
               <button
-                onClick={() => speakChinese(currentCharacter.char || currentCharacter.hanzi)}
+                onClick={() => speakChinese({ hanzi: currentCharacter.char || currentCharacter.hanzi, pinyin: currentCharacter.pinyin })}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 🔊 {t('writing_pronounce_button')}
@@ -261,7 +261,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
               </button>
 
               <button
-                onClick={() => speakChinese(currentCharacter.char || currentCharacter.hanzi)}
+                onClick={() => speakChinese({ hanzi: currentCharacter.char || currentCharacter.hanzi, pinyin: currentCharacter.pinyin })}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 🔊 {t('writing_pronounce_button')}

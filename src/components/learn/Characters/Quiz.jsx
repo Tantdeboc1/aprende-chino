@@ -121,7 +121,9 @@ export default function Quiz({
     if (showResult) return;
     setSelected(opt);
     setShowResult(true);
-    if (opt.char === question.correct.char) setScore(s => s + 1);
+    const isCorrect = opt.char === question.correct.char;
+    if (isCorrect) setScore(s => s + 1);
+    onTrackResult?.(question.correct, isCorrect);
   };
 
   const next = () => {
@@ -195,14 +197,14 @@ export default function Quiz({
           </button>
         </div>
 
-        <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
-          <div className="text-center mb-8">
+        <div className="bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-8 border border-gray-700">
+          <div className="text-center mb-6 sm:mb-8">
             <p className="text-gray-300 mb-4">{t('quiz_question_header')}</p>
-            <div className="text-9xl font-bold text-white mb-2">{question.correct.char}</div>
-            <p className="text-2xl text-gray-400">{question.correct.pinyin}</p>
+            <div className="text-7xl sm:text-9xl font-bold text-white mb-2">{question.correct.char}</div>
+            <p className="text-xl sm:text-2xl text-gray-400">{question.correct.pinyin}</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {question.options.map((option, idx) => (
               <button
                 key={idx}

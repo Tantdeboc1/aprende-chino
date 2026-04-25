@@ -7,8 +7,15 @@ const Sidebar = ({ isOpen, onClose, onNavigate, onLearnWithSection, onDailyWithS
 
   return (
     <>
-      {/* Sidebar sin overlay - solo el panel lateral */}
-      <div className="fixed left-0 top-0 bottom-0 w-64 bg-gray-800 shadow-xl z-50 overflow-y-auto rounded-r-2xl">
+      {/* Overlay oscuro para móvil - cierra al tocar fuera */}
+      <div
+        className="fixed inset-0 bg-black/60 z-40 md:hidden"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Panel lateral */}
+      <div className="fixed left-0 top-0 bottom-0 w-72 sm:w-64 bg-gray-800 shadow-xl z-50 overflow-y-auto rounded-r-2xl">
         <div className="p-4 border-b border-gray-700">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-white">

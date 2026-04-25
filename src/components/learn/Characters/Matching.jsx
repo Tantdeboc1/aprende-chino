@@ -62,6 +62,8 @@ export default function Matching({
         setMatched(m => [...m, item.match]);
         setSelected([]);
         setIncorrectPair(null);
+        const matchedChar = first.type === 'char' ? first.data : item.data;
+        onTrackSeen?.(matchedChar);
       } else {
         // Incorrecto - mostrar en rojo
         setIncorrectPair({ firstId: first.id, secondId: item.id });
@@ -188,7 +190,7 @@ export default function Matching({
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6">
               {/* Columna Caracteres */}
               <div className="space-y-3">
                 <h4 className="text-center font-bold text-gray-300 mb-4 text-lg">{t('matching_characters_header')}</h4>

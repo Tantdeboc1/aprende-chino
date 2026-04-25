@@ -29,14 +29,14 @@ export default function Header({
           <div className="bg-red-500 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-red-600 transition-colors">
             <span className="text-white font-bold text-lg">学</span>
           </div>
-          <span className="text-lg font-bold text-white group-hover:text-gray-200 transition-colors">
+          <span className="text-sm sm:text-lg font-bold text-white group-hover:text-gray-200 transition-colors">
             {t('welcome_title')}
           </span>
         </div>
 
         <button
           onClick={onDictionaryClick}
-          className="px-3 py-1 hover:bg-gray-700 rounded-lg transition text-gray-300 font-medium"
+          className="px-2 sm:px-3 py-1 hover:bg-gray-700 rounded-lg transition text-gray-300 font-medium text-sm sm:text-base"
         >
           {t('menu_dictionary_title')}
         </button>

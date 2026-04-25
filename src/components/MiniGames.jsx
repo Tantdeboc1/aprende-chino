@@ -46,23 +46,23 @@ export default function MiniGames({ goBack, navigateTo }) {
           </button>
         </div>
 
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-2">小游戏</h2>
-          <p className="text-xl text-gray-300">{t('minigames_title')}</p>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">小游戏</h2>
+          <p className="text-lg sm:text-xl text-gray-300">{t('minigames_title')}</p>
           <p className="text-gray-400 mt-2">{t('minigames_subtitle')}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
           {games.map((game) => (
             <Button
               key={game.id}
               variant="card"
               onClick={() => handleGameClick(game.id)}
-              className="bg-gray-800 border border-gray-700 hover:border-gray-600 h-48"
+              className="bg-gray-800 border border-gray-700 hover:border-gray-600"
             >
-              <div className="text-5xl mb-4">{game.icon}</div>
-              <h3 className="text-2xl font-bold text-white mb-2">{game.title}</h3>
-              <p className="text-gray-300">{game.description}</p>
+              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{game.icon}</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{game.title}</h3>
+              <p className="text-gray-300 text-sm sm:text-base">{game.description}</p>
             </Button>
           ))}
         </div>

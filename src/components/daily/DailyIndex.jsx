@@ -56,13 +56,13 @@ export default function DailyIndex({ goBack, setDailySection }) {
           </button>
         </div>
 
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-2">{t('daily_challenges_title')}</h2>
-          <p className="text-xl text-gray-300">{t('daily_challenges_subtitle')}</p>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">{t('daily_challenges_title')}</h2>
+          <p className="text-lg sm:text-xl text-gray-300">{t('daily_challenges_subtitle')}</p>
         </div>
 
         {/* Grid de desafíos */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
           {challenges.map((challenge) => (
             <Button
               key={challenge.id}
@@ -71,13 +71,13 @@ export default function DailyIndex({ goBack, setDailySection }) {
                 console.log('🟡 Click en:', challenge.id);
                 setDailySection(challenge.id);
               }}
-              className={`bg-gray-800 border border-gray-700 ${getBorderColor(challenge.color)} h-48`}
+              className={`bg-gray-800 border border-gray-700 ${getBorderColor(challenge.color)}`}
             >
-              <div className="text-5xl mb-4">{challenge.emoji}</div>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{challenge.emoji}</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                 {challenge.title}
               </h3>
-              <p className="text-lg text-gray-300 mb-2">{challenge.description}</p>
+              <p className="text-base sm:text-lg text-gray-300 mb-2">{challenge.description}</p>
               <p className="text-sm text-gray-400">{challenge.time}</p>
             </Button>
           ))}

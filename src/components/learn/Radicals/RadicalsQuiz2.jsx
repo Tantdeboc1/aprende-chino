@@ -273,7 +273,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
               return (
                 <button
-                  key={index}
+                  key={`opt-${option}`}
                   onClick={() => handleAnswerSelect(option)}
                   disabled={isAnswered}
                   className={`${buttonClass} border-2 rounded-xl p-4 text-lg font-semibold text-white transition disabled:cursor-not-allowed w-full text-center`}

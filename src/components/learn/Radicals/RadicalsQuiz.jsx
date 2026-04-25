@@ -269,18 +269,18 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         </div>
 
         {/* Pregunta */}
-        <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-6 text-center">
+        <div className="bg-gray-800 rounded-xl p-4 sm:p-8 border border-gray-700 mb-6 text-center">
           <h3 className="text-lg text-gray-400 mb-4">{t('radicals_question_header')}</h3>
 
           {/* Carácter objetivo */}
-          <div className="text-8xl font-bold text-white mb-8 py-4">
+          <div className="text-6xl sm:text-8xl font-bold text-white mb-4 sm:mb-8 py-2 sm:py-4">
             {currentQ.targetChar}
           </div>
 
-          <h4 className="text-lg text-gray-400 mb-6">{t('radicals_select_correct_radical')}</h4>
+          <h4 className="text-lg text-gray-400 mb-4 sm:mb-6">{t('radicals_select_correct_radical')}</h4>
 
           {/* Opciones de respuesta */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {currentQ.options.map((option, index) => {
               const isCorrect = option === currentQ.correctAnswer;
               const isSelected = selectedAnswer === option;

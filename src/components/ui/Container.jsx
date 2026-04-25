@@ -12,7 +12,7 @@ export default function Container({
 
   return (
     <div 
-      className={`${sizes[size]} mx-auto pt-8 ${className}`}
+      className={`${sizes[size]} mx-auto pt-6 px-4 sm:px-6 ${className}`}
       {...props}
     >
       {children}

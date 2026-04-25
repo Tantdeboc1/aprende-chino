@@ -247,7 +247,7 @@ function Daily({ goBack }) {
                 ))}
               </div>
 
-              <div className="text-9xl font-bold text-white mb-6">{dailyChar.char}</div>
+              <div className="text-7xl sm:text-9xl font-bold text-white mb-6">{dailyChar.char}</div>
 
               {!isBlocked ? (
                 <>

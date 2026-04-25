@@ -9,11 +9,12 @@ import { useTranslation } from "react-i18next";
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 // --- Componente Principal ---
-export default function TimeRace({ goBack, characters = [] }) {
+export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
   const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
+  const timeLeftRef = useRef(60);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null); // 'correct', 'incorrect', or null
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -30,6 +31,7 @@ export default function TimeRace({ goBack, characters = [] }) {
     setCurrentQuestion({
       character: correctChar.char,
       correctMeaning: correctChar.meaning,
+      charObj: correctChar,
       options: shuffleArray(options),
     });
     setFeedback(null);
@@ -39,7 +41,7 @@ export default function TimeRace({ goBack, characters = [] }) {
   // Iniciar el juego
   const startGame = () => {
     setScore(0);
-    setTimeLeft(60);
+    setTimeLeft(60); timeLeftRef.current = 60;
     setGameState('playing');
     generateQuestion();
   };
@@ -55,13 +57,14 @@ export default function TimeRace({ goBack, characters = [] }) {
       setScore(s => s + 10); // +10 puntos por acierto
       setFeedback('correct');
     } else {
-      setTimeLeft(t => Math.max(0, t - 2)); // Penalización de 2 segundos
+      setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; }); // Penalización de 2 segundos
       setFeedback('incorrect');
     }
 
     // Pasa a la siguiente pregunta después de un breve feedback visual
+    const capturedTime = timeLeftRef.current;
     setTimeout(() => {
-      if (timeLeft > 0) {
+      if (capturedTime > 0) {
         generateQuestion();
       }
     }, 800);
@@ -77,7 +80,7 @@ export default function TimeRace({ goBack, characters = [] }) {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft(t => t - 1);
+      setTimeLeft(t => { const next = t - 1; timeLeftRef.current = next; return next; });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -171,12 +174,12 @@ export default function TimeRace({ goBack, characters = [] }) {
         {currentQuestion && (
           <div className="text-center">
             {/* Tarjeta del Carácter */}
-            <div className="bg-gray-800 border-2 border-gray-700 rounded-2xl w-full max-w-md mx-auto h-48 flex items-center justify-center mb-8">
-              <span className="text-8xl font-bold text-white">{currentQuestion.character}</span>
+            <div className="bg-gray-800 border-2 border-gray-700 rounded-2xl w-full max-w-md mx-auto h-36 sm:h-48 flex items-center justify-center mb-6 sm:mb-8">
+              <span className="text-6xl sm:text-8xl font-bold text-white">{currentQuestion.character}</span>
             </div>
 
             {/* Opciones de Respuesta */}
-            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
               {currentQuestion.options.map((option, i) => {
                 let buttonClass = "bg-gray-700 hover:bg-gray-600";
                 if (feedback) {

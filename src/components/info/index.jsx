@@ -42,21 +42,21 @@ export default function InfoIndex({ goBack }) {
             </button>
           </div>
 
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">中国信息</h1>
-            <p className="text-xl text-gray-300">{t('info_title_main')}</p>
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">中国信息</h1>
+            <p className="text-lg sm:text-xl text-gray-300">{t('info_title_main')}</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {sections.map((s) => (
               <Button
                 key={s.key}
                 variant="card"
                 onClick={() => setInfoSection(s.key)}
-                className="min-h-[180px] text-left hover:shadow-xl transition bg-gray-800 border border-gray-700 hover:border-gray-600"
+                className="min-h-[140px] sm:min-h-[180px] text-left hover:shadow-xl transition bg-gray-800 border border-gray-700 hover:border-gray-600"
               >
-                <div className="text-5xl mb-3">{s.emoji}</div>
-                <h2 className="text-xl font-bold text-white mb-1">{s.title}</h2>
+                <div className="text-4xl sm:text-5xl mb-2 sm:mb-3">{s.emoji}</div>
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-1">{s.title}</h2>
                 <p className="text-gray-400 text-sm">{s.description}</p>
               </Button>
             ))}

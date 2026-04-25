@@ -305,7 +305,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
                 {isPlaying ? t('writing_animating_button') : t('writing_view_stroke_order_button')}
               </button>
               <button
-                onClick={() => speakChinese(currentRadical.char)}
+                onClick={() => speakChinese({ hanzi: currentRadical.char, pinyin: currentRadical.pinyin })}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 🔊 {t('writing_pronounce_button')}
@@ -327,7 +327,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
                 {t('writing_reset_button')}
               </button>
               <button
-                onClick={() => speakChinese(currentRadical.char)}
+                onClick={() => speakChinese({ hanzi: currentRadical.char, pinyin: currentRadical.pinyin })}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 🔊 {t('writing_pronounce_button')}
