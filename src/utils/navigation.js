@@ -27,6 +27,7 @@ import RadicalsDaily from "@/components/daily/RadicalsDaily.jsx";
 import TonesDaily from "@/components/daily/TonesDaily.jsx";
 import TimeRace from '@/components/minigames/TimeRace.jsx';
 import PinyinConnection from '@/components/minigames/PinyinConnection.jsx';
+import SOVGame from '@/components/minigames/SOVGame.jsx';
 
 export function useNavigation(
   screen,
@@ -129,15 +130,23 @@ export function useNavigation(
     if (screen === 'minigames') {
       Component = MiniGames;
       props = {
-        goBack: hubOr(() => setScreen('menu')),
+        goBack: hubOr(goBack || (() => setScreen('home'))),
         navigateTo
+      };
+    }
+
+    if (screen === 'sov-game') {
+      Component = SOVGame;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
       };
     }
 
     if (screen === 'time-race') {
       Component = TimeRace;
       props = {
-        goBack: hubOr(() => setScreen('minigames')),
+        goBack: () => { navigateTo('minigames'); },
         characters,
         onTrackResult,
       };
@@ -146,7 +155,7 @@ export function useNavigation(
     if (screen === 'pinyin-connection') {
       Component = PinyinConnection;
       props = {
-        goBack: hubOr(() => setScreen('minigames')),
+        goBack: () => { navigateTo('minigames'); },
         characters,
         onTrackResult,
       };
@@ -156,7 +165,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === null) {
       Component = LearnMenu;
       props = {
-        goBack: hubOr(() => setScreen('menu')),
+        goBack: hubOr(goBack),
         setLearnSection,
         setToneSection
       };
@@ -165,7 +174,7 @@ export function useNavigation(
     if (screen === 'daily' && dailySection === null) {
       Component = DailyIndex;
       props = {
-        goBack: hubOr(() => setScreen('menu')),
+        goBack: hubOr(goBack),
         setDailySection
       };
     }
@@ -174,7 +183,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'writing' && writingSection === null) {
       Component = WritingMenu;
       props = {
-        goBack: hubOr(() => setLearnSection(null)),
+        goBack: hubOr(goBack),
         setWritingSection
       };
     }
@@ -201,7 +210,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'radicals' && radicalSection === null) {
       Component = RadicalsIndex;
       props = {
-        goBack: hubOr(() => setLearnSection(null)),
+        goBack: hubOr(goBack),
         setRadicalSection,
         radicals
       };
@@ -235,7 +244,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'characters' && characterSection === null) {
       Component = CharactersIndex;
       props = {
-        goBack: hubOr(() => setLearnSection(null)),
+        goBack: hubOr(goBack),
         setCharacterSection,
         setCurrentLesson: () => {}
       };
@@ -244,7 +253,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'characters' && characterSection === 'lessons') {
       Component = Progressive;
       props = {
-        goBack: hubOr(() => setCharacterSection(null)),
+        goBack: goBack,
         characters,
         speakChinese: speak,
         onTrackSeen,
@@ -254,7 +263,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'characters' && characterSection === 'quiz') {
       Component = Quiz;
       props = {
-        goBack: hubOr(() => setCharacterSection(null)),
+        goBack: goBack,
         characters,
         speakChinese: speak,
         onTrackResult,
@@ -264,7 +273,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'characters' && characterSection === 'matching') {
       Component = Matching;
       props = {
-        goBack: hubOr(() => setCharacterSection(null)),
+        goBack: goBack,
         characters,
         onTrackSeen,
       };
@@ -274,7 +283,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'tones' && toneSection === null) {
       Component = TonesIndex;
       props = {
-        goBack: hubOr(() => setLearnSection(null)),
+        goBack: hubOr(goBack),
         toneSection,
         setToneSection,
         speakChinese: speak
@@ -284,7 +293,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'tones' && toneSection === 'quizTone') {
       Component = QuizTone;
       props = {
-        goBack: hubOr(() => setToneSection(null)),
+        goBack: () => setToneSection(null),
         speakChinese: speak
       };
     }
@@ -292,7 +301,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'tones' && toneSection === 'quizPronunciation') {
       Component = QuizPronunciation;
       props = {
-        goBack: hubOr(() => setToneSection(null)),
+        goBack: () => setToneSection(null),
         speakChinese: speak
       };
     }
@@ -300,7 +309,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'tones' && toneSection === 'specialSyllables') {
       Component = SpecialSyllables;
       props = {
-        goBack: hubOr(() => setToneSection(null)),
+        goBack: () => setToneSection(null),
         speakChinese: speak
       };
     }
@@ -309,14 +318,14 @@ export function useNavigation(
     if (screen === 'daily' && dailySection === 'characters') {
       Component = CharactersDaily;
       props = {
-        goBack: hubOr(() => setDailySection(null))
+        goBack: goBack
       };
     }
 
     if (screen === 'daily' && dailySection === 'radicals') {
       Component = RadicalsDaily;
       props = {
-        goBack: hubOr(() => setDailySection(null)),
+        goBack: goBack,
         radicals
       };
     }
@@ -324,7 +333,7 @@ export function useNavigation(
     if (screen === 'daily' && dailySection === 'tones') {
       Component = TonesDaily;
       props = {
-        goBack: hubOr(() => setDailySection(null)),
+        goBack: goBack,
         speakChinese: speak
       };
     }

@@ -1,5 +1,6 @@
 // src/utils/progress.js
 // Sistema de progreso por palabra, guardado en localStorage
+import { initSRSCard } from './srs.js';
 
 const STORAGE_KEY = 'aprende-chino-progress-v1';
 
@@ -30,19 +31,22 @@ export function getWordStatus(progress, lessonNum, char) {
 }
 
 // Marca una palabra como vista (sin nota de acierto/fallo)
+// También inicializa la tarjeta SRS
 export function markWordSeen(progress, lessonNum, char) {
   const lessonKey = `lesson_${lessonNum}`;
-  const updated = { ...progress };
+  let updated = { ...progress };
   if (!updated[lessonKey]) updated[lessonKey] = {};
   if (!updated[lessonKey][char]) updated[lessonKey][char] = { seen: false, correct: 0, incorrect: 0, mastered: false };
   updated[lessonKey][char] = { ...updated[lessonKey][char], seen: true };
+  updated = initSRSCard(updated, char);
   return updated;
 }
 
 // Registra un resultado de quiz (correct = true/false)
+// También inicializa la tarjeta SRS si aún no existe
 export function markWordResult(progress, lessonNum, char, correct) {
   const lessonKey = `lesson_${lessonNum}`;
-  const updated = { ...progress };
+  let updated = { ...progress };
   if (!updated[lessonKey]) updated[lessonKey] = {};
   const prev = updated[lessonKey][char] || { seen: false, correct: 0, incorrect: 0, mastered: false };
   const newCorrect = prev.correct + (correct ? 1 : 0);
@@ -51,8 +55,10 @@ export function markWordResult(progress, lessonNum, char, correct) {
     seen: true,
     correct: newCorrect,
     incorrect: newIncorrect,
-    mastered: newCorrect >= 3 && newIncorrect === 0, // dominada: 3+ correctas sin fallos recientes
+    mastered: newCorrect >= 3 && newIncorrect === 0,
   };
+  // Inicializar tarjeta SRS si es la primera vez que se ve la palabra
+  updated = initSRSCard(updated, char);
   return updated;
 }
 

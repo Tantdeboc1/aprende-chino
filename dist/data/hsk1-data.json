@@ -1,0 +1,1241 @@
+{
+  "hskLevel": 1,
+  "characters": {
+    "人": {
+      "radical": "人",
+      "pinyin": "ren2",
+      "meaning": "persona, gente"
+    },
+    "我": {
+      "radical": "戈",
+      "pinyin": "wo3",
+      "meaning": "yo"
+    },
+    "你": {
+      "radical": "亻",
+      "pinyin": "ni3",
+      "meaning": "tú"
+    },
+    "好": {
+      "radical": "女",
+      "pinyin": "hao3",
+      "meaning": "bueno, bien"
+    },
+    "大": {
+      "radical": "大",
+      "pinyin": "da4",
+      "meaning": "grande"
+    },
+    "小": {
+      "radical": "小",
+      "pinyin": "xiao3",
+      "meaning": "pequeño"
+    },
+    "中": {
+      "radical": "丨",
+      "pinyin": "zhong1",
+      "meaning": "centro, medio"
+    },
+    "国": {
+      "radical": "囗",
+      "pinyin": "guo2",
+      "meaning": "país"
+    },
+    "一": {
+      "radical": "一",
+      "pinyin": "yi1",
+      "meaning": "uno"
+    },
+    "二": {
+      "radical": "二",
+      "pinyin": "er4",
+      "meaning": "dos"
+    },
+    "三": {
+      "radical": "一",
+      "pinyin": "san1",
+      "meaning": "tres"
+    },
+    "四": {
+      "radical": "囗",
+      "pinyin": "si4",
+      "meaning": "cuatro"
+    },
+    "五": {
+      "radical": "二",
+      "pinyin": "wu3",
+      "meaning": "cinco"
+    },
+    "六": {
+      "radical": "八",
+      "pinyin": "liu4",
+      "meaning": "seis"
+    },
+    "七": {
+      "radical": "一",
+      "pinyin": "qi1",
+      "meaning": "siete"
+    },
+    "八": {
+      "radical": "八",
+      "pinyin": "ba1",
+      "meaning": "ocho"
+    },
+    "九": {
+      "radical": "丿",
+      "pinyin": "jiu3",
+      "meaning": "nueve"
+    },
+    "十": {
+      "radical": "十",
+      "pinyin": "shi2",
+      "meaning": "diez"
+    },
+    "天": {
+      "radical": "大",
+      "pinyin": "tian1",
+      "meaning": "cielo, día"
+    },
+    "水": {
+      "radical": "水",
+      "pinyin": "shui3",
+      "meaning": "agua"
+    },
+    "火": {
+      "radical": "火",
+      "pinyin": "huo3",
+      "meaning": "fuego"
+    },
+    "山": {
+      "radical": "山",
+      "pinyin": "shan1",
+      "meaning": "montaña"
+    },
+    "木": {
+      "radical": "木",
+      "pinyin": "mu4",
+      "meaning": "árbol, madera"
+    },
+    "日": {
+      "radical": "日",
+      "pinyin": "ri4",
+      "meaning": "sol, día"
+    },
+    "月": {
+      "radical": "月",
+      "pinyin": "yue4",
+      "meaning": "luna, mes"
+    },
+    "年": {
+      "radical": "丿",
+      "pinyin": "nian2",
+      "meaning": "año"
+    },
+    "今": {
+      "radical": "亻",
+      "pinyin": "jin1",
+      "meaning": "ahora, hoy"
+    },
+    "明": {
+      "radical": "日",
+      "pinyin": "ming2",
+      "meaning": "brillante, claro"
+    },
+    "上": {
+      "radical": "一",
+      "pinyin": "shang4",
+      "meaning": "arriba, subir"
+    },
+    "下": {
+      "radical": "一",
+      "pinyin": "xia4",
+      "meaning": "abajo, bajar"
+    },
+    "前": {
+      "radical": "刀",
+      "pinyin": "qian2",
+      "meaning": "delante, antes"
+    },
+    "后": {
+      "radical": "口",
+      "pinyin": "hou4",
+      "meaning": "detrás, después"
+    },
+    "左": {
+      "radical": "工",
+      "pinyin": "zuo3",
+      "meaning": "izquierda"
+    },
+    "右": {
+      "radical": "口",
+      "pinyin": "you4",
+      "meaning": "derecha"
+    },
+    "东": {
+      "radical": "木",
+      "pinyin": "dong1",
+      "meaning": "este"
+    },
+    "西": {
+      "radical": "襾",
+      "pinyin": "xi1",
+      "meaning": "oeste"
+    },
+    "南": {
+      "radical": "十",
+      "pinyin": "nan2",
+      "meaning": "sur"
+    },
+    "北": {
+      "radical": "匕",
+      "pinyin": "bei3",
+      "meaning": "norte"
+    },
+    "来": {
+      "radical": "木",
+      "pinyin": "lai2",
+      "meaning": "venir"
+    },
+    "去": {
+      "radical": "厶",
+      "pinyin": "qu4",
+      "meaning": "ir"
+    },
+    "有": {
+      "radical": "⺼",
+      "pinyin": "you3",
+      "meaning": "tener, haber"
+    },
+    "是": {
+      "radical": "日",
+      "pinyin": "shi4",
+      "meaning": "ser, estar"
+    },
+    "在": {
+      "radical": "土",
+      "pinyin": "zai4",
+      "meaning": "estar en, existir"
+    },
+    "他": {
+      "radical": "亻",
+      "pinyin": "ta1",
+      "meaning": "él"
+    },
+    "她": {
+      "radical": "女",
+      "pinyin": "ta1",
+      "meaning": "ella"
+    },
+    "们": {
+      "radical": "亻",
+      "pinyin": "men",
+      "meaning": "plural (nosotros, ellos)"
+    },
+    "不": {
+      "radical": "一",
+      "pinyin": "bu4",
+      "meaning": "no, negación"
+    },
+    "的": {
+      "radical": "白",
+      "pinyin": "de",
+      "meaning": "partícula posesiva (de)"
+    },
+    "了": {
+      "radical": "乙",
+      "pinyin": "le",
+      "meaning": "partícula de cambio"
+    },
+    "它": {
+      "radical": "宀",
+      "pinyin": "ta1",
+      "meaning": "eso (no humano)"
+    },
+    "很": {
+      "radical": "彳",
+      "pinyin": "hen3",
+      "meaning": "muy"
+    },
+    "也": {
+      "radical": "乙",
+      "pinyin": "ye3",
+      "meaning": "también"
+    },
+    "都": {
+      "radical": "阝",
+      "pinyin": "dou1",
+      "meaning": "todos; ambos"
+    },
+    "和": {
+      "radical": "禾",
+      "pinyin": "he2",
+      "meaning": "y; con"
+    },
+    "到": {
+      "radical": "刀",
+      "pinyin": "dao4",
+      "meaning": "llegar; a"
+    },
+    "回": {
+      "radical": "囗",
+      "pinyin": "hui2",
+      "meaning": "volver; regresar"
+    },
+    "看": {
+      "radical": "目",
+      "pinyin": "kan4",
+      "meaning": "ver; mirar; leer"
+    },
+    "见": {
+      "radical": "见",
+      "pinyin": "jian4",
+      "meaning": "ver; encontrarse"
+    },
+    "听": {
+      "radical": "口",
+      "pinyin": "ting1",
+      "meaning": "oír; escuchar"
+    },
+    "说": {
+      "radical": "讠",
+      "pinyin": "shuo1",
+      "meaning": "hablar; decir"
+    },
+    "读": {
+      "radical": "讠",
+      "pinyin": "du2",
+      "meaning": "leer; estudiar"
+    },
+    "写": {
+      "radical": "宀",
+      "pinyin": "xie3",
+      "meaning": "escribir"
+    },
+    "做": {
+      "radical": "亻",
+      "pinyin": "zuo4",
+      "meaning": "hacer"
+    },
+    "吃": {
+      "radical": "口",
+      "pinyin": "chi1",
+      "meaning": "comer"
+    },
+    "喝": {
+      "radical": "口",
+      "pinyin": "he1",
+      "meaning": "beber"
+    },
+    "想": {
+      "radical": "心",
+      "pinyin": "xiang3",
+      "meaning": "pensar; querer; echar de menos"
+    },
+    "要": {
+      "radical": "襾",
+      "pinyin": "yao4",
+      "meaning": "querer; necesitar"
+    },
+    "会": {
+      "radical": "人",
+      "pinyin": "hui4",
+      "meaning": "saber (habilidad); poder"
+    },
+    "能": {
+      "radical": "⺼",
+      "pinyin": "neng2",
+      "meaning": "poder; ser capaz"
+    },
+    "可以": {
+      "pinyin": "keyi3",
+      "meaning": "poder; permitido"
+    },
+    "给": {
+      "radical": "纟",
+      "pinyin": "gei3",
+      "meaning": "dar; para"
+    },
+    "用": {
+      "radical": "用",
+      "pinyin": "yong4",
+      "meaning": "usar"
+    },
+    "找": {
+      "radical": "扌",
+      "pinyin": "zhao3",
+      "meaning": "buscar"
+    },
+    "住": {
+      "radical": "亻",
+      "pinyin": "zhu4",
+      "meaning": "vivir; residir"
+    },
+    "坐": {
+      "radical": "土",
+      "pinyin": "zuo4",
+      "meaning": "sentarse; viajar en (transporte)"
+    },
+    "走": {
+      "radical": "走",
+      "pinyin": "zou3",
+      "meaning": "andar; irse"
+    },
+    "开": {
+      "radical": "开",
+      "pinyin": "kai1",
+      "meaning": "abrir; conducir"
+    },
+    "关": {
+      "radical": "八",
+      "pinyin": "guan1",
+      "meaning": "cerrar; apagar"
+    },
+    "买": {
+      "radical": "乙",
+      "pinyin": "mai3",
+      "meaning": "comprar"
+    },
+    "卖": {
+      "radical": "士",
+      "pinyin": "mai4",
+      "meaning": "vender"
+    },
+    "对": {
+      "radical": "寸",
+      "pinyin": "dui4",
+      "meaning": "correcto; hacia"
+    },
+    "错": {
+      "radical": "钅",
+      "pinyin": "cuo4",
+      "meaning": "equivocado; error"
+    },
+    "让": {
+      "radical": "讠",
+      "pinyin": "rang4",
+      "meaning": "dejar; permitir"
+    },
+    "叫": {
+      "radical": "口",
+      "pinyin": "jiao4",
+      "meaning": "llamarse; llamar"
+    },
+    "姓": {
+      "radical": "女",
+      "pinyin": "xing4",
+      "meaning": "apellidarse"
+    },
+    "名": {
+      "radical": "口",
+      "pinyin": "ming2",
+      "meaning": "nombre; fama"
+    },
+    "字": {
+      "radical": "子",
+      "pinyin": "zi4",
+      "meaning": "carácter; letra"
+    },
+    "请": {
+      "radical": "讠",
+      "pinyin": "qing3",
+      "meaning": "por favor; invitar"
+    },
+    "谢": {
+      "radical": "讠",
+      "pinyin": "xie4",
+      "meaning": "agradecer"
+    },
+    "对不起": {
+      "pinyin": "duibuqi3",
+      "meaning": "lo siento"
+    },
+    "没关系": {
+      "pinyin": "meiguanxi1",
+      "meaning": "no pasa nada"
+    },
+    "不好": {
+      "pinyin": "bu4 hao3",
+      "meaning": "mal; no bien"
+    },
+    "多": {
+      "radical": "夕",
+      "pinyin": "duo1",
+      "meaning": "mucho; muchos"
+    },
+    "少": {
+      "radical": "小",
+      "pinyin": "shao3",
+      "meaning": "poco; pocos"
+    },
+    "高": {
+      "radical": "高",
+      "pinyin": "gao1",
+      "meaning": "alto"
+    },
+    "低": {
+      "radical": "人",
+      "pinyin": "di1",
+      "meaning": "bajo (altura/sonido)"
+    },
+    "长": {
+      "radical": "长",
+      "pinyin": "chang2",
+      "meaning": "largo"
+    },
+    "短": {
+      "radical": "矢",
+      "pinyin": "duan3",
+      "meaning": "corto"
+    },
+    "远": {
+      "radical": "辶",
+      "pinyin": "yuan3",
+      "meaning": "lejos"
+    },
+    "近": {
+      "radical": "辶",
+      "pinyin": "jin4",
+      "meaning": "cerca"
+    },
+    "冷": {
+      "radical": "冫",
+      "pinyin": "leng3",
+      "meaning": "frío"
+    },
+    "热": {
+      "radical": "火",
+      "pinyin": "re4",
+      "meaning": "caliente"
+    },
+    "新": {
+      "radical": "斤",
+      "pinyin": "xin1",
+      "meaning": "nuevo"
+    },
+    "旧": {
+      "radical": "日",
+      "pinyin": "jiu4",
+      "meaning": "viejo (objeto)"
+    },
+    "忙": {
+      "radical": "心",
+      "pinyin": "mang2",
+      "meaning": "ocupado"
+    },
+    "累": {
+      "radical": "糸",
+      "pinyin": "lei4",
+      "meaning": "cansado"
+    },
+    "贵": {
+      "radical": "贝",
+      "pinyin": "gui4",
+      "meaning": "caro"
+    },
+    "便宜": {
+      "pinyin": "pianyi2",
+      "meaning": "barato"
+    },
+    "漂亮": {
+      "pinyin": "piaoliang4",
+      "meaning": "bonito; guapa"
+    },
+    "好吃": {
+      "pinyin": "haochi1",
+      "meaning": "rico (comida)"
+    },
+    "好喝": {
+      "pinyin": "haohe1",
+      "meaning": "rico (bebida)"
+    },
+    "中国": {
+      "pinyin": "zhongguo2",
+      "meaning": "China"
+    },
+    "中国人": {
+      "pinyin": "zhongguo2 ren2",
+      "meaning": "chino/a (persona)"
+    },
+    "汉语": {
+      "pinyin": "hanyu3",
+      "meaning": "chino mandarín"
+    },
+    "中文": {
+      "pinyin": "zhongwen2",
+      "meaning": "chino (lengua escrita)"
+    },
+    "北京": {
+      "pinyin": "beijing1",
+      "meaning": "Pekín"
+    },
+    "上海": {
+      "pinyin": "shanghai3",
+      "meaning": "Shanghái"
+    },
+    "学校": {
+      "pinyin": "xuexiao4",
+      "meaning": "colegio; escuela"
+    },
+    "老师": {
+      "pinyin": "laoshi1",
+      "meaning": "profesor/a"
+    },
+    "学生": {
+      "pinyin": "xuesheng2",
+      "meaning": "estudiante"
+    },
+    "同学": {
+      "pinyin": "tongxue2",
+      "meaning": "compañero de clase"
+    },
+    "朋友": {
+      "pinyin": "pengyou2",
+      "meaning": "amigo/a"
+    },
+    "家": {
+      "radical": "宀",
+      "pinyin": "jia1",
+      "meaning": "casa; familia"
+    },
+    "爸爸": {
+      "pinyin": "baba4",
+      "meaning": "papá"
+    },
+    "妈妈": {
+      "pinyin": "mama1",
+      "meaning": "mamá"
+    },
+    "儿子": {
+      "pinyin": "erzi2",
+      "meaning": "hijo"
+    },
+    "女儿": {
+      "pinyin": "nv’er2",
+      "meaning": "hija"
+    },
+    "先生": {
+      "pinyin": "xiansheng1",
+      "meaning": "señor; marido"
+    },
+    "小姐": {
+      "pinyin": "xiaojie3",
+      "meaning": "señorita"
+    },
+    "女士": {
+      "pinyin": "nvshi4",
+      "meaning": "señora"
+    },
+    "名字": {
+      "pinyin": "mingzi2",
+      "meaning": "nombre"
+    },
+    "昨天": {
+      "pinyin": "zuotian1",
+      "meaning": "ayer"
+    },
+    "今天": {
+      "pinyin": "jintian1",
+      "meaning": "hoy"
+    },
+    "明天": {
+      "pinyin": "mingtian1",
+      "meaning": "mañana"
+    },
+    "现在": {
+      "pinyin": "xianzai4",
+      "meaning": "ahora"
+    },
+    "点": {
+      "radical": "黑",
+      "pinyin": "dian3",
+      "meaning": "en punto; hora"
+    },
+    "分钟": {
+      "pinyin": "fenzhong1",
+      "meaning": "minuto"
+    },
+    "时候": {
+      "pinyin": "shihou2",
+      "meaning": "tiempo; momento"
+    },
+    "号": {
+      "radical": "口",
+      "pinyin": "hao4",
+      "meaning": "día (del mes); número"
+    },
+    "星期": {
+      "pinyin": "xingqi1",
+      "meaning": "semana"
+    },
+    "早上": {
+      "pinyin": "zaoshang3",
+      "meaning": "por la mañana"
+    },
+    "中午": {
+      "pinyin": "zhongwu3",
+      "meaning": "mediodía"
+    },
+    "晚上": {
+      "pinyin": "wanshang3",
+      "meaning": "por la noche"
+    },
+    "这": {
+      "radical": "辶",
+      "pinyin": "zhe4",
+      "meaning": "este/esta/esto"
+    },
+    "那": {
+      "radical": "阝",
+      "pinyin": "na4",
+      "meaning": "ese/esa/eso; aquel/aquella"
+    },
+    "哪": {
+      "radical": "口",
+      "pinyin": "na3",
+      "meaning": "cuál; qué (interrogativo)"
+    },
+    "谁": {
+      "radical": "讠",
+      "pinyin": "shei2",
+      "meaning": "quién"
+    },
+    "什么": {
+      "pinyin": "shenme2",
+      "meaning": "qué"
+    },
+    "多少": {
+      "pinyin": "duoshao1",
+      "meaning": "cuánto(s)"
+    },
+    "几": {
+      "radical": "几",
+      "pinyin": "ji3",
+      "meaning": "cuántos (pocos)"
+    },
+    "怎么": {
+      "pinyin": "zenme3",
+      "meaning": "cómo"
+    },
+    "怎么样": {
+      "pinyin": "zenmeyang4",
+      "meaning": "qué tal"
+    },
+    "吗": {
+      "radical": "口",
+      "pinyin": "ma",
+      "meaning": "partícula interrogativa"
+    },
+    "呢": {
+      "radical": "口",
+      "pinyin": "ne",
+      "meaning": "partícula enfática/interrogativa"
+    },
+    "吧": {
+      "radical": "口",
+      "pinyin": "ba",
+      "meaning": "partícula modal (sugerencia)"
+    },
+    "喜欢": {
+      "pinyin": "xihuan3",
+      "meaning": "gustar"
+    },
+    "爱": {
+      "radical": "心",
+      "pinyin": "ai4",
+      "meaning": "amar; amor"
+    },
+    "觉得": {
+      "pinyin": "juede2",
+      "meaning": "parecer; pensar"
+    },
+    "认识": {
+      "pinyin": "renshi4",
+      "meaning": "conocer (a alguien)"
+    },
+    "知道": {
+      "pinyin": "zhidao4",
+      "meaning": "saber (hecho)"
+    },
+    "问题": {
+      "pinyin": "wenti2",
+      "meaning": "pregunta; problema"
+    },
+    "没": {
+      "radical": "氵",
+      "pinyin": "mei2",
+      "meaning": "no; no tener"
+    },
+    "非常": {
+      "pinyin": "feichang2",
+      "meaning": "muy; extremadamente"
+    },
+    "真": {
+      "radical": "目",
+      "pinyin": "zhen1",
+      "meaning": "real; realmente"
+    },
+    "一点儿": {
+      "pinyin": "yidianr3",
+      "meaning": "un poco"
+    },
+    "东西": {
+      "pinyin": "dongxi1",
+      "meaning": "cosa; objeto"
+    },
+    "钱": {
+      "radical": "钅",
+      "pinyin": "qian2",
+      "meaning": "dinero"
+    },
+    "杯子": {
+      "pinyin": "beizi1",
+      "meaning": "vaso; taza"
+    },
+    "茶": {
+      "radical": "艹",
+      "pinyin": "cha2",
+      "meaning": "té"
+    },
+    "米饭": {
+      "pinyin": "mifan4",
+      "meaning": "arroz cocido; comida"
+    },
+    "面条": {
+      "pinyin": "miantiao2",
+      "meaning": "fideos"
+    },
+    "苹果": {
+      "pinyin": "pingguo3",
+      "meaning": "manzana"
+    },
+    "水果": {
+      "pinyin": "shuiguo3",
+      "meaning": "fruta"
+    },
+    "菜": {
+      "radical": "艹",
+      "pinyin": "cai4",
+      "meaning": "plato; verdura"
+    },
+    "饭馆": {
+      "pinyin": "fanguan3",
+      "meaning": "restaurante"
+    },
+    "医生": {
+      "pinyin": "yisheng1",
+      "meaning": "médico"
+    },
+    "医院": {
+      "pinyin": "yiyuan4",
+      "meaning": "hospital"
+    },
+    "商店": {
+      "pinyin": "shangdian4",
+      "meaning": "tienda"
+    },
+    "飞机": {
+      "pinyin": "feiji1",
+      "meaning": "avión"
+    },
+    "出租车": {
+      "pinyin": "chuzuche1",
+      "meaning": "taxi"
+    },
+    "车": {
+      "radical": "车",
+      "pinyin": "che1",
+      "meaning": "coche; vehículo"
+    },
+    "火车站": {
+      "pinyin": "huochezhan4",
+      "meaning": "estación de tren"
+    },
+    "前面": {
+      "pinyin": "qianmian4",
+      "meaning": "delante"
+    },
+    "后面": {
+      "pinyin": "houmian4",
+      "meaning": "detrás"
+    },
+    "里面": {
+      "pinyin": "limian4",
+      "meaning": "dentro"
+    },
+    "外面": {
+      "pinyin": "waimian4",
+      "meaning": "fuera"
+    },
+    "左边": {
+      "pinyin": "zuobian3",
+      "meaning": "izquierda"
+    },
+    "右边": {
+      "pinyin": "youbian4",
+      "meaning": "derecha"
+    },
+    "中间": {
+      "pinyin": "zhongjian1",
+      "meaning": "medio; entre"
+    },
+    "桌子": {
+      "pinyin": "zhuozi1",
+      "meaning": "mesa"
+    },
+    "椅子": {
+      "pinyin": "yizi3",
+      "meaning": "silla"
+    },
+    "书": {
+      "radical": "乙",
+      "pinyin": "shu1",
+      "meaning": "libro"
+    },
+    "本": {
+      "radical": "木",
+      "pinyin": "ben3",
+      "meaning": "clasificador de libros"
+    },
+    "个": {
+      "radical": "人",
+      "pinyin": "ge4",
+      "meaning": "clasificador general"
+    },
+    "块": {
+      "radical": "土",
+      "pinyin": "kuai4",
+      "meaning": "trozo; unidad de dinero (yuan)"
+    },
+    "件": {
+      "radical": "人",
+      "pinyin": "jian4",
+      "meaning": "pieza; clasificador de ropa/asuntos"
+    },
+    "张": {
+      "radical": "弓",
+      "pinyin": "zhang1",
+      "meaning": "clasificador para papeles/mesas"
+    },
+    "只": {
+      "radical": "口",
+      "pinyin": "zhi1",
+      "meaning": "clasificador de animales"
+    },
+    "宀": {
+      "radical": "宀",
+      "pinyin": "mian2",
+      "meaning": "techo, casa",
+      "tags": [
+        "radical"
+      ]
+    },
+    "讠": {
+      "radical": "讠",
+      "pinyin": "yan2",
+      "meaning": "discurso",
+      "tags": [
+        "radical"
+      ]
+    },
+    "辶": {
+      "radical": "辶",
+      "pinyin": "chuo4",
+      "meaning": "caminar",
+      "tags": [
+        "radical"
+      ]
+    },
+    "扌": {
+      "radical": "扌",
+      "pinyin": "shou3",
+      "meaning": "mano",
+      "tags": [
+        "radical"
+      ]
+    },
+    "纟": {
+      "radical": "纟",
+      "pinyin": "si1",
+      "meaning": "seda",
+      "tags": [
+        "radical"
+      ]
+    },
+    "钅": {
+      "radical": "钅",
+      "pinyin": "jin1",
+      "meaning": "metal",
+      "tags": [
+        "radical"
+      ]
+    },
+    "彳": {
+      "radical": "彳",
+      "pinyin": "chi4",
+      "meaning": "paso",
+      "tags": [
+        "radical"
+      ]
+    },
+    "禾": {
+      "radical": "禾",
+      "pinyin": "he2",
+      "meaning": "grano",
+      "tags": [
+        "radical"
+      ]
+    },
+    "目": {
+      "radical": "目",
+      "pinyin": "mu4",
+      "meaning": "ojo",
+      "tags": [
+        "radical"
+      ]
+    },
+    "贝": {
+      "radical": "贝",
+      "pinyin": "bei4",
+      "meaning": "concha",
+      "tags": [
+        "radical"
+      ]
+    },
+    "斤": {
+      "radical": "斤",
+      "pinyin": "jin1",
+      "meaning": "hacha",
+      "tags": [
+        "radical"
+      ]
+    },
+    "矢": {
+      "radical": "矢",
+      "pinyin": "shi3",
+      "meaning": "flecha",
+      "tags": [
+        "radical"
+      ]
+    },
+    "黑": {
+      "radical": "黑",
+      "pinyin": "hei1",
+      "meaning": "negro",
+      "tags": [
+        "radical"
+      ]
+    },
+    "糸": {
+      "radical": "糸",
+      "pinyin": "mi4",
+      "meaning": "seda fina",
+      "tags": [
+        "radical"
+      ]
+    }
+  },
+  "vowels": [
+    {
+      "char": "a",
+      "tone1": "ā",
+      "tone2": "á",
+      "tone3": "ǎ",
+      "tone4": "à"
+    },
+    {
+      "char": "e",
+      "tone1": "ē",
+      "tone2": "é",
+      "tone3": "ě",
+      "tone4": "è"
+    },
+    {
+      "char": "i",
+      "tone1": "ī",
+      "tone2": "í",
+      "tone3": "ǐ",
+      "tone4": "ì"
+    },
+    {
+      "char": "o",
+      "tone1": "ō",
+      "tone2": "ó",
+      "tone3": "ǒ",
+      "tone4": "ò"
+    },
+    {
+      "char": "u",
+      "tone1": "ū",
+      "tone2": "ú",
+      "tone3": "ǔ",
+      "tone4": "ù"
+    },
+    {
+      "char": "ü",
+      "tone1": "ǖ",
+      "tone2": "ǘ",
+      "tone3": "ǚ",
+      "tone4": "ǜ"
+    }
+  ],
+  "consonants": [
+    {
+      "pinyin": "b",
+      "sound": "como \"b\" en \"bar\""
+    },
+    {
+      "pinyin": "p",
+      "sound": "como \"p\" aspirada"
+    },
+    {
+      "pinyin": "m",
+      "sound": "como \"m\" en \"mamá\""
+    },
+    {
+      "pinyin": "f",
+      "sound": "como \"f\" en \"foto\""
+    },
+    {
+      "pinyin": "d",
+      "sound": "como \"d\" en \"día\""
+    },
+    {
+      "pinyin": "t",
+      "sound": "como \"t\" aspirada"
+    },
+    {
+      "pinyin": "n",
+      "sound": "como \"n\" en \"noche\""
+    },
+    {
+      "pinyin": "l",
+      "sound": "como \"l\" en \"luz\""
+    },
+    {
+      "pinyin": "g",
+      "sound": "como \"g\" en \"gato\""
+    },
+    {
+      "pinyin": "k",
+      "sound": "como \"k\" aspirada"
+    },
+    {
+      "pinyin": "h",
+      "sound": "como \"j\" en \"jamón\""
+    },
+    {
+      "pinyin": "j",
+      "sound": "como \"y\" en \"yo\""
+    },
+    {
+      "pinyin": "q",
+      "sound": "como \"ch\" suave"
+    },
+    {
+      "pinyin": "x",
+      "sound": "como \"sh\" suave"
+    },
+    {
+      "pinyin": "zh",
+      "sound": "como \"ch\" en \"chino\""
+    },
+    {
+      "pinyin": "ch",
+      "sound": "como \"ch\" aspirada"
+    },
+    {
+      "pinyin": "sh",
+      "sound": "como \"sh\" en inglés"
+    },
+    {
+      "pinyin": "r",
+      "sound": "entre \"r\" y \"zh\""
+    },
+    {
+      "pinyin": "z",
+      "sound": "como \"ds\" en inglés"
+    },
+    {
+      "pinyin": "c",
+      "sound": "como \"ts\" aspirada"
+    },
+    {
+      "pinyin": "s",
+      "sound": "como \"s\" en \"sol\""
+    },
+    {
+      "pinyin": "y",
+      "sound": "semivocal cercana a 'i' inicial; ej. yī (衣)"
+    },
+    {
+      "pinyin": "w",
+      "sound": "semivocal cercana a 'u' inicial; ej. wū (屋)"
+    }
+  ],
+  "specialSyllables": [
+    {
+      "pinyin": "zhi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "chi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "shi",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "ri",
+      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+    },
+    {
+      "pinyin": "zi",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "ci",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "si",
+      "sound": "sílaba de lectura global; 'i' débil"
+    },
+    {
+      "pinyin": "yi",
+      "sound": "inicial 'y' + 'i' (yī)"
+    },
+    {
+      "pinyin": "wu",
+      "sound": "inicial 'w' + 'u' (wū)"
+    },
+    {
+      "pinyin": "yu",
+      "sound": "inicial 'y' + 'ü' (yu)"
+    },
+    {
+      "pinyin": "ye",
+      "sound": "variante con 'y' + 'e' (ye)"
+    },
+    {
+      "pinyin": "yue",
+      "sound": "variante con 'y' + 'üe' (yue)"
+    },
+    {
+      "pinyin": "yuan",
+      "sound": "variante con 'y' + 'üan' (yuan)"
+    },
+    {
+      "pinyin": "yin",
+      "sound": "variante con 'y' + 'in' (yin)"
+    },
+    {
+      "pinyin": "yun",
+      "sound": "variante con 'y' + 'ün' (yun)"
+    },
+    {
+      "pinyin": "ying",
+      "sound": "variante con 'y' + 'ing' (ying)"
+    }
+  ]
+}

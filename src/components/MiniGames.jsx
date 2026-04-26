@@ -8,23 +8,35 @@ export default function MiniGames({ goBack, navigateTo }) {
 
   const games = [
     {
+      id: 'sov-game',
+      title: t('minigames_sov_title'),
+      description: t('minigames_sov_description'),
+      icon: '🔤',
+      color: 'red',
+      active: true,
+    },
+    {
       id: 'time-race',
       title: t('minigames_flashcards_title'),
       description: t('minigames_flashcards_description'),
       icon: '⏱️',
-      color: 'green'
+      color: 'green',
+      active: true,
     },
     {
       id: 'pinyin-connection',
       title: t('minigames_pinyin_connection_title'),
       description: t('minigames_pinyin_connection_description'),
       icon: '🎵',
-      color: 'blue'
-    }
+      color: 'blue',
+      active: true,
+    },
   ];
 
   const handleGameClick = (gameId) => {
-    if (gameId === 'time-race') {
+    if (gameId === 'sov-game') {
+      navigateTo('sov-game');
+    } else if (gameId === 'time-race') {
       navigateTo('time-race');
     } else if (gameId === 'pinyin-connection') {
       navigateTo('pinyin-connection');

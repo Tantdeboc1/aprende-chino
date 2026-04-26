@@ -1,0 +1,529 @@
+{
+  "history": {
+    "overview": "Historical overview of China from legendary origins to the contemporary era.",
+    "timeline": [
+      {
+        "title": "Origins and Neolithic Culture",
+        "years": "c. 5000–2000 B.C.",
+        "desc": "Cultures like Yangshao and Longshan develop agriculture, pottery, and complex settlements. These cultures set patterns of social organization and techniques that facilitated the emergence of early states and shared rituals."
+      },
+      {
+        "title": "Xia Dynasty (mythical)",
+        "years": "c. 2070–1600 B.C.",
+        "desc": "Traditionally considered the first dynasty; its historicity is debated. Beyond its historicity, its story serves as a moral framework for understanding the rise and fall of later dynasties."
+      },
+      {
+        "title": "Shang Dynasty",
+        "years": "c. 1600–1046 B.C.",
+        "desc": "Advanced bronze work, oracle bones engraved with archaic characters. Workshops and ritual centers show a specialized elite and regional exchange networks."
+      },
+      {
+        "title": "Zhou Dynasty (Western)",
+        "years": "1046–771 B.C.",
+        "desc": "Feudal system; legitimacy through the 'Mandate of Heaven' (天命). Rites and kinship structured political life, defining duties and hierarchies."
+      },
+      {
+        "title": "Zhou (Eastern): Spring and Autumn Period",
+        "years": "770–476 B.C.",
+        "desc": "Political fragmentation; intellectual flourishing: Confucius, Laozi, Sunzi. Itinerant teachers advised kingdoms, leaving fundamental texts for Chinese philosophy."
+      },
+      {
+        "title": "Zhou (Eastern): Warring States Period",
+        "years": "475–221 B.C.",
+        "desc": "Powerful states compete for hegemony; military and administrative innovation. Competition accelerated the professionalization of the bureaucracy and legal standardization."
+      },
+      {
+        "title": "Qin Unification",
+        "years": "221–206 B.C.",
+        "desc": "Qin Shi Huang unifies China; standardizes writing, currency, and measures; beginning of major defensive works. Centralization allowed for large public works, although the harshness of policies generated resistance."
+      },
+      {
+        "title": "Han Dynasty (Western)",
+        "years": "206 B.C.–9 A.D.",
+        "desc": "Imperial consolidation; opening of the Silk Road; Confucian bureaucracy. Lasting institutions and a literate culture that would influence all of East Asia were consolidated."
+      },
+      {
+        "title": "Xin Interregnum and Han Restoration (Eastern)",
+        "years": "9–220",
+        "desc": "Brief Xin dynasty; subsequent Han restoration; cultural and scientific boom. The administration adapted to new social and economic realities after the crises."
+      },
+      {
+        "title": "Three Kingdoms",
+        "years": "220–280",
+        "desc": "Wei, Shu, and Wu compete; an era mythologized in classical literature. The popular memory of this era influenced theater, opera, and later stories."
+      },
+      {
+        "title": "Jin and Northern and Southern Dynasties",
+        "years": "265–589",
+        "desc": "Alternating control; Sinicization of non-Han peoples; development of Chinese Buddhism. The encounter between Han and non-Han traditions spurred artistic and religious innovations."
+      },
+      {
+        "title": "Sui Dynasty",
+        "years": "581–618",
+        "desc": "Reunification; Grand Canal; administrative reforms that pave the way for the Tang. The Grand Canal integrated regional economies and facilitated the supply of the capital."
+      },
+      {
+        "title": "Tang Dynasty",
+        "years": "618–907",
+        "desc": "Golden age of poetry and arts; Chang'an as a cosmopolitan metropolis; imperial examination (科举) is consolidated. Land and sea routes connected China with Central Asia, India, and the Islamic world."
+      },
+      {
+        "title": "Five Dynasties and Ten Kingdoms",
+        "years": "907–960",
+        "desc": "Cycle of ephemeral states and regionalism after the fall of the Tang. Political fragmentation did not prevent urban and commercial progress in several regions."
+      },
+      {
+        "title": "Song Dynasty (Northern and Southern)",
+        "years": "960–1279",
+        "desc": "Innovations: gunpowder, compass, printing press; commercial boom; artistic refinement. Civil administration gained weight over the military, and private education expanded."
+      },
+      {
+        "title": "Mongol Rule: Yuan Dynasty",
+        "years": "1271–1368",
+        "desc": "Eurasian integration under the Mongols; intense contacts with the West. The mobility of artisans and astronomers led to technological and scientific transfers."
+      },
+      {
+        "title": "Ming Dynasty",
+        "years": "1368–1644",
+        "desc": "Han restoration; voyages of Zheng He; fortification of the Great Wall; artisanal splendor. Artisanal production and internal trade networks reached a large scale."
+      },
+      {
+        "title": "Qing Dynasty (Manchu)",
+        "years": "1644–1912",
+        "desc": "Territorial expansion; unequal encounters with Western powers; late reforms. Late reforms introduced railways, industries, and new educational institutions."
+      },
+      {
+        "title": "Republic of China",
+        "years": "1912–1949",
+        "desc": "End of the imperial system; internal conflicts and the Sino-Japanese War; uneven modernization. Intellectual debate renewed language, literature, and education, seeking to modernize the country."
+      },
+      {
+        "title": "People's Republic of China: early decades",
+        "years": "1949–1978",
+        "desc": "Industrialization; political campaigns; complex economic and social challenges. Literacy and public health advanced, despite political ups and downs."
+      },
+      {
+        "title": "Reforms and Opening Up",
+        "years": "since 1978",
+        "desc": "Accelerated growth; urbanization; integration into the global economy; scientific and technological advances. Cities and social mobility grew, while challenges of inequality and sustainability emerged."
+      }
+    ],
+    "glossary": [
+      {
+        "term": "Mandate of Heaven (天命)",
+        "desc": "Principle of political legitimacy based on the ruler's virtue. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "term": "Imperial Examination (科举)",
+        "desc": "Meritocratic system of access to the administration, in place for centuries. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "term": "Silk Road",
+        "desc": "Network of commercial and cultural exchanges between China, Central Asia, the Middle East, and Europe. This point provides additional context to better understand its use in practice."
+      }
+    ],
+    "suggestedReading": [
+      {
+        "title": "Cambridge History of China (selections)",
+        "note": "Academic reference work by periods."
+      },
+      {
+        "title": "A History of China (J. Gernet)",
+        "note": "Classic synthesis with a cultural and social focus."
+      }
+    ]
+  },
+  "language": {
+    "facts": [
+      {
+        "title": "Tones",
+        "desc": "Standard Mandarin has 4 tones and a neutral tone; the tonal contour changes the meaning. These aspects help to understand why learning Chinese combines writing, sound, and context."
+      },
+      {
+        "title": "Logographic Writing",
+        "desc": "Each character (汉字) represents a syllable and a morpheme; they combine to form words. Each character usually corresponds to a syllable with meaning; combining them allows for the formation of new words and nuances."
+      },
+      {
+        "title": "Pinyin",
+        "desc": "Transcription system to the Latin alphabet for learning pronunciation and typing. Mastering tone and rhyme in pinyin improves pronunciation and makes it easier to search and type on devices."
+      },
+      {
+        "title": "Simplification",
+        "desc": "Since the mid-20th century, many strokes were simplified to speed up literacy. In practice, simplified and traditional characters coexist depending on the region and cultural context."
+      },
+      {
+        "title": "Dialects",
+        "desc": "'Chinese' groups families like Mandarin, Cantonese, Wu, Min... with large differences. They share a common written base, but oral intelligibility can be very low between different families."
+      }
+    ],
+    "toneExamples": [
+      {
+        "char": "妈",
+        "pinyin": "mā",
+        "meaning": "mom (1st tone)"
+      },
+      {
+        "char": "麻",
+        "pinyin": "má",
+        "meaning": "hemp (2nd tone)"
+      },
+      {
+        "char": "马",
+        "pinyin": "mǎ",
+        "meaning": "horse (3rd tone)"
+      },
+      {
+        "char": "骂",
+        "pinyin": "mà",
+        "meaning": "to scold/insult (4th tone)"
+      }
+    ],
+    "scripts": {
+      "simplifiedExamples": [
+        {
+          "trad": "學",
+          "simp": "学",
+          "meaning": "to study"
+        },
+        {
+          "trad": "國",
+          "simp": "国",
+          "meaning": "country"
+        },
+        {
+          "trad": "門",
+          "simp": "门",
+          "meaning": "door"
+        },
+        {
+          "trad": "體",
+          "simp": "体",
+          "meaning": "body"
+        }
+      ]
+    }
+  },
+  "hsk": {
+    "levels": [
+      {
+        "level": 1,
+        "desc": "Simple phrases, personal introduction, numbers, time, and place. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~150 words"
+      },
+      {
+        "level": 2,
+        "desc": "Routines, basic descriptions, daily needs. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~300 words"
+      },
+      {
+        "level": 3,
+        "desc": "School/work life, tastes, simple comparisons. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~600 words"
+      },
+      {
+        "level": 4,
+        "desc": "Opinions, narrations, common social topics. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~1000+ words"
+      },
+      {
+        "level": 5,
+        "desc": "Long texts; news, cultural and technical topics. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~1500+ words"
+      },
+      {
+        "level": 6,
+        "desc": "High proficiency; nuances, formal registers, extensive reading. It is recommended to reinforce high-frequency vocabulary and practice with real-level tasks to gain fluency.",
+        "estimateVocab": "~2500+ words"
+      }
+    ],
+    "tips": [
+      {
+        "tip": "Practice daily listening",
+        "desc": "Slow podcasts, dialogues, and songs help to fix structures. Combine active study (spaced repetition) with comprehensible input and periodic self-assessments."
+      },
+      {
+        "tip": "Frequency lists",
+        "desc": "Prioritize high-use vocabulary and spaced reviews (SRS). Combine active study (spaced repetition) with comprehensible input and periodic self-assessments."
+      },
+      {
+        "tip": "Mock exams",
+        "desc": "Time real exam tasks to train your pace. Combine active study (spaced repetition) with comprehensible input and periodic self-assessments."
+      }
+    ]
+  },
+  "cuisine": {
+    "regions": [
+      {
+        "name": "Sichuan (川)",
+        "flavor": "spicy, numbing (má là)",
+        "dishes": [
+          {
+            "name": "Mapo Tofu",
+            "desc": "Tofu with meat and doubanjiang, Sichuan pepper. Characteristic of Sichuan (川); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Hot Pot",
+            "desc": "Spicy red broth for cooking meats and vegetables. Characteristic of Sichuan (川); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Kung Pao Chicken",
+            "desc": "Stir-fried chicken with peanuts and dried chilies. Characteristic of Sichuan (川); seeks a balance of textures and a typical flavor profile of the area."
+          }
+        ]
+      },
+      {
+        "name": "Canton (粤)",
+        "flavor": "mild, fresh, umami",
+        "dishes": [
+          {
+            "name": "Dim Sum",
+            "desc": "Steamed/baked bites for brunch. Characteristic of Canton (粤); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Char Siu",
+            "desc": "Sweet roasted pork with honey and soy sauce. Characteristic of Canton (粤); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Congee",
+            "desc": "Comforting rice porridge, multiple toppings. Characteristic of Canton (粤); seeks a balance of textures and a typical flavor profile of the area."
+          }
+        ]
+      },
+      {
+        "name": "Beijing (京)",
+        "flavor": "aromatic greasy, oven-baked",
+        "dishes": [
+          {
+            "name": "Peking Duck",
+            "desc": "Crispy skin, pancakes, scallion, and sweet sauce. Characteristic of Beijing (京); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Zhajiangmian",
+            "desc": "Noodles with fermented soybean paste and minced meat. Characteristic of Beijing (京); seeks a balance of textures and a typical flavor profile of the area."
+          }
+        ]
+      },
+      {
+        "name": "Shanghai (沪)",
+        "flavor": "sweet-salty",
+        "dishes": [
+          {
+            "name": "Xiaolongbao",
+            "desc": "Dumplings with soup inside. Characteristic of Shanghai (沪); seeks a balance of textures and a typical flavor profile of the area."
+          },
+          {
+            "name": "Hong Shao Rou",
+            "desc": "Slow-braised sweet and sour pork belly. Characteristic of Shanghai (沪); seeks a balance of textures and a typical flavor profile of the area."
+          }
+        ]
+      }
+    ]
+  },
+  "traditions": {
+    "festivals": [
+      {
+        "name": "Chinese New Year",
+        "when": "1st day of the 1st lunar month",
+        "customs": "Family reunion, red envelopes, fireworks."
+      },
+      {
+        "name": "Mid-Autumn Festival",
+        "when": "15th day of the 8th lunar month",
+        "customs": "Mooncakes, lanterns, moon gazing."
+      },
+      {
+        "name": "Dragon Boat Festival",
+        "when": "5th day of the 5th lunar month",
+        "customs": "Dragon boat races, zongzi (wrapped rice)."
+      },
+      {
+        "name": "Qingming Festival",
+        "when": "April (solar calendar)",
+        "customs": "Honor ancestors by cleaning tombs; spring outings."
+      }
+    ],
+    "etiquette": [
+      {
+        "title": "Courtesy and modesty",
+        "desc": "Avoid boasting; respect for elders; exchange cards with both hands. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Gifts",
+        "desc": "Avoid clocks and umbrellas; even numbers are welcome. This point provides additional context to better understand its use in practice."
+      }
+    ]
+  },
+  "modernChina": {
+    "topics": [
+      {
+        "title": "Technology",
+        "desc": "Digital giants, mobile payments, AI, and cutting-edge hardware. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Transportation",
+        "desc": "Leading high-speed rail network and efficient urban mobility. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Smart Cities",
+        "desc": "Connected urban services, shared bikes, cashless payments. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Environment",
+        "desc": "Energy transition, pollution challenges, and water management. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Education and R&D",
+        "desc": "Rising universities and growing scientific output. This point provides additional context to better understand its use in practice."
+      }
+    ]
+  },
+  "geography": {
+    "regions": [
+      {
+        "name": "North",
+        "highlights": "Cold winters; capital Beijing; North China Plain."
+      },
+      {
+        "name": "South",
+        "highlights": "Humid climate; Canton, Guangxi; rice paddies and karst landscapes."
+      },
+      {
+        "name": "East Coast",
+        "highlights": "Economic belt; Shanghai, Jiangsu, Zhejiang."
+      },
+      {
+        "name": "Inland/West",
+        "highlights": "Tibetan Plateau, Xinjiang, deserts, and ethnic minorities."
+      }
+    ],
+    "landmarks": [
+      {
+        "name": "The Great Wall",
+        "region": "North",
+        "note": "Restored sections near Beijing like Badaling and Mutianyu."
+      },
+      {
+        "name": "Guilin and Yangshuo",
+        "region": "South",
+        "note": "Iconic karst landscapes."
+      },
+      {
+        "name": "The Bund, Shanghai",
+        "region": "East Coast",
+        "note": "Colonial architecture facing the Pudong skyline."
+      }
+    ]
+  },
+  "musicCinema": {
+    "music": [
+      {
+        "type": "pop",
+        "title": "Jay Chou (周杰伦)",
+        "year": 2000,
+        "note": "Mandopop icon."
+      },
+      {
+        "type": "folk",
+        "title": "Li Jian (李健)",
+        "year": 2003,
+        "note": "Melodic and poetic ballads."
+      },
+      {
+        "type": "indie",
+        "title": "Omnipotent Youth Society",
+        "year": 2010,
+        "note": "Alternative rock from Hebei."
+      }
+    ],
+    "cinema": [
+      {
+        "title": "Hero (英雄)",
+        "year": 2002,
+        "note": "Zhang Yimou; color aesthetics and wuxia."
+      },
+      {
+        "title": "The Grandmaster (一代宗师)",
+        "year": 2013,
+        "note": "Wong Kar-wai; stylized biography of Ip Man."
+      },
+      {
+        "title": "Long Day's Journey into Night (地球最后的夜晚)",
+        "year": 2018,
+        "note": "Bi Gan; dreamlike and long take."
+      }
+    ]
+  },
+  "philosophy": {
+    "schools": [
+      {
+        "name": "Confucianism",
+        "coreIdeas": [
+          "Ethics of relationships",
+          "Ritual (礼) and social harmony",
+          "Virtuous government"
+        ],
+        "figures": [
+          "Confucius",
+          "Mencius",
+          "Xunzi"
+        ]
+      },
+      {
+        "name": "Taoism",
+        "coreIdeas": [
+          "Wu wei (non-action)",
+          "Harmony with the Dao",
+          "Simplicity and naturalness"
+        ],
+        "figures": [
+          "Laozi",
+          "Zhuangzi"
+        ]
+      },
+      {
+        "name": "Chinese Buddhism",
+        "coreIdeas": [
+          "Compassion",
+          "Enlightenment",
+          "Chan/Zen schools"
+        ],
+        "figures": [
+          "Bodhidharma",
+          "Huineng"
+        ]
+      },
+      {
+        "name": "Legalism",
+        "coreIdeas": [
+          "Strict laws",
+          "Control and meritocracy",
+          "Order above personal morality"
+        ],
+        "figures": [
+          "Han Feizi",
+          "Shang Yang"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "topics": [
+      {
+        "title": "Gaokao",
+        "desc": "National university entrance exam; highly competitive. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Primary and secondary",
+        "desc": "Strong focus on math and science; daily homework. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "Extracurriculars",
+        "desc": "Music, calligraphy, martial arts, academic olympiads. This point provides additional context to better understand its use in practice."
+      },
+      {
+        "title": "University",
+        "desc": "Growing internationalization; global research and collaboration. This point provides additional context to better understand its use in practice."
+      }
+    ]
+  }
+}

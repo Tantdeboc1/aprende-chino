@@ -13,7 +13,10 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
   const writerInstanceRef = useRef(null);
   const isMountedRef = useRef(true);
 
-  const currentCharacter = characters[currentIndex];
+  // HanziWriter solo soporta caracteres individuales — filtrar palabras multi-carácter
+  const writableChars = characters.filter(c => c.char && c.char.length === 1);
+
+  const currentCharacter = writableChars[currentIndex];
 
   // Efecto principal - CON CLEANUP AGGRESIVO
   useEffect(() => {
@@ -133,7 +136,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
   };
 
   const nextCharacter = () => {
-    if (currentIndex < characters.length - 1) {
+    if (currentIndex < writableChars.length - 1) {
       setCurrentIndex(prev => prev + 1);
       setIsPlaying(false);
     }
@@ -182,7 +185,7 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
             {currentCharacter.pinyin} - {currentCharacter.meaning}
           </p>
           <p className="text-gray-400">
-            {currentIndex + 1} de {characters.length}
+            {currentIndex + 1} de {writableChars.length}
           </p>
         </div>
 
@@ -282,8 +285,9 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
 
           <button
             onClick={nextCharacter}
-            disabled={currentIndex === characters.length - 1}
-            className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white px-6 py-2 rounded-lg transition-colors"
+            disabled={currentIndex === writableChars.length - 1}
+            className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray
+-800 text-white px-6 py-2 rounded-lg transition-colors"
           >
             {t('writing_next_button')} →
           </button>

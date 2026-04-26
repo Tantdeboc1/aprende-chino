@@ -1,0 +1,208 @@
+// src/data/sovData.js
+// Frases SOV (Sujeto-Objeto-Verbo) por lección para el minijuego de ordenar frases
+// Cada frase tiene: sentence (frase correcta), words (palabras mezcladas), translation, hint
+// Las palabras en 'words' se mezclan al montar el componente.
+
+const sovData = [
+  // ── Lección 1: Saludos y estado ──────────────────────────────────────────────
+  {
+    id: 'l1_1',
+    lesson: 1,
+    sentence: '你好吗',
+    words: ['你', '好', '吗'],
+    translation: '¿Estás bien?',
+    hint: 'Pregunta de sí/no con 吗 al final',
+  },
+  {
+    id: 'l1_2',
+    lesson: 1,
+    sentence: '我很好',
+    words: ['我', '很', '好'],
+    translation: 'Estoy muy bien.',
+    hint: 'Los adjetivos predicativos llevan 很 delante',
+  },
+  {
+    id: 'l1_3',
+    lesson: 1,
+    sentence: '我不好',
+    words: ['我', '不', '好'],
+    translation: 'No estoy bien.',
+    hint: '不 va delante del adjetivo o verbo que niega',
+  },
+  {
+    id: 'l1_4',
+    lesson: 1,
+    sentence: '你最近怎么样',
+    words: ['你', '最近', '怎么样'],
+    translation: '¿Qué tal últimamente?',
+    hint: '怎么样 = ¿cómo? / ¿qué tal?',
+  },
+  {
+    id: 'l1_5',
+    lesson: 1,
+    sentence: '他也很好',
+    words: ['他', '也', '很', '好'],
+    translation: 'Él también está muy bien.',
+    hint: '也 (también) va antes del adverbio 很',
+  },
+  {
+    id: 'l1_6',
+    lesson: 1,
+    sentence: '老师好吗',
+    words: ['老师', '好', '吗'],
+    translation: '¿Está bien el profesor?',
+    hint: 'Sujeto + adjetivo + 吗',
+  },
+
+  // ── Lección 2: Nacionalidades y presentaciones ────────────────────────────────
+  {
+    id: 'l2_1',
+    lesson: 2,
+    sentence: '我是中国人',
+    words: ['我', '是', '中国人'],
+    translation: 'Soy chino/a.',
+    hint: '是 es el verbo "ser" en chino',
+  },
+  {
+    id: 'l2_2',
+    lesson: 2,
+    sentence: '你是哪国人',
+    words: ['你', '是', '哪国人'],
+    translation: '¿De qué país eres?',
+    hint: '哪 pregunta "¿cuál?" o "¿de dónde?"',
+  },
+  {
+    id: 'l2_3',
+    lesson: 2,
+    sentence: '他不是日本人',
+    words: ['他', '不是', '日本人'],
+    translation: 'Él no es japonés.',
+    hint: 'La negación de 是 es 不是',
+  },
+  {
+    id: 'l2_4',
+    lesson: 2,
+    sentence: '她也是学生',
+    words: ['她', '也', '是', '学生'],
+    translation: 'Ella también es estudiante.',
+    hint: '也 (también) va antes del verbo',
+  },
+  {
+    id: 'l2_5',
+    lesson: 2,
+    sentence: '我叫马丁',
+    words: ['我', '叫', '马丁'],
+    translation: 'Me llamo Martín.',
+    hint: '叫 significa "llamarse"',
+  },
+  {
+    id: 'l2_6',
+    lesson: 2,
+    sentence: '你叫什么名字',
+    words: ['你', '叫', '什么', '名字'],
+    translation: '¿Cómo te llamas?',
+    hint: '什么 = ¿qué?; 名字 = nombre',
+  },
+
+  // ── Lección 3: Familia ────────────────────────────────────────────────────────
+  {
+    id: 'l3_1',
+    lesson: 3,
+    sentence: '你家有几口人',
+    words: ['你家', '有', '几口人'],
+    translation: '¿Cuántas personas hay en tu familia?',
+    hint: '有 = haber/tener; 几 = ¿cuántos?',
+  },
+  {
+    id: 'l3_2',
+    lesson: 3,
+    sentence: '我家有四口人',
+    words: ['我家', '有', '四口人'],
+    translation: 'En mi familia hay cuatro personas.',
+    hint: 'Estructura: lugar + 有 + cantidad',
+  },
+  {
+    id: 'l3_3',
+    lesson: 3,
+    sentence: '他有一个妹妹',
+    words: ['他', '有', '一个', '妹妹'],
+    translation: 'Él tiene una hermana menor.',
+    hint: '个 es el clasificador más común',
+  },
+  {
+    id: 'l3_4',
+    lesson: 3,
+    sentence: '我没有哥哥',
+    words: ['我', '没有', '哥哥'],
+    translation: 'No tengo hermano mayor.',
+    hint: 'La negación de 有 es 没有',
+  },
+  {
+    id: 'l3_5',
+    lesson: 3,
+    sentence: '她的爸爸是医生',
+    words: ['她的', '爸爸', '是', '医生'],
+    translation: 'El padre de ella es médico.',
+    hint: '的 indica posesión, como el apóstrofe en inglés',
+  },
+  {
+    id: 'l3_6',
+    lesson: 3,
+    sentence: '我爱我的家人',
+    words: ['我', '爱', '我的', '家人'],
+    translation: 'Amo a mi familia.',
+    hint: '爱 = amar; 家人 = familia/familiares',
+  },
+
+  // ── Lección 4: Tiempo y horario ───────────────────────────────────────────────
+  {
+    id: 'l4_1',
+    lesson: 4,
+    sentence: '你明天几点有课',
+    words: ['你', '明天', '几点', '有课'],
+    translation: '¿A qué hora tienes clase mañana?',
+    hint: '几点 = ¿a qué hora?; 有课 = tener clase',
+  },
+  {
+    id: 'l4_2',
+    lesson: 4,
+    sentence: '我八点上课',
+    words: ['我', '八点', '上课'],
+    translation: 'Tengo clase a las ocho.',
+    hint: 'Número + 点 = hora en punto',
+  },
+  {
+    id: 'l4_3',
+    lesson: 4,
+    sentence: '现在几点了',
+    words: ['现在', '几点', '了'],
+    translation: '¿Qué hora es ahora?',
+    hint: '现在 = ahora; 了 marca cambio de estado',
+  },
+  {
+    id: 'l4_4',
+    lesson: 4,
+    sentence: '他昨天没有上课',
+    words: ['他', '昨天', '没有', '上课'],
+    translation: 'Él ayer no fue a clase.',
+    hint: 'En chino el tiempo va antes del verbo',
+  },
+  {
+    id: 'l4_5',
+    lesson: 4,
+    sentence: '我们下午两点见面',
+    words: ['我们', '下午', '两点', '见面'],
+    translation: 'Nos vemos a las dos de la tarde.',
+    hint: '见面 = quedar/verse; 两 = 2 (para personas/horas)',
+  },
+  {
+    id: 'l4_6',
+    lesson: 4,
+    sentence: '今天天气很好',
+    words: ['今天', '天气', '很', '好'],
+    translation: 'Hoy hace muy buen tiempo.',
+    hint: '天气 = tiempo meteorológico',
+  },
+];
+
+export default sovData;
