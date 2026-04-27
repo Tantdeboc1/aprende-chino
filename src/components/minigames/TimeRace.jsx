@@ -1,4 +1,4 @@
-import ConfettiCelebration from "@/components/ui/ConfettiCelebration.jsx";import { useState, useEffect, useCallback } from "react";
+import ConfettiCelebration from "@/components/ui/ConfettiCelebration.jsx";import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowLeft, RefreshCw, Play, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
@@ -142,8 +142,8 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
               <p className="text-xl text-gray-300 mb-2">{t('minigames_final_score_message')}</p>
               <p className="text-6xl font-bold text-white mb-8">{score}</p>
               <div className="flex justify-center gap-4">
-                <Button onClick={startGame} variant="primary"><RefreshCw className="inline-block mr-2"/> {t('minigames_play_again_button')}</Button>
-                <Button onClick={goBack} variant="secondary"><ArrowLeft className="inline-block mr-2"/> {t('radicals_back_button')}</Button>
+                <Button onClick={startGame} variant="action"><RefreshCw className="inline-block mr-2"/> {t('minigames_play_again_button')}</Button>
+                <button onClick={goBack} className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center gap-2"><ArrowLeft size={18}/> {t('radicals_back_button')}</button>
               </div>
             </div>
           </Container>

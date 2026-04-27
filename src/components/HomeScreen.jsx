@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats } from '@/utils/srs.js';
+import { getStreak } from '@/utils/streak.js';
 
 const LESSONS = [
   {
@@ -111,6 +112,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const totalWords  = useMemo(() => allCharacters.filter(c => !c.isSupplementary).length, [allCharacters]);
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
+  const streak      = useMemo(() => getStreak(), [progress]);
 
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
@@ -131,20 +133,22 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         </div>
 
         {/* Stats rápidas */}
-        <div className="flex gap-3 mt-3">
-          <div className="flex-1 bg-gray-700/50 rounded-lg px-3 py-2 text-center">
+        <div className="flex gap-2 mt-3">
+          <div className="flex-1 bg-gray-700/50 rounded-lg px-2 py-2 text-center">
             <p className="text-white font-bold text-lg">{totalMastered}</p>
             <p className="text-gray-400 text-xs">{t('home_mastered')}</p>
           </div>
-          <div className="flex-1 bg-gray-700/50 rounded-lg px-3 py-2 text-center">
-            <p className="text-white font-bold text-lg">{totalWords}</p>
-            <p className="text-gray-400 text-xs">{t('home_words_hsk1')}</p>
-          </div>
-          <div className="flex-1 bg-gray-700/50 rounded-lg px-3 py-2 text-center">
+          <div className="flex-1 bg-gray-700/50 rounded-lg px-2 py-2 text-center">
             <p className="text-white font-bold text-lg">
               {totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0}%
             </p>
             <p className="text-gray-400 text-xs">{t('home_completed')}</p>
+          </div>
+          <div className={`flex-1 rounded-lg px-2 py-2 text-center ${streak.currentStreak > 0 ? 'bg-orange-900/40 border border-orange-700/40' : 'bg-gray-700/50'}`}>
+            <p className={`font-bold text-lg ${streak.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`}>
+              {streak.currentStreak > 0 ? '🔥' : '—'}{streak.currentStreak > 0 ? streak.currentStreak : ''}
+            </p>
+            <p className="text-gray-400 text-xs">{t('home_streak')}</p>
           </div>
         </div>
       </div>

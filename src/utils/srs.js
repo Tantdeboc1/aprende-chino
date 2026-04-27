@@ -52,6 +52,9 @@ export function updateSRS(progress, char, quality) {
     repetitions++;
   }
 
+  // Si la palabra está marcada como difícil, limitar el intervalo a 3 días
+  if (srs.difficult) interval = Math.min(interval, 3);
+
   // nextReview = ahora + interval días
   const nextReview = now + interval * 24 * 60 * 60 * 1000;
 
@@ -59,27 +62,55 @@ export function updateSRS(progress, char, quality) {
   if (!updated.__srs) updated.__srs = {};
   updated.__srs = {
     ...updated.__srs,
-    [char]: { interval, easeFactor, repetitions, nextReview, lastReviewed: now },
+    [char]: { interval, easeFactor, repetitions, nextReview, lastReviewed: now, difficult: srs.difficult || false },
   };
   return updated;
 }
 
 /**
+ * Alterna la bandera "difícil" de una palabra en el SRS.
+ * Las palabras difíciles tienen un intervalo máximo de 3 días.
+ */
+export function toggleWordDifficult(progress, char) {
+  const srs = getSRSData(progress, char);
+  const updated = { ...progress };
+  if (!updated.__srs) updated.__srs = {};
+  updated.__srs = {
+    ...updated.__srs,
+    [char]: { ...srs, difficult: !srs.difficult },
+  };
+  return updated;
+}
+
+/**
+ * Devuelve true si la palabra está marcada como difícil.
+ */
+export function isWordDifficult(progress, char) {
+  return progress?.__srs?.[char]?.difficult === true;
+}
+
+/**
  * Inicia una tarjeta SRS (marca como "vista por primera vez" si no existe),
  * sin cambiar el intervalo.
+ * FIX: si existe pero nextReview es null (ej: marcada difícil antes de ser vista),
+ * establece nextReview ahora preservando los demás datos (como la flag difficult).
  */
 export function initSRSCard(progress, char) {
-  if (progress?.__srs?.[char]) return progress; // ya tiene datos
+  const existing = progress?.__srs?.[char];
+  // Si ya existe y tiene nextReview válido, no tocar
+  if (existing && existing.nextReview !== null) return progress;
   const updated = { ...progress };
   if (!updated.__srs) updated.__srs = {};
   updated.__srs = {
     ...updated.__srs,
     [char]: {
-      interval:     1,
-      easeFactor:   DEFAULT_EASE,
-      repetitions:  0,
+      // Preservar flags existentes (ej: difficult) si la entrada ya existía
+      ...(existing || {}),
+      interval:     existing?.interval     ?? 1,
+      easeFactor:   existing?.easeFactor   ?? DEFAULT_EASE,
+      repetitions:  existing?.repetitions  ?? 0,
       nextReview:   Date.now(), // disponible para repasar ahora mismo
-      lastReviewed: null,
+      lastReviewed: existing?.lastReviewed ?? null,
     },
   };
   return updated;

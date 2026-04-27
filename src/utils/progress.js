@@ -1,6 +1,7 @@
 // src/utils/progress.js
 // Sistema de progreso por palabra, guardado en localStorage
 import { initSRSCard } from './srs.js';
+import { markDailyActivity } from './streak.js';
 
 const STORAGE_KEY = 'aprende-chino-progress-v1';
 
@@ -39,6 +40,7 @@ export function markWordSeen(progress, lessonNum, char) {
   if (!updated[lessonKey][char]) updated[lessonKey][char] = { seen: false, correct: 0, incorrect: 0, mastered: false };
   updated[lessonKey][char] = { ...updated[lessonKey][char], seen: true };
   updated = initSRSCard(updated, char);
+  markDailyActivity();
   return updated;
 }
 
@@ -59,6 +61,7 @@ export function markWordResult(progress, lessonNum, char, correct) {
   };
   // Inicializar tarjeta SRS si es la primera vez que se ve la palabra
   updated = initSRSCard(updated, char);
+  markDailyActivity();
   return updated;
 }
 

@@ -1,5 +1,5 @@
 import { assetUrl } from './utils/assets';
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import ExamMode from './components/ExamMode.jsx';
 import HomeScreen from './components/HomeScreen.jsx';
 import LessonDetail from './components/LessonDetail.jsx';
@@ -486,7 +486,13 @@ export default function App() {
     }
     return (
       <Layout activeScreen={screen} onNavigate={handleBottomNav}>
-        <CurrentComponent {...componentProps} />
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-gray-900">
+            <p className="text-gray-500 text-sm animate-pulse">Cargando...</p>
+          </div>
+        }>
+          <CurrentComponent {...componentProps} />
+        </Suspense>
       </Layout>
     );
   }

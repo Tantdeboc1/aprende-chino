@@ -1,5 +1,5 @@
 // src/utils/navigation.js
-import { useMemo } from 'react';
+import { useMemo, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
 import Menu from '@/components/menu';
 import Dictionary from '@/components/Dictionary.jsx';
@@ -8,8 +8,8 @@ import MiniGames from '@/components/MiniGames.jsx';
 import LearnMenu from "@/components/learn/LearnMenu.jsx";
 import DailyIndex from "@/components/daily/DailyIndex.jsx";
 import WritingMenu from "@/components/learn/Writing/index.jsx";
-import HanziWriting from '@/components/learn/Writing/HanziWriting.jsx';
-import RadicalsWriting from '@/components/learn/Writing/RadicalsWriting.jsx';
+const HanziWriting = lazy(() => import('@/components/learn/Writing/HanziWriting.jsx'));
+const RadicalsWriting = lazy(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
 import RadicalsIndex from "@/components/learn/Radicals/index.jsx";
 import RadicalsTheory from "@/components/learn/Radicals/RadicalsTheory.jsx";
 import RadicalsQuiz from "@/components/learn/Radicals/RadicalsQuiz.jsx";
@@ -25,9 +25,9 @@ import SpecialSyllables from "@/components/learn/Tones/SpecialSyllables.jsx";
 import CharactersDaily from "@/components/daily/CharactersDaily.jsx";
 import RadicalsDaily from "@/components/daily/RadicalsDaily.jsx";
 import TonesDaily from "@/components/daily/TonesDaily.jsx";
-import TimeRace from '@/components/minigames/TimeRace.jsx';
-import PinyinConnection from '@/components/minigames/PinyinConnection.jsx';
-import SOVGame from '@/components/minigames/SOVGame.jsx';
+const TimeRace = lazy(() => import('@/components/minigames/TimeRace.jsx'));
+const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
+const SOVGame = lazy(() => import('@/components/minigames/SOVGame.jsx'));
 
 export function useNavigation(
   screen,

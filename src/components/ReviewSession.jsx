@@ -2,6 +2,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { updateSRS, getDueCards } from '@/utils/srs.js';
+import { markDailyActivity } from '@/utils/streak.js';
 
 // ─── Tarjeta de flashcard ────────────────────────────────────────────────────
 function FlashCard({ word, isFlipped, onFlip, speakChinese }) {
@@ -196,6 +197,9 @@ export default function ReviewSession({
 
   const handleRate = useCallback((quality) => {
     if (!current) return;
+
+    // Registrar actividad diaria (solo cuenta una vez al día)
+    markDailyActivity();
 
     // Actualizar SRS en progreso
     const updated = updateSRS(progress, current.char, quality);

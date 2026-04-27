@@ -35,6 +35,44 @@ const LESSON_COLORS = {
 };
 const DEFAULT_COLOR = { bg: 'bg-red-600', border: 'border-red-500', text: 'text-red-400' };
 
+
+// ── Feedback de sonido via Web Audio API ────────────────────────────────────
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (type === 'correct') {
+      // Dos tonos ascendentes: un "ding" agradable
+      [523.25, 783.99].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+        gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
+        osc.start(ctx.currentTime + i * 0.12);
+        osc.stop(ctx.currentTime + i * 0.12 + 0.25);
+      });
+    } else {
+      // Tono grave descendente: "bong" de error
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.35);
+    }
+  } catch (e) {
+    // Web Audio no disponible — ignorar
+  }
+}
+
 export default function SOVGame({ goBack, selectedLesson }) {
   const { t } = useTranslation();
 
@@ -90,6 +128,7 @@ export default function SOVGame({ goBack, selectedLesson }) {
     const correct = answer === current.sentence;
     setResult(correct ? 'correct' : 'incorrect');
     if (correct) setScore(s => s + 1);
+    playSound(correct ? 'correct' : 'incorrect');
   };
 
   // Siguiente pregunta

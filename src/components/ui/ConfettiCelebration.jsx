@@ -1,7 +1,7 @@
 // src/components/ui/ConfettiCelebration.jsx
 import { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-import { useWindowSize } from "react-use";
+import { useWindowSize } from "@/hooks/useWindowSize.js";
 
 export default function ConfettiCelebration() {
   const { width, height } = useWindowSize();

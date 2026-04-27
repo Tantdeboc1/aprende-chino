@@ -1,7 +1,10 @@
 // src/components/LessonDetail.jsx
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { useWindowSize } from '@/hooks/useWindowSize.js';
+import Confetti from 'react-confetti';
 import { useTranslation } from 'react-i18next';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
+import { toggleWordDifficult, isWordDifficult } from '@/utils/srs.js';
 import GrammarTab from './GrammarTab.jsx';
 import CulturalTab from './CulturalTab.jsx';
 import grammarData from '@/data/grammarData.js';
@@ -52,6 +55,7 @@ export default function LessonDetail({
   onTabChange,
 }) {
   const [tab, setTab] = useState(defaultTab);
+  const { width, height } = useWindowSize();
 
   const handleTabChange = (id) => {
     setTab(id);
@@ -71,6 +75,17 @@ export default function LessonDetail({
   const seenPct     = stats.total > 0 ? Math.round((stats.seen    / stats.total) * 100) : 0;
   const masteredPct = stats.total > 0 ? Math.round((stats.mastered / stats.total) * 100) : 0;
 
+  // Confetti al llegar al 100%
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevMasteredPct = useRef(masteredPct);
+  useEffect(() => {
+    if (masteredPct === 100 && prevMasteredPct.current < 100) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 4000);
+    }
+    prevMasteredPct.current = masteredPct;
+  }, [masteredPct]);
+
   const getStatus = (char) => {
     const w = progress?.[`lesson_${lessonNum}`]?.[char];
     if (!w) return 'unseen';
@@ -84,8 +99,24 @@ export default function LessonDetail({
     onProgressChange(updated);
   };
 
+  const handleToggleDifficult = (char) => {
+    const updated = toggleWordDifficult(progress, char);
+    onProgressChange(updated);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
+      {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={250}
+          gravity={0.25}
+          colors={['#22c55e', '#86efac', '#fbbf24', '#f87171', '#60a5fa', '#c084fc']}
+          style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none' }}
+        />
+      )}
 
       {/* Header */}
       <div className={`bg-gray-800 border-b border-gray-700 border-l-4 ${a.border} px-4 pt-10 pb-4`}>
@@ -208,6 +239,17 @@ export default function LessonDetail({
                         <p className="text-white text-sm font-medium mt-0.5 truncate">{word.meaning}</p>
                       </div>
 
+                      <button
+                        onClick={e => { e.stopPropagation(); handleToggleDifficult(word.char); }}
+                        title={isWordDifficult(progress, word.char) ? t('vocab_unmark_difficult') : t('vocab_mark_difficult')}
+                        className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors text-sm flex-shrink-0 ${
+                          isWordDifficult(progress, word.char)
+                            ? 'bg-orange-800/60 text-orange-400 hover:bg-orange-800'
+                            : 'bg-gray-700 text-gray-500 hover:bg-gray-600 hover:text-orange-400'
+                        }`}
+                      >
+                        &#9888;
+                      </button>
                       <button
                         onClick={e => { e.stopPropagation(); speakChinese && speakChinese({ hanzi: word.char, pinyin: word.pinyin }); }}
                         className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-700 hover:bg-gray-600 text-green-400 transition-colors text-sm flex-shrink-0"
