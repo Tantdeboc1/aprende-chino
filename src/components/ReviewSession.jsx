@@ -1,11 +1,117 @@
 // src/components/ReviewSession.jsx
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { updateSRS, getDueCards } from '@/utils/srs.js';
+import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
 import { markDailyActivity } from '@/utils/streak.js';
 
+// ─── Selección de modo ────────────────────────────────────────────────────────
+function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
+  const bothEmpty = dueCount === 0 && weakCount === 0;
+
+  return (
+    <div className="min-h-screen bg-gray-900 flex flex-col pb-24">
+      {/* Header */}
+      <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-4 flex-shrink-0">
+        <button
+          onClick={goBack}
+          className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm transition-colors mb-3"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+          {t('srs_back', 'Volver')}
+        </button>
+        <h1 className="text-xl font-bold text-white">
+          {t('srs_mode_title', '¿Qué tipo de repaso?')}
+        </h1>
+      </div>
+
+      <div className="flex-1 flex flex-col justify-center px-4 gap-4 max-w-sm mx-auto w-full">
+        {bothEmpty ? (
+          /* Sin nada en el SRS */
+          <div className="text-center py-10">
+            <div className="text-5xl mb-4">📚</div>
+            <h2 className="text-xl font-bold text-white mb-2">
+              {t('srs_mode_empty', 'Sin palabras en el SRS todavía')}
+            </h2>
+            <p className="text-gray-400 text-sm">
+              {t('srs_mode_empty_desc', 'Completa algunas lecciones o quizzes primero')}
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* Opción A: Pendientes */}
+            <button
+              onClick={() => dueCount > 0 && onSelect('due')}
+              className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
+                dueCount > 0
+                  ? 'bg-gray-800 border-red-500/50 hover:border-red-400 hover:bg-gray-750'
+                  : 'bg-gray-800/50 border-gray-700 opacity-50 cursor-not-allowed'
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-2xl">🎯</span>
+                    <span className="text-white font-bold text-base">
+                      {t('srs_mode_due_title', 'Pendientes')}
+                    </span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-snug">
+                    {dueCount > 0
+                      ? t('srs_mode_due_count', '{{count}} tarjetas vencidas hoy', { count: dueCount })
+                      : t('srs_mode_due_empty', 'Sin repasos pendientes ahora')}
+                  </p>
+                  <p className="text-gray-600 text-xs mt-1">Orden aleatorio · Algoritmo SM-2</p>
+                </div>
+                {dueCount > 0 && (
+                  <span className="bg-red-500/20 text-red-400 font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0">
+                    {dueCount}
+                  </span>
+                )}
+              </div>
+            </button>
+
+            {/* Opción B: Palabras débiles */}
+            <button
+              onClick={() => weakCount > 0 && onSelect('weak')}
+              className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
+                weakCount > 0
+                  ? 'bg-gray-800 border-orange-500/50 hover:border-orange-400 hover:bg-gray-750'
+                  : 'bg-gray-800/50 border-gray-700 opacity-50 cursor-not-allowed'
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-2xl">💔</span>
+                    <span className="text-white font-bold text-base">
+                      {t('srs_mode_weak_title', 'Palabras débiles')}
+                    </span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-snug">
+                    {t('srs_mode_weak_desc', 'Ignora el calendario — repasa las que más te cuestan')}
+                  </p>
+                  <p className="text-gray-600 text-xs mt-1">
+                    {t('srs_mode_weak_count', 'Top {{count}} con peor puntuación', { count: weakCount })}
+                  </p>
+                </div>
+                {weakCount > 0 && (
+                  <span className="bg-orange-500/20 text-orange-400 font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0">
+                    {weakCount}
+                  </span>
+                )}
+              </div>
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Tarjeta de flashcard ────────────────────────────────────────────────────
-function FlashCard({ word, isFlipped, onFlip, speakChinese }) {
+function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4 py-6">
       {!isFlipped ? (
@@ -29,6 +135,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese }) {
             <button
               onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
               className="w-11 h-11 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-xl transition-colors"
+              title="Escuchar de nuevo"
             >
               🔊
             </button>
@@ -51,6 +158,15 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese }) {
                   <p key={i} className="text-sm text-gray-300 bg-gray-700/50 rounded-lg px-3 py-1.5">{ex}</p>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Badge modo débil */}
+          {mode === 'weak' && word._easeFactor && (
+            <div className="px-5 pb-3">
+              <span className="text-xs text-orange-400/70">
+                EF: {word._easeFactor.toFixed(2)} · Debilidad del SRS
+              </span>
             </div>
           )}
         </div>
@@ -100,7 +216,7 @@ function RatingButtons({ onRate }) {
 }
 
 // ─── Pantalla de resultados ──────────────────────────────────────────────────
-function ResultScreen({ stats, onFinish, onReviewAgain, t }) {
+function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
   const { again, hard, good, easy, total } = stats;
   const correctPct = total > 0 ? Math.round(((good + easy) / total) * 100) : 0;
 
@@ -117,6 +233,7 @@ function ResultScreen({ stats, onFinish, onReviewAgain, t }) {
           </h2>
           <p className="text-gray-400 text-sm mt-1">
             {total} {t('srs_cards_reviewed', 'tarjetas repasadas')}
+            {mode === 'weak' && <span className="ml-1 text-orange-400">· 💔 modo débiles</span>}
           </p>
         </div>
 
@@ -176,47 +293,59 @@ export default function ReviewSession({
 }) {
   const { t } = useTranslation();
 
-  // Cola de tarjetas pendientes al inicio de la sesión
-  const initialQueue = useMemo(() => {
-    const due = getDueCards(progress, allCharacters);
-    // Mezclar aleatoriamente
-    return [...due].sort(() => Math.random() - 0.5);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Precalcular las dos colas al montar (no cambian durante la sesión)
+  const dueQueue  = useMemo(() => [...getDueCards(progress, allCharacters)].sort(() => Math.random() - 0.5), []); // eslint-disable-line
+  const weakQueue = useMemo(() => getWeakCards(progress, allCharacters, 20), []); // eslint-disable-line
 
-  const [queue,   setQueue]   = useState(initialQueue);
+  // ── Estado de la sesión ──────────────────────────────────────────────────
+  const [phase,   setPhase]   = useState('select'); // 'select' | 'playing'
+  const [mode,    setMode]    = useState(null);      // 'due' | 'weak'
+  const [queue,   setQueue]   = useState([]);
   const [index,   setIndex]   = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [done,    setDone]    = useState(false);
   const [stats,   setStats]   = useState({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
-
-  // Tarjetas falladas (para poder repasarlas al final)
   const [failedQueue, setFailedQueue] = useState([]);
 
   const current = queue[index] || null;
   const total   = queue.length;
 
+  // ── Iniciar sesión con el modo elegido ────────────────────────────────────
+  const handleSelectMode = useCallback((selectedMode) => {
+    const q = selectedMode === 'due' ? dueQueue : weakQueue;
+    setMode(selectedMode);
+    setQueue(q);
+    setIndex(0);
+    setFlipped(false);
+    setDone(false);
+    setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
+    setFailedQueue([]);
+    setPhase('playing');
+  }, [dueQueue, weakQueue]);
+
+  // ── Voltear tarjeta + 🔊 audio automático ────────────────────────────────
+  const handleFlip = useCallback(() => {
+    if (!current) return;
+    setFlipped(true);
+    // Audio automático al revelar
+    speakChinese?.({ hanzi: current.char, pinyin: current.pinyin });
+  }, [current, speakChinese]);
+
+  // ── Evaluar tarjeta ───────────────────────────────────────────────────────
   const handleRate = useCallback((quality) => {
     if (!current) return;
-
-    // Registrar actividad diaria (solo cuenta una vez al día)
     markDailyActivity();
 
-    // Actualizar SRS en progreso
     const updated = updateSRS(progress, current.char, quality);
     onProgressChange(updated);
 
-    // Actualizar stats
     setStats(prev => {
       const label = quality === 0 ? 'again' : quality === 3 ? 'hard' : quality === 4 ? 'good' : 'easy';
       return { ...prev, [label]: prev[label] + 1, total: prev.total + 1 };
     });
 
-    // Si falla, agregar a la cola de fallos
-    if (quality < 3) {
-      setFailedQueue(prev => [...prev, current]);
-    }
+    if (quality < 3) setFailedQueue(prev => [...prev, current]);
 
-    // Avanzar
     const nextIndex = index + 1;
     if (nextIndex >= queue.length) {
       setDone(true);
@@ -235,34 +364,24 @@ export default function ReviewSession({
     setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
   };
 
-  // Sin tarjetas pendientes
-  if (initialQueue.length === 0) {
+  // ── Renderizado por fase ──────────────────────────────────────────────────
+  if (phase === 'select') {
     return (
-      <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-4 pb-24">
-        <div className="text-center max-w-xs">
-          <div className="text-5xl mb-4">🎉</div>
-          <h2 className="text-xl font-bold text-white mb-2">
-            {t('srs_no_due', '¡Sin repasos pendientes!')}
-          </h2>
-          <p className="text-gray-400 text-sm mb-6">
-            {t('srs_no_due_desc', 'Has repasado todo. Vuelve más tarde.')}
-          </p>
-          <button
-            onClick={goBack}
-            className="px-6 py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-colors"
-          >
-            {t('srs_back', 'Volver')}
-          </button>
-        </div>
-      </div>
+      <ModeSelector
+        dueCount={dueQueue.length}
+        weakCount={weakQueue.length}
+        onSelect={handleSelectMode}
+        goBack={goBack}
+        t={t}
+      />
     );
   }
 
-  // Resultados
   if (done) {
     return (
       <ResultScreen
         stats={stats}
+        mode={mode}
         onFinish={goBack}
         onReviewAgain={handleReviewFailed}
         t={t}
@@ -271,6 +390,7 @@ export default function ReviewSession({
   }
 
   const progressPct = total > 0 ? Math.round((index / total) * 100) : 0;
+  const isWeak = mode === 'weak';
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col pb-6">
@@ -286,14 +406,17 @@ export default function ReviewSession({
             </svg>
             {t('srs_back', 'Volver')}
           </button>
-          <span className="text-gray-400 text-sm font-medium">
-            {index + 1} / {total}
-          </span>
+          <div className="flex items-center gap-2">
+            {isWeak && <span className="text-orange-400 text-sm">💔</span>}
+            <span className="text-gray-400 text-sm font-medium">
+              {index + 1} / {total}
+            </span>
+          </div>
         </div>
         {/* Barra de progreso */}
         <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className="h-full bg-red-500 rounded-full transition-all duration-300"
+            className={`h-full rounded-full transition-all duration-300 ${isWeak ? 'bg-orange-500' : 'bg-red-500'}`}
             style={{ width: `${progressPct}%` }}
           />
         </div>
@@ -303,11 +426,12 @@ export default function ReviewSession({
       <FlashCard
         word={current}
         isFlipped={flipped}
-        onFlip={() => setFlipped(true)}
+        onFlip={handleFlip}
         speakChinese={speakChinese}
+        mode={mode}
       />
 
-      {/* Botones de evaluación — solo se muestran después de voltear */}
+      {/* Botones de evaluación / hint */}
       {flipped ? (
         <RatingButtons onRate={handleRate} />
       ) : (

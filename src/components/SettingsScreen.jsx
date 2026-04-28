@@ -1,8 +1,9 @@
 // src/components/SettingsScreen.jsx
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getSRSStats } from '@/utils/srs.js';
+import { getStreak } from '@/utils/streak.js';
 
 const LESSONS_META = [
   { num: 1, titleEs: 'Lección 1', titleZh: '你最近怎么样', color: 'text-red-400',    bar: 'bg-red-500'    },
@@ -12,10 +13,12 @@ const LESSONS_META = [
 ];
 
 const LANGUAGES = [
-  { code: 'es', name: 'Español',  flag: '🇪🇸' },
-  { code: 'en', name: 'English',  flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch',  flag: '🇩🇪' },
+  { code: 'es', name: 'Español',   flag: '🇪🇸' },
+  { code: 'en', name: 'English',   flag: '🇬🇧' },
+  { code: 'fr', name: 'Français',  flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch',   flag: '🇩🇪' },
+  { code: 'it', name: 'Italiano',  flag: '🇮🇹' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
 ];
 
 function Section({ title, children }) {
@@ -34,6 +37,157 @@ function Row({ label, children, border = true }) {
     <div className={`px-4 py-3 flex items-center justify-between gap-3 ${border ? 'border-b border-gray-700/60 last:border-0' : ''}`}>
       <span className="text-sm text-gray-300">{label}</span>
       {children}
+    </div>
+  );
+}
+
+// ── Heatmap de actividad (últimas 15 semanas) ────────────────────────────────
+function ActivityHeatmap({ activityDates }) {
+  const dateSet = useMemo(() => new Set(activityDates), [activityDates]);
+
+  // Generar las últimas 15 semanas (columnas) × 7 días (filas)
+  const weeks = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    // Retroceder al domingo más reciente
+    const endSunday = new Date(today);
+    endSunday.setDate(today.getDate() + (6 - today.getDay())); // próximo sábado
+    const cells = [];
+    for (let w = 14; w >= 0; w--) {
+      const week = [];
+      for (let d = 0; d < 7; d++) {
+        const date = new Date(endSunday);
+        date.setDate(endSunday.getDate() - w * 7 - (6 - d));
+        const str = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        week.push({ str, future: date > today });
+      }
+      cells.push(week);
+    }
+    return cells;
+  }, []);
+
+  return (
+    <div className="px-4 py-3">
+      <p className="text-xs text-gray-400 mb-2">Actividad (últimas 15 semanas)</p>
+      <div className="flex gap-1">
+        {weeks.map((week, wi) => (
+          <div key={wi} className="flex flex-col gap-1">
+            {week.map((day, di) => (
+              <div
+                key={di}
+                title={day.str}
+                className={`w-3.5 h-3.5 rounded-sm ${
+                  day.future
+                    ? 'bg-transparent'
+                    : dateSet.has(day.str)
+                    ? 'bg-purple-500'
+                    : 'bg-gray-700'
+                }`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-1.5 mt-2">
+        <div className="w-3 h-3 rounded-sm bg-gray-700" />
+        <span className="text-xs text-gray-600 mr-2">Sin actividad</span>
+        <div className="w-3 h-3 rounded-sm bg-purple-500" />
+        <span className="text-xs text-gray-600">Con actividad</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Gráfico de distribución de intervalos ────────────────────────────────────
+function IntervalChart({ progress, allCharacters }) {
+  const buckets = useMemo(() => {
+    const srs = progress?.__srs || {};
+    const counts = { '1d': 0, '6d': 0, '15d': 0, '30d+': 0 };
+    for (const c of allCharacters) {
+      if (c.isSupplementary) continue;
+      const d = srs[c.char];
+      if (!d || d.nextReview === null) continue;
+      if (d.interval <= 1)       counts['1d']++;
+      else if (d.interval <= 6)  counts['6d']++;
+      else if (d.interval <= 14) counts['15d']++;
+      else                       counts['30d+']++;
+    }
+    return [
+      { label: '1 día',  key: '1d',   count: counts['1d'],   color: 'bg-blue-500'   },
+      { label: '6 días', key: '6d',   count: counts['6d'],   color: 'bg-teal-500'   },
+      { label: '15 días',key: '15d',  count: counts['15d'],  color: 'bg-green-500'  },
+      { label: '30d+',   key: '30d+', count: counts['30d+'], color: 'bg-purple-500' },
+    ];
+  }, [progress, allCharacters]);
+
+  const maxCount = Math.max(...buckets.map(b => b.count), 1);
+
+  return (
+    <div className="px-4 py-3 border-t border-gray-700/60">
+      <p className="text-xs text-gray-400 mb-3">Palabras por intervalo</p>
+      <div className="space-y-2">
+        {buckets.map(b => (
+          <div key={b.key} className="flex items-center gap-2">
+            <span className="text-xs text-gray-400 w-12 text-right flex-shrink-0">{b.label}</span>
+            <div className="flex-1 h-5 bg-gray-700 rounded overflow-hidden">
+              <div
+                className={`h-full ${b.color} rounded transition-all duration-500`}
+                style={{ width: `${(b.count / maxCount) * 100}%` }}
+              />
+            </div>
+            <span className="text-xs text-gray-300 w-6 text-right flex-shrink-0">{b.count}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Previsión de repasos 7 días ──────────────────────────────────────────────
+function ReviewForecast({ progress, allCharacters }) {
+  const forecast = useMemo(() => {
+    const srs = progress?.__srs || {};
+    const now = Date.now();
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      const dayStart = now + i * 86400000;
+      const dayEnd   = dayStart + 86400000;
+      let count = 0;
+      for (const c of allCharacters) {
+        if (c.isSupplementary) continue;
+        const d = srs[c.char];
+        if (!d || d.nextReview === null) continue;
+        if (d.nextReview >= dayStart && d.nextReview < dayEnd) count++;
+        // Día 0: incluir también atrasados
+        if (i === 0 && d.nextReview < now) count++;
+      }
+      const date = new Date(dayStart);
+      const label = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' :
+        ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][date.getDay()];
+      days.push({ label, count });
+    }
+    return days;
+  }, [progress, allCharacters]);
+
+  const maxCount = Math.max(...forecast.map(d => d.count), 1);
+
+  return (
+    <div className="px-4 py-3 border-t border-gray-700/60">
+      <p className="text-xs text-gray-400 mb-3">Previsión de repasos (próximos 7 días)</p>
+      <div className="flex items-end gap-1.5 h-20">
+        {forecast.map((day, i) => (
+          <div key={i} className="flex-1 flex flex-col items-center gap-1">
+            <span className="text-xs text-gray-400">{day.count > 0 ? day.count : ''}</span>
+            <div className="w-full bg-gray-700 rounded-t overflow-hidden flex flex-col justify-end" style={{ height: '48px' }}>
+              <div
+                className={`w-full rounded-t transition-all duration-500 ${i === 0 ? 'bg-yellow-500' : 'bg-purple-500'}`}
+                style={{ height: `${(day.count / maxCount) * 100}%`, minHeight: day.count > 0 ? '4px' : '0' }}
+              />
+            </div>
+            <span className="text-xs text-gray-500">{day.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -58,6 +212,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
   const totalSeen     = LESSONS_META.reduce((acc, l) => acc + getLessonStats(progress, l.num, allCharacters).seen,     0);
   const globalPct     = totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0;
   const srsStats      = getSRSStats(progress, allCharacters);
+  const streak        = getStreak();
 
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
@@ -87,7 +242,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
 
         {/* Idioma */}
         <Section title={t('settings_language')}>
-          <div className="p-3 grid grid-cols-2 gap-2">
+          <div className="p-3 grid grid-cols-3 gap-2">
             {LANGUAGES.map(lang => (
               <button
                 key={lang.code}
@@ -165,23 +320,45 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
 
           {/* Tres estadísticas */}
           <div className="grid grid-cols-3 divide-x divide-gray-700/60">
-            {/* En repaso */}
             <div className="px-3 py-3 text-center">
               <p className="text-2xl font-bold text-purple-400">{srsStats.learned}</p>
               <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_in_srs')}</p>
             </div>
-            {/* Maduras */}
             <div className="px-3 py-3 text-center">
               <p className="text-2xl font-bold text-green-400">{srsStats.mature}</p>
               <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_mature')}</p>
             </div>
-            {/* Pendientes hoy */}
             <div className="px-3 py-3 text-center">
               <p className={`text-2xl font-bold ${srsStats.due > 0 ? 'text-yellow-400' : 'text-gray-500'}`}>
                 {srsStats.due}
               </p>
               <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_due')}</p>
             </div>
+          </div>
+
+          {/* Racha */}
+          {(streak.currentStreak > 0 || streak.longestStreak > 0) && (
+            <div className="flex divide-x divide-gray-700/60 border-t border-gray-700/60">
+              <div className="flex-1 px-3 py-2.5 text-center">
+                <p className="text-xl font-bold text-orange-400">🔥 {streak.currentStreak}</p>
+                <p className="text-xs text-gray-500 mt-0.5">Racha actual</p>
+              </div>
+              <div className="flex-1 px-3 py-2.5 text-center">
+                <p className="text-xl font-bold text-yellow-400">⭐ {streak.longestStreak}</p>
+                <p className="text-xs text-gray-500 mt-0.5">Mejor racha</p>
+              </div>
+            </div>
+          )}
+
+          {/* Distribución de intervalos */}
+          <IntervalChart progress={progress} allCharacters={allCharacters} />
+
+          {/* Previsión 7 días */}
+          <ReviewForecast progress={progress} allCharacters={allCharacters} />
+
+          {/* Heatmap de actividad */}
+          <div className="border-t border-gray-700/60">
+            <ActivityHeatmap activityDates={streak.activityDates} />
           </div>
 
           {/* Nota explicativa */}
@@ -231,7 +408,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
             <span className="text-xs text-gray-400 text-right leading-tight max-w-[180px]">{t('settings_book_name')}</span>
           </Row>
           <Row label={t('settings_version')}>
-            <span className="text-sm text-gray-400">v0.5</span>
+            <span className="text-sm text-gray-400">v0.6</span>
           </Row>
           <Row label={t('settings_words_included')} border={false}>
             <span className="text-sm text-gray-400">{totalWords}</span>

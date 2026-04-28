@@ -225,10 +225,20 @@ export default function Quiz({
             ))}
           </div>
 
+          {showResult && selected?.char !== question.correct.char && question.correct.examples?.length > 0 && (
+            <div className="mt-4 p-3 bg-red-900/20 border border-red-700/40 rounded-xl text-left">
+              <p className="text-xs text-gray-400 mb-1.5">Ejemplo de uso:</p>
+              <p className="text-sm text-gray-100 leading-relaxed">{question.correct.examples[0]}</p>
+              {question.correct.examples[1] && (
+                <p className="text-sm text-gray-300 leading-relaxed mt-1">{question.correct.examples[1]}</p>
+              )}
+            </div>
+          )}
+
           {showResult && (
             <button
               onClick={next}
-              className="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
+              className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
             >
               {index + 1 >= questions.length ? t('quiz_results_button') : t('quiz_next_button')}
             </button>

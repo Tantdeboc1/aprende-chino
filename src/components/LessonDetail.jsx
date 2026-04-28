@@ -209,9 +209,10 @@ export default function LessonDetail({
                     key={word.char}
                     onClick={() => setSelectedCard(isOpen ? null : word.char)}
                     className={`rounded-xl border cursor-pointer transition-all ${
-                      status === 'mastered' ? 'border-green-700/60 bg-gray-800' :
-                      status === 'seen'     ? 'border-yellow-700/40 bg-gray-800' :
-                                             'border-gray-700 bg-gray-800'
+                      isWordDifficult(progress, word.char) ? 'border-orange-500 bg-gray-800' :
+                      status === 'mastered'                ? 'border-green-700/60 bg-gray-800' :
+                      status === 'seen'                    ? 'border-yellow-700/40 bg-gray-800' :
+                                                             'border-gray-700 bg-gray-800'
                     } ${isOpen ? 'ring-1 ring-gray-600' : ''}`}
                   >
                     <div className="flex items-center gap-3 p-3">

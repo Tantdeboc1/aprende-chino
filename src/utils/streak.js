@@ -7,6 +7,7 @@ const DEFAULT_STREAK = {
   currentStreak: 0,
   longestStreak: 0,
   lastActiveDate: null, // 'YYYY-MM-DD'
+  activityDates: [],    // array de fechas 'YYYY-MM-DD' con actividad (últimos 365 días)
 };
 
 function todayStr() {
@@ -16,7 +17,12 @@ function todayStr() {
 
 export function loadStreak() {
   try {
-    return { ...DEFAULT_STREAK, ...JSON.parse(localStorage.getItem(STREAK_KEY) || '{}') };
+    const stored = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
+    return {
+      ...DEFAULT_STREAK,
+      ...stored,
+      activityDates: Array.isArray(stored.activityDates) ? stored.activityDates : [],
+    };
   } catch {
     return { ...DEFAULT_STREAK };
   }
@@ -62,10 +68,16 @@ export function markDailyActivity() {
     }
   }
 
+  // Añadir hoy al historial de actividad, mantener últimos 365 días
+  const dates = [...new Set([...streak.activityDates, today])]
+    .sort()
+    .slice(-365);
+
   const updated = {
     currentStreak: newStreak,
     longestStreak: Math.max(newStreak, streak.longestStreak),
     lastActiveDate: today,
+    activityDates: dates,
   };
   saveStreak(updated);
   return updated;

@@ -31,6 +31,14 @@ export default function MiniGames({ goBack, navigateTo }) {
       color: 'blue',
       active: true,
     },
+    {
+      id: 'global-exam',
+      title: 'Examen HSK1',
+      description: 'Examen cronometrado con todo el vocabulario HSK1',
+      icon: '🏆',
+      color: 'yellow',
+      active: true,
+    },
   ];
 
   const handleGameClick = (gameId) => {
@@ -40,6 +48,8 @@ export default function MiniGames({ goBack, navigateTo }) {
       navigateTo('time-race');
     } else if (gameId === 'pinyin-connection') {
       navigateTo('pinyin-connection');
+    } else if (gameId === 'global-exam') {
+      navigateTo('global-exam');
     } else {
       console.log('Navegando a:', gameId);
     }

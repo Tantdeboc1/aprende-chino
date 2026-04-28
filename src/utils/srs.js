@@ -138,6 +138,48 @@ export function getDueCount(progress, allCharacters) {
 }
 
 /**
+ * Devuelve las N tarjetas más débiles del SRS, ordenadas por debilidad.
+ * Combina el easeFactor (SM-2) con el ratio de aciertos en quizzes.
+ * No filtra por fecha — sirve para el modo "palabras débiles".
+ */
+export function getWeakCards(progress, allCharacters, limit = 20) {
+  const srs = progress?.__srs || {};
+
+  // Solo caracteres que ya están en el SRS (han sido vistos al menos una vez)
+  const enrolled = allCharacters.filter(c => {
+    const d = srs[c.char];
+    return d && d.nextReview !== null;
+  });
+
+  if (enrolled.length === 0) return [];
+
+  const scored = enrolled.map(c => {
+    const d = srs[c.char];
+    const lessonKey = `lesson_${c.lesson}`;
+    const wordData = progress?.[lessonKey]?.[c.char] || {};
+    const correct   = wordData.correct   || 0;
+    const incorrect = wordData.incorrect || 0;
+    const total = correct + incorrect;
+
+    // Ratio quiz: si no hay datos de quiz se asume 0.5 (neutral)
+    const quizAccuracy = total === 0 ? 0.5 : correct / total;
+
+    // easeFactor range: ~1.3 (muy difícil) – 2.5 (muy fácil)
+    // Normalizamos a [0, 1] donde 1 = más débil
+    const efNorm = 1 - Math.min(1, Math.max(0, (d.easeFactor - 1.3) / 1.2));
+
+    // Puntuación de debilidad: 60% peso SRS + 40% peso quiz
+    const weaknessScore = 0.6 * efNorm + 0.4 * (1 - quizAccuracy);
+
+    return { ...c, _weaknessScore: weaknessScore, _easeFactor: d.easeFactor };
+  });
+
+  // Más débiles primero
+  scored.sort((a, b) => b._weaknessScore - a._weaknessScore);
+  return scored.slice(0, limit);
+}
+
+/**
  * Devuelve estadísticas SRS globales.
  */
 export function getSRSStats(progress, allCharacters) {

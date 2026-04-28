@@ -1,33 +1,35 @@
 // src/utils/navigation.js
 import { useMemo, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
-import Menu from '@/components/menu';
-import Dictionary from '@/components/Dictionary.jsx';
-import InfoIndex from "@/components/info/index.jsx";
-import MiniGames from '@/components/MiniGames.jsx';
-import LearnMenu from "@/components/learn/LearnMenu.jsx";
-import DailyIndex from "@/components/daily/DailyIndex.jsx";
-import WritingMenu from "@/components/learn/Writing/index.jsx";
-const HanziWriting = lazy(() => import('@/components/learn/Writing/HanziWriting.jsx'));
-const RadicalsWriting = lazy(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
-import RadicalsIndex from "@/components/learn/Radicals/index.jsx";
-import RadicalsTheory from "@/components/learn/Radicals/RadicalsTheory.jsx";
-import RadicalsQuiz from "@/components/learn/Radicals/RadicalsQuiz.jsx";
-import RadicalsQuiz2 from "@/components/learn/Radicals/RadicalsQuiz2.jsx";
-import CharactersIndex from "@/components/learn/Characters/index.jsx";
-import Progressive from "@/components/learn/Characters/Progressive.jsx";
-import Quiz from "@/components/learn/Characters/Quiz.jsx";
-import Matching from "@/components/learn/Characters/Matching.jsx";
-import TonesIndex from "@/components/learn/Tones/index.jsx";
-import QuizTone from "@/components/learn/Tones/QuizTone.jsx";
-import QuizPronunciation from "@/components/learn/Tones/QuizPronunciation.jsx";
-import SpecialSyllables from "@/components/learn/Tones/SpecialSyllables.jsx";
-import CharactersDaily from "@/components/daily/CharactersDaily.jsx";
-import RadicalsDaily from "@/components/daily/RadicalsDaily.jsx";
-import TonesDaily from "@/components/daily/TonesDaily.jsx";
-const TimeRace = lazy(() => import('@/components/minigames/TimeRace.jsx'));
+
+// ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
+const Menu             = lazy(() => import('@/components/menu'));
+const Dictionary       = lazy(() => import('@/components/Dictionary.jsx'));
+const InfoIndex        = lazy(() => import('@/components/info/index.jsx'));
+const MiniGames        = lazy(() => import('@/components/MiniGames.jsx'));
+const LearnMenu        = lazy(() => import('@/components/learn/LearnMenu.jsx'));
+const DailyIndex       = lazy(() => import('@/components/daily/DailyIndex.jsx'));
+const WritingMenu      = lazy(() => import('@/components/learn/Writing/index.jsx'));
+const HanziWriting     = lazy(() => import('@/components/learn/Writing/HanziWriting.jsx'));
+const RadicalsWriting  = lazy(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
+const RadicalsIndex    = lazy(() => import('@/components/learn/Radicals/index.jsx'));
+const RadicalsTheory   = lazy(() => import('@/components/learn/Radicals/RadicalsTheory.jsx'));
+const RadicalsQuiz     = lazy(() => import('@/components/learn/Radicals/RadicalsQuiz.jsx'));
+const RadicalsQuiz2    = lazy(() => import('@/components/learn/Radicals/RadicalsQuiz2.jsx'));
+const CharactersIndex  = lazy(() => import('@/components/learn/Characters/index.jsx'));
+const Progressive      = lazy(() => import('@/components/learn/Characters/Progressive.jsx'));
+const Quiz             = lazy(() => import('@/components/learn/Characters/Quiz.jsx'));
+const Matching         = lazy(() => import('@/components/learn/Characters/Matching.jsx'));
+const TonesIndex       = lazy(() => import('@/components/learn/Tones/index.jsx'));
+const QuizTone         = lazy(() => import('@/components/learn/Tones/QuizTone.jsx'));
+const QuizPronunciation= lazy(() => import('@/components/learn/Tones/QuizPronunciation.jsx'));
+const SpecialSyllables = lazy(() => import('@/components/learn/Tones/SpecialSyllables.jsx'));
+const CharactersDaily  = lazy(() => import('@/components/daily/CharactersDaily.jsx'));
+const RadicalsDaily    = lazy(() => import('@/components/daily/RadicalsDaily.jsx'));
+const TonesDaily       = lazy(() => import('@/components/daily/TonesDaily.jsx'));
+const TimeRace         = lazy(() => import('@/components/minigames/TimeRace.jsx'));
 const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
-const SOVGame = lazy(() => import('@/components/minigames/SOVGame.jsx'));
+const SOVGame          = lazy(() => import('@/components/minigames/SOVGame.jsx'));
 
 export function useNavigation(
   screen,
@@ -140,6 +142,7 @@ export function useNavigation(
       props = {
         goBack: () => { navigateTo('minigames'); },
         selectedLesson,
+        speakChinese: speak,
       };
     }
 

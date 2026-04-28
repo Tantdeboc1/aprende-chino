@@ -1,6 +1,7 @@
 import { assetUrl } from './utils/assets';
-import { useState, useEffect, useMemo, Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense, lazy } from "react";
 import ExamMode from './components/ExamMode.jsx';
+const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
 import LessonDetail from './components/LessonDetail.jsx';
 import SettingsScreen from './components/SettingsScreen.jsx';
@@ -277,9 +278,10 @@ export default function App() {
   };
 
   const navigateTo = (key) => {
-    if (key === 'sov-game') setScreen('sov-game');
-    else if (key === 'time-race') setScreen('time-race');
-    else if (key === 'pinyin-connection') setScreen('pinyin-connection');
+    if (key === 'sov-game') { setPrevScreen(screen); setScreen('sov-game'); }
+    else if (key === 'time-race') { setPrevScreen(screen); setScreen('time-race'); }
+    else if (key === 'pinyin-connection') { setPrevScreen(screen); setScreen('pinyin-connection'); }
+    else if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -457,6 +459,18 @@ export default function App() {
     );
   }
 
+  // ── GLOBAL EXAM ──────────────────────────────────────────────────────────────
+  if (screen === 'global-exam') {
+    return (
+      <GlobalExam
+        allCharacters={allCharacters}
+        progress={progress}
+        onProgressChange={handleProgressChange}
+        goBack={() => setScreen(prevScreen || 'home')}
+      />
+    );
+  }
+
   // ── SETTINGS ─────────────────────────────────────────────────────────────────
   if (screen === 'settings') {
     return (
@@ -487,7 +501,7 @@ export default function App() {
     return (
       <Layout activeScreen={screen} onNavigate={handleBottomNav}>
         <Suspense fallback={
-          <div className="min-h-screen flex items-center justify-center bg-gray-900">
+          <div className="min-h-screen flex items-center justify-center">
             <p className="text-gray-500 text-sm animate-pulse">Cargando...</p>
           </div>
         }>

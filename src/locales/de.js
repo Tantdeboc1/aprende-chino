@@ -3,7 +3,7 @@ export default {
   // translation: {
           // --- Welcome Screen ---
           welcome_title: "Chinesisch lernen",
-          welcome_placeholder: "Schreiben Sie Ihren Namen...",
+          welcome_placeholder: "Schreib deinen Namen...",
           welcome_button: "Starten!",
           welcome_activating_audio: "Audio wird aktiviert...",
           welcome_ios_note: "📱 Drücken Sie 'Starten', um den Ton zu aktivieren",
@@ -118,7 +118,7 @@ export default {
           exercise_exam: "Abschlussprüfung",
           exercise_exam_desc: "Teste dein Wissen",
           settings_title: "Einstellungen",
-          settings_subtitle: "Passen Sie Ihre Erfahrung an",
+          settings_subtitle: "Passe deine Erfahrung an",
           settings_profile: "Profil",
           settings_name_label: "Dein Name",
           settings_language: "Oberflächensprache",
@@ -145,7 +145,7 @@ export default {
           home_srs_title: "Jetzt wiederholen",
           home_srs_due: "{{count}} Karten zur Wiederholung",
           home_srs_ok: "Auf dem neuesten Stand! {{learned}} Wörter gelernt",
-          srs_rate_prompt: "Wie gut haben Sie es erinnert?",
+          srs_rate_prompt: "Wie gut hast du es erinnert?",
           srs_again: "Nochmal",
           srs_again_hint: "Ich erinnerte mich nicht",
           srs_hard: "Schwer",
@@ -189,6 +189,8 @@ export default {
           sov_correct_label: "richtig",
           sov_accuracy_label: "Genauigkeit",
           sov_play_again: "Nochmal spielen",
+          minigames_start_game_button: "Spiel starten",
+          minigames_play_again_button: "Nochmal spielen",
           sov_no_data: "Keine Sätze für diesen Filter verfügbar.",
           // --- Kulturelle Notizen ---
           lesson_tab_culture: "🌏 Kultur",

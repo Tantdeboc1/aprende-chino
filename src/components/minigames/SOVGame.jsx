@@ -73,7 +73,7 @@ function playSound(type) {
   }
 }
 
-export default function SOVGame({ goBack, selectedLesson }) {
+export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const { t } = useTranslation();
 
   // Estado de la ronda
@@ -127,7 +127,12 @@ export default function SOVGame({ goBack, selectedLesson }) {
     const answer = placed.map(x => x.word).join('');
     const correct = answer === current.sentence;
     setResult(correct ? 'correct' : 'incorrect');
-    if (correct) setScore(s => s + 1);
+    if (correct) {
+      setScore(s => s + 1);
+    } else {
+      // Reproducir audio de la frase correcta al fallar
+      speakChinese?.({ hanzi: current.sentence, pinyin: current.hint || '' });
+    }
     playSound(correct ? 'correct' : 'incorrect');
   };
 
