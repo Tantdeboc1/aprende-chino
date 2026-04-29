@@ -17,7 +17,7 @@ export default function MiniGames({ goBack, navigateTo }) {
     },
     {
       id: 'time-race',
-      title: t('minigames_flashcards_title'),
+      title: t('minigames_time_race_title'),
       description: t('minigames_flashcards_description'),
       icon: '⏱️',
       color: 'green',
@@ -56,7 +56,7 @@ export default function MiniGames({ goBack, navigateTo }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 p-4 pb-24">
       <Container>
         <div className="mb-6">
           <button

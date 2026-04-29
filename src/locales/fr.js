@@ -310,7 +310,7 @@ export default {
           minigames_guess_the_meaning_subtitle: "Devinez la signification",
           minigames_time_race_instructions_1: "Devinez la signification du plus grand nombre de caractères en 60 secondes.",
           minigames_time_race_instructions_2: "Chaque bonne réponse ajoute 10 points.",
-          minigames_time_race_instructions_3: "Chaque erreur soustrait 3 secondes au chronomètre.",
+          minigames_time_race_instructions_3: "Chaque erreur soustrait 2 secondes au chronomètre.",
           minigames_time_race_instructions_4: "Essayez d'obtenir le meilleur score !",
           minigames_time_up_message: "Temps écoulé !",
           minigames_final_score_message: "Votre score final est :",
@@ -390,6 +390,7 @@ export default {
           lesson_4_subtitle: "À quelle heure as-tu cours demain ?",
 
           // --- Nouvelle UI (BottomNav, HomeScreen, LessonDetail, Paramètres) ---
+          nav_review: "Révision",
           nav_home: "Accueil",
           nav_dictionary: "Dictionnaire",
           nav_games: "Jeux",

@@ -310,11 +310,13 @@ export default {
           minigames_guess_the_meaning_subtitle: "Adivina el significado",
           minigames_time_race_instructions_1: "Adivina el significado del mayor número de caracteres en 60 segundos.",
           minigames_time_race_instructions_2: "Cada acierto suma 10 puntos.",
-          minigames_time_race_instructions_3: "Cada error resta 3 segundos del temporizador.",
+          minigames_time_race_instructions_3: "Cada error resta 2 segundos del temporizador.",
           minigames_time_race_instructions_4: "¡Intenta conseguir la puntuación más alta!",
           minigames_time_up_message: "¡Tiempo!",
           minigames_final_score_message: "Tu puntuación final es:",
           minigames_score_label_hud: "Puntuación:",
+          minigames_start_game_button: "Comenzar juego",
+          minigames_play_again_button: "Jugar de nuevo",
 
           minigames_pinyin_connection_title: "Conexión Pinyin",
           minigames_pinyin_connection_description: "Conecta el carácter con su pinyin",
@@ -391,6 +393,7 @@ export default {
 
           // --- Nueva UI (BottomNav, HomeScreen, LessonDetail, Ajustes) ---
           nav_home: "Inicio",
+          nav_review: "Repaso",
           nav_dictionary: "Diccionario",
           nav_games: "Juegos",
           nav_settings: "Ajustes",
@@ -520,8 +523,16 @@ export default {
           settings_srs_in_srs: "En repaso",
           settings_srs_mature: "Maduras (≥21d)",
           settings_srs_due: "Pendientes hoy",
-          settings_srs_mature_note: "Una palabra es 'madura' cuando su intervalo de repaso alcanza 21+ días — ¡la conoces bien!",
-
-
-
+          settings_srs_mature_note: "Una palabra es 'madura' cuando su intervalo de repaso alcanza 21+ días sin necesidad de repaso.",
+          // --- SRS modo selector ---
+          srs_mode_title: "¿Qué tipo de repaso?",
+          srs_mode_due_title: "Pendientes",
+          srs_mode_due_count: "{{count}} tarjetas vencidas hoy",
+          srs_mode_due_count_one: "1 tarjeta vencida hoy",
+          srs_mode_due_empty: "Sin repasos pendientes ahora",
+          srs_mode_weak_title: "Palabras débiles",
+          srs_mode_weak_count: "Top {{count}} con peor puntuación",
+          srs_mode_weak_desc: "Ignora el calendario — repasa las que más te cuestan",
+          srs_mode_empty: "Sin palabras en el SRS todavía",
+          srs_mode_empty_desc: "Completa algunas lecciones o quizzes primero",
 };

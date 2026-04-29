@@ -3,8 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
+import { markWritingPractice, getWritingCount } from '@/utils/progress.js';
 
-export default function HanziWriting({ goBack, characters, speakChinese }) {
+export default function HanziWriting({ goBack, characters, speakChinese, progress, onProgressChange }) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -114,10 +115,13 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
       writerInstanceRef.current.quiz({
         onComplete: () => {
           setIsPlaying(false);
+          // Registrar práctica completada
+          if (onProgressChange) {
+            const char = currentCharacter.char || currentCharacter.hanzi;
+            onProgressChange(markWritingPractice(progress || {}, char));
+          }
           setTimeout(() => {
-            if (writerInstanceRef.current) {
-              writerInstanceRef.current.showOutline();
-            }
+            if (writerInstanceRef.current) writerInstanceRef.current.showOutline();
           }, 1000);
         },
         onMistake: () => {
@@ -184,9 +188,17 @@ export default function HanziWriting({ goBack, characters, speakChinese }) {
           <p className="text-xl text-gray-300 mb-1">
             {currentCharacter.pinyin} - {currentCharacter.meaning}
           </p>
-          <p className="text-gray-400">
-            {currentIndex + 1} de {writableChars.length}
-          </p>
+          <div className="flex items-center justify-center gap-3 text-sm">
+            <p className="text-gray-400">{currentIndex + 1} de {writableChars.length}</p>
+            {(() => {
+              const count = getWritingCount(progress, currentCharacter.char || currentCharacter.hanzi);
+              return count > 0 ? (
+                <span className="bg-green-900/40 text-green-400 border border-green-700/40 px-2 py-0.5 rounded-full text-xs font-semibold">
+                  ✍️ practicado {count}×
+                </span>
+              ) : null;
+            })()}
+          </div>
         </div>
 
         {/* Pestañas */}

@@ -228,6 +228,7 @@ export default function App() {
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setPrevScreen(screen);
     if (key === 'home')            setScreen('home');
+    else if (key === 'review')     setScreen('review');
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
     else if (key === 'settings')   setScreen('settings');
@@ -372,13 +373,15 @@ export default function App() {
   // ── REVIEW (SRS) ─────────────────────────────────────────────────────────────
   if (screen === 'review') {
     return (
-      <ReviewSession
-        allCharacters={allCharacters}
-        progress={progress}
-        onProgressChange={handleProgressChange}
-        goBack={() => setScreen(prevScreen || 'home')}
-        speakChinese={speak}
-      />
+      <Layout activeScreen="review" onNavigate={handleBottomNav}>
+        <ReviewSession
+          allCharacters={allCharacters}
+          progress={progress}
+          onProgressChange={handleProgressChange}
+          goBack={() => setScreen(prevScreen || 'home')}
+          speakChinese={speak}
+        />
+      </Layout>
     );
   }
 

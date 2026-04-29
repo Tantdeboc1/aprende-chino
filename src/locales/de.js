@@ -71,6 +71,7 @@ export default {
           writing_radicals_title: "Radikale",
           writing_radicals_description: "Lerne die Radikale zu schreiben",
           // --- New UI ---
+          nav_review: "Wiederholung",
           nav_home: "Startseite",
           nav_dictionary: "Wörterbuch",
           nav_games: "Spiele",
@@ -347,7 +348,7 @@ export default {
           minigames_subtitle: "Chinesisch auf spielerische Weise üben",
           minigames_time_race_instructions_1: "Errate die Bedeutung möglichst vieler Zeichen in 60 Sekunden.",
           minigames_time_race_instructions_2: "Jede richtige Antwort gibt 10 Punkte.",
-          minigames_time_race_instructions_3: "Jeder Fehler zieht 3 Sekunden vom Timer ab.",
+          minigames_time_race_instructions_3: "Jeder Fehler zieht 2 Sekunden vom Timer ab.",
           minigames_time_race_instructions_4: "Versuche die höchste Punktzahl zu erreichen!",
           minigames_time_race_title: "Rennen gegen die Zeit",
           minigames_time_up_message: "Zeit abgelaufen!",

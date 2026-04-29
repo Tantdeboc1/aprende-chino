@@ -1,0 +1,2 @@
+import{j as s}from"./vendor-react-DFAPTu3P.js";function l({children:t,variant:r="card",className:e="",...o}){const a="transition font-semibold",n={card:"bg-gray-800 rounded-xl shadow-lg p-8 hover:shadow-xl transform hover:-translate-y-1 text-center border border-gray-700",action:"bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg w-full text-lg"};return s.jsx("button",{className:`${a} ${n[r]} ${e}`,...o,children:t})}export{l as B};
+//# sourceMappingURL=Button-DbBPou20.js.map

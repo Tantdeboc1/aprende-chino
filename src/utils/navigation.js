@@ -120,6 +120,8 @@ export function useNavigation(
         showSupplementary,
         setShowSupplementary,
         lessonsData,
+        progress,
+        onProgressChange,
       };
     }
 
@@ -196,7 +198,9 @@ export function useNavigation(
       props = {
         goBack: hubOr(() => setWritingSection(null)),
         characters,
-        speakChinese: speak
+        speakChinese: speak,
+        progress,
+        onProgressChange,
       };
     }
 

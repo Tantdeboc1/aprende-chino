@@ -88,6 +88,19 @@ export function saveExamResult(progress, lessonNum, { score, total, wrongChars }
   return updated;
 }
 
+// Incrementa el contador de práctica de escritura para un carácter
+export function markWritingPractice(progress, char) {
+  const updated = { ...progress };
+  if (!updated.__writing) updated.__writing = {};
+  updated.__writing = { ...updated.__writing, [char]: (updated.__writing[char] || 0) + 1 };
+  return updated;
+}
+
+// Obtiene el número de veces que se ha practicado la escritura de un carácter
+export function getWritingCount(progress, char) {
+  return progress?.__writing?.[char] || 0;
+}
+
 // Devuelve el historial de exámenes de una lección
 export function getExamHistory(progress, lessonNum) {
   const lessonKey = `lesson_${lessonNum}`;

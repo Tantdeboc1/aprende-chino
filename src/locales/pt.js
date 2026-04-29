@@ -302,7 +302,7 @@ export default {
   minigames_guess_the_meaning_subtitle: "Adivinhe o significado",
   minigames_time_race_instructions_1: "Adivinhe o significado do maior número de caracteres em 60 segundos.",
   minigames_time_race_instructions_2: "Cada resposta correta adiciona 10 pontos.",
-  minigames_time_race_instructions_3: "Cada erro subtrai 3 segundos do cronômetro.",
+  minigames_time_race_instructions_3: "Cada erro subtrai 2 segundos do cronômetro.",
   minigames_time_race_instructions_4: "Tente obter a pontuação mais alta!",
   minigames_time_up_message: "Tempo esgotado!",
   minigames_final_score_message: "Sua pontuação final é:",
@@ -379,6 +379,7 @@ export default {
   lesson_4_title: "Lição 4",
   lesson_4_subtitle: "Que horas você tem aula amanhã?",
   // --- New UI ---
+  nav_review: "Revisão",
   nav_home: "Início",
   nav_dictionary: "Dicionário",
   nav_games: "Jogos",

@@ -302,7 +302,7 @@ export default {
   minigames_guess_the_meaning_subtitle: "Indovina il significato",
   minigames_time_race_instructions_1: "Indovina il significato del maggior numero di caratteri in 60 secondi.",
   minigames_time_race_instructions_2: "Ogni risposta corretta aggiunge 10 punti.",
-  minigames_time_race_instructions_3: "Ogni errore sottrae 3 secondi dal timer.",
+  minigames_time_race_instructions_3: "Ogni errore sottrae 2 secondi dal timer.",
   minigames_time_race_instructions_4: "Cerca di ottenere il punteggio più alto!",
   minigames_time_up_message: "Tempo scaduto!",
   minigames_final_score_message: "Il tuo punteggio finale è:",
@@ -379,6 +379,7 @@ export default {
   lesson_4_title: "Lezione 4",
   lesson_4_subtitle: "A che ora hai lezione domani?",
   // --- New UI ---
+  nav_review: "Ripasso",
   nav_home: "Home",
   nav_dictionary: "Dizionario",
   nav_games: "Giochi",

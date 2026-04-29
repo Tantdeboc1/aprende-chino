@@ -53,13 +53,15 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
     setSelectedAnswer(selectedMeaning);
 
-    if (selectedMeaning === currentQuestion.correctMeaning) {
+    const isCorrect = selectedMeaning === currentQuestion.correctMeaning;
+    if (isCorrect) {
       setScore(s => s + 10); // +10 puntos por acierto
       setFeedback('correct');
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; }); // Penalización de 2 segundos
       setFeedback('incorrect');
     }
+    onTrackResult?.(currentQuestion.charObj, isCorrect);
 
     // Pasa a la siguiente pregunta después de un breve feedback visual
     const capturedTime = timeLeftRef.current;

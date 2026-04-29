@@ -25,6 +25,14 @@ const GamesIcon = () => (
   </svg>
 );
 
+const ReviewIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 4v6h6"/>
+    <path d="M23 20v-6h-6"/>
+    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+  </svg>
+);
+
 const SettingsIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3"/>
@@ -37,6 +45,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   const items = [
     { key: 'home',       label: t('nav_home'),       Icon: HomeIcon },
+    { key: 'review',     label: t('nav_review'),     Icon: ReviewIcon },
     { key: 'dictionary', label: t('nav_dictionary'), Icon: DictIcon },
     { key: 'minigames',  label: t('nav_games'),      Icon: GamesIcon },
     { key: 'settings',   label: t('nav_settings'),   Icon: SettingsIcon },
@@ -47,27 +56,33 @@ export default function BottomNav({ activeScreen, onNavigate }) {
     return activeScreen === key;
   };
 
+  const activeColor = (key) => {
+    if (key === 'review') return 'text-orange-400';
+    return 'text-red-500';
+  };
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-800 border-t border-gray-700">
       <div className="max-w-lg mx-auto flex justify-around items-center py-2 pb-3">
         {items.map(({ key, label, Icon }) => {
           const active = isActive(key);
+          const color  = active ? activeColor(key) : 'text-gray-500';
           return (
             <button
               key={key}
               onClick={() => onNavigate(key)}
-              className="flex flex-col items-center gap-1 px-4 py-1 transition-colors"
+              className="flex flex-col items-center gap-1 px-3 py-1 transition-colors"
             >
-              <span className={active ? 'text-red-500' : 'text-gray-500'}>
+              <span className={color}>
                 <Icon />
               </span>
-              <span className={`text-xs font-medium ${active ? 'text-red-500' : 'text-gray-500'}`}>
+              <span className={`text-xs font-medium ${color}`}>
                 {label}
               </span>
             </button>
           );
         })}
-            </div>
+      </div>
     </nav>
   );
 }

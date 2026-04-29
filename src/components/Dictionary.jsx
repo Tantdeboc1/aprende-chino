@@ -3,14 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Search, Volume2, Star } from "lucide-react";
 import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
-import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from 'react-i18next';
 
 const LESSON_COLORS = {
-  1: { active: 'bg-red-600 text-white border-red-600', inactive: 'bg-gray-800 text-red-400 border-red-800 hover:border-red-600' },
+  1: { active: 'bg-red-600 text-white border-red-600',    inactive: 'bg-gray-800 text-red-400 border-red-800 hover:border-red-600' },
   2: { active: 'bg-orange-600 text-white border-orange-600', inactive: 'bg-gray-800 text-orange-400 border-orange-800 hover:border-orange-600' },
   3: { active: 'bg-yellow-600 text-white border-yellow-600', inactive: 'bg-gray-800 text-yellow-400 border-yellow-800 hover:border-yellow-600' },
-  4: { active: 'bg-green-700 text-white border-green-700', inactive: 'bg-gray-800 text-green-400 border-green-800 hover:border-green-700' },
+  4: { active: 'bg-green-700 text-white border-green-700',  inactive: 'bg-gray-800 text-green-400 border-green-800 hover:border-green-700' },
 };
 
 const LESSON_BADGE = {
@@ -19,6 +18,28 @@ const LESSON_BADGE = {
   3: 'bg-yellow-900 text-yellow-300 border border-yellow-700',
   4: 'bg-green-900 text-green-300 border border-green-700',
 };
+
+const FAV_KEY = 'aprende-chino-favorites';
+
+function loadFavorites() {
+  try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+
+// ─── Dot de estado SRS ───────────────────────────────────────────────────────
+function SRSDot({ srsData }) {
+  if (!srsData || srsData.nextReview === null) {
+    return <span title="Sin iniciar en SRS" className="w-2 h-2 rounded-full bg-gray-600 inline-block" />;
+  }
+  const now = Date.now();
+  if (srsData.nextReview <= now) {
+    return <span title="Pendiente de repaso" className="w-2 h-2 rounded-full bg-yellow-400 inline-block animate-pulse" />;
+  }
+  if (srsData.interval >= 21) {
+    return <span title="Dominado (≥21 días)" className="w-2 h-2 rounded-full bg-green-400 inline-block" />;
+  }
+  return <span title="En aprendizaje" className="w-2 h-2 rounded-full bg-blue-400 inline-block" />;
+}
 
 export default function Dictionary({
   goBack,
@@ -31,93 +52,81 @@ export default function Dictionary({
   showSupplementary,
   setShowSupplementary,
   lessonsData = [],
+  progress,
 }) {
   const { t } = useTranslation();
 
-  // Normalización (tono-agnóstica y sin diacríticos)
-  const mapUmlautToV = (s) => (s || "").replace(/u\u0308|ü/gi, "v");
-  const normalizeBase = (s) =>
-    mapUmlautToV(String(s || ""))
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "")
-      .trim();
-  const normalizeToneAgnostic = (s) =>
-    normalizeBase(s)
-      .replace(/[\s_\-]/g, "")
-      .replace(/[1-4]/g, "");
+  // ── Favoritos ────────────────────────────────────────────────────────────
+  const [favorites, setFavorites] = useState(loadFavorites);
+  const [showFavorites, setShowFavorites] = useState(false);
 
-  // Debounce y sincronización con el estado externo
-  const [rawQuery, setRawQuery] = useState(searchTerm || "");
-  const [debouncedQuery, setDebouncedQuery] = useState(rawQuery);
+  const toggleFavorite = (char) => {
+    setFavorites(prev => {
+      const next = new Set(prev);
+      if (next.has(char)) next.delete(char); else next.add(char);
+      localStorage.setItem(FAV_KEY, JSON.stringify([...next]));
+      return next;
+    });
+  };
+
+  // ── Normalización ─────────────────────────────────────────────────────────
+  const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
+  const normalizeBase  = (s) => mapUmlautToV(String(s || "")).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").trim();
+  const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_\-]/g, "").replace(/[1-4]/g, "");
+
+  // ── Búsqueda con debounce ─────────────────────────────────────────────────
+  const [rawQuery, setRawQuery]         = useState(searchTerm || "");
+  const [debouncedQuery, setDebounced]  = useState(rawQuery);
+
+  useEffect(() => { setRawQuery(searchTerm || ""); }, [searchTerm]);
 
   useEffect(() => {
-    setRawQuery(searchTerm || "");
-  }, [searchTerm]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(rawQuery);
+    const t = setTimeout(() => {
+      setDebounced(rawQuery);
       if (typeof setSearchTerm === 'function') setSearchTerm(rawQuery);
     }, 300);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(t);
   }, [rawQuery, setSearchTerm]);
 
-  // Filtrado: lección + suplementarias + búsqueda
+  // ── Filtrado ──────────────────────────────────────────────────────────────
   const filteredChars = useMemo(() => {
     let list = characters;
 
-    // Filtro por lección
     if (selectedLesson !== null && selectedLesson !== undefined) {
       list = list.filter(c => c.lesson === selectedLesson);
     }
+    if (!showSupplementary) list = list.filter(c => !c.isSupplementary);
+    if (showFavorites)      list = list.filter(c => favorites.has(c.char));
 
-    // Filtro suplementarias
-    if (!showSupplementary) {
-      list = list.filter(c => !c.isSupplementary);
-    }
-
-    // Búsqueda por texto
-    const qRaw = (debouncedQuery || '').trim();
-    const qNorm = normalizeToneAgnostic(qRaw);
+    const qRaw  = (debouncedQuery || '').trim();
+    const qNorm = normToneAgnost(qRaw);
     if (!qNorm) return list;
 
     const pinyinLike = /^[a-zA-Züǖǘǚǜv\s_\-0-9]+$/.test(qRaw);
-
-    return list.filter((c) => {
-      const ch = String(c.char || "");
-      if (pinyinLike) {
-        const py = normalizeToneAgnostic(c.pinyin);
-        if (py.startsWith(qNorm)) return true;
-      }
-      const me = normalizeBase(c.meaning);
-      const rad = normalizeBase(c.radical);
-      return ch.includes(qRaw) || me.includes(qNorm) || rad.includes(qNorm);
+    return list.filter(c => {
+      if (pinyinLike && normToneAgnost(c.pinyin).startsWith(qNorm)) return true;
+      return String(c.char || "").includes(qRaw)
+        || normalizeBase(c.meaning).includes(qNorm)
+        || normalizeBase(c.radical).includes(qNorm);
     });
-  }, [characters, debouncedQuery, selectedLesson, showSupplementary]);
-
-  const handleSpeak = (char) => {
-    if (typeof speakChinese === 'function') {
-      speakChinese({ hanzi: char.char, pinyin: char.pinyin });
-    }
-  };
+  }, [characters, debouncedQuery, selectedLesson, showSupplementary, showFavorites, favorites]);
 
   const totalMain = characters.filter(c =>
     (selectedLesson === null || c.lesson === selectedLesson) && !c.isSupplementary
   ).length;
-
   const totalSupp = characters.filter(c =>
     (selectedLesson === null || c.lesson === selectedLesson) && c.isSupplementary
   ).length;
+
+  const handleSpeak = (char) => {
+    if (typeof speakChinese === 'function') speakChinese({ hanzi: char.char, pinyin: char.pinyin });
+  };
 
   return (
     <div className="min-h-screen p-4">
       <Container size="lg">
         <div className="mb-6">
-          <button
-            onClick={goBack}
-            className="flex items-center text-gray-300 hover:text-white mb-4"
-          >
+          <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-4">
             <ArrowLeft className="mr-2" />
             {t('dictionary_back_to_menu')}
           </button>
@@ -126,14 +135,15 @@ export default function Dictionary({
           <p className="text-gray-400 mb-4 text-sm">
             {filteredChars.length} palabra{filteredChars.length !== 1 ? 's' : ''}
             {selectedLesson ? ` · Lección ${selectedLesson}` : ' · Todas las lecciones'}
+            {showFavorites && ` · ⭐ favoritos`}
           </p>
 
-          {/* Filtro por lección */}
+          {/* Filtros por lección */}
           <div className="flex flex-wrap gap-2 mb-3">
             <button
-              onClick={() => typeof setSelectedLesson === 'function' && setSelectedLesson(null)}
+              onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(null); setShowFavorites(false); }}
               className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
-                selectedLesson === null
+                selectedLesson === null && !showFavorites
                   ? 'bg-gray-100 text-gray-900 border-gray-100'
                   : 'bg-gray-800 text-gray-300 border-gray-600 hover:border-gray-400'
               }`}
@@ -141,21 +151,31 @@ export default function Dictionary({
               Todas
             </button>
             {lessonsData.map(l => {
-              const colors = LESSON_COLORS[l.lesson] || LESSON_COLORS[1];
-              const isActive = selectedLesson === l.lesson;
+              const colors  = LESSON_COLORS[l.lesson] || LESSON_COLORS[1];
+              const isActive = selectedLesson === l.lesson && !showFavorites;
               return (
                 <button
                   key={l.lesson}
-                  onClick={() => typeof setSelectedLesson === 'function' && setSelectedLesson(isActive ? null : l.lesson)}
-                  className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
-                    isActive ? colors.active : colors.inactive
-                  }`}
+                  onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(isActive ? null : l.lesson); setShowFavorites(false); }}
+                  className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${isActive ? colors.active : colors.inactive}`}
                   title={l.titleEs}
                 >
                   Lección {l.lesson}
                 </button>
               );
             })}
+            {/* Botón Favoritos */}
+            <button
+              onClick={() => { setShowFavorites(f => !f); typeof setSelectedLesson === 'function' && setSelectedLesson(null); }}
+              className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+                showFavorites
+                  ? 'bg-yellow-600 text-white border-yellow-500'
+                  : 'bg-gray-800 text-yellow-400 border-yellow-800 hover:border-yellow-500'
+              }`}
+            >
+              <Star className="w-3.5 h-3.5" />
+              Favoritos ({favorites.size})
+            </button>
           </div>
 
           {/* Toggle suplementarias */}
@@ -171,9 +191,7 @@ export default function Dictionary({
               <Star className="w-3.5 h-3.5" />
               Vocabulario extra ({totalSupp})
             </button>
-            <span className="text-gray-500 text-xs">
-              {totalMain} palabras principales
-            </span>
+            <span className="text-gray-500 text-xs">{totalMain} palabras principales</span>
           </div>
 
           {/* Buscador */}
@@ -189,81 +207,102 @@ export default function Dictionary({
           </div>
         </div>
 
+        {/* Leyenda SRS */}
+        <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> Dominado</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Pendiente</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-400 inline-block" /> Aprendiendo</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-gray-600 inline-block" /> Sin iniciar</span>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredChars.map((char, idx) => (
-            <Card key={idx} className="hover:shadow-xl transition bg-gray-800 border border-gray-700">
-              {/* Cabecera: lección + tipo gramatical + suplementaria */}
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex items-center gap-2">
-                  {char.lesson && (
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${LESSON_BADGE[char.lesson] || ''}`}>
-                      L{char.lesson}
-                    </span>
-                  )}
-                  {char.isSupplementary && (
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">
-                      extra
-                    </span>
-                  )}
-                </div>
-                {char.type && (
-                  <span className="text-xs text-gray-500 italic">{char.type}</span>
-                )}
-              </div>
+          {filteredChars.map((char, idx) => {
+            const srsData = progress?.__srs?.[char.char] || null;
+            const isFav   = favorites.has(char.char);
 
-              {/* Carácter principal */}
-              <div className="text-6xl text-center mb-3 text-white">{char.char}</div>
-
-              <div className="space-y-2.5">
-                {/* Pinyin */}
-                <div className="flex justify-between items-center pb-2 border-b border-gray-700">
-                  <span className="text-sm text-gray-400 font-semibold">{t('dictionary_pinyin')}</span>
+            return (
+              <Card key={idx} className="hover:shadow-xl transition bg-gray-800 border border-gray-700 relative">
+                {/* Cabecera: lección + tipo + SRS dot + favorito */}
+                <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-lg text-gray-200">{char.pinyin}</span>
+                    {char.lesson && (
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${LESSON_BADGE[char.lesson] || ''}`}>
+                        L{char.lesson}
+                      </span>
+                    )}
+                    {char.isSupplementary && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
+                    )}
+                    <SRSDot srsData={srsData} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {char.type && <span className="text-xs text-gray-500 italic">{char.type}</span>}
+                    {/* Botón favorito */}
                     <button
-                      onClick={() => handleSpeak(char)}
-                      aria-label={`Escuchar ${char.char}`}
-                      className="p-1 rounded-full bg-green-800 hover:bg-green-700 text-green-300 transition-colors"
+                      onClick={() => toggleFavorite(char.char)}
+                      className={`transition-colors ${isFav ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-400'}`}
+                      title={isFav ? 'Quitar de favoritos' : 'Añadir a favoritos'}
                     >
-                      <Volume2 className="w-3.5 h-3.5" />
+                      <Star className="w-4 h-4" fill={isFav ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 </div>
 
-                {/* Significado */}
-                <div className="pb-2 border-b border-gray-700">
-                  <p className="text-white font-semibold text-center text-base leading-snug">{char.meaning}</p>
-                </div>
+                {/* Carácter principal */}
+                <div className="text-6xl text-center mb-3 text-white">{char.char}</div>
 
-                {/* Radical (solo si no es "—") */}
-                {char.radical && char.radical !== '—' && (
+                <div className="space-y-2.5">
+                  {/* Pinyin + audio */}
                   <div className="flex justify-between items-center pb-2 border-b border-gray-700">
-                    <span className="text-xs text-gray-500">{t('dictionary_radical')}</span>
-                    <span className="text-2xl text-gray-300">{char.radical}</span>
-                  </div>
-                )}
-
-                {/* Frases de ejemplo */}
-                {char.examples && char.examples.length > 0 && (
-                  <div className="pt-1">
-                    <p className="text-xs text-gray-500 mb-1">Ejemplos:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {char.examples.map((ex, i) => (
-                        <span key={i} className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-md">
-                          {ex}
-                        </span>
-                      ))}
+                    <span className="text-sm text-gray-400 font-semibold">{t('dictionary_pinyin')}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg text-gray-200">{char.pinyin}</span>
+                      <button
+                        onClick={() => handleSpeak(char)}
+                        aria-label={`Escuchar ${char.char}`}
+                        className="p-1 rounded-full bg-green-800 hover:bg-green-700 text-green-300 transition-colors"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
-            </Card>
-          ))}
+
+                  {/* Significado */}
+                  <div className="pb-2 border-b border-gray-700">
+                    <p className="text-white font-semibold text-center text-base leading-snug">{char.meaning}</p>
+                  </div>
+
+                  {/* Radical */}
+                  {char.radical && char.radical !== '—' && (
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-700">
+                      <span className="text-xs text-gray-500">{t('dictionary_radical')}</span>
+                      <span className="text-2xl text-gray-300">{char.radical}</span>
+                    </div>
+                  )}
+
+                  {/* Ejemplos */}
+                  {char.examples?.length > 0 && (
+                    <div className="pt-1">
+                      <p className="text-xs text-gray-500 mb-1">Ejemplos:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {char.examples.map((ex, i) => (
+                          <span key={i} className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-md">{ex}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            );
+          })}
         </div>
 
         {filteredChars.length === 0 && (
           <div className="text-center text-gray-400 mt-8">
-            <p className="text-xl">{t('dictionary_no_results')}</p>
+            {showFavorites && favorites.size === 0
+              ? <p className="text-xl">No tienes favoritos todavía. Pulsa ⭐ en cualquier palabra.</p>
+              : <p className="text-xl">{t('dictionary_no_results')}</p>
+            }
           </div>
         )}
       </Container>

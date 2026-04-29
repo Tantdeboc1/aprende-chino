@@ -310,11 +310,13 @@ export default {
           minigames_guess_the_meaning_subtitle: "Guess the meaning",
           minigames_time_race_instructions_1: "Guess the meaning of the largest number of characters in 60 seconds.",
           minigames_time_race_instructions_2: "Each correct answer adds 10 points.",
-          minigames_time_race_instructions_3: "Each mistake subtracts 3 seconds from the timer.",
+          minigames_time_race_instructions_3: "Each mistake subtracts 2 seconds from the timer.",
           minigames_time_race_instructions_4: "Try to get the highest score!",
           minigames_time_up_message: "Time's up!",
           minigames_final_score_message: "Your final score is:",
           minigames_score_label_hud: "Score:",
+          minigames_start_game_button: "Start Game",
+          minigames_play_again_button: "Play Again",
 
           minigames_pinyin_connection_title: "Pinyin Connection",
           minigames_pinyin_connection_description: "Connect the character to its pinyin",
@@ -391,6 +393,7 @@ export default {
 
           // --- New UI (BottomNav, HomeScreen, LessonDetail, Settings) ---
           nav_home: "Home",
+          nav_review: "Review",
           nav_dictionary: "Dictionary",
           nav_games: "Games",
           nav_settings: "Settings",
@@ -520,8 +523,16 @@ export default {
           settings_srs_in_srs: "In review",
           settings_srs_mature: "Mature (≥21d)",
           settings_srs_due: "Due today",
-          settings_srs_mature_note: "A word is 'mature' when its review interval reaches 21+ days — you know it well!",
-
-
-
+          settings_srs_mature_note: "A word is 'mature' when its review interval reaches 21+ days without needing review.",
+          // --- SRS mode selector ---
+          srs_mode_title: "What type of review?",
+          srs_mode_due_title: "Due",
+          srs_mode_due_count: "{{count}} cards due today",
+          srs_mode_due_count_one: "1 card due today",
+          srs_mode_due_empty: "No reviews due right now",
+          srs_mode_weak_title: "Weak words",
+          srs_mode_weak_count: "Top {{count}} lowest scoring",
+          srs_mode_weak_desc: "Ignore the schedule — review the ones you struggle with most",
+          srs_mode_empty: "No words in SRS yet",
+          srs_mode_empty_desc: "Complete some lessons or quizzes first",
 };
