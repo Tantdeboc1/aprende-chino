@@ -177,7 +177,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
     );
     if (mode === 'meaning_to_char') return (
       <div className="text-center mb-6">
-        <p className="text-gray-400 text-sm mb-3">¿Qué carácter corresponde a este significado?</p>
+        <p className="text-gray-400 text-sm mb-3">{t('char_quiz_meaning_to_char_prompt')}</p>
         {question.correct.type && (
           <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 mb-3 inline-block">{question.correct.type}</span>
         )}
@@ -187,7 +187,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
     // pinyin_to_char
     return (
       <div className="text-center mb-6">
-        <p className="text-gray-400 text-sm mb-3">¿Qué carácter tiene este pinyin?</p>
+        <p className="text-gray-400 text-sm mb-3">{t('char_quiz_pinyin_to_char_prompt')}</p>
         <div className="text-4xl sm:text-5xl font-bold text-red-400">{question.correct.pinyin}</div>
       </div>
     );
@@ -228,7 +228,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
             onClick={() => setShowInstructions(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
-            Cambiar
+            {t('char_quiz_change_button')}
           </button>
         </div>
 

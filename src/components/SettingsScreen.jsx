@@ -42,7 +42,7 @@ function Row({ label, children, border = true }) {
 }
 
 // ── Heatmap de actividad (últimas 15 semanas) ────────────────────────────────
-function ActivityHeatmap({ activityDates }) {
+function ActivityHeatmap({ activityDates, t }) {
   const dateSet = useMemo(() => new Set(activityDates), [activityDates]);
 
   // Generar las últimas 15 semanas (columnas) × 7 días (filas)
@@ -68,7 +68,7 @@ function ActivityHeatmap({ activityDates }) {
 
   return (
     <div className="px-4 py-3">
-      <p className="text-xs text-gray-400 mb-2">Actividad (últimas 15 semanas)</p>
+      <p className="text-xs text-gray-400 mb-2">{t('settings_heatmap_title')}</p>
       <div className="flex gap-1">
         {weeks.map((week, wi) => (
           <div key={wi} className="flex flex-col gap-1">
@@ -144,7 +144,7 @@ function IntervalChart({ progress, allCharacters }) {
 }
 
 // ── Previsión de repasos 7 días ──────────────────────────────────────────────
-function ReviewForecast({ progress, allCharacters }) {
+function ReviewForecast({ progress, allCharacters, t }) {
   const forecast = useMemo(() => {
     const srs = progress?.__srs || {};
     const now = Date.now();
@@ -162,8 +162,8 @@ function ReviewForecast({ progress, allCharacters }) {
         if (i === 0 && d.nextReview < now) count++;
       }
       const date = new Date(dayStart);
-      const label = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' :
-        ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][date.getDay()];
+      const dayNames = [t('settings_day_sun'),t('settings_day_mon'),t('settings_day_tue'),t('settings_day_wed'),t('settings_day_thu'),t('settings_day_fri'),t('settings_day_sat')];
+      const label = i === 0 ? t('settings_day_today') : i === 1 ? t('settings_day_tomorrow') : dayNames[date.getDay()];
       days.push({ label, count });
     }
     return days;
@@ -173,7 +173,7 @@ function ReviewForecast({ progress, allCharacters }) {
 
   return (
     <div className="px-4 py-3 border-t border-gray-700/60">
-      <p className="text-xs text-gray-400 mb-3">Previsión de repasos (próximos 7 días)</p>
+      <p className="text-xs text-gray-400 mb-3">{t('settings_forecast_title')}</p>
       <div className="flex items-end gap-1.5 h-20">
         {forecast.map((day, i) => (
           <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -354,11 +354,11 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
           <IntervalChart progress={progress} allCharacters={allCharacters} />
 
           {/* Previsión 7 días */}
-          <ReviewForecast progress={progress} allCharacters={allCharacters} />
+          <ReviewForecast t={t} progress={progress} allCharacters={allCharacters} />
 
           {/* Heatmap de actividad */}
           <div className="border-t border-gray-700/60">
-            <ActivityHeatmap activityDates={streak.activityDates} />
+            <ActivityHeatmap t={t} activityDates={streak.activityDates} />
           </div>
 
           {/* Nota explicativa */}

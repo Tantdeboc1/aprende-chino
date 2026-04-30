@@ -80,7 +80,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
                 ) : (
                   <>
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-0.5">Modo</p>
-                    <p className="text-white font-semibold text-sm">Todas las lecciones</p>
+                    <p className="text-white font-semibold text-sm">{t('menu_all_lessons')}</p>
                   </>
                 )}
               </div>
@@ -89,7 +89,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
               <button
                 onClick={() => setSelectedLesson && setSelectedLesson(null)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${selectedLesson === null ? 'bg-gray-200 text-gray-900 border-gray-200' : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-400 hover:text-gray-300'}`}
-              >Todas</button>
+              >{t('menu_filter_all')}</button>
               {lessonsData.map(l => {
                 const a = LESSON_ACCENT[l.lesson] || LESSON_ACCENT[1];
                 const isActive = selectedLesson === l.lesson;

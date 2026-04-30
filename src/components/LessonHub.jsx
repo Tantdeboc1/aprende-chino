@@ -1,5 +1,6 @@
 // src/components/LessonHub.jsx
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
 
 const LESSON_ACCENT = {
@@ -22,10 +23,10 @@ const TYPE_COLORS = {
   'NP.': 'bg-emerald-900 text-emerald-300',
 };
 
-function StatusIcon({ status }) {
-  if (status === 'mastered') return <span title="Dominada" className="text-green-400 text-lg">★</span>;
-  if (status === 'seen') return <span title="Vista" className="text-yellow-500 text-lg">◑</span>;
-  return <span title="Sin estudiar" className="text-gray-600 text-lg">○</span>;
+function StatusIcon({ status, t }) {
+  if (status === 'mastered') return <span title={t('lesson_hub_status_mastered_title')} className="text-green-400 text-lg">★</span>;
+  if (status === 'seen') return <span title={t('lesson_hub_status_seen_title')} className="text-yellow-500 text-lg">◑</span>;
+  return <span title={t('lesson_hub_status_unseen_title')} className="text-gray-600 text-lg">○</span>;
 }
 
 export default function LessonHub({
@@ -38,6 +39,7 @@ export default function LessonHub({
   onStartExercise,
   speakChinese,
 }) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState('vocab');
   const [showSupp, setShowSupp] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -72,13 +74,13 @@ export default function LessonHub({
   };
 
   const exercises = [
-    { key: 'exam',      icon: '🎓', label: 'Examen',           desc: 'Pon nota a tu lección y guarda tu historial', color: 'border-red-500 hover:border-red-400', highlight: true },
-    { key: 'learn',     icon: '📖', label: 'Aprender',         desc: 'Introducción progresiva palabra a palabra',   color: 'border-blue-600 hover:border-blue-400' },
-    { key: 'quiz',      icon: '🧠', label: 'Quiz',             desc: 'Pon a prueba tu memoria con preguntas',       color: 'border-purple-600 hover:border-purple-400' },
-    { key: 'matching',  icon: '🎯', label: 'Emparejar',        desc: 'Conecta caracteres con su significado',       color: 'border-yellow-600 hover:border-yellow-400' },
-    { key: 'writing',   icon: '✏️', label: 'Escritura',        desc: 'Practica los trazos de los caracteres',       color: 'border-orange-600 hover:border-orange-400' },
-    { key: 'daily',     icon: '📅', label: 'Práctica diaria',  desc: 'Repaso rápido del día',                       color: 'border-green-600 hover:border-green-400' },
-    { key: 'minigames', icon: '🎮', label: 'Minijuegos',       desc: 'Aprende jugando con velocidad',               color: 'border-indigo-600 hover:border-indigo-400' },
+    { key: 'exam',      icon: '🎓', label: t('lesson_hub_ex_exam_label'),      desc: t('lesson_hub_ex_exam_desc'),      color: 'border-red-500 hover:border-red-400', highlight: true },
+    { key: 'learn',     icon: '📖', label: t('lesson_hub_ex_learn_label'),     desc: t('lesson_hub_ex_learn_desc'),     color: 'border-blue-600 hover:border-blue-400' },
+    { key: 'quiz',      icon: '🧠', label: t('lesson_hub_ex_quiz_label'),      desc: t('lesson_hub_ex_quiz_desc'),      color: 'border-purple-600 hover:border-purple-400' },
+    { key: 'matching',  icon: '🎯', label: t('lesson_hub_ex_matching_label'),  desc: t('lesson_hub_ex_matching_desc'),  color: 'border-yellow-600 hover:border-yellow-400' },
+    { key: 'writing',   icon: '✏️', label: t('lesson_hub_ex_writing_label'),   desc: t('lesson_hub_ex_writing_desc'),   color: 'border-orange-600 hover:border-orange-400' },
+    { key: 'daily',     icon: '📅', label: t('lesson_hub_ex_daily_label'),     desc: t('lesson_hub_ex_daily_desc'),     color: 'border-green-600 hover:border-green-400' },
+    { key: 'minigames', icon: '🎮', label: t('lesson_hub_ex_minigames_label'), desc: t('lesson_hub_ex_minigames_desc'), color: 'border-indigo-600 hover:border-indigo-400' },
   ];
 
   return (
@@ -86,28 +88,28 @@ export default function LessonHub({
 
       {/* Cabecera */}
       <button onClick={goBack} className="flex items-center gap-2 text-gray-400 hover:text-white mb-5 text-sm transition-colors">
-        ← Volver al menú
+        {t('lesson_hub_back')}
       </button>
 
       {/* Tarjeta de lección */}
       <div className={`rounded-2xl border-2 ${a.border} bg-gray-800 p-5 mb-5`}>
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <p className={`text-xs font-bold uppercase tracking-widest ${a.light} mb-1`}>Lección {lessonNum}</p>
+            <p className={`text-xs font-bold uppercase tracking-widest ${a.light} mb-1`}>{t('lesson_hub_lesson', { num: lessonNum })}</p>
             <h1 className="text-2xl font-bold text-white mb-0.5">{lessonData?.titleEs || ''}</h1>
             <p className={`text-lg ${a.text}`}>{lessonData?.titleZh || ''}</p>
           </div>
           <div className="text-right">
             <p className="text-3xl font-bold text-white">{masteredPct}%</p>
-            <p className="text-xs text-gray-400">dominado</p>
+            <p className="text-xs text-gray-400">{t('lesson_hub_mastered_pct_label')}</p>
           </div>
         </div>
 
         {/* Barra de progreso */}
         <div className="mt-4">
           <div className="flex justify-between text-xs text-gray-400 mb-1.5">
-            <span>{stats.mastered} dominadas · {stats.seen - stats.mastered} vistas · {stats.unseen} sin ver</span>
-            <span>{stats.total} palabras</span>
+            <span>{t('lesson_hub_stats', { mastered: stats.mastered, seen: stats.seen - stats.mastered, unseen: stats.unseen })}</span>
+            <span>{t('lesson_hub_total_words', { total: stats.total })}</span>
           </div>
           <div className="h-2.5 bg-gray-700 rounded-full overflow-hidden">
             <div className={`h-full ${a.bar} rounded-full transition-all duration-500`} style={{ width: seenPct + '%' }} />
@@ -116,23 +118,23 @@ export default function LessonHub({
             <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: masteredPct + '%' }} />
           </div>
           <div className="flex gap-4 text-xs mt-1.5">
-            <span className={`${a.text}`}>▪ Vistas</span>
-            <span className="text-green-400">▪ Dominadas</span>
+            <span className={`${a.text}`}>▪ {t('lesson_hub_legend_seen')}</span>
+            <span className="text-green-400">▪ {t('lesson_hub_legend_mastered')}</span>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="flex gap-2 mb-4">
-        {['vocab', 'exercises'].map(t => (
+        {['vocab', 'exercises'].map(tabKey => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
+            key={tabKey}
+            onClick={() => setTab(tabKey)}
             className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${
-              tab === t ? `${a.bg} text-white border-transparent` : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
+              tab === tabKey ? `${a.bg} text-white border-transparent` : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
             }`}
           >
-            {t === 'vocab' ? `📚 Vocabulario (${stats.total})` : '🎯 Ejercicios'}
+            {tabKey === 'vocab' ? t('lesson_hub_vocab_tab', { count: stats.total }) : t('lesson_hub_exercises_tab')}
           </button>
         ))}
       </div>
@@ -147,9 +149,9 @@ export default function LessonHub({
                 showSupp ? 'bg-purple-800 text-purple-200 border-purple-600' : 'bg-gray-800 text-gray-500 border-gray-700 hover:border-gray-500'
               }`}
             >
-              ★ Vocabulario extra ({suppWords.length})
+              {t('lesson_hub_extra_vocab', { count: suppWords.length })}
             </button>
-            <span className="text-gray-600 text-xs">Toca ★ en una palabra para marcarla como dominada</span>
+            <span className="text-gray-600 text-xs">{t('lesson_hub_tap_hint')}</span>
           </div>
 
           <div className="space-y-2">
@@ -170,9 +172,9 @@ export default function LessonHub({
                     <button
                       onClick={(e) => { e.stopPropagation(); handleToggleMastered(word.char, status); }}
                       className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-700 transition-colors"
-                      title={status === 'mastered' ? 'Marcar como no dominada' : 'Marcar como dominada'}
+                      title={status === 'mastered' ? t('lesson_hub_mark_not_mastered') : t('lesson_hub_mark_mastered')}
                     >
-                      <StatusIcon status={status} />
+                      <StatusIcon status={status} t={t} />
                     </button>
 
                     <span className="text-2xl text-white font-medium w-10 text-center flex-shrink-0">{word.char}</span>
@@ -186,7 +188,7 @@ export default function LessonHub({
                           </span>
                         )}
                         {word.isSupplementary && (
-                          <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900 text-purple-300">extra</span>
+                          <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900 text-purple-300">{t('lesson_hub_extra_badge')}</span>
                         )}
                       </div>
                       <p className="text-white text-sm font-medium mt-0.5 truncate">{word.meaning}</p>
@@ -202,7 +204,7 @@ export default function LessonHub({
 
                   {isSelected && word.examples && word.examples.length > 0 && (
                     <div className="px-3 pb-3 border-t border-gray-700 pt-2">
-                      <p className="text-xs text-gray-500 mb-1.5">Ejemplos:</p>
+                      <p className="text-xs text-gray-500 mb-1.5">{t('lesson_hub_examples_label')}</p>
                       <div className="flex flex-wrap gap-1.5">
                         {word.examples.map((ex, i) => (
                           <span key={i} className="text-sm bg-gray-700 text-gray-200 px-2.5 py-1 rounded-lg">{ex}</span>
@@ -243,6 +245,20 @@ export default function LessonHub({
                 key={ex.key}
                 onClick={() => onStartExercise(ex.key)}
                 className={`flex flex-col items-start p-4 rounded-xl bg-gray-800 border-2 ${ex.color} transition-all hover:scale-[1.02] text-left`}
+              >
+                <span className="text-2xl mb-2">{ex.icon}</span>
+                <h3 className="text-white font-bold text-sm mb-1">{ex.label}</h3>
+                <p className="text-gray-400 text-xs leading-tight">{ex.desc}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+tems-start p-4 rounded-xl bg-gray-800 border-2 ${ex.color} transition-all hover:scale-[1.02] text-left`}
               >
                 <span className="text-2xl mb-2">{ex.icon}</span>
                 <h3 className="text-white font-bold text-sm mb-1">{ex.label}</h3>

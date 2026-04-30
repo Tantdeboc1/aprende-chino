@@ -27,18 +27,18 @@ function loadFavorites() {
 }
 
 // ─── Dot de estado SRS ───────────────────────────────────────────────────────
-function SRSDot({ srsData }) {
+function SRSDot({ srsData, t }) {
   if (!srsData || srsData.nextReview === null) {
-    return <span title="Sin iniciar en SRS" className="w-2 h-2 rounded-full bg-gray-600 inline-block" />;
+    return <span title={t('dictionary_uninitiated_label')} className="w-2 h-2 rounded-full bg-gray-600 inline-block" />;
   }
   const now = Date.now();
   if (srsData.nextReview <= now) {
-    return <span title="Pendiente de repaso" className="w-2 h-2 rounded-full bg-yellow-400 inline-block animate-pulse" />;
+    return <span title={t('dictionary_pending_label')} className="w-2 h-2 rounded-full bg-yellow-400 inline-block animate-pulse" />;
   }
   if (srsData.interval >= 21) {
-    return <span title="Dominado (≥21 días)" className="w-2 h-2 rounded-full bg-green-400 inline-block" />;
+    return <span title={t('dictionary_mastered_tooltip')} className="w-2 h-2 rounded-full bg-green-400 inline-block" />;
   }
-  return <span title="En aprendizaje" className="w-2 h-2 rounded-full bg-blue-400 inline-block" />;
+  return <span title={t('dictionary_learning_label')} className="w-2 h-2 rounded-full bg-blue-400 inline-block" />;
 }
 
 export default function Dictionary({
@@ -134,8 +134,8 @@ export default function Dictionary({
           <h2 className="text-3xl font-bold text-white mb-1">{t('dictionary_title')}</h2>
           <p className="text-gray-400 mb-4 text-sm">
             {filteredChars.length} palabra{filteredChars.length !== 1 ? 's' : ''}
-            {selectedLesson ? ` · Lección ${selectedLesson}` : ' · Todas las lecciones'}
-            {showFavorites && ` · ⭐ favoritos`}
+            {selectedLesson ? ` · ${t('dictionary_filter_lesson', { num: selectedLesson })}` : ` · ${t('dictionary_filter_all_lessons')}`}
+            {showFavorites && ` · ⭐ ${t('dictionary_filter_favorites_label')}`}
           </p>
 
           {/* Filtros por lección */}
@@ -148,7 +148,7 @@ export default function Dictionary({
                   : 'bg-gray-800 text-gray-300 border-gray-600 hover:border-gray-400'
               }`}
             >
-              Todas
+              {t('dictionary_filter_all')}
             </button>
             {lessonsData.map(l => {
               const colors  = LESSON_COLORS[l.lesson] || LESSON_COLORS[1];
@@ -160,7 +160,7 @@ export default function Dictionary({
                   className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${isActive ? colors.active : colors.inactive}`}
                   title={l.titleEs}
                 >
-                  Lección {l.lesson}
+                  {t('dictionary_filter_lesson', { num: l.lesson })}
                 </button>
               );
             })}
@@ -209,10 +209,10 @@ export default function Dictionary({
 
         {/* Leyenda SRS */}
         <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> Dominado</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Pendiente</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-400 inline-block" /> Aprendiendo</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-gray-600 inline-block" /> Sin iniciar</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> {t('dictionary_mastered_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> {t('dictionary_pending_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-400 inline-block" /> {t('dictionary_learning_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-gray-600 inline-block" /> {t('dictionary_uninitiated_label')}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -233,7 +233,7 @@ export default function Dictionary({
                     {char.isSupplementary && (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
                     )}
-                    <SRSDot srsData={srsData} />
+                    <SRSDot t={t} srsData={srsData} />
                   </div>
                   <div className="flex items-center gap-2">
                     {char.type && <span className="text-xs text-gray-500 italic">{char.type}</span>}
@@ -241,7 +241,7 @@ export default function Dictionary({
                     <button
                       onClick={() => toggleFavorite(char.char)}
                       className={`transition-colors ${isFav ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-400'}`}
-                      title={isFav ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+                      title={isFav ? t('dictionary_remove_favorite') : t('dictionary_add_favorite')}
                     >
                       <Star className="w-4 h-4" fill={isFav ? 'currentColor' : 'none'} />
                     </button>
@@ -300,7 +300,7 @@ export default function Dictionary({
         {filteredChars.length === 0 && (
           <div className="text-center text-gray-400 mt-8">
             {showFavorites && favorites.size === 0
-              ? <p className="text-xl">No tienes favoritos todavía. Pulsa ⭐ en cualquier palabra.</p>
+              ? <p className="text-xl">{t('dictionary_no_favorites')}</p>
               : <p className="text-xl">{t('dictionary_no_results')}</p>
             }
           </div>

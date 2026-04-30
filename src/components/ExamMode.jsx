@@ -1,5 +1,6 @@
 // src/components/ExamMode.jsx
 import { useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { saveExamResult, getExamHistory } from '@/utils/progress.js';
 import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Trophy, BookOpen, Clock } from 'lucide-react';
 
@@ -25,9 +26,9 @@ function buildQuestions(characters) {
   });
 }
 
-function formatDate(iso) {
+function formatDate(iso, language) {
   try {
-    return new Date(iso).toLocaleDateString('es-ES', {
+    return new Date(iso).toLocaleDateString(language, {
       day: '2-digit', month: 'short', year: 'numeric',
       hour: '2-digit', minute: '2-digit',
     });
@@ -42,17 +43,17 @@ function gradeColor(pct) {
   return 'text-red-400';
 }
 
-function gradeLabel(pct) {
-  if (pct === 100) return '¡Perfecto! 🏆';
-  if (pct >= 90) return '¡Excelente! ⭐';
-  if (pct >= 70) return '¡Bien! 👍';
-  if (pct >= 50) return 'Puedes mejorar 📚';
-  return 'Sigue practicando 💪';
+function gradeLabel(pct, t) {
+  if (pct === 100) return t('exam_grade_perfect');
+  if (pct >= 90)  return t('exam_grade_excellent');
+  if (pct >= 70)  return t('exam_grade_good');
+  if (pct >= 50)  return t('exam_grade_improve');
+  return t('exam_grade_keep_practicing');
 }
 
 // ── Pantalla de historial ────────────────────────────────────────────────────
 
-function HistoryScreen({ history, lessonNum, onBack, onNewExam }) {
+function HistoryScreen({ history, lessonNum, onBack, onNewExam, t, language }) {
   return (
     <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto">
@@ -61,18 +62,20 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam }) {
           className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Volver al hub
+          {t('exam_back_to_hub')}
         </button>
 
         <div className="flex items-center gap-3 mb-8">
           <Clock className="w-6 h-6 text-blue-400" />
-          <h1 className="text-2xl font-bold text-white">Historial — Lección {lessonNum}</h1>
+          <h1 className="text-2xl font-bold text-white">
+            {t('exam_history_title', { lesson: lessonNum })}
+          </h1>
         </div>
 
         {history.length === 0 ? (
           <div className="text-center text-gray-500 py-16">
             <Trophy className="w-12 h-12 mx-auto mb-4 opacity-30" />
-            <p>Aún no has hecho ningún examen de esta lección.</p>
+            <p>{t('exam_no_history')}</p>
           </div>
         ) : (
           <div className="space-y-3 mb-8">
@@ -82,13 +85,13 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam }) {
                 <div key={i} className="bg-gray-800 rounded-xl px-5 py-4 flex items-center justify-between border border-gray-700">
                   <div>
                     <p className="text-white font-semibold">
-                      {h.score}/{h.total} correctas
+                      {t('exam_results_score', { score: h.score, total: h.total })}
                       <span className={`ml-2 text-sm font-bold ${gradeColor(pct)}`}>({pct}%)</span>
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">{formatDate(h.date)}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{formatDate(h.date, language)}</p>
                     {h.wrongChars?.length > 0 && (
                       <p className="text-xs text-gray-400 mt-1">
-                        Falladas: {h.wrongChars.join('  ')}
+                        {t('exam_wrong_label')} {h.wrongChars.join('  ')}
                       </p>
                     )}
                   </div>
@@ -103,7 +106,7 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam }) {
           onClick={onNewExam}
           className="w-full py-4 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl transition-colors"
         >
-          Hacer examen ahora →
+          {t('exam_start_now_button')}
         </button>
       </div>
     </div>
@@ -112,7 +115,7 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam }) {
 
 // ── Pantalla de resultados ───────────────────────────────────────────────────
 
-function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
+function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
   const pct = Math.round((score / total) * 100);
 
   return (
@@ -122,8 +125,8 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
         <div className="text-center py-10">
           <Trophy className={`w-16 h-16 mx-auto mb-4 ${gradeColor(pct)}`} />
           <p className={`text-6xl font-bold mb-2 ${gradeColor(pct)}`}>{pct}%</p>
-          <p className="text-gray-300 text-lg mb-1">{score} de {total} correctas</p>
-          <p className="text-gray-400 font-semibold">{gradeLabel(pct)}</p>
+          <p className="text-gray-300 text-lg mb-1">{t('exam_results_score', { score, total })}</p>
+          <p className="text-gray-400 font-semibold">{gradeLabel(pct, t)}</p>
         </div>
 
         {/* Repaso de errores */}
@@ -131,7 +134,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
           <div className="mb-8">
             <h2 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
               <XCircle className="w-5 h-5 text-red-400" />
-              Palabras a repasar ({wrongChars.length})
+              {t('exam_words_to_review', { count: wrongChars.length })}
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {wrongChars.map((w, i) => (
@@ -148,7 +151,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
         {wrongChars.length === 0 && (
           <div className="bg-green-900/40 border border-green-700 rounded-xl p-5 mb-8 text-center">
             <CheckCircle className="w-8 h-8 text-green-400 mx-auto mb-2" />
-            <p className="text-green-300 font-semibold">¡Sin errores! Todas las palabras correctas.</p>
+            <p className="text-green-300 font-semibold">{t('exam_no_errors')}</p>
           </div>
         )}
 
@@ -159,13 +162,13 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
             className="flex-1 flex items-center justify-center gap-2 py-4 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-xl transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
-            Repetir examen
+            {t('exam_retry_button')}
           </button>
           <button
             onClick={onBack}
             className="flex-1 py-4 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl transition-colors"
           >
-            Volver al hub
+            {t('exam_back_to_hub')}
           </button>
         </div>
       </div>
@@ -176,26 +179,28 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack }) {
 // ── Componente principal ExamMode ────────────────────────────────────────────
 
 export default function ExamMode({
-  characters,       // palabras de la lección (sin suplementarias)
+  characters,
   lessonNum,
-  lessonData,       // { titleEs, ... }
+  lessonData,
   progress,
   onProgressChange,
-  goBack,           // vuelve al hub
+  goBack,
 }) {
+  const { t, i18n } = useTranslation();
+  const language = i18n.language || 'es';
+
   const [phase, setPhase] = useState('exam'); // 'exam' | 'results' | 'history'
   const [questions, setQuestions] = useState(() => buildQuestions(characters));
   const [qIndex, setQIndex] = useState(0);
-  const [selected, setSelected] = useState(null);     // char del option elegido
-  const [feedback, setFeedback] = useState(null);     // 'correct' | 'wrong'
-  const [wrongChars, setWrongChars] = useState([]);   // objetos completos { char, pinyin, meaning }
+  const [selected, setSelected] = useState(null);
+  const [feedback, setFeedback] = useState(null); // 'correct' | 'wrong'
+  const [wrongChars, setWrongChars] = useState([]);
   const [score, setScore] = useState(0);
 
   const history = getExamHistory(progress, lessonNum);
   const total = questions.length;
   const current = questions[qIndex];
 
-  // Reiniciar examen
   const restart = useCallback(() => {
     setQuestions(buildQuestions(characters));
     setQIndex(0);
@@ -207,25 +212,22 @@ export default function ExamMode({
   }, [characters]);
 
   const handleSelect = (option) => {
-    if (feedback) return; // ya respondió, esperar animación
+    if (feedback) return;
     setSelected(option.char);
     const isCorrect = option.char === current.correct.char;
     setFeedback(isCorrect ? 'correct' : 'wrong');
 
-    // Calcular nuevos valores ANTES del timeout para evitar closures obsoletas
     const newScore = isCorrect ? score + 1 : score;
     const newWrong = isCorrect ? wrongChars : [...wrongChars, current.correct];
 
     setTimeout(() => {
       if (qIndex + 1 < total) {
-        // Avanzar a la siguiente pregunta
         setScore(newScore);
         setWrongChars(newWrong);
         setQIndex(qIndex + 1);
         setSelected(null);
         setFeedback(null);
       } else {
-        // Fin del examen — guardar historial con chars como strings (para display compacto)
         const updated = saveExamResult(progress, lessonNum, {
           score: newScore,
           total,
@@ -247,6 +249,8 @@ export default function ExamMode({
         lessonNum={lessonNum}
         onBack={goBack}
         onNewExam={restart}
+        t={t}
+        language={language}
       />
     );
   }
@@ -260,6 +264,7 @@ export default function ExamMode({
         wrongChars={wrongChars}
         onRetry={restart}
         onBack={goBack}
+        t={t}
       />
     );
   }
@@ -269,19 +274,17 @@ export default function ExamMode({
     return (
       <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4 text-center">
         <BookOpen className="w-12 h-12 text-gray-500 mb-4" />
-        <p className="text-gray-400 text-lg mb-2">No hay suficientes palabras para el examen.</p>
-        <p className="text-gray-600 text-sm mb-8">Necesitas al menos 4 palabras en la lección.</p>
+        <p className="text-gray-400 text-lg mb-2">{t('exam_not_enough_words')}</p>
+        <p className="text-gray-600 text-sm mb-8">{t('exam_need_more_words')}</p>
         <button onClick={goBack} className="px-8 py-3 bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-600 transition-colors">
-          Volver
+          {t('exam_back_button')}
         </button>
       </div>
     );
   }
 
   // ── Examen en curso ──
-  // Barra de progreso: muestra la pregunta actual (1-based) sobre el total
   const progress_pct = Math.round(((qIndex + 1) / total) * 100);
-  // Número de errores hasta ahora (respuestas ya evaluadas)
   const errorCount = qIndex - score;
 
   return (
@@ -295,7 +298,7 @@ export default function ExamMode({
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
-            Salir
+            {t('exam_exit_button')}
           </button>
           <div className="flex items-center gap-3">
             {history.length > 0 && (
@@ -304,7 +307,7 @@ export default function ExamMode({
                 className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-blue-400 transition-colors"
               >
                 <Clock className="w-3.5 h-3.5" />
-                Historial
+                {t('exam_history_button')}
               </button>
             )}
             <span className="text-sm text-gray-400 font-semibold">
@@ -323,7 +326,7 @@ export default function ExamMode({
 
         {/* Lección */}
         <p className="text-xs text-gray-500 uppercase tracking-widest text-center mb-2">
-          {lessonData?.titleEs || `Lección ${lessonNum}`}
+          {lessonData?.titleEs || t('exam_lesson_label', { num: lessonNum })}
         </p>
 
         {/* Pregunta */}
@@ -366,9 +369,9 @@ export default function ExamMode({
           })}
         </div>
 
-        {/* Marcador de aciertos en tiempo real */}
+        {/* Marcador en tiempo real */}
         <div className="mt-8 text-center text-sm text-gray-500">
-          ✓ {score} correctas · ✗ {errorCount} errores
+          {t('exam_score_hud', { score, errors: errorCount })}
         </div>
 
       </div>

@@ -1,5 +1,6 @@
 // src/components/LessonSelector.jsx
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 const LESSON_STYLES = {
   1: { border: 'border-red-600', activeBg: 'bg-red-600', hoverBorder: 'hover:border-red-500', glow: 'shadow-red-900/50', text: 'text-red-400', titleColor: 'text-red-300', num: '一' },
@@ -15,6 +16,7 @@ export default function LessonSelector({
   allCharacters = [],
   onSelect,
 }) {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState(null);
   const [nameInput, setNameInput] = useState('');
 
@@ -44,32 +46,32 @@ export default function LessonSelector({
         {/* Input de nombre — solo si no hay nombre guardado */}
         {needsName ? (
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">¡Bienvenido!</h1>
-            <p className="text-gray-400 mb-4">¿Cómo te llamas?</p>
+            <h1 className="text-3xl font-bold text-white mb-2">{t('selector_welcome')}</h1>
+            <p className="text-gray-400 mb-4">{t('selector_name_prompt')}</p>
             <input
               type="text"
               value={nameInput}
               onChange={e => setNameInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && canConfirm && handleConfirm()}
-              placeholder="Tu nombre..."
+              placeholder={t('selector_name_placeholder')}
               autoFocus
               className="w-full max-w-xs mx-auto block px-4 py-3 rounded-xl bg-gray-800 border-2 border-gray-600 focus:border-red-500 focus:outline-none text-white text-center text-lg placeholder-gray-500"
             />
           </div>
         ) : (
           <h1 className="text-3xl font-bold text-white mb-2">
-            {effectiveName ? `Hola, ${effectiveName}!` : '¡Hola!'} ¿Qué estás estudiando?
+            {effectiveName ? t('selector_greeting_with_name', { name: effectiveName }) : t('selector_greeting_no_name')}
           </h1>
         )}
 
         {!needsName && (
           <p className="text-gray-400">
-            Elige tu lección para que los ejercicios se adapten a lo que habéis visto en clase.
+            {t('selector_choose_lesson')}
           </p>
         )}
         {needsName && nameInput.trim() && (
           <p className="text-gray-400 mt-2">
-            Hola, {nameInput.trim()}! ¿Qué lección estás estudiando?
+            {t('selector_name_preview', { name: nameInput.trim() })}
           </p>
         )}
       </div>
@@ -98,13 +100,13 @@ export default function LessonSelector({
                 {s.num}
               </span>
               <span className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isSelected ? 'text-white/80' : 'text-gray-500'}`}>
-                Lección {l.lesson}
+                {t('selector_lesson', { num: l.lesson })}
               </span>
               <p className={`text-center text-xs leading-tight mb-3 ${isSelected ? 'text-white/90' : s.titleColor}`}>
                 {l.titleEs}
               </p>
               <div className={`text-xs ${isSelected ? 'text-white/70' : 'text-gray-500'}`}>
-                {main} palabras{supp > 0 && <span> + {supp} extra</span>}
+                {t('selector_words_count', { count: main })}{supp > 0 && <span> {t('selector_extra_count', { count: supp })}</span>}
               </div>
               {isSelected && (
                 <div className="absolute top-2 right-2 w-5 h-5 bg-white/30 rounded-full flex items-center justify-center">
@@ -127,7 +129,7 @@ export default function LessonSelector({
           }
         `}
       >
-        {selected === null ? '✓ ' : ''}Todas las lecciones ({allCharacters.filter(c => !c.isSupplementary).length} palabras)
+        {selected === null ? '✓ ' : ''}{t('selector_all_lessons', { count: allCharacters.filter(c => !c.isSupplementary).length })}
       </button>
 
       {/* Confirmar */}
@@ -137,13 +139,13 @@ export default function LessonSelector({
         className="px-10 py-4 bg-red-600 hover:bg-red-500 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl shadow-lg shadow-red-900/50 transition-all duration-200 hover:scale-105 disabled:scale-100"
       >
         {selected !== null
-          ? `Estudiar Lección ${selected} →`
-          : 'Estudiar todo →'
+          ? t('selector_confirm_lesson', { num: selected })
+          : t('selector_confirm_all')
         }
       </button>
 
       <p className="text-gray-600 text-xs mt-4 text-center max-w-sm">
-        Puedes cambiar la lección en cualquier momento desde el menú principal.
+        {t('selector_change_hint')}
       </p>
     </div>
   );

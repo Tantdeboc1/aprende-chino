@@ -105,31 +105,31 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
         <div className="max-w-lg mx-auto pt-8">
           <button onClick={goBack} className="flex items-center text-gray-400 hover:text-white text-sm mb-6 transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-1.5"><path d="M15 18l-6-6 6-6"/></svg>
-            Volver
+            {t('exam_back_button')}
           </button>
 
           <div className="text-center mb-8">
             <div className="text-5xl mb-4">🏆</div>
-            <h1 className="text-3xl font-bold text-white mb-2">Examen HSK 1</h1>
-            <p className="text-gray-400">Modo examen cronometrado — todas las lecciones</p>
+            <h1 className="text-3xl font-bold text-white mb-2">{t('global_exam_title')}</h1>
+            <p className="text-gray-400">{t('global_exam_subtitle')}</p>
           </div>
 
           <div className="bg-gray-800 border border-gray-700 rounded-xl p-5 mb-6 space-y-3">
             <div className="flex items-start gap-3">
               <div className="bg-yellow-500 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
-              <p className="text-gray-300 text-sm">{QUESTIONS_PER_ROUND} preguntas de vocabulario mezclando las {pool.length} palabras HSK1.</p>
+              <p className="text-gray-300 text-sm">{t('global_exam_info_1', { questions: QUESTIONS_PER_ROUND, words: pool.length })}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-yellow-500 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
-              <p className="text-gray-300 text-sm">Tienes <strong className="text-white">{TOTAL_TIME} segundos</strong> para responder todas las preguntas.</p>
+              <p className="text-gray-300 text-sm">{t('global_exam_info_2', { seconds: TOTAL_TIME })}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-yellow-500 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
-              <p className="text-gray-300 text-sm">Se muestra el carácter chino — elige el significado correcto.</p>
+              <p className="text-gray-300 text-sm">{t('global_exam_info_3')}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="bg-yellow-500 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">4</div>
-              <p className="text-gray-300 text-sm">Objetivo: <strong className="text-white">&gt;80%</strong> de aciertos para nivel HSK1.</p>
+              <p className="text-gray-300 text-sm">{t('global_exam_info_4')}</p>
             </div>
           </div>
 
@@ -137,7 +137,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
             onClick={startGame}
             className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-4 rounded-xl text-lg transition-colors"
           >
-            🏁 Iniciar examen
+            {t('global_exam_start_button')}
           </button>
         </div>
       </div>
@@ -155,23 +155,23 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
         <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
           <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-sm w-full text-center shadow-xl">
             <div className="text-6xl mb-4">{pct === 100 ? '🥇' : passed ? '🏆' : '💪'}</div>
-            <h2 className="text-2xl font-bold text-white mb-1">Examen completado</h2>
+            <h2 className="text-2xl font-bold text-white mb-1">{t('global_exam_completed_title')}</h2>
             <p className="text-gray-400 text-sm mb-6">
-              {passed ? '¡Nivel HSK1 alcanzado!' : 'Sigue practicando para alcanzar el HSK1'}
+              {passed ? t('global_exam_passed') : t('global_exam_keep_practicing')}
             </p>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="bg-gray-700/50 rounded-xl p-3">
                 <p className="text-2xl font-bold text-green-400">{score}</p>
-                <p className="text-xs text-gray-400 mt-0.5">Correctas</p>
+                <p className="text-xs text-gray-400 mt-0.5">{t('global_exam_correct_label')}</p>
               </div>
               <div className="bg-gray-700/50 rounded-xl p-3">
                 <p className="text-2xl font-bold text-red-400">{wrong}</p>
-                <p className="text-xs text-gray-400 mt-0.5">Errores</p>
+                <p className="text-xs text-gray-400 mt-0.5">{t('global_exam_errors_label')}</p>
               </div>
               <div className={`rounded-xl p-3 ${passed ? 'bg-green-900/40' : 'bg-gray-700/50'}`}>
                 <p className={`text-2xl font-bold ${passed ? 'text-yellow-400' : 'text-white'}`}>{pct}%</p>
-                <p className="text-xs text-gray-400 mt-0.5">Acierto</p>
+                <p className="text-xs text-gray-400 mt-0.5">{t('global_exam_accuracy_label')}</p>
               </div>
             </div>
 
@@ -184,7 +184,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
             </div>
             <div className="flex justify-between text-xs text-gray-500 mb-6">
               <span>0%</span>
-              <span className={passed ? 'text-green-400' : 'text-gray-400'}>80% mínimo</span>
+              <span className={passed ? 'text-green-400' : 'text-gray-400'}>{t('global_exam_min_score')}</span>
               <span>100%</span>
             </div>
 
@@ -193,13 +193,13 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
                 onClick={startGame}
                 className="flex-1 py-3 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold text-sm transition-colors"
               >
-                🔄 Repetir
+                {t('global_exam_repeat_button')}
               </button>
               <button
                 onClick={goBack}
                 className="flex-1 py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-gray-300 font-medium text-sm transition-colors"
               >
-                Volver
+                {t('exam_back_button')}
               </button>
             </div>
           </div>

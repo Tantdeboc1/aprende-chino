@@ -233,7 +233,7 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
           </h2>
           <p className="text-gray-400 text-sm mt-1">
             {total} {t('srs_cards_reviewed', 'tarjetas repasadas')}
-            {mode === 'weak' && <span className="ml-1 text-orange-400">· 💔 modo débiles</span>}
+            {mode === 'weak' && <span className="ml-1 text-orange-400">{t('srs_mode_weak_badge')}</span>}
           </p>
         </div>
 
