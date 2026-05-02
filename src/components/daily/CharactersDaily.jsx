@@ -323,6 +323,3 @@ function Daily({ goBack }) {
 }
 
 export default Daily;
-
-  );
-}

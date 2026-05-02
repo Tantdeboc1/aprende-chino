@@ -525,6 +525,3 @@ export default function App() {
     </Layout>
   );
 }
-/Layout>
-  );
-}
