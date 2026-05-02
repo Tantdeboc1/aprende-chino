@@ -3,28 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function pickN(arr, n) {
-  return shuffle([...arr]).slice(0, n);
-}
-
-function buildQuestion(pool) {
-  if (pool.length < 4) return null;
-  const sh = shuffle(pool);
-  const correct = sh[0];
-  const distractors = sh.slice(1, 4).map(c => c.meaning);
-  const options = shuffle([correct.meaning, ...distractors]);
-  return { correct, options };
-}
+import { shuffle } from '@/utils/arrayUtils.js';
 
 const TOTAL_TIME = 90; // segundos
 const QUESTIONS_PER_ROUND = 20;
@@ -45,11 +24,16 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   const pool = allCharacters.filter(c => !c.isSupplementary);
 
   const startGame = useCallback(() => {
-    const qs = [];
-    for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
-      const q = buildQuestion(pool);
-      if (q) qs.push(q);
-    }
+    // Pick unique characters so no question repeats
+    const count = Math.min(QUESTIONS_PER_ROUND, pool.length);
+    const picked = shuffle([...pool]).slice(0, count);
+    const qs = picked.map(correct => {
+      const distractors = shuffle(pool.filter(c => c.char !== correct.char))
+        .slice(0, 3)
+        .map(c => c.meaning);
+      const options = shuffle([correct.meaning, ...distractors]);
+      return { correct, options };
+    });
     setQuestions(qs);
     setQIndex(0);
     setScore(0);
@@ -61,20 +45,23 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
     setPhase('playing');
   }, [pool]);
 
-  // Temporizador
+  // Temporizador — depende solo de [phase] para no crear/destruir el intervalo cada segundo
   useEffect(() => {
     if (phase !== 'playing') return;
-    if (timeLeft <= 0) { setPhase('finished'); return; }
 
     const id = setInterval(() => {
-      setTimeLeft(t => {
-        const next = t - 1;
+      setTimeLeft(prev => {
+        const next = prev - 1;
         timeRef.current = next;
+        if (next <= 0) {
+          clearInterval(id);
+          setPhase('finished');
+        }
         return next;
       });
     }, 1000);
     return () => clearInterval(id);
-  }, [phase, timeLeft]);
+  }, [phase]);
 
   const handleAnswer = (opt) => {
     if (feedback) return;

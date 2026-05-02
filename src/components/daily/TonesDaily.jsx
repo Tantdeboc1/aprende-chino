@@ -119,7 +119,6 @@ export default function TonesDaily({ goBack, speakChinese }) {
 
   const listen = () => {
     if (!questions[currentQuestion]) return;
-    console.log('🔊 TonesDaily - Reproduciendo:', questions[currentQuestion].pinyinToSpeak);
     if (typeof speakChinese === 'function') {
       speakChinese(questions[currentQuestion].pinyinToSpeak, { category: 'pronunciation' });
     }

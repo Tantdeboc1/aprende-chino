@@ -26,7 +26,6 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
     const initWriter = async () => {
       if (!currentCharacter || !writerRef.current || !isMountedRef.current) return;
 
-      console.log('🔄 Inicializando HanziWriter para:', currentCharacter.char);
 
       try {
         // LIMPIAR COMPLETAMENTE - método más agresivo
@@ -35,7 +34,6 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
             writerInstanceRef.current._target.innerHTML = '';
             writerInstanceRef.current = null;
           } catch (e) {
-            console.log('Error en cleanup:', e);
           }
         }
 
@@ -71,10 +69,8 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           options
         );
 
-        console.log('✅ HanziWriter inicializado correctamente');
 
       } catch (error) {
-        console.error('❌ Error inicializando HanziWriter:', error);
       }
     };
 
@@ -90,7 +86,6 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
 
       if (writerInstanceRef.current) {
         try {
-          console.log('🧹 Limpiando instancia anterior');
           writerInstanceRef.current._target.innerHTML = '';
           writerInstanceRef.current = null;
         } catch (e) {
@@ -104,7 +99,6 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
     if (writerInstanceRef.current && activeTab === 'view') {
       setIsPlaying(true);
       writerInstanceRef.current.animateCharacter({
-        onComplete: () => setIsPlaying(false)
       });
     }
   };
@@ -125,7 +119,6 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           }, 1000);
         },
         onMistake: () => {
-          console.log('Error - intenta de nuevo');
         }
       });
     }

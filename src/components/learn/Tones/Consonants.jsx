@@ -78,7 +78,6 @@ export default function Consonants({ goBack, speakChinese }) {
 
     syllable = consonantToSyllable[consonantPinyin] || consonantPinyin;
 
-    console.log('🔊 Consonantes - Reproduciendo:', { consonant: consonantPinyin, syllable });
 
     if (speakChinese) {
       speakChinese(syllable, { category: 'pronunciation' });

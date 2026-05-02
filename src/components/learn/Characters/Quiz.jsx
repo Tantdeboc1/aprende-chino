@@ -66,7 +66,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
 
           {/* Selector de modo */}
           <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 mb-4">
-            <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">Tipo de pregunta</h2>
+            <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">{t('quiz_question_type_label')}</h2>
             <div className="grid grid-cols-3 gap-2">
               {QUIZ_MODES.map(m => (
                 <button
@@ -133,7 +133,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
           <h2 className="text-3xl font-bold text-white mb-4">{t('quiz_completed_title')}</h2>
           <p className="text-5xl font-bold text-red-400 mb-6">{score}/{questions.length}</p>
           <p className="text-gray-300 mb-6">
-            {score >= 8 ? '¡Excelente trabajo!' : score >= 6 ? '¡Bien hecho!' : '¡Sigue practicando!'}
+            {score >= 8 ? t('quiz_result_excellent') : score >= 6 ? t('quiz_result_good') : t('quiz_result_keep_going')}
           </p>
           <div className="flex gap-3">
             <button onClick={() => setShowInstructions(true)} className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition">

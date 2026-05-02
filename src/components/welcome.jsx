@@ -13,7 +13,6 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
     setIsActivatingAudio(true);
 
     try {
-      console.log('🔊 Activando audio desde botón Comenzar...');
 
       // 🔥 DESBLOQUEAR AUDIO DIRECTAMENTE DESDE EL CLICK
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -26,7 +25,6 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
       source.connect(audioContext.destination);
       source.start(0);
 
-      console.log('✅ Audio desbloqueado');
 
       // Llamar la inicialización de audio de App.jsx
       if (onAudioInit) {
@@ -37,7 +35,6 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
       handleWelcome();
 
     } catch (error) {
-      console.error('⚠️ Error activando audio:', error);
       // Continuar de todos modos
       handleWelcome();
     } finally {

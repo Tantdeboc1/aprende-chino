@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { playAudioSmart } from "../../../utils/audio";
 import { useTranslation } from "react-i18next";
+import { shuffle } from '@/utils/arrayUtils.js';
 
 /**
  * Quiz de pronunciación (consonantes y vocales)
@@ -20,7 +21,6 @@ const MAX_Q = 10;
 
 // Utilidad
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-function shuffle(a){ return a.map(x=>[Math.random(),x]).sort((u,v)=>u[0]-v[0]).map(x=>x[1]); }
 
 /**
  * Para cada objetivo (ej. "b" o "a") generamos una lista de candidatos de audio

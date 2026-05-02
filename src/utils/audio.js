@@ -40,7 +40,6 @@ class AudioCompressor {
     }
 
     if (this.audioContext && this.audioContext.state === 'suspended') {
-      console.log('🔓 Desbloqueando AudioContext para iOS...');
       try {
         await this.audioContext.resume();
 
@@ -52,9 +51,7 @@ class AudioCompressor {
         source.start(0);
 
         this.audioContextUnlocked = true;
-        console.log('✅ AudioContext desbloqueado para iOS');
       } catch (error) {
-        console.warn('⚠️ Error desbloqueando AudioContext:', error);
       }
     }
   }
@@ -79,9 +76,7 @@ class AudioCompressor {
       this.compressor.connect(this.gainNode);
       this.gainNode.connect(this.audioContext.destination);
 
-      console.log('🎵 AudioContext creado, estado:', this.audioContext.state);
     } catch (error) {
-      console.warn('⚠️ AudioContext no disponible, usando audio normal');
     }
   }
 
@@ -90,7 +85,6 @@ class AudioCompressor {
 
     // 🔥 EN iOS, USAR SIEMPRE AUDIO NORMAL (MÁS COMPATIBLE)
     if (this.isIOS) {
-      console.log('📱 iOS detectado - usando Audio() directo');
       return this.playNormalAudio(src, audioKey);
     }
 
@@ -105,11 +99,9 @@ class AudioCompressor {
 
     // 🔥 Si el contexto está suspendido, intentar reanudar
     if (this.audioContext.state === 'suspended') {
-      console.log('⏸️ AudioContext suspendido, intentando reanudar...');
       try {
         await this.audioContext.resume();
       } catch (error) {
-        console.warn('⚠️ No se pudo reanudar AudioContext, usando audio normal');
         return this.playNormalAudio(src, audioKey);
       }
     }
@@ -122,7 +114,6 @@ class AudioCompressor {
       const volume = this.analyzeVolume(audioBuffer);
       this.volumeCache.set(audioKey, volume);
 
-      console.log('🔊', audioKey, '-> Volumen:', volume.toFixed(3));
 
       let volumeMultiplier = this.calculateVolumeMultiplier(volume);
 
@@ -139,7 +130,6 @@ class AudioCompressor {
         setTimeout(() => resolve(true), 5000);
       });
     } catch (error) {
-      console.warn('❌ Error con compresor, usando audio normal:', error);
       return this.playNormalAudio(src, audioKey);
     }
   }
@@ -164,28 +154,22 @@ class AudioCompressor {
 
   calculateVolumeMultiplier(volume) {
     if (volume > 0.25) {
-      console.log('🔇🔇 ARCHIVO MUY ALTO - Reducción fuerte');
       return 0.25;
     } else if (volume > 0.18) {
-      console.log('🔇 Archivo alto - Reducción media-fuerte');
       return 0.40;
     } else if (volume > 0.12) {
-      console.log('🔈 Archivo medio-alto - Reducción media');
       return 0.60;
     } else if (volume > 0.07) {
-      console.log('🔉 Archivo normal');
       return 0.85;
     } else if (volume > 0.03) {
       return 1.0;
     } else {
-      console.log('🔊 Archivo muy bajo - Pequeño boost');
       return 1.1;
     }
   }
 
   playNormalAudio(src, audioKey) {
     return new Promise((resolve, reject) => {
-      console.log('🎵 Intentando reproducir audio normal:', src);
 
       const audio = new Audio();
 
@@ -197,7 +181,6 @@ class AudioCompressor {
       if (cachedVolume !== undefined) {
         const multiplier = this.calculateVolumeMultiplier(cachedVolume);
         audio.volume = Math.min(0.8, multiplier * 0.8);
-        console.log('🎚️ Fallback con volumen:', audioKey, '->', audio.volume.toFixed(2));
       } else {
         audio.volume = 0.8; // 🔥 VOLUMEN MÁS ALTO PARA iOS
       }
@@ -205,18 +188,15 @@ class AudioCompressor {
       let hasEnded = false;
 
       audio.onended = () => {
-        console.log('✅ Audio terminado:', audioKey);
         hasEnded = true;
         resolve(true);
       };
 
       audio.onerror = (e) => {
-        console.error('❌ Error reproduciendo audio:', src, e);
         reject(new Error(`No se pudo reproducir ${src}`));
       };
 
       audio.oncanplaythrough = () => {
-        console.log('📥 Audio cargado y listo:', audioKey);
       };
 
       // 🔥 ASIGNAR SRC Y REPRODUCIR
@@ -230,17 +210,14 @@ class AudioCompressor {
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
-              console.log('▶️ Audio reproduciéndose:', audioKey);
               // Timeout de seguridad
               setTimeout(() => {
                 if (!hasEnded) {
-                  console.log('⏱️ Timeout - considerando audio terminado');
                   resolve(true);
                 }
               }, 5000);
             })
             .catch(error => {
-              console.error('❌ Error en play():', error.name, error.message);
               reject(error);
             });
         } else {
@@ -340,7 +317,6 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
         await audioCompressor.playCompressedAudio(`${base}${candidate}`, name);
         return true;
       } catch (error) {
-        console.error('❌ Error reproduciendo MP3:', candidate, error);
       }
     }
   }

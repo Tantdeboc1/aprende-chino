@@ -48,11 +48,6 @@ export async function speakChinese(keyOrObj, opts = {}) {
     fallbackText = keyOrObj.hanzi || keyOrObj.pinyin || '';
   }
 
-  console.log('🔊 Procesando audio simplificado:', {
-    input: keyOrObj,
-    key,
-    fallbackText
-  });
 
   try {
     onStart && onStart();
@@ -82,7 +77,6 @@ export async function speakChinese(keyOrObj, opts = {}) {
 
         // Si no se encontró MP3 para esta sílaba, usar TTS inmediatamente
         if (!played) {
-          console.log('🔊 Usando TTS para sílaba:', syl);
           await playAudioSmart(category, syl, syl);
         }
       }
@@ -94,7 +88,6 @@ export async function speakChinese(keyOrObj, opts = {}) {
     }
 
     // SI NO ES PINYIN O NO SE ENCONTRÓ MP3, USAR TTS DIRECTAMENTE
-    console.log('🔊 Usando TTS directo para:', fallbackText || key);
     await playAudioSmart(category, key || fallbackText, fallbackText || key);
     onEnd && onEnd();
 

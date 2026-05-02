@@ -48,7 +48,6 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
         radical: correctRadical.radical,
         pinyin: correctRadical.pinyin,
         correctAnswer: correctRadical.meaning,
-        options: allOptions
       });
     }
 

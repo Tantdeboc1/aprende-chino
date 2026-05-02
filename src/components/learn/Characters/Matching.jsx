@@ -14,7 +14,8 @@ function pickN(arr, n) {
 
 export default function Matching({
   goBack,
-  characters = []
+  characters = [],
+  onTrackSeen,
 }) {
   const { t } = useTranslation();
   const [pairs, setPairs] = useState([]);

@@ -35,7 +35,6 @@ export default function SplashScreen({ progress, onComplete }) {
           delayBetweenStrokes: 80,
           showOutline: true,
           showCharacter: false,
-          outlineColor: '#374151',
         });
         writerInst.current = writer;
 

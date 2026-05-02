@@ -57,7 +57,7 @@ export function markWordResult(progress, lessonNum, char, correct) {
     seen: true,
     correct: newCorrect,
     incorrect: newIncorrect,
-    mastered: newCorrect >= 3 && newIncorrect === 0,
+    mastered: newCorrect >= 3 && (newCorrect / (newCorrect + newIncorrect)) >= 0.75,
   };
   // Inicializar tarjeta SRS si es la primera vez que se ve la palabra
   updated = initSRSCard(updated, char);

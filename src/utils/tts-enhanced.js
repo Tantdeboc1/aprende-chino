@@ -22,16 +22,13 @@ function speakWithTTS(text) {
       utterance.volume = 1.0;
 
       utterance.onend = () => {
-        console.log('✅ TTS completado:', text);
         resolve();
       };
 
       utterance.onerror = (event) => {
-        console.error('❌ Error en TTS:', event);
         reject(event);
       };
 
-      console.log('🔊 Reproduciendo TTS:', text);
       window.speechSynthesis.speak(utterance);
 
       // Timeout de seguridad (10 segundos)
@@ -40,7 +37,6 @@ function speakWithTTS(text) {
       }, 10000);
 
     } catch (error) {
-      console.error('❌ Error configurando TTS:', error);
       reject(error);
     }
   });
@@ -69,15 +65,8 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
     hanzi = keyOrObj.hanzi || '';
   }
 
-  console.log('🔊 Sistema mejorado procesando:', {
-    input: keyOrObj,
-    pinyin,
-    hanzi
-  });
-
   // Validar que tengamos algo para reproducir
   if (!pinyin && !hanzi) {
-    console.log('❌ Sin texto para reproducir');
     return;
   }
 
@@ -85,46 +74,37 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
     onStart && onStart();
 
     // 🎯 ESTRATEGIA 1: Intentar palabra completa (sin TTS fallback)
-    console.log('🔊 Paso 1: Intentando MP3 palabra completa:', pinyin);
     const mp3Found = await playAudioSmart(category, pinyin, null);
 
     if (mp3Found) {
-      console.log('✅ MP3 palabra completa reproducido');
       onEnd && onEnd();
       return;
     }
 
-    console.log('⚠️ MP3 palabra completa no encontrado');
 
     // 🎯 ESTRATEGIA 2: Si es pinyin, intentar sílaba por sílaba
     if (pinyin && /^[a-zA-ZüÜvV\s-]+\d?$/.test(pinyin)) {
-      console.log('🔊 Paso 2: Intentando sílabas individuales');
 
       // Dividir en sílabas
       const syllables = pinyin.split(/[\s-]+/).filter(Boolean);
-      console.log('📝 Sílabas detectadas:', syllables);
 
       if (syllables.length > 1) {
         let hasMP3 = false;
 
         for (const syl of syllables) {
-          console.log('🔊 Intentando sílaba:', syl);
           const sylFound = await playAudioSmart(category, syl, null);
 
           if (sylFound) {
-            console.log('✅ Sílaba encontrada en MP3:', syl);
             hasMP3 = true;
             // Pequeña pausa entre sílabas
             await new Promise(resolve => setTimeout(resolve, 200));
           } else {
-            console.log('⚠️ Sílaba no encontrada en MP3:', syl);
             // No hacer nada aquí, seguimos intentando las demás
           }
         }
 
         // Si encontramos al menos un MP3, consideramos éxito parcial
         if (hasMP3) {
-          console.log('⚠️ Audio reproducido parcialmente. Usando TTS para pronunciación completa:', hanzi);
           // Reproducir TTS completo para que escuchen la palabra correcta
           await speakWithTTS(hanzi);
           onEnd && onEnd();
@@ -134,13 +114,11 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
     }
 
     // 🎯 ESTRATEGIA 3: Fallback final - TTS directo con hanzi completo
-    console.log('🔊 Paso 3: Usando TTS directo con hanzi:', hanzi || pinyin);
     await speakWithTTS(hanzi || pinyin);
 
     onEnd && onEnd();
 
   } catch (e) {
-    console.error('❌ Error en speakChineseEnhanced:', e);
     onError && onError(e);
   }
 }
@@ -152,6 +130,5 @@ export function cancelSpeak() {
   try {
     window.speechSynthesis?.cancel?.();
   } catch (e) {
-    console.error('Error cancelando síntesis de voz:', e);
   }
 }

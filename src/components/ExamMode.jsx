@@ -3,17 +3,9 @@ import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { saveExamResult, getExamHistory } from '@/utils/progress.js';
 import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Trophy, BookOpen, Clock } from 'lucide-react';
+import { shuffle } from '@/utils/arrayUtils.js';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 function buildQuestions(characters) {
   const pool = characters.filter(c => c.char && c.meaning);

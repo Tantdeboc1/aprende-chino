@@ -54,7 +54,6 @@ export default function Vowels({ goBack, speakChinese }) {
     const syllableBase = vowelToSyllable[vowelChar] || vowelChar;
     pinyin = `${syllableBase}${tone}`;
 
-    console.log('🔊 Vocales - Reproduciendo:', { vowel: vowelChar, tone, syllable: pinyin });
 
     if (speakChinese) {
       speakChinese(pinyin, { category: 'pronunciation' });

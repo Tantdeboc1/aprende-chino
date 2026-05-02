@@ -80,7 +80,6 @@ export default function RadicalsDaily({ goBack, radicals }) {
         targetChar: targetChar,
         correctAnswer: correctRadical.radical,
         options: allOptions,
-        radicalMeaning: correctRadical.meaning
       });
     }
 

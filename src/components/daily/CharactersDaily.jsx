@@ -3,9 +3,9 @@ import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import Card from "@/components/ui/Card.jsx";
 import { useTranslation } from "react-i18next";
+import { MAX_ATTEMPTS } from '@/utils/daily-logic.js';
 
 // === Self-contained Daily.jsx (MODO OSCURO) ===
-const MAX_ATTEMPTS = 5;
 const STORAGE_KEY = "dailyProgress_v1";
 const INDEX_KEY = "dailyIndex_v1";
 const BASE = (import.meta && import.meta.env && import.meta.env.BASE_URL) ? import.meta.env.BASE_URL : '/';
@@ -323,3 +323,6 @@ function Daily({ goBack }) {
 }
 
 export default Daily;
+
+  );
+}

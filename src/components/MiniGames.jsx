@@ -51,7 +51,6 @@ export default function MiniGames({ goBack, navigateTo }) {
     } else if (gameId === 'global-exam') {
       navigateTo('global-exam');
     } else {
-      console.log('Navegando a:', gameId);
     }
   };
 

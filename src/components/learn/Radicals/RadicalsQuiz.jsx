@@ -81,7 +81,6 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         targetChar: targetChar,
         correctAnswer: correctRadical.radical,
         options: allOptions,
-        radicalMeaning: correctRadical.meaning
       });
     }
 

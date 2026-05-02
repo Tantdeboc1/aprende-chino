@@ -68,7 +68,6 @@ export default function DailyIndex({ goBack, setDailySection }) {
               key={challenge.id}
               variant="card"
               onClick={() => {
-                console.log('🟡 Click en:', challenge.id);
                 setDailySection(challenge.id);
               }}
               className={`bg-gray-800 border border-gray-700 ${getBorderColor(challenge.color)}`}

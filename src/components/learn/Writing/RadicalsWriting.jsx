@@ -36,7 +36,6 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
     const initWriter = async () => {
       if (!currentRadical || !writerRef.current || !mounted) return;
 
-      console.log('🔄 Inicializando HanziWriter para:', currentRadical.char);
 
       try {
         // Limpiar instancia anterior
@@ -83,10 +82,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           writer.showOutline();
         }
 
-        console.log('✅ HanziWriter inicializado correctamente');
 
       } catch (error) {
-        console.error('❌ Error inicializando HanziWriter:', error);
       }
     };
 
@@ -103,7 +100,6 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const animateCharacter = async () => {
     if (!writerInstanceRef.current || activeTab !== 'view') return;
 
-    console.log('🎬 Iniciando animación de trazos');
     setIsPlaying(true);
 
     try {
@@ -122,12 +118,10 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       // 5. Ejecutar animación
       writerInstanceRef.current.animateCharacter({
         onComplete: () => {
-          console.log('✅ Animación completada');
           setIsPlaying(false);
         }
       });
     } catch (error) {
-      console.error('❌ Error en animación:', error);
       setIsPlaying(false);
     }
   };
@@ -136,7 +130,6 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const startPractice = async () => {
     if (!writerInstanceRef.current || activeTab !== 'practice') return;
 
-    console.log('🎯 Iniciando modo práctica');
     setIsPlaying(true);
 
     try {
@@ -150,7 +143,6 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       // 3. Iniciar quiz
       writerInstanceRef.current.quiz({
         onComplete: () => {
-          console.log('✅ Práctica completada');
           setIsPlaying(false);
           // Mostrar carácter completo al finalizar
           setTimeout(() => {
@@ -160,21 +152,17 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           }, 500);
         },
         onMistake: (strokeNum) => {
-          console.log('❌ Error en trazo:', strokeNum);
         },
         onStrokeStatusChange: (data) => {
-          console.log('📝 Estado del trazo:', data);
         }
       });
     } catch (error) {
-      console.error('❌ Error iniciando práctica:', error);
       setIsPlaying(false);
     }
   };
 
   const resetPractice = () => {
     if (writerInstanceRef.current && activeTab === 'practice') {
-      console.log('🔄 Reiniciando práctica');
       writerInstanceRef.current.cancelQuiz();
       writerInstanceRef.current.hideCharacter();
       writerInstanceRef.current.showOutline();
@@ -201,12 +189,6 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
     setIsPlaying(false);
   };
 
-  // Debug info
-  console.log('📊 Radicales:', {
-    total: radicals.length,
-    validos: validRadicals.length,
-    actual: currentRadical?.char
-  });
 
   if (validRadicals.length === 0) {
     return (

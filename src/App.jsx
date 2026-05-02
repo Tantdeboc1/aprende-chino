@@ -1,5 +1,6 @@
 import { assetUrl } from './utils/assets';
 import { useState, useEffect, useMemo, Suspense, lazy } from "react";
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 import ExamMode from './components/ExamMode.jsx';
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
@@ -170,7 +171,6 @@ export default function App() {
               pinyinPlain: pNum.replace(/[1-4]/g, '').replace(/\s+/g, ''),
               tone: toneFromNumeric(pNum), audioKeys: audioKeysFromNumeric(pNum),
               lesson: lesson.lesson, lessonTitle: lesson.titleEs,
-              isSupplementary: word.isSupplementary || false,
             });
           }
         }
@@ -503,13 +503,15 @@ export default function App() {
     }
     return (
       <Layout activeScreen={screen} onNavigate={handleBottomNav}>
-        <Suspense fallback={
-          <div className="min-h-screen flex items-center justify-center">
-            <p className="text-gray-500 text-sm animate-pulse">Cargando...</p>
-          </div>
-        }>
-          <CurrentComponent {...componentProps} />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          }>
+            <CurrentComponent {...componentProps} />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }
@@ -521,5 +523,8 @@ export default function App() {
         <p className="text-gray-400">Pantalla desconocida: {screen}</p>
       </div>
     </Layout>
+  );
+}
+/Layout>
   );
 }

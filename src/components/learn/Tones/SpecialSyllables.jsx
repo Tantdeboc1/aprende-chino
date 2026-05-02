@@ -49,7 +49,6 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
     // En tu manifest tienes: zhi1, chi1, shi1, ri1, zi1, ci1, si1, etc.
     const syllableWithTone = `${pin}1`;
 
-    console.log('🔊 Sílabas Completas - Reproduciendo:', syllableWithTone);
 
     if (typeof speakChinese === "function") {
       speakChinese(syllableWithTone, { category: 'pronunciation' });

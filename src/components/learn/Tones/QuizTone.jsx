@@ -135,7 +135,6 @@ export default function QuizTone({ goBack, speakChinese }) {
   const q = questions[idx];
 
   const listen = () => {
-    console.log('🔊 QuizTone - Reproduciendo:', q.pinyinToSpeak);
     if (typeof speakChinese === 'function') {
       speakChinese(q.pinyinToSpeak, { category: 'pronunciation' });
     }
