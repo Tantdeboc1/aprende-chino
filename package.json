@@ -11,7 +11,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "vite build --base=/aprende-chino/",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
