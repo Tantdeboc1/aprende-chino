@@ -39,6 +39,14 @@ export default function MiniGames({ goBack, navigateTo }) {
       color: 'yellow',
       active: true,
     },
+    {
+      id: 'translation-game',
+      title: t('minigames_translation_title'),
+      description: t('minigames_translation_description'),
+      icon: '📝',
+      color: 'purple',
+      active: true,
+    },
   ];
 
   const handleGameClick = (gameId) => {
@@ -50,7 +58,8 @@ export default function MiniGames({ goBack, navigateTo }) {
       navigateTo('pinyin-connection');
     } else if (gameId === 'global-exam') {
       navigateTo('global-exam');
-    } else {
+    } else if (gameId === 'translation-game') {
+      navigateTo('translation-game');
     }
   };
 

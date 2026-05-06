@@ -269,6 +269,7 @@ export default function App() {
     : screen === 'sov-game' ? 'sov-game'
     : screen === 'time-race' ? 'time-race'
     : screen === 'pinyin-connection' ? 'pinyin-connection'
+    : screen === 'translation-game' ? 'translation-game'
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
@@ -283,6 +284,7 @@ export default function App() {
     else if (key === 'time-race') { setPrevScreen(screen); setScreen('time-race'); }
     else if (key === 'pinyin-connection') { setPrevScreen(screen); setScreen('pinyin-connection'); }
     else if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
+    else if (key === 'translation-game') { setPrevScreen(screen); setScreen('translation-game'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -491,7 +493,8 @@ export default function App() {
 
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
-      screen === 'sov-game' || screen === 'time-race' || screen === 'pinyin-connection') {
+      screen === 'sov-game' || screen === 'time-race' || screen === 'pinyin-connection' ||
+      screen === 'translation-game') {
     if (!CurrentComponent) {
       return (
         <Layout activeScreen={screen} onNavigate={handleBottomNav}>

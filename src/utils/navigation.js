@@ -30,6 +30,7 @@ const TonesDaily       = lazy(() => import('@/components/daily/TonesDaily.jsx'))
 const TimeRace         = lazy(() => import('@/components/minigames/TimeRace.jsx'));
 const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
 const SOVGame          = lazy(() => import('@/components/minigames/SOVGame.jsx'));
+const TranslationGame  = lazy(() => import('@/components/minigames/TranslationGame.jsx'));
 
 export function useNavigation(
   screen,
@@ -163,6 +164,13 @@ export function useNavigation(
         goBack: () => { navigateTo('minigames'); },
         characters,
         onTrackResult,
+      };
+    }
+
+    if (screen === 'translation-game') {
+      Component = TranslationGame;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
       };
     }
 
