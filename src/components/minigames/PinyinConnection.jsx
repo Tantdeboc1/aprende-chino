@@ -3,6 +3,7 @@ import { ArrowLeft, RefreshCw, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 // --- Helpers ---
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
@@ -55,9 +56,11 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
     if (isCorrect) {
       setScore(s => s + 10);
       setFeedback('correct');
+      hapticSuccess();
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; });
       setFeedback('incorrect');
+      hapticError();
     }
     onTrackResult?.(currentQuestion.charObj, isCorrect);
 

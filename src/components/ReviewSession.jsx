@@ -28,15 +28,47 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
 
       <div className="flex-1 flex flex-col justify-center px-4 gap-4 max-w-sm mx-auto w-full">
         {bothEmpty ? (
-          /* Sin nada en el SRS */
-          <div className="text-center py-10">
-            <div className="text-5xl mb-4">📚</div>
+          /* Sin nada en el SRS — estado vacío motivacional */
+          <div className="text-center py-8 px-4">
+            {/* Ilustración SVG */}
+            <svg viewBox="0 0 200 160" className="w-48 h-36 mx-auto mb-6 opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="85" r="60" fill="#1f2937" />
+              <rect x="55" y="65" width="40" height="50" rx="4" fill="#374151" stroke="#4b5563" strokeWidth="1.5"/>
+              <rect x="105" y="65" width="40" height="50" rx="4" fill="#374151" stroke="#4b5563" strokeWidth="1.5"/>
+              <line x1="95" y1="65" x2="95" y2="115" stroke="#6b7280" strokeWidth="1"/>
+              <line x1="105" y1="65" x2="105" y2="115" stroke="#6b7280" strokeWidth="1"/>
+              <line x1="63" y1="78" x2="88" y2="78" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="63" y1="85" x2="85" y2="85" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="63" y1="92" x2="88" y2="92" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="112" y1="78" x2="137" y2="78" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="112" y1="85" x2="134" y2="85" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="112" y1="92" x2="137" y2="92" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="100" cy="52" r="14" fill="#1f2937" stroke="#f59e0b" strokeWidth="2"/>
+              <text x="100" y="57" textAnchor="middle" fontSize="14" fill="#f59e0b">✦</text>
+              <circle cx="60" cy="52" r="3" fill="#4b5563"/>
+              <circle cx="140" cy="52" r="3" fill="#4b5563"/>
+            </svg>
             <h2 className="text-xl font-bold text-white mb-2">
               {t('srs_mode_empty', 'Sin palabras en el SRS todavía')}
             </h2>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
               {t('srs_mode_empty_desc', 'Completa algunas lecciones o quizzes primero')}
             </p>
+            <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-4 text-left space-y-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">¿Cómo empezar?</p>
+              <div className="flex items-start gap-3">
+                <span className="text-lg">1️⃣</span>
+                <p className="text-gray-300 text-sm">Ve a <span className="text-white font-semibold">Inicio</span> y abre una lección</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-lg">2️⃣</span>
+                <p className="text-gray-300 text-sm">Completa el <span className="text-white font-semibold">Quiz</span> de la lección</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-lg">3️⃣</span>
+                <p className="text-gray-300 text-sm">¡Vuelve aquí para repasar con el algoritmo SRS!</p>
+              </div>
+            </div>
           </div>
         ) : (
           <>

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -125,6 +126,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
       speakChinese?.({ hanzi: current.sentence, pinyin: current.hint || '' });
     }
     playSound(correct ? 'correct' : 'incorrect');
+    if (correct) hapticSuccess(); else hapticError();
   };
 
   // Siguiente pregunta

@@ -643,6 +643,7 @@ export default {
           translation_ime_label: "Scrivi in pinyin per vedere i candidati:",
           translation_ime_placeholder: "es. laoshi, nimen…",
           translation_ime_help: "Scrivi il pinyin senza toni · Premi Invio o tocca un candidato per aggiungerlo",
+          translation_draw_help: "Disegna un carattere · attendi i candidati · tocca quello corretto",
           translation_clear_button: "Cancella tutto",
           translation_check_button: "Verifica",
           translation_correct: "✓ Corretto!",

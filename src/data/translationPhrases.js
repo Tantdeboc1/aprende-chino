@@ -44,6 +44,7 @@ export const translationPhrases = [
     es: "¿En qué trabajan tus padres?",
     hanzi: "你爸爸妈妈做什么工作？",
     pinyin: "Nǐ bàba māma zuò shénme gōngzuò?",
+    alt: ["你爸爸妈妈做什么工作？", "你父母做什么工作？"],
   },
   {
     id: 8,
@@ -174,6 +175,10 @@ export const pinyinDictionary = {
   // 妈妈
   mama:     [{ hanzi: "妈妈", pinyin: "māma" }],
   ma:       [{ hanzi: "妈", pinyin: "mā" }, { hanzi: "吗", pinyin: "ma" }, { hanzi: "马", pinyin: "mǎ" }],
+  // 父母
+  fumu:     [{ hanzi: "父母", pinyin: "fùmǔ" }],
+  fu:       [{ hanzi: "父", pinyin: "fù" }, { hanzi: "夫", pinyin: "fū" }, { hanzi: "服", pinyin: "fú" }],
+  mu:       [{ hanzi: "母", pinyin: "mǔ" }, { hanzi: "木", pinyin: "mù" }, { hanzi: "目", pinyin: "mù" }],
   // 做
   zuo:      [{ hanzi: "做", pinyin: "zuò" }, { hanzi: "坐", pinyin: "zuò" }, { hanzi: "左", pinyin: "zuǒ" }],
   // 工作

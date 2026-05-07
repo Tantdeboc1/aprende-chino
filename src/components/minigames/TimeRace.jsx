@@ -3,6 +3,7 @@ import { ArrowLeft, RefreshCw, Play, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 // --- Helpers ---
 // Función para barajar un array
@@ -57,9 +58,11 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     if (isCorrect) {
       setScore(s => s + 10); // +10 puntos por acierto
       setFeedback('correct');
+      hapticSuccess();
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; }); // Penalización de 2 segundos
       setFeedback('incorrect');
+      hapticError();
     }
     onTrackResult?.(currentQuestion.charObj, isCorrect);
 

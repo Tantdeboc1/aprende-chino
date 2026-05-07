@@ -1,5 +1,5 @@
 // src/components/learn/Characters/Matching.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 function pickN(arr, n) {
@@ -23,6 +23,8 @@ export default function Matching({
   const [matched, setMatched] = useState([]);
   const [incorrectPair, setIncorrectPair] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
+  const incorrectTimerRef = useRef(null);
+  useEffect(() => () => { if (incorrectTimerRef.current) clearTimeout(incorrectTimerRef.current); }, []);
 
   const init = () => {
     const sample = pickN(characters, Math.min(6, Math.floor(characters.length / 2) || 6));
@@ -68,7 +70,8 @@ export default function Matching({
       } else {
         // Incorrecto - mostrar en rojo
         setIncorrectPair({ firstId: first.id, secondId: item.id });
-        setTimeout(() => {
+        if (incorrectTimerRef.current) clearTimeout(incorrectTimerRef.current);
+        incorrectTimerRef.current = setTimeout(() => {
           setSelected([]);
           setIncorrectPair(null);
         }, 1000);

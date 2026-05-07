@@ -53,32 +53,36 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   const isActive = (key) => {
     if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
+    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam'].includes(activeScreen);
     return activeScreen === key;
   };
 
-  const activeColor = (key) => {
-    if (key === 'review') return 'text-orange-400';
-    return 'text-red-500';
+  const activeAccent = (key) => {
+    if (key === 'review') return { text: 'text-orange-400', dot: 'bg-orange-400', pill: 'bg-orange-900/50' };
+    return { text: 'text-red-400', dot: 'bg-red-500', pill: 'bg-red-900/40' };
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-800 border-t border-gray-700">
-      <div className="max-w-lg mx-auto flex justify-around items-center py-2 pb-3">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/60">
+      <div className="max-w-lg mx-auto flex justify-around items-end pt-1 pb-3">
         {items.map(({ key, label, Icon }) => {
-          const active = isActive(key);
-          const color  = active ? activeColor(key) : 'text-gray-500';
+          const active  = isActive(key);
+          const accent  = activeAccent(key);
           return (
             <button
               key={key}
               onClick={() => onNavigate(key)}
-              className="flex flex-col items-center gap-1 px-3 py-1 transition-colors"
+              className="flex flex-col items-center gap-0.5 px-2 py-1 min-w-[56px] transition-all duration-200 active:scale-95"
             >
-              <span className={color}>
-                <Icon />
+              <span className={`flex items-center justify-center w-12 h-7 rounded-full transition-all duration-200 ${active ? accent.pill : 'bg-transparent'}`}>
+                <span className={`transition-colors duration-200 ${active ? accent.text : 'text-gray-500'}`}>
+                  <Icon />
+                </span>
               </span>
-              <span className={`text-xs font-medium ${color}`}>
+              <span className={`text-[10px] font-semibold leading-none transition-colors duration-200 ${active ? accent.text : 'text-gray-500'}`}>
                 {label}
               </span>
+              {active && <span className={`w-1 h-1 rounded-full mt-0.5 ${accent.dot}`} />}
             </button>
           );
         })}

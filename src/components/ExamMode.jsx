@@ -1,9 +1,10 @@
 // src/components/ExamMode.jsx
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { saveExamResult, getExamHistory } from '@/utils/progress.js';
 import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Trophy, BookOpen, Clock } from 'lucide-react';
 import { shuffle } from '@/utils/arrayUtils.js';
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -189,6 +190,9 @@ export default function ExamMode({
   const [wrongChars, setWrongChars] = useState([]);
   const [score, setScore] = useState(0);
 
+  const feedbackTimerRef = useRef(null);
+  useEffect(() => () => { if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current); }, []);
+
   const history = getExamHistory(progress, lessonNum);
   const total = questions.length;
   const current = questions[qIndex];
@@ -208,11 +212,12 @@ export default function ExamMode({
     setSelected(option.char);
     const isCorrect = option.char === current.correct.char;
     setFeedback(isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) hapticSuccess(); else hapticError();
 
     const newScore = isCorrect ? score + 1 : score;
     const newWrong = isCorrect ? wrongChars : [...wrongChars, current.correct];
 
-    setTimeout(() => {
+    feedbackTimerRef.current = setTimeout(() => {
       if (qIndex + 1 < total) {
         setScore(newScore);
         setWrongChars(newWrong);

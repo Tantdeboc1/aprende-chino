@@ -1,5 +1,5 @@
 import { assetUrl } from './utils/assets';
-import { useState, useEffect, useMemo, Suspense, lazy } from "react";
+import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import ExamMode from './components/ExamMode.jsx';
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
@@ -12,6 +12,60 @@ import Layout from "@/components/ui/Layout.jsx";
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
+
+// ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
+function AnimatedLoader() {
+  const canvasRef = useRef(null);
+  const writerRef = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    let writer = null;
+
+    async function init() {
+      try {
+        const HanziWriter = (await import('hanzi-writer')).default;
+        if (cancelled || !canvasRef.current) return;
+        writer = HanziWriter.create(canvasRef.current, '学', {
+          width: 80,
+          height: 80,
+          padding: 5,
+          strokeColor: '#a855f7',
+          radicalColor: '#c084fc',
+          drawingWidth: 3,
+          showCharacter: false,
+          showOutline: true,
+          outlineColor: '#374151',
+        });
+        writerRef.current = writer;
+        function loop() {
+          if (cancelled) return;
+          writer.animateCharacter({ onComplete: () => { if (!cancelled) setTimeout(loop, 400); } });
+        }
+        loop();
+      } catch (_) {
+        // Si HanziWriter falla, el spinner CSS es el fallback visual
+      }
+    }
+    init();
+    return () => {
+      cancelled = true;
+      writerRef.current = null;
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-900">
+      <div className="relative">
+        {/* Canvas para HanziWriter */}
+        <canvas ref={canvasRef} width={80} height={80} />
+        {/* Anillo giratorio alrededor */}
+        <div className="absolute rounded-full border-2 border-purple-700/30 border-t-purple-500 animate-spin" style={{ width: 92, height: 92, top: -6, left: -6 }} />
+      </div>
+      <p className="text-gray-500 text-xs tracking-widest uppercase animate-pulse">Cargando…</p>
+    </div>
+  );
+}
 
 // ── Persistencia ──────────────────────────────────────────────────────────────
 const LS_USERNAME = 'aprende-chino-username';
@@ -270,6 +324,7 @@ export default function App() {
     : screen === 'time-race' ? 'time-race'
     : screen === 'pinyin-connection' ? 'pinyin-connection'
     : screen === 'translation-game' ? 'translation-game'
+    : screen === 'global-exam' ? 'global-exam'
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
@@ -507,11 +562,7 @@ export default function App() {
     return (
       <Layout activeScreen={screen} onNavigate={handleBottomNav}>
         <ErrorBoundary>
-          <Suspense fallback={
-            <div className="min-h-screen flex items-center justify-center">
-              <div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
-            </div>
-          }>
+          <Suspense fallback={<AnimatedLoader />}>
             <CurrentComponent {...componentProps} />
           </Suspense>
         </ErrorBoundary>

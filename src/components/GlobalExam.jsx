@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { shuffle } from '@/utils/arrayUtils.js';
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 const TOTAL_TIME = 90; // segundos
 const QUESTIONS_PER_ROUND = 20;
@@ -19,7 +20,6 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   const timeRef                     = useRef(TOTAL_TIME);
   const [selected, setSelected]     = useState(null);
   const [feedback, setFeedback]     = useState(null); // null | 'correct' | 'incorrect'
-  const [showConfetti, setShowConfetti] = useState(false);
 
   const pool = allCharacters.filter(c => !c.isSupplementary);
 
@@ -68,6 +68,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
     setSelected(opt);
     const isCorrect = opt === questions[qIndex].correct.meaning;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
+    if (isCorrect) hapticSuccess(); else hapticError();
     if (isCorrect) setScore(s => s + 1);
     else setWrong(w => w + 1);
 
@@ -88,8 +89,8 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   // Pantalla de bienvenida
   if (phase === 'ready') {
     return (
-      <div className="min-h-screen bg-gray-900 p-4">
-        <div className="max-w-lg mx-auto pt-8">
+      <div className="min-h-screen bg-gray-900 p-4 pb-28">
+        <div className="max-w-lg mx-auto pt-6">
           <button onClick={goBack} className="flex items-center text-gray-400 hover:text-white text-sm mb-6 transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-1.5"><path d="M15 18l-6-6 6-6"/></svg>
             {t('exam_back_button')}
@@ -203,11 +204,11 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   const timeColor = timeLeft > 30 ? 'bg-green-500' : timeLeft > 15 ? 'bg-yellow-500' : 'bg-red-500';
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-gray-900 px-4 pb-28 pt-4">
       <div className="max-w-lg mx-auto">
         {/* HUD */}
-        <div className="flex items-center justify-between mb-3 pt-4">
-          <button onClick={goBack} className="text-gray-500 hover:text-white transition-colors">
+        <div className="flex items-center justify-between mb-3 pt-2">
+          <button onClick={goBack} className="text-gray-500 hover:text-white transition-colors p-1">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div className="flex items-center gap-3 text-sm font-semibold">
@@ -226,20 +227,20 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
         </div>
 
         {/* Barra de pregunta */}
-        <div className="h-1 bg-gray-700/50 rounded-full overflow-hidden mb-6">
+        <div className="h-1 bg-gray-700/50 rounded-full overflow-hidden mb-4">
           <div className="h-full bg-yellow-500/60 rounded-full transition-all duration-300" style={{ width: `${progressPct}%` }} />
         </div>
 
         {/* Carácter */}
-        <div className="bg-gray-800 border-2 border-gray-700 rounded-2xl flex items-center justify-center mb-6" style={{ height: '180px' }}>
+        <div className="bg-gray-800 border-2 border-gray-700 rounded-2xl flex items-center justify-center mb-4 py-8 sm:py-12">
           <div className="text-center">
-            <div className="text-8xl font-bold text-white mb-1">{question.correct.char}</div>
-            <div className="text-gray-400 text-base">{question.correct.pinyin}</div>
+            <div className="text-7xl sm:text-8xl font-bold text-white mb-1">{question.correct.char}</div>
+            <div className="text-gray-400 text-sm sm:text-base">{question.correct.pinyin}</div>
           </div>
         </div>
 
         {/* Opciones */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
           {question.options.map((opt, i) => {
             let cls = 'bg-gray-700 hover:bg-gray-600 text-white';
             if (feedback) {
@@ -252,7 +253,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
                 key={i}
                 onClick={() => handleAnswer(opt)}
                 disabled={!!feedback}
-                className={`p-4 rounded-xl font-medium text-sm transition-colors h-16 flex items-center justify-center text-center leading-tight ${cls}`}
+                className={`p-3 rounded-xl font-medium text-sm transition-colors min-h-[60px] sm:min-h-[68px] flex items-center justify-center text-center leading-tight ${cls}`}
               >
                 {opt}
               </button>

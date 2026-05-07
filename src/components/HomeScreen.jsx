@@ -1,9 +1,90 @@
 // src/components/HomeScreen.jsx
-import { useMemo } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
+
+
+// ── Carácter del día con HanziWriter ──────────────────────────────────────────
+function DailyCharacter({ allCharacters }) {
+  const containerRef = useRef(null);
+  const writerRef    = useRef(null);
+  const [status, setStatus] = useState('loading');
+
+  const daily = useMemo(() => {
+    const pool = allCharacters.filter(c => !c.isSupplementary && c.char);
+    if (!pool.length) return null;
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    return pool[dayOfYear % pool.length];
+  }, [allCharacters]);
+
+  useEffect(() => {
+    if (!daily || !containerRef.current) return;
+    setStatus('loading');
+    if (containerRef.current) containerRef.current.innerHTML = '';
+    writerRef.current = null;
+    let cancelled = false;
+
+    import('hanzi-writer').then(({ default: HanziWriter }) => {
+      if (cancelled || !containerRef.current) return;
+      try {
+        const writer = HanziWriter.create(containerRef.current, daily.char, {
+          width: 120,
+          height: 120,
+          padding: 8,
+          strokeColor: '#f9fafb',
+          radicalColor: '#f87171',
+          outlineColor: '#374151',
+          drawingWidth: 5,
+          strokeAnimationSpeed: 0.8,
+          delayBetweenStrokes: 150,
+          showCharacter: false,
+          showOutline: true,
+          onLoadCharDataSuccess: () => {
+            if (!cancelled) { setStatus('ready'); writer.loopCharacterAnimation(); }
+          },
+          onLoadCharDataError: () => { if (!cancelled) setStatus('error'); },
+        });
+        writerRef.current = writer;
+      } catch { if (!cancelled) setStatus('error'); }
+    }).catch(() => { if (!cancelled) setStatus('error'); });
+
+    return () => { cancelled = true; };
+  }, [daily]);
+
+  if (!daily) return null;
+
+  return (
+    <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4 flex items-center gap-4">
+      <div className="relative flex-shrink-0">
+        <div
+          ref={containerRef}
+          className="w-[120px] h-[120px] bg-gray-900/60 rounded-xl border border-gray-700"
+        />
+        {status === 'loading' && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-gray-900/70">
+            <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-xl">
+            <span className="text-5xl font-bold text-white">{daily.char}</span>
+          </div>
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-1">Carácter del día</p>
+        <p className="text-2xl text-white font-bold leading-tight">{daily.char}</p>
+        <p className="text-gray-300 text-sm">{daily.pinyin}</p>
+        <p className="text-gray-400 text-xs mt-1 leading-snug">{daily.meaning}</p>
+        {daily.radical && daily.radical !== '—' && (
+          <p className="text-gray-600 text-xs mt-1">Radical: <span className="text-gray-400">{daily.radical}</span></p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 const LESSONS = [
   {
@@ -81,11 +162,26 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
         </div>
         <p className="text-gray-400 text-xs truncate">{t(lesson.subtitleKey)}</p>
         {stats && stats.total > 0 && (
-          <div className="mt-2 h-1 bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${lesson.color.bar} rounded-full transition-all duration-500`}
-              style={{ width: `${pct}%` }}
-            />
+          <div className="mt-2">
+            <div className="flex items-center justify-between mb-1">
+              <div className="h-2 flex-1 bg-gray-700 rounded-full overflow-hidden">
+                <div
+                  className={`h-full ${lesson.color.bar} rounded-full transition-all duration-500`}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className={`ml-2 text-[11px] font-bold flex-shrink-0 ${masteredPct === 100 ? 'text-green-400' : lesson.color.text}`}>
+                {masteredPct === 100 ? '✓' : `${pct}%`}
+              </span>
+            </div>
+            {masteredPct > 0 && masteredPct < 100 && (
+              <div className="h-1 bg-gray-700/50 rounded-full overflow-hidden">
+                <div
+                  className={`h-full ${lesson.color.bar} opacity-40 rounded-full transition-all duration-500`}
+                  style={{ width: `${masteredPct}%` }}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -155,6 +251,9 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
       {/* Contenido */}
       <div className="px-4 pt-5 space-y-6">
+
+        {/* Carácter del día */}
+        <DailyCharacter allCharacters={allCharacters} />
 
         {/* Tarjeta SRS — solo si hay repasos pendientes o palabras aprendidas */}
         {srsStats.learned > 0 && (

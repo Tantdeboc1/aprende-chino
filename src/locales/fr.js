@@ -657,6 +657,7 @@ export default {
           translation_ime_label: "Écris en pinyin pour voir les candidats :",
           translation_ime_placeholder: "ex : laoshi, nimen…",
           translation_ime_help: "Écris le pinyin sans tons · Appuie sur Entrée ou sur un candidat pour l'ajouter",
+          translation_draw_help: "Tracez un caractère · attendez les candidats · touchez le bon",
           translation_clear_button: "Tout effacer",
           translation_check_button: "Vérifier",
           translation_correct: "✓ Correct !",

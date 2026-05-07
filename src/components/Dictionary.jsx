@@ -4,6 +4,7 @@ import { ArrowLeft, Search, Volume2, Star } from "lucide-react";
 import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
+import CharacterSheet from "@/components/ui/CharacterSheet.jsx";
 
 const LESSON_COLORS = {
   1: { active: 'bg-red-600 text-white border-red-600',    inactive: 'bg-gray-800 text-red-400 border-red-800 hover:border-red-600' },
@@ -59,6 +60,7 @@ export default function Dictionary({
   // ── Favoritos ────────────────────────────────────────────────────────────
   const [favorites, setFavorites] = useState(loadFavorites);
   const [showFavorites, setShowFavorites] = useState(false);
+  const [selectedChar, setSelectedChar] = useState(null);
 
   const toggleFavorite = (char) => {
     setFavorites(prev => {
@@ -221,7 +223,11 @@ export default function Dictionary({
             const isFav   = favorites.has(char.char);
 
             return (
-              <Card key={idx} className="hover:shadow-xl transition bg-gray-800 border border-gray-700 relative">
+              <Card
+                key={idx}
+                onClick={() => setSelectedChar(char)}
+                className="hover:shadow-xl hover:border-gray-500 transition cursor-pointer bg-gray-800 border border-gray-700 relative active:scale-[0.98]"
+              >
                 {/* Cabecera: lección + tipo + SRS dot + favorito */}
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
@@ -306,6 +312,18 @@ export default function Dictionary({
           </div>
         )}
       </Container>
+
+      {/* Bottom-sheet con trazos animados */}
+      {selectedChar && (
+        <CharacterSheet
+          char={selectedChar}
+          onClose={() => setSelectedChar(null)}
+          onSpeak={handleSpeak}
+          onToggleFavorite={toggleFavorite}
+          isFav={favorites.has(selectedChar.char)}
+          progress={progress}
+        />
+      )}
     </div>
   );
 }

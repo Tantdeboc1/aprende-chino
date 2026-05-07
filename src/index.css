@@ -40,6 +40,15 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden; /* Safari */
 }
+/* Animación del bottom-sheet */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
 
 /* Asegurar que todos los componentes tengan fondo oscuro por defecto */
 * {

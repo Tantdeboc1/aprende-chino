@@ -81,7 +81,9 @@ export default function LessonDetail({
   useEffect(() => {
     if (masteredPct === 100 && prevMasteredPct.current < 100) {
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 4000);
+      const t = setTimeout(() => setShowConfetti(false), 4000);
+      prevMasteredPct.current = masteredPct;
+      return () => clearTimeout(t);
     }
     prevMasteredPct.current = masteredPct;
   }, [masteredPct]);

@@ -245,6 +245,7 @@ export default {
           translation_ime_label: "Pinyin eingeben, um Kandidaten zu sehen:",
           translation_ime_placeholder: "z. B. laoshi, nimen…",
           translation_ime_help: "Pinyin ohne Töne eingeben · Enter drücken oder Kandidat antippen, um hinzuzufügen",
+          translation_draw_help: "Zeichen zeichnen · Kandidaten abwarten · richtiges antippen",
           translation_clear_button: "Alles löschen",
           translation_check_button: "Prüfen",
           translation_correct: "✓ Richtig!",
