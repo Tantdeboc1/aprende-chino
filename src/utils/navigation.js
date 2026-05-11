@@ -204,7 +204,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'writing' && writingSection === 'hanzi') {
       Component = HanziWriting;
       props = {
-        goBack: hubOr(() => setWritingSection(null)),
+        goBack: hubOr(goBack),
         characters,
         speakChinese: speak,
         progress,
@@ -215,7 +215,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'writing' && writingSection === 'radicals') {
       Component = RadicalsWriting;
       props = {
-        goBack: hubOr(() => setWritingSection(null)),
+        goBack: hubOr(goBack),
         radicals,
         speakChinese: speak
       };
