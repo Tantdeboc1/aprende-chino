@@ -38,7 +38,17 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
   const initQuiz = (mode = quizMode) => {
     if (!Array.isArray(characters) || characters.length < 4) return;
     const pool = [...characters];
-    const qs   = Array.from({ length: 10 }, () => buildQuestion(mode, pool));
+    const remaining = [...pool];
+    const count = Math.min(10, remaining.length);
+    const qs = [];
+    for (let i = 0; i < count; i++) {
+      if (remaining.length === 0) break;
+      const idx = Math.floor(Math.random() * remaining.length);
+      const correct = remaining.splice(idx, 1)[0];
+      const wrongPool = pool.filter(c => c.char !== correct.char);
+      const options = [...pickN(wrongPool, 3), correct].sort(() => Math.random() - 0.5);
+      qs.push({ correct, options, mode });
+    }
     setQuestions(qs);
     setIndex(0);
     setScore(0);

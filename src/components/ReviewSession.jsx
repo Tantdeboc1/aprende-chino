@@ -12,25 +12,17 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
     <div className="min-h-screen bg-gray-900 flex flex-col pb-24">
       {/* Header */}
       <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-4 flex-shrink-0">
-        <button
-          onClick={goBack}
-          className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm transition-colors mb-3"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-          {t('srs_back', 'Volver')}
-        </button>
-        <h1 className="text-xl font-bold text-white">
-          {t('srs_mode_title', '¿Qué tipo de repaso?')}
+        <h1 className="text-xl font-bold text-white mb-1">
+          {t('srs_mode_title', 'Repaso')}
         </h1>
+        <p className="text-gray-400 text-sm leading-snug">
+          {t('srs_mode_subtitle', 'Refuerza lo aprendido con tarjetas de memoria. Verás un carácter, intenta recordar su significado y luego evalúa cómo de bien lo recordabas.')}
+        </p>
       </div>
 
       <div className="flex-1 flex flex-col justify-center px-4 gap-4 max-w-sm mx-auto w-full">
         {bothEmpty ? (
-          /* Sin nada en el SRS — estado vacío motivacional */
           <div className="text-center py-8 px-4">
-            {/* Ilustración SVG */}
             <svg viewBox="0 0 200 160" className="w-48 h-36 mx-auto mb-6 opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="100" cy="85" r="60" fill="#1f2937" />
               <rect x="55" y="65" width="40" height="50" rx="4" fill="#374151" stroke="#4b5563" strokeWidth="1.5"/>
@@ -49,29 +41,42 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               <circle cx="140" cy="52" r="3" fill="#4b5563"/>
             </svg>
             <h2 className="text-xl font-bold text-white mb-2">
-              {t('srs_mode_empty', 'Sin palabras en el SRS todavía')}
+              {t('srs_mode_empty', 'Sin palabras para repasar')}
             </h2>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              {t('srs_mode_empty_desc', 'Completa algunas lecciones o quizzes primero')}
+              {t('srs_mode_empty_desc', 'Las palabras se añaden aquí automáticamente cuando completas quizzes en las lecciones.')}
             </p>
             <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-4 text-left space-y-2">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">¿Cómo empezar?</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">{t('srs_how_to_start', '¿Cómo empezar?')}</p>
               <div className="flex items-start gap-3">
-                <span className="text-lg">1️⃣</span>
+                <span className="text-lg">1.</span>
                 <p className="text-gray-300 text-sm">Ve a <span className="text-white font-semibold">Inicio</span> y abre una lección</p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg">2️⃣</span>
+                <span className="text-lg">2.</span>
                 <p className="text-gray-300 text-sm">Completa el <span className="text-white font-semibold">Quiz</span> de la lección</p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg">3️⃣</span>
-                <p className="text-gray-300 text-sm">¡Vuelve aquí para repasar con el algoritmo SRS!</p>
+                <span className="text-lg">3.</span>
+                <p className="text-gray-300 text-sm">Vuelve aquí, las palabras aparecerán listas para repasar</p>
               </div>
             </div>
           </div>
         ) : (
           <>
+            {/* Explicación breve del flujo */}
+            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 mb-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('srs_how_it_works', '¿Cómo funciona?')}</p>
+              <div className="space-y-1.5 text-gray-400 text-sm">
+                <p>1. Aparece un carácter chino</p>
+                <p>2. Intenta recordar su pinyin y significado</p>
+                <p>3. Toca la tarjeta para ver la respuesta</p>
+                <p>4. Evalúa cómo de bien lo recordabas</p>
+              </div>
+            </div>
+
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">{t('srs_choose_mode', 'Elige un modo')}</p>
+
             {/* Opción A: Pendientes */}
             <button
               onClick={() => dueCount > 0 && onSelect('due')}
@@ -84,17 +89,15 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">🎯</span>
                     <span className="text-white font-bold text-base">
-                      {t('srs_mode_due_title', 'Pendientes')}
+                      {t('srs_mode_due_title', 'Repaso del día')}
                     </span>
                   </div>
                   <p className="text-gray-400 text-sm leading-snug">
                     {dueCount > 0
-                      ? t('srs_mode_due_count', '{{count}} tarjetas vencidas hoy', { count: dueCount })
-                      : t('srs_mode_due_empty', 'Sin repasos pendientes ahora')}
+                      ? t('srs_mode_due_count', '{{count}} palabras listas para repasar hoy', { count: dueCount })
+                      : t('srs_mode_due_empty', 'Ya repasaste todo por hoy. Vuelve mañana.')}
                   </p>
-                  <p className="text-gray-600 text-xs mt-1">Orden aleatorio · Algoritmo SM-2</p>
                 </div>
                 {dueCount > 0 && (
                   <span className="bg-red-500/20 text-red-400 font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0">
@@ -116,16 +119,12 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">💔</span>
                     <span className="text-white font-bold text-base">
-                      {t('srs_mode_weak_title', 'Palabras débiles')}
+                      {t('srs_mode_weak_title', 'Palabras difíciles')}
                     </span>
                   </div>
                   <p className="text-gray-400 text-sm leading-snug">
-                    {t('srs_mode_weak_desc', 'Ignora el calendario — repasa las que más te cuestan')}
-                  </p>
-                  <p className="text-gray-600 text-xs mt-1">
-                    {t('srs_mode_weak_count', 'Top {{count}} con peor puntuación', { count: weakCount })}
+                    {t('srs_mode_weak_desc', 'Practica extra con las que más te cuestan, sin importar el calendario')}
                   </p>
                 </div>
                 {weakCount > 0 && (
@@ -153,7 +152,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           className="w-full max-w-sm aspect-square bg-gray-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-gray-500 active:scale-[0.98] transition-all shadow-xl"
         >
           <span className="text-8xl font-bold text-white leading-none">{word.char}</span>
-          <span className="text-gray-500 text-sm mt-2">Toca para ver</span>
+          <span className="text-gray-500 text-sm mt-2">{t('srs_tap_hint', '¿Recuerdas qué significa? Toca para ver')}</span>
         </button>
       ) : (
         /* REVERSO — pinyin + significado + ejemplos */
