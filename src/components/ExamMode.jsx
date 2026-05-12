@@ -108,18 +108,36 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam, t, language }) {
 
 // ── Pantalla de resultados ───────────────────────────────────────────────────
 
-function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
+function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t, elapsedSecs, maxStreak }) {
+  const { i18n } = useTranslation();
   const pct = Math.round((score / total) * 100);
+  const mins = Math.floor(elapsedSecs / 60);
+  const secs = elapsedSecs % 60;
+  const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
 
   return (
     <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto">
         {/* Puntuación */}
-        <div className="text-center py-10">
+        <div className="text-center py-8">
           <Trophy className={`w-16 h-16 mx-auto mb-4 ${gradeColor(pct)}`} />
           <p className={`text-6xl font-bold mb-2 ${gradeColor(pct)}`}>{pct}%</p>
           <p className="text-gray-300 text-lg mb-1">{t('exam_results_score', { score, total })}</p>
           <p className="text-gray-400 font-semibold">{gradeLabel(pct, t)}</p>
+        </div>
+
+        {/* Stats de sesión */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="bg-gray-800 border border-gray-700 rounded-xl py-3 px-4 text-center">
+            <p className="text-2xl font-bold text-blue-400">{timeStr}</p>
+            <p className="text-xs text-gray-500 mt-0.5">{t('exam_total_time')}</p>
+          </div>
+          <div className="bg-gray-800 border border-gray-700 rounded-xl py-3 px-4 text-center">
+            <p className="text-2xl font-bold text-orange-400">
+              {maxStreak > 0 ? `🔥 ${maxStreak}` : '—'}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">{t('exam_max_streak')}</p>
+          </div>
         </div>
 
         {/* Repaso de errores */}
@@ -134,7 +152,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
                 <div key={i} className="bg-gray-800 border border-red-900 rounded-xl p-3 text-center">
                   <div className="text-3xl text-white mb-1">{w.char}</div>
                   <div className="text-sm text-gray-400">{w.pinyin}</div>
-                  <div className="text-xs text-red-300 font-semibold mt-1">{w.meaning}</div>
+                  <div className="text-xs text-red-300 font-semibold mt-1">{w.meanings?.[i18n.language] || w.meaning}</div>
                 </div>
               ))}
             </div>
@@ -190,6 +208,12 @@ export default function ExamMode({
   const [wrongChars, setWrongChars] = useState([]);
   const [score, setScore] = useState(0);
 
+  // Estadísticas de sesión
+  const startTimeRef = useRef(Date.now());
+  const streakRef    = useRef(0);
+  const maxStreakRef = useRef(0);
+  const [elapsedSecs, setElapsedSecs] = useState(0);
+
   const feedbackTimerRef = useRef(null);
   useEffect(() => () => { if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current); }, []);
 
@@ -205,6 +229,9 @@ export default function ExamMode({
     setWrongChars([]);
     setScore(0);
     setPhase('exam');
+    startTimeRef.current = Date.now();
+    streakRef.current    = 0;
+    maxStreakRef.current = 0;
   }, [characters]);
 
   const handleSelect = (option) => {
@@ -212,7 +239,14 @@ export default function ExamMode({
     setSelected(option.char);
     const isCorrect = option.char === current.correct.char;
     setFeedback(isCorrect ? 'correct' : 'wrong');
-    if (isCorrect) hapticSuccess(); else hapticError();
+    if (isCorrect) {
+      hapticSuccess();
+      streakRef.current++;
+      if (streakRef.current > maxStreakRef.current) maxStreakRef.current = streakRef.current;
+    } else {
+      hapticError();
+      streakRef.current = 0;
+    }
 
     const newScore = isCorrect ? score + 1 : score;
     const newWrong = isCorrect ? wrongChars : [...wrongChars, current.correct];
@@ -225,6 +259,8 @@ export default function ExamMode({
         setSelected(null);
         setFeedback(null);
       } else {
+        const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000);
+        setElapsedSecs(elapsed);
         const updated = saveExamResult(progress, lessonNum, {
           score: newScore,
           total,
@@ -262,6 +298,8 @@ export default function ExamMode({
         onRetry={restart}
         onBack={goBack}
         t={t}
+        elapsedSecs={elapsedSecs}
+        maxStreak={maxStreakRef.current}
       />
     );
   }
@@ -323,7 +361,7 @@ export default function ExamMode({
 
         {/* Lección */}
         <p className="text-xs text-gray-500 uppercase tracking-widest text-center mb-2">
-          {lessonData?.titleEs || t('exam_lesson_label', { num: lessonNum })}
+          {t('exam_lesson_label', { num: lessonNum })}
         </p>
 
         {/* Pregunta */}
@@ -360,7 +398,7 @@ export default function ExamMode({
                 {feedback && isSelected && !isCorrect && (
                   <XCircle className="w-4 h-4 text-red-400 absolute top-2 right-2" />
                 )}
-                <span className="text-sm leading-snug">{opt.meaning}</span>
+                <span className="text-sm leading-snug">{opt.meanings?.[i18n.language] || opt.meaning}</span>
               </button>
             );
           })}

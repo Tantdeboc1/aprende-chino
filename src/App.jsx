@@ -2,6 +2,8 @@ import { assetUrl } from './utils/assets';
 import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import ExamMode from './components/ExamMode.jsx';
+import { MusicProvider } from './context/MusicContext.jsx';
+import { useTranslation } from 'react-i18next';
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
 import LessonDetail from './components/LessonDetail.jsx';
@@ -15,6 +17,7 @@ import { useNavigation } from './utils/navigation.js';
 
 // ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
 function AnimatedLoader() {
+  const { t } = useTranslation();
   const canvasRef = useRef(null);
   const writerRef = useRef(null);
 
@@ -62,7 +65,7 @@ function AnimatedLoader() {
         {/* Anillo giratorio alrededor */}
         <div className="absolute rounded-full border-2 border-purple-700/30 border-t-purple-500 animate-spin" style={{ width: 92, height: 92, top: -6, left: -6 }} />
       </div>
-      <p className="text-gray-500 text-xs tracking-widest uppercase animate-pulse">Cargando…</p>
+      <p className="text-gray-500 text-xs tracking-widest uppercase animate-pulse">{t('loader_loading')}</p>
     </div>
   );
 }
@@ -72,7 +75,8 @@ const LS_USERNAME = 'aprende-chino-username';
 function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
 function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
 
-export default function App() {
+function App() {
+  const { t } = useTranslation();
   // Forzar modo oscuro
   useEffect(() => {
     const force = () => {
@@ -220,11 +224,13 @@ export default function App() {
             const pNum = word.pinyin || '';
             enriched.push({
               char: word.char, radical: word.radical || '—', meaning: word.meaning,
+              meanings: word.meanings || {},
+              isSupplementary: word.isSupplementary || false,
               type: word.type || '', examples: word.examples || [], tags: [],
               pinyin: fromNumericToMarked(pNum), pinyinNumeric: pNum,
               pinyinPlain: pNum.replace(/[1-4]/g, '').replace(/\s+/g, ''),
               tone: toneFromNumeric(pNum), audioKeys: audioKeysFromNumeric(pNum),
-              lesson: lesson.lesson, lessonTitle: lesson.titleEs,
+              lesson: lesson.lesson, lessonTitle: lesson.titleEs, lessonTitleZh: lesson.titleZh,
             });
           }
         }
@@ -335,11 +341,11 @@ export default function App() {
   };
 
   const navigateTo = (key) => {
-    if (key === 'sov-game') { setPrevScreen(screen); setScreen('sov-game'); }
-    else if (key === 'time-race') { setPrevScreen(screen); setScreen('time-race'); }
-    else if (key === 'pinyin-connection') { setPrevScreen(screen); setScreen('pinyin-connection'); }
-    else if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
-    else if (key === 'translation-game') { setPrevScreen(screen); setScreen('translation-game'); }
+    if (key === 'sov-game') { setPrevScreen('minigames'); setScreen('sov-game'); }
+    else if (key === 'time-race') { setPrevScreen('minigames'); setScreen('time-race'); }
+    else if (key === 'pinyin-connection') { setPrevScreen('minigames'); setScreen('pinyin-connection'); }
+    else if (key === 'global-exam') { setPrevScreen('minigames'); setScreen('global-exam'); }
+    else if (key === 'translation-game') { setPrevScreen('minigames'); setScreen('translation-game'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -377,12 +383,12 @@ export default function App() {
               <img src="https://flagcdn.com/w160/cn.png" alt="China" className="w-24 h-16 object-cover rounded-sm shadow-lg" />
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">学中文</h1>
-            <p className="text-gray-400">Aprende Chino · HSK 1</p>
+            <p className="text-gray-400">{t('welcome_app_subtitle')}</p>
           </div>
           <div className="space-y-4">
             <input
               type="text"
-              placeholder="¿Cómo te llamas?"
+              placeholder={t('welcome_name_placeholder')}
               value={nameInput}
               onChange={e => setNameInput(e.target.value)}
               onKeyDown={e => {
@@ -403,7 +409,7 @@ export default function App() {
               disabled={!nameInput.trim()}
               className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition"
             >
-              Comenzar →
+              {t('welcome_start_button')}
             </button>
           </div>
         </div>
@@ -471,18 +477,18 @@ export default function App() {
           <div className="bg-gray-800 border-b border-gray-700 border-l-4 border-l-purple-500 px-4 pt-10 pb-4">
             <button onClick={() => setScreen('home')} className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-3 transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-              Inicio
+              {t('intro_back_home')}
             </button>
-            <h1 className="text-xl font-bold text-white">Introducción</h1>
-            <p className="text-purple-400 text-sm mt-0.5">入门 · Fundamentos del chino</p>
+            <h1 className="text-xl font-bold text-white">{t('intro_title')}</h1>
+            <p className="text-purple-400 text-sm mt-0.5">{t('intro_subtitle')}</p>
           </div>
 
           <div className="px-4 pt-5 space-y-3 pb-6">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Secciones</p>
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('intro_sections_header')}</p>
             {[
-              { key: 'radicals', icon: '🔠', title: 'Radicales', desc: 'Las piezas base de los caracteres chinos', action: () => handleStartIntroExercise('radicals') },
-              { key: 'tones',    icon: '🎵', title: 'Tonos',     desc: 'Los 4 tonos del mandarín',                action: () => handleStartIntroExercise('tones')    },
-              { key: 'writing',  icon: '✍️', title: 'Escritura', desc: 'Práctica de trazos',                      action: () => handleStartIntroExercise('writing')  },
+              { key: 'radicals', icon: '🔠', title: t('intro_radicals_title'), desc: t('intro_radicals_desc'), action: () => handleStartIntroExercise('radicals') },
+              { key: 'tones',    icon: '🎵', title: t('intro_tones_title'),     desc: t('intro_tones_desc'),                action: () => handleStartIntroExercise('tones')    },
+              { key: 'writing',  icon: '✍️', title: t('intro_writing_title'), desc: t('intro_writing_desc'),                      action: () => handleStartIntroExercise('writing')  },
             ].map(item => (
               <button
                 key={item.key}
@@ -526,7 +532,7 @@ export default function App() {
         allCharacters={allCharacters}
         progress={progress}
         onProgressChange={handleProgressChange}
-        goBack={() => setScreen(prevScreen || 'home')}
+        goBack={() => setScreen('minigames')}
       />
     );
   }
@@ -554,7 +560,7 @@ export default function App() {
       return (
         <Layout activeScreen={screen} onNavigate={handleBottomNav}>
           <div className="min-h-screen flex items-center justify-center">
-            <p className="text-gray-400">Sección no disponible.</p>
+            <p className="text-gray-400">{t('fallback_section_unavailable')}</p>
           </div>
         </Layout>
       );
@@ -574,8 +580,17 @@ export default function App() {
   return (
     <Layout activeScreen="home" onNavigate={handleBottomNav}>
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Pantalla desconocida: {screen}</p>
+        <p className="text-gray-400">{t('fallback_unknown_screen')} {screen}</p>
       </div>
     </Layout>
   );
 }
+
+// Envolver con MusicProvider para que persista entre pantallas
+const AppWithMusic = () => (
+  <MusicProvider>
+    <App />
+  </MusicProvider>
+);
+
+export { AppWithMusic as default };

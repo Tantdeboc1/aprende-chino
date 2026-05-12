@@ -1,6 +1,6 @@
 // src/components/GlobalExam.jsx
 // Modo examen cronometrado global — mezcla todas las lecciones HSK1
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { shuffle } from '@/utils/arrayUtils.js';
@@ -10,7 +10,7 @@ const TOTAL_TIME = 90; // segundos
 const QUESTIONS_PER_ROUND = 20;
 
 export default function GlobalExam({ goBack, allCharacters, onProgressChange, progress }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [phase, setPhase] = useState('ready'); // 'ready' | 'playing' | 'finished'
   const [questions, setQuestions]   = useState([]);
   const [qIndex, setQIndex]         = useState(0);
@@ -21,7 +21,9 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   const [selected, setSelected]     = useState(null);
   const [feedback, setFeedback]     = useState(null); // null | 'correct' | 'incorrect'
 
-  const pool = allCharacters.filter(c => !c.isSupplementary);
+  const pool = useMemo(() => allCharacters.filter(c => !c.isSupplementary), [allCharacters]);
+  const lang = i18n.language;
+  const getMeaning = useCallback((c) => c.meanings?.[lang] || c.meaning, [lang]);
 
   const startGame = useCallback(() => {
     // Pick unique characters so no question repeats
@@ -30,8 +32,11 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
     const qs = picked.map(correct => {
       const distractors = shuffle(pool.filter(c => c.char !== correct.char))
         .slice(0, 3)
-        .map(c => c.meaning);
-      const options = shuffle([correct.meaning, ...distractors]);
+        .map(c => ({ char: c.char, meaning: getMeaning(c) }));
+      const options = shuffle([
+        { char: correct.char, meaning: getMeaning(correct) },
+        ...distractors,
+      ]);
       return { correct, options };
     });
     setQuestions(qs);
@@ -43,7 +48,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
     setSelected(null);
     setFeedback(null);
     setPhase('playing');
-  }, [pool]);
+  }, [pool, getMeaning]);
 
   // Temporizador — depende solo de [phase] para no crear/destruir el intervalo cada segundo
   useEffect(() => {
@@ -66,7 +71,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
   const handleAnswer = (opt) => {
     if (feedback) return;
     setSelected(opt);
-    const isCorrect = opt === questions[qIndex].correct.meaning;
+    const isCorrect = opt.char === questions[qIndex].correct.char;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) hapticSuccess(); else hapticError();
     if (isCorrect) setScore(s => s + 1);
@@ -244,9 +249,9 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
           {question.options.map((opt, i) => {
             let cls = 'bg-gray-700 hover:bg-gray-600 text-white';
             if (feedback) {
-              if (opt === question.correct.meaning)   cls = 'bg-green-600 text-white';
-              else if (opt === selected)              cls = 'bg-red-600 text-white';
-              else                                   cls = 'bg-gray-700 text-gray-500';
+              if (opt.char === question.correct.char)      cls = 'bg-green-600 text-white';
+              else if (opt.char === selected?.char)        cls = 'bg-red-600 text-white';
+              else                                        cls = 'bg-gray-700 text-gray-500';
             }
             return (
               <button
@@ -255,7 +260,7 @@ export default function GlobalExam({ goBack, allCharacters, onProgressChange, pr
                 disabled={!!feedback}
                 className={`p-3 rounded-xl font-medium text-sm transition-colors min-h-[60px] sm:min-h-[68px] flex items-center justify-center text-center leading-tight ${cls}`}
               >
-                {opt}
+                {opt.meaning}
               </button>
             );
           })}

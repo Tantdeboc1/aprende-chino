@@ -28,7 +28,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       description: t('minigames_sov_description'),
       icon: '🔤',
       color: 'red',
-      badges: ['★★☆ Medio', '🎯 Gramática'],
+      badges: [t('badge_medium'), t('badge_grammar')],
     },
     {
       id: 'time-race',
@@ -36,7 +36,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       description: t('minigames_flashcards_description'),
       icon: '⏱️',
       color: 'green',
-      badges: ['⏱ 90s', '★☆☆ Fácil', '⚡ Velocidad'],
+      badges: [t('badge_90s'), t('badge_easy'), t('badge_speed')],
     },
     {
       id: 'pinyin-connection',
@@ -44,15 +44,15 @@ export default function MiniGames({ goBack, navigateTo }) {
       description: t('minigames_pinyin_connection_description'),
       icon: '🎵',
       color: 'blue',
-      badges: ['★★☆ Medio', '🔊 Pronunciación'],
+      badges: [t('badge_medium'), t('badge_pronunciation')],
     },
     {
       id: 'global-exam',
-      title: 'Examen HSK1',
-      description: 'Examen cronometrado con todo el vocabulario HSK1',
+      title: t('minigames_global_exam_title'),
+      description: t('minigames_global_exam_description'),
       icon: '🏆',
       color: 'yellow',
-      badges: ['⏱ 90s', '★★★ Difícil', '📋 HSK1'],
+      badges: [t('badge_90s'), t('badge_hard'), t('badge_hsk1')],
     },
     {
       id: 'translation-game',
@@ -60,7 +60,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       description: t('minigames_translation_description'),
       icon: '📝',
       color: 'purple',
-      badges: ['★★★ Difícil', '✍️ Construcción'],
+      badges: [t('badge_hard'), t('badge_construction')],
     },
   ];
 

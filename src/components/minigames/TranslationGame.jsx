@@ -45,6 +45,7 @@ async function recognizeStrokes(strokes, width, height) {
 
 // ── Panel de escritura a mano ─────────────────────────────────────────────
 function HandwritingPanel({ onCharSelected }) {
+  const { t } = useTranslation();
   const canvasRef     = useRef(null);
   const strokesRef    = useRef([]);      // trazos completados [{x,y,t}[]]
   const currentRef    = useRef(null);    // trazo en curso
@@ -227,19 +228,19 @@ function HandwritingPanel({ onCharSelected }) {
       {/* Cabecera */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold text-purple-400 uppercase tracking-wide">✍️ Dibujar hanzi</p>
+          <p className="text-xs font-semibold text-purple-400 uppercase tracking-wide">{t('translation_draw_header')}</p>
           {strokeCount > 0 && (
-            <span className="text-xs text-gray-500">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-gray-500">{strokeCount !== 1 ? t('translation_stroke_count_plural', { count: strokeCount }) : t('translation_stroke_count', { count: strokeCount })}</span>
           )}
         </div>
         <div className="flex gap-2">
           <button onClick={handleUndo} disabled={strokeCount === 0}
             className="text-xs px-2 py-1 rounded-lg border border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 transition-colors disabled:opacity-30">
-            ↩ Deshacer
+            {t('translation_undo')}
           </button>
           <button onClick={handleClear} disabled={strokeCount === 0}
             className="text-xs px-2 py-1 rounded-lg border border-gray-600 text-gray-400 hover:text-red-400 hover:border-red-600 transition-colors disabled:opacity-30">
-            🗑 Borrar
+            {t('translation_erase')}
           </button>
         </div>
       </div>
@@ -261,22 +262,22 @@ function HandwritingPanel({ onCharSelected }) {
 
       {/* Estado */}
       {status === 'recognizing' && (
-        <p className="text-center text-xs text-purple-400 animate-pulse">Reconociendo…</p>
+        <p className="text-center text-xs text-purple-400 animate-pulse">{t('translation_recognizing')}</p>
       )}
       {status === 'success' && (
-        <p className="text-center text-xs text-green-400 font-semibold">✓ Añadido</p>
+        <p className="text-center text-xs text-green-400 font-semibold">{t('translation_added')}</p>
       )}
       {status === 'error' && (
-        <p className="text-center text-xs text-red-400">Sin conexión. Prueba el modo Pinyin.</p>
+        <p className="text-center text-xs text-red-400">{t('translation_offline')}</p>
       )}
       {status === 'idle' && candidates.length === 0 && strokeCount === 0 && (
-        <p className="text-center text-xs text-gray-600">Dibuja un carácter y espera los candidatos</p>
+        <p className="text-center text-xs text-gray-600">{t('translation_draw_instruction')}</p>
       )}
 
       {/* Candidatos */}
       {candidates.length > 0 && status !== 'success' && (
         <div>
-          <p className="text-xs text-gray-500 mb-2">Toca el carácter correcto:</p>
+          <p className="text-xs text-gray-500 mb-2">{t('translation_pick_candidate')}</p>
           <div className="flex flex-wrap gap-2">
             {candidates.map((ch, i) => (
               <button key={i} onClick={() => handleSelect(ch)}
@@ -310,7 +311,7 @@ function playSound(type) {
         osc.start(ctx.currentTime + i * 0.12);
         osc.stop(ctx.currentTime + i * 0.12 + 0.25);
       });
-    } else {
+    } else if (type === 'incorrect') {
       const osc = ctx.createOscillator(), gain = ctx.createGain();
       osc.connect(gain); gain.connect(ctx.destination);
       osc.type = 'sawtooth';
@@ -319,6 +320,16 @@ function playSound(type) {
       gain.gain.setValueAtTime(0.25, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
       osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.35);
+    } else if (type === 'tap') {
+      // Sonido suave de "click" al añadir un carácter
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.1);
     }
   } catch (_) {}
 }
@@ -340,13 +351,14 @@ export default function TranslationGame({ goBack }) {
   const [score, setScore]             = useState(0);
   const [done, setDone]               = useState(false);
   const [inputMode, setInputMode]     = useState('pinyin'); // 'pinyin' | 'draw'
+  const [failedPhrases, setFailedPhrases] = useState([]);
   const inputRef = useRef(null);
 
   const initGame = useCallback(() => {
     setRounds(shuffle([...translationPhrases]).slice(0, ROUNDS));
     setCurrentIdx(0); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null); setScore(0);
-    setDone(false); setInputMode('pinyin');
+    setDone(false); setInputMode('pinyin'); setFailedPhrases([]);
   }, []);
 
   useEffect(() => { initGame(); }, [initGame]);
@@ -380,11 +392,13 @@ export default function TranslationGame({ goBack }) {
   const handleSelectCandidate = (c) => {
     setBuilt(prev => [...prev, c.hanzi]);
     setPinyinInput(''); setCandidates([]);
+    playSound('tap');
     inputRef.current?.focus();
   };
 
   const handleCharDrawn = useCallback((ch) => {
     setBuilt(prev => [...prev, ch]);
+    playSound('tap');
   }, []);
 
   const handleDeleteLast = () => {
@@ -401,6 +415,7 @@ export default function TranslationGame({ goBack }) {
     const correct = solutions.includes(answer);
     setResult(correct ? 'correct' : 'incorrect');
     if (correct) setScore(s => s + 1);
+    else setFailedPhrases(prev => [...prev, current]);
     playSound(correct ? 'correct' : 'incorrect');
     if (correct) hapticSuccess(); else hapticError();
   };
@@ -408,7 +423,7 @@ export default function TranslationGame({ goBack }) {
   const handleNext = () => {
     const next = currentIdx + 1;
     if (next >= rounds.length) { setDone(true); return; }
-    setCurrentIdx(next); setBuilt([]); setPinyinInput([]);
+    setCurrentIdx(next); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null);
   };
 
@@ -417,10 +432,19 @@ export default function TranslationGame({ goBack }) {
     inputRef.current?.focus();
   };
 
+  const reviewFailed = useCallback(() => {
+    const failed = [...failedPhrases];
+    setRounds(shuffle(failed));
+    setCurrentIdx(0); setBuilt([]); setPinyinInput('');
+    setCandidates([]); setResult(null); setScore(0);
+    setDone(false); setInputMode('pinyin'); setFailedPhrases([]);
+  }, [failedPhrases]);
+
   // ── Pantalla final ────────────────────────────────────────────────────────
   if (done) {
     const pct = rounds.length > 0 ? Math.round((score / rounds.length) * 100) : 0;
     const emoji = pct === 100 ? '\u{1F3C6}' : pct >= 70 ? '\u{1F44F}' : '\u{1F4AA}';
+    const failedCount = failedPhrases.length;
     return (
       <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-6">
         <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-sm w-full text-center shadow-xl">
@@ -432,6 +456,11 @@ export default function TranslationGame({ goBack }) {
             <div><p className="text-4xl font-bold text-white">{pct}%</p><p className="text-xs text-gray-500 mt-1">{t('translation_accuracy_label')}</p></div>
           </div>
           <div className="space-y-2">
+            {failedCount > 0 && (
+              <button onClick={reviewFailed} className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition-colors">
+                {t('translation_review_failed', { count: failedCount })}
+              </button>
+            )}
             <button onClick={initGame} className={`w-full py-3 rounded-xl ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-white font-bold transition-colors`}>{t('translation_play_again')}</button>
             <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-gray-700 hover:bg-gray-600 text-gray-300 font-medium transition-colors">{t('translation_back')}</button>
           </div>

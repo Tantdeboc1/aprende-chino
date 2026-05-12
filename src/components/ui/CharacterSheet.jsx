@@ -12,6 +12,7 @@ const LESSON_BADGE = {
 };
 
 function HanziWriterCanvas({ char }) {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const writerRef    = useRef(null);
   const [status, setStatus]   = useState('loading'); // 'loading' | 'ready' | 'error'
@@ -100,13 +101,13 @@ function HanziWriterCanvas({ char }) {
             onClick={handleAnimate}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-900/40 border border-red-700/50 text-red-300 text-xs font-semibold transition hover:bg-red-900/60"
           >
-            <Play className="w-3 h-3" /> Animar
+            <Play className="w-3 h-3" /> {t('charsheet_animate')}
           </button>
           <button
             onClick={handleReset}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-700 border border-gray-600 text-gray-300 text-xs font-semibold transition hover:bg-gray-600"
           >
-            <RotateCcw className="w-3 h-3" /> Repetir
+            <RotateCcw className="w-3 h-3" /> {t('charsheet_repeat')}
           </button>
         </div>
       )}
@@ -115,7 +116,7 @@ function HanziWriterCanvas({ char }) {
 }
 
 export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorite, isFav, progress }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const sheetRef = useRef(null);
 
   // Cerrar al hacer tap fuera
@@ -163,8 +164,8 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             {char.isSupplementary && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
             )}
-            {masteredAt && <span className="text-xs px-2 py-0.5 rounded-full bg-green-900 text-green-300 border border-green-700 font-semibold">✓ Dominado</span>}
-            {isPending  && <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-900 text-yellow-300 border border-yellow-700 font-semibold animate-pulse">⏰ Pendiente</span>}
+            {masteredAt && <span className="text-xs px-2 py-0.5 rounded-full bg-green-900 text-green-300 border border-green-700 font-semibold">{t('charsheet_mastered_badge')}</span>}
+            {isPending  && <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-900 text-yellow-300 border border-yellow-700 font-semibold animate-pulse">{t('charsheet_pending_badge')}</span>}
           </div>
           <button
             onClick={onClose}
@@ -184,7 +185,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
           <div className="w-full flex items-center justify-between px-2">
             <div>
               <p className="text-2xl text-white font-semibold">{char.pinyin}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{char.type || 'Sustantivo'}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{char.type || t('charsheet_default_type')}</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -204,8 +205,8 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
 
           {/* Significado */}
           <div className="w-full bg-gray-800 border border-gray-700 rounded-2xl p-4 text-center">
-            <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Significado</p>
-            <p className="text-xl text-white font-bold leading-snug">{char.meaning}</p>
+            <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">{t('charsheet_meaning_header')}</p>
+            <p className="text-xl text-white font-bold leading-snug">{char.meanings?.[i18n.language] || char.meaning}</p>
           </div>
 
           {/* Radical + ejemplos */}
@@ -218,7 +219,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             )}
             {char.examples?.length > 0 && (
               <div className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-500 mb-2">Ejemplos</p>
+                <p className="text-xs text-gray-500 mb-2">{t('charsheet_examples')}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {char.examples.map((ex, i) => (
                     <span key={i} className="text-sm bg-gray-700 text-gray-200 px-2.5 py-1 rounded-lg">{ex}</span>

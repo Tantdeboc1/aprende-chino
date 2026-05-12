@@ -54,7 +54,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
 
   const menuItems = [
     { key: 'learn',      icon: <GraduationCap />, iconColor: 'text-blue-400',   zh: '学习',     pinyin: 'Xuéxí',           desc: t('menu_learn_description') },
-    { key: 'daily',      icon: <Calendar />,      iconColor: 'text-green-400',  zh: '每日挑战', pinyin: 'Měi rì tiǎozhàn', desc: t('menu_daily_description'), badge: dailyComplete ? '✓ Completado' : null },
+    { key: 'daily',      icon: <Calendar />,      iconColor: 'text-green-400',  zh: '每日挑战', pinyin: 'Měi rì tiǎozhàn', desc: t('menu_daily_description'), badge: dailyComplete ? t('menu_completed_badge') : null },
     { key: 'minigames',  icon: <Gamepad />,        iconColor: 'text-yellow-400', zh: '小游戏',   pinyin: 'Xiǎo yóuxì',      desc: t('menu_minigames_description') },
     { key: 'dictionary', icon: <BookOpen />,       iconColor: 'text-purple-400', zh: '词典',     pinyin: 'Cídiǎn',          desc: t('menu_dictionary_description') },
     { key: 'info',       icon: <InfoIcon />,       iconColor: 'text-orange-400', zh: '信息',     pinyin: 'Xìnxī',           desc: t('menu_info_description') },
@@ -73,13 +73,13 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
                 {selectedLesson ? (
                   <>
                     <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent ? accent.text : 'text-gray-400'}`}>
-                      Leccion {selectedLesson}
+                      {t('menu_lesson_label', { num: selectedLesson })}
                     </p>
-                    <p className="text-white font-semibold text-sm truncate">{activeLesson ? activeLesson.titleEs : ''}</p>
+                    <p className="text-white font-semibold text-sm truncate">{activeLesson ? (activeLesson.titleZh || activeLesson.titleEs) : ''}</p>
                   </>
                 ) : (
                   <>
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-0.5">Modo</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-0.5">{t('menu_mode_label')}</p>
                     <p className="text-white font-semibold text-sm">{t('menu_all_lessons')}</p>
                   </>
                 )}
@@ -97,7 +97,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
                   <button
                     key={l.lesson}
                     onClick={() => setSelectedLesson && setSelectedLesson(isActive ? null : l.lesson)}
-                    title={l.titleEs}
+                    title={l.titleZh || l.titleEs}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${isActive ? a.activePill : 'bg-gray-700 border-gray-600 hover:border-gray-500 ' + a.text}`}
                   >L{l.lesson}</button>
                 );

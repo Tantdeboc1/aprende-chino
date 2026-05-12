@@ -8,6 +8,7 @@ import { getStreak } from '@/utils/streak.js';
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
 function DailyCharacter({ allCharacters }) {
+  const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const writerRef    = useRef(null);
   const [status, setStatus] = useState('loading');
@@ -74,12 +75,12 @@ function DailyCharacter({ allCharacters }) {
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-1">Carácter del día</p>
+        <p className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-1">{t('daily_character_of_day')}</p>
         <p className="text-2xl text-white font-bold leading-tight">{daily.char}</p>
         <p className="text-gray-300 text-sm">{daily.pinyin}</p>
-        <p className="text-gray-400 text-xs mt-1 leading-snug">{daily.meaning}</p>
+        <p className="text-gray-400 text-xs mt-1 leading-snug">{daily.meanings?.[i18n.language] || daily.meaning}</p>
         {daily.radical && daily.radical !== '—' && (
-          <p className="text-gray-600 text-xs mt-1">Radical: <span className="text-gray-400">{daily.radical}</span></p>
+          <p className="text-gray-600 text-xs mt-1">{t('home_radical_label')} <span className="text-gray-400">{daily.radical}</span></p>
         )}
       </div>
     </div>
@@ -208,7 +209,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const totalWords  = useMemo(() => allCharacters.filter(c => !c.isSupplementary).length, [allCharacters]);
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
-  const streak      = useMemo(() => getStreak(), [progress]);
+  const streak      = useMemo(() => getStreak(), []);
 
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
@@ -218,7 +219,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           <div className="bg-red-600 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
             <span className="text-white font-bold text-sm">学</span>
           </div>
-          <span className="text-white font-bold text-base">Aprende Chino</span>
+          <span className="text-white font-bold text-base">{t('app_brand')}</span>
         </div>
 
         <div className="mt-3">

@@ -55,7 +55,7 @@ export default function Dictionary({
   lessonsData = [],
   progress,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // ── Favoritos ────────────────────────────────────────────────────────────
   const [favorites, setFavorites] = useState(loadFavorites);
@@ -107,7 +107,9 @@ export default function Dictionary({
     const pinyinLike = /^[a-zA-Züǖǘǚǜv\s_\-0-9]+$/.test(qRaw);
     return list.filter(c => {
       if (pinyinLike && normToneAgnost(c.pinyin).startsWith(qNorm)) return true;
+      const displayMeaning = c.meanings?.[i18n.language] || c.meaning;
       return String(c.char || "").includes(qRaw)
+        || normalizeBase(displayMeaning).includes(qNorm)
         || normalizeBase(c.meaning).includes(qNorm)
         || normalizeBase(c.radical).includes(qNorm);
     });
@@ -135,7 +137,7 @@ export default function Dictionary({
 
           <h2 className="text-3xl font-bold text-white mb-1">{t('dictionary_title')}</h2>
           <p className="text-gray-400 mb-4 text-sm">
-            {filteredChars.length} palabra{filteredChars.length !== 1 ? 's' : ''}
+            {filteredChars.length === 1 ? t('dictionary_word_count', { count: filteredChars.length }) : t('dictionary_word_count_plural', { count: filteredChars.length })}
             {selectedLesson ? ` · ${t('dictionary_filter_lesson', { num: selectedLesson })}` : ` · ${t('dictionary_filter_all_lessons')}`}
             {showFavorites && ` · ⭐ ${t('dictionary_filter_favorites_label')}`}
           </p>
@@ -160,7 +162,7 @@ export default function Dictionary({
                   key={l.lesson}
                   onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(isActive ? null : l.lesson); setShowFavorites(false); }}
                   className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${isActive ? colors.active : colors.inactive}`}
-                  title={l.titleEs}
+                  title={l.titleZh || l.titleEs}
                 >
                   {t('dictionary_filter_lesson', { num: l.lesson })}
                 </button>
@@ -176,7 +178,7 @@ export default function Dictionary({
               }`}
             >
               <Star className="w-3.5 h-3.5" />
-              Favoritos ({favorites.size})
+              {t('dictionary_favorites_button')} ({favorites.size})
             </button>
           </div>
 
@@ -191,9 +193,9 @@ export default function Dictionary({
               }`}
             >
               <Star className="w-3.5 h-3.5" />
-              Vocabulario extra ({totalSupp})
+              {t('dictionary_extra_vocab')} ({totalSupp})
             </button>
-            <span className="text-gray-500 text-xs">{totalMain} palabras principales</span>
+            <span className="text-gray-500 text-xs">{totalMain} {t('dictionary_main_words')}</span>
           </div>
 
           {/* Buscador */}
@@ -265,7 +267,7 @@ export default function Dictionary({
                       <span className="text-lg text-gray-200">{char.pinyin}</span>
                       <button
                         onClick={() => handleSpeak(char)}
-                        aria-label={`Escuchar ${char.char}`}
+                        aria-label={t('dictionary_listen_char', { char: char.char })}
                         className="p-1 rounded-full bg-green-800 hover:bg-green-700 text-green-300 transition-colors"
                       >
                         <Volume2 className="w-3.5 h-3.5" />
@@ -275,7 +277,7 @@ export default function Dictionary({
 
                   {/* Significado */}
                   <div className="pb-2 border-b border-gray-700">
-                    <p className="text-white font-semibold text-center text-base leading-snug">{char.meaning}</p>
+                    <p className="text-white font-semibold text-center text-base leading-snug">{char.meanings?.[i18n.language] || char.meaning}</p>
                   </div>
 
                   {/* Radical */}
@@ -289,7 +291,7 @@ export default function Dictionary({
                   {/* Ejemplos */}
                   {char.examples?.length > 0 && (
                     <div className="pt-1">
-                      <p className="text-xs text-gray-500 mb-1">Ejemplos:</p>
+                      <p className="text-xs text-gray-500 mb-1">{t('dictionary_examples')}:</p>
                       <div className="flex flex-wrap gap-1">
                         {char.examples.map((ex, i) => (
                           <span key={i} className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-md">{ex}</span>

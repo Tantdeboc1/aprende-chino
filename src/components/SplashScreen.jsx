@@ -1,9 +1,11 @@
 // src/components/SplashScreen.jsx
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const MIN_DISPLAY_MS = 4000; // mostrar al menos 4s para ver la animación completa
 
 export default function SplashScreen({ progress, onComplete }) {
+  const { t } = useTranslation();
   const writerRef      = useRef(null);
   const writerInst     = useRef(null);
   const startTime      = useRef(Date.now());
@@ -82,7 +84,7 @@ export default function SplashScreen({ progress, onComplete }) {
           <span className="text-white font-bold text-base">学</span>
         </div>
         <div>
-          <h1 className="text-white font-bold text-2xl tracking-tight">Aprende Chino</h1>
+          <h1 className="text-white font-bold text-2xl tracking-tight">{t('splash_title')}</h1>
           <p className="text-gray-500 text-xs tracking-widest uppercase">HSK 1</p>
         </div>
       </div>
@@ -106,7 +108,7 @@ export default function SplashScreen({ progress, onComplete }) {
           />
         </div>
         <p className="text-gray-600 text-xs text-center">
-          {progress < 100 ? 'Cargando...' : '¡Todo listo!'}
+          {progress < 100 ? t('splash_loading') : t('splash_ready')}
         </p>
       </div>
     </div>

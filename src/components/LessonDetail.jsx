@@ -61,7 +61,7 @@ export default function LessonDetail({
     setTab(id);
     onTabChange?.(id);
   };
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showSupp, setShowSupp] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -124,16 +124,16 @@ export default function LessonDetail({
       <div className={`bg-gray-800 border-b border-gray-700 border-l-4 ${a.border} px-4 pt-10 pb-4`}>
         <button onClick={goBack} className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-3 transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-          Inicio
+          {t('lesson_back_home')}
         </button>
 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className={`text-xs font-bold uppercase tracking-widest ${a.light} mb-0.5`}>
-              Lección {lessonNum}
+              {t('lesson_label')} {lessonNum}
             </p>
             <h1 className="text-xl font-bold text-white leading-snug">
-              {lessonData?.titleEs || ''}
+              {t(`lesson_${lessonNum}_subtitle`)}
             </h1>
             <p className={`text-sm ${a.text} mt-0.5`}>{lessonData?.titleZh || ''}</p>
           </div>
@@ -239,7 +239,7 @@ export default function LessonDetail({
                             <span className="text-xs px-1.5 py-0.5 rounded bg-purple-900/70 text-purple-300">extra</span>
                           )}
                         </div>
-                        <p className="text-white text-sm font-medium mt-0.5 truncate">{word.meaning}</p>
+                        <p className="text-white text-sm font-medium mt-0.5 truncate">{word.meanings?.[i18n.language] || word.meaning}</p>
                       </div>
 
                       <button
@@ -263,7 +263,7 @@ export default function LessonDetail({
 
                     {isOpen && word.examples && word.examples.length > 0 && (
                       <div className="px-3 pb-3 border-t border-gray-700 pt-2">
-                        <p className="text-xs text-gray-500 mb-1.5">Ejemplos:</p>
+                        <p className="text-xs text-gray-500 mb-1.5">{t('dictionary_examples')}:</p>
                         <div className="flex flex-wrap gap-1.5">
                           {word.examples.map((ex, i) => (
                             <span key={i} className="text-sm bg-gray-700 text-gray-200 px-2.5 py-1 rounded-lg">{ex}</span>
