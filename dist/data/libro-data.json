@@ -17,7 +17,15 @@
             "认识你"
           ],
           "isSupplementary": false,
-          "radical": "亻"
+          "radical": "亻",
+          "meanings": {
+            "es": "tú",
+            "en": "you",
+            "fr": "tu",
+            "de": "du",
+            "it": "tu",
+            "pt": "você/tu"
+          }
         },
         {
           "char": "好",
@@ -30,7 +38,15 @@
             "好吃"
           ],
           "isSupplementary": false,
-          "radical": "女"
+          "radical": "女",
+          "meanings": {
+            "es": "bueno; bien; vale",
+            "en": "good; well; okay",
+            "fr": "bon; bien; d'accord",
+            "de": "gut; okay",
+            "it": "buono; bene; va bene",
+            "pt": "bom; bem; tudo bem"
+          }
         },
         {
           "char": "我",
@@ -43,7 +59,15 @@
             "我妈妈"
           ],
           "isSupplementary": false,
-          "radical": "戈"
+          "radical": "戈",
+          "meanings": {
+            "es": "yo; mí",
+            "en": "I; me",
+            "fr": "je; moi",
+            "de": "ich; mich",
+            "it": "io; mi",
+            "pt": "eu; me"
+          }
         },
         {
           "char": "叫",
@@ -55,7 +79,15 @@
             "叫什么名字"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "llamarse; llamar",
+            "en": "to be called; to call",
+            "fr": "s'appeler; appeler",
+            "de": "heißen; rufen",
+            "it": "chiamarsi; chiamare",
+            "pt": "chamar-se; chamar"
+          }
         },
         {
           "char": "请问",
@@ -66,7 +98,15 @@
             "请问你叫什么名字"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "¿podría preguntar?; disculpe",
+            "en": "excuse me; may I ask?",
+            "fr": "excusez-moi; puis-je demander?",
+            "de": "Entschuldigung; darf ich fragen?",
+            "it": "mi scusi; posso chiedere?",
+            "pt": "com licença; posso perguntar?"
+          }
         },
         {
           "char": "请",
@@ -78,7 +118,15 @@
             "请坐"
           ],
           "isSupplementary": false,
-          "radical": "讠"
+          "radical": "讠",
+          "meanings": {
+            "es": "por favor; solicitar; invitar",
+            "en": "please; to invite; to request",
+            "fr": "s'il vous plaît; inviter",
+            "de": "bitte; einladen",
+            "it": "per favore; invitare",
+            "pt": "por favor; convidar"
+          }
         },
         {
           "char": "问",
@@ -90,7 +138,15 @@
             "问老师"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "preguntar",
+            "en": "to ask",
+            "fr": "demander",
+            "de": "fragen",
+            "it": "chiedere",
+            "pt": "perguntar"
+          }
         },
         {
           "char": "什么",
@@ -103,7 +159,15 @@
             "什么意思"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "qué",
+            "en": "what",
+            "fr": "quoi; qu'est-ce que",
+            "de": "was",
+            "it": "che cosa; cosa",
+            "pt": "o que; qual"
+          }
         },
         {
           "char": "名字",
@@ -115,7 +179,15 @@
             "叫什么名字"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "nombre",
+            "en": "name",
+            "fr": "prénom; nom",
+            "de": "Name; Vorname",
+            "it": "nome",
+            "pt": "nome"
+          }
         },
         {
           "char": "姓",
@@ -128,7 +200,15 @@
             "你贵姓"
           ],
           "isSupplementary": false,
-          "radical": "女"
+          "radical": "女",
+          "meanings": {
+            "es": "apellidarse / apellido",
+            "en": "surname; to be surnamed",
+            "fr": "nom de famille; s'appeler",
+            "de": "Nachname; heißen",
+            "it": "cognome; chiamarsi",
+            "pt": "sobrenome; chamar-se"
+          }
         },
         {
           "char": "认识",
@@ -140,7 +220,15 @@
             "认识马大为"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "conocer",
+            "en": "to know; to recognize",
+            "fr": "connaître; reconnaître",
+            "de": "kennen; erkennen",
+            "it": "conoscere; riconoscere",
+            "pt": "conhecer; reconhecer"
+          }
         },
         {
           "char": "很",
@@ -153,7 +241,15 @@
             "很高兴"
           ],
           "isSupplementary": false,
-          "radical": "彳"
+          "radical": "彳",
+          "meanings": {
+            "es": "muy",
+            "en": "very",
+            "fr": "très",
+            "de": "sehr",
+            "it": "molto",
+            "pt": "muito"
+          }
         },
         {
           "char": "高兴",
@@ -165,7 +261,15 @@
             "真高兴"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "contento; feliz",
+            "en": "happy; pleased",
+            "fr": "content; heureux",
+            "de": "froh; glücklich",
+            "it": "contento; felice",
+            "pt": "contente; feliz"
+          }
         },
         {
           "char": "也",
@@ -178,7 +282,15 @@
             "也很高兴"
           ],
           "isSupplementary": false,
-          "radical": "乙"
+          "radical": "乙",
+          "meanings": {
+            "es": "también",
+            "en": "also; too",
+            "fr": "aussi; également",
+            "de": "auch",
+            "it": "anche",
+            "pt": "também"
+          }
         },
         {
           "char": "在",
@@ -190,7 +302,15 @@
             "在北京"
           ],
           "isSupplementary": false,
-          "radical": "土"
+          "radical": "土",
+          "meanings": {
+            "es": "estar (en un lugar)",
+            "en": "to be (at a place)",
+            "fr": "être (dans un lieu)",
+            "de": "sein (an einem Ort)",
+            "it": "essere (in un luogo)",
+            "pt": "estar (em um lugar)"
+          }
         },
         {
           "char": "吗",
@@ -203,7 +323,15 @@
             "是吗"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "partícula interrogativa de sí/no",
+            "en": "yes/no question particle",
+            "fr": "particule interrogative",
+            "de": "Fragepartikel",
+            "it": "particella interrogativa",
+            "pt": "partícula interrogativa"
+          }
         },
         {
           "char": "进",
@@ -215,7 +343,15 @@
             "请进"
           ],
           "isSupplementary": false,
-          "radical": "辶"
+          "radical": "辶",
+          "meanings": {
+            "es": "entrar",
+            "en": "to enter",
+            "fr": "entrer",
+            "de": "eintreten",
+            "it": "entrare",
+            "pt": "entrar"
+          }
         },
         {
           "char": "坐",
@@ -227,7 +363,15 @@
             "请坐"
           ],
           "isSupplementary": false,
-          "radical": "土"
+          "radical": "土",
+          "meanings": {
+            "es": "sentarse",
+            "en": "to sit",
+            "fr": "s'asseoir",
+            "de": "sitzen; sich setzen",
+            "it": "sedersi",
+            "pt": "sentar"
+          }
         },
         {
           "char": "谢谢",
@@ -239,7 +383,15 @@
             "谢谢老师"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "gracias; agradecer",
+            "en": "thank you",
+            "fr": "merci",
+            "de": "danke",
+            "it": "grazie",
+            "pt": "obrigado/a"
+          }
         },
         {
           "char": "最近",
@@ -251,7 +403,15 @@
             "最近很忙"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "últimamente; recientemente",
+            "en": "lately; recently",
+            "fr": "dernièrement; récemment",
+            "de": "letzte Zeit; neulich",
+            "it": "ultimamente; di recente",
+            "pt": "ultimamente; recentemente"
+          }
         },
         {
           "char": "怎么样",
@@ -263,7 +423,15 @@
             "汉语怎么样"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "¿cómo está?; ¿qué tal?",
+            "en": "how are you?; how is it?",
+            "fr": "comment ça va?",
+            "de": "wie geht's?; wie ist es?",
+            "it": "come stai?; com'è?",
+            "pt": "como está?; como vai?"
+          }
         },
         {
           "char": "呢",
@@ -275,7 +443,15 @@
             "他呢"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "partícula para preguntas elípticas",
+            "en": "elliptical question particle",
+            "fr": "particule pour questions elliptiques",
+            "de": "elliptische Fragepartikel",
+            "it": "particella per domande ellittiche",
+            "pt": "partícula de pergunta elíptica"
+          }
         },
         {
           "char": "忙",
@@ -288,7 +464,15 @@
             "特别忙"
           ],
           "isSupplementary": false,
-          "radical": "忄"
+          "radical": "忄",
+          "meanings": {
+            "es": "ocupado/a",
+            "en": "busy",
+            "fr": "occupé",
+            "de": "beschäftigt",
+            "it": "occupato",
+            "pt": "ocupado/a"
+          }
         },
         {
           "char": "不",
@@ -302,7 +486,15 @@
             "不对"
           ],
           "isSupplementary": false,
-          "radical": "一"
+          "radical": "一",
+          "meanings": {
+            "es": "no; partícula de negación",
+            "en": "no; not",
+            "fr": "non; ne...pas",
+            "de": "nein; nicht",
+            "it": "no; non",
+            "pt": "não"
+          }
         },
         {
           "char": "太",
@@ -315,7 +507,15 @@
             "太累"
           ],
           "isSupplementary": false,
-          "radical": "大"
+          "radical": "大",
+          "meanings": {
+            "es": "demasiado; extremadamente",
+            "en": "too; extremely",
+            "fr": "trop; extrêmement",
+            "de": "zu; äußerst",
+            "it": "troppo; estremamente",
+            "pt": "demais; extremamente"
+          }
         },
         {
           "char": "他",
@@ -328,7 +528,15 @@
             "他叫什么"
           ],
           "isSupplementary": false,
-          "radical": "亻"
+          "radical": "亻",
+          "meanings": {
+            "es": "él",
+            "en": "he; him",
+            "fr": "il; lui",
+            "de": "er; ihm",
+            "it": "lui; egli",
+            "pt": "ele"
+          }
         },
         {
           "char": "困",
@@ -340,7 +548,15 @@
             "太困了"
           ],
           "isSupplementary": true,
-          "radical": "囗"
+          "radical": "囗",
+          "meanings": {
+            "es": "soñoliento/a",
+            "en": "sleepy; drowsy",
+            "fr": "somnolent; endormi",
+            "de": "schläfrig",
+            "it": "assonnato",
+            "pt": "com sono; sonolento"
+          }
         },
         {
           "char": "渴",
@@ -352,7 +568,15 @@
             "不渴"
           ],
           "isSupplementary": true,
-          "radical": "氵"
+          "radical": "氵",
+          "meanings": {
+            "es": "sediento; tener sed",
+            "en": "thirsty",
+            "fr": "assoiffé; avoir soif",
+            "de": "durstig",
+            "it": "assetato",
+            "pt": "com sede"
+          }
         },
         {
           "char": "饿",
@@ -364,7 +588,15 @@
             "太饿了"
           ],
           "isSupplementary": true,
-          "radical": "饣"
+          "radical": "饣",
+          "meanings": {
+            "es": "hambriento; tener hambre",
+            "en": "hungry",
+            "fr": "affamé; avoir faim",
+            "de": "hungrig",
+            "it": "affamato",
+            "pt": "com fome"
+          }
         },
         {
           "char": "累",
@@ -377,7 +609,15 @@
             "累不累"
           ],
           "isSupplementary": true,
-          "radical": "糸"
+          "radical": "糸",
+          "meanings": {
+            "es": "cansado/a",
+            "en": "tired",
+            "fr": "fatigué",
+            "de": "müde",
+            "it": "stanco",
+            "pt": "cansado/a"
+          }
         },
         {
           "char": "还行",
@@ -389,7 +629,15 @@
             "还行还行"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "no está mal; más o menos",
+            "en": "not bad; so-so",
+            "fr": "pas mal; comme ci comme ça",
+            "de": "nicht schlecht; so lala",
+            "it": "non male; così così",
+            "pt": "não está mal; mais ou menos"
+          }
         },
         {
           "char": "马马虎虎",
@@ -400,7 +648,15 @@
             "我汉语马马虎虎"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "más o menos; regular; así así",
+            "en": "so-so; just okay",
+            "fr": "comme ci comme ça; bof",
+            "de": "mittelmäßig; so lala",
+            "it": "così così; mediocre",
+            "pt": "mais ou menos; razoável"
+          }
         },
         {
           "char": "她",
@@ -413,7 +669,15 @@
             "她妈妈"
           ],
           "isSupplementary": true,
-          "radical": "女"
+          "radical": "女",
+          "meanings": {
+            "es": "ella",
+            "en": "she; her",
+            "fr": "elle",
+            "de": "sie; ihr",
+            "it": "lei; ella",
+            "pt": "ela"
+          }
         }
       ]
     },
@@ -432,7 +696,15 @@
             "你是老师吗"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "profesor/a",
+            "en": "teacher",
+            "fr": "professeur",
+            "de": "Lehrer/in",
+            "it": "insegnante; professore",
+            "pt": "professor/a"
+          }
         },
         {
           "char": "早上",
@@ -444,7 +716,15 @@
             "早上七点"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "mañana (temprano)",
+            "en": "morning (early)",
+            "fr": "le matin (tôt)",
+            "de": "Morgen (früh)",
+            "it": "mattina (presto)",
+            "pt": "manhã cedo"
+          }
         },
         {
           "char": "早",
@@ -457,7 +737,15 @@
             "你早"
           ],
           "isSupplementary": false,
-          "radical": "日"
+          "radical": "日",
+          "meanings": {
+            "es": "temprano; buenos días",
+            "en": "early; good morning",
+            "fr": "tôt; bonjour",
+            "de": "früh; guten Morgen",
+            "it": "presto; buongiorno",
+            "pt": "cedo; bom dia"
+          }
         },
         {
           "char": "你们",
@@ -469,7 +757,15 @@
             "你们是哪国人"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "vosotros; ustedes",
+            "en": "you (plural)",
+            "fr": "vous (pluriel)",
+            "de": "ihr; Sie (Plural)",
+            "it": "voi",
+            "pt": "vocês"
+          }
         },
         {
           "char": "们",
@@ -482,7 +778,15 @@
             "我们"
           ],
           "isSupplementary": false,
-          "radical": "亻"
+          "radical": "亻",
+          "meanings": {
+            "es": "sufijo plural",
+            "en": "plural suffix",
+            "fr": "suffixe pluriel",
+            "de": "Pluralsuffix",
+            "it": "suffisso plurale",
+            "pt": "sufixo plural"
+          }
         },
         {
           "char": "是",
@@ -495,7 +799,15 @@
             "这是"
           ],
           "isSupplementary": false,
-          "radical": "日"
+          "radical": "日",
+          "meanings": {
+            "es": "ser; es/soy/son",
+            "en": "to be; is/am/are",
+            "fr": "être; est/suis/êtes",
+            "de": "sein; ist/bin/sind",
+            "it": "essere; è/sono",
+            "pt": "ser; é/sou/são"
+          }
         },
         {
           "char": "这",
@@ -508,7 +820,15 @@
             "这是什么"
           ],
           "isSupplementary": false,
-          "radical": "辶"
+          "radical": "辶",
+          "meanings": {
+            "es": "esto; este/esta",
+            "en": "this; here",
+            "fr": "ce; ceci; ici",
+            "de": "dies; dieser/diese/dieses",
+            "it": "questo/a; ciò",
+            "pt": "este/a; isso"
+          }
         },
         {
           "char": "朋友",
@@ -521,7 +841,15 @@
             "老朋友"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "amigo/a",
+            "en": "friend",
+            "fr": "ami/e",
+            "de": "Freund/in",
+            "it": "amico/a",
+            "pt": "amigo/a"
+          }
         },
         {
           "char": "刚",
@@ -534,7 +862,15 @@
             "刚来北京"
           ],
           "isSupplementary": false,
-          "radical": "刀"
+          "radical": "刀",
+          "meanings": {
+            "es": "recién; acabar de",
+            "en": "just; just now",
+            "fr": "venir de; tout juste",
+            "de": "gerade eben; soeben",
+            "it": "appena; or ora",
+            "pt": "acabar de; recém"
+          }
         },
         {
           "char": "您",
@@ -546,7 +882,15 @@
             "您贵姓"
           ],
           "isSupplementary": false,
-          "radical": "心"
+          "radical": "心",
+          "meanings": {
+            "es": "usted (formal)",
+            "en": "you (formal)",
+            "fr": "vous (formel)",
+            "de": "Sie (formal)",
+            "it": "Lei (formale)",
+            "pt": "o senhor/a senhora"
+          }
         },
         {
           "char": "到",
@@ -559,7 +903,15 @@
             "到北京"
           ],
           "isSupplementary": false,
-          "radical": "刀"
+          "radical": "刀",
+          "meanings": {
+            "es": "llegar; alcanzar",
+            "en": "to arrive; to reach",
+            "fr": "arriver; atteindre",
+            "de": "ankommen; erreichen",
+            "it": "arrivare; raggiungere",
+            "pt": "chegar; alcançar"
+          }
         },
         {
           "char": "贵姓",
@@ -570,7 +922,15 @@
             "您贵姓"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "¿cuál es su apellido? (formal)",
+            "en": "what is your surname? (formal)",
+            "fr": "quel est votre nom? (formel)",
+            "de": "wie heißen Sie? (formal)",
+            "it": "come si chiama? (formale)",
+            "pt": "qual é seu sobrenome? (formal)"
+          }
         },
         {
           "char": "哪",
@@ -583,7 +943,15 @@
             "你是哪国人"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "cuál; qué (de varios)",
+            "en": "which; what (of several)",
+            "fr": "lequel; quel",
+            "de": "welcher/welche/welches",
+            "it": "quale",
+            "pt": "qual; que (de vários)"
+          }
         },
         {
           "char": "国",
@@ -596,7 +964,15 @@
             "美国"
           ],
           "isSupplementary": false,
-          "radical": "囗"
+          "radical": "囗",
+          "meanings": {
+            "es": "país",
+            "en": "country; nation",
+            "fr": "pays; nation",
+            "de": "Land; Nation",
+            "it": "paese; nazione",
+            "pt": "país; nação"
+          }
         },
         {
           "char": "人",
@@ -609,7 +985,15 @@
             "一个人"
           ],
           "isSupplementary": false,
-          "radical": "人"
+          "radical": "人",
+          "meanings": {
+            "es": "persona; gente",
+            "en": "person; people",
+            "fr": "personne; gens",
+            "de": "Person; Leute",
+            "it": "persona; gente",
+            "pt": "pessoa; povo"
+          }
         },
         {
           "char": "学习",
@@ -622,7 +1006,15 @@
             "一起学习"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "estudiar; aprender",
+            "en": "to study; to learn",
+            "fr": "étudier; apprendre",
+            "de": "studieren; lernen",
+            "it": "studiare; imparare",
+            "pt": "estudar; aprender"
+          }
         },
         {
           "char": "学",
@@ -635,7 +1027,15 @@
             "刚学"
           ],
           "isSupplementary": false,
-          "radical": "子"
+          "radical": "子",
+          "meanings": {
+            "es": "estudiar",
+            "en": "to study",
+            "fr": "étudier",
+            "de": "studieren; lernen",
+            "it": "studiare",
+            "pt": "estudar"
+          }
         },
         {
           "char": "汉语",
@@ -648,7 +1048,15 @@
             "汉语课"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "idioma chino; mandarín",
+            "en": "Chinese language; Mandarin",
+            "fr": "langue chinoise; mandarin",
+            "de": "Chinesisch; Mandarin",
+            "it": "cinese; mandarino",
+            "pt": "língua chinesa; mandarim"
+          }
         },
         {
           "char": "再见",
@@ -660,7 +1068,15 @@
             "再见"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "adiós; hasta luego",
+            "en": "goodbye; see you",
+            "fr": "au revoir",
+            "de": "auf Wiedersehen; tschüss",
+            "it": "arrivederci; ciao",
+            "pt": "adeus; até logo"
+          }
         },
         {
           "char": "点心",
@@ -673,7 +1089,15 @@
             "小点心"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "bocadillos; dim sum",
+            "en": "dim sum; snacks",
+            "fr": "dim sum; collation",
+            "de": "Dim Sum; Snacks",
+            "it": "dim sum; spuntino",
+            "pt": "dim sum; salgados"
+          }
         },
         {
           "char": "好吃",
@@ -686,7 +1110,15 @@
             "真好吃"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "delicioso; sabroso",
+            "en": "delicious; tasty",
+            "fr": "délicieux; savoureux",
+            "de": "lecker; köstlich",
+            "it": "delizioso; saporito",
+            "pt": "delicioso; gostoso"
+          }
         },
         {
           "char": "吃",
@@ -699,7 +1131,15 @@
             "吃饺子"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "comer",
+            "en": "to eat",
+            "fr": "manger",
+            "de": "essen",
+            "it": "mangiare",
+            "pt": "comer"
+          }
         },
         {
           "char": "爸爸",
@@ -711,7 +1151,15 @@
             "爸爸很忙"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "papá; padre",
+            "en": "dad; father",
+            "fr": "papa; père",
+            "de": "Papa; Vater",
+            "it": "papà; padre",
+            "pt": "pai; papai"
+          }
         },
         {
           "char": "喜欢",
@@ -724,7 +1172,15 @@
             "很喜欢"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "gustar; que gusta",
+            "en": "to like; to enjoy",
+            "fr": "aimer; apprécier",
+            "de": "mögen; gerne haben",
+            "it": "piacere; gradire",
+            "pt": "gostar; apreciar"
+          }
         },
         {
           "char": "和",
@@ -736,7 +1192,15 @@
             "米饭和点心"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "y; con",
+            "en": "and; with",
+            "fr": "et; avec",
+            "de": "und; mit",
+            "it": "e; con",
+            "pt": "e; com"
+          }
         },
         {
           "char": "米饭",
@@ -748,7 +1212,15 @@
             "米饭和点心"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "arroz (cocido)",
+            "en": "cooked rice",
+            "fr": "riz cuit",
+            "de": "gekochter Reis",
+            "it": "riso cotto",
+            "pt": "arroz cozido"
+          }
         },
         {
           "char": "饭",
@@ -761,7 +1233,15 @@
             "早饭"
           ],
           "isSupplementary": false,
-          "radical": "饣"
+          "radical": "饣",
+          "meanings": {
+            "es": "arroz; comida",
+            "en": "rice; meal",
+            "fr": "riz; repas",
+            "de": "Reis; Mahlzeit",
+            "it": "riso; pasto",
+            "pt": "arroz; refeição"
+          }
         },
         {
           "char": "妈妈",
@@ -773,7 +1253,15 @@
             "妈妈喜欢"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "mamá; madre",
+            "en": "mom; mother",
+            "fr": "maman; mère",
+            "de": "Mama; Mutter",
+            "it": "mamma; madre",
+            "pt": "mãe; mamãe"
+          }
         },
         {
           "char": "面条儿",
@@ -785,7 +1273,15 @@
             "不喜欢吃面条儿"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "tallarines; fideos",
+            "en": "noodles",
+            "fr": "nouilles",
+            "de": "Nudeln",
+            "it": "tagliatelle; spaghetti",
+            "pt": "macarrão; talharim"
+          }
         },
         {
           "char": "饺子",
@@ -797,7 +1293,15 @@
             "喜欢吃饺子"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "jiaozi; ravioles chinos",
+            "en": "jiaozi; Chinese dumplings",
+            "fr": "jiaozi; raviolis chinois",
+            "de": "Jiaozi; chinesische Teigtaschen",
+            "it": "jiaozi; ravioli cinesi",
+            "pt": "jiaozi; ravioli chinês"
+          }
         },
         {
           "char": "包子",
@@ -809,7 +1313,15 @@
             "不喜欢吃包子"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "baozi; bollo relleno al vapor",
+            "en": "baozi; steamed bun",
+            "fr": "baozi; brioche vapeur",
+            "de": "Baozi; gedämpftes Brötchen",
+            "it": "baozi; panino al vapore",
+            "pt": "baozi; pão cozido a vapor"
+          }
         },
         {
           "char": "大",
@@ -822,7 +1334,15 @@
             "大包子"
           ],
           "isSupplementary": false,
-          "radical": "大"
+          "radical": "大",
+          "meanings": {
+            "es": "grande",
+            "en": "big; large",
+            "fr": "grand; gros",
+            "de": "groß",
+            "it": "grande",
+            "pt": "grande"
+          }
         },
         {
           "char": "小",
@@ -835,7 +1355,15 @@
             "小狗"
           ],
           "isSupplementary": false,
-          "radical": "小"
+          "radical": "小",
+          "meanings": {
+            "es": "pequeño",
+            "en": "small; little",
+            "fr": "petit",
+            "de": "klein",
+            "it": "piccolo",
+            "pt": "pequeno"
+          }
         },
         {
           "char": "看",
@@ -848,7 +1376,15 @@
             "你看"
           ],
           "isSupplementary": false,
-          "radical": "目"
+          "radical": "目",
+          "meanings": {
+            "es": "mirar; ver",
+            "en": "to look; to watch",
+            "fr": "regarder; voir",
+            "de": "schauen; sehen",
+            "it": "guardare; vedere",
+            "pt": "olhar; ver"
+          }
         },
         {
           "char": "那",
@@ -861,7 +1397,15 @@
             "那是面条儿"
           ],
           "isSupplementary": false,
-          "radical": "阝"
+          "radical": "阝",
+          "meanings": {
+            "es": "aquel; aquello/a",
+            "en": "that; there",
+            "fr": "ce; cela; là",
+            "de": "jener/jene/jenes; dort",
+            "it": "quello/a; là",
+            "pt": "aquele/a; lá"
+          }
         },
         {
           "char": "都",
@@ -874,7 +1418,15 @@
             "都喜欢"
           ],
           "isSupplementary": false,
-          "radical": "阝"
+          "radical": "阝",
+          "meanings": {
+            "es": "todos; ambos",
+            "en": "all; both",
+            "fr": "tous; les deux",
+            "de": "alle; beide",
+            "it": "tutti; entrambi",
+            "pt": "todos; ambos"
+          }
         },
         {
           "char": "要",
@@ -887,7 +1439,15 @@
             "我要"
           ],
           "isSupplementary": false,
-          "radical": "覀"
+          "radical": "覀",
+          "meanings": {
+            "es": "querer; quisiera",
+            "en": "to want; would like",
+            "fr": "vouloir; voudrais",
+            "de": "wollen; möchten",
+            "it": "volere; vorresti",
+            "pt": "querer; gostaria"
+          }
         },
         {
           "char": "中国",
@@ -900,7 +1460,15 @@
             "中国文化"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "China",
+            "en": "China",
+            "fr": "Chine",
+            "de": "China",
+            "it": "Cina",
+            "pt": "China"
+          }
         },
         {
           "char": "西班牙",
@@ -912,7 +1480,15 @@
             "我是西班牙人"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "España",
+            "en": "Spain",
+            "fr": "Espagne",
+            "de": "Spanien",
+            "it": "Spagna",
+            "pt": "Espanha"
+          }
         },
         {
           "char": "法国",
@@ -924,7 +1500,15 @@
             "去法国"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Francia",
+            "en": "France",
+            "fr": "France",
+            "de": "Frankreich",
+            "it": "Francia",
+            "pt": "França"
+          }
         },
         {
           "char": "德国",
@@ -936,7 +1520,15 @@
             "去德国"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Alemania",
+            "en": "Germany",
+            "fr": "Allemagne",
+            "de": "Deutschland",
+            "it": "Germania",
+            "pt": "Alemanha"
+          }
         },
         {
           "char": "英国",
@@ -948,7 +1540,15 @@
             "去英国"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Reino Unido; Inglaterra",
+            "en": "United Kingdom; England",
+            "fr": "Royaume-Uni; Angleterre",
+            "de": "Vereinigtes Königreich; England",
+            "it": "Regno Unito; Inghilterra",
+            "pt": "Reino Unido; Inglaterra"
+          }
         },
         {
           "char": "美国",
@@ -960,7 +1560,15 @@
             "去美国"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Estados Unidos",
+            "en": "United States; America",
+            "fr": "États-Unis; Amérique",
+            "de": "Vereinigte Staaten; Amerika",
+            "it": "Stati Uniti; America",
+            "pt": "Estados Unidos; América"
+          }
         },
         {
           "char": "日本",
@@ -972,7 +1580,15 @@
             "去日本"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Japón",
+            "en": "Japan",
+            "fr": "Japon",
+            "de": "Japan",
+            "it": "Giappone",
+            "pt": "Japão"
+          }
         },
         {
           "char": "同学",
@@ -984,7 +1600,15 @@
             "你们班同学"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "compañero/a de clase",
+            "en": "classmate",
+            "fr": "camarade de classe",
+            "de": "Klassenkamerad/in",
+            "it": "compagno/a di classe",
+            "pt": "colega de classe"
+          }
         },
         {
           "char": "面包",
@@ -996,7 +1620,15 @@
             "喜欢吃面包"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "pan",
+            "en": "bread",
+            "fr": "pain",
+            "de": "Brot",
+            "it": "pane",
+            "pt": "pão"
+          }
         },
         {
           "char": "汉堡包",
@@ -1008,7 +1640,15 @@
             "喜欢吃汉堡包"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hamburguesa",
+            "en": "hamburger",
+            "fr": "hamburger",
+            "de": "Hamburger",
+            "it": "hamburger",
+            "pt": "hambúrguer"
+          }
         },
         {
           "char": "比萨饼",
@@ -1020,7 +1660,15 @@
             "喜欢吃比萨饼"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "pizza",
+            "en": "pizza",
+            "fr": "pizza",
+            "de": "Pizza",
+            "it": "pizza",
+            "pt": "pizza"
+          }
         }
       ]
     },
@@ -1040,7 +1688,15 @@
             "回家"
           ],
           "isSupplementary": false,
-          "radical": "宀"
+          "radical": "宀",
+          "meanings": {
+            "es": "familia; casa",
+            "en": "family; home",
+            "fr": "famille; maison",
+            "de": "Familie; Zuhause",
+            "it": "famiglia; casa",
+            "pt": "família; casa"
+          }
         },
         {
           "char": "有",
@@ -1053,7 +1709,15 @@
             "有时间"
           ],
           "isSupplementary": false,
-          "radical": "月"
+          "radical": "月",
+          "meanings": {
+            "es": "tener; haber",
+            "en": "to have; there is/are",
+            "fr": "avoir; il y a",
+            "de": "haben; es gibt",
+            "it": "avere; c'è/ci sono",
+            "pt": "ter; há"
+          }
         },
         {
           "char": "几",
@@ -1066,7 +1730,15 @@
             "几点"
           ],
           "isSupplementary": false,
-          "radical": "几"
+          "radical": "几",
+          "meanings": {
+            "es": "cuánto (menos de 10)",
+            "en": "how many (under 10)",
+            "fr": "combien (moins de 10)",
+            "de": "wie viele (unter 10)",
+            "it": "quanti (meno di 10)",
+            "pt": "quantos (menos de 10)"
+          }
         },
         {
           "char": "口",
@@ -1078,7 +1750,15 @@
             "六口人"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "clasificador para personas de una familia",
+            "en": "classifier for family members",
+            "fr": "classificateur pour membres de la famille",
+            "de": "Zählwort für Familienmitglieder",
+            "it": "classificatore per membri della famiglia",
+            "pt": "classificador para membros da família"
+          }
         },
         {
           "char": "的",
@@ -1091,7 +1771,15 @@
             "中国的"
           ],
           "isSupplementary": false,
-          "radical": "白"
+          "radical": "白",
+          "meanings": {
+            "es": "partícula posesiva o modificadora",
+            "en": "possessive/modifier particle",
+            "fr": "particule possessive ou modificatrice",
+            "de": "Possessivpartikel",
+            "it": "particella possessiva o modificatrice",
+            "pt": "partícula possessiva ou modificadora"
+          }
         },
         {
           "char": "照片",
@@ -1104,7 +1792,15 @@
             "一张照片"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "foto; fotografía",
+            "en": "photo; photograph",
+            "fr": "photo; photographie",
+            "de": "Foto; Fotografie",
+            "it": "foto; fotografia",
+            "pt": "foto; fotografia"
+          }
         },
         {
           "char": "做",
@@ -1117,7 +1813,15 @@
             "做饭"
           ],
           "isSupplementary": false,
-          "radical": "亻"
+          "radical": "亻",
+          "meanings": {
+            "es": "hacer",
+            "en": "to do; to make",
+            "fr": "faire",
+            "de": "machen; tun",
+            "it": "fare",
+            "pt": "fazer"
+          }
         },
         {
           "char": "工作",
@@ -1130,7 +1834,15 @@
             "做工作"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "trabajar / trabajo; empleo",
+            "en": "to work; work; job",
+            "fr": "travailler; travail; emploi",
+            "de": "arbeiten; Arbeit; Job",
+            "it": "lavorare; lavoro",
+            "pt": "trabalhar; trabalho"
+          }
         },
         {
           "char": "医生",
@@ -1142,7 +1854,15 @@
             "你是医生吗"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "médico/a; doctor/a",
+            "en": "doctor; physician",
+            "fr": "médecin; docteur",
+            "de": "Arzt; Ärztin",
+            "it": "medico; dottore",
+            "pt": "médico/a; doutor/a"
+          }
         },
         {
           "char": "哥哥",
@@ -1154,7 +1874,15 @@
             "我哥哥是老师"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hermano mayor",
+            "en": "older brother",
+            "fr": "grand frère",
+            "de": "älterer Bruder",
+            "it": "fratello maggiore",
+            "pt": "irmão mais velho"
+          }
         },
         {
           "char": "弟弟",
@@ -1166,7 +1894,15 @@
             "我弟弟很帅"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hermano menor",
+            "en": "younger brother",
+            "fr": "petit frère",
+            "de": "jüngerer Bruder",
+            "it": "fratello minore",
+            "pt": "irmão mais novo"
+          }
         },
         {
           "char": "一共",
@@ -1178,7 +1914,15 @@
             "一共几个"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "en total",
+            "en": "in total; altogether",
+            "fr": "en tout; au total",
+            "de": "insgesamt; alles zusammen",
+            "it": "in totale; complessivamente",
+            "pt": "no total; ao todo"
+          }
         },
         {
           "char": "个",
@@ -1191,7 +1935,15 @@
             "两个人"
           ],
           "isSupplementary": false,
-          "radical": "亻"
+          "radical": "亻",
+          "meanings": {
+            "es": "clasificador de uso general",
+            "en": "general classifier",
+            "fr": "classificateur général",
+            "de": "allgemeines Zählwort",
+            "it": "classificatore generico",
+            "pt": "classificador geral"
+          }
         },
         {
           "char": "两",
@@ -1204,7 +1956,15 @@
             "两张照片"
           ],
           "isSupplementary": false,
-          "radical": "一"
+          "radical": "一",
+          "meanings": {
+            "es": "dos (con clasificador)",
+            "en": "two (with classifier)",
+            "fr": "deux (avec classificateur)",
+            "de": "zwei (mit Zählwort)",
+            "it": "due (con classificatore)",
+            "pt": "dois (com classificador)"
+          }
         },
         {
           "char": "姐姐",
@@ -1216,7 +1976,15 @@
             "我姐姐很漂亮"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hermana mayor",
+            "en": "older sister",
+            "fr": "grande sœur",
+            "de": "ältere Schwester",
+            "it": "sorella maggiore",
+            "pt": "irmã mais velha"
+          }
         },
         {
           "char": "还",
@@ -1229,7 +1997,15 @@
             "还好"
           ],
           "isSupplementary": false,
-          "radical": "辶"
+          "radical": "辶",
+          "meanings": {
+            "es": "además; también; todavía",
+            "en": "also; still; furthermore",
+            "fr": "aussi; encore; de plus",
+            "de": "auch; noch; außerdem",
+            "it": "anche; ancora; inoltre",
+            "pt": "também; ainda; além disso"
+          }
         },
         {
           "char": "谁",
@@ -1242,7 +2018,15 @@
             "谁是老师"
           ],
           "isSupplementary": false,
-          "radical": "讠"
+          "radical": "讠",
+          "meanings": {
+            "es": "quién",
+            "en": "who",
+            "fr": "qui",
+            "de": "wer",
+            "it": "chi",
+            "pt": "quem"
+          }
         },
         {
           "char": "妹妹",
@@ -1254,7 +2038,15 @@
             "我妹妹很漂亮"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hermana menor",
+            "en": "younger sister",
+            "fr": "petite sœur",
+            "de": "jüngere Schwester",
+            "it": "sorella minore",
+            "pt": "irmã mais nova"
+          }
         },
         {
           "char": "没有",
@@ -1267,7 +2059,15 @@
             "没有人"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "no; no hay; no tener",
+            "en": "no; there isn't; to not have",
+            "fr": "non; il n'y a pas; ne pas avoir",
+            "de": "nein; es gibt nicht; nicht haben",
+            "it": "no; non c'è; non avere",
+            "pt": "não; não há; não ter"
+          }
         },
         {
           "char": "没",
@@ -1280,7 +2080,15 @@
             "没好"
           ],
           "isSupplementary": false,
-          "radical": "氵"
+          "radical": "氵",
+          "meanings": {
+            "es": "no (negación de 有)",
+            "en": "not (negation of 有)",
+            "fr": "ne pas (négation de 有)",
+            "de": "nicht (Verneinung von 有)",
+            "it": "non (negazione di 有)",
+            "pt": "não (negação de 有)"
+          }
         },
         {
           "char": "狗",
@@ -1292,7 +2100,15 @@
             "我的小狗"
           ],
           "isSupplementary": false,
-          "radical": "犭"
+          "radical": "犭",
+          "meanings": {
+            "es": "perro",
+            "en": "dog",
+            "fr": "chien",
+            "de": "Hund",
+            "it": "cane",
+            "pt": "cachorro; cão"
+          }
         },
         {
           "char": "真",
@@ -1306,7 +2122,15 @@
             "真漂亮"
           ],
           "isSupplementary": false,
-          "radical": "目"
+          "radical": "目",
+          "meanings": {
+            "es": "verdaderamente; de verdad",
+            "en": "really; truly",
+            "fr": "vraiment; réellement",
+            "de": "wirklich; tatsächlich",
+            "it": "davvero; veramente",
+            "pt": "realmente; de verdade"
+          }
         },
         {
           "char": "漂亮",
@@ -1318,7 +2142,15 @@
             "很漂亮"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hermoso/a; bonito/a",
+            "en": "beautiful; pretty",
+            "fr": "beau; joli",
+            "de": "schön; hübsch",
+            "it": "bello; carino",
+            "pt": "bonito/a; lindo/a"
+          }
         },
         {
           "char": "喝",
@@ -1331,7 +2163,15 @@
             "喝咖啡"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "beber",
+            "en": "to drink",
+            "fr": "boire",
+            "de": "trinken",
+            "it": "bere",
+            "pt": "beber"
+          }
         },
         {
           "char": "茶",
@@ -1344,7 +2184,15 @@
             "一杯茶"
           ],
           "isSupplementary": false,
-          "radical": "艹"
+          "radical": "艹",
+          "meanings": {
+            "es": "té",
+            "en": "tea",
+            "fr": "thé",
+            "de": "Tee",
+            "it": "tè",
+            "pt": "chá"
+          }
         },
         {
           "char": "咖啡",
@@ -1357,7 +2205,15 @@
             "一杯咖啡"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "café",
+            "en": "coffee",
+            "fr": "café",
+            "de": "Kaffee",
+            "it": "caffè",
+            "pt": "café"
+          }
         },
         {
           "char": "张",
@@ -1369,7 +2225,15 @@
             "两张照片"
           ],
           "isSupplementary": false,
-          "radical": "弓"
+          "radical": "弓",
+          "meanings": {
+            "es": "clasificador para objetos planos",
+            "en": "classifier for flat objects",
+            "fr": "classificateur pour objets plats",
+            "de": "Zählwort für flache Objekte",
+            "it": "classificatore per oggetti piatti",
+            "pt": "classificador para objetos planos"
+          }
         },
         {
           "char": "女儿",
@@ -1381,7 +2245,15 @@
             "女儿很漂亮"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hija",
+            "en": "daughter",
+            "fr": "fille",
+            "de": "Tochter",
+            "it": "figlia",
+            "pt": "filha"
+          }
         },
         {
           "char": "女",
@@ -1394,7 +2266,15 @@
             "女生"
           ],
           "isSupplementary": false,
-          "radical": "女"
+          "radical": "女",
+          "meanings": {
+            "es": "femenino; mujer",
+            "en": "female; woman",
+            "fr": "féminin; femme",
+            "de": "weiblich; Frau",
+            "it": "femminile; donna",
+            "pt": "feminino; mulher"
+          }
         },
         {
           "char": "今年",
@@ -1406,7 +2286,15 @@
             "今年几岁"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "este año",
+            "en": "this year",
+            "fr": "cette année",
+            "de": "dieses Jahr",
+            "it": "quest'anno",
+            "pt": "este ano"
+          }
         },
         {
           "char": "年",
@@ -1419,7 +2307,15 @@
             "一年"
           ],
           "isSupplementary": false,
-          "radical": "干"
+          "radical": "干",
+          "meanings": {
+            "es": "año",
+            "en": "year",
+            "fr": "année; an",
+            "de": "Jahr",
+            "it": "anno",
+            "pt": "ano"
+          }
         },
         {
           "char": "岁",
@@ -1432,7 +2328,15 @@
             "二十岁"
           ],
           "isSupplementary": false,
-          "radical": "山"
+          "radical": "山",
+          "meanings": {
+            "es": "año (de edad)",
+            "en": "years old (age)",
+            "fr": "ans (âge)",
+            "de": "Jahre alt (Alter)",
+            "it": "anni (età)",
+            "pt": "anos (de idade)"
+          }
         },
         {
           "char": "今天",
@@ -1445,7 +2349,15 @@
             "今天上午"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "hoy",
+            "en": "today",
+            "fr": "aujourd'hui",
+            "de": "heute",
+            "it": "oggi",
+            "pt": "hoje"
+          }
         },
         {
           "char": "天",
@@ -1458,7 +2370,15 @@
             "两天"
           ],
           "isSupplementary": false,
-          "radical": "大"
+          "radical": "大",
+          "meanings": {
+            "es": "día; cielo",
+            "en": "day; sky",
+            "fr": "jour; ciel",
+            "de": "Tag; Himmel",
+            "it": "giorno; cielo",
+            "pt": "dia; céu"
+          }
         },
         {
           "char": "钢琴",
@@ -1470,7 +2390,15 @@
             "钢琴课"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "piano",
+            "en": "piano",
+            "fr": "piano",
+            "de": "Klavier",
+            "it": "pianoforte",
+            "pt": "piano"
+          }
         },
         {
           "char": "课",
@@ -1483,7 +2411,15 @@
             "没有课"
           ],
           "isSupplementary": false,
-          "radical": "讠"
+          "radical": "讠",
+          "meanings": {
+            "es": "clase; lección",
+            "en": "class; lesson",
+            "fr": "cours; leçon",
+            "de": "Unterricht; Stunde",
+            "it": "lezione; classe",
+            "pt": "aula; lição"
+          }
         },
         {
           "char": "孩子",
@@ -1495,7 +2431,15 @@
             "一个孩子"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "niño/a; hijo/a",
+            "en": "child; children",
+            "fr": "enfant; enfants",
+            "de": "Kind; Kinder",
+            "it": "bambino/a; figlio/a",
+            "pt": "criança; filho/a"
+          }
         },
         {
           "char": "啊",
@@ -1508,7 +2452,15 @@
             "是啊"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "partícula de confirmación o exclamación",
+            "en": "confirmation/exclamation particle",
+            "fr": "particule de confirmation ou exclamation",
+            "de": "Bestätigungs- oder Ausrufepartikel",
+            "it": "particella di conferma o esclamazione",
+            "pt": "partícula de confirmação ou exclamação"
+          }
         },
         {
           "char": "晚上",
@@ -1521,7 +2473,15 @@
             "今天晚上"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "noche; por la noche",
+            "en": "evening; night",
+            "fr": "soir; nuit",
+            "de": "Abend; Nacht",
+            "it": "sera; notte",
+            "pt": "noite; à noite"
+          }
         },
         {
           "char": "晚",
@@ -1534,7 +2494,15 @@
             "不晚"
           ],
           "isSupplementary": false,
-          "radical": "日"
+          "radical": "日",
+          "meanings": {
+            "es": "tarde; noche",
+            "en": "late; evening",
+            "fr": "tard; soir",
+            "de": "spät; Abend",
+            "it": "tardi; sera",
+            "pt": "tarde; noite"
+          }
         },
         {
           "char": "英语",
@@ -1547,7 +2515,15 @@
             "说英语"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "idioma inglés",
+            "en": "English language",
+            "fr": "langue anglaise; anglais",
+            "de": "Englisch",
+            "it": "inglese",
+            "pt": "inglês; língua inglesa"
+          }
         },
         {
           "char": "律师",
@@ -1559,7 +2535,15 @@
             "你是律师吗"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "abogado/a",
+            "en": "lawyer; attorney",
+            "fr": "avocat/e",
+            "de": "Rechtsanwalt/-anwältin",
+            "it": "avvocato/a",
+            "pt": "advogado/a"
+          }
         },
         {
           "char": "记者",
@@ -1571,7 +2555,15 @@
             "他是记者"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "reportero/a; periodista",
+            "en": "reporter; journalist",
+            "fr": "journaliste; reporter",
+            "de": "Reporter/in; Journalist/in",
+            "it": "giornalista; reporter",
+            "pt": "repórter; jornalista"
+          }
         },
         {
           "char": "服务员",
@@ -1583,7 +2575,15 @@
             "他是服务员"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "camarero/a; empleado de servicio",
+            "en": "waiter; service employee",
+            "fr": "serveur/euse; employé de service",
+            "de": "Kellner/in; Servicekraft",
+            "it": "cameriere/a; addetto al servizio",
+            "pt": "garçom; garçonete; funcionário"
+          }
         },
         {
           "char": "经理",
@@ -1595,7 +2595,15 @@
             "王经理"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "gerente; director/a",
+            "en": "manager; director",
+            "fr": "directeur/trice; gérant/e",
+            "de": "Manager/in; Direktor/in",
+            "it": "direttore/trice; responsabile",
+            "pt": "gerente; diretor/a"
+          }
         },
         {
           "char": "工程师",
@@ -1607,7 +2615,15 @@
             "他是工程师"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "ingeniero/a",
+            "en": "engineer",
+            "fr": "ingénieur/e",
+            "de": "Ingenieur/in",
+            "it": "ingegnere",
+            "pt": "engenheiro/a"
+          }
         },
         {
           "char": "学生",
@@ -1620,7 +2636,15 @@
             "你们班学生"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "estudiante",
+            "en": "student",
+            "fr": "étudiant/e; élève",
+            "de": "Schüler/in; Student/in",
+            "it": "studente/ssa",
+            "pt": "estudante; aluno/a"
+          }
         },
         {
           "char": "商人",
@@ -1632,7 +2656,15 @@
             "我爸爸是商人"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "comerciante; autónomo",
+            "en": "businessman; self-employed",
+            "fr": "commerçant; indépendant",
+            "de": "Kaufmann; Selbstständiger",
+            "it": "commerciante; autonomo",
+            "pt": "comerciante; autônomo"
+          }
         },
         {
           "char": "先生",
@@ -1644,7 +2676,15 @@
             "陈先生"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Sr.; señor; marido",
+            "en": "Mr.; sir; husband",
+            "fr": "M.; monsieur; mari",
+            "de": "Herr; Ehemann",
+            "it": "signore; sig.; marito",
+            "pt": "senhor; sr.; marido"
+          }
         },
         {
           "char": "太太",
@@ -1656,7 +2696,15 @@
             "她太太"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "Sra.; señora; esposa",
+            "en": "Mrs.; madam; wife",
+            "fr": "Mme; madame; femme",
+            "de": "Frau; Ehefrau",
+            "it": "signora; sig.ra; moglie",
+            "pt": "senhora; sra.; esposa"
+          }
         },
         {
           "char": "男朋友",
@@ -1668,7 +2716,15 @@
             "找男朋友"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "novio",
+            "en": "boyfriend",
+            "fr": "petit ami",
+            "de": "Freund (Beziehung)",
+            "it": "fidanzato; ragazzo",
+            "pt": "namorado"
+          }
         },
         {
           "char": "女朋友",
@@ -1680,7 +2736,15 @@
             "找女朋友"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "novia",
+            "en": "girlfriend",
+            "fr": "petite amie",
+            "de": "Freundin (Beziehung)",
+            "it": "fidanzata; ragazza",
+            "pt": "namorada"
+          }
         },
         {
           "char": "可乐",
@@ -1692,7 +2756,15 @@
             "不好喝"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "coca cola",
+            "en": "cola; Coca-Cola",
+            "fr": "coca-cola; soda cola",
+            "de": "Cola",
+            "it": "cola; coca cola",
+            "pt": "cola; refrigerante"
+          }
         },
         {
           "char": "牛奶",
@@ -1705,7 +2777,15 @@
             "一杯牛奶"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "leche",
+            "en": "milk",
+            "fr": "lait",
+            "de": "Milch",
+            "it": "latte",
+            "pt": "leite"
+          }
         },
         {
           "char": "豆浆",
@@ -1717,7 +2797,15 @@
             "喜欢喝豆浆"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "leche de soja",
+            "en": "soy milk",
+            "fr": "lait de soja",
+            "de": "Sojamilch",
+            "it": "latte di soia",
+            "pt": "leite de soja"
+          }
         },
         {
           "char": "水",
@@ -1730,7 +2818,15 @@
             "喜欢喝水"
           ],
           "isSupplementary": true,
-          "radical": "水"
+          "radical": "水",
+          "meanings": {
+            "es": "agua",
+            "en": "water",
+            "fr": "eau",
+            "de": "Wasser",
+            "it": "acqua",
+            "pt": "água"
+          }
         },
         {
           "char": "杯",
@@ -1743,7 +2839,15 @@
             "一杯茶"
           ],
           "isSupplementary": true,
-          "radical": "木"
+          "radical": "木",
+          "meanings": {
+            "es": "taza; vaso; copa",
+            "en": "cup; glass",
+            "fr": "tasse; verre",
+            "de": "Tasse; Glas",
+            "it": "tazza; bicchiere",
+            "pt": "xícara; copo"
+          }
         },
         {
           "char": "帅",
@@ -1756,7 +2860,15 @@
             "他很帅"
           ],
           "isSupplementary": true,
-          "radical": "巾"
+          "radical": "巾",
+          "meanings": {
+            "es": "guapo",
+            "en": "handsome",
+            "fr": "beau; séduisant",
+            "de": "gutaussehend; attraktiv",
+            "it": "bello; attraente",
+            "pt": "bonito; atraente"
+          }
         }
       ]
     },
@@ -1776,7 +2888,15 @@
             "明天几点"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "mañana (el día siguiente)",
+            "en": "tomorrow",
+            "fr": "demain",
+            "de": "morgen",
+            "it": "domani",
+            "pt": "amanhã"
+          }
         },
         {
           "char": "多",
@@ -1789,7 +2909,15 @@
             "多少"
           ],
           "isSupplementary": false,
-          "radical": "夕"
+          "radical": "夕",
+          "meanings": {
+            "es": "mucho; más",
+            "en": "many; much; more",
+            "fr": "beaucoup; plus",
+            "de": "viel; mehr",
+            "it": "molto; di più",
+            "pt": "muito; mais"
+          }
         },
         {
           "char": "特别",
@@ -1802,7 +2930,15 @@
             "特别好"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "especialmente; muy",
+            "en": "especially; very",
+            "fr": "particulièrement; très",
+            "de": "besonders; sehr",
+            "it": "particolarmente; molto",
+            "pt": "especialmente; muito"
+          }
         },
         {
           "char": "点（钟）",
@@ -1815,7 +2951,15 @@
             "八点半"
           ],
           "isSupplementary": false,
-          "radical": "火"
+          "radical": "火",
+          "meanings": {
+            "es": "en punto (hora)",
+            "en": "o'clock",
+            "fr": "heure (précise)",
+            "de": "Uhr (Punkt)",
+            "it": "in punto (ora)",
+            "pt": "em ponto (hora)"
+          }
         },
         {
           "char": "上午",
@@ -1828,7 +2972,15 @@
             "明天上午"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "mañana; antes del mediodía",
+            "en": "morning; before noon",
+            "fr": "matin; avant-midi",
+            "de": "Vormittag",
+            "it": "mattina; prima di mezzogiorno",
+            "pt": "manhã; antes do meio-dia"
+          }
         },
         {
           "char": "半",
@@ -1840,7 +2992,15 @@
             "半本书"
           ],
           "isSupplementary": false,
-          "radical": "十"
+          "radical": "十",
+          "meanings": {
+            "es": "mitad; media (hora)",
+            "en": "half; half past",
+            "fr": "demi; et demie",
+            "de": "halb; halbe Stunde",
+            "it": "mezzo; e mezza",
+            "pt": "meia; meia hora"
+          }
         },
         {
           "char": "语法",
@@ -1853,7 +3013,15 @@
             "汉语语法"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "gramática",
+            "en": "grammar",
+            "fr": "grammaire",
+            "de": "Grammatik",
+            "it": "grammatica",
+            "pt": "gramática"
+          }
         },
         {
           "char": "汉字",
@@ -1866,7 +3034,15 @@
             "多少个汉字"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "carácter chino",
+            "en": "Chinese character",
+            "fr": "caractère chinois",
+            "de": "chinesisches Schriftzeichen",
+            "it": "carattere cinese",
+            "pt": "caractere chinês"
+          }
         },
         {
           "char": "下午",
@@ -1879,7 +3055,15 @@
             "今天下午"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "tarde (después del mediodía)",
+            "en": "afternoon",
+            "fr": "après-midi",
+            "de": "Nachmittag",
+            "it": "pomeriggio",
+            "pt": "tarde (após o meio-dia)"
+          }
         },
         {
           "char": "下",
@@ -1892,7 +3076,15 @@
             "坐下"
           ],
           "isSupplementary": false,
-          "radical": "一"
+          "radical": "一",
+          "meanings": {
+            "es": "abajo; siguiente",
+            "en": "below; next",
+            "fr": "en bas; suivant",
+            "de": "unten; nächste/r/s",
+            "it": "sotto; prossimo",
+            "pt": "abaixo; próximo"
+          }
         },
         {
           "char": "口语",
@@ -1905,7 +3097,15 @@
             "口语课"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "idioma hablado; expresión oral",
+            "en": "spoken language; oral expression",
+            "fr": "langue parlée; expression orale",
+            "de": "gesprochene Sprache; mündlicher Ausdruck",
+            "it": "lingua parlata; espressione orale",
+            "pt": "língua falada; expressão oral"
+          }
         },
         {
           "char": "对了",
@@ -1916,7 +3116,15 @@
             "对了，你明天有课吗"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "a propósito; oye (para cambiar tema)",
+            "en": "by the way; hey (topic change)",
+            "fr": "au fait; à propos",
+            "de": "übrigens; apropos",
+            "it": "a proposito; senti",
+            "pt": "aliás; a propósito"
+          }
         },
         {
           "char": "时间",
@@ -1929,7 +3137,15 @@
             "什么时间"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "tiempo; hora",
+            "en": "time; hour",
+            "fr": "temps; heure",
+            "de": "Zeit; Stunde",
+            "it": "tempo; ora",
+            "pt": "tempo; hora"
+          }
         },
         {
           "char": "电影",
@@ -1942,7 +3158,15 @@
             "有意思的电影"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "película; cine",
+            "en": "movie; cinema",
+            "fr": "film; cinéma",
+            "de": "Film; Kino",
+            "it": "film; cinema",
+            "pt": "filme; cinema"
+          }
         },
         {
           "char": "一起",
@@ -1955,7 +3179,15 @@
             "一起学习"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "juntos; a la vez",
+            "en": "together; at the same time",
+            "fr": "ensemble; en même temps",
+            "de": "zusammen; gleichzeitig",
+            "it": "insieme; allo stesso tempo",
+            "pt": "juntos; ao mesmo tempo"
+          }
         },
         {
           "char": "去",
@@ -1968,7 +3200,15 @@
             "去哪儿"
           ],
           "isSupplementary": false,
-          "radical": "土"
+          "radical": "土",
+          "meanings": {
+            "es": "ir",
+            "en": "to go",
+            "fr": "aller",
+            "de": "gehen; fahren",
+            "it": "andare",
+            "pt": "ir"
+          }
         },
         {
           "char": "吧",
@@ -1981,7 +3221,15 @@
             "好吧"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "partícula de sugerencia o consulta",
+            "en": "suggestion/confirmation particle",
+            "fr": "particule de suggestion",
+            "de": "Vorschlag- oder Bestätigungspartikel",
+            "it": "particella di suggerimento",
+            "pt": "partícula de sugestão ou confirmação"
+          }
         },
         {
           "char": "行",
@@ -1994,7 +3242,15 @@
             "还行"
           ],
           "isSupplementary": false,
-          "radical": "彳"
+          "radical": "彳",
+          "meanings": {
+            "es": "estar bien; vale; poder",
+            "en": "okay; fine; can do",
+            "fr": "d'accord; ça va; pouvoir",
+            "de": "okay; in Ordnung; können",
+            "it": "va bene; sì; potere",
+            "pt": "tudo bem; pode; conseguir"
+          }
         },
         {
           "char": "恐怕",
@@ -2006,7 +3262,15 @@
             "恐怕没时间"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "me temo que; tal vez",
+            "en": "I'm afraid; perhaps",
+            "fr": "j'ai peur que; peut-être",
+            "de": "ich fürchte; vielleicht",
+            "it": "temo che; forse",
+            "pt": "temo que; talvez"
+          }
         },
         {
           "char": "练习",
@@ -2019,7 +3283,15 @@
             "练习听力"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "practicar; ejercicio",
+            "en": "to practice; exercise",
+            "fr": "pratiquer; exercice",
+            "de": "üben; Übung",
+            "it": "praticare; esercizio",
+            "pt": "praticar; exercício"
+          }
         },
         {
           "char": "现在",
@@ -2032,7 +3304,15 @@
             "现在很忙"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "ahora; actualmente",
+            "en": "now; currently",
+            "fr": "maintenant; actuellement",
+            "de": "jetzt; momentan",
+            "it": "adesso; attualmente",
+            "pt": "agora; atualmente"
+          }
         },
         {
           "char": "差",
@@ -2044,7 +3324,15 @@
             "差一点"
           ],
           "isSupplementary": false,
-          "radical": "工"
+          "radical": "工",
+          "meanings": {
+            "es": "faltar; carecer",
+            "en": "to lack; to be short of",
+            "fr": "manquer; faire défaut",
+            "de": "fehlen; mangeln",
+            "it": "mancare; essere in mancanza",
+            "pt": "faltar; carecer"
+          }
         },
         {
           "char": "分",
@@ -2056,7 +3344,15 @@
             "十点十分"
           ],
           "isSupplementary": false,
-          "radical": "刀"
+          "radical": "刀",
+          "meanings": {
+            "es": "minuto",
+            "en": "minute",
+            "fr": "minute",
+            "de": "Minute",
+            "it": "minuto",
+            "pt": "minuto"
+          }
         },
         {
           "char": "回",
@@ -2069,7 +3365,15 @@
             "回学校"
           ],
           "isSupplementary": false,
-          "radical": "囗"
+          "radical": "囗",
+          "meanings": {
+            "es": "regresar; volver",
+            "en": "to return; to go back",
+            "fr": "retourner; rentrer",
+            "de": "zurückkehren; zurückgehen",
+            "it": "tornare; ritornare",
+            "pt": "voltar; retornar"
+          }
         },
         {
           "char": "学校",
@@ -2082,7 +3386,15 @@
             "去学校"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "escuela; colegio",
+            "en": "school",
+            "fr": "école",
+            "de": "Schule",
+            "it": "scuola",
+            "pt": "escola"
+          }
         },
         {
           "char": "班",
@@ -2095,7 +3407,15 @@
             "我们班活动"
           ],
           "isSupplementary": false,
-          "radical": "王"
+          "radical": "王",
+          "meanings": {
+            "es": "clase (grupo de estudiantes)",
+            "en": "class (group of students)",
+            "fr": "classe (groupe d'élèves)",
+            "de": "Klasse (Schülergruppe)",
+            "it": "classe (gruppo di studenti)",
+            "pt": "turma; classe"
+          }
         },
         {
           "char": "活动",
@@ -2107,7 +3427,15 @@
             "我们班的活动"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "actividad; evento",
+            "en": "activity; event",
+            "fr": "activité; événement",
+            "de": "Aktivität; Veranstaltung",
+            "it": "attività; evento",
+            "pt": "atividade; evento"
+          }
         },
         {
           "char": "听说",
@@ -2119,7 +3447,15 @@
             "听说这个电影很好"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "se dice; he oído que",
+            "en": "I've heard; they say",
+            "fr": "j'ai entendu dire; on dit",
+            "de": "ich habe gehört; man sagt",
+            "it": "ho sentito dire; si dice",
+            "pt": "ouvi dizer; dizem que"
+          }
         },
         {
           "char": "听",
@@ -2132,7 +3468,15 @@
             "听说"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "escuchar",
+            "en": "to listen; to hear",
+            "fr": "écouter; entendre",
+            "de": "hören; zuhören",
+            "it": "ascoltare; sentire",
+            "pt": "escutar; ouvir"
+          }
         },
         {
           "char": "说",
@@ -2145,7 +3489,15 @@
             "听说"
           ],
           "isSupplementary": false,
-          "radical": "讠"
+          "radical": "讠",
+          "meanings": {
+            "es": "decir; hablar",
+            "en": "to say; to speak",
+            "fr": "dire; parler",
+            "de": "sagen; sprechen",
+            "it": "dire; parlare",
+            "pt": "dizer; falar"
+          }
         },
         {
           "char": "女生",
@@ -2158,7 +3510,15 @@
             "你们班的女生"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "estudiante (chica); chica",
+            "en": "girl student; girl",
+            "fr": "étudiante; fille",
+            "de": "Schülerin; Mädchen",
+            "it": "studentessa; ragazza",
+            "pt": "estudante (menina); menina"
+          }
         },
         {
           "char": "男生",
@@ -2171,7 +3531,15 @@
             "我们班的男生"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "estudiante (chico); chico",
+            "en": "boy student; boy",
+            "fr": "étudiant; garçon",
+            "de": "Schüler; Junge",
+            "it": "studente; ragazzo",
+            "pt": "estudante (menino); menino"
+          }
         },
         {
           "char": "男",
@@ -2184,7 +3552,15 @@
             "男生"
           ],
           "isSupplementary": false,
-          "radical": "田"
+          "radical": "田",
+          "meanings": {
+            "es": "masculino; hombre",
+            "en": "male; man",
+            "fr": "masculin; homme",
+            "de": "männlich; Mann",
+            "it": "maschile; uomo",
+            "pt": "masculino; homem"
+          }
         },
         {
           "char": "少",
@@ -2197,7 +3573,15 @@
             "男生少"
           ],
           "isSupplementary": false,
-          "radical": "小"
+          "radical": "小",
+          "meanings": {
+            "es": "poco; pocos",
+            "en": "few; little",
+            "fr": "peu; peu nombreux",
+            "de": "wenig; gering",
+            "it": "poco; pochi",
+            "pt": "pouco; poucos"
+          }
         },
         {
           "char": "只",
@@ -2210,7 +3594,15 @@
             "只喜欢妈妈"
           ],
           "isSupplementary": false,
-          "radical": "口"
+          "radical": "口",
+          "meanings": {
+            "es": "solo; solamente",
+            "en": "only; just",
+            "fr": "seulement; juste",
+            "de": "nur; bloß",
+            "it": "solo; soltanto",
+            "pt": "apenas; só"
+          }
         },
         {
           "char": "多少",
@@ -2223,7 +3615,15 @@
             "多少钱"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "cuánto; cuántos",
+            "en": "how many; how much",
+            "fr": "combien",
+            "de": "wie viele; wie viel",
+            "it": "quanto/i",
+            "pt": "quanto; quantos"
+          }
         },
         {
           "char": "有意思",
@@ -2236,7 +3636,15 @@
             "这个电影有意思"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "interesante",
+            "en": "interesting",
+            "fr": "intéressant",
+            "de": "interessant",
+            "it": "interessante",
+            "pt": "interessante"
+          }
         },
         {
           "char": "意思",
@@ -2248,7 +3656,15 @@
             "这个汉字的意思"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "significado; sentido",
+            "en": "meaning; sense",
+            "fr": "signification; sens",
+            "de": "Bedeutung; Sinn",
+            "it": "significato; senso",
+            "pt": "significado; sentido"
+          }
         },
         {
           "char": "来",
@@ -2261,7 +3677,15 @@
             "明天晚上来"
           ],
           "isSupplementary": false,
-          "radical": "木"
+          "radical": "木",
+          "meanings": {
+            "es": "venir",
+            "en": "to come",
+            "fr": "venir",
+            "de": "kommen",
+            "it": "venire",
+            "pt": "vir"
+          }
         },
         {
           "char": "专业",
@@ -2273,7 +3697,15 @@
             "汉语专业"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "especialidad; asignatura",
+            "en": "major; specialty",
+            "fr": "spécialité; matière",
+            "de": "Fachrichtung; Spezialisierung",
+            "it": "specializzazione; materia",
+            "pt": "especialidade; curso"
+          }
         },
         {
           "char": "主意",
@@ -2285,7 +3717,15 @@
             "有一个主意"
           ],
           "isSupplementary": false,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "idea; plan",
+            "en": "idea; plan",
+            "fr": "idée; plan",
+            "de": "Idee; Plan",
+            "it": "idea; piano",
+            "pt": "ideia; plano"
+          }
         },
         {
           "char": "起床",
@@ -2297,7 +3737,15 @@
             "早上起床"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "levantarse (de la cama)",
+            "en": "to get up; to get out of bed",
+            "fr": "se lever; sortir du lit",
+            "de": "aufstehen",
+            "it": "alzarsi (dal letto)",
+            "pt": "levantar-se; sair da cama"
+          }
         },
         {
           "char": "早饭",
@@ -2309,7 +3757,15 @@
             "做早饭"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "desayuno",
+            "en": "breakfast",
+            "fr": "petit-déjeuner",
+            "de": "Frühstück",
+            "it": "colazione",
+            "pt": "café da manhã; pequeno-almoço"
+          }
         },
         {
           "char": "午饭",
@@ -2321,7 +3777,15 @@
             "做午饭"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "almuerzo; comida",
+            "en": "lunch; midday meal",
+            "fr": "déjeuner; repas du midi",
+            "de": "Mittagessen",
+            "it": "pranzo; colazione",
+            "pt": "almoço; refeição do meio-dia"
+          }
         },
         {
           "char": "运动",
@@ -2333,7 +3797,15 @@
             "做运动"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "deportes; hacer ejercicio",
+            "en": "sports; to exercise",
+            "fr": "sport; faire de l'exercice",
+            "de": "Sport; Sport treiben",
+            "it": "sport; fare esercizio",
+            "pt": "esporte; fazer exercício"
+          }
         },
         {
           "char": "打球",
@@ -2345,7 +3817,15 @@
             "喜欢打球"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "jugar a la pelota",
+            "en": "to play ball",
+            "fr": "jouer à la balle; faire du sport",
+            "de": "Ball spielen",
+            "it": "giocare a palla",
+            "pt": "jogar bola"
+          }
         },
         {
           "char": "跑步",
@@ -2357,7 +3837,15 @@
             "喜欢跑步"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "correr; trotar",
+            "en": "to run; to jog",
+            "fr": "courir; faire du jogging",
+            "de": "laufen; joggen",
+            "it": "correre; fare jogging",
+            "pt": "correr; fazer corrida"
+          }
         },
         {
           "char": "电视",
@@ -2369,7 +3857,15 @@
             "喜欢看电视"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "televisión; TV",
+            "en": "television; TV",
+            "fr": "télévision; TV",
+            "de": "Fernsehen; TV",
+            "it": "televisione; TV",
+            "pt": "televisão; TV"
+          }
         },
         {
           "char": "晚饭",
@@ -2381,7 +3877,15 @@
             "做晚饭"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "cena",
+            "en": "dinner; evening meal",
+            "fr": "dîner; souper",
+            "de": "Abendessen",
+            "it": "cena",
+            "pt": "jantar; ceia"
+          }
         },
         {
           "char": "睡觉",
@@ -2393,7 +3897,15 @@
             "去睡觉"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "dormir; acostarse",
+            "en": "to sleep; to go to bed",
+            "fr": "dormir; se coucher",
+            "de": "schlafen; ins Bett gehen",
+            "it": "dormire; andare a letto",
+            "pt": "dormir; deitar-se"
+          }
         },
         {
           "char": "听力",
@@ -2405,7 +3917,15 @@
             "练习听力"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "comprensión auditiva",
+            "en": "listening comprehension",
+            "fr": "compréhension orale",
+            "de": "Hörverstehen",
+            "it": "comprensione auditiva",
+            "pt": "compreensão auditiva"
+          }
         },
         {
           "char": "文学",
@@ -2417,7 +3937,15 @@
             "学习文学"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "literatura",
+            "en": "literature",
+            "fr": "littérature",
+            "de": "Literatur",
+            "it": "letteratura",
+            "pt": "literatura"
+          }
         },
         {
           "char": "历史",
@@ -2429,7 +3957,15 @@
             "学习历史"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "historia",
+            "en": "history",
+            "fr": "histoire",
+            "de": "Geschichte",
+            "it": "storia",
+            "pt": "história"
+          }
         },
         {
           "char": "语言",
@@ -2441,7 +3977,15 @@
             "说什么语言"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "idioma; lenguaje",
+            "en": "language",
+            "fr": "langue; langage",
+            "de": "Sprache",
+            "it": "lingua; linguaggio",
+            "pt": "idioma; linguagem"
+          }
         },
         {
           "char": "经济",
@@ -2453,7 +3997,15 @@
             "学习经济"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "economía",
+            "en": "economy; economics",
+            "fr": "économie",
+            "de": "Wirtschaft; Ökonomie",
+            "it": "economia",
+            "pt": "economia"
+          }
         },
         {
           "char": "文化",
@@ -2466,7 +4018,15 @@
             "学习文化"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "cultura",
+            "en": "culture",
+            "fr": "culture",
+            "de": "Kultur",
+            "it": "cultura",
+            "pt": "cultura"
+          }
         },
         {
           "char": "容易",
@@ -2478,7 +4038,15 @@
             "不容易"
           ],
           "isSupplementary": true,
-          "radical": "—"
+          "radical": "—",
+          "meanings": {
+            "es": "fácil",
+            "en": "easy",
+            "fr": "facile",
+            "de": "einfach; leicht",
+            "it": "facile",
+            "pt": "fácil"
+          }
         },
         {
           "char": "难",
@@ -2491,7 +4059,15 @@
             "太难了"
           ],
           "isSupplementary": true,
-          "radical": "又"
+          "radical": "又",
+          "meanings": {
+            "es": "difícil",
+            "en": "difficult; hard",
+            "fr": "difficile; dur",
+            "de": "schwierig; schwer",
+            "it": "difficile",
+            "pt": "difícil"
+          }
         }
       ]
     }

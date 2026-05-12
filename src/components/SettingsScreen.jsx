@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
+import { useMusic } from '@/context/MusicContext.jsx';
 
 const LESSONS_META = [
-  { num: 1, titleEs: 'Lección 1', titleZh: '你最近怎么样', color: 'text-red-400',    bar: 'bg-red-500'    },
-  { num: 2, titleEs: 'Lección 2', titleZh: '你是哪国人？',  color: 'text-orange-400', bar: 'bg-orange-500' },
-  { num: 3, titleEs: 'Lección 3', titleZh: '你家有几口人？',color: 'text-yellow-400', bar: 'bg-yellow-400' },
-  { num: 4, titleEs: 'Lección 4', titleZh: '你明天几点有课？',color:'text-green-400',  bar: 'bg-green-500'  },
+  { num: 1, titleKey: 'lesson_1_title', titleZh: '你最近怎么样', color: 'text-red-400',    bar: 'bg-red-500'    },
+  { num: 2, titleKey: 'lesson_2_title', titleZh: '你是哪国人？',  color: 'text-orange-400', bar: 'bg-orange-500' },
+  { num: 3, titleKey: 'lesson_3_title', titleZh: '你家有几口人？',color: 'text-yellow-400', bar: 'bg-yellow-400' },
+  { num: 4, titleKey: 'lesson_4_title', titleZh: '你明天几点有课？',color:'text-green-400',  bar: 'bg-green-500'  },
 ];
 
 const LANGUAGES = [
@@ -90,9 +91,9 @@ function ActivityHeatmap({ activityDates, t }) {
       </div>
       <div className="flex items-center gap-1.5 mt-2">
         <div className="w-3 h-3 rounded-sm bg-gray-700" />
-        <span className="text-xs text-gray-600 mr-2">Sin actividad</span>
+        <span className="text-xs text-gray-600 mr-2">{t('settings_heatmap_inactive')}</span>
         <div className="w-3 h-3 rounded-sm bg-purple-500" />
-        <span className="text-xs text-gray-600">Con actividad</span>
+        <span className="text-xs text-gray-600">{t('settings_heatmap_active')}</span>
       </div>
     </div>
   );
@@ -100,6 +101,7 @@ function ActivityHeatmap({ activityDates, t }) {
 
 // ── Gráfico de distribución de intervalos ────────────────────────────────────
 function IntervalChart({ progress, allCharacters }) {
+  const { t } = useTranslation();
   const buckets = useMemo(() => {
     const srs = progress?.__srs || {};
     const counts = { '1d': 0, '6d': 0, '15d': 0, '30d+': 0 };
@@ -113,18 +115,18 @@ function IntervalChart({ progress, allCharacters }) {
       else                       counts['30d+']++;
     }
     return [
-      { label: '1 día',  key: '1d',   count: counts['1d'],   color: 'bg-blue-500'   },
-      { label: '6 días', key: '6d',   count: counts['6d'],   color: 'bg-teal-500'   },
-      { label: '15 días',key: '15d',  count: counts['15d'],  color: 'bg-green-500'  },
-      { label: '30d+',   key: '30d+', count: counts['30d+'], color: 'bg-purple-500' },
+      { label: t('settings_interval_1d'),  key: '1d',   count: counts['1d'],   color: 'bg-blue-500'   },
+      { label: t('settings_interval_6d'),  key: '6d',   count: counts['6d'],   color: 'bg-teal-500'   },
+      { label: t('settings_interval_15d'), key: '15d',  count: counts['15d'],  color: 'bg-green-500'  },
+      { label: t('settings_interval_30d'), key: '30d+', count: counts['30d+'], color: 'bg-purple-500' },
     ];
-  }, [progress, allCharacters]);
+  }, [progress, allCharacters, t]);
 
   const maxCount = Math.max(...buckets.map(b => b.count), 1);
 
   return (
     <div className="px-4 py-3 border-t border-gray-700/60">
-      <p className="text-xs text-gray-400 mb-3">Palabras por intervalo</p>
+      <p className="text-xs text-gray-400 mb-3">{t('settings_interval_chart_title')}</p>
       <div className="space-y-2">
         {buckets.map(b => (
           <div key={b.key} className="flex items-center gap-2">
@@ -196,6 +198,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
   const { t, i18n } = useTranslation();
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const { enabled: musicEnabled, volume: musicVolume, toggle: toggleMusic, setVolume: setMusicVolume } = useMusic();
 
   const handleNameBlur = () => {
     const trimmed = nameInput.trim();
@@ -237,6 +240,40 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               placeholder={t('settings_name_label')}
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:border-red-500 focus:outline-none placeholder-gray-500"
             />
+          </div>
+        </Section>
+
+        {/* Música */}
+        <Section title={t('settings_music_title')}>
+          <Row label={t('settings_music_label')}>
+            <button
+              onClick={() => toggleMusic()}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                musicEnabled ? 'bg-red-600' : 'bg-gray-600'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  musicEnabled ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </Row>
+          <div className="px-4 py-3 border-t border-gray-700/60">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-300">{t('settings_volume')}</span>
+              <span className="text-sm font-bold text-white">{Math.round(musicVolume * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={musicVolume}
+              onChange={e => setMusicVolume(parseFloat(e.target.value))}
+              className="w-full h-1.5 rounded-full appearance-none bg-gray-700 accent-red-500 cursor-pointer"
+            />
+            <p className="text-xs text-gray-600 mt-2">{t('settings_music_credit')}</p>
           </div>
         </Section>
 
@@ -285,7 +322,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               <div key={l.num} className="px-4 py-2.5 border-b border-gray-700/60 last:border-0">
                 <div className="flex items-center justify-between mb-1">
                   <div>
-                    <span className="text-sm text-white font-medium">{l.titleEs}</span>
+                    <span className="text-sm text-white font-medium">{t(l.titleKey)}</span>
                     <span className={`text-xs ml-2 ${l.color}`}>{l.titleZh}</span>
                   </div>
                   <span className={`text-xs font-bold ${l.color}`}>{pct}%</span>
@@ -341,11 +378,11 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
             <div className="flex divide-x divide-gray-700/60 border-t border-gray-700/60">
               <div className="flex-1 px-3 py-2.5 text-center">
                 <p className="text-xl font-bold text-orange-400">🔥 {streak.currentStreak}</p>
-                <p className="text-xs text-gray-500 mt-0.5">Racha actual</p>
+                <p className="text-xs text-gray-500 mt-0.5">{t('settings_streak_current')}</p>
               </div>
               <div className="flex-1 px-3 py-2.5 text-center">
                 <p className="text-xl font-bold text-yellow-400">⭐ {streak.longestStreak}</p>
-                <p className="text-xs text-gray-500 mt-0.5">Mejor racha</p>
+                <p className="text-xs text-gray-500 mt-0.5">{t('settings_streak_best')}</p>
               </div>
             </div>
           )}

@@ -17,7 +17,7 @@ export default function Matching({
   characters = [],
   onTrackSeen,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [pairs, setPairs] = useState([]);
   const [selected, setSelected] = useState([]);
   const [matched, setMatched] = useState([]);
@@ -29,7 +29,7 @@ export default function Matching({
   const init = () => {
     const sample = pickN(characters, Math.min(6, Math.floor(characters.length / 2) || 6));
     const chars = sample.map((c, i) => ({ id: `char-${i}`, type: 'char', content: c.char, match: i, data: c }));
-    const meanings = sample.map((c, i) => ({ id: `meaning-${i}`, type: 'meaning', content: c.meaning, match: i, data: c }));
+    const meanings = sample.map((c, i) => ({ id: `meaning-${i}`, type: 'meaning', content: c.meanings?.[i18n.language] || c.meaning, match: i, data: c }));
     const all = [...chars, ...meanings].sort(() => Math.random() - 0.5);
     setPairs(all);
     setSelected([]);
@@ -91,7 +91,7 @@ export default function Matching({
     return 'default';
   };
 
-  const done = matched.length && (matched.length === pairs.filter(p => p.type === 'char').length);
+  const done = matched.length > 0 && (matched.length === (pairs?.filter(p => p.type === 'char').length || 0));
 
   // Pantalla de instrucciones
   if (showInstructions) {

@@ -11,7 +11,7 @@ const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 // --- Componente Principal ---
 export default function TimeRace({ goBack, characters = [], onTrackResult }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -22,16 +22,17 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
   // Función para generar una nueva pregunta
   const generateQuestion = useCallback(() => {
-    if (characters.length < 4) return;
+    if (!characters || characters.length < 4) return;
 
     const shuffled = shuffleArray(characters);
     const correctChar = shuffled[0];
-    const options = shuffled.slice(1, 4).map(c => c.meaning);
-    options.push(correctChar.meaning);
+    const getMeaning = (c) => c.meanings?.[i18n.language] || c.meaning;
+    const options = shuffled.slice(1, 4).map(c => getMeaning(c));
+    options.push(getMeaning(correctChar));
 
     setCurrentQuestion({
       character: correctChar.char,
-      correctMeaning: correctChar.meaning,
+      correctMeaning: getMeaning(correctChar),
       charObj: correctChar,
       options: shuffleArray(options),
     });

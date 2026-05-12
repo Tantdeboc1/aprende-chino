@@ -103,7 +103,7 @@ export default function LessonSelector({
                 {t('selector_lesson', { num: l.lesson })}
               </span>
               <p className={`text-center text-xs leading-tight mb-3 ${isSelected ? 'text-white/90' : s.titleColor}`}>
-                {l.titleEs}
+                {l.titleZh || l.titleEs}
               </p>
               <div className={`text-xs ${isSelected ? 'text-white/70' : 'text-gray-500'}`}>
                 {t('selector_words_count', { count: main })}{supp > 0 && <span> {t('selector_extra_count', { count: supp })}</span>}

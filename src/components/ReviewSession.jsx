@@ -50,15 +50,15 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">{t('srs_how_to_start', '¿Cómo empezar?')}</p>
               <div className="flex items-start gap-3">
                 <span className="text-lg">1.</span>
-                <p className="text-gray-300 text-sm">Ve a <span className="text-white font-semibold">Inicio</span> y abre una lección</p>
+                <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: t('srs_step_1', { 1: '<span class="text-white font-semibold">', '/1': '</span>' }).replace('<1>', '<span class="text-white font-semibold">').replace('</1>', '</span>') }} />
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-lg">2.</span>
-                <p className="text-gray-300 text-sm">Completa el <span className="text-white font-semibold">Quiz</span> de la lección</p>
+                <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: t('srs_step_2').replace('<1>', '<span class="text-white font-semibold">').replace('</1>', '</span>') }} />
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-lg">3.</span>
-                <p className="text-gray-300 text-sm">Vuelve aquí, las palabras aparecerán listas para repasar</p>
+                <p className="text-gray-300 text-sm">{t('srs_step_3')}</p>
               </div>
             </div>
           </div>
@@ -68,10 +68,10 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 mb-2">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('srs_how_it_works', '¿Cómo funciona?')}</p>
               <div className="space-y-1.5 text-gray-400 text-sm">
-                <p>1. Aparece un carácter chino</p>
-                <p>2. Intenta recordar su pinyin y significado</p>
-                <p>3. Toca la tarjeta para ver la respuesta</p>
-                <p>4. Evalúa cómo de bien lo recordabas</p>
+                <p>1. {t('srs_how_it_works_step_1')}</p>
+                <p>2. {t('srs_how_it_works_step_2')}</p>
+                <p>3. {t('srs_how_it_works_step_3')}</p>
+                <p>4. {t('srs_how_it_works_step_4')}</p>
               </div>
             </div>
 
@@ -143,6 +143,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
 
 // ─── Tarjeta de flashcard ────────────────────────────────────────────────────
 function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
+  const { t, i18n } = useTranslation();
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4 py-6">
       {!isFlipped ? (
@@ -166,7 +167,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
             <button
               onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
               className="w-11 h-11 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-xl transition-colors"
-              title="Escuchar de nuevo"
+              title={t('srs_listen_again')}
             >
               🔊
             </button>
@@ -177,13 +178,13 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
             {word.type && (
               <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 mb-2 inline-block">{word.type}</span>
             )}
-            <p className="text-white text-xl font-semibold">{word.meaning}</p>
+            <p className="text-white text-xl font-semibold">{word.meanings?.[i18n.language] || word.meaning}</p>
           </div>
 
           {/* Ejemplos */}
           {word.examples?.length > 0 && (
             <div className="px-5 py-3">
-              <p className="text-xs text-gray-500 mb-2">Ejemplos</p>
+              <p className="text-xs text-gray-500 mb-2">{t('srs_examples')}</p>
               <div className="space-y-1.5">
                 {word.examples.slice(0, 2).map((ex, i) => (
                   <p key={i} className="text-sm text-gray-300 bg-gray-700/50 rounded-lg px-3 py-1.5">{ex}</p>
@@ -196,7 +197,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           {mode === 'weak' && word._easeFactor && (
             <div className="px-5 pb-3">
               <span className="text-xs text-orange-400/70">
-                EF: {word._easeFactor.toFixed(2)} · Debilidad del SRS
+                {t('srs_ef_label', { ef: word._easeFactor.toFixed(2) })}
               </span>
             </div>
           )}

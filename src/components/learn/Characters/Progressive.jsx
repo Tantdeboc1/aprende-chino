@@ -8,7 +8,7 @@ export default function Progressive({
   speakChinese,
   onTrackSeen,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const chunkSize = 6;
   const lessons = useMemo(() => {
     const arr = [];
@@ -34,7 +34,7 @@ export default function Progressive({
           <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white">
             ← {t('lessons_back_button')}
           </button>
-          <span className="text-gray-300 font-semibold">Lección {current + 1} de {Math.max(1, lessons.length)}</span>
+          <span className="text-gray-300 font-semibold">{t('progressive_lesson_counter', { current: current + 1, total: Math.max(1, lessons.length) })}</span>
         </div>
 
         <div className="bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-8 border border-gray-700">
@@ -59,7 +59,7 @@ export default function Progressive({
                     </div>
                   )}
                   <div className="pt-2 border-t border-gray-600">
-                    <p className="text-white font-semibold text-center text-lg">{char.meaning}</p>
+                    <p className="text-white font-semibold text-center text-lg">{char.meanings?.[i18n.language] || char.meaning}</p>
                   </div>
                 </div>
                 {typeof speakChinese === 'function' && (
