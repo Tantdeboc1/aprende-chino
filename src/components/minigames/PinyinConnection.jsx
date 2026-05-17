@@ -4,6 +4,8 @@ import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 
 // --- Helpers ---
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
@@ -57,6 +59,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
       setScore(s => s + 10);
       setFeedback('correct');
       hapticSuccess();
+      addXP(10);
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; });
       setFeedback('incorrect');
@@ -76,17 +79,21 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   useEffect(() => {
     if (gameState !== 'playing') return;
 
-    if (timeLeft <= 0) {
-      setGameState('finished');
-      return;
-    }
-
     const timer = setInterval(() => {
-      setTimeLeft(t => { const next = t - 1; timeLeftRef.current = next; return next; });
+      setTimeLeft(prev => {
+        const next = prev - 1;
+        timeLeftRef.current = next;
+        if (next <= 0) {
+          clearInterval(timer);
+          setGameState('finished');
+          trackAchievement('complete_quiz', 1);
+        }
+        return next;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState, timeLeft]);
+  }, [gameState]);
 
   // --- Renderizado ---
 

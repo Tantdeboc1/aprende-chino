@@ -1,10 +1,12 @@
 // src/components/LessonDetail.jsx
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
-import Confetti from 'react-confetti';
+const Confetti = lazy(() => import('react-confetti'));
 import { useTranslation } from 'react-i18next';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
+import { trackAchievement } from '@/utils/leveling.js';
 import { toggleWordDifficult, isWordDifficult } from '@/utils/srs.js';
+import { preloadLessonAudio, preloadNextLessonAudio, clearAudioCache } from '@/utils/audioPreloader.js';
 import GrammarTab from './GrammarTab.jsx';
 import CulturalTab from './CulturalTab.jsx';
 import grammarData from '@/data/grammarData.js';
@@ -65,6 +67,11 @@ export default function LessonDetail({
   const [showSupp, setShowSupp] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
+  // Registrar lección vista para logro "Explorador"
+  useEffect(() => {
+    if (lessonNum) trackAchievement('lesson_seen', lessonNum);
+  }, [lessonNum]);
+
   const a = ACCENT[lessonNum] || ACCENT[1];
 
   const mainWords = useMemo(() => characters.filter(c => c.lesson === lessonNum && !c.isSupplementary), [characters, lessonNum]);
@@ -74,6 +81,23 @@ export default function LessonDetail({
   const stats = useMemo(() => getLessonStats(progress, lessonNum, characters), [progress, lessonNum, characters]);
   const seenPct     = stats.total > 0 ? Math.round((stats.seen    / stats.total) * 100) : 0;
   const masteredPct = stats.total > 0 ? Math.round((stats.mastered / stats.total) * 100) : 0;
+
+  // ── Preload de audio por lección ──────────────────────────────────────────────
+  // Precarga solo los audios de ESTA lección cuando el usuario la abre.
+  // Libera los de otras lecciones para no acumular memoria.
+  useEffect(() => {
+    if (!mainWords.length) return;
+    // Precargar lección actual con prioridad inmediata
+    preloadLessonAudio(mainWords);
+    // Precargamos la siguiente lección en background (3s de delay)
+    const nextLessonChars = characters.filter(c => c.lesson === lessonNum + 1 && !c.isSupplementary);
+    if (nextLessonChars.length) preloadNextLessonAudio(nextLessonChars, false);
+    return () => {
+      // Al salir, liberar audios que no pertenecen a esta lección para ahorrar memoria
+      const keysToKeep = mainWords.flatMap(c => c.audioKeys || []);
+      clearAudioCache(keysToKeep);
+    };
+  }, [lessonNum]); // solo re-ejecutar si cambia la lección
 
   // Confetti al llegar al 100%
   const [showConfetti, setShowConfetti] = useState(false);
@@ -97,8 +121,20 @@ export default function LessonDetail({
   };
 
   const handleToggle = (char, status) => {
-    const updated = toggleWordMastered(progress, lessonNum, char, status !== 'mastered');
+    const newMastered = status !== 'mastered';
+    const updated = toggleWordMastered(progress, lessonNum, char, newMastered);
     onProgressChange(updated);
+    // Contar total de palabras dominadas para logro "Políglota"
+    if (newMastered) {
+      let totalMastered = 0;
+      for (const key of Object.keys(updated)) {
+        if (!key.startsWith('lesson_')) continue;
+        for (const w of Object.values(updated[key])) {
+          if (w.mastered) totalMastered++;
+        }
+      }
+      trackAchievement('words_mastered', totalMastered);
+    }
   };
 
   const handleToggleDifficult = (char) => {
@@ -109,15 +145,17 @@ export default function LessonDetail({
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
       {showConfetti && (
-        <Confetti
-          width={width}
-          height={height}
-          recycle={false}
-          numberOfPieces={250}
-          gravity={0.25}
-          colors={['#22c55e', '#86efac', '#fbbf24', '#f87171', '#60a5fa', '#c084fc']}
-          style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none' }}
-        />
+        <Suspense fallback={null}>
+          <Confetti
+            width={width}
+            height={height}
+            recycle={false}
+            numberOfPieces={250}
+            gravity={0.25}
+            colors={['#22c55e', '#86efac', '#fbbf24', '#f87171', '#60a5fa', '#c084fc']}
+            style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none' }}
+          />
+        </Suspense>
       )}
 
       {/* Header */}

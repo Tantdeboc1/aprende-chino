@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translationPhrases, getCandidates } from '@/data/translationPhrases.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { playSound } from '@/utils/gameAudio.js';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
@@ -296,43 +297,6 @@ function HandwritingPanel({ onCharSelected }) {
   );
 }
 
-// ── Sonidos ──────────────────────────────────────────────────────────────────
-function playSound(type) {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (type === 'correct') {
-      [523.25, 783.99].forEach((freq, i) => {
-        const osc = ctx.createOscillator(), gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
-        gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.12);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
-        osc.start(ctx.currentTime + i * 0.12);
-        osc.stop(ctx.currentTime + i * 0.12 + 0.25);
-      });
-    } else if (type === 'incorrect') {
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(220, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
-      gain.gain.setValueAtTime(0.25, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.35);
-    } else if (type === 'tap') {
-      // Sonido suave de "click" al añadir un carácter
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.1);
-    }
-  } catch (_) {}
-}
 
 function buildRounds() {
   return shuffle([...translationPhrases]).slice(0, ROUNDS);
@@ -340,7 +304,7 @@ function buildRounds() {
 
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function TranslationGame({ goBack }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -505,7 +469,7 @@ export default function TranslationGame({ goBack }) {
         {/* Frase en español */}
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
           <p className="text-xs text-gray-500 mb-1">{t('translation_translate_label')}</p>
-          <p className="text-white font-semibold text-base leading-snug">{current.es}</p>
+          <p className="text-white font-semibold text-base leading-snug">{current.translations?.[i18n.language] || current.translations?.es || current.es}</p>
         </div>
 
         {/* Zona de construcción */}
@@ -542,13 +506,13 @@ export default function TranslationGame({ goBack }) {
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
                 inputMode === 'pinyin' ? 'bg-purple-900/50 border-purple-500 text-purple-300' : 'bg-gray-800 border-gray-700 text-gray-500 hover:border-gray-600'
               }`}>
-              ⌨️ Pinyin IME
+              ⌨️ {t('translation_mode_pinyin')}
             </button>
             <button onClick={() => setInputMode('draw')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
                 inputMode === 'draw' ? 'bg-purple-900/50 border-purple-500 text-purple-300' : 'bg-gray-800 border-gray-700 text-gray-500 hover:border-gray-600'
               }`}>
-              ✍️ Dibujar
+              ✍️ {t('translation_mode_draw')}
             </button>
           </div>
         )}

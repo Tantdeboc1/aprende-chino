@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
 import { markDailyActivity } from '@/utils/streak.js';
+import { preloadLessonAudio } from '@/utils/audioPreloader.js';
 
 // ─── Selección de modo ────────────────────────────────────────────────────────
 function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
@@ -345,6 +346,8 @@ export default function ReviewSession({
   // ── Iniciar sesión con el modo elegido ────────────────────────────────────
   const handleSelectMode = useCallback((selectedMode) => {
     const q = selectedMode === 'due' ? dueQueue : weakQueue;
+    // Precargar audios de los caracteres en cola (solo metadata, no descarga completa)
+    if (q.length) preloadLessonAudio(q);
     setMode(selectedMode);
     setQueue(q);
     setIndex(0);

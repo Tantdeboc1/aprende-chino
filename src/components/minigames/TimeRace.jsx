@@ -4,6 +4,8 @@ import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 
 // --- Helpers ---
 // Función para barajar un array
@@ -14,6 +16,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   const { t, i18n } = useTranslation();
   const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const timeLeftRef = useRef(60);
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -38,7 +41,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     });
     setFeedback(null);
     setSelectedAnswer(null);
-  }, [characters]);
+  }, [characters, i18n.language]);
 
   // Iniciar el juego
   const startGame = () => {
@@ -57,9 +60,10 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
     const isCorrect = selectedMeaning === currentQuestion.correctMeaning;
     if (isCorrect) {
-      setScore(s => s + 10); // +10 puntos por acierto
+      setScore(s => { const n = s + 10; scoreRef.current = n; return n; });
       setFeedback('correct');
       hapticSuccess();
+      addXP(10);
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; }); // Penalización de 2 segundos
       setFeedback('incorrect');
@@ -80,17 +84,22 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   useEffect(() => {
     if (gameState !== 'playing') return;
 
-    if (timeLeft <= 0) {
-      setGameState('finished');
-      return;
-    }
-
     const timer = setInterval(() => {
-      setTimeLeft(t => { const next = t - 1; timeLeftRef.current = next; return next; });
+      setTimeLeft(prev => {
+        const next = prev - 1;
+        timeLeftRef.current = next;
+        if (next <= 0) {
+          clearInterval(timer);
+          setGameState('finished');
+          trackAchievement('complete_quiz', 1);
+          trackAchievement('time_race_score', scoreRef.current);
+        }
+        return next;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState, timeLeft]);
+  }, [gameState]);
 
   // --- Renderizado ---
 

@@ -53,7 +53,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   const isActive = (key) => {
     if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
-    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam'].includes(activeScreen);
+    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam','complete-sentence','dialogue-order','find-intruder'].includes(activeScreen);
     return activeScreen === key;
   };
 
@@ -63,7 +63,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/60">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/60" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       <div className="max-w-lg mx-auto flex justify-around items-end pt-1 pb-3">
         {items.map(({ key, label, Icon }) => {
           const active  = isActive(key);

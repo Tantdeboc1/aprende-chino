@@ -1,68 +1,32 @@
 import { assetUrl } from './utils/assets';
-import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
-import ExamMode from './components/ExamMode.jsx';
 import { MusicProvider } from './context/MusicContext.jsx';
 import { useTranslation } from 'react-i18next';
-const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
-import HomeScreen from './components/HomeScreen.jsx';
-import LessonDetail from './components/LessonDetail.jsx';
-import SettingsScreen from './components/SettingsScreen.jsx';
-import ReviewSession from './components/ReviewSession.jsx';
-import SplashScreen from './components/SplashScreen.jsx';
 import Layout from "@/components/ui/Layout.jsx";
+import SplashScreen from './components/SplashScreen.jsx';
+
+// ── Lazy Loading de componentes pesados ──
+const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
+const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
+const HomeScreen = lazy(() => import('./components/HomeScreen.jsx'));
+const LessonDetail = lazy(() => import('./components/LessonDetail.jsx'));
+const SettingsScreen = lazy(() => import('./components/SettingsScreen.jsx'));
+const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
 import { loadProgress, saveProgress } from './utils/progress.js';
+import { saveProgressOptimized, loadProgressOptimized } from './utils/persistenceOptimized.js';
+import { preloadLessonAudio, preloadNextLessonAudio } from './utils/audioPreloader.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
 
-// ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
+// ── Loader ligero para Suspense (sin dynamic imports pesados) ────────────────
 function AnimatedLoader() {
   const { t } = useTranslation();
-  const canvasRef = useRef(null);
-  const writerRef = useRef(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    let writer = null;
-
-    async function init() {
-      try {
-        const HanziWriter = (await import('hanzi-writer')).default;
-        if (cancelled || !canvasRef.current) return;
-        writer = HanziWriter.create(canvasRef.current, '学', {
-          width: 80,
-          height: 80,
-          padding: 5,
-          strokeColor: '#a855f7',
-          radicalColor: '#c084fc',
-          drawingWidth: 3,
-          showCharacter: false,
-          showOutline: true,
-          outlineColor: '#374151',
-        });
-        writerRef.current = writer;
-        function loop() {
-          if (cancelled) return;
-          writer.animateCharacter({ onComplete: () => { if (!cancelled) setTimeout(loop, 400); } });
-        }
-        loop();
-      } catch (_) {
-        // Si HanziWriter falla, el spinner CSS es el fallback visual
-      }
-    }
-    init();
-    return () => {
-      cancelled = true;
-      writerRef.current = null;
-    };
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-900">
-      <div className="relative">
-        {/* Canvas para HanziWriter */}
-        <canvas ref={canvasRef} width={80} height={80} />
-        {/* Anillo giratorio alrededor */}
+      <div className="relative w-20 h-20 flex items-center justify-center">
+        <span className="text-4xl font-bold text-purple-400">学</span>
         <div className="absolute rounded-full border-2 border-purple-700/30 border-t-purple-500 animate-spin" style={{ width: 92, height: 92, top: -6, left: -6 }} />
       </div>
       <p className="text-gray-500 text-xs tracking-widest uppercase animate-pulse">{t('loader_loading')}</p>
@@ -88,8 +52,7 @@ function App() {
     force();
     const mq = window.matchMedia('(prefers-color-scheme: light)');
     mq.addEventListener('change', force);
-    const iv = setInterval(force, 1000);
-    return () => { mq.removeEventListener('change', force); clearInterval(iv); };
+    return () => { mq.removeEventListener('change', force); };
   }, []);
 
   // Datos globales
@@ -151,16 +114,23 @@ function App() {
     }
   };
 
-  const speak = async (keyOrText, opts = {}) => {
-    if (!audioInitialized) await initializeAudio();
-    if (isSpeaking) return;
+  const speakingRef = useRef(false);
+  const audioInitRef = useRef(false);
+
+  const speak = useCallback(async (keyOrText, opts = {}) => {
+    if (!audioInitRef.current) {
+      try { await initAudioForIOS(); audioInitRef.current = true; setAudioInitialized(true); }
+      catch (e) { console.error('Error audio:', e); }
+    }
+    if (speakingRef.current) return;
     try {
+      speakingRef.current = true;
       setIsSpeaking(true);
       const { speakChineseEnhanced } = await import('./utils/tts-enhanced.js');
       await speakChineseEnhanced(keyOrText, { category: opts.category || 'pronunciation' });
     } catch (e) { console.error('Error speak:', e); }
-    finally { setIsSpeaking(false); }
-  };
+    finally { speakingRef.current = false; setIsSpeaking(false); }
+  }, []);
 
   // Cargar datos
   useEffect(() => {
@@ -283,7 +253,7 @@ function App() {
   };
 
   // Navegar desde bottom nav
-  const handleBottomNav = (key) => {
+  const handleBottomNav = useCallback((key) => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setPrevScreen(screen);
@@ -292,7 +262,7 @@ function App() {
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
     else if (key === 'settings')   setScreen('settings');
-  };
+  }, [screen]);
 
   // Iniciar ejercicio desde LessonDetail
   const handleStartExercise = (exerciseKey) => {
@@ -330,26 +300,32 @@ function App() {
     : screen === 'time-race' ? 'time-race'
     : screen === 'pinyin-connection' ? 'pinyin-connection'
     : screen === 'translation-game' ? 'translation-game'
+    : screen === 'complete-sentence' ? 'complete-sentence'
+    : screen === 'dialogue-order' ? 'dialogue-order'
+    : screen === 'find-intruder' ? 'find-intruder'
     : screen === 'global-exam' ? 'global-exam'
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
-  const goBackToLesson = () => {
+  const goBackToLesson = useCallback(() => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setScreen(prevScreen || 'home');
-  };
+  }, [prevScreen]);
 
-  const navigateTo = (key) => {
+  const navigateTo = useCallback((key) => {
     if (key === 'sov-game') { setPrevScreen('minigames'); setScreen('sov-game'); }
     else if (key === 'time-race') { setPrevScreen('minigames'); setScreen('time-race'); }
     else if (key === 'pinyin-connection') { setPrevScreen('minigames'); setScreen('pinyin-connection'); }
     else if (key === 'global-exam') { setPrevScreen('minigames'); setScreen('global-exam'); }
     else if (key === 'translation-game') { setPrevScreen('minigames'); setScreen('translation-game'); }
+    else if (key === 'complete-sentence') { setPrevScreen('minigames'); setScreen('complete-sentence'); }
+    else if (key === 'dialogue-order') { setPrevScreen('minigames'); setScreen('dialogue-order'); }
+    else if (key === 'find-intruder') { setPrevScreen('minigames'); setScreen('find-intruder'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
-  };
+  }, [handleBottomNav]);
 
   const { CurrentComponent, componentProps } = useNavigation(
     navScreen || screen, learnSection, writingSection, radicalSection,
@@ -555,7 +531,8 @@ function App() {
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
       screen === 'sov-game' || screen === 'time-race' || screen === 'pinyin-connection' ||
-      screen === 'translation-game') {
+      screen === 'translation-game' || screen === 'complete-sentence' ||
+      screen === 'dialogue-order' || screen === 'find-intruder') {
     if (!CurrentComponent) {
       return (
         <Layout activeScreen={screen} onNavigate={handleBottomNav}>

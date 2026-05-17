@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
+import { getLevelInfo, getEquippedTitle, getAvailableTitles, setEquippedTitle, getAllAchievements } from '@/utils/leveling.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 
 const LESSONS_META = [
@@ -216,6 +217,16 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
   const globalPct     = totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0;
   const srsStats      = getSRSStats(progress, allCharacters);
   const streak        = getStreak();
+  const levelInfo     = getLevelInfo(streak.totalXP || 0);
+  const equipped      = getEquippedTitle(streak.totalXP || 0);
+  const availableTitles = getAvailableTitles(streak.totalXP || 0);
+  const achievements  = getAllAchievements();
+  const [titleRefresh, setTitleRefresh] = useState(0);
+
+  const handleSelectTitle = (titleId) => {
+    setEquippedTitle(titleId);
+    setTitleRefresh(r => r + 1); // force re-read
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
@@ -240,6 +251,98 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               placeholder={t('settings_name_label')}
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:border-red-500 focus:outline-none placeholder-gray-500"
             />
+          </div>
+        </Section>
+
+        {/* Nivel y Títulos */}
+        <Section title={t('settings_level_title')}>
+          {/* Info de nivel actual */}
+          <div className="px-4 py-3">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-12 h-12 rounded-xl bg-purple-900/40 flex items-center justify-center text-2xl">
+                {equipped.icon}
+              </div>
+              <div className="flex-1">
+                <p className="text-white font-bold text-sm">
+                  {t('settings_level_current', { level: levelInfo.level })} — {equipped.title?.[i18n.language] || equipped.title?.es} {equipped.zh}
+                </p>
+                <p className="text-gray-400 text-xs">
+                  {streak.totalXP || 0} XP {t('settings_level_total')}
+                </p>
+              </div>
+            </div>
+            {!levelInfo.isMaxLevel && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Lv.{levelInfo.level}</span>
+                <div className="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-purple-500 rounded-full transition-all duration-500" style={{ width: `${levelInfo.progress}%` }} />
+                </div>
+                <span className="text-xs text-gray-500">Lv.{levelInfo.level + 1}</span>
+                <span className="text-xs text-gray-400 ml-1">{levelInfo.xpInLevel}/{levelInfo.xpForNext}</span>
+              </div>
+            )}
+            {levelInfo.isMaxLevel && (
+              <p className="text-xs text-purple-400 font-bold">👑 {t('level_max_reached')}</p>
+            )}
+          </div>
+
+          {/* Selector de título */}
+          <div className="px-4 py-3 border-t border-gray-700/60">
+            <p className="text-xs text-gray-500 mb-2">{t('settings_title_selector')}</p>
+            <div className="space-y-1.5 max-h-48 overflow-y-auto">
+              {availableTitles.map(ti => {
+                const isEquipped = (equipped.icon === ti.icon && equipped.zh === ti.zh);
+                return (
+                  <button
+                    key={ti.id}
+                    onClick={() => handleSelectTitle(ti.id)}
+                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors ${
+                      isEquipped
+                        ? 'bg-purple-900/40 border border-purple-600/50'
+                        : 'bg-gray-700/50 border border-gray-700 hover:border-gray-500'
+                    }`}
+                  >
+                    <span className="text-lg">{ti.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm text-white font-medium">
+                        {ti.title?.[i18n.language] || ti.title?.es}
+                      </span>
+                      <span className="text-xs text-gray-400 ml-1">{ti.zh}</span>
+                    </div>
+                    {isEquipped && <span className="text-xs text-purple-400 font-bold">{t('settings_title_equipped')}</span>}
+                    {ti.source === 'achievement' && <span className="text-xs text-yellow-500">★</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Logros */}
+          <div className="px-4 py-3 border-t border-gray-700/60">
+            <p className="text-xs text-gray-500 mb-2">{t('settings_achievements_title')}</p>
+            <div className="space-y-1.5">
+              {achievements.map(ach => (
+                <div
+                  key={ach.id}
+                  className={`px-3 py-2 rounded-lg flex items-center gap-2 ${
+                    ach.unlocked ? 'bg-gray-700/50' : 'bg-gray-800/50 opacity-40'
+                  }`}
+                >
+                  <span className="text-lg">{ach.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white font-medium">
+                      {ach.title?.[i18n.language] || ach.title?.es} <span className="text-gray-500 text-xs">{ach.zh}</span>
+                    </p>
+                    <p className="text-xs text-gray-400">{ach.desc?.[i18n.language] || ach.desc?.es}</p>
+                  </div>
+                  {ach.unlocked ? (
+                    <span className="text-xs text-green-400 font-bold">✓</span>
+                  ) : (
+                    <span className="text-xs text-gray-600">🔒</span>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </Section>
 

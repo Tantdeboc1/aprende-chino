@@ -1,7 +1,7 @@
 // src/components/ui/CharacterSheet.jsx
 // Bottom-sheet con trazos animados HanziWriter al tocar una entrada del diccionario
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, Star, X, Play, RotateCcw } from 'lucide-react';
+import { Volume2, Star, X, Play, RotateCcw, Clock, TrendingUp, Brain } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const LESSON_BADGE = {
@@ -133,9 +133,34 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
 
   if (!char) return null;
 
-  const srsData     = progress?.__srs?.[char.char] || null;
-  const masteredAt  = srsData?.interval >= 21;
-  const isPending   = srsData?.nextReview != null && srsData.nextReview <= Date.now();
+  const srsData    = progress?.__srs?.[char.char] || null;
+  const masteredAt = srsData?.interval >= 21;
+  const isPending  = srsData?.nextReview != null && srsData.nextReview <= Date.now();
+
+  // ── Cálculo de info SRS para mostrar al usuario ──────────────────────────────
+  const srsInfo = (() => {
+    if (!srsData || srsData.nextReview == null) return null;
+    const now = Date.now();
+    const msLeft = srsData.nextReview - now;
+    const daysLeft = Math.ceil(msLeft / (24 * 60 * 60 * 1000));
+    // Progreso de madurez: 0..21 días → 0..100%
+    const maturityPct = Math.min(100, Math.round((srsData.interval / 21) * 100));
+    // Etiqueta del estado
+    let statusLabel, statusColor;
+    if (isPending) {
+      statusLabel = t('srs_status_due', '¡Repasar ahora!');
+      statusColor = 'text-yellow-400';
+    } else if (masteredAt) {
+      statusLabel = t('srs_status_mastered', 'Dominada');
+      statusColor = 'text-green-400';
+    } else {
+      statusLabel = daysLeft === 1
+        ? t('srs_status_tomorrow', 'Mañana')
+        : t('srs_status_days', 'En {{n}} días', { n: daysLeft });
+      statusColor = 'text-blue-400';
+    }
+    return { daysLeft, maturityPct, statusLabel, statusColor, interval: srsData.interval, repetitions: srsData.repetitions };
+  })();
 
   return (
     /* Backdrop */
@@ -228,6 +253,67 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
               </div>
             )}
           </div>
+
+          {/* Panel SRS — solo si el carácter ya ha sido estudiado */}
+          {srsInfo ? (
+            <div className="w-full bg-gray-800 border border-gray-700 rounded-2xl px-4 py-3 space-y-3">
+              <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">{t('srs_panel_title', 'Repetición espaciada')}</p>
+
+              {/* Fila: próxima revisión + repeticiones */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  <div>
+                    <p className={`text-sm font-semibold ${srsInfo.statusColor}`}>{srsInfo.statusLabel}</p>
+                    {!isPending && (
+                      <p className="text-xs text-gray-500">
+                        {t('srs_interval_label', 'Intervalo: {{n}} días', { n: srsInfo.interval })}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 bg-gray-700/60 rounded-lg px-2.5 py-1">
+                  <Brain className="w-3.5 h-3.5 text-purple-400" />
+                  <span className="text-xs text-gray-300 font-semibold">
+                    {srsInfo.repetitions}× {t('srs_repetitions_label', 'repaso')}
+                  </span>
+                </div>
+              </div>
+
+              {/* Barra de madurez */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-1">
+                    <TrendingUp className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-500">{t('srs_maturity_label', 'Madurez')}</span>
+                  </div>
+                  <span className={`text-xs font-bold ${masteredAt ? 'text-green-400' : 'text-gray-400'}`}>
+                    {srsInfo.maturityPct}%
+                  </span>
+                </div>
+                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-700 ${
+                      masteredAt ? 'bg-green-500' : srsInfo.maturityPct > 50 ? 'bg-blue-500' : 'bg-purple-500'
+                    }`}
+                    style={{ width: `${srsInfo.maturityPct}%` }}
+                  />
+                </div>
+                <p className="text-[10px] text-gray-600 mt-1">
+                  {masteredAt
+                    ? t('srs_mature_note', '✓ Carácter dominado (intervalo ≥21 días)')
+                    : t('srs_maturing_note', 'Se considera dominado con intervalo ≥21 días')
+                  }
+                </p>
+              </div>
+            </div>
+          ) : (
+            /* Carácter aún no estudiado */
+            <div className="w-full bg-gray-800/50 border border-dashed border-gray-700 rounded-2xl px-4 py-3 flex items-center gap-2">
+              <Brain className="w-4 h-4 text-gray-600 flex-shrink-0" />
+              <p className="text-xs text-gray-600">{t('srs_not_studied', 'Aún no estudiado — practica en una lección para añadirlo al repaso espaciado')}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
