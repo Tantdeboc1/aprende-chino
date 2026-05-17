@@ -780,4 +780,68 @@ export default {
           menu_completed_badge: "✓ Completado",
           home_radical_label: "Radical:",
           dictionary_listen_char: "Escuchar {{char}}",
+          home_default_username: "Estudiante",
+          translation_mode_pinyin: "Pinyin IME",
+          translation_mode_draw: "Dibujar",
+
+          // --- Streak System ---
+          streak_days_active_one: "{{count}} día de racha",
+          streak_days_active_other: "{{count}} días de racha",
+          streak_inactive: "Sin racha activa",
+          streak_best_label: "Mejor: {{count}}d",
+          streak_total_xp: "{{xp}} XP total",
+          streak_daily_goal: "Objetivo diario",
+          streak_goal_completed: "¡Objetivo cumplido! 🎉",
+          streak_activity_label: "Actividad (12 semanas)",
+          streak_milestones_label: "Logros de racha",
+          streak_days_suffix: "d",
+
+          // --- New Minigames ---
+          badge_vocabulary: "📖 Vocabulario",
+          minigames_complete_title: "Completa la Frase",
+          minigames_complete_description: "Elige el carácter que falta en la frase",
+          minigames_dialogue_title: "Ordena el Diálogo",
+          minigames_dialogue_description: "Pon las líneas del diálogo en orden",
+          minigames_intruder_title: "Encuentra el Intruso",
+          minigames_intruder_description: "Encuentra el carácter que no pertenece al grupo",
+
+          // Completa la frase
+          complete_title: "Completa la Frase",
+          complete_subtitle: "Elige el carácter correcto",
+          complete_translate_label: "Traduce esta frase:",
+          complete_sentence_label: "Completa la frase:",
+          complete_options_label: "Elige el carácter correcto:",
+          complete_results_title: "¡Ronda completada!",
+          complete_results_subtitle: "Estos son tus resultados",
+
+          // Ordena el diálogo
+          dialogue_title: "Ordena el Diálogo",
+          dialogue_subtitle: "Pon las líneas en el orden correcto",
+          dialogue_answer_zone: "Orden del diálogo (pulsa para quitar):",
+          dialogue_drop_here: "Pulsa una línea de abajo para colocarla aquí…",
+          dialogue_lines_label: "Líneas disponibles:",
+          dialogue_show_translation: "Ver traducción",
+          dialogue_correct_order: "El orden correcto era:",
+          dialogue_results_title: "¡Ronda completada!",
+          dialogue_results_subtitle: "Estos son tus resultados",
+
+          // Encuentra el intruso
+          intruder_title: "Encuentra el Intruso",
+          intruder_subtitle: "¿Cuál no pertenece al grupo?",
+          intruder_question: "¿Cuál es el intruso?",
+          intruder_question_hint: "Tres pertenecen al mismo grupo. Encuentra el diferente.",
+          intruder_this_one: "¡Intruso!",
+          intruder_explanation: "Los otros tres pertenecen a: {{group}}",
+          intruder_correct_was: "El intruso era:",
+          intruder_results_title: "¡Ronda completada!",
+          intruder_results_subtitle: "Estos son tus resultados",
+
+          // --- Leveling & Titles ---
+          settings_level_title: "Nivel y Títulos",
+          settings_level_current: "Nivel {{level}}",
+          settings_level_total: "total",
+          level_max_reached: "¡Nivel máximo alcanzado!",
+          settings_title_selector: "Título equipado",
+          settings_title_equipped: "Equipado",
+          settings_achievements_title: "Logros",
 };

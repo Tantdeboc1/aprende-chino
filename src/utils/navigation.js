@@ -31,6 +31,9 @@ const TimeRace         = lazy(() => import('@/components/minigames/TimeRace.jsx'
 const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
 const SOVGame          = lazy(() => import('@/components/minigames/SOVGame.jsx'));
 const TranslationGame  = lazy(() => import('@/components/minigames/TranslationGame.jsx'));
+const CompleteSentence = lazy(() => import('@/components/minigames/CompleteSentence.jsx'));
+const DialogueOrder    = lazy(() => import('@/components/minigames/DialogueOrder.jsx'));
+const FindIntruder     = lazy(() => import('@/components/minigames/FindIntruder.jsx'));
 
 export function useNavigation(
   screen,
@@ -169,6 +172,27 @@ export function useNavigation(
 
     if (screen === 'translation-game') {
       Component = TranslationGame;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+    if (screen === 'complete-sentence') {
+      Component = CompleteSentence;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+    if (screen === 'dialogue-order') {
+      Component = DialogueOrder;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+    if (screen === 'find-intruder') {
+      Component = FindIntruder;
       props = {
         goBack: () => { navigateTo('minigames'); },
       };

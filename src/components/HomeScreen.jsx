@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
+import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
+import StreakPanel from '@/components/ui/StreakPanel.jsx';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
@@ -196,7 +198,7 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
 }
 
 export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const totalMastered = useMemo(() => {
     let total = 0;
     for (let i = 1; i <= 4; i++) {
@@ -210,6 +212,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
   const streak      = useMemo(() => getStreak(), []);
+  const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
+  const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
 
   return (
     <div className="min-h-screen bg-gray-900 pb-24">
@@ -224,9 +228,32 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
         <div className="mt-3">
           <h1 className="text-xl font-bold text-white">
-            {t('home_greeting', { name: userName || 'Estudiante' })}
+            {t('home_greeting', { name: userName || t('home_default_username') })}
           </h1>
-          <p className="text-gray-400 text-sm mt-0.5">{t('home_subtitle')}</p>
+          <div className="flex items-center gap-2 mt-0.5">
+            <p className="text-gray-400 text-sm">{t('home_subtitle')}</p>
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-700 text-gray-300">
+              {equipped.icon} {equipped.title?.[i18n.language] || equipped.title?.es} · {equipped.zh}
+            </span>
+          </div>
+          {/* Barra XP al siguiente nivel */}
+          {!levelInfo.isMaxLevel && (
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-xs text-gray-500">Lv.{levelInfo.level}</span>
+              <div className="flex-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-purple-500 rounded-full transition-all duration-500"
+                  style={{ width: `${levelInfo.progress}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500">Lv.{levelInfo.level + 1}</span>
+            </div>
+          )}
+          {levelInfo.isMaxLevel && (
+            <div className="mt-2">
+              <span className="text-xs text-purple-400 font-bold">👑 {t('level_max_reached')}</span>
+            </div>
+          )}
         </div>
 
         {/* Stats rápidas */}
@@ -255,6 +282,9 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
         {/* Carácter del día */}
         <DailyCharacter allCharacters={allCharacters} />
+
+        {/* Panel de racha + XP */}
+        <StreakPanel streak={streak} />
 
         {/* Tarjeta SRS — solo si hay repasos pendientes o palabras aprendidas */}
         {srsStats.learned > 0 && (

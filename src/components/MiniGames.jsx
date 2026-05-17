@@ -62,6 +62,30 @@ export default function MiniGames({ goBack, navigateTo }) {
       color: 'purple',
       badges: [t('badge_hard'), t('badge_construction')],
     },
+    {
+      id: 'complete-sentence',
+      title: t('minigames_complete_title'),
+      description: t('minigames_complete_description'),
+      icon: '🧩',
+      color: 'green',
+      badges: [t('badge_easy'), t('badge_grammar')],
+    },
+    {
+      id: 'dialogue-order',
+      title: t('minigames_dialogue_title'),
+      description: t('minigames_dialogue_description'),
+      icon: '🔀',
+      color: 'blue',
+      badges: [t('badge_medium'), t('badge_grammar')],
+    },
+    {
+      id: 'find-intruder',
+      title: t('minigames_intruder_title'),
+      description: t('minigames_intruder_description'),
+      icon: '🎯',
+      color: 'red',
+      badges: [t('badge_easy'), t('badge_vocabulary')],
+    },
   ];
 
   return (

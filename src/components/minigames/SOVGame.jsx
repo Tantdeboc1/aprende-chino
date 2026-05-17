@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { playSound } from '@/utils/gameAudio.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -28,45 +31,9 @@ const LESSON_COLORS = {
 const DEFAULT_COLOR = { bg: 'bg-red-600', border: 'border-red-500', text: 'text-red-400' };
 
 
-// ── Feedback de sonido via Web Audio API ────────────────────────────────────
-function playSound(type) {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (type === 'correct') {
-      // Dos tonos ascendentes: un "ding" agradable
-      [523.25, 783.99].forEach((freq, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
-        gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.12);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
-        osc.start(ctx.currentTime + i * 0.12);
-        osc.stop(ctx.currentTime + i * 0.12 + 0.25);
-      });
-    } else {
-      // Tono grave descendente: "bong" de error
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(220, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
-      gain.gain.setValueAtTime(0.25, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.35);
-    }
-  } catch (e) {
-    // Web Audio no disponible — ignorar
-  }
-}
 
 export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Estado de la ronda
   const [rounds, setRounds]           = useState([]);
@@ -121,9 +88,10 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     setResult(correct ? 'correct' : 'incorrect');
     if (correct) {
       setScore(s => s + 1);
+      addXP(10);
     } else {
       // Reproducir audio de la frase correcta al fallar
-      speakChinese?.({ hanzi: current.sentence, pinyin: current.hint || '' });
+      speakChinese?.({ hanzi: current.sentence, pinyin: current.hints?.[i18n.language] || current.hint || '' });
     }
     playSound(correct ? 'correct' : 'incorrect');
     if (correct) hapticSuccess(); else hapticError();
@@ -134,6 +102,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     const next = currentIdx + 1;
     if (next >= rounds.length) {
       setDone(true);
+      trackAchievement('complete_quiz', 1);
+      if (score === rounds.length) trackAchievement('perfect_score', 1);
       return;
     }
     setCurrentIdx(next);
@@ -281,12 +251,12 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
         {/* Traducción */}
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
           <p className="text-xs text-gray-500 mb-1">{t('sov_translate_label')}</p>
-          <p className="text-white font-semibold text-base leading-snug">{current.translation}</p>
+          <p className="text-white font-semibold text-base leading-snug">{current.translations?.[i18n.language] || current.translation}</p>
 
           {showHint && (
             <div className="mt-2 pt-2 border-t border-gray-700">
               <p className="text-xs text-gray-500 mb-0.5">{t('sov_hint_label')}</p>
-              <p className="text-yellow-400 text-sm">{current.hint}</p>
+              <p className="text-yellow-400 text-sm">{current.hints?.[i18n.language] || current.hint}</p>
             </div>
           )}
         </div>
