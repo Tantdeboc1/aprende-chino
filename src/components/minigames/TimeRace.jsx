@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 // --- Helpers ---
 // Función para barajar un array
@@ -64,6 +65,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
       setFeedback('correct');
       hapticSuccess();
       addXP(10);
+      updateChallengeProgress('correct_answers', 1);
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; }); // Penalización de 2 segundos
       setFeedback('incorrect');
@@ -93,6 +95,8 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
           setGameState('finished');
           trackAchievement('complete_quiz', 1);
           trackAchievement('time_race_score', scoreRef.current);
+          updateChallengeProgress('complete_quizzes', 1);
+          updateChallengeProgress('play_different_games', 'TimeRace');
         }
         return next;
       });

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 // --- Helpers ---
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
@@ -60,6 +61,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
       setFeedback('correct');
       hapticSuccess();
       addXP(10);
+      updateChallengeProgress('correct_answers', 1);
     } else {
       setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; });
       setFeedback('incorrect');
@@ -87,6 +89,8 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
           clearInterval(timer);
           setGameState('finished');
           trackAchievement('complete_quiz', 1);
+          updateChallengeProgress('complete_quizzes', 1);
+          updateChallengeProgress('play_different_games', 'PinyinConnection');
         }
         return next;
       });

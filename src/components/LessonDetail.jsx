@@ -5,7 +5,7 @@ const Confetti = lazy(() => import('react-confetti'));
 import { useTranslation } from 'react-i18next';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
 import { trackAchievement } from '@/utils/leveling.js';
-import { toggleWordDifficult, isWordDifficult } from '@/utils/srs.js';
+import { toggleWordDifficult, isWordDifficult, getWordHealth } from '@/utils/srs.js';
 import { preloadLessonAudio, preloadNextLessonAudio, clearAudioCache } from '@/utils/audioPreloader.js';
 import GrammarTab from './GrammarTab.jsx';
 import CulturalTab from './CulturalTab.jsx';
@@ -268,6 +268,7 @@ export default function LessonDetail({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm text-gray-300">{word.pinyin}</span>
+                          {(() => { const h = getWordHealth(progress, word.char); return h.level !== 'new' ? <span className="text-xs leading-none" title={t(h.labelKey)}>{h.emoji}</span> : null; })()}
                           {word.type && (
                             <span className={`text-xs px-1.5 py-0.5 rounded ${TYPE_COLORS[word.type] || 'bg-gray-700 text-gray-400'}`}>
                               {word.type}

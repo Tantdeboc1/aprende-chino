@@ -1,23 +1,61 @@
 // src/components/ReviewSession.jsx
-import { useState, useMemo, useCallback } from 'react';
+// Repaso activo: quiz (char→significado, significado→char, pinyin→significado) + contextual
+import { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
-import { markDailyActivity } from '@/utils/streak.js';
+import { updateSRS, getDueCards, getWeakCards, getWordHealth } from '@/utils/srs.js';
+import { markDailyActivity, addXP } from '@/utils/streak.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { preloadLessonAudio } from '@/utils/audioPreloader.js';
+import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
-// ─── Selección de modo ────────────────────────────────────────────────────────
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
+/**
+ * Elige un modo de repaso aleatorio para cada tarjeta.
+ * Modos: 'char_to_meaning' | 'meaning_to_char' | 'pinyin_to_meaning' | 'context'
+ */
+function pickReviewMode(word) {
+  const modes = ['char_to_meaning', 'meaning_to_char', 'pinyin_to_meaning'];
+  // Solo añadir modo contexto si la palabra tiene ejemplos
+  if (word.examples?.length > 0) modes.push('context');
+  return modes[Math.floor(Math.random() * modes.length)];
+}
+
+/**
+ * Genera 4 opciones de respuesta para un quiz.
+ */
+function generateOptions(correctWord, allWords, mode, lang) {
+  const getMeaning = (w) => w.meanings?.[lang] || w.meaning;
+
+  // Elegir qué campo usar como opción según el modo
+  const getOptionText = (w) => {
+    if (mode === 'meaning_to_char') return w.char;
+    return getMeaning(w);
+  };
+
+  const correctText = getOptionText(correctWord);
+  const others = allWords
+    .filter(w => w.char !== correctWord.char && getOptionText(w) !== correctText)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3)
+    .map(w => getOptionText(w));
+
+  return shuffleArray([correctText, ...others]);
+}
+
+// ─── Selección de modo ──────────────────────────────────────────────────────
 function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
   const bothEmpty = dueCount === 0 && weakCount === 0;
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col pb-24">
-      {/* Header */}
       <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-4 flex-shrink-0">
         <h1 className="text-xl font-bold text-white mb-1">
           {t('srs_mode_title', 'Repaso')}
         </h1>
         <p className="text-gray-400 text-sm leading-snug">
-          {t('srs_mode_subtitle', 'Refuerza lo aprendido con tarjetas de memoria. Verás un carácter, intenta recordar su significado y luego evalúa cómo de bien lo recordabas.')}
+          {t('srs_mode_subtitle_v2', 'Pon a prueba tu memoria con distintos tipos de preguntas. ¡Cada tarjeta es un reto diferente!')}
         </p>
       </div>
 
@@ -51,7 +89,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">{t('srs_how_to_start', '¿Cómo empezar?')}</p>
               <div className="flex items-start gap-3">
                 <span className="text-lg">1.</span>
-                <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: t('srs_step_1', { 1: '<span class="text-white font-semibold">', '/1': '</span>' }).replace('<1>', '<span class="text-white font-semibold">').replace('</1>', '</span>') }} />
+                <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: t('srs_step_1').replace('<1>', '<span class="text-white font-semibold">').replace('</1>', '</span>') }} />
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-lg">2.</span>
@@ -65,20 +103,18 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
           </div>
         ) : (
           <>
-            {/* Explicación breve del flujo */}
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 mb-2">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('srs_how_it_works', '¿Cómo funciona?')}</p>
               <div className="space-y-1.5 text-gray-400 text-sm">
-                <p>1. {t('srs_how_it_works_step_1')}</p>
-                <p>2. {t('srs_how_it_works_step_2')}</p>
-                <p>3. {t('srs_how_it_works_step_3')}</p>
-                <p>4. {t('srs_how_it_works_step_4')}</p>
+                <p>1. {t('srs_how_v2_step_1', 'Verás una pregunta sobre un carácter')}</p>
+                <p>2. {t('srs_how_v2_step_2', 'Elige la respuesta correcta entre 4 opciones')}</p>
+                <p>3. {t('srs_how_v2_step_3', 'Los modos varían: carácter→significado, significado→carácter, pinyin→significado y frases contextuales')}</p>
+                <p>4. {t('srs_how_v2_step_4', 'Las palabras que falles se repasarán antes')}</p>
               </div>
             </div>
 
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">{t('srs_choose_mode', 'Elige un modo')}</p>
 
-            {/* Opción A: Pendientes */}
             <button
               onClick={() => dueCount > 0 && onSelect('due')}
               className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
@@ -89,12 +125,10 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-white font-bold text-base">
-                      {t('srs_mode_due_title', 'Repaso del día')}
-                    </span>
-                  </div>
-                  <p className="text-gray-400 text-sm leading-snug">
+                  <span className="text-white font-bold text-base">
+                    {t('srs_mode_due_title', 'Repaso del día')}
+                  </span>
+                  <p className="text-gray-400 text-sm leading-snug mt-1">
                     {dueCount > 0
                       ? t('srs_mode_due_count', '{{count}} palabras listas para repasar hoy', { count: dueCount })
                       : t('srs_mode_due_empty', 'Ya repasaste todo por hoy. Vuelve mañana.')}
@@ -108,7 +142,6 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               </div>
             </button>
 
-            {/* Opción B: Palabras débiles */}
             <button
               onClick={() => weakCount > 0 && onSelect('weak')}
               className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
@@ -119,12 +152,10 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-white font-bold text-base">
-                      {t('srs_mode_weak_title', 'Palabras difíciles')}
-                    </span>
-                  </div>
-                  <p className="text-gray-400 text-sm leading-snug">
+                  <span className="text-white font-bold text-base">
+                    {t('srs_mode_weak_title', 'Palabras difíciles')}
+                  </span>
+                  <p className="text-gray-400 text-sm leading-snug mt-1">
                     {t('srs_mode_weak_desc', 'Practica extra con las que más te cuestan, sin importar el calendario')}
                   </p>
                 </div>
@@ -142,65 +173,153 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
   );
 }
 
-// ─── Tarjeta de flashcard ────────────────────────────────────────────────────
-function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
-  const { t, i18n } = useTranslation();
+// ─── Etiqueta del modo de pregunta ──────────────────────────────────────────
+function ModeLabel({ mode, t }) {
+  const labels = {
+    char_to_meaning: t('srs_mode_char_meaning', '¿Qué significa?'),
+    meaning_to_char: t('srs_mode_meaning_char', '¿Qué carácter es?'),
+    pinyin_to_meaning: t('srs_mode_pinyin_meaning', '¿Qué significa este pinyin?'),
+    context: t('srs_mode_context', '¿Qué significa la palabra destacada?'),
+  };
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-4 py-6">
-      {!isFlipped ? (
-        /* FRONTAL — solo carácter */
-        <button
-          onClick={onFlip}
-          className="w-full max-w-sm aspect-square bg-gray-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-gray-500 active:scale-[0.98] transition-all shadow-xl"
-        >
-          <span className="text-8xl font-bold text-white leading-none">{word.char}</span>
-          <span className="text-gray-500 text-sm mt-2">{t('srs_tap_hint', '¿Recuerdas qué significa? Toca para ver')}</span>
-        </button>
-      ) : (
-        /* REVERSO — pinyin + significado + ejemplos */
-        <div className="w-full max-w-sm bg-gray-800 border-2 border-gray-600 rounded-2xl overflow-hidden shadow-xl">
-          {/* Carácter + pinyin */}
-          <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-700">
-            <div>
-              <span className="text-5xl font-bold text-white">{word.char}</span>
-              <p className="text-red-400 text-lg font-medium mt-1">{word.pinyin}</p>
-            </div>
-            <button
-              onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
-              className="w-11 h-11 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-xl transition-colors"
-              title={t('srs_listen_again')}
-            >
-              🔊
-            </button>
-          </div>
+    <span className="text-xs px-2.5 py-1 rounded-lg bg-gray-700 text-gray-400 font-medium">
+      {labels[mode] || ''}
+    </span>
+  );
+}
 
-          {/* Significado */}
-          <div className="px-5 py-3 border-b border-gray-700">
-            {word.type && (
-              <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 mb-2 inline-block">{word.type}</span>
-            )}
-            <p className="text-white text-xl font-semibold">{word.meanings?.[i18n.language] || word.meaning}</p>
-          </div>
+// ─── Tarjeta de pregunta (quiz activo) ──────────────────────────────────────
+function QuizCard({ word, reviewMode, options, selectedAnswer, isCorrect, onAnswer, speakChinese, t, i18n, allCharacters, progress }) {
+  const getMeaning = (w) => w.meanings?.[i18n.language] || w.meaning;
+  const health = getWordHealth(progress, word.char);
+  // Estabilizar ejemplo para modo contexto (no cambiar en cada render)
+  const contextExample = useMemo(() => {
+    if (reviewMode !== 'context' || !word.examples?.length) return word.char;
+    return word.examples[Math.floor(Math.random() * word.examples.length)];
+  }, [word.char, reviewMode]); // eslint-disable-line
 
-          {/* Ejemplos */}
-          {word.examples?.length > 0 && (
-            <div className="px-5 py-3">
-              <p className="text-xs text-gray-500 mb-2">{t('srs_examples')}</p>
-              <div className="space-y-1.5">
-                {word.examples.slice(0, 2).map((ex, i) => (
-                  <p key={i} className="text-sm text-gray-300 bg-gray-700/50 rounded-lg px-3 py-1.5">{ex}</p>
-                ))}
-              </div>
-            </div>
-          )}
+  // Determinar qué mostrar como "pregunta"
+  let questionContent;
+  const correctAnswer = reviewMode === 'meaning_to_char' ? word.char : getMeaning(word);
 
-          {/* Badge modo débil */}
-          {mode === 'weak' && word._easeFactor && (
-            <div className="px-5 pb-3">
-              <span className="text-xs text-orange-400/70">
-                {t('srs_ef_label', { ef: word._easeFactor.toFixed(2) })}
+  switch (reviewMode) {
+    case 'char_to_meaning':
+      questionContent = (
+        <div className="text-center">
+          <span className="text-7xl sm:text-8xl font-bold text-white leading-none">{word.char}</span>
+          <p className="text-red-400 text-sm mt-2">{word.pinyin}</p>
+        </div>
+      );
+      break;
+
+    case 'meaning_to_char':
+      questionContent = (
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-white leading-snug">{getMeaning(word)}</p>
+          {word.type && <p className="text-gray-500 text-sm mt-1">{word.type}</p>}
+        </div>
+      );
+      break;
+
+    case 'pinyin_to_meaning':
+      questionContent = (
+        <div className="text-center">
+          <span className="text-4xl sm:text-5xl font-bold text-red-400 leading-none">{word.pinyin}</span>
+          <button
+            onClick={(e) => { e.stopPropagation(); speakChinese?.({ hanzi: word.char, pinyin: word.pinyin }); }}
+            className="mx-auto mt-3 w-10 h-10 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-lg transition-colors"
+          >
+            🔊
+          </button>
+        </div>
+      );
+      break;
+
+    case 'context':
+      questionContent = (
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-white leading-snug mb-2">
+            {contextExample.split(word.char).map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && <span className="text-yellow-400 underline decoration-yellow-400/50">{word.char}</span>}
               </span>
+            ))}
+          </p>
+          <p className="text-gray-500 text-xs mt-2">{t('srs_context_hint', '¿Qué significa la palabra destacada en amarillo?')}</p>
+        </div>
+      );
+      break;
+  }
+
+  return (
+    <div className="flex-1 flex flex-col px-4 py-4">
+      {/* Modo label + health */}
+      <div className="flex items-center justify-between mb-4">
+        <ModeLabel mode={reviewMode} t={t} />
+        {health.level !== 'new' && (
+          <span className="text-sm" title={t(health.labelKey)}>{health.emoji}</span>
+        )}
+      </div>
+
+      {/* Pregunta */}
+      <div className="w-full max-w-md mx-auto bg-gray-800 border-2 border-gray-700 rounded-2xl flex items-center justify-center p-6 min-h-[160px] sm:min-h-[200px] mb-6">
+        {questionContent}
+      </div>
+
+      {/* Opciones */}
+      <div className="grid grid-cols-2 gap-3 max-w-md mx-auto w-full">
+        {options.map((option, i) => {
+          let buttonClass = 'bg-gray-700 border-2 border-gray-600 hover:border-gray-400 active:scale-[0.97]';
+
+          if (selectedAnswer !== null) {
+            if (option === correctAnswer) {
+              buttonClass = 'bg-green-900/50 border-2 border-green-500 text-green-300';
+            } else if (option === selectedAnswer && !isCorrect) {
+              buttonClass = 'bg-red-900/50 border-2 border-red-500 text-red-300';
+            } else {
+              buttonClass = 'bg-gray-800 border-2 border-gray-700 opacity-50';
+            }
+          }
+
+          return (
+            <button
+              key={i}
+              onClick={() => onAnswer(option)}
+              disabled={selectedAnswer !== null}
+              className={`rounded-xl py-4 px-3 text-center font-medium transition-all ${buttonClass} ${
+                reviewMode === 'meaning_to_char' ? 'text-3xl' : 'text-sm sm:text-base'
+              }`}
+            >
+              {option}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Feedback después de responder */}
+      {selectedAnswer !== null && (
+        <div className={`mt-4 max-w-md mx-auto w-full rounded-xl p-3 border ${
+          isCorrect ? 'bg-green-900/30 border-green-700' : 'bg-red-900/30 border-red-700'
+        }`}>
+          <div className="flex items-center gap-2">
+            <span className="text-xl">{isCorrect ? '✅' : '❌'}</span>
+            <div>
+              <p className={`font-bold text-sm ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                {isCorrect ? t('srs_quiz_correct', '¡Correcto!') : t('srs_quiz_incorrect', 'Incorrecto')}
+              </p>
+              {!isCorrect && (
+                <p className="text-gray-300 text-xs mt-0.5">
+                  {word.char} · {word.pinyin} = {getMeaning(word)}
+                </p>
+              )}
             </div>
+          </div>
+          {/* Mostrar ejemplo si no estamos en modo contexto */}
+          {reviewMode !== 'context' && word.examples?.length > 0 && (
+            <p className="text-gray-400 text-xs mt-2 italic">
+              {t('srs_example_label', 'Ejemplo:')} {word.examples[0]}
+            </p>
           )}
         </div>
       )}
@@ -208,58 +327,17 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
   );
 }
 
-// ─── Botones de evaluación ───────────────────────────────────────────────────
-function RatingButtons({ onRate }) {
-  const { t } = useTranslation();
-  return (
-    <div className="px-4 pb-6 pt-2">
-      <p className="text-center text-xs text-gray-500 mb-3">{t('srs_rate_prompt', '¿Cómo de bien lo recordabas?')}</p>
-      <div className="flex gap-2">
-        <button
-          onClick={() => onRate(0)}
-          className="flex-1 py-3 rounded-xl bg-red-900/40 border border-red-700/50 text-red-400 font-bold text-sm active:scale-95 transition-all hover:bg-red-900/60"
-        >
-          {t('srs_again', 'Otra vez')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_again_hint', 'No lo recuerdo')}</span>
-        </button>
-        <button
-          onClick={() => onRate(3)}
-          className="flex-1 py-3 rounded-xl bg-yellow-900/40 border border-yellow-700/50 text-yellow-400 font-bold text-sm active:scale-95 transition-all hover:bg-yellow-900/60"
-        >
-          {t('srs_hard', 'Difícil')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_hard_hint', 'Con esfuerzo')}</span>
-        </button>
-        <button
-          onClick={() => onRate(4)}
-          className="flex-1 py-3 rounded-xl bg-green-900/40 border border-green-700/50 text-green-400 font-bold text-sm active:scale-95 transition-all hover:bg-green-900/60"
-        >
-          {t('srs_good', 'Bien')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_good_hint', 'Lo sabía')}</span>
-        </button>
-        <button
-          onClick={() => onRate(5)}
-          className="flex-1 py-3 rounded-xl bg-blue-900/40 border border-blue-700/50 text-blue-400 font-bold text-sm active:scale-95 transition-all hover:bg-blue-900/60"
-        >
-          {t('srs_easy', 'Fácil')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_easy_hint', 'Inmediato')}</span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── Pantalla de resultados ──────────────────────────────────────────────────
-function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
-  const { again, hard, good, easy, total } = stats;
-  const correctPct = total > 0 ? Math.round(((good + easy) / total) * 100) : 0;
+// ─── Pantalla de resultados ─────────────────────────────────────────────────
+function ResultScreen({ stats, mode, onFinish, onReviewFailed, t }) {
+  const { correct, incorrect, total } = stats;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-4 pb-24">
       <div className="w-full max-w-sm">
-        {/* Título */}
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">
-            {correctPct >= 80 ? '🌟' : correctPct >= 50 ? '👍' : '💪'}
+            {pct >= 80 ? '🌟' : pct >= 50 ? '👍' : '💪'}
           </div>
           <h2 className="text-2xl font-bold text-white">
             {t('srs_results_title', 'Sesión completada')}
@@ -270,38 +348,28 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
           </p>
         </div>
 
-        {/* Stats */}
         <div className="bg-gray-800 rounded-2xl border border-gray-700 p-5 mb-6 space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_again', 'Otra vez')}</span>
-            <span className="text-red-400 font-bold text-lg">{again}</span>
+            <span className="text-gray-400 text-sm">{t('srs_quiz_correct', '¡Correcto!')}</span>
+            <span className="text-green-400 font-bold text-lg">{correct}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_hard', 'Difícil')}</span>
-            <span className="text-yellow-400 font-bold text-lg">{hard}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_good', 'Bien')}</span>
-            <span className="text-green-400 font-bold text-lg">{good}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_easy', 'Fácil')}</span>
-            <span className="text-blue-400 font-bold text-lg">{easy}</span>
+            <span className="text-gray-400 text-sm">{t('srs_quiz_incorrect', 'Incorrecto')}</span>
+            <span className="text-red-400 font-bold text-lg">{incorrect}</span>
           </div>
           <div className="border-t border-gray-700 pt-3 flex justify-between items-center">
             <span className="text-white font-semibold text-sm">{t('srs_accuracy', 'Precisión')}</span>
-            <span className="text-white font-bold text-xl">{correctPct}%</span>
+            <span className="text-white font-bold text-xl">{pct}%</span>
           </div>
         </div>
 
-        {/* Botones */}
         <div className="space-y-2">
-          {again > 0 && (
+          {incorrect > 0 && (
             <button
-              onClick={onReviewAgain}
+              onClick={onReviewFailed}
               className="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-700 active:scale-[0.98] transition-all"
             >
-              {t('srs_review_again', 'Repasar las que fallé')} ({again})
+              {t('srs_review_again', 'Repasar las que fallé')} ({incorrect})
             </button>
           )}
           <button
@@ -316,7 +384,7 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
   );
 }
 
-// ─── Componente principal ─────────────────────────────────────────────────────
+// ─── Componente principal ───────────────────────────────────────────────────
 export default function ReviewSession({
   allCharacters,
   progress,
@@ -324,82 +392,114 @@ export default function ReviewSession({
   goBack,
   speakChinese,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  // Precalcular las dos colas al montar (no cambian durante la sesión)
   const dueQueue  = useMemo(() => [...getDueCards(progress, allCharacters)].sort(() => Math.random() - 0.5), []); // eslint-disable-line
   const weakQueue = useMemo(() => getWeakCards(progress, allCharacters, 20), []); // eslint-disable-line
 
-  // ── Estado de la sesión ──────────────────────────────────────────────────
-  const [phase,   setPhase]   = useState('select'); // 'select' | 'playing'
-  const [mode,    setMode]    = useState(null);      // 'due' | 'weak'
+  const [phase,   setPhase]   = useState('select');
+  const [mode,    setMode]    = useState(null);
   const [queue,   setQueue]   = useState([]);
   const [index,   setIndex]   = useState(0);
-  const [flipped, setFlipped] = useState(false);
   const [done,    setDone]    = useState(false);
-  const [stats,   setStats]   = useState({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
+  const [stats,   setStats]   = useState({ correct: 0, incorrect: 0, total: 0 });
   const [failedQueue, setFailedQueue] = useState([]);
+
+  // Quiz state per question
+  const [reviewMode,    setReviewMode]    = useState(null);
+  const [options,       setOptions]       = useState([]);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [isCorrect,     setIsCorrect]     = useState(null);
+  const autoAdvanceRef = useRef(null);
 
   const current = queue[index] || null;
   const total   = queue.length;
 
-  // ── Iniciar sesión con el modo elegido ────────────────────────────────────
+  // Preparar la pregunta actual
+  const setupQuestion = useCallback((wordQueue, idx) => {
+    const word = wordQueue[idx];
+    if (!word) return;
+    const rMode = pickReviewMode(word);
+    const opts = generateOptions(word, allCharacters, rMode, i18n.language);
+    setReviewMode(rMode);
+    setOptions(opts);
+    setSelectedAnswer(null);
+    setIsCorrect(null);
+  }, [allCharacters, i18n.language]);
+
   const handleSelectMode = useCallback((selectedMode) => {
     const q = selectedMode === 'due' ? dueQueue : weakQueue;
-    // Precargar audios de los caracteres en cola (solo metadata, no descarga completa)
     if (q.length) preloadLessonAudio(q);
     setMode(selectedMode);
     setQueue(q);
     setIndex(0);
-    setFlipped(false);
     setDone(false);
-    setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
+    setStats({ correct: 0, incorrect: 0, total: 0 });
     setFailedQueue([]);
     setPhase('playing');
-  }, [dueQueue, weakQueue]);
+    // setup first question
+    setTimeout(() => setupQuestion(q, 0), 0);
+  }, [dueQueue, weakQueue, setupQuestion]);
 
-  // ── Voltear tarjeta + 🔊 audio automático ────────────────────────────────
-  const handleFlip = useCallback(() => {
-    if (!current) return;
-    setFlipped(true);
-    // Audio automático al revelar
-    speakChinese?.({ hanzi: current.char, pinyin: current.pinyin });
-  }, [current, speakChinese]);
+  // Manejar respuesta del quiz
+  const handleAnswer = useCallback((answer) => {
+    if (selectedAnswer !== null || !current) return;
 
-  // ── Evaluar tarjeta ───────────────────────────────────────────────────────
-  const handleRate = useCallback((quality) => {
-    if (!current) return;
+    const getMeaning = (w) => w.meanings?.[i18n.language] || w.meaning;
+    const correctAnswer = reviewMode === 'meaning_to_char' ? current.char : getMeaning(current);
+    const correct = answer === correctAnswer;
+
+    setSelectedAnswer(answer);
+    setIsCorrect(correct);
+
     markDailyActivity();
 
+    // Mapear a quality SM-2
+    const quality = correct ? 4 : 0;
     const updated = updateSRS(progress, current.char, quality);
     onProgressChange(updated);
 
-    setStats(prev => {
-      const label = quality === 0 ? 'again' : quality === 3 ? 'hard' : quality === 4 ? 'good' : 'easy';
-      return { ...prev, [label]: prev[label] + 1, total: prev.total + 1 };
-    });
-
-    if (quality < 3) setFailedQueue(prev => [...prev, current]);
-
-    const nextIndex = index + 1;
-    if (nextIndex >= queue.length) {
-      setDone(true);
+    if (correct) {
+      addXP(5);
+      updateChallengeProgress('correct_answers', 1);
+      updateChallengeProgress('review_mistakes', 1);
+      hapticSuccess();
     } else {
-      setIndex(nextIndex);
-      setFlipped(false);
+      hapticError();
     }
-  }, [current, index, queue, progress, onProgressChange]);
+
+    setStats(prev => ({
+      correct: prev.correct + (correct ? 1 : 0),
+      incorrect: prev.incorrect + (correct ? 0 : 1),
+      total: prev.total + 1,
+    }));
+
+    if (!correct) setFailedQueue(prev => [...prev, current]);
+
+    // Auto-avanzar después de feedback
+    if (autoAdvanceRef.current) clearTimeout(autoAdvanceRef.current);
+    autoAdvanceRef.current = setTimeout(() => {
+      const nextIndex = index + 1;
+      if (nextIndex >= queue.length) {
+        setDone(true);
+      } else {
+        setIndex(nextIndex);
+        setupQuestion(queue, nextIndex);
+      }
+    }, correct ? 1200 : 2000); // Más tiempo para ver el feedback de error
+  }, [selectedAnswer, current, reviewMode, i18n.language, progress, onProgressChange, index, queue, setupQuestion]);
 
   const handleReviewFailed = () => {
-    setQueue(failedQueue.sort(() => Math.random() - 0.5));
+    const q = failedQueue.sort(() => Math.random() - 0.5);
+    setQueue(q);
     setFailedQueue([]);
     setIndex(0);
-    setFlipped(false);
     setDone(false);
-    setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
+    setStats({ correct: 0, incorrect: 0, total: 0 });
+    setupQuestion(q, 0);
   };
 
-  // ── Renderizado por fase ──────────────────────────────────────────────────
+  // ── Renderizado ──────────────────────────────────────────────────────────
   if (phase === 'select') {
     return (
       <ModeSelector
@@ -418,7 +518,7 @@ export default function ReviewSession({
         stats={stats}
         mode={mode}
         onFinish={goBack}
-        onReviewAgain={handleReviewFailed}
+        onReviewFailed={handleReviewFailed}
         t={t}
       />
     );
@@ -448,7 +548,6 @@ export default function ReviewSession({
             </span>
           </div>
         </div>
-        {/* Barra de progreso */}
         <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ${isWeak ? 'bg-orange-500' : 'bg-red-500'}`}
@@ -457,22 +556,21 @@ export default function ReviewSession({
         </div>
       </div>
 
-      {/* Tarjeta */}
-      <FlashCard
-        word={current}
-        isFlipped={flipped}
-        onFlip={handleFlip}
-        speakChinese={speakChinese}
-        mode={mode}
-      />
-
-      {/* Botones de evaluación / hint */}
-      {flipped ? (
-        <RatingButtons onRate={handleRate} />
-      ) : (
-        <div className="px-4 pb-6 pt-2 text-center">
-          <p className="text-gray-600 text-xs">{t('srs_tap_to_reveal', 'Toca la tarjeta para ver la respuesta')}</p>
-        </div>
+      {/* Quiz */}
+      {current && reviewMode && (
+        <QuizCard
+          word={current}
+          reviewMode={reviewMode}
+          options={options}
+          selectedAnswer={selectedAnswer}
+          isCorrect={isCorrect}
+          onAnswer={handleAnswer}
+          speakChinese={speakChinese}
+          t={t}
+          i18n={i18n}
+          allCharacters={allCharacters}
+          progress={progress}
+        />
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import { getDueCount, getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
 import StreakPanel from '@/components/ui/StreakPanel.jsx';
+import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
@@ -285,6 +286,9 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
         {/* Panel de racha + XP */}
         <StreakPanel streak={streak} />
+
+        {/* Retos diarios */}
+        <DailyChallenges />
 
         {/* Tarjeta SRS — solo si hay repasos pendientes o palabras aprendidas */}
         {srsStats.learned > 0 && (

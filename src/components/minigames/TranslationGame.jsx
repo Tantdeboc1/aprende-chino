@@ -5,6 +5,9 @@ import { translationPhrases, getCandidates } from '@/data/translationPhrases.js'
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
@@ -378,15 +381,30 @@ export default function TranslationGame({ goBack }) {
     const solutions = (current.alt || [current.hanzi]).map(stripPunct);
     const correct = solutions.includes(answer);
     setResult(correct ? 'correct' : 'incorrect');
-    if (correct) setScore(s => s + 1);
-    else setFailedPhrases(prev => [...prev, current]);
+    if (correct) {
+      setScore(s => s + 1);
+      addXP(10);
+      updateChallengeProgress('correct_answers', 1);
+    } else {
+      setFailedPhrases(prev => [...prev, current]);
+    }
     playSound(correct ? 'correct' : 'incorrect');
     if (correct) hapticSuccess(); else hapticError();
   };
 
   const handleNext = () => {
     const next = currentIdx + 1;
-    if (next >= rounds.length) { setDone(true); return; }
+    if (next >= rounds.length) {
+      setDone(true);
+      trackAchievement('complete_quiz', 1);
+      updateChallengeProgress('complete_quizzes', 1);
+      updateChallengeProgress('play_different_games', 'TranslationGame');
+      if (score === rounds.length) {
+        trackAchievement('perfect_score', 1);
+        updateChallengeProgress('perfect_score', 1);
+      }
+      return;
+    }
     setCurrentIdx(next); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null);
   };

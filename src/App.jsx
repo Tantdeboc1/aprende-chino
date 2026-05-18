@@ -5,6 +5,7 @@ import { MusicProvider } from './context/MusicContext.jsx';
 import { useTranslation } from 'react-i18next';
 import Layout from "@/components/ui/Layout.jsx";
 import SplashScreen from './components/SplashScreen.jsx';
+import LevelUpNotification from './components/ui/LevelUpNotification.jsx';
 
 // ── Lazy Loading de componentes pesados ──
 const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
@@ -131,6 +132,67 @@ function App() {
     } catch (e) { console.error('Error speak:', e); }
     finally { speakingRef.current = false; setIsSpeaking(false); }
   }, []);
+
+  // ── Notificaciones de nivel / logros ─────────────────────────────────────────
+  const [notification, setNotification] = useState(null);
+  const notifQueue = useRef([]);
+
+  const showNextNotification = useCallback(() => {
+    if (notifQueue.current.length === 0) { setNotification(null); return; }
+    setNotification(notifQueue.current.shift());
+  }, []);
+
+  const dismissNotification = useCallback(() => {
+    showNextNotification();
+  }, [showNextNotification]);
+
+  useEffect(() => {
+    const handleLevelUp = (e) => {
+      const { levelUp, achievements } = e.detail || {};
+      if (levelUp) {
+        notifQueue.current.push({
+          type: 'level_up',
+          level: levelUp.level,
+          title: levelUp.title,
+          zh: levelUp.zh,
+          icon: levelUp.icon,
+        });
+      }
+      if (achievements?.length) {
+        for (const ach of achievements) {
+          notifQueue.current.push({
+            type: 'achievement',
+            title: ach.title,
+            zh: ach.zh,
+            icon: ach.icon,
+          });
+        }
+      }
+      if (notifQueue.current.length && !notification) showNextNotification();
+    };
+
+    const handleAchievement = (e) => {
+      const { achievements } = e.detail || {};
+      if (achievements?.length) {
+        for (const ach of achievements) {
+          notifQueue.current.push({
+            type: 'achievement',
+            title: ach.title,
+            zh: ach.zh,
+            icon: ach.icon,
+          });
+        }
+        if (!notification) showNextNotification();
+      }
+    };
+
+    window.addEventListener('xp-notification', handleLevelUp);
+    window.addEventListener('achievement-unlocked', handleAchievement);
+    return () => {
+      window.removeEventListener('xp-notification', handleLevelUp);
+      window.removeEventListener('achievement-unlocked', handleAchievement);
+    };
+  }, [notification, showNextNotification]);
 
   // Cargar datos
   useEffect(() => {
@@ -349,6 +411,11 @@ function App() {
     return <SplashScreen progress={splashProgress} onComplete={() => setSplashDone(true)} />;
   }
 
+  // ── NOTIFICATION OVERLAY (fixed position, renders on all screens) ─────────────
+  const notificationOverlay = (
+    <LevelUpNotification notification={notification} onDismiss={dismissNotification} />
+  );
+
   // ── WELCOME ──────────────────────────────────────────────────────────────────
   if (screen === 'welcome') {
     return (
@@ -397,6 +464,7 @@ function App() {
   if (screen === 'home') {
     return (
       <Layout activeScreen="home" onNavigate={handleBottomNav}>
+        {notificationOverlay}
         <HomeScreen
           userName={userName}
           progress={progress}
@@ -413,6 +481,7 @@ function App() {
   if (screen === 'review') {
     return (
       <Layout activeScreen="review" onNavigate={handleBottomNav}>
+        {notificationOverlay}
         <ReviewSession
           allCharacters={allCharacters}
           progress={progress}
@@ -544,6 +613,7 @@ function App() {
     }
     return (
       <Layout activeScreen={screen} onNavigate={handleBottomNav}>
+        {notificationOverlay}
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <CurrentComponent {...componentProps} />
