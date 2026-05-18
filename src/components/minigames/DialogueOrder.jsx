@@ -8,6 +8,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 const LESSON_COLORS = {
   1: { bg: 'bg-red-600',    border: 'border-red-500',    text: 'text-red-400'    },
@@ -73,6 +74,7 @@ export default function DialogueOrder({ goBack }) {
     if (correct) {
       setScore(s => s + 1);
       addXP(15);
+      updateChallengeProgress('correct_answers', 1);
     }
     playSound(correct ? 'correct' : 'incorrect');
     if (correct) hapticSuccess(); else hapticError();
@@ -83,7 +85,12 @@ export default function DialogueOrder({ goBack }) {
     if (next >= rounds.length) {
       setDone(true);
       trackAchievement('complete_quiz', 1);
-      if (score === rounds.length) trackAchievement('perfect_score', 1);
+      updateChallengeProgress('complete_quizzes', 1);
+      updateChallengeProgress('play_different_games', 'DialogueOrder');
+      if (score === rounds.length) {
+        trackAchievement('perfect_score', 1);
+        updateChallengeProgress('perfect_score', 1);
+      }
       return;
     }
     setCurrentIdx(next);

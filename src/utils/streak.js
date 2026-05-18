@@ -1,6 +1,7 @@
 // src/utils/streak.js
 // Racha diaria de estudio + sistema XP — persiste en localStorage
-import { trackAchievement } from '@/utils/leveling.js';
+import { trackAchievement, checkLevelUp } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 const STREAK_KEY = 'aprende-chino-streak-v1';
 
@@ -116,7 +117,7 @@ export function markDailyActivity() {
 /**
  * Añade XP al contador de hoy y al total.
  * @param {number} xp - cantidad de XP a sumar (ej: 10 por respuesta correcta)
- * @returns {object} estado actualizado del streak
+ * @returns {object} estado actualizado del streak (con .levelUp y .newAchievements si aplica)
  */
 export function addXP(xp) {
   const streak = loadStreak();
@@ -128,18 +129,41 @@ export function addXP(xp) {
     updated = markDailyActivity();
   }
 
+  const prevTotalXP = updated.totalXP || 0;
   const prevTodayXP = updated.todayXP || 0;
   updated.todayXP = prevTodayXP + xp;
   updated.todayXPDate = today;
-  updated.totalXP = (updated.totalXP || 0) + xp;
+  updated.totalXP = prevTotalXP + xp;
+
+  // Track XP earned for daily challenges
+  updateChallengeProgress('earn_xp', xp);
 
   // Registrar cumplimiento de objetivo diario (solo la primera vez que se cruza)
   const goal = updated.dailyGoal || DAILY_XP_GOAL;
+  const newAchievements = [];
   if (prevTodayXP < goal && updated.todayXP >= goal) {
-    trackAchievement('daily_goal_completed', 1);
+    const unlocked = trackAchievement('daily_goal_completed', 1);
+    if (unlocked.length) newAchievements.push(...unlocked);
   }
 
+  // Check level up
+  const levelUp = checkLevelUp(prevTotalXP, updated.totalXP);
+
   saveStreak(updated);
+
+  // Attach notifications metadata (non-persistent, consumed by UI)
+  updated._levelUp = levelUp;
+  updated._newAchievements = newAchievements;
+
+  // Dispatch custom event for App.jsx to catch
+  if (levelUp || newAchievements.length) {
+    try {
+      window.dispatchEvent(new CustomEvent('xp-notification', {
+        detail: { levelUp, achievements: newAchievements }
+      }));
+    } catch { /* SSR safety */ }
+  }
+
   return updated;
 }
 

@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
 import CharacterSheet from "@/components/ui/CharacterSheet.jsx";
+import { getWordHealth } from '@/utils/srs.js';
 
 const LESSON_COLORS = {
   1: { active: 'bg-red-600 text-white border-red-600',    inactive: 'bg-gray-800 text-red-400 border-red-800 hover:border-red-600' },
@@ -27,19 +28,15 @@ function loadFavorites() {
   catch { return new Set(); }
 }
 
-// ─── Dot de estado SRS ───────────────────────────────────────────────────────
-function SRSDot({ srsData, t }) {
-  if (!srsData || srsData.nextReview === null) {
-    return <span title={t('dictionary_uninitiated_label')} className="w-2 h-2 rounded-full bg-gray-600 inline-block" />;
-  }
-  const now = Date.now();
-  if (srsData.nextReview <= now) {
-    return <span title={t('dictionary_pending_label')} className="w-2 h-2 rounded-full bg-yellow-400 inline-block animate-pulse" />;
-  }
-  if (srsData.interval >= 21) {
-    return <span title={t('dictionary_mastered_tooltip')} className="w-2 h-2 rounded-full bg-green-400 inline-block" />;
-  }
-  return <span title={t('dictionary_learning_label')} className="w-2 h-2 rounded-full bg-blue-400 inline-block" />;
+// ─── Indicador de salud SRS ──────────────────────────────────────────────────
+function HealthBadge({ progress, char, t }) {
+  const health = getWordHealth(progress, char);
+  if (health.level === 'new') return null; // no mostrar para palabras sin SRS
+  return (
+    <span title={t(health.labelKey)} className="text-xs leading-none">
+      {health.emoji}
+    </span>
+  );
 }
 
 export default function Dictionary({
@@ -221,7 +218,6 @@ export default function Dictionary({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredChars.map((char, idx) => {
-            const srsData = progress?.__srs?.[char.char] || null;
             const isFav   = favorites.has(char.char);
 
             return (
@@ -241,7 +237,7 @@ export default function Dictionary({
                     {char.isSupplementary && (
                       <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
                     )}
-                    <SRSDot t={t} srsData={srsData} />
+                    <HealthBadge progress={progress} char={char.char} t={t} />
                   </div>
                   <div className="flex items-center gap-2">
                     {char.type && <span className="text-xs text-gray-500 italic">{char.type}</span>}

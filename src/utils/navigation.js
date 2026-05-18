@@ -1,6 +1,8 @@
 // src/utils/navigation.js
 import { useMemo, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
+import { updateChallengeProgress } from './dailyChallenges.js';
+import { initSRSCard, updateSRS } from './srs.js';
 
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
 const Menu             = lazy(() => import('@/components/menu'));
@@ -82,7 +84,14 @@ export function useNavigation(
     // Callbacks de feedback visual: actualizan el progreso al responder ejercicios
     const onTrackResult = (charObj, isCorrect) => {
       if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
-      const updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
+      let updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
+      if (isCorrect) {
+        updateChallengeProgress('correct_answers', 1);
+      } else {
+        // Penalizar el SRS: iniciar tarjeta si no existe, luego resetear intervalo
+        updated = initSRSCard(updated, charObj.char);
+        updated = updateSRS(updated, charObj.char, 0); // quality 0 = resetea a 1 día
+      }
       onProgressChange(updated);
     };
     const onTrackSeen = (charObj) => {
@@ -197,6 +206,7 @@ export function useNavigation(
         goBack: () => { navigateTo('minigames'); },
       };
     }
+
 
     // === APRENDIZAJE - MENÚS PRINCIPALES ===
     if (screen === 'learn' && learnSection === null) {

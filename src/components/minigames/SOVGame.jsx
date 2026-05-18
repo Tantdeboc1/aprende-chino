@@ -8,6 +8,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -89,6 +90,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     if (correct) {
       setScore(s => s + 1);
       addXP(10);
+      updateChallengeProgress('correct_answers', 1);
     } else {
       // Reproducir audio de la frase correcta al fallar
       speakChinese?.({ hanzi: current.sentence, pinyin: current.hints?.[i18n.language] || current.hint || '' });
@@ -103,7 +105,12 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     if (next >= rounds.length) {
       setDone(true);
       trackAchievement('complete_quiz', 1);
-      if (score === rounds.length) trackAchievement('perfect_score', 1);
+      updateChallengeProgress('complete_quizzes', 1);
+      updateChallengeProgress('play_different_games', 'SOVGame');
+      if (score === rounds.length) {
+        trackAchievement('perfect_score', 1);
+        updateChallengeProgress('perfect_score', 1);
+      }
       return;
     }
     setCurrentIdx(next);

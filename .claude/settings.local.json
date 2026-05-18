@@ -10,7 +10,8 @@
       "Bash(git commit -m ' *)",
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\jesus\\\\Desktop\\\\Proyecto-chino\\\\mi-app-chino\" -Recurse -Include \"*i18n*\", \"*translat*\", \"*language*\", \"*locale*\" -ErrorAction SilentlyContinue)",
-      "Bash(Select-Object -ExpandProperty FullName)"
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "mcp__Claude_in_Chrome__navigate"
     ]
   }
 }
