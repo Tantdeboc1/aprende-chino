@@ -3,7 +3,7 @@
 
 const grammarData = {
   1: {
-    intro: 'En esta lección aprendes a saludar, preguntar cómo está alguien y responder. El chino mandarin usa pocas palabras para expresar mucho — presta atención a los tonos.',
+    intro: 'En esta lección aprendes a saludar, preguntar cómo está alguien y responder. El chino mandarín usa pocas palabras para expresar mucho — presta atención a los tonos.',
     patterns: [
       {
         id: 'p1',

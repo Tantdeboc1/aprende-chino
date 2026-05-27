@@ -1,46 +1,53 @@
-/* src/index.css - TEMA OSCURO PERMANENTE */
 @import "tailwindcss";
 
-/* Forzar tema oscuro en todos los elementos */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --paper: #f4ecdc;
+  --paper-hi: #fbf5e6;
+  --ink: #1c1813;
+  --ink-soft: #5b5446;
+  --mute: #928a76;
+  --hair: rgba(28,24,19,0.10);
+  --jade: #2f6b4a;
+  --jade-deep: #1f4a33;
+  --jade-bg: #cfe1d3;
+  --red: #c8392f;
+  --red-deep: #8b1f1a;
+  --red-bg: #f0d6cf;
+  --sand: #b88a3e;
+  --sand-deep: #7a5722;
+  --sand-bg: #e8d4a8;
+  --butter: #f0c862;
 }
 
 html {
-  color-scheme: dark;
-}
-
-html.dark {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background: #111827 !important;
-  color: #ffffff !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
   min-height: 100vh;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Geist", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Clases para el efecto 3D de las Flashcards */
-.perspective {
-  perspective: 1000px;
+* {
+  box-sizing: border-box;
 }
-.transform-style-3d {
-  transform-style: preserve-3d;
+
+/* Flashcard answer reveal */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.rotate-y-180 {
-  transform: rotateY(180deg);
+.animate-fade-in {
+  animation: fadeIn 0.3s ease both;
 }
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Safari */
-}
-/* Animación del bottom-sheet */
+
+/* Bottom-sheet */
 @keyframes slide-up {
   from { transform: translateY(100%); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
@@ -49,29 +56,15 @@ body {
   animation: slide-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
-
-/* Asegurar que todos los componentes tengan fondo oscuro por defecto */
-* {
-  box-sizing: border-box;
+/* 3D flashcard */
+.perspective { perspective: 1000px; }
+.transform-style-3d { transform-style: preserve-3d; }
+.rotate-y-180 { transform: rotateY(180deg); }
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Override para cualquier elemento que intente usar colores claros */
-.bg-white {
-  background-color: #1f2937 !important;
-}
-
-.text-black {
-  color: #ffffff !important;
-}
-
-.text-gray-800 {
-  color: #e5e7eb !important;
-}
-
-.bg-gray-50 {
-  background-color: #111827 !important;
-}
-
-.bg-gray-100 {
-  background-color: #1f2937 !important;
-}
+/* CJK font utility */
+.font-cn { font-family: "Noto Sans SC", "PingFang SC", sans-serif; }
+.font-cn-serif { font-family: "Noto Serif SC", "Songti SC", serif; }

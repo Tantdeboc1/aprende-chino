@@ -1,5 +1,6 @@
 // src/components/ui/BottomNav.jsx
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
 
 const HomeIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -33,6 +34,14 @@ const ReviewIcon = () => (
   </svg>
 );
 
+const StoriesIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    <path d="M9 7h6M9 11h4"/>
+  </svg>
+);
+
 const SettingsIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3"/>
@@ -46,6 +55,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
   const items = [
     { key: 'home',       label: t('nav_home'),       Icon: HomeIcon },
     { key: 'review',     label: t('nav_review'),     Icon: ReviewIcon },
+    { key: 'stories',    label: t('nav_stories'),    Icon: StoriesIcon },
     { key: 'dictionary', label: t('nav_dictionary'), Icon: DictIcon },
     { key: 'minigames',  label: t('nav_games'),      Icon: GamesIcon },
     { key: 'settings',   label: t('nav_settings'),   Icon: SettingsIcon },
@@ -53,17 +63,25 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   const isActive = (key) => {
     if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
-    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam'].includes(activeScreen);
+    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam','complete-sentence','dialogue-order','find-intruder'].includes(activeScreen);
     return activeScreen === key;
   };
 
+  // Cultural color logic: review gets sand accent, rest get jade (red reserved for achievement)
   const activeAccent = (key) => {
-    if (key === 'review') return { text: 'text-orange-400', dot: 'bg-orange-400', pill: 'bg-orange-900/50' };
-    return { text: 'text-red-400', dot: 'bg-red-500', pill: 'bg-red-900/40' };
+    if (key === 'review') return { color: J.sand, bg: J.sandBg };
+    if (key === 'stories') return { color: J.red, bg: J.redBg };
+    return { color: J.jade, bg: J.jadeBg };
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/60">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm"
+      style={{
+        background: `${J.paperHi}f2`,
+        borderTop: `1px solid ${J.hair}`,
+      }}
+    >
       <div className="max-w-lg mx-auto flex justify-around items-end pt-1 pb-3">
         {items.map(({ key, label, Icon }) => {
           const active  = isActive(key);
@@ -73,16 +91,28 @@ export default function BottomNav({ activeScreen, onNavigate }) {
               key={key}
               onClick={() => onNavigate(key)}
               className="flex flex-col items-center gap-0.5 px-2 py-1 min-w-[56px] transition-all duration-200 active:scale-95"
+              style={{ background: 'none', border: 0, cursor: 'pointer' }}
             >
-              <span className={`flex items-center justify-center w-12 h-7 rounded-full transition-all duration-200 ${active ? accent.pill : 'bg-transparent'}`}>
-                <span className={`transition-colors duration-200 ${active ? accent.text : 'text-gray-500'}`}>
+              <span
+                className="flex items-center justify-center w-12 h-7 rounded-full transition-all duration-200"
+                style={{ background: active ? accent.bg : 'transparent' }}
+              >
+                <span style={{ color: active ? accent.color : J.mute2, transition: 'color 200ms' }}>
                   <Icon />
                 </span>
               </span>
-              <span className={`text-[10px] font-semibold leading-none transition-colors duration-200 ${active ? accent.text : 'text-gray-500'}`}>
+              <span
+                className="text-[10px] font-semibold leading-none transition-colors duration-200"
+                style={{ color: active ? accent.color : J.mute2 }}
+              >
                 {label}
               </span>
-              {active && <span className={`w-1 h-1 rounded-full mt-0.5 ${accent.dot}`} />}
+              {active && (
+                <span
+                  className="w-1 h-1 rounded-full mt-0.5"
+                  style={{ background: accent.color }}
+                />
+              )}
             </button>
           );
         })}

@@ -14,7 +14,7 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
 
     try {
 
-      // 🔥 DESBLOQUEAR AUDIO DIRECTAMENTE DESDE EL CLICK
+      // DESBLOQUEAR AUDIO DIRECTAMENTE DESDE EL CLICK
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       await audioContext.resume();
 
@@ -56,7 +56,7 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center relative">
+    <div className="min-h-screen bg-[#f4ecdc] p-4 flex items-center justify-center relative">
       {/* Language Selector */}
       <div className="absolute top-4 right-4 flex gap-2">
         {languages.map((lang) => (
@@ -65,8 +65,8 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
             onClick={() => i18n.changeLanguage(lang.code)}
             className={`px-3 py-1 text-sm font-bold rounded-md transition-colors ${
               i18n.language === lang.code
-                ? 'bg-red-500 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'bg-[#c8392f] text-[#fbf5e6]'
+                : 'bg-[#f8f1de] text-[#5b5446] hover:bg-[#bdb39a]'
             }`}
           >
             {lang.name}
@@ -74,7 +74,7 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
         ))}
       </div>
 
-      <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full border border-gray-700">
+      <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-8 max-w-md w-full border border-[rgba(28,24,19,0.10)]">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img
@@ -83,9 +83,9 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
               className="w-24 h-16 object-cover rounded-sm shadow-lg"
             />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">{t('welcome_title')}</h1>
-          <p className="text-xl text-gray-300 mb-1">Xuéxí Zhōngwén</p>
-          <p className="text-gray-400">Aprende Chino - HSK 1</p>
+          <h1 className="text-3xl font-bold text-[#1c1813] mb-2">{t('welcome_title')}</h1>
+          <p className="text-xl text-[#5b5446] mb-1">Xuéxí Zhōngwén</p>
+          <p className="text-[#928a76]">Aprende Chino - HSK 1</p>
         </div>
         <div className="space-y-4">
           <input
@@ -94,17 +94,17 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
             value={inputName}
             onChange={(e) => setInputName(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="w-full px-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
+            className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.18)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#928a76]"
             disabled={isActivatingAudio}
           />
           <button
             onClick={handleClick}
             disabled={!inputName.trim() || isActivatingAudio}
-            className="w-full bg-red-500 hover:bg-red-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2"
+            className="w-full bg-[#c8392f] hover:bg-[#8b1f1a] disabled:bg-[#bdb39a] disabled:cursor-not-allowed text-[#fbf5e6] font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2"
           >
             {isActivatingAudio ? (
               <>
-                <span className="animate-pulse">🔊</span>
+                <span className="animate-pulse"></span>
                 <span>{t('welcome_activating_audio')}</span>
               </>
             ) : (
@@ -115,8 +115,8 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
           </button>
 
           {/iPad|iPhone|iPod/.test(navigator.userAgent) && (
-            <p className="text-xs text-center text-gray-500 mt-2">
-              📱 {t('welcome_ios_note')}
+            <p className="text-xs text-center text-[#928a76] mt-2">
+              {t('welcome_ios_note')}
             </p>
           )}
         </div>

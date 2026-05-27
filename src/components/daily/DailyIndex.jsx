@@ -21,7 +21,7 @@ export default function DailyIndex({ goBack, setDailySection }) {
       title: t('daily_tones_challenge_title'),
       description: t('daily_tones_challenge_description'),
       time: t('daily_tones_challenge_time'),
-      emoji: '🎵',
+      emoji: '',
       color: 'green'
     },
     {
@@ -29,16 +29,16 @@ export default function DailyIndex({ goBack, setDailySection }) {
       title: t('daily_radicals_challenge_title'),
       description: t('daily_radicals_challenge_description'),
       time: t('daily_radicals_challenge_time'),
-      emoji: '🧩',
+      emoji: '',
       color: 'purple'
     }
   ];
 
   const getBorderColor = (color) => {
     const colors = {
-      blue: 'hover:border-blue-500',
-      green: 'hover:border-green-500',
-      purple: 'hover:border-purple-500'
+      blue: 'hover:border-[#2f6b4a]',
+      green: 'hover:border-[#2f6b4a]',
+      purple: 'hover:border-[#c8392f]'
     };
     return colors[color] || colors.blue;
   };
@@ -49,7 +49,7 @@ export default function DailyIndex({ goBack, setDailySection }) {
         <div className="mb-6">
           <button
             onClick={goBack}
-            className="flex items-center text-gray-300 hover:text-white"
+            className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
           >
             <ArrowLeft className="mr-2" />
             {t('daily_back_to_menu')}
@@ -57,8 +57,8 @@ export default function DailyIndex({ goBack, setDailySection }) {
         </div>
 
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">{t('daily_challenges_title')}</h2>
-          <p className="text-lg sm:text-xl text-gray-300">{t('daily_challenges_subtitle')}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1c1813] mb-2">{t('daily_challenges_title')}</h2>
+          <p className="text-lg sm:text-xl text-[#5b5446]">{t('daily_challenges_subtitle')}</p>
         </div>
 
         {/* Grid de desafíos */}
@@ -70,14 +70,14 @@ export default function DailyIndex({ goBack, setDailySection }) {
               onClick={() => {
                 setDailySection(challenge.id);
               }}
-              className={`bg-gray-800 border border-gray-700 ${getBorderColor(challenge.color)}`}
+              className={`bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] ${getBorderColor(challenge.color)}`}
             >
               <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{challenge.emoji}</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-2">
                 {challenge.title}
               </h3>
-              <p className="text-base sm:text-lg text-gray-300 mb-2">{challenge.description}</p>
-              <p className="text-sm text-gray-400">{challenge.time}</p>
+              <p className="text-base sm:text-lg text-[#5b5446] mb-2">{challenge.description}</p>
+              <p className="text-sm text-[#928a76]">{challenge.time}</p>
             </Button>
           ))}
         </div>

@@ -7,10 +7,10 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
-  bg: 'bg-purple-600',
-  border: 'border-purple-500',
-  text: 'text-purple-400',
-  hover: 'hover:bg-purple-700',
+  bg: 'bg-[#c8392f]',
+  border: 'border-[#c8392f]',
+  text: 'text-[#c8392f]',
+  hover: 'hover:bg-[#8b1f1a]',
 };
 
 // ── Google IME Handwriting API ──────────────────────────────────────────────
@@ -217,29 +217,29 @@ function HandwritingPanel({ onCharSelected }) {
   };
 
   const canvasBorder =
-    status === 'success'     ? 'border-green-500' :
-    status === 'recognizing' ? 'border-purple-400 animate-pulse' :
-    strokeCount > 0          ? 'border-purple-600' :
-                               'border-purple-700/60';
+    status === 'success'     ? 'border-[#2f6b4a]' :
+    status === 'recognizing' ? 'border-[#c8392f] animate-pulse' :
+    strokeCount > 0          ? 'border-[#c8392f]' :
+                               'border-[rgba(28,24,19,0.18)]';
 
   return (
-    <div className="bg-gray-800 border border-purple-700/50 rounded-2xl p-4 space-y-3">
+    <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-4 space-y-3">
       {/* Cabecera */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold text-purple-400 uppercase tracking-wide">✍️ Dibujar hanzi</p>
+          <p className="text-xs font-semibold text-[#c8392f] uppercase tracking-wide">Dibujar hanzi</p>
           {strokeCount > 0 && (
-            <span className="text-xs text-gray-500">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-[#928a76]">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
           )}
         </div>
         <div className="flex gap-2">
           <button onClick={handleUndo} disabled={strokeCount === 0}
-            className="text-xs px-2 py-1 rounded-lg border border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 transition-colors disabled:opacity-30">
+            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] transition-colors disabled:opacity-30">
             ↩ Deshacer
           </button>
           <button onClick={handleClear} disabled={strokeCount === 0}
-            className="text-xs px-2 py-1 rounded-lg border border-gray-600 text-gray-400 hover:text-red-400 hover:border-red-600 transition-colors disabled:opacity-30">
-            🗑 Borrar
+            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#c8392f] hover:border-[#c8392f] transition-colors disabled:opacity-30">
+            Borrar
           </button>
         </div>
       </div>
@@ -250,7 +250,7 @@ function HandwritingPanel({ onCharSelected }) {
           ref={canvasRef}
           width={CANVAS_SIZE}
           height={CANVAS_SIZE}
-          className={`rounded-xl border-2 bg-gray-900 touch-none cursor-crosshair transition-colors duration-300 ${canvasBorder}`}
+          className={`rounded-xl border-2 bg-[#f4ecdc] touch-none cursor-crosshair transition-colors duration-300 ${canvasBorder}`}
           style={{ width: CANVAS_SIZE, height: CANVAS_SIZE }}
           onPointerDown={onDown}
           onPointerMove={onMove}
@@ -261,29 +261,29 @@ function HandwritingPanel({ onCharSelected }) {
 
       {/* Estado */}
       {status === 'recognizing' && (
-        <p className="text-center text-xs text-purple-400 animate-pulse">Reconociendo…</p>
+        <p className="text-center text-xs text-[#c8392f] animate-pulse">Reconociendo…</p>
       )}
       {status === 'success' && (
-        <p className="text-center text-xs text-green-400 font-semibold">✓ Añadido</p>
+        <p className="text-center text-xs text-[#2f6b4a] font-semibold">✓ Añadido</p>
       )}
       {status === 'error' && (
-        <p className="text-center text-xs text-red-400">Sin conexión. Prueba el modo Pinyin.</p>
+        <p className="text-center text-xs text-[#c8392f]">Sin conexión. Prueba el modo Pinyin.</p>
       )}
       {status === 'idle' && candidates.length === 0 && strokeCount === 0 && (
-        <p className="text-center text-xs text-gray-600">Dibuja un carácter y espera los candidatos</p>
+        <p className="text-center text-xs text-[#928a76]">Dibuja un carácter y espera los candidatos</p>
       )}
 
       {/* Candidatos */}
       {candidates.length > 0 && status !== 'success' && (
         <div>
-          <p className="text-xs text-gray-500 mb-2">Toca el carácter correcto:</p>
+          <p className="text-xs text-[#928a76] mb-2">Toca el carácter correcto:</p>
           <div className="flex flex-wrap gap-2">
             {candidates.map((ch, i) => (
               <button key={i} onClick={() => handleSelect(ch)}
-                className={`rounded-xl border-2 font-bold transition-all active:scale-95 text-white
+                className={`rounded-xl border-2 font-bold transition-all active:scale-95 text-[#1c1813]
                   ${i === 0
-                    ? 'w-14 h-14 text-3xl border-purple-400 bg-purple-900/60 hover:bg-purple-800/70 shadow-lg shadow-purple-900/40'
-                    : 'w-12 h-12 text-2xl border-gray-600 bg-gray-700 hover:border-purple-400 hover:bg-purple-900/40'
+                    ? 'w-14 h-14 text-3xl border-[#c8392f] bg-[#f0d6cf]/60 hover:bg-[#8b1f1a]/70 shadow-lg shadow-[#c8392f]/20'
+                    : 'w-12 h-12 text-2xl border-[rgba(28,24,19,0.18)] bg-[#f8f1de] hover:border-[#c8392f] hover:bg-[#f0d6cf]/40'
                   }`}>
                 {ch}
               </button>
@@ -422,18 +422,18 @@ export default function TranslationGame({ goBack }) {
     const pct = rounds.length > 0 ? Math.round((score / rounds.length) * 100) : 0;
     const emoji = pct === 100 ? '\u{1F3C6}' : pct >= 70 ? '\u{1F44F}' : '\u{1F4AA}';
     return (
-      <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-6">
-        <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-sm w-full text-center shadow-xl">
+      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center p-6">
+        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-8 max-w-sm w-full text-center shadow-sm">
           <div className="text-6xl mb-4">{emoji}</div>
-          <h2 className="text-2xl font-bold text-white mb-1">{t('translation_results_title')}</h2>
-          <p className="text-gray-400 mb-6">{t('translation_results_subtitle')}</p>
+          <h2 className="text-2xl font-bold text-[#1c1813] mb-1">{t('translation_results_title')}</h2>
+          <p className="text-[#928a76] mb-6">{t('translation_results_subtitle')}</p>
           <div className="flex justify-center gap-8 mb-8">
-            <div><p className="text-4xl font-bold text-white">{score}/{rounds.length}</p><p className="text-xs text-gray-500 mt-1">{t('translation_correct_label')}</p></div>
-            <div><p className="text-4xl font-bold text-white">{pct}%</p><p className="text-xs text-gray-500 mt-1">{t('translation_accuracy_label')}</p></div>
+            <div><p className="text-4xl font-bold text-[#1c1813]">{score}/{rounds.length}</p><p className="text-xs text-[#928a76] mt-1">{t('translation_correct_label')}</p></div>
+            <div><p className="text-4xl font-bold text-[#1c1813]">{pct}%</p><p className="text-xs text-[#928a76] mt-1">{t('translation_accuracy_label')}</p></div>
           </div>
           <div className="space-y-2">
-            <button onClick={initGame} className={`w-full py-3 rounded-xl ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-white font-bold transition-colors`}>{t('translation_play_again')}</button>
-            <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-gray-700 hover:bg-gray-600 text-gray-300 font-medium transition-colors">{t('translation_back')}</button>
+            <button onClick={initGame} className={`w-full py-3 rounded-xl ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#1c1813] font-bold transition-colors`}>{t('translation_play_again')}</button>
+            <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-medium transition-colors">{t('translation_back')}</button>
           </div>
         </div>
       </div>
@@ -441,32 +441,32 @@ export default function TranslationGame({ goBack }) {
   }
 
   if (rounds.length === 0 || !current) {
-    return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><p className="text-gray-400">{t('minigames_loading')}</p></div>;
+    return <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center"><p className="text-[#928a76]">{t('minigames_loading')}</p></div>;
   }
 
   const builtText = built.join('');
   const progress = ((currentIdx + (result ? 1 : 0)) / rounds.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gray-900 pb-8">
+    <div className="min-h-screen bg-[#f4ecdc] pb-8">
 
       {/* Header */}
-      <div className={`bg-gray-800 border-b border-gray-700 border-l-4 ${ACCENT_COLOR.border} px-4 pt-10 pb-4`}>
-        <button onClick={goBack} className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-3 transition-colors">
+      <div className={`bg-[#fbf5e6] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${ACCENT_COLOR.border} px-4 pt-10 pb-4`}>
+        <button onClick={goBack} className="flex items-center gap-1.5 text-[#928a76] hover:text-[#1c1813] text-sm mb-3 transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           {t('translation_back')}
         </button>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-white">{t('translation_title')}</h1>
-            <p className="text-sm text-gray-400">{t('translation_subtitle')}</p>
+            <h1 className="text-lg font-bold text-[#1c1813]">{t('translation_title')}</h1>
+            <p className="text-sm text-[#928a76]">{t('translation_subtitle')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${ACCENT_COLOR.text}`}>{score}</p>
-            <p className="text-xs text-gray-500">{currentIdx + 1}/{rounds.length}</p>
+            <p className="text-xs text-[#928a76]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
-        <div className="mt-3 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[#f8f1de] rounded-full overflow-hidden">
           <div className={`h-full ${ACCENT_COLOR.bg} rounded-full transition-all duration-500`} style={{ width: `${progress}%` }} />
         </div>
       </div>
@@ -474,34 +474,34 @@ export default function TranslationGame({ goBack }) {
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-4">
 
         {/* Frase en español */}
-        <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
-          <p className="text-xs text-gray-500 mb-1">{t('translation_translate_label')}</p>
-          <p className="text-white font-semibold text-base leading-snug">{current.es}</p>
+        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
+          <p className="text-xs text-[#928a76] mb-1">{t('translation_translate_label')}</p>
+          <p className="text-[#1c1813] font-semibold text-base leading-snug">{current.es}</p>
         </div>
 
         {/* Zona de construcción */}
         <div>
-          <p className="text-xs text-gray-500 mb-2">{t('translation_built_zone')}</p>
+          <p className="text-xs text-[#928a76] mb-2">{t('translation_built_zone')}</p>
           <div className={`min-h-[56px] rounded-xl border-2 p-3 flex flex-wrap items-center gap-1.5 transition-colors ${
-            result === 'correct'   ? 'border-green-500 bg-green-900/20' :
-            result === 'incorrect' ? 'border-red-500 bg-red-900/20'     :
-            builtText.length > 0  ? `${ACCENT_COLOR.border} bg-gray-800` :
-                                    'border-gray-600 bg-gray-800/50 border-dashed'
+            result === 'correct'   ? 'border-[#2f6b4a] bg-[#cfe1d3]/20' :
+            result === 'incorrect' ? 'border-[#c8392f] bg-[#f0d6cf]/20'     :
+            builtText.length > 0  ? `${ACCENT_COLOR.border} bg-[#fbf5e6]` :
+                                    'border-[rgba(28,24,19,0.18)] bg-[#fbf5e6]/50 border-dashed'
           }`}>
-            {builtText.length === 0 && !result && <p className="text-gray-600 text-sm">{t('translation_built_placeholder')}</p>}
+            {builtText.length === 0 && !result && <p className="text-[#928a76] text-sm">{t('translation_built_placeholder')}</p>}
             {built.map((block, i) => (
               <button key={i} onClick={() => !result && setBuilt(prev => prev.filter((_, idx) => idx !== i))}
                 disabled={!!result}
                 className={`px-2 py-1 rounded-lg text-xl font-bold transition-all ${
-                  result === 'correct' ? 'bg-green-700 text-white cursor-default' :
-                  result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-green-700 text-white cursor-default' : 'bg-red-700 text-white cursor-default') :
-                  `${ACCENT_COLOR.bg} text-white hover:opacity-75 active:scale-95`
+                  result === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' :
+                  result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' : 'bg-[#c8392f] text-[#fbf5e6] cursor-default') :
+                  `${ACCENT_COLOR.bg} text-[#1c1813] hover:opacity-75 active:scale-95`
                 }`}>
                 {block}
               </button>
             ))}
             {builtText.length > 0 && !result && (
-              <button onClick={handleDeleteLast} className="ml-auto text-gray-500 hover:text-red-400 text-xs px-2 py-1 rounded transition-colors">&#x232B;</button>
+              <button onClick={handleDeleteLast} className="ml-auto text-[#928a76] hover:text-[#c8392f] text-xs px-2 py-1 rounded transition-colors">&#x232B;</button>
             )}
           </div>
         </div>
@@ -511,15 +511,15 @@ export default function TranslationGame({ goBack }) {
           <div className="flex gap-2">
             <button onClick={() => setInputMode('pinyin')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
-                inputMode === 'pinyin' ? 'bg-purple-900/50 border-purple-500 text-purple-300' : 'bg-gray-800 border-gray-700 text-gray-500 hover:border-gray-600'
+                inputMode === 'pinyin' ? 'bg-[#f0d6cf]/50 border-[#c8392f] text-[#c8392f]' : 'bg-[#fbf5e6] border-[rgba(28,24,19,0.10)] text-[#928a76] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
               ⌨️ Pinyin IME
             </button>
             <button onClick={() => setInputMode('draw')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
-                inputMode === 'draw' ? 'bg-purple-900/50 border-purple-500 text-purple-300' : 'bg-gray-800 border-gray-700 text-gray-500 hover:border-gray-600'
+                inputMode === 'draw' ? 'bg-[#f0d6cf]/50 border-[#c8392f] text-[#c8392f]' : 'bg-[#fbf5e6] border-[rgba(28,24,19,0.10)] text-[#928a76] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
-              ✍️ Dibujar
+              Dibujar
             </button>
           </div>
         )}
@@ -533,16 +533,16 @@ export default function TranslationGame({ goBack }) {
                 if (e.key === 'Backspace' && pinyinInput === '' && built.length > 0) handleDeleteLast();
               }}
               placeholder={t('translation_ime_placeholder')}
-              className={`w-full px-4 py-3 rounded-xl bg-gray-800 border ${ACCENT_COLOR.border} text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 text-base`}
+              className={`w-full px-4 py-3 rounded-xl bg-[#fbf5e6] border ${ACCENT_COLOR.border} text-[#1c1813] placeholder-[#928a76] focus:outline-none focus:ring-2 focus:ring-[#c8392f] text-base`}
               autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}
             />
             {candidates.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {candidates.map((c, i) => (
                   <button key={i} onClick={() => handleSelectCandidate(c)}
-                    className="flex flex-col items-center px-3 py-2 rounded-xl bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-purple-500 transition-all active:scale-95">
-                    <span className="text-white text-xl font-bold leading-none">{c.hanzi}</span>
-                    <span className="text-purple-400 text-xs mt-0.5">{c.pinyin}</span>
+                    className="flex flex-col items-center px-3 py-2 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] border border-[rgba(28,24,19,0.18)] hover:border-[#c8392f] transition-all active:scale-95">
+                    <span className="text-[#1c1813] text-xl font-bold leading-none">{c.hanzi}</span>
+                    <span className="text-[#c8392f] text-xs mt-0.5">{c.pinyin}</span>
                   </button>
                 ))}
               </div>
@@ -557,27 +557,27 @@ export default function TranslationGame({ goBack }) {
 
         {/* Feedback */}
         {result === 'correct' && (
-          <div className="bg-green-900/30 border border-green-700 rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[#cfe1d3]/30 border border-[#2f6b4a] rounded-xl p-3 flex items-center gap-3">
             <span className="text-2xl">&#x2705;</span>
             <div>
-              <p className="text-green-400 font-bold text-sm">{t('translation_correct')}</p>
-              <p className="text-gray-100 text-lg font-bold leading-tight">{current.hanzi}</p>
-              {current.pinyin && <p className="text-green-300 text-sm mt-0.5">{current.pinyin}</p>}
+              <p className="text-[#2f6b4a] font-bold text-sm">{t('translation_correct')}</p>
+              <p className="text-[#1c1813] text-lg font-bold leading-tight">{current.hanzi}</p>
+              {current.pinyin && <p className="text-[#5a8f72] text-sm mt-0.5">{current.pinyin}</p>}
             </div>
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-red-900/30 border border-red-700 rounded-xl p-3">
+          <div className="bg-[#f0d6cf]/30 border border-[#c8392f] rounded-xl p-3">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">&#x274C;</span>
               <div>
-                <p className="text-red-400 font-bold text-sm">{t('translation_incorrect')}</p>
-                <p className="text-xs text-gray-400">{t('translation_your_answer')}: <span className="text-gray-200">{builtText || '—'}</span></p>
+                <p className="text-[#c8392f] font-bold text-sm">{t('translation_incorrect')}</p>
+                <p className="text-xs text-[#928a76]">{t('translation_your_answer')}: <span className="text-[#1c1813]">{builtText || '—'}</span></p>
               </div>
             </div>
-            <p className="text-xs text-gray-400 mb-0.5">{t('translation_correct_answer')}</p>
-            <p className="text-white font-bold text-lg leading-tight">{current.hanzi}</p>
-            {current.pinyin && <p className="text-red-300 text-sm mt-0.5">{current.pinyin}</p>}
+            <p className="text-xs text-[#928a76] mb-0.5">{t('translation_correct_answer')}</p>
+            <p className="text-[#1c1813] font-bold text-lg leading-tight">{current.hanzi}</p>
+            {current.pinyin && <p className="text-[#c8392f] text-sm mt-0.5">{current.pinyin}</p>}
           </div>
         )}
 
@@ -587,35 +587,35 @@ export default function TranslationGame({ goBack }) {
             <>
               {builtText.length > 0 && (
                 <button onClick={handleClearBuilt}
-                  className="py-3 px-4 rounded-xl border border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 text-sm font-medium transition-colors">
+                  className="py-3 px-4 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
                   {t('translation_clear_button')}
                 </button>
               )}
               <button onClick={handleCheck} disabled={builtText.length === 0}
                 className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${
-                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-white` : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#1c1813]` : 'bg-[#f8f1de] text-[#928a76] cursor-not-allowed'
                 }`}>
                 {t('translation_check_button')}
               </button>
             </>
           )}
           {result === 'correct' && (
-            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-sm transition-colors">
+            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold text-sm transition-colors">
               {currentIdx + 1 >= rounds.length ? t('translation_see_results') : t('translation_next_button')} &rarr;
             </button>
           )}
           {result === 'incorrect' && (
-            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold text-sm transition-colors">
+            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-bold text-sm transition-colors">
               {currentIdx + 1 >= rounds.length ? t('translation_see_results') : t('translation_next_button')} &rarr;
             </button>
           )}
         </div>
 
         {!result && inputMode === 'pinyin' && (
-          <p className="text-center text-xs text-gray-600">{t('translation_ime_help')}</p>
+          <p className="text-center text-xs text-[#928a76]">{t('translation_ime_help')}</p>
         )}
         {!result && inputMode === 'draw' && (
-          <p className="text-center text-xs text-gray-600">{t('translation_draw_help')}</p>
+          <p className="text-center text-xs text-[#928a76]">{t('translation_draw_help')}</p>
         )}
 
       </div>

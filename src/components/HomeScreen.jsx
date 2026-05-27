@@ -1,13 +1,20 @@
 // src/components/HomeScreen.jsx
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
+import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
+import StreakPanel from '@/components/ui/StreakPanel.jsx';
+import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
+import { loadUserProfile } from '@/utils/userProfile.js';
+import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
 function DailyCharacter({ allCharacters }) {
+  const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const writerRef    = useRef(null);
   const [status, setStatus] = useState('loading');
@@ -26,16 +33,19 @@ function DailyCharacter({ allCharacters }) {
     writerRef.current = null;
     let cancelled = false;
 
+    // HanziWriter solo soporta 1 carácter — usar el primero si hay varios
+    const singleChar = daily.char.length > 1 ? daily.char[0] : daily.char;
+
     import('hanzi-writer').then(({ default: HanziWriter }) => {
       if (cancelled || !containerRef.current) return;
       try {
-        const writer = HanziWriter.create(containerRef.current, daily.char, {
-          width: 120,
-          height: 120,
+        const writer = HanziWriter.create(containerRef.current, singleChar, {
+          width: 100,
+          height: 100,
           padding: 8,
-          strokeColor: '#f9fafb',
-          radicalColor: '#f87171',
-          outlineColor: '#374151',
+          strokeColor: J.paperHi,
+          radicalColor: J.butter,
+          outlineColor: J.jadeDeep,
           drawingWidth: 5,
           strokeAnimationSpeed: 0.8,
           delayBetweenStrokes: 150,
@@ -56,41 +66,48 @@ function DailyCharacter({ allCharacters }) {
   if (!daily) return null;
 
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4 flex items-center gap-4">
+    <div className="rounded-2xl p-4 flex items-center gap-4"
+      style={{ background: J.jade, border: `1px solid ${J.jadeDeep}` }}>
       <div className="relative flex-shrink-0">
         <div
           ref={containerRef}
-          className="w-[120px] h-[120px] bg-gray-900/60 rounded-xl border border-gray-700"
+          className="w-[100px] h-[100px] rounded-xl"
+          style={{ background: `${J.jadeDeep}90`, border: `1px solid ${J.jadeDeep}` }}
         />
         {status === 'loading' && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-gray-900/70">
-            <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center rounded-xl"
+            style={{ background: `${J.jadeDeep}b0` }}>
+            <div className="w-5 h-5 rounded-full animate-spin"
+              style={{ border: `2px solid ${J.butter}`, borderTopColor: 'transparent' }} />
           </div>
         )}
         {status === 'error' && (
           <div className="absolute inset-0 flex items-center justify-center rounded-xl">
-            <span className="text-5xl font-bold text-white">{daily.char}</span>
+            <span className="text-4xl font-bold font-cn" style={{ color: J.paperHi }}>{daily.char}</span>
           </div>
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-1">Carácter del día</p>
-        <p className="text-2xl text-white font-bold leading-tight">{daily.char}</p>
-        <p className="text-gray-300 text-sm">{daily.pinyin}</p>
-        <p className="text-gray-400 text-xs mt-1 leading-snug">{daily.meaning}</p>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: J.butter }}>{t('daily_character_of_day')}</p>
+        <p className="text-2xl font-bold font-cn leading-tight" style={{ color: J.paperHi }}>{daily.char}</p>
+        <p className="text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>{daily.pinyin}</p>
+        <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.6)' }}>{daily.meanings?.[i18n.language] || daily.meaning}</p>
         {daily.radical && daily.radical !== '—' && (
-          <p className="text-gray-600 text-xs mt-1">Radical: <span className="text-gray-400">{daily.radical}</span></p>
+          <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.7)' }}>{daily.radical}</span>
+          </p>
         )}
       </div>
     </div>
   );
 }
 
+// ── Lección color mapping (Jade Pop cultural) ─────────────────────────────────
 const LESSONS = [
   {
     key: 'intro',
     num: null,
-    color: { border: 'border-l-purple-500', dot: 'bg-purple-500', bar: 'bg-purple-500', text: 'text-purple-400', icon: 'bg-purple-900/50' },
+    color: { border: J.sand, bar: J.sand, text: J.sandDeep, icon: J.sandBg },
     titleKey: 'lesson_intro_title',
     titleZh: '入门',
     subtitleKey: 'lesson_intro_subtitle',
@@ -98,7 +115,7 @@ const LESSONS = [
   {
     key: 'lesson-1',
     num: 1,
-    color: { border: 'border-l-red-500', dot: 'bg-red-500', bar: 'bg-red-500', text: 'text-red-400', icon: 'bg-red-900/50' },
+    color: { border: J.red, bar: J.red, text: J.redDeep, icon: J.redBg },
     titleKey: 'lesson_1_title',
     titleZh: '你最近怎么样',
     subtitleKey: 'lesson_1_subtitle',
@@ -106,7 +123,7 @@ const LESSONS = [
   {
     key: 'lesson-2',
     num: 2,
-    color: { border: 'border-l-orange-500', dot: 'bg-orange-500', bar: 'bg-orange-500', text: 'text-orange-400', icon: 'bg-orange-900/50' },
+    color: { border: J.sand, bar: J.sand, text: J.sandDeep, icon: J.sandBg },
     titleKey: 'lesson_2_title',
     titleZh: '你是哪国人？',
     subtitleKey: 'lesson_2_subtitle',
@@ -114,7 +131,7 @@ const LESSONS = [
   {
     key: 'lesson-3',
     num: 3,
-    color: { border: 'border-l-yellow-500', dot: 'bg-yellow-500', bar: 'bg-yellow-400', text: 'text-yellow-400', icon: 'bg-yellow-900/50' },
+    color: { border: J.sand, bar: J.sand, text: J.sandDeep, icon: J.sandBg2 },
     titleKey: 'lesson_3_title',
     titleZh: '你家有几口人？',
     subtitleKey: 'lesson_3_subtitle',
@@ -122,7 +139,7 @@ const LESSONS = [
   {
     key: 'lesson-4',
     num: 4,
-    color: { border: 'border-l-green-500', dot: 'bg-green-500', bar: 'bg-green-500', text: 'text-green-400', icon: 'bg-green-900/50' },
+    color: { border: J.jade, bar: J.jade, text: J.jadeDeep, icon: J.jadeBg },
     titleKey: 'lesson_4_title',
     titleZh: '你明天几点有课？',
     subtitleKey: 'lesson_4_subtitle',
@@ -141,44 +158,50 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full bg-gray-800 border border-gray-700 border-l-4 ${lesson.color.border} rounded-xl p-4 flex items-center gap-3 hover:bg-gray-750 hover:border-gray-600 transition-all text-left active:scale-[0.99]`}
+      className="w-full rounded-xl p-4 flex items-center gap-3 transition-all text-left active:scale-[0.99]"
+      style={{
+        background: J.paperHi, border: `1px solid ${J.hair}`,
+        borderLeftWidth: 4, borderLeftColor: lesson.color.border,
+        cursor: 'pointer',
+      }}
     >
       {/* Icono */}
-      <div className={`w-10 h-10 rounded-lg ${lesson.color.icon} flex items-center justify-center flex-shrink-0`}>
-        <span className="text-white font-bold text-base">
-          {lesson.num === null ? '0' : lesson.num}
-        </span>
+      <div className="font-cn w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-base"
+        style={{ background: lesson.color.icon, color: lesson.color.text, fontWeight: 700 }}>
+        {lesson.num === null ? '入' : lesson.num}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-0.5">
-          <span className="text-white font-semibold text-sm truncate">{t(lesson.titleKey)}</span>
+          <span className="font-semibold text-sm truncate" style={{ color: J.ink }}>{t(lesson.titleKey)}</span>
           {stats && (
-            <span className={`text-xs font-bold flex-shrink-0 ${masteredPct === 100 ? 'text-green-400' : lesson.color.text}`}>
-              {masteredPct === 100 ? '✓' : `${pct}%`}
+            <span className="text-xs font-bold flex-shrink-0"
+              style={{ color: masteredPct === 100 ? J.jade : lesson.color.text }}>
+              {masteredPct === 100 ? '★' : `${pct}%`}
             </span>
           )}
         </div>
-        <p className="text-gray-400 text-xs truncate">{t(lesson.subtitleKey)}</p>
+        <p className="text-xs truncate" style={{ color: J.mute }}>{t(lesson.subtitleKey)}</p>
         {stats && stats.total > 0 && (
           <div className="mt-2">
             <div className="flex items-center justify-between mb-1">
-              <div className="h-2 flex-1 bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-2 flex-1 rounded-full overflow-hidden" style={{ background: J.hair }}>
                 <div
-                  className={`h-full ${lesson.color.bar} rounded-full transition-all duration-500`}
-                  style={{ width: `${pct}%` }}
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${pct}%`, background: lesson.color.bar }}
                 />
               </div>
-              <span className={`ml-2 text-[11px] font-bold flex-shrink-0 ${masteredPct === 100 ? 'text-green-400' : lesson.color.text}`}>
-                {masteredPct === 100 ? '✓' : `${pct}%`}
+              <span className="ml-2 text-[11px] font-bold flex-shrink-0"
+                style={{ color: masteredPct === 100 ? J.jade : lesson.color.text }}>
+                {masteredPct === 100 ? '★' : `${pct}%`}
               </span>
             </div>
             {masteredPct > 0 && masteredPct < 100 && (
-              <div className="h-1 bg-gray-700/50 rounded-full overflow-hidden">
+              <div className="h-1 rounded-full overflow-hidden" style={{ background: J.hair }}>
                 <div
-                  className={`h-full ${lesson.color.bar} opacity-40 rounded-full transition-all duration-500`}
-                  style={{ width: `${masteredPct}%` }}
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${masteredPct}%`, background: lesson.color.bar, opacity: 0.4 }}
                 />
               </div>
             )}
@@ -187,15 +210,13 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
       </div>
 
       {/* Flecha */}
-      <svg className="text-gray-600 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
+      <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
     </button>
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview }) {
-  const { t } = useTranslation();
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenSettings }) {
+  const { t, i18n } = useTranslation();
   const totalMastered = useMemo(() => {
     let total = 0;
     for (let i = 1; i <= 4; i++) {
@@ -208,43 +229,107 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const totalWords  = useMemo(() => allCharacters.filter(c => !c.isSupplementary).length, [allCharacters]);
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
-  const streak      = useMemo(() => getStreak(), [progress]);
+  const streak      = useMemo(() => getStreak(), []);
+  const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
+  const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
+  const profile     = useMemo(() => loadUserProfile(), []);
+  const avatar      = useMemo(
+    () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
+    [profile.avatarId]
+  );
 
   return (
-    <div className="min-h-screen bg-gray-900 pb-24">
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-4">
+      <div style={{
+        background: J.jade, color: J.paperHi,
+        borderLeft: `4px solid ${J.jadeDeep}`,
+        padding: '40px 16px 16px',
+      }}>
         <div className="flex items-center gap-2">
-          <div className="bg-red-600 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-white font-bold text-sm">学</span>
+          <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ background: J.red, color: J.paperHi, fontWeight: 700, fontSize: 14 }}>
+            学
           </div>
-          <span className="text-white font-bold text-base">Aprende Chino</span>
+          <span className="font-bold text-base" style={{ color: J.paperHi }}>{t('app_brand')}</span>
         </div>
 
-        <div className="mt-3">
-          <h1 className="text-xl font-bold text-white">
-            {t('home_greeting', { name: userName || 'Estudiante' })}
-          </h1>
-          <p className="text-gray-400 text-sm mt-0.5">{t('home_subtitle')}</p>
+        <div className="mt-3 flex items-center gap-3">
+          {/* Avatar circular del perfil — clickable para abrir Ajustes */}
+          <button
+            onClick={onOpenSettings}
+            aria-label={t('profile_edit_aria')}
+            disabled={!onOpenSettings}
+            style={{
+              background: J.paperHi,
+              border: `2.5px solid ${J.butter}`,
+              borderRadius: '50%',
+              width: 60, height: 60,
+              padding: 0,
+              cursor: onOpenSettings ? 'pointer' : 'default',
+              overflow: 'hidden',
+              flexShrink: 0,
+              boxShadow: '0 4px 12px -3px rgba(0,0,0,0.30)',
+            }}
+          >
+            <img
+              src={avatar.src}
+              alt=""
+              draggable={false}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </button>
+
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>
+              {t('home_greeting', { name: userName || t('home_default_username') })}
+            </h1>
+            <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('home_subtitle')}</p>
+              <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+                style={{ background: 'rgba(0,0,0,0.2)', color: J.butter }}>
+                {equipped.icon} {equipped.title?.[i18n.language] || equipped.title?.es} · {equipped.zh}
+              </span>
+            </div>
+          </div>
         </div>
+        {/* Barra XP al siguiente nivel */}
+        {!levelInfo.isMaxLevel && (
+          <div className="mt-3 flex items-center gap-2">
+            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>Lv.{levelInfo.level}</span>
+            <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.25)' }}>
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{ width: `${levelInfo.progress}%`, background: J.butter }}
+              />
+            </div>
+            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>Lv.{levelInfo.level + 1}</span>
+          </div>
+        )}
+        {levelInfo.isMaxLevel && (
+          <div className="mt-3">
+            <span className="text-xs font-bold" style={{ color: J.butter }}>★ {t('level_max_reached')}</span>
+          </div>
+        )}
 
         {/* Stats rápidas */}
         <div className="flex gap-2 mt-3">
-          <div className="flex-1 bg-gray-700/50 rounded-lg px-2 py-2 text-center">
-            <p className="text-white font-bold text-lg">{totalMastered}</p>
-            <p className="text-gray-400 text-xs">{t('home_mastered')}</p>
+          <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
+            <p className="font-bold text-lg" style={{ color: J.paperHi }}>{totalMastered}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_mastered')}</p>
           </div>
-          <div className="flex-1 bg-gray-700/50 rounded-lg px-2 py-2 text-center">
-            <p className="text-white font-bold text-lg">
+          <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
+            <p className="font-bold text-lg" style={{ color: J.paperHi }}>
               {totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0}%
             </p>
-            <p className="text-gray-400 text-xs">{t('home_completed')}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_completed')}</p>
           </div>
-          <div className={`flex-1 rounded-lg px-2 py-2 text-center ${streak.currentStreak > 0 ? 'bg-orange-900/40 border border-orange-700/40' : 'bg-gray-700/50'}`}>
-            <p className={`font-bold text-lg ${streak.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`}>
-              {streak.currentStreak > 0 ? '🔥' : '—'}{streak.currentStreak > 0 ? streak.currentStreak : ''}
+          <div className="flex-1 rounded-lg px-2 py-2 text-center"
+            style={{ background: streak.currentStreak > 0 ? 'rgba(240,200,98,0.2)' : 'rgba(0,0,0,0.15)' }}>
+            <p className="font-bold text-lg" style={{ color: streak.currentStreak > 0 ? J.butter : J.paperHi }}>
+              {streak.currentStreak > 0 ? `★${streak.currentStreak}` : '—'}
             </p>
-            <p className="text-gray-400 text-xs">{t('home_streak')}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_streak')}</p>
           </div>
         </div>
       </div>
@@ -255,47 +340,60 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         {/* Carácter del día */}
         <DailyCharacter allCharacters={allCharacters} />
 
+        {/* Panel de racha + XP */}
+        <StreakPanel streak={streak} />
+
+        {/* Retos diarios */}
+        <DailyChallenges />
+
         {/* Tarjeta SRS — solo si hay repasos pendientes o palabras aprendidas */}
         {srsStats.learned > 0 && (
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('home_section_review', 'Repaso')}</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
+              {t('home_section_review', 'Repaso')}
+            </p>
             <button
               onClick={onStartReview}
-              className={`w-full rounded-xl p-4 flex items-center gap-3 transition-all text-left border ${
-                dueCount > 0
-                  ? 'bg-red-900/20 border-red-700/50 hover:bg-red-900/30'
-                  : 'bg-gray-800 border-gray-700 hover:border-gray-600'
-              }`}
+              className="w-full rounded-xl p-4 flex items-center gap-3 transition-all text-left"
+              style={{
+                background: dueCount > 0 ? J.redBg : J.paperHi,
+                border: `1px solid ${dueCount > 0 ? J.red : J.hair}`,
+                cursor: 'pointer',
+              }}
             >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-xl ${
-                dueCount > 0 ? 'bg-red-900/60' : 'bg-gray-700'
-              }`}>
-                🔁
+              <div className="font-cn w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-xl"
+                style={{
+                  background: dueCount > 0 ? J.red : J.paperHi,
+                  color: dueCount > 0 ? J.paperHi : J.mute,
+                  fontWeight: 700, border: dueCount > 0 ? 'none' : `1px solid ${J.hair}`,
+                }}>
+                复
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-white font-semibold text-sm">{t('home_srs_title', 'Repasar ahora')}</span>
+                  <span className="font-semibold text-sm" style={{ color: J.ink }}>{t('home_srs_title', 'Repasar ahora')}</span>
                   {dueCount > 0 && (
-                    <span className="bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">{dueCount}</span>
+                    <span className="text-xs font-bold px-1.5 py-0.5 rounded-full"
+                      style={{ background: J.red, color: J.paperHi }}>{dueCount}</span>
                   )}
                 </div>
-                <p className="text-gray-400 text-xs">
+                <p className="text-xs" style={{ color: J.mute }}>
                   {dueCount > 0
                     ? t('home_srs_due', '{{count}} tarjetas pendientes de repaso', { count: dueCount })
                     : t('home_srs_ok', '¡Al día! {{learned}} palabras aprendidas', { learned: srsStats.learned })
                   }
                 </p>
               </div>
-              <svg className="text-gray-600 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
+              <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
             </button>
           </div>
         )}
 
         {/* Introducción */}
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('home_section_basics')}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
+            {t('home_section_basics')}
+          </p>
           <LessonCard
             lesson={LESSONS[0]}
             progress={progress}
@@ -307,7 +405,9 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
         {/* Lecciones */}
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('home_section_lessons')}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
+            {t('home_section_lessons')}
+          </p>
           <div className="space-y-3">
             {LESSONS.slice(1).map(lesson => (
               <LessonCard

@@ -214,14 +214,14 @@ function Daily({ goBack }) {
     }
   };
 
-  if (loading) return <p className="text-center text-gray-400 p-6">{t('daily_loading_hsk1')}</p>;
-  if (error) return <p className="text-center text-red-400 p-6">{t('daily_error_loading_dictionary')}: {error}</p>;
+  if (loading) return <p className="text-center text-[#928a76] p-6">{t('daily_loading_hsk1')}</p>;
+  if (error) return <p className="text-center text-[#c8392f] p-6">{t('daily_error_loading_dictionary')}: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-[#f4ecdc] p-4">
       <Container>
         <div className="mb-6">
-          <button onClick={handleBack} className="flex items-center text-gray-300 hover:text-white">
+          <button onClick={handleBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813]">
             <ArrowLeft className="mr-2" />
             {t('daily_back_to_challenges')}
           </button>
@@ -229,9 +229,9 @@ function Daily({ goBack }) {
 
         <Card>
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">每日挑战</h2>
-            <p className="text-xl text-gray-300">Měi rì tiǎozhàn</p>
-            <p className="text-gray-400 mt-1">{t('daily_challenge_title')}</p>
+            <h2 className="text-3xl font-bold text-[#1c1813] mb-2">每日挑战</h2>
+            <p className="text-xl text-[#5b5446]">Měi rì tiǎozhàn</p>
+            <p className="text-[#928a76] mt-1">{t('daily_challenge_title')}</p>
           </div>
 
           {dailyChar ? (
@@ -240,19 +240,19 @@ function Daily({ goBack }) {
                 {[...Array(MAX_ATTEMPTS)].map((_, i) => (
                   <div key={i} className={
                     'w-10 h-10 rounded-full flex items-center justify-center font-bold ' +
-                    (i < dailyAttempts ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-400')
+                    (i < dailyAttempts ? 'bg-[#c8392f] text-[#fbf5e6]' : 'bg-[#f8f1de] text-[#928a76]')
                   }>
                     {i < dailyAttempts ? '✗' : i + 1}
                   </div>
                 ))}
               </div>
 
-              <div className="text-7xl sm:text-9xl font-bold text-white mb-6">{dailyChar.char}</div>
+              <div className="text-7xl sm:text-9xl font-bold text-[#1c1813] mb-6">{dailyChar.char}</div>
 
               {!isBlocked ? (
                 <>
-                  <p className="text-gray-300 mb-2">{t('daily_guess_meaning_or_pinyin')}</p>
-                  <p className="text-sm text-gray-400 mb-6">
+                  <p className="text-[#5b5446] mb-2">{t('daily_guess_meaning_or_pinyin')}</p>
+                  <p className="text-sm text-[#928a76] mb-6">
                     {remaining === 1 ? t('daily_attempts_left', { count: remaining }) : t('daily_attempts_left_plural', { count: remaining })}
                   </p>
 
@@ -263,7 +263,7 @@ function Daily({ goBack }) {
                       onChange={(e) => setGuess(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && tryGuess()}
                       placeholder={t('daily_your_answer_placeholder')}
-                      className="w-full px-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.18)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#928a76]"
                       autoFocus
                       disabled={isBlocked}
                     />
@@ -281,9 +281,9 @@ function Daily({ goBack }) {
                       {[...Array(Math.min(dailyAttempts, MAX_ATTEMPTS))].map((_, i) => {
                         const hint = getHint(i + 1, dailyChar, t);
                         return hint ? (
-                          <div key={i} className="bg-yellow-900 border-2 border-yellow-700 rounded-lg p-4 text-left">
-                            <p className="text-yellow-300 font-semibold">{hint.label}</p>
-                            <p className="text-yellow-200">{hint.content}</p>
+                          <div key={i} className="bg-[#e8d4a8] border-2 border-[#b88a3e] rounded-lg p-4 text-left">
+                            <p className="text-[#b88a3e] font-semibold">{hint.label}</p>
+                            <p className="text-[#7a5722]">{hint.content}</p>
                           </div>
                         ) : null;
                       })}
@@ -292,21 +292,21 @@ function Daily({ goBack }) {
                 </>
               ) : (
                 <div className="space-y-4">
-                  <div className="text-6xl mb-2">{dailyComplete ? '✅' : '😔'}</div>
-                  <h3 className={'text-2xl font-bold ' + (dailyComplete ? 'text-green-400' : 'text-red-400') }>
+                  <div className="text-6xl mb-2">{dailyComplete ? '' : '😔'}</div>
+                  <h3 className={'text-2xl font-bold ' + (dailyComplete ? 'text-[#2f6b4a]' : 'text-[#c8392f]') }>
                     {dailyComplete ? t('daily_completed_title') : t('daily_out_of_attempts_title')}
                   </h3>
                   {!dailyComplete && (
                     <>
-                      <p className="text-gray-300 mb-4">{t('daily_correct_answer_was')}</p>
-                      <div className="bg-gray-700 rounded-lg p-6 mb-2">
-                        <p className="text-xl text-gray-300 mb-1"><strong>{t('daily_pinyin_label')}</strong> {dailyChar.pinyin}</p>
-                        <p className="text-lg text-gray-200 font-semibold"><strong>{t('daily_meaning_label')}</strong> {dailyChar.meaning}</p>
+                      <p className="text-[#5b5446] mb-4">{t('daily_correct_answer_was')}</p>
+                      <div className="bg-[#f8f1de] rounded-lg p-6 mb-2">
+                        <p className="text-xl text-[#5b5446] mb-1"><strong>{t('daily_pinyin_label')}</strong> {dailyChar.pinyin}</p>
+                        <p className="text-lg text-[#1c1813] font-semibold"><strong>{t('daily_meaning_label')}</strong> {dailyChar.meaning}</p>
                       </div>
                     </>
                   )}
                   <div className="flex gap-3 justify-center">
-                    <button onClick={resetToday} className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-3 px-6 rounded-lg transition">
+                    <button onClick={resetToday} className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 px-6 rounded-lg transition">
                       {t('daily_reset_button')}
                     </button>
                   </div>
@@ -314,7 +314,7 @@ function Daily({ goBack }) {
               )}
             </div>
           ) : (
-            <p className="text-center text-gray-400">{t('daily_no_hsk1_data')}</p>
+            <p className="text-center text-[#928a76]">{t('daily_no_hsk1_data')}</p>
           )}
         </Card>
       </Container>

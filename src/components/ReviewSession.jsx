@@ -1,27 +1,34 @@
 // src/components/ReviewSession.jsx
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
 import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
 import { markDailyActivity } from '@/utils/streak.js';
+import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 
 // ─── Selección de modo ────────────────────────────────────────────────────────
 function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
   const bothEmpty = dueCount === 0 && weakCount === 0;
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col pb-24">
+    <div className="min-h-screen flex flex-col pb-24" style={{ background: J.paper }}>
       {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-4 flex-shrink-0">
-        <button
-          onClick={goBack}
-          className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm transition-colors mb-3"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-          {t('srs_back', 'Volver')}
-        </button>
-        <h1 className="text-xl font-bold text-white">
+      <div style={{
+        background: J.jade, color: J.paperHi,
+        borderLeft: `4px solid ${J.jadeDeep}`,
+        padding: '40px 16px 16px',
+      }}>
+        <div className="flex items-start justify-between mb-3">
+          <button
+            onClick={goBack}
+            className="flex items-center gap-1.5 text-sm"
+            style={{ color: 'rgba(255,255,255,0.7)', background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}
+          >
+            <span>←</span> {t('srs_back', 'Volver')}
+          </button>
+          <ProfileBadge variant="dark" />
+        </div>
+        <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>
           {t('srs_mode_title', '¿Qué tipo de repaso?')}
         </h1>
       </div>
@@ -30,43 +37,30 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
         {bothEmpty ? (
           /* Sin nada en el SRS — estado vacío motivacional */
           <div className="text-center py-8 px-4">
-            {/* Ilustración SVG */}
-            <svg viewBox="0 0 200 160" className="w-48 h-36 mx-auto mb-6 opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="100" cy="85" r="60" fill="#1f2937" />
-              <rect x="55" y="65" width="40" height="50" rx="4" fill="#374151" stroke="#4b5563" strokeWidth="1.5"/>
-              <rect x="105" y="65" width="40" height="50" rx="4" fill="#374151" stroke="#4b5563" strokeWidth="1.5"/>
-              <line x1="95" y1="65" x2="95" y2="115" stroke="#6b7280" strokeWidth="1"/>
-              <line x1="105" y1="65" x2="105" y2="115" stroke="#6b7280" strokeWidth="1"/>
-              <line x1="63" y1="78" x2="88" y2="78" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <line x1="63" y1="85" x2="85" y2="85" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <line x1="63" y1="92" x2="88" y2="92" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <line x1="112" y1="78" x2="137" y2="78" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <line x1="112" y1="85" x2="134" y2="85" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <line x1="112" y1="92" x2="137" y2="92" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="100" cy="52" r="14" fill="#1f2937" stroke="#f59e0b" strokeWidth="2"/>
-              <text x="100" y="57" textAnchor="middle" fontSize="14" fill="#f59e0b">✦</text>
-              <circle cx="60" cy="52" r="3" fill="#4b5563"/>
-              <circle cx="140" cy="52" r="3" fill="#4b5563"/>
-            </svg>
-            <h2 className="text-xl font-bold text-white mb-2">
+            {/* CJK icon */}
+            <div className="font-cn mx-auto mb-6 flex items-center justify-center"
+              style={{ width: 80, height: 80, borderRadius: 20, background: J.jadeBg, color: J.jade, fontSize: 42, fontWeight: 700 }}>
+              复
+            </div>
+            <h2 className="text-xl font-bold mb-2" style={{ color: J.ink }}>
               {t('srs_mode_empty', 'Sin palabras en el SRS todavía')}
             </h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-sm leading-relaxed mb-6" style={{ color: J.inkSoft }}>
               {t('srs_mode_empty_desc', 'Completa algunas lecciones o quizzes primero')}
             </p>
-            <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-4 text-left space-y-2">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">¿Cómo empezar?</p>
+            <div className="rounded-xl p-4 text-left space-y-2" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: J.mute }}>¿Cómo empezar?</p>
               <div className="flex items-start gap-3">
-                <span className="text-lg">1️⃣</span>
-                <p className="text-gray-300 text-sm">Ve a <span className="text-white font-semibold">Inicio</span> y abre una lección</p>
+                <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>一</span>
+                <p className="text-sm" style={{ color: J.inkSoft }}>Ve a <span className="font-semibold" style={{ color: J.ink }}>Inicio</span> y abre una lección</p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg">2️⃣</span>
-                <p className="text-gray-300 text-sm">Completa el <span className="text-white font-semibold">Quiz</span> de la lección</p>
+                <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>二</span>
+                <p className="text-sm" style={{ color: J.inkSoft }}>Completa el <span className="font-semibold" style={{ color: J.ink }}>Quiz</span> de la lección</p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg">3️⃣</span>
-                <p className="text-gray-300 text-sm">¡Vuelve aquí para repasar con el algoritmo SRS!</p>
+                <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>三</span>
+                <p className="text-sm" style={{ color: J.inkSoft }}>¡Vuelve aquí para repasar con el algoritmo SRS!</p>
               </div>
             </div>
           </div>
@@ -75,29 +69,32 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
             {/* Opción A: Pendientes */}
             <button
               onClick={() => dueCount > 0 && onSelect('due')}
-              className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
-                dueCount > 0
-                  ? 'bg-gray-800 border-red-500/50 hover:border-red-400 hover:bg-gray-750'
-                  : 'bg-gray-800/50 border-gray-700 opacity-50 cursor-not-allowed'
-              }`}
+              className="w-full p-5 rounded-2xl text-left transition-all active:scale-[0.98]"
+              style={{
+                background: J.paperHi,
+                border: `2px solid ${dueCount > 0 ? J.red : J.hair}`,
+                opacity: dueCount > 0 ? 1 : 0.5,
+                cursor: dueCount > 0 ? 'pointer' : 'not-allowed',
+              }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">🎯</span>
-                    <span className="text-white font-bold text-base">
+                    <span className="font-cn text-2xl" style={{ color: J.red, fontWeight: 700 }}>复</span>
+                    <span className="font-bold text-base" style={{ color: J.ink }}>
                       {t('srs_mode_due_title', 'Pendientes')}
                     </span>
                   </div>
-                  <p className="text-gray-400 text-sm leading-snug">
+                  <p className="text-sm leading-snug" style={{ color: J.inkSoft }}>
                     {dueCount > 0
                       ? t('srs_mode_due_count', '{{count}} tarjetas vencidas hoy', { count: dueCount })
                       : t('srs_mode_due_empty', 'Sin repasos pendientes ahora')}
                   </p>
-                  <p className="text-gray-600 text-xs mt-1">Orden aleatorio · Algoritmo SM-2</p>
+                  <p className="text-xs mt-1" style={{ color: J.mute }}>Orden aleatorio · Algoritmo SM-2</p>
                 </div>
                 {dueCount > 0 && (
-                  <span className="bg-red-500/20 text-red-400 font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0">
+                  <span className="font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0"
+                    style={{ background: J.redBg, color: J.redDeep }}>
                     {dueCount}
                   </span>
                 )}
@@ -107,29 +104,32 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
             {/* Opción B: Palabras débiles */}
             <button
               onClick={() => weakCount > 0 && onSelect('weak')}
-              className={`w-full p-5 rounded-2xl border-2 text-left transition-all active:scale-[0.98] ${
-                weakCount > 0
-                  ? 'bg-gray-800 border-orange-500/50 hover:border-orange-400 hover:bg-gray-750'
-                  : 'bg-gray-800/50 border-gray-700 opacity-50 cursor-not-allowed'
-              }`}
+              className="w-full p-5 rounded-2xl text-left transition-all active:scale-[0.98]"
+              style={{
+                background: J.paperHi,
+                border: `2px solid ${weakCount > 0 ? J.sand : J.hair}`,
+                opacity: weakCount > 0 ? 1 : 0.5,
+                cursor: weakCount > 0 ? 'pointer' : 'not-allowed',
+              }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">💔</span>
-                    <span className="text-white font-bold text-base">
+                    <span className="font-cn text-2xl" style={{ color: J.sand, fontWeight: 700 }}>弱</span>
+                    <span className="font-bold text-base" style={{ color: J.ink }}>
                       {t('srs_mode_weak_title', 'Palabras débiles')}
                     </span>
                   </div>
-                  <p className="text-gray-400 text-sm leading-snug">
+                  <p className="text-sm leading-snug" style={{ color: J.inkSoft }}>
                     {t('srs_mode_weak_desc', 'Ignora el calendario — repasa las que más te cuestan')}
                   </p>
-                  <p className="text-gray-600 text-xs mt-1">
+                  <p className="text-xs mt-1" style={{ color: J.mute }}>
                     {t('srs_mode_weak_count', 'Top {{count}} con peor puntuación', { count: weakCount })}
                   </p>
                 </div>
                 {weakCount > 0 && (
-                  <span className="bg-orange-500/20 text-orange-400 font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0">
+                  <span className="font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0"
+                    style={{ background: J.sandBg, color: J.sandDeep }}>
                     {weakCount}
                   </span>
                 )}
@@ -150,44 +150,51 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
         /* FRONTAL — solo carácter */
         <button
           onClick={onFlip}
-          className="w-full max-w-sm aspect-square bg-gray-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-gray-500 active:scale-[0.98] transition-all shadow-xl"
+          className="w-full max-w-sm aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 active:scale-[0.98] transition-all"
+          style={{
+            background: J.paperHi, border: `2px solid ${J.hair}`,
+            boxShadow: `0 8px 24px -8px ${J.hairS}`, cursor: 'pointer',
+          }}
         >
-          <span className="text-8xl font-bold text-white leading-none">{word.char}</span>
-          <span className="text-gray-500 text-sm mt-2">Toca para ver</span>
+          <span className="text-8xl font-bold font-cn leading-none" style={{ color: J.ink }}>{word.char}</span>
+          <span className="text-sm mt-2" style={{ color: J.mute }}>Toca para ver</span>
         </button>
       ) : (
         /* REVERSO — pinyin + significado + ejemplos */
-        <div className="w-full max-w-sm bg-gray-800 border-2 border-gray-600 rounded-2xl overflow-hidden shadow-xl">
+        <div className="w-full max-w-sm rounded-2xl overflow-hidden"
+          style={{ background: J.paperHi, border: `2px solid ${J.jade}`, boxShadow: `0 8px 24px -8px ${J.hairS}` }}>
           {/* Carácter + pinyin */}
-          <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-700">
+          <div className="flex items-center justify-between px-5 pt-5 pb-3" style={{ borderBottom: `1px solid ${J.hair}` }}>
             <div>
-              <span className="text-5xl font-bold text-white">{word.char}</span>
-              <p className="text-red-400 text-lg font-medium mt-1">{word.pinyin}</p>
+              <span className="text-5xl font-bold font-cn" style={{ color: J.ink }}>{word.char}</span>
+              <p className="text-lg font-medium mt-1" style={{ color: J.jade }}>{word.pinyin}</p>
             </div>
             <button
               onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
-              className="w-11 h-11 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-xl transition-colors"
+              className="font-cn w-11 h-11 rounded-full flex items-center justify-center text-xl transition-colors"
+              style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontWeight: 700 }}
               title="Escuchar de nuevo"
             >
-              🔊
+              声
             </button>
           </div>
 
           {/* Significado */}
-          <div className="px-5 py-3 border-b border-gray-700">
+          <div className="px-5 py-3" style={{ borderBottom: `1px solid ${J.hair}` }}>
             {word.type && (
-              <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 mb-2 inline-block">{word.type}</span>
+              <span className="text-xs px-2 py-0.5 rounded mb-2 inline-block"
+                style={{ background: J.sandBg, color: J.sandDeep }}>{word.type}</span>
             )}
-            <p className="text-white text-xl font-semibold">{word.meaning}</p>
+            <p className="text-xl font-semibold" style={{ color: J.ink }}>{word.meaning}</p>
           </div>
 
           {/* Ejemplos */}
           {word.examples?.length > 0 && (
             <div className="px-5 py-3">
-              <p className="text-xs text-gray-500 mb-2">Ejemplos</p>
+              <p className="text-xs mb-2" style={{ color: J.mute }}>Ejemplos</p>
               <div className="space-y-1.5">
                 {word.examples.slice(0, 2).map((ex, i) => (
-                  <p key={i} className="text-sm text-gray-300 bg-gray-700/50 rounded-lg px-3 py-1.5">{ex}</p>
+                  <p key={i} className="text-sm rounded-lg px-3 py-1.5" style={{ background: J.paper, color: J.ink }}>{ex}</p>
                 ))}
               </div>
             </div>
@@ -196,7 +203,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           {/* Badge modo débil */}
           {mode === 'weak' && word._easeFactor && (
             <div className="px-5 pb-3">
-              <span className="text-xs text-orange-400/70">
+              <span className="text-xs" style={{ color: J.sand }}>
                 EF: {word._easeFactor.toFixed(2)} · Debilidad del SRS
               </span>
             </div>
@@ -212,32 +219,36 @@ function RatingButtons({ onRate }) {
   const { t } = useTranslation();
   return (
     <div className="px-4 pb-6 pt-2">
-      <p className="text-center text-xs text-gray-500 mb-3">{t('srs_rate_prompt', '¿Cómo de bien lo recordabas?')}</p>
+      <p className="text-center text-xs mb-3" style={{ color: J.mute }}>{t('srs_rate_prompt', '¿Cómo de bien lo recordabas?')}</p>
       <div className="flex gap-2">
         <button
           onClick={() => onRate(0)}
-          className="flex-1 py-3 rounded-xl bg-red-900/40 border border-red-700/50 text-red-400 font-bold text-sm active:scale-95 transition-all hover:bg-red-900/60"
+          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
+          style={{ background: J.redBg, border: `1px solid ${J.red}`, color: J.redDeep, cursor: 'pointer' }}
         >
           {t('srs_again', 'Otra vez')}
           <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_again_hint', 'No lo recuerdo')}</span>
         </button>
         <button
           onClick={() => onRate(3)}
-          className="flex-1 py-3 rounded-xl bg-yellow-900/40 border border-yellow-700/50 text-yellow-400 font-bold text-sm active:scale-95 transition-all hover:bg-yellow-900/60"
+          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
+          style={{ background: J.sandBg, border: `1px solid ${J.sand}`, color: J.sandDeep, cursor: 'pointer' }}
         >
           {t('srs_hard', 'Difícil')}
           <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_hard_hint', 'Con esfuerzo')}</span>
         </button>
         <button
           onClick={() => onRate(4)}
-          className="flex-1 py-3 rounded-xl bg-green-900/40 border border-green-700/50 text-green-400 font-bold text-sm active:scale-95 transition-all hover:bg-green-900/60"
+          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
+          style={{ background: J.jadeBg, border: `1px solid ${J.jade}`, color: J.jadeDeep, cursor: 'pointer' }}
         >
           {t('srs_good', 'Bien')}
           <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_good_hint', 'Lo sabía')}</span>
         </button>
         <button
           onClick={() => onRate(5)}
-          className="flex-1 py-3 rounded-xl bg-blue-900/40 border border-blue-700/50 text-blue-400 font-bold text-sm active:scale-95 transition-all hover:bg-blue-900/60"
+          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
+          style={{ background: J.jadeBg, border: `1px solid ${J.jadeDeep}`, color: J.jadeDeep, cursor: 'pointer' }}
         >
           {t('srs_easy', 'Fácil')}
           <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_easy_hint', 'Inmediato')}</span>
@@ -253,43 +264,48 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
   const correctPct = total > 0 ? Math.round(((good + easy) / total) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-4 pb-24">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 pb-24" style={{ background: J.paper }}>
       <div className="w-full max-w-sm">
         {/* Título */}
         <div className="text-center mb-8">
-          <div className="text-5xl mb-3">
-            {correctPct >= 80 ? '🌟' : correctPct >= 50 ? '👍' : '💪'}
+          <div className="font-cn mx-auto mb-3 flex items-center justify-center"
+            style={{
+              width: 64, height: 64, borderRadius: 16, fontWeight: 700, fontSize: 36,
+              background: correctPct >= 80 ? J.jadeBg : correctPct >= 50 ? J.sandBg : J.redBg,
+              color: correctPct >= 80 ? J.jade : correctPct >= 50 ? J.sand : J.red,
+            }}>
+            {correctPct >= 80 ? '优' : correctPct >= 50 ? '良' : '练'}
           </div>
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold" style={{ color: J.ink }}>
             {t('srs_results_title', 'Sesión completada')}
           </h2>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-sm mt-1" style={{ color: J.inkSoft }}>
             {total} {t('srs_cards_reviewed', 'tarjetas repasadas')}
-            {mode === 'weak' && <span className="ml-1 text-orange-400">{t('srs_mode_weak_badge')}</span>}
+            {mode === 'weak' && <span className="ml-1" style={{ color: J.sand }}>{t('srs_mode_weak_badge')}</span>}
           </p>
         </div>
 
         {/* Stats */}
-        <div className="bg-gray-800 rounded-2xl border border-gray-700 p-5 mb-6 space-y-3">
+        <div className="rounded-2xl p-5 mb-6 space-y-3" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_again', 'Otra vez')}</span>
-            <span className="text-red-400 font-bold text-lg">{again}</span>
+            <span className="text-sm" style={{ color: J.inkSoft }}>{t('srs_again', 'Otra vez')}</span>
+            <span className="font-bold text-lg" style={{ color: J.red }}>{again}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_hard', 'Difícil')}</span>
-            <span className="text-yellow-400 font-bold text-lg">{hard}</span>
+            <span className="text-sm" style={{ color: J.inkSoft }}>{t('srs_hard', 'Difícil')}</span>
+            <span className="font-bold text-lg" style={{ color: J.sand }}>{hard}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_good', 'Bien')}</span>
-            <span className="text-green-400 font-bold text-lg">{good}</span>
+            <span className="text-sm" style={{ color: J.inkSoft }}>{t('srs_good', 'Bien')}</span>
+            <span className="font-bold text-lg" style={{ color: J.jade }}>{good}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">{t('srs_easy', 'Fácil')}</span>
-            <span className="text-blue-400 font-bold text-lg">{easy}</span>
+            <span className="text-sm" style={{ color: J.inkSoft }}>{t('srs_easy', 'Fácil')}</span>
+            <span className="font-bold text-lg" style={{ color: J.jadeDeep }}>{easy}</span>
           </div>
-          <div className="border-t border-gray-700 pt-3 flex justify-between items-center">
-            <span className="text-white font-semibold text-sm">{t('srs_accuracy', 'Precisión')}</span>
-            <span className="text-white font-bold text-xl">{correctPct}%</span>
+          <div className="pt-3 flex justify-between items-center" style={{ borderTop: `1px solid ${J.hair}` }}>
+            <span className="font-semibold text-sm" style={{ color: J.ink }}>{t('srs_accuracy', 'Precisión')}</span>
+            <span className="font-bold text-xl" style={{ color: J.ink }}>{correctPct}%</span>
           </div>
         </div>
 
@@ -298,14 +314,16 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
           {again > 0 && (
             <button
               onClick={onReviewAgain}
-              className="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-700 active:scale-[0.98] transition-all"
+              className="w-full py-3 rounded-xl font-bold text-sm active:scale-[0.98] transition-all"
+              style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
             >
               {t('srs_review_again', 'Repasar las que fallé')} ({again})
             </button>
           )}
           <button
             onClick={onFinish}
-            className="w-full py-3 rounded-xl bg-gray-700 text-gray-200 font-semibold text-sm hover:bg-gray-600 active:scale-[0.98] transition-all"
+            className="w-full py-3 rounded-xl font-semibold text-sm active:scale-[0.98] transition-all"
+            style={{ background: J.paperHi, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
           >
             {t('srs_finish', 'Terminar')}
           </button>
@@ -355,11 +373,10 @@ export default function ReviewSession({
     setPhase('playing');
   }, [dueQueue, weakQueue]);
 
-  // ── Voltear tarjeta + 🔊 audio automático ────────────────────────────────
+  // ── Voltear tarjeta + audio automático ────────────────────────────────────
   const handleFlip = useCallback(() => {
     if (!current) return;
     setFlipped(true);
-    // Audio automático al revelar
     speakChinese?.({ hanzi: current.char, pinyin: current.pinyin });
   }, [current, speakChinese]);
 
@@ -425,31 +442,33 @@ export default function ReviewSession({
   const isWeak = mode === 'weak';
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col pb-6">
+    <div className="min-h-screen flex flex-col pb-6" style={{ background: J.paper }}>
       {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-3 flex-shrink-0">
+      <div style={{
+        background: isWeak ? J.sandBg : J.paperHi,
+        borderBottom: `1px solid ${J.hair}`,
+        padding: '40px 16px 12px',
+      }}>
         <div className="flex items-center justify-between mb-3">
           <button
             onClick={goBack}
-            className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm transition-colors"
+            className="flex items-center gap-1.5 text-sm transition-colors"
+            style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
-            {t('srs_back', 'Volver')}
+            <span>←</span> {t('srs_back', 'Volver')}
           </button>
           <div className="flex items-center gap-2">
-            {isWeak && <span className="text-orange-400 text-sm">💔</span>}
-            <span className="text-gray-400 text-sm font-medium">
+            {isWeak && <span className="font-cn" style={{ color: J.sand, fontWeight: 700 }}>弱</span>}
+            <span className="text-sm font-medium" style={{ color: J.inkSoft }}>
               {index + 1} / {total}
             </span>
           </div>
         </div>
         {/* Barra de progreso */}
-        <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: J.hair }}>
           <div
-            className={`h-full rounded-full transition-all duration-300 ${isWeak ? 'bg-orange-500' : 'bg-red-500'}`}
-            style={{ width: `${progressPct}%` }}
+            className="h-full rounded-full transition-all duration-300"
+            style={{ width: `${progressPct}%`, background: isWeak ? J.sand : J.jade }}
           />
         </div>
       </div>
@@ -468,7 +487,7 @@ export default function ReviewSession({
         <RatingButtons onRate={handleRate} />
       ) : (
         <div className="px-4 pb-6 pt-2 text-center">
-          <p className="text-gray-600 text-xs">{t('srs_tap_to_reveal', 'Toca la tarjeta para ver la respuesta')}</p>
+          <p className="text-xs" style={{ color: J.mute }}>{t('srs_tap_to_reveal', 'Toca la tarjeta para ver la respuesta')}</p>
         </div>
       )}
     </div>

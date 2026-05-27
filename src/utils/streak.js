@@ -1,13 +1,37 @@
 // src/utils/streak.js
-// Racha diaria de estudio — persiste en localStorage independiente del progreso
+// Racha diaria de estudio + sistema XP — persiste en localStorage
+import { trackAchievement, checkLevelUp } from '@/utils/leveling.js';
+import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 
 const STREAK_KEY = 'aprende-chino-streak-v1';
+
+// XP diario objetivo. Una historia perfecta da 120 XP, así que con el daily
+// goal a 50 se rompía siempre. Lo subimos para que sea un reto real: hacer
+// una historia o varios quizzes.
+const DAILY_XP_GOAL = 120;
+
+const MILESTONES = [
+  { days: 3,   icon: '🌱', key: 'milestone_3' },
+  { days: 7,   icon: '🥉', key: 'milestone_7' },
+  { days: 14,  icon: '🔥', key: 'milestone_14' },
+  { days: 30,  icon: '🥈', key: 'milestone_30' },
+  { days: 60,  icon: '💎', key: 'milestone_60' },
+  { days: 100, icon: '🥇', key: 'milestone_100' },
+  { days: 365, icon: '👑', key: 'milestone_365' },
+];
 
 const DEFAULT_STREAK = {
   currentStreak: 0,
   longestStreak: 0,
-  lastActiveDate: null, // 'YYYY-MM-DD'
-  activityDates: [],    // array de fechas 'YYYY-MM-DD' con actividad (últimos 365 días)
+  lastActiveDate: null,   // 'YYYY-MM-DD'
+  activityDates: [],      // últimos 365 días con actividad
+  // XP system
+  todayXP: 0,             // XP ganado hoy
+  todayXPDate: null,      // fecha del todayXP (para resetear al cambiar de día)
+  totalXP: 0,             // XP acumulado total
+  dailyGoal: DAILY_XP_GOAL,
+  // Milestones alcanzados
+  unlockedMilestones: [], // array de days alcanzados [3, 7, 14, ...]
 };
 
 function todayStr() {
@@ -18,11 +42,24 @@ function todayStr() {
 export function loadStreak() {
   try {
     const stored = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
-    return {
+    const data = {
       ...DEFAULT_STREAK,
       ...stored,
       activityDates: Array.isArray(stored.activityDates) ? stored.activityDates : [],
+      unlockedMilestones: Array.isArray(stored.unlockedMilestones) ? stored.unlockedMilestones : [],
     };
+    // Reset todayXP si cambió de día
+    const today = todayStr();
+    if (data.todayXPDate !== today) {
+      data.todayXP = 0;
+      data.todayXPDate = today;
+    }
+    // Migración: si el usuario tenía el viejo daily goal (50) lo subimos
+    // al nuevo (120). El usuario puede sobreescribirlo en ajustes.
+    if (data.dailyGoal === 50 && DAILY_XP_GOAL !== 50) {
+      data.dailyGoal = DAILY_XP_GOAL;
+    }
+    return data;
   } catch {
     return { ...DEFAULT_STREAK };
   }
@@ -37,49 +74,104 @@ function saveStreak(data) {
 }
 
 /**
- * Llamar una vez por sesión de ejercicio para registrar actividad.
- * Actualiza el streak y devuelve el estado actualizado.
+ * Registra actividad diaria + actualiza streak.
  */
 export function markDailyActivity() {
   const streak = loadStreak();
   const today = todayStr();
 
   if (streak.lastActiveDate === today) {
-    // Ya se registró actividad hoy — no cambia nada
     return streak;
   }
 
   let newStreak;
   if (streak.lastActiveDate === null) {
-    // Primera vez
     newStreak = 1;
   } else {
-    // Calcular diferencia de días
     const last = new Date(streak.lastActiveDate);
     const now  = new Date(today);
     const diffDays = Math.round((now - last) / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 1) {
-      // Día consecutivo
-      newStreak = streak.currentStreak + 1;
-    } else {
-      // Racha rota
-      newStreak = 1;
-    }
+    newStreak = diffDays === 1 ? streak.currentStreak + 1 : 1;
   }
 
-  // Añadir hoy al historial de actividad, mantener últimos 365 días
   const dates = [...new Set([...streak.activityDates, today])]
     .sort()
     .slice(-365);
 
+  // Check for new milestones
+  const unlocked = [...streak.unlockedMilestones];
+  for (const m of MILESTONES) {
+    if (newStreak >= m.days && !unlocked.includes(m.days)) {
+      unlocked.push(m.days);
+    }
+  }
+
   const updated = {
+    ...streak,
     currentStreak: newStreak,
     longestStreak: Math.max(newStreak, streak.longestStreak),
     lastActiveDate: today,
     activityDates: dates,
+    unlockedMilestones: unlocked,
   };
   saveStreak(updated);
+
+  // Registrar racha para logros (streak_7, streak_30, etc.)
+  trackAchievement('streak', newStreak);
+
+  return updated;
+}
+
+/**
+ * Añade XP al contador de hoy y al total.
+ * @param {number} xp - cantidad de XP a sumar (ej: 10 por respuesta correcta)
+ * @returns {object} estado actualizado del streak (con .levelUp y .newAchievements si aplica)
+ */
+export function addXP(xp) {
+  const streak = loadStreak();
+  const today = todayStr();
+
+  // Registrar actividad si no se ha hecho hoy
+  let updated = streak;
+  if (streak.lastActiveDate !== today) {
+    updated = markDailyActivity();
+  }
+
+  const prevTotalXP = updated.totalXP || 0;
+  const prevTodayXP = updated.todayXP || 0;
+  updated.todayXP = prevTodayXP + xp;
+  updated.todayXPDate = today;
+  updated.totalXP = prevTotalXP + xp;
+
+  // Track XP earned for daily challenges
+  updateChallengeProgress('earn_xp', xp);
+
+  // Registrar cumplimiento de objetivo diario (solo la primera vez que se cruza)
+  const goal = updated.dailyGoal || DAILY_XP_GOAL;
+  const newAchievements = [];
+  if (prevTodayXP < goal && updated.todayXP >= goal) {
+    const unlocked = trackAchievement('daily_goal_completed', 1);
+    if (unlocked.length) newAchievements.push(...unlocked);
+  }
+
+  // Check level up
+  const levelUp = checkLevelUp(prevTotalXP, updated.totalXP);
+
+  saveStreak(updated);
+
+  // Attach notifications metadata (non-persistent, consumed by UI)
+  updated._levelUp = levelUp;
+  updated._newAchievements = newAchievements;
+
+  // Dispatch custom event for App.jsx to catch
+  if (levelUp || newAchievements.length) {
+    try {
+      window.dispatchEvent(new CustomEvent('xp-notification', {
+        detail: { levelUp, achievements: newAchievements }
+      }));
+    } catch { /* SSR safety */ }
+  }
+
   return updated;
 }
 
@@ -89,3 +181,31 @@ export function markDailyActivity() {
 export function getStreak() {
   return loadStreak();
 }
+
+/**
+ * Devuelve la lista de milestones con su estado de desbloqueo.
+ */
+export function getMilestones() {
+  const streak = loadStreak();
+  return MILESTONES.map(m => ({
+    ...m,
+    unlocked: streak.unlockedMilestones.includes(m.days),
+    current: streak.currentStreak >= m.days,
+  }));
+}
+
+/**
+ * Calcula el progreso del objetivo diario (0-100).
+ */
+export function getDailyGoalProgress() {
+  const streak = loadStreak();
+  const goal = streak.dailyGoal || DAILY_XP_GOAL;
+  return {
+    current: streak.todayXP || 0,
+    goal,
+    percent: Math.min(100, Math.round(((streak.todayXP || 0) / goal) * 100)),
+    completed: (streak.todayXP || 0) >= goal,
+  };
+}
+
+export { MILESTONES, DAILY_XP_GOAL };

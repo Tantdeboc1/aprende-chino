@@ -1,6 +1,8 @@
 // src/utils/navigation.js
 import { useMemo, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
+import { updateChallengeProgress } from './dailyChallenges.js';
+import { initSRSCard, updateSRS } from './srs.js';
 
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
 const Menu             = lazy(() => import('@/components/menu'));
@@ -31,6 +33,9 @@ const TimeRace         = lazy(() => import('@/components/minigames/TimeRace.jsx'
 const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
 const SOVGame          = lazy(() => import('@/components/minigames/SOVGame.jsx'));
 const TranslationGame  = lazy(() => import('@/components/minigames/TranslationGame.jsx'));
+const CompleteSentence = lazy(() => import('@/components/minigames/CompleteSentence.jsx'));
+const DialogueOrder    = lazy(() => import('@/components/minigames/DialogueOrder.jsx'));
+const FindIntruder     = lazy(() => import('@/components/minigames/FindIntruder.jsx'));
 
 export function useNavigation(
   screen,
@@ -79,7 +84,14 @@ export function useNavigation(
     // Callbacks de feedback visual: actualizan el progreso al responder ejercicios
     const onTrackResult = (charObj, isCorrect) => {
       if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
-      const updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
+      let updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
+      if (isCorrect) {
+        updateChallengeProgress('correct_answers', 1);
+      } else {
+        // Penalizar el SRS: iniciar tarjeta si no existe, luego resetear intervalo
+        updated = initSRSCard(updated, charObj.char);
+        updated = updateSRS(updated, charObj.char, 0); // quality 0 = resetea a 1 día
+      }
       onProgressChange(updated);
     };
     const onTrackSeen = (charObj) => {
@@ -174,6 +186,28 @@ export function useNavigation(
       };
     }
 
+    if (screen === 'complete-sentence') {
+      Component = CompleteSentence;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+    if (screen === 'dialogue-order') {
+      Component = DialogueOrder;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+    if (screen === 'find-intruder') {
+      Component = FindIntruder;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+      };
+    }
+
+
     // === APRENDIZAJE - MENÚS PRINCIPALES ===
     if (screen === 'learn' && learnSection === null) {
       Component = LearnMenu;
@@ -204,7 +238,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'writing' && writingSection === 'hanzi') {
       Component = HanziWriting;
       props = {
-        goBack: hubOr(() => setWritingSection(null)),
+        goBack: hubOr(goBack),
         characters,
         speakChinese: speak,
         progress,
@@ -215,7 +249,7 @@ export function useNavigation(
     if (screen === 'learn' && learnSection === 'writing' && writingSection === 'radicals') {
       Component = RadicalsWriting;
       props = {
-        goBack: hubOr(() => setWritingSection(null)),
+        goBack: hubOr(goBack),
         radicals,
         speakChinese: speak
       };

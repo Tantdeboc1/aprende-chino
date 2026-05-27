@@ -1,9 +1,10 @@
 // src/components/ui/Layout.jsx
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { J } from '@/styles/tokens';
 import BottomNav from './BottomNav.jsx';
 
 // Tabs del BottomNav en orden izquierda→derecha
-const NAV_TABS = ['home', 'review', 'dictionary', 'minigames', 'settings'];
+const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'settings'];
 
 // Mapeo: pantalla activa → índice en NAV_TABS (para swipe)
 function getTabIndex(screen) {
@@ -11,11 +12,11 @@ function getTabIndex(screen) {
   if (direct !== -1) return direct;
   // Pantallas que "pertenecen" a un tab pero no están en el array
   if (['lesson-detail', 'intro-detail', 'exam', 'exercise'].includes(screen)) return 0; // home
-  if (['sov-game', 'time-race', 'pinyin-connection', 'translation-game', 'global-exam'].includes(screen)) return 3; // minigames
+  if (['sov-game', 'time-race', 'pinyin-connection', 'translation-game', 'global-exam', 'complete-sentence', 'dialogue-order', 'find-intruder'].includes(screen)) return 3; // minigames
   return -1; // swipe deshabilitado en esta pantalla
 }
 
-export default function Layout({ children, activeScreen, onNavigate }) {
+export default function Layout({ children, activeScreen, onNavigate, hideNav }) {
   const [visible, setVisible] = useState(false);
   const prevScreen = useRef(activeScreen);
 
@@ -70,14 +71,14 @@ export default function Layout({ children, activeScreen, onNavigate }) {
   return (
     <>
       <div
-        className="min-h-screen bg-gray-900 text-white transition-opacity duration-150"
-        style={{ opacity: visible ? 1 : 0 }}
+        className="min-h-screen transition-opacity duration-150"
+        style={{ opacity: visible ? 1 : 0, background: J.paper, color: J.ink }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
         {children}
       </div>
-      <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} />
+      {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} />}
     </>
   );
 }

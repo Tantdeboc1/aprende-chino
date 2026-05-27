@@ -96,39 +96,39 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   // Pantalla de Inicio (estilo Quiz)
   if (gameState === 'ready') {
     return (
-      <div className="min-h-screen bg-gray-900 p-4">
+      <div className="min-h-screen bg-[#f4ecdc] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
-            <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white transition mb-4">
+            <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4">
               <ArrowLeft className="mr-2" />
               {t('minigames_back_to_minigames')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">{t('minigames_time_race_title')}</h1>
-            <p className="text-gray-400 text-center">{t('minigames_guess_the_meaning_subtitle')}</p>
+            <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('minigames_time_race_title')}</h1>
+            <p className="text-[#928a76] text-center">{t('minigames_guess_the_meaning_subtitle')}</p>
           </div>
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-gray-300">
+          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
+            <div className="space-y-3 text-[#5b5446]">
               <div className="flex items-start">
-                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
                 <p dangerouslySetInnerHTML={{ __html: t('minigames_time_race_instructions_1') }} />
               </div>
               <div className="flex items-start">
-                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
                 <p dangerouslySetInnerHTML={{ __html: t('minigames_time_race_instructions_2') }} />
               </div>
               <div className="flex items-start">
-                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
                 <p dangerouslySetInnerHTML={{ __html: t('minigames_time_race_instructions_3') }} />
               </div>
               <div className="flex items-start">
-                <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
                 <p>{t('minigames_time_race_instructions_4')}</p>
               </div>
             </div>
           </div>
-          <button onClick={startGame} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg">
-            ⏱️ {t('minigames_start_game_button')}
+          <button onClick={startGame} className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg">
+            ️ {t('minigames_start_game_button')}
           </button>
         </div>
       </div>
@@ -140,15 +140,15 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     return (
       <>
         {score > 0 && <ConfettiCelebration />}
-        <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center">
+        <div className="min-h-screen bg-[#f4ecdc] p-4 flex items-center justify-center">
           <Container>
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-yellow-400 mb-4">{t('minigames_time_up_message')}</h2>
-              <p className="text-xl text-gray-300 mb-2">{t('minigames_final_score_message')}</p>
-              <p className="text-6xl font-bold text-white mb-8">{score}</p>
+              <h2 className="text-4xl font-bold text-[#b88a3e] mb-4">{t('minigames_time_up_message')}</h2>
+              <p className="text-xl text-[#5b5446] mb-2">{t('minigames_final_score_message')}</p>
+              <p className="text-6xl font-bold text-[#1c1813] mb-8">{score}</p>
               <div className="flex justify-center gap-4">
                 <Button onClick={startGame} variant="action"><RefreshCw className="inline-block mr-2"/> {t('minigames_play_again_button')}</Button>
-                <button onClick={goBack} className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center gap-2"><ArrowLeft size={18}/> {t('radicals_back_button')}</button>
+                <button onClick={goBack} className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 px-6 rounded-lg transition flex items-center gap-2"><ArrowLeft size={18}/> {t('radicals_back_button')}</button>
               </div>
             </div>
           </Container>
@@ -159,17 +159,17 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
   // Pantalla de Juego
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-[#f4ecdc] p-4">
       <Container>
         <div className="mb-6">
-          <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white">
+          <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813]">
             <ArrowLeft className="mr-2" />
             {t('minigames_back_to_minigames')}
           </button>
         </div>
         {/* HUD: Puntuación y Tiempo */}
-        <div className="mb-6 flex justify-between items-center text-white font-bold text-xl">
-          <div>{t('minigames_score_label_hud')} <span className="text-yellow-400">{score}</span></div>
+        <div className="mb-6 flex justify-between items-center text-[#1c1813] font-bold text-xl">
+          <div>{t('minigames_score_label_hud')} <span className="text-[#b88a3e]">{score}</span></div>
           <div className="flex items-center gap-2">
             <Clock size={20}/>
             <span>{timeLeft}</span>
@@ -179,19 +179,19 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
         {currentQuestion && (
           <div className="text-center">
             {/* Tarjeta del Carácter */}
-            <div className="bg-gray-800 border-2 border-gray-700 rounded-2xl w-full max-w-md mx-auto h-36 sm:h-48 flex items-center justify-center mb-6 sm:mb-8">
-              <span className="text-6xl sm:text-8xl font-bold text-white">{currentQuestion.character}</span>
+            <div className="bg-[#fbf5e6] border-2 border-[rgba(28,24,19,0.10)] rounded-2xl w-full max-w-md mx-auto h-36 sm:h-48 flex items-center justify-center mb-6 sm:mb-8">
+              <span className="text-6xl sm:text-8xl font-bold text-[#1c1813]">{currentQuestion.character}</span>
             </div>
 
             {/* Opciones de Respuesta */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
               {currentQuestion.options.map((option, i) => {
-                let buttonClass = "bg-gray-700 hover:bg-gray-600";
+                let buttonClass = "bg-[#f8f1de] hover:bg-[#bdb39a]";
                 if (feedback) {
                   if (option === currentQuestion.correctMeaning) {
-                    buttonClass = "bg-green-600 animate-pulse"; // Correcta siempre en verde
+                    buttonClass = "bg-[#2f6b4a] animate-pulse"; // Correcta siempre en verde
                   } else if (option === selectedAnswer) {
-                    buttonClass = "bg-red-600"; // La seleccionada incorrecta en rojo
+                    buttonClass = "bg-[#c8392f]"; // La seleccionada incorrecta en rojo
                   }
                 }
 

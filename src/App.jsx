@@ -8,7 +8,9 @@ import LessonDetail from './components/LessonDetail.jsx';
 import SettingsScreen from './components/SettingsScreen.jsx';
 import ReviewSession from './components/ReviewSession.jsx';
 import SplashScreen from './components/SplashScreen.jsx';
-import Layout from "@/components/ui/Layout.jsx";
+const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
+import Layout from './components/ui/Layout.jsx';
+import { J } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
@@ -27,15 +29,10 @@ function AnimatedLoader() {
         const HanziWriter = (await import('hanzi-writer')).default;
         if (cancelled || !canvasRef.current) return;
         writer = HanziWriter.create(canvasRef.current, '学', {
-          width: 80,
-          height: 80,
-          padding: 5,
-          strokeColor: '#a855f7',
-          radicalColor: '#c084fc',
-          drawingWidth: 3,
-          showCharacter: false,
-          showOutline: true,
-          outlineColor: '#374151',
+          width: 80, height: 80, padding: 5,
+          strokeColor: J.jade, radicalColor: J.red,
+          drawingWidth: 3, showCharacter: false, showOutline: true,
+          outlineColor: J.mute2,
         });
         writerRef.current = writer;
         function loop() {
@@ -43,26 +40,22 @@ function AnimatedLoader() {
           writer.animateCharacter({ onComplete: () => { if (!cancelled) setTimeout(loop, 400); } });
         }
         loop();
-      } catch (_) {
-        // Si HanziWriter falla, el spinner CSS es el fallback visual
-      }
+      } catch (_) {}
     }
     init();
-    return () => {
-      cancelled = true;
-      writerRef.current = null;
-    };
+    return () => { cancelled = true; writerRef.current = null; };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-900">
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: J.paper }}>
       <div className="relative">
-        {/* Canvas para HanziWriter */}
         <canvas ref={canvasRef} width={80} height={80} />
-        {/* Anillo giratorio alrededor */}
-        <div className="absolute rounded-full border-2 border-purple-700/30 border-t-purple-500 animate-spin" style={{ width: 92, height: 92, top: -6, left: -6 }} />
+        <div className="absolute rounded-full animate-spin"
+          style={{ width: 92, height: 92, top: -6, left: -6, border: `2px solid ${J.hair}`, borderTopColor: J.jade }} />
       </div>
-      <p className="text-gray-500 text-xs tracking-widest uppercase animate-pulse">Cargando…</p>
+      <p style={{ color: J.mute, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' }} className="animate-pulse">
+        Cargando...
+      </p>
     </div>
   );
 }
@@ -73,19 +66,11 @@ function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
 function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
 
 export default function App() {
-  // Forzar modo oscuro
+  // Jade Pop theme — warm cream paper
   useEffect(() => {
-    const force = () => {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      document.body.classList.add('bg-gray-900', 'text-white');
-      document.body.style.backgroundColor = '#111827';
-    };
-    force();
-    const mq = window.matchMedia('(prefers-color-scheme: light)');
-    mq.addEventListener('change', force);
-    const iv = setInterval(force, 1000);
-    return () => { mq.removeEventListener('change', force); clearInterval(iv); };
+    document.documentElement.classList.remove('dark');
+    document.body.style.backgroundColor = J.paper;
+    document.body.style.color = J.ink;
   }, []);
 
   // Datos globales
@@ -139,6 +124,29 @@ export default function App() {
   // Audio
   const [isSpeaking, setIsSpeaking]           = useState(false);
   const [audioInitialized, setAudioInitialized] = useState(false);
+
+  // ProfileBadge dispara 'open-settings' desde cualquier pantalla
+  useEffect(() => {
+    const handler = () => {
+      setPrevScreen(prev => prev || 'home');
+      setScreen('settings');
+    };
+    window.addEventListener('open-settings', handler);
+    return () => window.removeEventListener('open-settings', handler);
+  }, []);
+
+  // StoryPlayer dispara story-mode-enter/exit para ocultar la bottom nav
+  const [inStoryMode, setInStoryMode] = useState(false);
+  useEffect(() => {
+    const enter = () => setInStoryMode(true);
+    const exit  = () => setInStoryMode(false);
+    window.addEventListener('story-mode-enter', enter);
+    window.addEventListener('story-mode-exit',  exit);
+    return () => {
+      window.removeEventListener('story-mode-enter', enter);
+      window.removeEventListener('story-mode-exit',  exit);
+    };
+  }, []);
 
   const initializeAudio = async () => {
     if (!audioInitialized) {
@@ -283,6 +291,7 @@ export default function App() {
     setPrevScreen(screen);
     if (key === 'home')            setScreen('home');
     else if (key === 'review')     setScreen('review');
+    else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
     else if (key === 'settings')   setScreen('settings');
@@ -325,6 +334,9 @@ export default function App() {
     : screen === 'pinyin-connection' ? 'pinyin-connection'
     : screen === 'translation-game' ? 'translation-game'
     : screen === 'global-exam' ? 'global-exam'
+    : screen === 'complete-sentence' ? 'complete-sentence'
+    : screen === 'dialogue-order' ? 'dialogue-order'
+    : screen === 'find-intruder' ? 'find-intruder'
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
@@ -340,6 +352,9 @@ export default function App() {
     else if (key === 'pinyin-connection') { setPrevScreen(screen); setScreen('pinyin-connection'); }
     else if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
     else if (key === 'translation-game') { setPrevScreen(screen); setScreen('translation-game'); }
+    else if (key === 'complete-sentence') { setPrevScreen('minigames'); setScreen('complete-sentence'); }
+    else if (key === 'dialogue-order') { setPrevScreen('minigames'); setScreen('dialogue-order'); }
+    else if (key === 'find-intruder') { setPrevScreen('minigames'); setScreen('find-intruder'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -370,19 +385,23 @@ export default function App() {
   // ── WELCOME ──────────────────────────────────────────────────────────────────
   if (screen === 'welcome') {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-        <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-sm w-full border border-gray-700">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: J.paper }}>
+        <div className="max-w-sm w-full" style={{ background: J.paperHi, borderRadius: 22, padding: 32, border: `1px solid ${J.hair}` }}>
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <img src="https://flagcdn.com/w160/cn.png" alt="China" className="w-24 h-16 object-cover rounded-sm shadow-lg" />
+            <div className="font-cn flex justify-center mb-4"
+              style={{ width: 64, height: 64, borderRadius: 16, background: J.jade, color: J.butter,
+                       fontSize: 36, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              学
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">学中文</h1>
-            <p className="text-gray-400">Aprende Chino · HSK 1</p>
+            <h1 className="font-cn" style={{ fontSize: 32, fontWeight: 700, color: J.ink, margin: '12px 0 4px' }}>
+              学中文
+            </h1>
+            <p style={{ color: J.inkSoft, fontSize: 14 }}>Aprende Chino · HSK 1</p>
           </div>
           <div className="space-y-4">
             <input
               type="text"
-              placeholder="¿Cómo te llamas?"
+              placeholder="Como te llamas?"
               value={nameInput}
               onChange={e => setNameInput(e.target.value)}
               onKeyDown={e => {
@@ -391,7 +410,12 @@ export default function App() {
                   setScreen('home');
                 }
               }}
-              className="w-full px-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
+              style={{
+                width: '100%', padding: '14px 18px', border: `2px solid ${J.hair}`, borderRadius: 14,
+                fontSize: 16, background: J.paper, color: J.ink, outline: 'none',
+              }}
+              onFocus={e => e.target.style.borderColor = J.jade}
+              onBlur={e => e.target.style.borderColor = J.hair}
             />
             <button
               onClick={() => {
@@ -401,7 +425,13 @@ export default function App() {
                 }
               }}
               disabled={!nameInput.trim()}
-              className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition"
+              style={{
+                width: '100%', padding: '14px 22px', borderRadius: 99, border: 0,
+                background: nameInput.trim() ? J.jade : J.mute2,
+                color: J.paperHi, fontWeight: 700, fontSize: 15,
+                cursor: nameInput.trim() ? 'pointer' : 'default',
+                boxShadow: nameInput.trim() ? '0 4px 12px -4px rgba(31,74,51,0.4)' : 'none',
+              }}
             >
               Comenzar →
             </button>
@@ -422,6 +452,7 @@ export default function App() {
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
           onStartReview={() => { setPrevScreen('home'); setScreen('review'); }}
+          onOpenSettings={() => { setPrevScreen('home'); setScreen('settings'); }}
         />
       </Layout>
     );
@@ -465,36 +496,42 @@ export default function App() {
 
   // ── INTRO DETAIL ─────────────────────────────────────────────────────────────
   if (screen === 'intro-detail') {
+    const introItems = [
+      { key: 'radicals', cn: '部', title: 'Radicales', desc: 'Las piezas base de los caracteres chinos', bg: J.sandBg, fg: J.sandDeep, action: () => handleStartIntroExercise('radicals') },
+      { key: 'tones',    cn: '声', title: 'Tonos',     desc: 'Los 4 tonos del mandarín',                bg: J.redBg,  fg: J.redDeep,  action: () => handleStartIntroExercise('tones')    },
+      { key: 'writing',  cn: '写', title: 'Escritura', desc: 'Practica de trazos',                      bg: J.jadeBg, fg: J.jadeDeep, action: () => handleStartIntroExercise('writing')  },
+    ];
     return (
       <Layout activeScreen="home" onNavigate={handleBottomNav}>
-        <div className="min-h-screen bg-gray-900 pb-24">
-          <div className="bg-gray-800 border-b border-gray-700 border-l-4 border-l-purple-500 px-4 pt-10 pb-4">
-            <button onClick={() => setScreen('home')} className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-3 transition-colors">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-              Inicio
+        <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
+          <div style={{ padding: '14px 20px 8px' }}>
+            <button onClick={() => setScreen('home')}
+              style={{ background: J.paperHi, border: 0, borderRadius: 14, padding: '6px 12px',
+                       fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer', marginBottom: 12 }}>
+              ← Inicio
             </button>
-            <h1 className="text-xl font-bold text-white">Introducción</h1>
-            <p className="text-purple-400 text-sm mt-0.5">入门 · Fundamentos del chino</p>
+            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 28, letterSpacing: '-0.025em', color: J.ink }}>
+              Fundamentos<span style={{ color: J.red }}>.</span>
+            </h1>
+            <p style={{ color: J.inkSoft, fontSize: 13.5, marginTop: 4 }}>入门 · Radicales, tonos y pinyin</p>
           </div>
-
-          <div className="px-4 pt-5 space-y-3 pb-6">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Secciones</p>
-            {[
-              { key: 'radicals', icon: '🔠', title: 'Radicales', desc: 'Las piezas base de los caracteres chinos', action: () => handleStartIntroExercise('radicals') },
-              { key: 'tones',    icon: '🎵', title: 'Tonos',     desc: 'Los 4 tonos del mandarín',                action: () => handleStartIntroExercise('tones')    },
-              { key: 'writing',  icon: '✍️', title: 'Escritura', desc: 'Práctica de trazos',                      action: () => handleStartIntroExercise('writing')  },
-            ].map(item => (
+          <div style={{ padding: '12px 20px 24px' }} className="space-y-2.5">
+            {introItems.map(item => (
               <button
                 key={item.key}
                 onClick={item.action}
-                className="w-full bg-gray-800 border border-gray-700 rounded-xl p-4 flex items-center gap-3 hover:border-purple-500/50 transition-all text-left"
+                className="w-full flex items-center gap-3.5 text-left"
+                style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderRadius: 18, padding: '14px 16px', cursor: 'pointer' }}
               >
-                <div className="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center text-xl flex-shrink-0">{item.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-sm">{item.title}</p>
-                  <p className="text-gray-400 text-xs mt-0.5">{item.desc}</p>
+                <div className="font-cn flex items-center justify-center flex-shrink-0"
+                  style={{ width: 44, height: 44, borderRadius: 12, background: item.bg, color: item.fg, fontSize: 22, fontWeight: 700 }}>
+                  {item.cn}
                 </div>
-                <svg className="text-gray-600" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                <div className="flex-1 min-w-0">
+                  <p style={{ fontWeight: 700, fontSize: 14, color: J.ink }}>{item.title}</p>
+                  <p style={{ color: J.inkSoft, fontSize: 12, marginTop: 2 }}>{item.desc}</p>
+                </div>
+                <span style={{ fontSize: 14, color: J.mute, fontWeight: 700 }}>→</span>
               </button>
             ))}
           </div>
@@ -531,6 +568,26 @@ export default function App() {
     );
   }
 
+  // ── STORIES ──────────────────────────────────────────────────────────────────
+  if (screen === 'stories') {
+    return (
+      <Layout activeScreen="stories" onNavigate={handleBottomNav} hideNav={inStoryMode}>
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <StoriesPage
+              userName={userName}
+              speak={speak}
+              onExit={() => setScreen('home')}
+              progress={progress}
+              onProgressChange={handleProgressChange}
+              allCharacters={allCharacters}
+            />
+          </Suspense>
+        </ErrorBoundary>
+      </Layout>
+    );
+  }
+
   // ── SETTINGS ─────────────────────────────────────────────────────────────────
   if (screen === 'settings') {
     return (
@@ -549,18 +606,21 @@ export default function App() {
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
       screen === 'sov-game' || screen === 'time-race' || screen === 'pinyin-connection' ||
-      screen === 'translation-game') {
+      screen === 'translation-game' || screen === 'complete-sentence' ||
+      screen === 'dialogue-order' || screen === 'find-intruder') {
+    const navScreen = screen === 'dictionary' ? 'dictionary' : screen === 'minigames' ? 'minigames' : 'home';
+    const hideNav = screen === 'exercise';
     if (!CurrentComponent) {
       return (
-        <Layout activeScreen={screen} onNavigate={handleBottomNav}>
+        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} hideNav={hideNav}>
           <div className="min-h-screen flex items-center justify-center">
-            <p className="text-gray-400">Sección no disponible.</p>
+            <p style={{ color: J.mute }}>Seccion no disponible.</p>
           </div>
         </Layout>
       );
     }
     return (
-      <Layout activeScreen={screen} onNavigate={handleBottomNav}>
+      <Layout activeScreen={navScreen} onNavigate={handleBottomNav} hideNav={hideNav}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <CurrentComponent {...componentProps} />
@@ -574,7 +634,7 @@ export default function App() {
   return (
     <Layout activeScreen="home" onNavigate={handleBottomNav}>
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Pantalla desconocida: {screen}</p>
+        <p className="text-[#928a76]">Pantalla desconocida: {screen}</p>
       </div>
     </Layout>
   );

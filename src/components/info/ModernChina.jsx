@@ -28,27 +28,27 @@ export default function ModernChina({ goBack }) {
     return () => { alive = false; };
   }, [i18n.language, t]);
 
-  if (loading) return <div className="min-h-screen grid place-items-center bg-gray-900 text-gray-300">{t('info_loading')}</div>;
+  if (loading) return <div className="min-h-screen grid place-items-center bg-[#f4ecdc] text-[#5b5446]">{t('info_loading')}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-[#f4ecdc] p-4">
       <Container>
-        <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-6">
+        <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] mb-6">
           <ArrowLeft className="mr-2" /> {t('info_back_to_info')}
         </button>
 
-        {error && <div className="bg-red-900 text-red-200 border border-red-700 rounded-md p-3 mb-4">{error}</div>}
+        {error && <div className="bg-[#f0d6cf] text-[#8b1f1a] border border-[#c8392f] rounded-md p-3 mb-4">{error}</div>}
 
-        <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-          <h1 className="text-3xl font-bold text-white mb-2">🏙️ {t('info_modern_china_title')}</h1>
-          <p className="text-gray-300 mb-6">{t('info_modern_china_description')}</p>
+        <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-6 md:p-8 border border-[rgba(28,24,19,0.10)]">
+          <h1 className="text-3xl font-bold text-[#1c1813] mb-2">🏙️ {t('info_modern_china_title')}</h1>
+          <p className="text-[#5b5446] mb-6">{t('info_modern_china_description')}</p>
 
           {data?.modernChina?.topics && (
             <div className="grid md:grid-cols-2 gap-4">
               {data.modernChina.topics.map((topic, i) => (
-                <div key={i} className="rounded-xl border border-gray-600 p-4 hover:shadow-lg transition bg-gray-700">
-                  <div className="text-lg font-semibold text-white">{topic.title}</div>
-                  <div className="text-gray-300">{topic.desc}</div>
+                <div key={i} className="rounded-xl border border-[rgba(28,24,19,0.18)] p-4 hover:shadow-lg transition bg-[#f8f1de]">
+                  <div className="text-lg font-semibold text-[#1c1813]">{topic.title}</div>
+                  <div className="text-[#5b5446]">{topic.desc}</div>
                 </div>
               ))}
             </div>

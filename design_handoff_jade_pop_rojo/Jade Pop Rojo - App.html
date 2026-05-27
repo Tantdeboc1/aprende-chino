@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende Chino — Jade Pop · Rojo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      background: #efe9da;
+      font-family: "Geist", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    * { box-sizing: border-box; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- Canvas -->
+  <script type="text/babel" src="design-canvas.jsx"></script>
+
+  <!-- Jade Rojo screens -->
+  <script type="text/babel" src="jr-shell.jsx"></script>
+  <script type="text/babel" src="jr-home.jsx"></script>
+  <script type="text/babel" src="jr-lessons.jsx"></script>
+  <script type="text/babel" src="jr-flash.jsx"></script>
+  <script type="text/babel" src="jr-practice.jsx"></script>
+  <script type="text/babel" src="jr-dict-profile.jsx"></script>
+
+  <!-- Main -->
+  <script type="text/babel">
+    const SCREENS = {
+      home:      JRHome,
+      learn:     JRLessons,
+      lesson:    JRLessonDetail,
+      flashcard: JRFlash,
+      tones:     JRTones,
+      strokes:   JRStrokes,
+      translate: JRTranslate,
+      dict:      JRDict,
+      profile:   JRProfile,
+    };
+
+    const InteractivePhone = ({ start = 'home' }) => {
+      const [screen, setScreen] = React.useState(start);
+      const Cur = SCREENS[screen] || JRHome;
+      return <Cur go={setScreen} />;
+    };
+
+    const App = () => (
+      <DesignCanvas>
+        <DCSection
+          id="prototype"
+          title="Prototipo navegable · Jade Pop · Rojo"
+          subtitle="Toca el carácter del día, las prácticas o la barra inferior para moverte entre pantallas.">
+          <DCArtboard id="proto" label="Prototipo · toca para navegar" width={412} height={860}>
+            <InteractivePhone start="home"/>
+          </DCArtboard>
+          <DCArtboard id="logic" label="Lógica de color" width={340} height={860}>
+            <div style={{ height: '100%', background: '#f4ecdc', padding: '24px 22px',
+                           fontFamily: '"Geist", system-ui, sans-serif', color: '#1c1813',
+                           display: 'flex', flexDirection: 'column', gap: 14, overflow: 'auto' }}>
+              <div>
+                <div style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase',
+                                color: '#928a76', fontWeight: 700 }}>Sistema</div>
+                <div style={{ fontSize: 30, fontWeight: 700, marginTop: 6,
+                                letterSpacing: '-0.025em', lineHeight: 1 }}>
+                  Jade Pop <span style={{ color: '#c8392f' }}>·</span> Rojo.
+                </div>
+                <div style={{ fontSize: 13, color: '#5b5446', marginTop: 10, lineHeight: 1.5 }}>
+                  Sin emojis ni iconos pictográficos. Solo tipografía,
+                  caracteres CJK como tipografía, formas geométricas.
+                </div>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(28,24,19,0.10)', paddingTop: 14 }}>
+                <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
+                                color: '#928a76', fontWeight: 700, marginBottom: 8 }}>
+                  Lectura del color
+                </div>
+                <ColorLogic c="#2f6b4a" name="JADE" body="Identidad · carácter del día · «en curso» · progreso vivo · «bien» en flashcards"/>
+                <ColorLogic c="#c8392f" name="ROJO cinabrio" body="Sello del maestro · racha · logro · «dominado» · acentos cuando algo cuenta"/>
+                <ColorLogic c="#b88a3e" name="ARENA" body="Neutro cálido · «otra vez» (sin connotación de error)"/>
+                <ColorLogic c="#f0c862" name="MANTEQUILLA" body="Solo sobre jade o rojo · ornamentos · números de racha"/>
+                <ColorLogic c="#1c1813" name="TINTA" body="Texto, encabezados, tab activa, «repaso»"/>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(28,24,19,0.10)', paddingTop: 14 }}>
+                <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
+                                color: '#928a76', fontWeight: 700, marginBottom: 8 }}>
+                  Reglas
+                </div>
+                <div style={{ fontSize: 12, color: '#5b5446', lineHeight: 1.5 }}>
+                  · Rojo <b>nunca</b> en errores ni alertas.<br/>
+                  · El sello rojo aparece cuando algo se "firma": carácter del día, flashcard.<br/>
+                  · Las barras de progreso pasan de jade → rojo en el último 35%.<br/>
+                  · Mantequilla solo sobre fondos jade/rojo, nunca solo.<br/>
+                  · Caracteres CJK son tipografía, no iconos.
+                </div>
+              </div>
+            </div>
+          </DCArtboard>
+        </DCSection>
+
+        <DCSection
+          id="flow"
+          title="Flujo completo · pantallas"
+          subtitle="Las nueve pantallas del producto. Cada una abre fullscreen con el botón ↗.">
+          <DCArtboard id="s-home"      label="01 · Home"             width={412} height={860}><JRHome/></DCArtboard>
+          <DCArtboard id="s-learn"     label="02 · Lecciones"        width={412} height={860}><JRLessons/></DCArtboard>
+          <DCArtboard id="s-lesson"    label="03 · Detalle lección"  width={412} height={860}><JRLessonDetail/></DCArtboard>
+          <DCArtboard id="s-flash"     label="04 · Flashcard"        width={412} height={860}><JRFlash/></DCArtboard>
+          <DCArtboard id="s-tones"     label="05 · Tonos"            width={412} height={860}><JRTones/></DCArtboard>
+          <DCArtboard id="s-strokes"   label="06 · Trazos"           width={412} height={860}><JRStrokes/></DCArtboard>
+          <DCArtboard id="s-translate" label="07 · Traducir"         width={412} height={860}><JRTranslate/></DCArtboard>
+          <DCArtboard id="s-dict"      label="08 · Diccionario"      width={412} height={860}><JRDict/></DCArtboard>
+          <DCArtboard id="s-profile"   label="09 · Perfil"           width={412} height={860}><JRProfile/></DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+    );
+
+    const ColorLogic = ({ c, name, body }) => (
+      <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start',
+                     padding: '8px 0', borderBottom: '1px solid rgba(28,24,19,0.06)' }}>
+        <div style={{ width: 18, height: 18, borderRadius: 4, background: c,
+                       border: '1px solid rgba(0,0,0,0.08)', flexShrink: 0, marginTop: 2 }}/>
+        <div>
+          <div style={{ fontSize: 12, fontWeight: 800, color: '#1c1813',
+                          letterSpacing: '0.02em' }}>{name}</div>
+          <div style={{ fontSize: 11.5, color: '#5b5446', marginTop: 2, lineHeight: 1.4 }}>{body}</div>
+        </div>
+      </div>
+    );
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>

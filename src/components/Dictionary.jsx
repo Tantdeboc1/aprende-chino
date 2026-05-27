@@ -1,23 +1,17 @@
 // src/components/Dictionary.jsx
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Search, Volume2, Star } from "lucide-react";
 import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
 import CharacterSheet from "@/components/ui/CharacterSheet.jsx";
+import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
 
 const LESSON_COLORS = {
-  1: { active: 'bg-red-600 text-white border-red-600',    inactive: 'bg-gray-800 text-red-400 border-red-800 hover:border-red-600' },
-  2: { active: 'bg-orange-600 text-white border-orange-600', inactive: 'bg-gray-800 text-orange-400 border-orange-800 hover:border-orange-600' },
-  3: { active: 'bg-yellow-600 text-white border-yellow-600', inactive: 'bg-gray-800 text-yellow-400 border-yellow-800 hover:border-yellow-600' },
-  4: { active: 'bg-green-700 text-white border-green-700',  inactive: 'bg-gray-800 text-green-400 border-green-800 hover:border-green-700' },
-};
-
-const LESSON_BADGE = {
-  1: 'bg-red-900 text-red-300 border border-red-700',
-  2: 'bg-orange-900 text-orange-300 border border-orange-700',
-  3: 'bg-yellow-900 text-yellow-300 border border-yellow-700',
-  4: 'bg-green-900 text-green-300 border border-green-700',
+  1: { bg: J.redBg, fg: J.redDeep, border: J.red },
+  2: { bg: J.sandBg, fg: J.sandDeep, border: J.sand },
+  3: { bg: J.sandBg2, fg: J.sandDeep, border: J.sand },
+  4: { bg: J.jadeBg, fg: J.jadeDeep, border: J.jade },
 };
 
 const FAV_KEY = 'aprende-chino-favorites';
@@ -29,17 +23,18 @@ function loadFavorites() {
 
 // ─── Dot de estado SRS ───────────────────────────────────────────────────────
 function SRSDot({ srsData, t }) {
+  const base = "w-2 h-2 rounded-full inline-block";
   if (!srsData || srsData.nextReview === null) {
-    return <span title={t('dictionary_uninitiated_label')} className="w-2 h-2 rounded-full bg-gray-600 inline-block" />;
+    return <span title={t('dictionary_uninitiated_label')} className={base} style={{ background: J.mute2 }} />;
   }
   const now = Date.now();
   if (srsData.nextReview <= now) {
-    return <span title={t('dictionary_pending_label')} className="w-2 h-2 rounded-full bg-yellow-400 inline-block animate-pulse" />;
+    return <span title={t('dictionary_pending_label')} className={`${base} animate-pulse`} style={{ background: J.sand }} />;
   }
   if (srsData.interval >= 21) {
-    return <span title={t('dictionary_mastered_tooltip')} className="w-2 h-2 rounded-full bg-green-400 inline-block" />;
+    return <span title={t('dictionary_mastered_tooltip')} className={base} style={{ background: J.jade }} />;
   }
-  return <span title={t('dictionary_learning_label')} className="w-2 h-2 rounded-full bg-blue-400 inline-block" />;
+  return <span title={t('dictionary_learning_label')} className={base} style={{ background: J.jadeMid }} />;
 }
 
 export default function Dictionary({
@@ -72,7 +67,7 @@ export default function Dictionary({
   };
 
   // ── Normalización ─────────────────────────────────────────────────────────
-  const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
+  const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
   const normalizeBase  = (s) => mapUmlautToV(String(s || "")).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").trim();
   const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_\-]/g, "").replace(/[1-4]/g, "");
 
@@ -125,41 +120,52 @@ export default function Dictionary({
   };
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-4" style={{ background: J.paper }}>
       <Container size="lg">
         <div className="mb-6">
-          <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-4">
-            <ArrowLeft className="mr-2" />
-            {t('dictionary_back_to_menu')}
-          </button>
+          <div className="flex items-start justify-between mb-4">
+            <button onClick={goBack} className="flex items-center" style={{ color: J.inkSoft, fontWeight: 600, fontSize: 14, background: 'none', border: 0, cursor: 'pointer' }}>
+              <span style={{ marginRight: 8, fontSize: 16 }}>←</span>
+              {t('dictionary_back_to_menu')}
+            </button>
+            <ProfileBadge variant="light" />
+          </div>
 
-          <h2 className="text-3xl font-bold text-white mb-1">{t('dictionary_title')}</h2>
-          <p className="text-gray-400 mb-4 text-sm">
+          <h2 className="text-3xl font-bold mb-1" style={{ color: J.ink }}>
+            {t('dictionary_title')}<span style={{ color: J.red }}>.</span>
+          </h2>
+          <p className="mb-4 text-sm" style={{ color: J.inkSoft }}>
             {filteredChars.length} palabra{filteredChars.length !== 1 ? 's' : ''}
             {selectedLesson ? ` · ${t('dictionary_filter_lesson', { num: selectedLesson })}` : ` · ${t('dictionary_filter_all_lessons')}`}
-            {showFavorites && ` · ⭐ ${t('dictionary_filter_favorites_label')}`}
+            {showFavorites && ` · ${t('dictionary_filter_favorites_label')}`}
           </p>
 
           {/* Filtros por lección */}
           <div className="flex flex-wrap gap-2 mb-3">
             <button
               onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(null); setShowFavorites(false); }}
-              className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
-                selectedLesson === null && !showFavorites
-                  ? 'bg-gray-100 text-gray-900 border-gray-100'
-                  : 'bg-gray-800 text-gray-300 border-gray-600 hover:border-gray-400'
-              }`}
+              style={{
+                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                border: `1px solid ${selectedLesson === null && !showFavorites ? J.ink : J.hair}`,
+                background: selectedLesson === null && !showFavorites ? J.ink : J.paperHi,
+                color: selectedLesson === null && !showFavorites ? J.paperHi : J.inkSoft,
+              }}
             >
               {t('dictionary_filter_all')}
             </button>
             {lessonsData.map(l => {
-              const colors  = LESSON_COLORS[l.lesson] || LESSON_COLORS[1];
+              const colors = LESSON_COLORS[l.lesson] || LESSON_COLORS[1];
               const isActive = selectedLesson === l.lesson && !showFavorites;
               return (
                 <button
                   key={l.lesson}
                   onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(isActive ? null : l.lesson); setShowFavorites(false); }}
-                  className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${isActive ? colors.active : colors.inactive}`}
+                  style={{
+                    padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                    border: `1px solid ${isActive ? colors.border : J.hair}`,
+                    background: isActive ? colors.bg : J.paperHi,
+                    color: isActive ? colors.fg : J.inkSoft,
+                  }}
                   title={l.titleEs}
                 >
                   {t('dictionary_filter_lesson', { num: l.lesson })}
@@ -169,13 +175,15 @@ export default function Dictionary({
             {/* Botón Favoritos */}
             <button
               onClick={() => { setShowFavorites(f => !f); typeof setSelectedLesson === 'function' && setSelectedLesson(null); }}
-              className={`px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                showFavorites
-                  ? 'bg-yellow-600 text-white border-yellow-500'
-                  : 'bg-gray-800 text-yellow-400 border-yellow-800 hover:border-yellow-500'
-              }`}
+              className="flex items-center gap-1.5"
+              style={{
+                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                border: `1px solid ${showFavorites ? J.sand : J.hair}`,
+                background: showFavorites ? J.sandBg : J.paperHi,
+                color: showFavorites ? J.sandDeep : J.inkSoft,
+              }}
             >
-              <Star className="w-3.5 h-3.5" />
+              <span className="font-cn" style={{ fontSize: 14 }}>收</span>
               Favoritos ({favorites.size})
             </button>
           </div>
@@ -184,37 +192,45 @@ export default function Dictionary({
           <div className="flex items-center gap-3 mb-4">
             <button
               onClick={() => typeof setShowSupplementary === 'function' && setShowSupplementary(!showSupplementary)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm transition-colors ${
-                showSupplementary
-                  ? 'bg-purple-800 text-purple-200 border-purple-600'
-                  : 'bg-gray-800 text-gray-400 border-gray-600 hover:border-gray-500'
-              }`}
+              className="flex items-center gap-2"
+              style={{
+                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                border: `1px solid ${showSupplementary ? J.jade : J.hair}`,
+                background: showSupplementary ? J.jadeBg : J.paperHi,
+                color: showSupplementary ? J.jadeDeep : J.inkSoft,
+              }}
             >
-              <Star className="w-3.5 h-3.5" />
+              <span className="font-cn" style={{ fontSize: 14 }}>补</span>
               Vocabulario extra ({totalSupp})
             </button>
-            <span className="text-gray-500 text-xs">{totalMain} palabras principales</span>
+            <span style={{ color: J.mute, fontSize: 12 }}>{totalMain} palabras principales</span>
           </div>
 
           {/* Buscador */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+            <span className="font-cn absolute left-3 top-1/2 -translate-y-1/2" style={{ color: J.jade, fontSize: 20, fontWeight: 700 }}>找</span>
             <input
               type="text"
               placeholder={t('dictionary_search_placeholder')}
               value={rawQuery}
               onChange={(e) => setRawQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none text-lg bg-gray-700 text-white placeholder-gray-400"
+              className="w-full pl-10 pr-4 py-3 rounded-lg text-lg"
+              style={{
+                border: `2px solid ${J.hair}`, background: J.paperHi, color: J.ink,
+                outline: 'none',
+              }}
+              onFocus={e => e.target.style.borderColor = J.jade}
+              onBlur={e => e.target.style.borderColor = J.hair}
             />
           </div>
         </div>
 
         {/* Leyenda SRS */}
-        <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> {t('dictionary_mastered_label')}</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> {t('dictionary_pending_label')}</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-400 inline-block" /> {t('dictionary_learning_label')}</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-gray-600 inline-block" /> {t('dictionary_uninitiated_label')}</span>
+        <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: J.mute }}>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.jade }} /> {t('dictionary_mastered_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.sand }} /> {t('dictionary_pending_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.jadeMid }} /> {t('dictionary_learning_label')}</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.mute2 }} /> {t('dictionary_uninitiated_label')}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -226,73 +242,94 @@ export default function Dictionary({
               <Card
                 key={idx}
                 onClick={() => setSelectedChar(char)}
-                className="hover:shadow-xl hover:border-gray-500 transition cursor-pointer bg-gray-800 border border-gray-700 relative active:scale-[0.98]"
+                className="hover:shadow-sm transition cursor-pointer relative active:scale-[0.98]"
+                style={{
+                  background: J.paperHi, border: `1px solid ${J.hair}`,
+                  borderRadius: 18, padding: '1.5rem',
+                }}
               >
                 {/* Cabecera: lección + tipo + SRS dot + favorito */}
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-2">
-                    {char.lesson && (
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${LESSON_BADGE[char.lesson] || ''}`}>
-                        L{char.lesson}
-                      </span>
-                    )}
+                    {char.lesson && (() => {
+                      const c = LESSON_COLORS[char.lesson] || LESSON_COLORS[1];
+                      return (
+                        <span style={{
+                          fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                          background: c.bg, color: c.fg, border: `1px solid ${c.border}`,
+                        }}>
+                          L{char.lesson}
+                        </span>
+                      );
+                    })()}
                     {char.isSupplementary && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
+                      <span style={{
+                        fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                        background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
+                      }}>extra</span>
                     )}
                     <SRSDot t={t} srsData={srsData} />
                   </div>
                   <div className="flex items-center gap-2">
-                    {char.type && <span className="text-xs text-gray-500 italic">{char.type}</span>}
-                    {/* Botón favorito */}
+                    {char.type && <span className="text-xs italic" style={{ color: J.mute }}>{char.type}</span>}
+                    {/* Botón favorito — CJK 收 en vez de Star */}
                     <button
-                      onClick={() => toggleFavorite(char.char)}
-                      className={`transition-colors ${isFav ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-400'}`}
+                      onClick={(e) => { e.stopPropagation(); toggleFavorite(char.char); }}
+                      className="font-cn"
+                      style={{
+                        background: 'none', border: 0, cursor: 'pointer', fontSize: 16, fontWeight: 700,
+                        color: isFav ? J.red : J.mute2,
+                      }}
                       title={isFav ? t('dictionary_remove_favorite') : t('dictionary_add_favorite')}
                     >
-                      <Star className="w-4 h-4" fill={isFav ? 'currentColor' : 'none'} />
+                      收
                     </button>
                   </div>
                 </div>
 
                 {/* Carácter principal */}
-                <div className="text-6xl text-center mb-3 text-white">{char.char}</div>
+                <div className="text-6xl text-center mb-3 font-cn" style={{ color: J.ink }}>{char.char}</div>
 
                 <div className="space-y-2.5">
                   {/* Pinyin + audio */}
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-700">
-                    <span className="text-sm text-gray-400 font-semibold">{t('dictionary_pinyin')}</span>
+                  <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+                    <span className="text-sm font-semibold" style={{ color: J.mute }}>{t('dictionary_pinyin')}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg text-gray-200">{char.pinyin}</span>
+                      <span className="text-lg" style={{ color: J.ink }}>{char.pinyin}</span>
                       <button
-                        onClick={() => handleSpeak(char)}
+                        onClick={(e) => { e.stopPropagation(); handleSpeak(char); }}
                         aria-label={`Escuchar ${char.char}`}
-                        className="p-1 rounded-full bg-green-800 hover:bg-green-700 text-green-300 transition-colors"
+                        className="font-cn rounded-full"
+                        style={{
+                          padding: '4px 8px', background: J.jadeBg, color: J.jadeDeep,
+                          border: 0, cursor: 'pointer', fontSize: 13, fontWeight: 700,
+                        }}
                       >
-                        <Volume2 className="w-3.5 h-3.5" />
+                        声
                       </button>
                     </div>
                   </div>
 
                   {/* Significado */}
-                  <div className="pb-2 border-b border-gray-700">
-                    <p className="text-white font-semibold text-center text-base leading-snug">{char.meaning}</p>
+                  <div className="pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+                    <p className="font-semibold text-center text-base leading-snug" style={{ color: J.ink }}>{char.meaning}</p>
                   </div>
 
                   {/* Radical */}
                   {char.radical && char.radical !== '—' && (
-                    <div className="flex justify-between items-center pb-2 border-b border-gray-700">
-                      <span className="text-xs text-gray-500">{t('dictionary_radical')}</span>
-                      <span className="text-2xl text-gray-300">{char.radical}</span>
+                    <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+                      <span className="text-xs" style={{ color: J.mute }}>{t('dictionary_radical')}</span>
+                      <span className="text-2xl font-cn" style={{ color: J.ink }}>{char.radical}</span>
                     </div>
                   )}
 
                   {/* Ejemplos */}
                   {char.examples?.length > 0 && (
                     <div className="pt-1">
-                      <p className="text-xs text-gray-500 mb-1">Ejemplos:</p>
+                      <p className="text-xs mb-1" style={{ color: J.mute }}>Ejemplos:</p>
                       <div className="flex flex-wrap gap-1">
                         {char.examples.map((ex, i) => (
-                          <span key={i} className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-md">{ex}</span>
+                          <span key={i} className="text-xs px-2 py-0.5 rounded-md" style={{ background: J.paper, color: J.ink }}>{ex}</span>
                         ))}
                       </div>
                     </div>
@@ -304,10 +341,10 @@ export default function Dictionary({
         </div>
 
         {filteredChars.length === 0 && (
-          <div className="text-center text-gray-400 mt-8">
+          <div className="text-center mt-8">
             {showFavorites && favorites.size === 0
-              ? <p className="text-xl">{t('dictionary_no_favorites')}</p>
-              : <p className="text-xl">{t('dictionary_no_results')}</p>
+              ? <p className="text-xl" style={{ color: J.mute }}>{t('dictionary_no_favorites')}</p>
+              : <p className="text-xl" style={{ color: J.mute }}>{t('dictionary_no_results')}</p>
             }
           </div>
         )}

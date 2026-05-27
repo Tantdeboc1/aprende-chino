@@ -1,14 +1,14 @@
 // src/components/ui/CharacterSheet.jsx
 // Bottom-sheet con trazos animados HanziWriter al tocar una entrada del diccionario
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, Star, X, Play, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
 
 const LESSON_BADGE = {
-  1: 'bg-red-900 text-red-300 border border-red-700',
-  2: 'bg-orange-900 text-orange-300 border border-orange-700',
-  3: 'bg-yellow-900 text-yellow-300 border border-yellow-700',
-  4: 'bg-green-900 text-green-300 border border-green-700',
+  1: { bg: J.redBg, fg: J.redDeep, border: J.red },
+  2: { bg: J.sandBg, fg: J.sandDeep, border: J.sand },
+  3: { bg: J.sandBg2, fg: J.sandDeep, border: J.sand },
+  4: { bg: J.jadeBg, fg: J.jadeDeep, border: J.jade },
 };
 
 function HanziWriterCanvas({ char }) {
@@ -33,9 +33,9 @@ function HanziWriterCanvas({ char }) {
           width: 180,
           height: 180,
           padding: 10,
-          strokeColor: '#f3f4f6',
-          radicalColor: '#f87171',
-          outlineColor: '#374151',
+          strokeColor: J.ink,
+          radicalColor: J.red,
+          outlineColor: J.mute2,
           drawingWidth: 4,
           strokeAnimationSpeed: 1,
           delayBetweenStrokes: 100,
@@ -78,17 +78,18 @@ function HanziWriterCanvas({ char }) {
         {/* Canvas HanziWriter */}
         <div
           ref={containerRef}
-          className="w-[180px] h-[180px] bg-gray-800 rounded-2xl border border-gray-700 flex items-center justify-center"
+          className="w-[180px] h-[180px] rounded-2xl flex items-center justify-center"
+          style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}
         />
         {/* Overlay loading / error */}
         {status === 'loading' && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-gray-800/80">
-            <div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ background: 'rgba(244,236,220,0.8)' }}>
+            <div className="w-6 h-6 rounded-full animate-spin" style={{ border: `2px solid ${J.jade}`, borderTopColor: 'transparent' }} />
           </div>
         )}
         {status === 'error' && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-gray-800/80">
-            <span className="text-4xl text-white font-bold">{char}</span>
+          <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ background: 'rgba(244,236,220,0.8)' }}>
+            <span className="text-4xl font-bold font-cn" style={{ color: J.ink }}>{char}</span>
           </div>
         )}
       </div>
@@ -98,15 +99,17 @@ function HanziWriterCanvas({ char }) {
         <div className="flex gap-2">
           <button
             onClick={handleAnimate}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-900/40 border border-red-700/50 text-red-300 text-xs font-semibold transition hover:bg-red-900/60"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
+            style={{ background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jade}`, cursor: 'pointer' }}
           >
-            <Play className="w-3 h-3" /> Animar
+            <span className="font-cn">播</span> Animar
           </button>
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-700 border border-gray-600 text-gray-300 text-xs font-semibold transition hover:bg-gray-600"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
+            style={{ background: J.paperHi, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
           >
-            <RotateCcw className="w-3 h-3" /> Repetir
+            <span className="font-cn">重</span> Repetir
           </button>
         </div>
       )}
@@ -136,41 +139,60 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
   const masteredAt  = srsData?.interval >= 21;
   const isPending   = srsData?.nextReview != null && srsData.nextReview <= Date.now();
 
+  const badge = LESSON_BADGE[char.lesson] || LESSON_BADGE[1];
+
   return (
     /* Backdrop */
     <div
       className="fixed inset-0 z-[100] flex items-end justify-center"
-      style={{ background: 'rgba(0,0,0,0.6)' }}
+      style={{ background: 'rgba(28,24,19,0.5)' }}
       onClick={handleBackdrop}
     >
       {/* Sheet */}
       <div
         ref={sheetRef}
-        className="w-full max-w-lg bg-gray-900 border-t border-gray-700 rounded-t-3xl px-5 pt-4 pb-8 animate-slide-up"
-        style={{ maxHeight: '90dvh', overflowY: 'auto' }}
+        className="w-full max-w-lg rounded-t-3xl px-5 pt-4 pb-8 animate-slide-up"
+        style={{ maxHeight: '90dvh', overflowY: 'auto', background: J.paper, borderTop: `1px solid ${J.hair}` }}
       >
         {/* Handle */}
-        <div className="w-10 h-1 bg-gray-600 rounded-full mx-auto mb-5" />
+        <div className="w-10 h-1 rounded-full mx-auto mb-5" style={{ background: J.mute2 }} />
 
         {/* Header: badges + cerrar */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             {char.lesson && (
-              <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${LESSON_BADGE[char.lesson] || ''}`}>
+              <span style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                background: badge.bg, color: badge.fg, border: `1px solid ${badge.border}`,
+              }}>
                 L{char.lesson}
               </span>
             )}
             {char.isSupplementary && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900 text-purple-300 border border-purple-700 font-semibold">extra</span>
+              <span style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
+              }}>extra</span>
             )}
-            {masteredAt && <span className="text-xs px-2 py-0.5 rounded-full bg-green-900 text-green-300 border border-green-700 font-semibold">✓ Dominado</span>}
-            {isPending  && <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-900 text-yellow-300 border border-yellow-700 font-semibold animate-pulse">⏰ Pendiente</span>}
+            {masteredAt && (
+              <span style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jade}`,
+              }}>Dominado</span>
+            )}
+            {isPending && (
+              <span className="animate-pulse" style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
+              }}>Pendiente</span>
+            )}
           </div>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors p-1"
+            className="p-1"
+            style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer', fontSize: 20, fontWeight: 700 }}
           >
-            <X className="w-5 h-5" />
+            ×
           </button>
         </div>
 
@@ -183,45 +205,50 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
           {/* Pinyin + audio + favorito */}
           <div className="w-full flex items-center justify-between px-2">
             <div>
-              <p className="text-2xl text-white font-semibold">{char.pinyin}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{char.type || 'Sustantivo'}</p>
+              <p className="text-2xl font-semibold" style={{ color: J.jade }}>{char.pinyin}</p>
+              <p className="text-xs mt-0.5" style={{ color: J.mute }}>{char.type || 'Sustantivo'}</p>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => onSpeak?.(char)}
-                className="p-2.5 rounded-full bg-green-800/60 hover:bg-green-700/60 text-green-300 transition-colors"
+                className="font-cn p-2.5 rounded-full transition-colors"
+                style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontSize: 16, fontWeight: 700 }}
               >
-                <Volume2 className="w-5 h-5" />
+                声
               </button>
               <button
                 onClick={() => onToggleFavorite?.(char.char)}
-                className={`p-2.5 rounded-full transition-colors ${isFav ? 'bg-yellow-800/60 text-yellow-300' : 'bg-gray-700/60 text-gray-500 hover:text-yellow-400'}`}
+                className="font-cn p-2.5 rounded-full transition-colors"
+                style={{
+                  background: isFav ? J.sandBg : J.paperHi, border: 0, cursor: 'pointer',
+                  color: isFav ? J.red : J.mute2, fontSize: 16, fontWeight: 700,
+                }}
               >
-                <Star className="w-5 h-5" fill={isFav ? 'currentColor' : 'none'} />
+                收
               </button>
             </div>
           </div>
 
           {/* Significado */}
-          <div className="w-full bg-gray-800 border border-gray-700 rounded-2xl p-4 text-center">
-            <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Significado</p>
-            <p className="text-xl text-white font-bold leading-snug">{char.meaning}</p>
+          <div className="w-full rounded-2xl p-4 text-center" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+            <p className="text-xs uppercase tracking-widest mb-1" style={{ color: J.mute }}>Significado</p>
+            <p className="text-xl font-bold leading-snug" style={{ color: J.ink }}>{char.meaning}</p>
           </div>
 
           {/* Radical + ejemplos */}
           <div className="w-full space-y-3">
             {char.radical && char.radical !== '—' && (
-              <div className="flex items-center justify-between bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
-                <span className="text-sm text-gray-400">{t('dictionary_radical', 'Radical')}</span>
-                <span className="text-3xl text-gray-200">{char.radical}</span>
+              <div className="flex items-center justify-between rounded-xl px-4 py-3" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+                <span className="text-sm" style={{ color: J.mute }}>{t('dictionary_radical', 'Radical')}</span>
+                <span className="text-3xl font-cn" style={{ color: J.ink }}>{char.radical}</span>
               </div>
             )}
             {char.examples?.length > 0 && (
-              <div className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-500 mb-2">Ejemplos</p>
+              <div className="rounded-xl px-4 py-3" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+                <p className="text-xs mb-2" style={{ color: J.mute }}>Ejemplos</p>
                 <div className="flex flex-wrap gap-1.5">
                   {char.examples.map((ex, i) => (
-                    <span key={i} className="text-sm bg-gray-700 text-gray-200 px-2.5 py-1 rounded-lg">{ex}</span>
+                    <span key={i} className="text-sm px-2.5 py-1 rounded-lg" style={{ background: J.paper, color: J.ink }}>{ex}</span>
                   ))}
                 </div>
               </div>

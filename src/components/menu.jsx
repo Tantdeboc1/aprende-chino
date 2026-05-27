@@ -3,10 +3,10 @@ import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
 
 const LESSON_ACCENT = {
-  1: { bg: 'bg-red-600',    border: 'border-red-500',    text: 'text-red-300',    dot: 'bg-red-400',    activePill: 'bg-red-600 text-white border-transparent' },
-  2: { bg: 'bg-orange-600', border: 'border-orange-500', text: 'text-orange-300', dot: 'bg-orange-400', activePill: 'bg-orange-600 text-white border-transparent' },
-  3: { bg: 'bg-yellow-500', border: 'border-yellow-400', text: 'text-yellow-300', dot: 'bg-yellow-400', activePill: 'bg-yellow-500 text-white border-transparent' },
-  4: { bg: 'bg-green-600',  border: 'border-green-500',  text: 'text-green-300',  dot: 'bg-green-400',  activePill: 'bg-green-600 text-white border-transparent' },
+  1: { bg: 'bg-[#c8392f]',    border: 'border-[#c8392f]',    text: 'text-[#c8392f]',    dot: 'bg-[#c8392f]',    activePill: 'bg-[#c8392f] text-[#fbf5e6] border-transparent' },
+  2: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#b88a3e]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
+  3: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#f0c862]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
+  4: { bg: 'bg-[#2f6b4a]',  border: 'border-[#2f6b4a]',  text: 'text-[#5a8f72]',  dot: 'bg-[#5a8f72]',  activePill: 'bg-[#2f6b4a] text-[#fbf5e6] border-transparent' },
 };
 
 const GraduationCap = () => (
@@ -53,11 +53,11 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
   const activeLesson = lessonsData.find(l => l.lesson === selectedLesson);
 
   const menuItems = [
-    { key: 'learn',      icon: <GraduationCap />, iconColor: 'text-blue-400',   zh: '学习',     pinyin: 'Xuéxí',           desc: t('menu_learn_description') },
-    { key: 'daily',      icon: <Calendar />,      iconColor: 'text-green-400',  zh: '每日挑战', pinyin: 'Měi rì tiǎozhàn', desc: t('menu_daily_description'), badge: dailyComplete ? '✓ Completado' : null },
-    { key: 'minigames',  icon: <Gamepad />,        iconColor: 'text-yellow-400', zh: '小游戏',   pinyin: 'Xiǎo yóuxì',      desc: t('menu_minigames_description') },
-    { key: 'dictionary', icon: <BookOpen />,       iconColor: 'text-purple-400', zh: '词典',     pinyin: 'Cídiǎn',          desc: t('menu_dictionary_description') },
-    { key: 'info',       icon: <InfoIcon />,       iconColor: 'text-orange-400', zh: '信息',     pinyin: 'Xìnxī',           desc: t('menu_info_description') },
+    { key: 'learn',      icon: <GraduationCap />, iconColor: 'text-[#2f6b4a]',   zh: '学习',     pinyin: 'Xuéxí',           desc: t('menu_learn_description') },
+    { key: 'daily',      icon: <Calendar />,      iconColor: 'text-[#2f6b4a]',  zh: '每日挑战', pinyin: 'Měi rì tiǎozhàn', desc: t('menu_daily_description'), badge: dailyComplete ? '✓ Completado' : null },
+    { key: 'minigames',  icon: <Gamepad />,        iconColor: 'text-[#b88a3e]', zh: '小游戏',   pinyin: 'Xiǎo yóuxì',      desc: t('menu_minigames_description') },
+    { key: 'dictionary', icon: <BookOpen />,       iconColor: 'text-[#c8392f]', zh: '词典',     pinyin: 'Cídiǎn',          desc: t('menu_dictionary_description') },
+    { key: 'info',       icon: <InfoIcon />,       iconColor: 'text-[#b88a3e]', zh: '信息',     pinyin: 'Xìnxī',           desc: t('menu_info_description') },
   ];
 
   return (
@@ -65,22 +65,22 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
       <Container>
 
         {/* Banner de leccion activa */}
-        <div className={`mb-6 rounded-2xl border ${accent ? accent.border : 'border-gray-700'} bg-gray-800/60 px-5 py-4`}>
+        <div className={`mb-6 rounded-2xl border ${accent ? accent.border : 'border-[rgba(28,24,19,0.10)]'} bg-[#fbf5e6]/60 px-5 py-4`}>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-3 min-w-0">
               {accent && <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${accent.dot}`} />}
               <div className="min-w-0">
                 {selectedLesson ? (
                   <>
-                    <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent ? accent.text : 'text-gray-400'}`}>
+                    <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent ? accent.text : 'text-[#928a76]'}`}>
                       Leccion {selectedLesson}
                     </p>
-                    <p className="text-white font-semibold text-sm truncate">{activeLesson ? activeLesson.titleEs : ''}</p>
+                    <p className="text-[#1c1813] font-semibold text-sm truncate">{activeLesson ? activeLesson.titleEs : ''}</p>
                   </>
                 ) : (
                   <>
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-0.5">Modo</p>
-                    <p className="text-white font-semibold text-sm">{t('menu_all_lessons')}</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-[#928a76] mb-0.5">Modo</p>
+                    <p className="text-[#1c1813] font-semibold text-sm">{t('menu_all_lessons')}</p>
                   </>
                 )}
               </div>
@@ -88,7 +88,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
             <div className="flex items-center gap-1.5 flex-wrap">
               <button
                 onClick={() => setSelectedLesson && setSelectedLesson(null)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${selectedLesson === null ? 'bg-gray-200 text-gray-900 border-gray-200' : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-400 hover:text-gray-300'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${selectedLesson === null ? 'bg-[#2f6b4a] text-[#fbf5e6] border-[#2f6b4a]' : 'bg-[#f8f1de] text-[#928a76] border-[rgba(28,24,19,0.18)] hover:border-[#928a76] hover:text-[#5b5446]'}`}
               >{t('menu_filter_all')}</button>
               {lessonsData.map(l => {
                 const a = LESSON_ACCENT[l.lesson] || LESSON_ACCENT[1];
@@ -98,7 +98,7 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
                     key={l.lesson}
                     onClick={() => setSelectedLesson && setSelectedLesson(isActive ? null : l.lesson)}
                     title={l.titleEs}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${isActive ? a.activePill : 'bg-gray-700 border-gray-600 hover:border-gray-500 ' + a.text}`}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${isActive ? a.activePill : 'bg-[#f8f1de] border-[rgba(28,24,19,0.18)] hover:border-[rgba(28,24,19,0.18)] ' + a.text}`}
                   >L{l.lesson}</button>
                 );
               })}
@@ -108,8 +108,8 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
 
         {/* Saludo */}
         <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{t('menu_greeting', { name: userName })} </h1>
-          <p className="text-gray-400 text-sm">{t('menu_question')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#1c1813] mb-1">{t('menu_greeting', { name: userName })} </h1>
+          <p className="text-[#928a76] text-sm">{t('menu_question')}</p>
         </div>
 
         {/* Grid de secciones */}
@@ -118,13 +118,13 @@ function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelected
             <button
               key={item.key}
               onClick={() => navigateTo(item.key)}
-              className="flex flex-col items-center justify-center p-3 sm:p-5 rounded-2xl bg-gray-800 border border-gray-700 hover:border-gray-500 hover:bg-gray-700 transition-all duration-200 hover:scale-105 group cursor-pointer"
+              className="flex flex-col items-center justify-center p-3 sm:p-5 rounded-2xl bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)] hover:bg-[#f8f1de] transition-all duration-200 hover:scale-105 group cursor-pointer"
             >
               <div className={`mb-2 sm:mb-3 ${item.iconColor} group-hover:scale-110 transition-transform duration-200 scale-75 sm:scale-100`}>{item.icon}</div>
-              <h2 className="text-base sm:text-lg font-bold text-white mb-0.5">{item.zh}</h2>
-              <p className="text-xs text-gray-400 mb-1 hidden sm:block">{item.pinyin}</p>
-              <p className="text-xs text-gray-500 text-center leading-tight hidden sm:block">{item.desc}</p>
-              {item.badge && <span className="mt-1 sm:mt-2 text-xs text-green-400 font-semibold">{item.badge}</span>}
+              <h2 className="text-base sm:text-lg font-bold text-[#1c1813] mb-0.5">{item.zh}</h2>
+              <p className="text-xs text-[#928a76] mb-1 hidden sm:block">{item.pinyin}</p>
+              <p className="text-xs text-[#928a76] text-center leading-tight hidden sm:block">{item.desc}</p>
+              {item.badge && <span className="mt-1 sm:mt-2 text-xs text-[#2f6b4a] font-semibold">{item.badge}</span>}
             </button>
           ))}
         </div>

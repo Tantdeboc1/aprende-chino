@@ -180,6 +180,32 @@ export function getWeakCards(progress, allCharacters, limit = 20) {
 }
 
 /**
+ * Devuelve el nivel de "salud" de una palabra en el SRS.
+ * Retorna un objeto { emoji, color, level, label }
+ *   level: 'new' | 'critical' | 'learning' | 'known' | 'mastered'
+ */
+export function getWordHealth(progress, char) {
+  const srs = progress?.__srs?.[char];
+  if (!srs || srs.nextReview === null) {
+    return { emoji: '新', color: 'text-[#928a76]', level: 'new', labelKey: 'health_new' };
+  }
+  // critical: interval 1, easeFactor bajo, o pendiente de repaso con muchos fallos
+  if (srs.interval <= 1 || srs.easeFactor < 1.5) {
+    return { emoji: '危', color: 'text-[#c8392f]', level: 'critical', labelKey: 'health_critical' };
+  }
+  // learning: interval < 7 días
+  if (srs.interval < 7) {
+    return { emoji: '习', color: 'text-[#b88a3e]', level: 'learning', labelKey: 'health_learning' };
+  }
+  // mastered: interval >= 21 días (3+ semanas)
+  if (srs.interval >= 21) {
+    return { emoji: '精', color: 'text-[#2f6b4a]', level: 'mastered', labelKey: 'health_mastered' };
+  }
+  // known: interval 7-20 días
+  return { emoji: '知', color: 'text-[#5a8f72]', level: 'known', labelKey: 'health_known' };
+}
+
+/**
  * Devuelve estadísticas SRS globales.
  */
 export function getSRSStats(progress, allCharacters) {

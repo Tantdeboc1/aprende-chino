@@ -12,7 +12,7 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
         <div className="mb-6">
           <button
             onClick={goBack}
-            className="flex items-center text-gray-300 hover:text-white"
+            className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
           >
             <ArrowLeft className="mr-2" />
             {t('learn_back_to_menu')}
@@ -20,8 +20,8 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
         </div>
 
         <div className="text-center mb-6 sm:mb-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">学习</h2>
-          <p className="text-lg sm:text-xl text-gray-300">Xuéxí - {t('learn_title')}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1c1813] mb-2">学习</h2>
+          <p className="text-lg sm:text-xl text-[#5b5446]">Xuéxí - {t('learn_title')}</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -32,12 +32,12 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
               setLearnSection("characters");
               if (setToneSection) setToneSection(null);
             }}
-            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+            className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]"
           >
-            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🈶</div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">汉字</h3>
-            <p className="text-sm sm:text-lg text-gray-300 mb-1">Hànzì</p>
-            <p className="text-gray-400">{t('learn_characters_title')}</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4"></div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-1 sm:mb-2">汉字</h3>
+            <p className="text-sm sm:text-lg text-[#5b5446] mb-1">Hànzì</p>
+            <p className="text-[#928a76]">{t('learn_characters_title')}</p>
           </Button>
 
           {/* Escritura - NUEVO */}
@@ -47,12 +47,12 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
               setLearnSection("writing");
               if (setToneSection) setToneSection(null);
             }}
-            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+            className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]"
           >
-            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">✍️</div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">书写</h3>
-            <p className="text-sm sm:text-lg text-gray-300 mb-1">Shūxiě</p>
-            <p className="text-gray-400">{t('learn_writing_title')}</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4"></div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-1 sm:mb-2">书写</h3>
+            <p className="text-sm sm:text-lg text-[#5b5446] mb-1">Shūxiě</p>
+            <p className="text-[#928a76]">{t('learn_writing_title')}</p>
           </Button>
 
           {/* Radicales */}
@@ -62,12 +62,12 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
               setLearnSection("radicals");
               if (setToneSection) setToneSection(null);
             }}
-            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+            className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]"
           >
             <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🔠</div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">部首</h3>
-            <p className="text-sm sm:text-lg text-gray-300 mb-1">Bùshǒu</p>
-            <p className="text-gray-400">{t('learn_radicals_title')}</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-1 sm:mb-2">部首</h3>
+            <p className="text-sm sm:text-lg text-[#5b5446] mb-1">Bùshǒu</p>
+            <p className="text-[#928a76]">{t('learn_radicals_title')}</p>
           </Button>
 
           {/* Tonos */}
@@ -77,16 +77,16 @@ export default function LearnMenu({ goBack, setLearnSection, setToneSection }) {
               setLearnSection("tones");
               if (setToneSection) setToneSection(null);
             }}
-            className="bg-gray-800 border border-gray-700 hover:border-gray-600"
+            className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]"
           >
-            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4">🎵</div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">声调</h3>
-            <p className="text-sm sm:text-lg text-gray-300 mb-1">Shēngdiào</p>
-            <p className="text-gray-400">{t('learn_tones_title')}</p>
+            <div className="text-3xl sm:text-5xl mb-2 sm:mb-4"></div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-1 sm:mb-2">声调</h3>
+            <p className="text-sm sm:text-lg text-[#5b5446] mb-1">Shēngdiào</p>
+            <p className="text-[#928a76]">{t('learn_tones_title')}</p>
           </Button>
         </div>
 
-        {/* 🔥 ELIMINADO: La sección "¿Por qué aprender radicales?" */}
+        {/* ELIMINADO: La sección "¿Por qué aprender radicales?" */}
       </Container>
     </div>
   );

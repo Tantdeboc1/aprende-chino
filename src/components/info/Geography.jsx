@@ -29,56 +29,56 @@ export default function Geography({ goBack }) {
   }, [i18n.language, t]);
 
   if (loading) {
-    return <div className="min-h-screen grid place-items-center bg-gray-900 text-gray-300">{t('info_loading')}</div>;
+    return <div className="min-h-screen grid place-items-center bg-[#f4ecdc] text-[#5b5446]">{t('info_loading')}</div>;
   }
 
   const regions = data?.regions ?? [];
   const landmarks = data?.landmarks ?? [];
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-[#f4ecdc] p-4">
       <Container>
-        <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white mb-6">
+        <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] mb-6">
           <ArrowLeft className="mr-2" /> {t('info_back_to_info')}
         </button>
 
         {error && (
-          <div className="bg-red-900 text-red-200 border border-red-700 rounded-md p-3 mb-4">
+          <div className="bg-[#f0d6cf] text-[#8b1f1a] border border-[#c8392f] rounded-md p-3 mb-4">
             {error}
           </div>
         )}
 
         <div className="grid gap-6">
           {/* Header */}
-          <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h1 className="text-3xl font-bold text-white mb-2">🧭 {t('info_geography_regions_title')}</h1>
-            <p className="text-gray-300">{t('info_geography_regions_description')}</p>
+          <section className="bg-[#fbf5e6] rounded-2xl shadow-sm p-6 md:p-8 border border-[rgba(28,24,19,0.10)]">
+            <h1 className="text-3xl font-bold text-[#1c1813] mb-2">🧭 {t('info_geography_regions_title')}</h1>
+            <p className="text-[#5b5446]">{t('info_geography_regions_description')}</p>
           </section>
 
           {/* Regions */}
-          <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-4">{t('info_regions_title')}</h2>
+          <section className="bg-[#fbf5e6] rounded-2xl shadow-sm p-6 md:p-8 border border-[rgba(28,24,19,0.10)]">
+            <h2 className="text-2xl font-bold text-[#1c1813] mb-4">{t('info_regions_title')}</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {regions.map((region, idx) => (
-                <div key={idx} className="bg-gray-700 rounded-xl p-4 hover:shadow-lg transition border border-gray-600">
-                  <h3 className="font-bold text-white text-lg mb-2">{region.name}</h3>
-                  <p className="text-gray-300">{region.highlights}</p>
+                <div key={idx} className="bg-[#f8f1de] rounded-xl p-4 hover:shadow-lg transition border border-[rgba(28,24,19,0.18)]">
+                  <h3 className="font-bold text-[#1c1813] text-lg mb-2">{region.name}</h3>
+                  <p className="text-[#5b5446]">{region.highlights}</p>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Landmarks */}
-          <section className="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-4">{t('info_landmarks_title')}</h2>
+          <section className="bg-[#fbf5e6] rounded-2xl shadow-sm p-6 md:p-8 border border-[rgba(28,24,19,0.10)]">
+            <h2 className="text-2xl font-bold text-[#1c1813] mb-4">{t('info_landmarks_title')}</h2>
             <div className="space-y-4">
               {landmarks.map((landmark, idx) => (
-                <div key={idx} className="bg-gray-700 rounded-xl p-4 hover:shadow-lg transition border border-gray-600">
+                <div key={idx} className="bg-[#f8f1de] rounded-xl p-4 hover:shadow-lg transition border border-[rgba(28,24,19,0.18)]">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-white text-lg">{landmark.name}</h3>
-                    <span className="bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded">{landmark.region}</span>
+                    <h3 className="font-bold text-[#1c1813] text-lg">{landmark.name}</h3>
+                    <span className="bg-[#cfe1d3] text-[#2f6b4a] text-xs px-2 py-1 rounded">{landmark.region}</span>
                   </div>
-                  <p className="text-gray-300">{landmark.note}</p>
+                  <p className="text-[#5b5446]">{landmark.note}</p>
                 </div>
               ))}
             </div>

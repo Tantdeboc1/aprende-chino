@@ -5,3 +5,7 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# Claude Code local preview config
+.claude/launch.json
+

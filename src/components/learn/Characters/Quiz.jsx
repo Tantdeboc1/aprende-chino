@@ -54,19 +54,19 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
   // ── Pantalla de instrucciones + selector de modo ──────────────────────────
   if (showInstructions) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4">
+      <div className="min-h-screen bg-[#f4ecdc] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
-            <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white transition mb-4">
+            <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4">
               ← {t('quiz_back_button')}
             </button>
-            <h1 className="text-3xl font-bold text-white text-center">{t('quiz_title')}</h1>
-            <p className="text-gray-400 text-center">{t('quiz_subtitle')}</p>
+            <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('quiz_title')}</h1>
+            <p className="text-[#928a76] text-center">{t('quiz_subtitle')}</p>
           </div>
 
           {/* Selector de modo */}
-          <div className="bg-gray-800 rounded-xl p-5 border border-gray-700 mb-4">
-            <h2 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide">{t('quiz_question_type_label')}</h2>
+          <div className="bg-[#fbf5e6] rounded-xl p-5 border border-[rgba(28,24,19,0.10)] mb-4">
+            <h2 className="text-sm font-bold text-[#928a76] mb-3 uppercase tracking-wide">{t('quiz_question_type_label')}</h2>
             <div className="grid grid-cols-3 gap-2">
               {QUIZ_MODES.map(m => (
                 <button
@@ -74,8 +74,8 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
                   onClick={() => setQuizMode(m.id)}
                   className={`p-3 rounded-xl border text-center transition-all active:scale-95 ${
                     quizMode === m.id
-                      ? 'bg-blue-600 border-blue-500 text-white'
-                      : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-gray-500'
+                      ? 'bg-[#2f6b4a] border-[#2f6b4a] text-[#fbf5e6]'
+                      : 'bg-[#f8f1de] border-[rgba(28,24,19,0.18)] text-[#5b5446] hover:border-[#928a76]'
                   }`}
                 >
                   <div className="text-base font-bold mb-1 font-mono">{m.icon}</div>
@@ -86,15 +86,13 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
           </div>
 
           {/* Instrucciones */}
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-            <h2 className="text-xl font-bold text-white mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-gray-300">
+          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
+            <div className="space-y-3 text-[#5b5446]">
               {[1,2,3,4,5].map(n => (
                 <div key={n} className="flex items-start">
-                  <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1 flex-shrink-0">{n}</div>
-                  <p dangerouslySetInnerHTML={{ __html: t(`quiz_instructions_${n}`, {
-                    1: '<span class="text-green-400">', '/1': '</span>'
-                  }) }} />
+                  <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1 flex-shrink-0">{n}</div>
+                  <p>{t(`quiz_instructions_${n}`).replace(/<\/?1>/g, '')}</p>
                 </div>
               ))}
             </div>
@@ -102,9 +100,9 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
 
           <button
             onClick={() => initQuiz(quizMode)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
           >
-            🎯 {t('quiz_start_button')}
+            {t('quiz_start_button')}
           </button>
         </div>
       </div>
@@ -113,10 +111,10 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
 
   if (!questions.length) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center">
-        <div className="bg-gray-800 rounded-2xl p-8 max-w-md w-full text-center border border-gray-700">
-          <p className="text-gray-300 mb-6">{t('dictionary_no_results')}</p>
-          <button onClick={goBack} className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg transition">
+      <div className="min-h-screen bg-[#f4ecdc] p-4 flex items-center justify-center">
+        <div className="bg-[#fbf5e6] rounded-2xl p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
+          <p className="text-[#5b5446] mb-6">{t('dictionary_no_results')}</p>
+          <button onClick={goBack} className="w-full bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 rounded-lg transition">
             {t('quiz_back_button')}
           </button>
         </div>
@@ -127,19 +125,19 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
   // ── Resultado final ────────────────────────────────────────────────────────
   if (index >= questions.length) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-        <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border border-gray-700">
-          <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-bold text-white mb-4">{t('quiz_completed_title')}</h2>
-          <p className="text-5xl font-bold text-red-400 mb-6">{score}/{questions.length}</p>
-          <p className="text-gray-300 mb-6">
+      <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center p-4">
+        <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
+          <div className="text-5xl mb-4 text-[#2f6b4a]">完</div>
+          <h2 className="text-3xl font-bold text-[#1c1813] mb-4">{t('quiz_completed_title')}</h2>
+          <p className="text-5xl font-bold text-[#2f6b4a] mb-6">{score}/{questions.length}</p>
+          <p className="text-[#5b5446] mb-6">
             {score >= 8 ? t('quiz_result_excellent') : score >= 6 ? t('quiz_result_good') : t('quiz_result_keep_going')}
           </p>
           <div className="flex gap-3">
-            <button onClick={() => setShowInstructions(true)} className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition">
+            <button onClick={() => setShowInstructions(true)} className="flex-1 bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 rounded-lg transition">
               {t('quiz_play_again_button')}
             </button>
-            <button onClick={goBack} className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition">
+            <button onClick={goBack} className="flex-1 bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 rounded-lg transition border border-[rgba(28,24,19,0.10)]">
               {t('quiz_back_button')}
             </button>
           </div>
@@ -170,25 +168,25 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
   const Stimulus = () => {
     if (mode === 'char_to_meaning') return (
       <div className="text-center mb-6">
-        <p className="text-gray-300 mb-4">{t('quiz_question_header')}</p>
-        <div className="text-7xl sm:text-9xl font-bold text-white mb-2">{question.correct.char}</div>
-        <p className="text-xl text-gray-400">{question.correct.pinyin}</p>
+        <p className="text-[#5b5446] mb-4">{t('quiz_question_header')}</p>
+        <div className="text-7xl sm:text-9xl font-bold text-[#1c1813] mb-2">{question.correct.char}</div>
+        <p className="text-xl text-[#928a76]">{question.correct.pinyin}</p>
       </div>
     );
     if (mode === 'meaning_to_char') return (
       <div className="text-center mb-6">
-        <p className="text-gray-400 text-sm mb-3">{t('char_quiz_meaning_to_char_prompt')}</p>
+        <p className="text-[#928a76] text-sm mb-3">{t('char_quiz_meaning_to_char_prompt')}</p>
         {question.correct.type && (
-          <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400 mb-3 inline-block">{question.correct.type}</span>
+          <span className="text-xs px-2 py-0.5 rounded bg-[#f8f1de] text-[#928a76] mb-3 inline-block">{question.correct.type}</span>
         )}
-        <div className="text-3xl sm:text-4xl font-bold text-white mt-2">{question.correct.meaning}</div>
+        <div className="text-3xl sm:text-4xl font-bold text-[#1c1813] mt-2">{question.correct.meaning}</div>
       </div>
     );
     // pinyin_to_char
     return (
       <div className="text-center mb-6">
-        <p className="text-gray-400 text-sm mb-3">{t('char_quiz_pinyin_to_char_prompt')}</p>
-        <div className="text-4xl sm:text-5xl font-bold text-red-400">{question.correct.pinyin}</div>
+        <p className="text-[#928a76] text-sm mb-3">{t('char_quiz_pinyin_to_char_prompt')}</p>
+        <div className="text-4xl sm:text-5xl font-bold text-[#c8392f]">{question.correct.pinyin}</div>
       </div>
     );
   };
@@ -202,37 +200,37 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
   const isCorrectOpt = (opt) => opt.char === question.correct.char;
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-[#f4ecdc] p-4">
       <div className="max-w-2xl mx-auto pt-8">
         {/* Header */}
         <div className="mb-6 flex justify-between items-center">
-          <button onClick={goBack} className="flex items-center text-gray-300 hover:text-white text-sm">
+          <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] text-sm">
             ← {t('quiz_back_button')}
           </button>
           <div className="text-center">
-            <span className="text-gray-300 font-semibold text-base block">
+            <span className="text-[#5b5446] font-semibold text-base block">
               {index + 1}/{questions.length} · {score} ✓
             </span>
-            <div className="w-32 bg-gray-700 rounded-full h-1.5 mt-1 mx-auto">
+            <div className="w-32 bg-[#f8f1de] rounded-full h-1.5 mt-1 mx-auto">
               <div
-                className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
+                className="bg-[#2f6b4a] h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${((index + 1) / questions.length) * 100}%` }}
               />
             </div>
             {/* badge de modo */}
-            <span className="text-xs text-gray-500 mt-0.5 block font-mono">
+            <span className="text-xs text-[#928a76] mt-0.5 block font-mono">
               {QUIZ_MODES.find(m => m.id === mode)?.icon}
             </span>
           </div>
           <button
             onClick={() => setShowInstructions(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded-lg transition text-sm"
+            className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
             {t('char_quiz_change_button')}
           </button>
         </div>
 
-        <div className="bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-8 border border-gray-700">
+        <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-4 sm:p-8 border border-[rgba(28,24,19,0.10)]">
           <Stimulus />
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -244,11 +242,11 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
                 className={`p-4 rounded-lg text-lg font-semibold transition flex items-center justify-center min-h-[64px] ${
                   showResult
                     ? isCorrectOpt(opt)
-                      ? 'bg-green-500 text-white'
+                      ? 'bg-[#2f6b4a] text-[#fbf5e6]'
                       : opt === selected
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-700 text-gray-400'
-                    : 'bg-gray-700 hover:bg-gray-600 text-white'
+                      ? 'bg-[#c8392f] text-[#fbf5e6]'
+                      : 'bg-[#f8f1de] text-[#928a76]'
+                    : 'bg-[#f8f1de] hover:bg-[#f8f1de] hover:border-[#928a76] text-[#1c1813] border border-[rgba(28,24,19,0.10)]'
                 }`}
               >
                 {optionLabel(opt)}
@@ -258,11 +256,11 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
 
           {/* Ejemplo de uso en fallo */}
           {showResult && selected?.char !== question.correct.char && question.correct.examples?.length > 0 && (
-            <div className="mt-4 p-3 bg-red-900/20 border border-red-700/40 rounded-xl text-left">
-              <p className="text-xs text-gray-400 mb-1.5">Ejemplo de uso:</p>
-              <p className="text-sm text-gray-100 leading-relaxed">{question.correct.examples[0]}</p>
+            <div className="mt-4 p-3 bg-[#f0d6cf]/20 border border-[#c8392f]/40 rounded-xl text-left">
+              <p className="text-xs text-[#928a76] mb-1.5">Ejemplo de uso:</p>
+              <p className="text-sm text-[#1c1813] leading-relaxed">{question.correct.examples[0]}</p>
               {question.correct.examples[1] && (
-                <p className="text-sm text-gray-300 leading-relaxed mt-1">{question.correct.examples[1]}</p>
+                <p className="text-sm text-[#5b5446] leading-relaxed mt-1">{question.correct.examples[1]}</p>
               )}
             </div>
           )}
@@ -270,7 +268,7 @@ export default function Quiz({ goBack, characters = [], speakChinese, onTrackRes
           {showResult && (
             <button
               onClick={next}
-              className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition"
+              className="w-full mt-4 bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 rounded-lg transition"
             >
               {index + 1 >= questions.length ? t('quiz_results_button') : t('quiz_next_button')}
             </button>

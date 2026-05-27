@@ -3,9 +3,15 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: '/',
   plugins: [react()],
+  // En PRODUCCIÓN elimina console.* y debugger automáticamente (vía esbuild,
+  // el minificador por defecto de Vite). En dev se mantienen para debug.
+  // Excluye console.warn/error porque suelen ser señales legítimas.
+  esbuild: mode === 'production'
+    ? { drop: ['debugger'], pure: ['console.log', 'console.info', 'console.debug', 'console.trace'] }
+    : {},
   build: {
     outDir: 'dist',
     sourcemap: true,
@@ -27,4 +33,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
-})
+}))

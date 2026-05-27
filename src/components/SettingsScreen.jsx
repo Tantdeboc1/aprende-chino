@@ -1,192 +1,167 @@
-// src/components/SettingsScreen.jsx
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { J } from '@/styles/tokens';
+import { JTopBar, JMark, JLabel, JCard, JSection } from '@/components/jade';
 import { getLessonStats } from '@/utils/progress.js';
 import { getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
-
-const LESSONS_META = [
-  { num: 1, titleEs: 'Lección 1', titleZh: '你最近怎么样', color: 'text-red-400',    bar: 'bg-red-500'    },
-  { num: 2, titleEs: 'Lección 2', titleZh: '你是哪国人？',  color: 'text-orange-400', bar: 'bg-orange-500' },
-  { num: 3, titleEs: 'Lección 3', titleZh: '你家有几口人？',color: 'text-yellow-400', bar: 'bg-yellow-400' },
-  { num: 4, titleEs: 'Lección 4', titleZh: '你明天几点有课？',color:'text-green-400',  bar: 'bg-green-500'  },
-];
+import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
+import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { loadUserProfile, updateUserProfile, GENDERS } from '@/utils/userProfile.js';
 
 const LANGUAGES = [
-  { code: 'es', name: 'Español',   flag: '🇪🇸' },
-  { code: 'en', name: 'English',   flag: '🇬🇧' },
-  { code: 'fr', name: 'Français',  flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch',   flag: '🇩🇪' },
-  { code: 'it', name: 'Italiano',  flag: '🇮🇹' },
-  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+  { code: 'es', name: 'Español',   cn: '西' },
+  { code: 'en', name: 'English',   cn: '英' },
+  { code: 'fr', name: 'Français',  cn: '法' },
+  { code: 'de', name: 'Deutsch',   cn: '德' },
+  { code: 'it', name: 'Italiano',  cn: '意' },
+  { code: 'pt', name: 'Português', cn: '葡' },
 ];
 
-function Section({ title, children }) {
+function ProfileRow({ l, v, tag, accent, first }) {
   return (
-    <div className="mb-5">
-      <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">{title}</p>
-      <div className="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
-        {children}
+    <div
+      className="flex items-baseline justify-between gap-3"
+      style={{
+        padding: '14px 18px',
+        borderTop: first ? 0 : `1px solid ${J.hair}`,
+      }}
+    >
+      <span style={{ fontSize: 14, color: J.ink, fontWeight: 500 }}>{l}</span>
+      <div className="flex items-baseline gap-2">
+        {tag && (
+          <span style={{ fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.02em' }}>{tag}</span>
+        )}
+        <span style={{
+          fontSize: 14, fontWeight: 800, letterSpacing: '-0.01em',
+          color: accent === 'red' ? J.red : accent === 'jade' ? J.jade : J.ink,
+        }}>{v}</span>
       </div>
     </div>
   );
 }
 
-function Row({ label, children, border = true }) {
-  return (
-    <div className={`px-4 py-3 flex items-center justify-between gap-3 ${border ? 'border-b border-gray-700/60 last:border-0' : ''}`}>
-      <span className="text-sm text-gray-300">{label}</span>
-      {children}
-    </div>
-  );
-}
+// ─── Picker de avatar con tabs por género ───────────────────────────────────
+function AvatarPicker({ currentId, gender, onSelect, onClose }) {
+  const { t } = useTranslation();
+  const [tab, setTab] = useState(gender || 'all');
 
-// ── Heatmap de actividad (últimas 15 semanas) ────────────────────────────────
-function ActivityHeatmap({ activityDates, t }) {
-  const dateSet = useMemo(() => new Set(activityDates), [activityDates]);
-
-  // Generar las últimas 15 semanas (columnas) × 7 días (filas)
-  const weeks = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    // Retroceder al domingo más reciente
-    const endSunday = new Date(today);
-    endSunday.setDate(today.getDate() + (6 - today.getDay())); // próximo sábado
-    const cells = [];
-    for (let w = 14; w >= 0; w--) {
-      const week = [];
-      for (let d = 0; d < 7; d++) {
-        const date = new Date(endSunday);
-        date.setDate(endSunday.getDate() - w * 7 - (6 - d));
-        const str = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        week.push({ str, future: date > today });
-      }
-      cells.push(week);
-    }
-    return cells;
-  }, []);
+  const filtered = useMemo(() => {
+    if (tab === 'all') return AVATARS;
+    return AVATARS.filter(a => a.gender === tab);
+  }, [tab]);
 
   return (
-    <div className="px-4 py-3">
-      <p className="text-xs text-gray-400 mb-2">{t('settings_heatmap_title')}</p>
-      <div className="flex gap-1">
-        {weeks.map((week, wi) => (
-          <div key={wi} className="flex flex-col gap-1">
-            {week.map((day, di) => (
-              <div
-                key={di}
-                title={day.str}
-                className={`w-3.5 h-3.5 rounded-sm ${
-                  day.future
-                    ? 'bg-transparent'
-                    : dateSet.has(day.str)
-                    ? 'bg-purple-500'
-                    : 'bg-gray-700'
-                }`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center gap-1.5 mt-2">
-        <div className="w-3 h-3 rounded-sm bg-gray-700" />
-        <span className="text-xs text-gray-600 mr-2">Sin actividad</span>
-        <div className="w-3 h-3 rounded-sm bg-purple-500" />
-        <span className="text-xs text-gray-600">Con actividad</span>
-      </div>
-    </div>
-  );
-}
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 100,
+        background: 'rgba(0,0,0,0.55)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          width: '100%', maxWidth: 520,
+          background: J.paperHi,
+          borderRadius: '22px 22px 0 0',
+          padding: '18px 18px 28px',
+          maxHeight: '85vh',
+          overflowY: 'auto',
+        }}
+      >
+        {/* Asa */}
+        <div style={{
+          width: 40, height: 4, borderRadius: 99,
+          background: J.hairS, margin: '0 auto 14px',
+        }} />
 
-// ── Gráfico de distribución de intervalos ────────────────────────────────────
-function IntervalChart({ progress, allCharacters }) {
-  const buckets = useMemo(() => {
-    const srs = progress?.__srs || {};
-    const counts = { '1d': 0, '6d': 0, '15d': 0, '30d+': 0 };
-    for (const c of allCharacters) {
-      if (c.isSupplementary) continue;
-      const d = srs[c.char];
-      if (!d || d.nextReview === null) continue;
-      if (d.interval <= 1)       counts['1d']++;
-      else if (d.interval <= 6)  counts['6d']++;
-      else if (d.interval <= 14) counts['15d']++;
-      else                       counts['30d+']++;
-    }
-    return [
-      { label: '1 día',  key: '1d',   count: counts['1d'],   color: 'bg-blue-500'   },
-      { label: '6 días', key: '6d',   count: counts['6d'],   color: 'bg-teal-500'   },
-      { label: '15 días',key: '15d',  count: counts['15d'],  color: 'bg-green-500'  },
-      { label: '30d+',   key: '30d+', count: counts['30d+'], color: 'bg-purple-500' },
-    ];
-  }, [progress, allCharacters]);
+        <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+          <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: J.ink }}>{t('avatar_picker_title')}</h3>
+          <button onClick={onClose} style={{
+            background: 'transparent', border: 0, cursor: 'pointer',
+            color: J.mute, fontSize: 24, lineHeight: 1, padding: 4,
+          }}>×</button>
+        </div>
 
-  const maxCount = Math.max(...buckets.map(b => b.count), 1);
+        {/* Tabs */}
+        <div className="flex gap-2" style={{ marginBottom: 14 }}>
+          {[
+            { id: 'all', label: t('avatar_picker_all'), cn: '全部' },
+            ...GENDERS.map(g => ({ id: g.id, label: t(g.i18nKey), cn: g.cn })),
+          ].map(tabOpt => {
+            const on = tab === tabOpt.id;
+            return (
+              <button
+                key={tabOpt.id}
+                onClick={() => setTab(tabOpt.id)}
+                style={{
+                  background: on ? J.ink : J.paper,
+                  color: on ? J.paperHi : J.inkSoft,
+                  border: 0, borderRadius: 99,
+                  padding: '7px 14px', fontSize: 12.5, fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                <span className="font-cn" style={{ marginRight: 6, fontSize: 13 }}>{tabOpt.cn}</span>
+                {tabOpt.label}
+              </button>
+            );
+          })}
+        </div>
 
-  return (
-    <div className="px-4 py-3 border-t border-gray-700/60">
-      <p className="text-xs text-gray-400 mb-3">Palabras por intervalo</p>
-      <div className="space-y-2">
-        {buckets.map(b => (
-          <div key={b.key} className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 w-12 text-right flex-shrink-0">{b.label}</span>
-            <div className="flex-1 h-5 bg-gray-700 rounded overflow-hidden">
-              <div
-                className={`h-full ${b.color} rounded transition-all duration-500`}
-                style={{ width: `${(b.count / maxCount) * 100}%` }}
-              />
-            </div>
-            <span className="text-xs text-gray-300 w-6 text-right flex-shrink-0">{b.count}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ── Previsión de repasos 7 días ──────────────────────────────────────────────
-function ReviewForecast({ progress, allCharacters, t }) {
-  const forecast = useMemo(() => {
-    const srs = progress?.__srs || {};
-    const now = Date.now();
-    const days = [];
-    for (let i = 0; i < 7; i++) {
-      const dayStart = now + i * 86400000;
-      const dayEnd   = dayStart + 86400000;
-      let count = 0;
-      for (const c of allCharacters) {
-        if (c.isSupplementary) continue;
-        const d = srs[c.char];
-        if (!d || d.nextReview === null) continue;
-        if (d.nextReview >= dayStart && d.nextReview < dayEnd) count++;
-        // Día 0: incluir también atrasados
-        if (i === 0 && d.nextReview < now) count++;
-      }
-      const date = new Date(dayStart);
-      const dayNames = [t('settings_day_sun'),t('settings_day_mon'),t('settings_day_tue'),t('settings_day_wed'),t('settings_day_thu'),t('settings_day_fri'),t('settings_day_sat')];
-      const label = i === 0 ? t('settings_day_today') : i === 1 ? t('settings_day_tomorrow') : dayNames[date.getDay()];
-      days.push({ label, count });
-    }
-    return days;
-  }, [progress, allCharacters]);
-
-  const maxCount = Math.max(...forecast.map(d => d.count), 1);
-
-  return (
-    <div className="px-4 py-3 border-t border-gray-700/60">
-      <p className="text-xs text-gray-400 mb-3">{t('settings_forecast_title')}</p>
-      <div className="flex items-end gap-1.5 h-20">
-        {forecast.map((day, i) => (
-          <div key={i} className="flex-1 flex flex-col items-center gap-1">
-            <span className="text-xs text-gray-400">{day.count > 0 ? day.count : ''}</span>
-            <div className="w-full bg-gray-700 rounded-t overflow-hidden flex flex-col justify-end" style={{ height: '48px' }}>
-              <div
-                className={`w-full rounded-t transition-all duration-500 ${i === 0 ? 'bg-yellow-500' : 'bg-purple-500'}`}
-                style={{ height: `${(day.count / maxCount) * 100}%`, minHeight: day.count > 0 ? '4px' : '0' }}
-              />
-            </div>
-            <span className="text-xs text-gray-500">{day.label}</span>
-          </div>
-        ))}
+        {/* Grid de avatares */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(88px, 1fr))',
+          gap: 10,
+        }}>
+          {filtered.map(av => {
+            const selected = av.id === currentId;
+            return (
+              <button
+                key={av.id}
+                onClick={() => onSelect(av.id)}
+                style={{
+                  background: selected ? J.jade : J.paper,
+                  border: `2px solid ${selected ? J.jadeDeep : J.hair}`,
+                  borderRadius: 14,
+                  padding: 6,
+                  cursor: 'pointer',
+                  transition: 'transform 150ms ease, background 200ms ease',
+                  transform: selected ? 'scale(1.04)' : 'scale(1)',
+                  position: 'relative',
+                  aspectRatio: '1 / 1',
+                  overflow: 'hidden',
+                }}
+                title={av.label}
+              >
+                <img
+                  src={av.src}
+                  alt={av.label}
+                  draggable={false}
+                  style={{
+                    width: '100%', height: '100%',
+                    objectFit: 'cover', borderRadius: 10,
+                    display: 'block',
+                  }}
+                />
+                {selected && (
+                  <span style={{
+                    position: 'absolute', top: 4, right: 4,
+                    background: J.butter, color: J.jadeDeep,
+                    fontSize: 11, fontWeight: 800,
+                    width: 20, height: 20, borderRadius: '50%',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
+                  }}>✓</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -196,6 +171,8 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
   const { t, i18n } = useTranslation();
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [profile, setProfile] = useState(() => loadUserProfile());
+  const [showPicker, setShowPicker] = useState(false);
 
   const handleNameBlur = () => {
     const trimmed = nameInput.trim();
@@ -207,215 +184,387 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
     setShowResetConfirm(false);
   };
 
-  const totalWords    = allCharacters.filter(c => !c.isSupplementary).length;
-  const totalMastered = LESSONS_META.reduce((acc, l) => acc + getLessonStats(progress, l.num, allCharacters).mastered, 0);
-  const totalSeen     = LESSONS_META.reduce((acc, l) => acc + getLessonStats(progress, l.num, allCharacters).seen,     0);
-  const globalPct     = totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0;
-  const srsStats      = getSRSStats(progress, allCharacters);
-  const streak        = getStreak();
+  const handleGenderChange = (g) => {
+    setProfile(updateUserProfile({ gender: g }));
+  };
+
+  const handleAvatarChange = (avatarId) => {
+    setProfile(updateUserProfile({ avatarId }));
+    setShowPicker(false);
+  };
+
+  const totalWords = allCharacters.filter(c => !c.isSupplementary).length;
+  const srsStats = getSRSStats(progress, allCharacters);
+  const streak = getStreak();
+  const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
+  const equipped = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
+
+  const currentAvatar = getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID);
+
+  const days = useMemo(() => {
+    const dateSet = new Set(streak.activityDates || []);
+    return Array.from({ length: 30 }).map((_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (29 - i));
+      const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      return dateSet.has(str) ? 'on' : 'off';
+    });
+  }, [streak.activityDates]);
+
+  const totalStudyMin = useMemo(() => {
+    const sessions = progress?.__sessions || [];
+    const ms = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
+    return Math.round(ms / 60000);
+  }, [progress]);
+
+  const accuracy = useMemo(() => {
+    const srs = progress?.__srs || {};
+    let correct = 0, total = 0;
+    for (const d of Object.values(srs)) {
+      if (d.reviews) { total += d.reviews; correct += d.correct || 0; }
+    }
+    return total > 0 ? Math.round((correct / total) * 100) : 0;
+  }, [progress]);
+
+  const totalMastered = useMemo(() => {
+    let total = 0;
+    for (let i = 1; i <= 4; i++) {
+      total += getLessonStats(progress, i, allCharacters).mastered;
+    }
+    return total;
+  }, [progress, allCharacters]);
 
   return (
-    <div className="min-h-screen bg-gray-900 pb-24">
-      {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700 px-4 pt-10 pb-5">
-        <h1 className="text-xl font-bold text-white">{t('settings_title')}</h1>
-        <p className="text-gray-400 text-sm mt-0.5">{t('settings_subtitle')}</p>
-      </div>
+    <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
+      <JTopBar
+        left={<JMark />}
+        right={
+          <button style={{ background: 'transparent', border: 0, fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
+            {t('nav_settings')}
+          </button>
+        }
+      />
 
-      <div className="px-4 pt-5">
+      <div style={{ padding: '6px 20px 24px' }}>
 
-        {/* Perfil */}
-        <Section title={t('settings_profile')}>
-          <div className="px-4 py-3">
-            <p className="text-xs text-gray-500 mb-1.5">{t('settings_name_label')}</p>
+        {/* ─── Cabecera con avatar + nombre ──────────────────────────────── */}
+        <div style={{ marginTop: 8, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 16 }}>
+          <button
+            onClick={() => setShowPicker(true)}
+            aria-label={t('profile_edit_aria')}
+            style={{
+              background: J.paperHi,
+              border: `3px solid ${J.jade}`,
+              borderRadius: '50%',
+              width: 88, height: 88,
+              padding: 0,
+              cursor: 'pointer',
+              overflow: 'hidden',
+              flexShrink: 0,
+              position: 'relative',
+              boxShadow: '0 4px 12px -3px rgba(0,0,0,0.20)',
+            }}
+          >
+            <img
+              src={currentAvatar.src}
+              alt={currentAvatar.label}
+              draggable={false}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            {/* lápiz pequeño en esquina */}
+            <span style={{
+              position: 'absolute', bottom: -2, right: -2,
+              background: J.red, color: J.paperHi,
+              width: 26, height: 26, borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 12,
+              border: `2px solid ${J.paper}`,
+            }}>✎</span>
+          </button>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 26, lineHeight: 1.1, letterSpacing: '-0.025em', color: J.ink }}>
+              {userName || t('settings_default_user')}<span style={{ color: J.red }}>.</span>
+            </h1>
+            <div style={{ marginTop: 6, fontSize: 13.5, color: J.inkSoft, fontWeight: 500 }}>
+              <span style={{ marginRight: 6 }}>{equipped.icon}</span>
+              {equipped.title?.[i18n.language] || equipped.title?.es} · <span className="font-cn">{equipped.zh}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Nivel y XP ────────────────────────────────────────────────── */}
+        <JSection label={t('settings_section_level')} cn="等级" />
+        <div style={{
+          background: J.jade, color: J.paperHi,
+          borderRadius: 18, padding: '18px 20px',
+          marginBottom: 4,
+          position: 'relative', overflow: 'hidden',
+          boxShadow: '0 6px 16px -6px rgba(31,74,51,0.5)',
+        }}>
+          <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, borderRadius: '50%', background: J.jadeDeep, opacity: 0.45 }} />
+          <div style={{ position: 'relative' }}>
+            <div className="flex items-end justify-between">
+              <div>
+                <JLabel color={J.butter}>{t('settings_level_current')}</JLabel>
+                <div className="flex items-baseline gap-2" style={{ marginTop: 4 }}>
+                  <span style={{ fontSize: 56, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
+                    {levelInfo.level}
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
+                    Lv.
+                  </span>
+                </div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                  {t('settings_xp_total')}
+                </span>
+                <div style={{ fontSize: 22, fontWeight: 800, color: J.paperHi, marginTop: 4, letterSpacing: '-0.02em' }}>
+                  {(streak.totalXP || 0).toLocaleString()}
+                </div>
+              </div>
+            </div>
+
+            {/* Barra de progreso al siguiente nivel */}
+            {!levelInfo.isMaxLevel ? (
+              <div style={{ marginTop: 14 }}>
+                <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
+                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                    Lv.{levelInfo.level}
+                  </span>
+                  <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.30)' }}>
+                    <div className="h-full rounded-full transition-all duration-500"
+                      style={{ width: `${levelInfo.progress}%`, background: J.butter }} />
+                  </div>
+                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                    Lv.{levelInfo.level + 1}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', textAlign: 'center' }}>
+                  {t('settings_xp_to_next', { xp: levelInfo.xpForNext - levelInfo.xpInLevel })}
+                </div>
+              </div>
+            ) : (
+              <div style={{ marginTop: 14, fontSize: 13, color: J.butter, fontWeight: 800, textAlign: 'center' }}>
+                ★ {t('settings_max_level')}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ─── Streak hero (si tiene racha activa) ─────────────────────── */}
+        {streak.currentStreak > 0 && (
+          <div style={{
+            background: J.red, color: J.paperHi, borderRadius: 22,
+            padding: '20px 22px 18px', position: 'relative', overflow: 'hidden',
+            marginTop: 14, marginBottom: 18, boxShadow: '0 8px 24px rgba(200,57,47,0.30)',
+          }}>
+            <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: J.redDeep, opacity: 0.5 }} />
+            <div style={{ position: 'relative' }}>
+              <div className="flex justify-between items-start">
+                <div>
+                  <JLabel color={J.butter}>{t('settings_streak_current')} · 连续</JLabel>
+                  <div className="flex items-baseline gap-2" style={{ marginTop: 8 }}>
+                    <span style={{ fontSize: 64, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
+                      {streak.currentStreak}
+                    </span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{t('settings_day', { count: streak.currentStreak })}</span>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                    {t('settings_streak_record')}
+                  </span>
+                  <div style={{ fontSize: 24, fontWeight: 800, color: J.paperHi, marginTop: 6, letterSpacing: '-0.02em' }}>
+                    {streak.longestStreak || streak.currentStreak}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-1" style={{ marginTop: 18, gridTemplateColumns: 'repeat(15, 1fr)' }}>
+                {days.map((d, i) => (
+                  <div key={i} style={{
+                    aspectRatio: '1 / 1', borderRadius: 4,
+                    background: d === 'on' ? J.butter : 'rgba(255,255,255,0.12)',
+                  }} />
+                ))}
+              </div>
+              <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(255,255,255,0.65)', fontWeight: 600, letterSpacing: '0.04em' }}>
+                {t('settings_streak_last_30')}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── Progreso general ─────────────────────────────────────────── */}
+        <JSection label={t('settings_progress')} cn="进步" />
+        <JCard padding="0">
+          <ProfileRow l={t('settings_progress_chars_learned')} v={srsStats.learned} tag={t('settings_progress_hsk_tag')} first />
+          <ProfileRow l={t('settings_progress_study_time')} v={totalStudyMin > 0 ? `${Math.floor(totalStudyMin / 60)}h ${totalStudyMin % 60}m` : '0m'} tag={t('settings_progress_pace_tag')} />
+          <ProfileRow l={t('settings_progress_accuracy')} v={`${accuracy}%`} tag={accuracy >= 80 ? t('settings_progress_accuracy_good') : t('settings_progress_accuracy_meh')} accent="jade" />
+          <ProfileRow l={t('settings_progress_chars_mastered')} v={totalMastered} tag={t('settings_progress_record_tag')} accent="red" />
+        </JCard>
+
+        {/* ─── Perfil (nick + género) ───────────────────────────────────── */}
+        <JSection label={t('settings_section_profile')} cn="个人资料" />
+        <JCard padding="0">
+          {/* Nick */}
+          <div style={{ padding: '14px 18px' }}>
+            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 6, letterSpacing: '0.04em' }}>{t('settings_label_nick')}</p>
             <input
               type="text"
               value={nameInput}
               onChange={e => setNameInput(e.target.value)}
               onBlur={handleNameBlur}
-              onKeyDown={e => { if (e.key === 'Enter') { e.target.blur(); } }}
-              placeholder={t('settings_name_label')}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:border-red-500 focus:outline-none placeholder-gray-500"
+              onKeyDown={e => { if (e.key === 'Enter') e.target.blur(); }}
+              style={{
+                width: '100%', padding: '10px 14px', background: J.paper,
+                border: `1px solid ${J.hair}`, borderRadius: 12,
+                fontSize: 14, color: J.ink, outline: 'none',
+              }}
+              onFocus={e => e.target.style.borderColor = J.jade}
+              onBlurCapture={e => e.target.style.borderColor = J.hair}
             />
           </div>
-        </Section>
 
-        {/* Idioma */}
-        <Section title={t('settings_language')}>
-          <div className="p-3 grid grid-cols-3 gap-2">
-            {LANGUAGES.map(lang => (
-              <button
-                key={lang.code}
-                onClick={() => i18n.changeLanguage(lang.code)}
-                className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  i18n.language === lang.code
-                    ? 'bg-red-600 text-white'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                <span>{lang.flag}</span>
-                <span>{lang.name}</span>
-              </button>
-            ))}
-          </div>
-        </Section>
-
-        {/* Progreso */}
-        <Section title={t('settings_progress')}>
-          {/* Resumen global */}
-          <div className="px-4 py-3 border-b border-gray-700/60">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-300">{t('settings_global_progress')}</span>
-              <span className="text-sm font-bold text-white">{globalPct}%</span>
-            </div>
-            <div className="h-2 bg-gray-700 rounded-full overflow-hidden mb-1">
-              <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${globalPct}%` }} />
-            </div>
-            <div className="flex justify-between text-xs text-gray-500 mt-1">
-              <span>{totalMastered} {t('settings_mastered')} · {totalSeen - totalMastered} {t('settings_seen')}</span>
-              <span>{totalWords} {t('settings_words_hsk1')}</span>
+          {/* Género */}
+          <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_gender')}</p>
+            <div className="flex flex-wrap gap-2">
+              {GENDERS.map(g => {
+                const on = profile.gender === g.id;
+                return (
+                  <button
+                    key={g.id}
+                    onClick={() => handleGenderChange(g.id)}
+                    className="flex items-center gap-2"
+                    style={{
+                      padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
+                      background: on ? J.ink : J.paper,
+                      color: on ? J.paperHi : J.inkSoft,
+                      fontSize: 12.5, fontWeight: 700,
+                    }}
+                  >
+                    <span className="font-cn" style={{ fontSize: 14 }}>{g.cn}</span>
+                    {t(g.i18nKey)}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Por lección */}
-          {LESSONS_META.map(l => {
-            const stats = getLessonStats(progress, l.num, allCharacters);
-            const pct = stats.total > 0 ? Math.round((stats.mastered / stats.total) * 100) : 0;
-            return (
-              <div key={l.num} className="px-4 py-2.5 border-b border-gray-700/60 last:border-0">
-                <div className="flex items-center justify-between mb-1">
-                  <div>
-                    <span className="text-sm text-white font-medium">{l.titleEs}</span>
-                    <span className={`text-xs ml-2 ${l.color}`}>{l.titleZh}</span>
-                  </div>
-                  <span className={`text-xs font-bold ${l.color}`}>{pct}%</span>
-                </div>
-                <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
-                  <div className={`h-full ${l.bar} rounded-full transition-all`} style={{ width: `${pct}%` }} />
-                </div>
-                <p className="text-xs text-gray-600 mt-0.5">{stats.mastered}/{stats.total} {t('settings_mastered')}</p>
-              </div>
-            );
-          })}
-        </Section>
-
-        {/* Estadísticas SRS */}
-        <Section title={t('settings_srs_title')}>
-          {/* Barra de progreso SRS */}
-          <div className="px-4 py-3 border-b border-gray-700/60">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-300">{t('settings_srs_learned')}</span>
-              <span className="text-sm font-bold text-white">{srsStats.learned} / {srsStats.total}</span>
-            </div>
-            <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-purple-500 rounded-full transition-all duration-500"
-                style={{ width: srsStats.total > 0 ? `${Math.round((srsStats.learned / srsStats.total) * 100)}%` : '0%' }}
+          {/* Avatar (botón abre picker) */}
+          <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_avatar')}</p>
+            <button
+              onClick={() => setShowPicker(true)}
+              className="flex items-center gap-3 w-full"
+              style={{
+                background: J.paper, border: `1px solid ${J.hair}`,
+                borderRadius: 12, padding: '10px 14px',
+                cursor: 'pointer', textAlign: 'left',
+              }}
+            >
+              <img
+                src={currentAvatar.src}
+                alt={currentAvatar.label}
+                style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10, display: 'block' }}
               />
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              {srsStats.total > 0 ? Math.round((srsStats.learned / srsStats.total) * 100) : 0}% {t('settings_srs_of_total')}
-            </p>
-          </div>
-
-          {/* Tres estadísticas */}
-          <div className="grid grid-cols-3 divide-x divide-gray-700/60">
-            <div className="px-3 py-3 text-center">
-              <p className="text-2xl font-bold text-purple-400">{srsStats.learned}</p>
-              <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_in_srs')}</p>
-            </div>
-            <div className="px-3 py-3 text-center">
-              <p className="text-2xl font-bold text-green-400">{srsStats.mature}</p>
-              <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_mature')}</p>
-            </div>
-            <div className="px-3 py-3 text-center">
-              <p className={`text-2xl font-bold ${srsStats.due > 0 ? 'text-yellow-400' : 'text-gray-500'}`}>
-                {srsStats.due}
-              </p>
-              <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t('settings_srs_due')}</p>
-            </div>
-          </div>
-
-          {/* Racha */}
-          {(streak.currentStreak > 0 || streak.longestStreak > 0) && (
-            <div className="flex divide-x divide-gray-700/60 border-t border-gray-700/60">
-              <div className="flex-1 px-3 py-2.5 text-center">
-                <p className="text-xl font-bold text-orange-400">🔥 {streak.currentStreak}</p>
-                <p className="text-xs text-gray-500 mt-0.5">Racha actual</p>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ margin: 0, fontSize: 13.5, color: J.ink, fontWeight: 700 }}>{currentAvatar.label}</p>
+                <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_avatar_change_hint')}</p>
               </div>
-              <div className="flex-1 px-3 py-2.5 text-center">
-                <p className="text-xl font-bold text-yellow-400">⭐ {streak.longestStreak}</p>
-                <p className="text-xs text-gray-500 mt-0.5">Mejor racha</p>
+              <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
+            </button>
+          </div>
+        </JCard>
+
+        {/* ─── Idioma ──────────────────────────────────────────────────── */}
+        <JSection label={t('settings_language')} cn="语言" />
+        <JCard padding="14px 18px">
+          <div className="flex flex-wrap gap-2">
+            {LANGUAGES.map(lang => {
+              const on = i18n.language === lang.code;
+              return (
+                <button
+                  key={lang.code}
+                  onClick={() => i18n.changeLanguage(lang.code)}
+                  className="flex items-center gap-2"
+                  style={{
+                    padding: '7px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
+                    background: on ? J.ink : J.paper,
+                    color: on ? J.paperHi : J.inkSoft,
+                    fontSize: 12.5, fontWeight: 700,
+                  }}
+                >
+                  <span className="font-cn" style={{ fontSize: 14 }}>{lang.cn}</span>
+                  {lang.name}
+                </button>
+              );
+            })}
+          </div>
+        </JCard>
+
+        {/* ─── Datos ────────────────────────────────────────────────────── */}
+        <JSection label={t('settings_data')} cn="数据" />
+        <JCard padding="14px 18px">
+          {!showResetConfirm ? (
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              style={{
+                width: '100%', padding: '12px 16px', borderRadius: 14,
+                border: `1px solid ${J.sandBg}`, background: 'transparent',
+                color: J.sandDeep, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+              }}
+            >
+              {t('settings_reset')}
+            </button>
+          ) : (
+            <div className="space-y-3">
+              <p style={{ fontSize: 14, color: J.ink, textAlign: 'center' }}>{t('settings_reset_confirm')}</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  style={{
+                    flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
+                    background: J.paperHi, color: J.ink, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                  }}
+                >
+                  {t('settings_cancel')}
+                </button>
+                <button
+                  onClick={handleReset}
+                  style={{
+                    flex: 1, padding: '12px', borderRadius: 99, border: 0,
+                    background: J.red, color: J.paperHi, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                    boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
+                  }}
+                >
+                  {t('settings_confirm_reset')}
+                </button>
               </div>
             </div>
           )}
+        </JCard>
 
-          {/* Distribución de intervalos */}
-          <IntervalChart progress={progress} allCharacters={allCharacters} />
-
-          {/* Previsión 7 días */}
-          <ReviewForecast t={t} progress={progress} allCharacters={allCharacters} />
-
-          {/* Heatmap de actividad */}
-          <div className="border-t border-gray-700/60">
-            <ActivityHeatmap t={t} activityDates={streak.activityDates} />
-          </div>
-
-          {/* Nota explicativa */}
-          <div className="px-4 pb-3 pt-1 border-t border-gray-700/60">
-            <p className="text-xs text-gray-600 leading-relaxed">{t('settings_srs_mature_note')}</p>
-          </div>
-        </Section>
-
-        {/* Danger zone */}
-        <Section title={t('settings_data')}>
-          <div className="px-4 py-3">
-            {!showResetConfirm ? (
-              <button
-                onClick={() => setShowResetConfirm(true)}
-                className="w-full py-2.5 px-4 rounded-lg border border-red-800 text-red-400 text-sm font-medium hover:bg-red-900/30 transition-colors"
-              >
-                {t('settings_reset')}
-              </button>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-sm text-gray-300 text-center">{t('settings_reset_confirm')}</p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setShowResetConfirm(false)}
-                    className="flex-1 py-2 rounded-lg bg-gray-700 text-gray-300 text-sm font-medium hover:bg-gray-600 transition-colors"
-                  >
-                    {t('settings_cancel')}
-                  </button>
-                  <button
-                    onClick={handleReset}
-                    className="flex-1 py-2 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-colors"
-                  >
-                    {t('settings_confirm_reset')}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </Section>
-
-        {/* Acerca de */}
-        <Section title={t('settings_about')}>
-          <Row label="App">
-            <span className="text-sm text-gray-400">{t('settings_app_name')}</span>
-          </Row>
-          <Row label={t('settings_based_on')}>
-            <span className="text-xs text-gray-400 text-right leading-tight max-w-[180px]">{t('settings_book_name')}</span>
-          </Row>
-          <Row label={t('settings_version')}>
-            <span className="text-sm text-gray-400">v0.6</span>
-          </Row>
-          <Row label={t('settings_words_included')} border={false}>
-            <span className="text-sm text-gray-400">{totalWords}</span>
-          </Row>
-        </Section>
-
+        {/* ─── Acerca de ───────────────────────────────────────────────── */}
+        <JSection label={t('settings_about')} cn="关于" />
+        <JCard padding="0">
+          <ProfileRow l={t('settings_app_label')} v="Aprende Chino" first />
+          <ProfileRow l={t('settings_version')} v="v0.7" />
+          <ProfileRow l={t('settings_words_included')} v={totalWords} />
+        </JCard>
       </div>
+
+      {/* Picker de avatares */}
+      {showPicker && (
+        <AvatarPicker
+          currentId={profile.avatarId}
+          gender={profile.gender}
+          onSelect={handleAvatarChange}
+          onClose={() => setShowPicker(false)}
+        />
+      )}
     </div>
   );
 }
