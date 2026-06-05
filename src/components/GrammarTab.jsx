@@ -1,9 +1,10 @@
 // src/components/GrammarTab.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { loadGrammarData } from '@/utils/loadContent.js';
 
-function PatternCard({ pattern, accent }) {
+function PatternCard({ pattern }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
@@ -41,7 +42,7 @@ function PatternCard({ pattern, accent }) {
                 <div key={i} className="rounded-lg p-3" style={{ background: J.paper }}>
                   <p className="text-base font-medium" style={{ color: J.ink }}>{ex.zh}</p>
                   <p className="text-xs mt-0.5" style={{ color: J.jade }}>{ex.pinyin}</p>
-                  <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{ex.es}</p>
+                  <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{ex.translation ?? ex.es}</p>
                 </div>
               ))}
             </div>
@@ -52,7 +53,7 @@ function PatternCard({ pattern, accent }) {
   );
 }
 
-function StructureCard({ structure, accent }) {
+function StructureCard({ structure }) {
   return (
     <div className="rounded-xl p-4" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
       <h4 className="font-semibold text-sm mb-2" style={{ color: J.ink }}>{structure.title}</h4>
@@ -63,7 +64,7 @@ function StructureCard({ structure, accent }) {
       <div className="rounded-lg p-3 mb-2" style={{ background: J.paper }}>
         <p className="text-base" style={{ color: J.ink }}>{structure.example}</p>
         <p className="text-xs mt-0.5" style={{ color: J.jade }}>{structure.examplePinyin}</p>
-        <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{structure.exampleEs}</p>
+        <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{structure.exampleTranslation ?? structure.exampleEs}</p>
       </div>
       {structure.note && (
         <p className="text-xs leading-relaxed" style={{ color: J.mute }}>{structure.note}</p>
@@ -72,13 +73,27 @@ function StructureCard({ structure, accent }) {
   );
 }
 
-export default function GrammarTab({ grammarData, accent }) {
-  const { t } = useTranslation();
+export default function GrammarTab({ lessonNum }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
+
+  // Cargamos los datos del idioma activo en demanda. El chunk de gramática
+  // resultante pesa ~7-8 kB gzip (un solo idioma) en lugar de ~42 kB (los 6).
+  const [grammarData, setGrammarData] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    loadGrammarData(lang).then(all => {
+      if (!alive) return;
+      setGrammarData(all[lessonNum] || null);
+    });
+    return () => { alive = false; };
+  }, [lang, lessonNum]);
 
   if (!grammarData) {
     return (
-      <div className="pt-4 text-center text-sm" style={{ color: J.mute }}>
-        {t('grammar_not_available', 'Grammar content not available yet.')}
+      <div className="pt-6 text-center text-sm" style={{ color: J.mute }}>
+        {t('grammar_not_available', 'Loading…')}
       </div>
     );
   }
@@ -101,7 +116,7 @@ export default function GrammarTab({ grammarData, accent }) {
           </p>
           <div className="space-y-2">
             {grammarData.patterns.map(p => (
-              <PatternCard key={p.id} pattern={p} accent={accent} />
+              <PatternCard key={p.id} pattern={p} />
             ))}
           </div>
         </div>
@@ -115,7 +130,7 @@ export default function GrammarTab({ grammarData, accent }) {
           </p>
           <div className="space-y-3">
             {grammarData.structures.map(s => (
-              <StructureCard key={s.id} structure={s} accent={accent} />
+              <StructureCard key={s.id} structure={s} />
             ))}
           </div>
         </div>

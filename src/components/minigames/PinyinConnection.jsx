@@ -4,9 +4,7 @@ import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
-
-// --- Helpers ---
-const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 
 // --- Componente Principal ---
 export default function PinyinConnection({ goBack, characters = [], onTrackResult }) {

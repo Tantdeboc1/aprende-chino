@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { shuffle } from "@/utils/arrayUtils.js";
 
 export default function RadicalsQuiz2({ goBack, radicals }) {
   const { t } = useTranslation();
@@ -34,20 +35,20 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
       usedRadicals.add(correctRadical.radical);
 
       // Generar opciones incorrectas (otros significados de radicales)
-      const otherMeanings = radicals
-        .filter(r => r.radical !== correctRadical.radical && r.meaning && !usedRadicals.has(r.radical))
-        .sort(() => Math.random() - 0.5)
+      const otherMeanings = shuffle(
+        radicals.filter(r => r.radical !== correctRadical.radical && r.meaning && !usedRadicals.has(r.radical))
+      )
         .slice(0, 3)
         .map(r => r.meaning);
 
-      const allOptions = [correctRadical.meaning, ...otherMeanings]
-        .sort(() => Math.random() - 0.5);
+      const allOptions = shuffle([correctRadical.meaning, ...otherMeanings]);
 
       questions.push({
         id: i,
         radical: correctRadical.radical,
         pinyin: correctRadical.pinyin,
         correctAnswer: correctRadical.meaning,
+        options: allOptions,
       });
     }
 
@@ -254,7 +255,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
           {/* Opciones de respuesta */}
           <div className="space-y-3">
-            {currentQ.options.map((option, index) => {
+            {currentQ.options.map((option) => {
               const isCorrect = option === currentQ.correctAnswer;
               const isSelected = selectedAnswer === option;
 

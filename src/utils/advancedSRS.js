@@ -31,7 +31,6 @@ export class AdvancedSRS {
       interval = 0,
       ease = this.initialEase,
       repetitions = 0,
-      lastReviewDate = null
     } = cardData;
 
     // Validar respuesta

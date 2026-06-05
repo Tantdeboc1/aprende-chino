@@ -144,6 +144,38 @@ const LESSONS = [
     titleZh: '你明天几点有课？',
     subtitleKey: 'lesson_4_subtitle',
   },
+  {
+    key: 'lesson-5',
+    num: 5,
+    color: { border: J.red, bar: J.red, text: J.redDeep, icon: J.redBg },
+    titleKey: 'lesson_5_title',
+    titleZh: '祝你生日快乐',
+    subtitleKey: 'lesson_5_subtitle',
+  },
+  {
+    key: 'lesson-6',
+    num: 6,
+    color: { border: J.sand, bar: J.sand, text: J.sandDeep, icon: J.sandBg },
+    titleKey: 'lesson_6_title',
+    titleZh: '图书馆在食堂北边',
+    subtitleKey: 'lesson_6_subtitle',
+  },
+  {
+    key: 'lesson-7',
+    num: 7,
+    color: { border: J.sand, bar: J.sand, text: J.sandDeep, icon: J.sandBg2 || J.sandBg },
+    titleKey: 'lesson_7_title',
+    titleZh: '苹果多少钱一斤',
+    subtitleKey: 'lesson_7_subtitle',
+  },
+  {
+    key: 'lesson-8',
+    num: 8,
+    color: { border: J.jade, bar: J.jade, text: J.jadeDeep, icon: J.jadeBg },
+    titleKey: 'lesson_8_title',
+    titleZh: '我全身都不舒服',
+    subtitleKey: 'lesson_8_subtitle',
+  },
 ];
 
 function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
@@ -274,7 +306,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           >
             <img
               src={avatar.src}
-              alt=""
+              alt={avatar.label || 'Avatar'}
               draggable={false}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />

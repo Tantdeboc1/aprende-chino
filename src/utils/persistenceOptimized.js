@@ -16,7 +16,7 @@ let db = null;
 const initDB = async () => {
   if (db) return db;
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const request = indexedDB.open(DB_NAME, 1);
 
     request.onupgradeneeded = (event) => {

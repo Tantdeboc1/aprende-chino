@@ -36,6 +36,7 @@ const TranslationGame  = lazy(() => import('@/components/minigames/TranslationGa
 const CompleteSentence = lazy(() => import('@/components/minigames/CompleteSentence.jsx'));
 const DialogueOrder    = lazy(() => import('@/components/minigames/DialogueOrder.jsx'));
 const FindIntruder     = lazy(() => import('@/components/minigames/FindIntruder.jsx'));
+const PronunciationPractice = lazy(() => import('@/components/minigames/PronunciationPractice.jsx'));
 
 export function useNavigation(
   screen,
@@ -183,6 +184,7 @@ export function useNavigation(
       Component = TranslationGame;
       props = {
         goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
       };
     }
 
@@ -190,6 +192,7 @@ export function useNavigation(
       Component = CompleteSentence;
       props = {
         goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
       };
     }
 
@@ -197,6 +200,7 @@ export function useNavigation(
       Component = DialogueOrder;
       props = {
         goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
       };
     }
 
@@ -204,6 +208,15 @@ export function useNavigation(
       Component = FindIntruder;
       props = {
         goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
+      };
+    }
+
+    if (screen === 'pronunciation-practice') {
+      Component = PronunciationPractice;
+      props = {
+        goBack: () => { navigateTo('minigames'); },
+        selectedLesson,
       };
     }
 

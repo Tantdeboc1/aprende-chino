@@ -3,10 +3,14 @@ import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
 
 const LESSON_ACCENT = {
-  1: { bg: 'bg-[#c8392f]',    border: 'border-[#c8392f]',    text: 'text-[#c8392f]',    dot: 'bg-[#c8392f]',    activePill: 'bg-[#c8392f] text-[#fbf5e6] border-transparent' },
+  1: { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]', dot: 'bg-[#c8392f]', activePill: 'bg-[#c8392f] text-[#fbf5e6] border-transparent' },
   2: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#b88a3e]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
   3: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#f0c862]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
-  4: { bg: 'bg-[#2f6b4a]',  border: 'border-[#2f6b4a]',  text: 'text-[#5a8f72]',  dot: 'bg-[#5a8f72]',  activePill: 'bg-[#2f6b4a] text-[#fbf5e6] border-transparent' },
+  4: { bg: 'bg-[#2f6b4a]', border: 'border-[#2f6b4a]', text: 'text-[#5a8f72]', dot: 'bg-[#5a8f72]', activePill: 'bg-[#2f6b4a] text-[#fbf5e6] border-transparent' },
+  5: { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]', dot: 'bg-[#c8392f]', activePill: 'bg-[#c8392f] text-[#fbf5e6] border-transparent' },
+  6: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#b88a3e]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
+  7: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]', dot: 'bg-[#f0c862]', activePill: 'bg-[#b88a3e] text-[#fbf5e6] border-transparent' },
+  8: { bg: 'bg-[#2f6b4a]', border: 'border-[#2f6b4a]', text: 'text-[#5a8f72]', dot: 'bg-[#5a8f72]', activePill: 'bg-[#2f6b4a] text-[#fbf5e6] border-transparent' },
 };
 
 const GraduationCap = () => (
@@ -46,7 +50,7 @@ const Gamepad = () => (
   </svg>
 );
 
-function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelectedLesson, lessonsData = [], onChangeLessons }) {
+function Menu({ userName, navigateTo, dailyComplete, selectedLesson, setSelectedLesson, lessonsData = [] }) {
   const { t } = useTranslation();
 
   const accent = selectedLesson ? (LESSON_ACCENT[selectedLesson] || LESSON_ACCENT[1]) : null;

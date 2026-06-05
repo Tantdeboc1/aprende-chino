@@ -4,10 +4,7 @@ import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
-
-// --- Helpers ---
-// Función para barajar un array
-const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 
 // --- Componente Principal ---
 export default function TimeRace({ goBack, characters = [], onTrackResult }) {
@@ -26,14 +23,24 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
     const shuffled = shuffleArray(characters);
     const correctChar = shuffled[0];
-    const options = shuffled.slice(1, 4).map(c => c.meaning);
-    options.push(correctChar.meaning);
+
+    // Distractores: significados distintos al correcto y sin repetir entre sí,
+    // para evitar dos botones iguales o dos respuestas "correctas".
+    const distractors = [];
+    const seen = new Set([correctChar.meaning]);
+    for (const c of shuffled.slice(1)) {
+      if (seen.has(c.meaning)) continue;
+      seen.add(c.meaning);
+      distractors.push(c.meaning);
+      if (distractors.length === 3) break;
+    }
+    const options = shuffleArray([correctChar.meaning, ...distractors]);
 
     setCurrentQuestion({
       character: correctChar.char,
       correctMeaning: correctChar.meaning,
       charObj: correctChar,
-      options: shuffleArray(options),
+      options,
     });
     setFeedback(null);
     setSelectedAnswer(null);

@@ -1,6 +1,7 @@
 // src/components/learn/Characters/Quiz.jsx
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { shuffle } from "@/utils/arrayUtils.js";
 
 function pickN(arr, n) {
   const copy = [...arr];
@@ -21,11 +22,11 @@ const QUIZ_MODES = [
 function buildQuestion(mode, pool) {
   const correct   = pool[Math.floor(Math.random() * pool.length)];
   const wrongPool = pool.filter(c => c.char !== correct.char);
-  const options   = [...pickN(wrongPool, 3), correct].sort(() => Math.random() - 0.5);
+  const options   = shuffle([...pickN(wrongPool, 3), correct]);
   return { correct, options, mode };
 }
 
-export default function Quiz({ goBack, characters = [], speakChinese, onTrackResult }) {
+export default function Quiz({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
   const [quizMode, setQuizMode]         = useState('char_to_meaning');
   const [questions, setQuestions]       = useState([]);

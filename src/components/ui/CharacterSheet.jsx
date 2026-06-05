@@ -189,6 +189,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
           </div>
           <button
             onClick={onClose}
+            aria-label="Cerrar"
             className="p-1"
             style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer', fontSize: 20, fontWeight: 700 }}
           >

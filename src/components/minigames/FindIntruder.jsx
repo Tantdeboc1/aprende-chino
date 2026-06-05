@@ -9,13 +9,9 @@ import { playSound } from '@/utils/gameAudio.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
+import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
 
-const LESSON_COLORS = {
-  1: { bg: 'bg-[#c8392f]',    border: 'border-[#c8392f]',    text: 'text-[#c8392f]'    },
-  2: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]' },
-  3: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]' },
-  4: { bg: 'bg-[#2f6b4a]',  border: 'border-[#2f6b4a]',  text: 'text-[#2f6b4a]'  },
-};
+import { LESSON_COLORS, LESSON_NUMBERS } from '@/styles/lessonColors.js';
 const DEFAULT_COLOR = { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]' };
 
 function buildRound(lessonFilter) {
@@ -28,7 +24,7 @@ function buildRound(lessonFilter) {
   }));
 }
 
-export default function FindIntruder({ goBack }) {
+export default function FindIntruder({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
 
   const [rounds, setRounds]             = useState([]);
@@ -38,7 +34,8 @@ export default function FindIntruder({ goBack }) {
   const [showHint, setShowHint]         = useState(false);
   const [score, setScore]               = useState(0);
   const [done, setDone]                 = useState(false);
-  const [lessonFilter, setLessonFilter] = useState(null);
+  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
+  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
 
   const initRound = useCallback((filter) => {
     const r = buildRound(filter);
@@ -164,7 +161,7 @@ export default function FindIntruder({ goBack }) {
           <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[#c8392f] text-[#fbf5e6] border-transparent' : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
             {t('sov_all_lessons')}
           </button>
-          {[1, 2, 3, 4].map(n => (
+          {LESSON_NUMBERS.map(n => (
             <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[#fbf5e6] border-transparent` : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
               L{n}
             </button>

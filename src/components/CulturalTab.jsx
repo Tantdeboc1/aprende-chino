@@ -1,15 +1,35 @@
 // src/components/CulturalTab.jsx
 // Tab de notas culturales con tarjetas expandibles
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import culturalData from '@/data/culturalData.js';
+import { loadCulturalData } from '@/utils/loadContent.js';
 
-export default function CulturalTab({ lessonNum, accent }) {
-  const { t } = useTranslation();
+export default function CulturalTab({ lessonNum }) {
+  const { t, i18n } = useTranslation();
   const [openId, setOpenId] = useState(null);
+  const lang = i18n.language;
 
-  const notes = culturalData[lessonNum] || [];
+  // Carga el chunk del idioma activo en demanda. Solo se descarga ~10 kB gzip
+  // en lugar de los 60 kB del archivo multi-idioma completo.
+  const [notes, setNotes] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    loadCulturalData(lang).then(all => {
+      if (!alive) return;
+      setNotes(all[lessonNum] || []);
+    });
+    return () => { alive = false; };
+  }, [lang, lessonNum]);
+
+  if (notes === null) {
+    return (
+      <div className="pt-6 text-center text-sm" style={{ color: J.mute }}>
+        {t('culture_not_available', 'Loading…')}
+      </div>
+    );
+  }
 
   if (notes.length === 0) {
     return (

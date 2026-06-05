@@ -1,5 +1,5 @@
 // src/components/ExamMode.jsx
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { saveExamResult, getExamHistory } from '@/utils/progress.js';

@@ -81,7 +81,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
               placeholder={t('radicals_search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#f8f1de] border border-[rgba(28,24,19,0.18)] rounded-lg py-3 pl-10 pr-4 text-[#1c1813] placeholder-[#928a76] focus:outline-none focus:border-[#2f6b4a] focus:ring-1 focus:ring-[#2f6b4a]"
+              className="w-full bg-[#f8f1de] border border-[rgba(28,24,19,0.32)] rounded-lg py-3 pl-10 pr-4 text-[#1c1813] placeholder-[#6e6757] focus:outline-none focus:border-[#2f6b4a] focus:ring-1 focus:ring-[#2f6b4a]"
             />
             {searchTerm && (
               <button
@@ -156,7 +156,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {groupRadicals.map((radical, index) => (
+                {groupRadicals.map((radical) => (
                   <div
                     key={radical.radical}
                     className="bg-[#f8f1de] rounded-lg p-4 hover:bg-[#bdb39a] transition cursor-pointer border border-[rgba(28,24,19,0.18)]"

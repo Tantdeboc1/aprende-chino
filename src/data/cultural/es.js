@@ -1,0 +1,411 @@
+// src/data/cultural/es.js
+// AUTO-GENERADO por scripts/split-i18n-data.mjs — no editar a mano.
+// Fuente: src/data/culturalData.js (estructura multilingüe).
+//
+// Este archivo solo contiene los textos en es. El loader dinámico carga
+// el archivo del idioma activo para minimizar el chunk descargado por el cliente.
+
+const data = {
+  "1": [
+    {
+      id: "l1_c1",
+      emoji: "礼",
+      title: "Saludos en China",
+      content: "你好 (nǐ hǎo) es el saludo estándar, pero en el día a día los chinos usan más \"¿Has comido?\" (你吃饭了吗？nǐ chīfàn le ma) como forma coloquial de saludar. Preguntar por el bienestar ajeno es señal de cortesía y cuidado social."
+    },
+    {
+      id: "l1_c2",
+      emoji: "面",
+      title: "El concepto de \"面子\" (Mianzi)",
+      content: "La 面子 (miànzi, \"cara social\") es fundamental en la cultura china. Evitar avergonzar a alguien públicamente es una norma no escrita básica. En conversaciones cotidianas, se prefieren respuestas indirectas o evasivas si la respuesta directa pudiera causar vergüenza."
+    },
+    {
+      id: "l1_c3",
+      emoji: "茶",
+      title: "El té como ritual de bienvenida",
+      content: "Ofrecer té es la forma tradicional de dar la bienvenida a alguien en China. Rechazar el té puede interpretarse como descortés. La cultura del té (茶文化, chá wénhuà) es milenaria y cada región tiene sus propias variedades: té verde de Hangzhou, pu-erh de Yunnan, oolong de Fujian…"
+    },
+    {
+      id: "l1_c4",
+      emoji: "别",
+      title: "Formas de despedirse",
+      content: "再见 (zàijiàn) es el equivalente a \"adiós\", pero en contextos informales se usa 拜拜 (bāibāi, del inglés \"bye-bye\"). En entornos formales o con personas mayores, se añade respeto con 您慢走 (nín màn zǒu, \"vaya despacio, tenga cuidado\")."
+    },
+    {
+      id: "l1_c5",
+      emoji: "您",
+      title: "您 vs 你 — el tú respetuoso",
+      content: "您 (nín) es la forma respetuosa de 你 (nǐ). Se usa con personas mayores, profesores, clientes, suegros o desconocidos en contextos formales. En el norte de China (sobre todo Pekín) se oye constantemente; en el sur algo menos. Una vez que tu interlocutor te tutea (cambia a 你), tú también puedes hacerlo. 您们 no se usa; el plural es 你们."
+    },
+    {
+      id: "l1_c6",
+      emoji: "名",
+      title: "Tarjetas de visita (名片)",
+      content: "En contextos profesionales se intercambia la 名片 (míngpiàn, tarjeta de visita) con ambas manos, el texto orientado hacia el receptor. Recibirla y guardarla rápido en el bolsillo trasero se considera falta de respeto: tómala, léela unos segundos y déjala visible sobre la mesa durante la reunión. Suele venir en chino por un lado e inglés por el otro."
+    },
+    {
+      id: "l1_c7",
+      emoji: "微",
+      title: "WeChat: la puerta de entrada social",
+      content: "En China casi nadie pide el número de teléfono al conocerse: se pide 加个微信吧 (jiā ge Wēixìn ba, \"añádeme en WeChat\"). 微信 (WeChat) es a la vez chat, red social, pasarela de pagos, cartera digital y mini-tiendas. Tener WeChat es prácticamente imprescindible para moverse en China."
+    },
+    {
+      id: "l1_c8",
+      emoji: "老",
+      title: "Honoríficos: 老 / 小 + apellido",
+      content: "Entre conocidos del trabajo o el barrio, se usa 老 (lǎo, \"viejo\") o 小 (xiǎo, \"pequeño\") delante del apellido: 老王 (Wáng mayor que tú), 小李 (Lǐ más joven). No se traducen literalmente — son tratamientos afectuosos, no juicios sobre la edad. Con superiores o personas muy mayores se prefiere apellido + título profesional: 王老师 (profesor Wang), 李医生 (doctor Li)."
+    }
+  ],
+  "2": [
+    {
+      id: "l2_c1",
+      emoji: "族",
+      title: "China y su diversidad étnica",
+      content: "China tiene 56 grupos étnicos oficiales. El mayoritario, el Han (汉族, Hàn zú), representa el 91% de la población. Los otros 55 grupos tienen sus propias lenguas, costumbres y tradiciones. El mandarín (普通话, pǔtōnghuà) es la lengua oficial y vehicular del país."
+    },
+    {
+      id: "l2_c2",
+      emoji: "名",
+      title: "Los nombres chinos",
+      content: "En China el apellido va primero. Por ejemplo, 王明 (Wáng Míng): 王 es el apellido y 明 el nombre. Los nombres suelen tener uno o dos caracteres con significado positivo (fuerza, belleza, sabiduría…). Al dirigirse a alguien por su nombre completo, el apellido siempre precede al nombre propio."
+    },
+    {
+      id: "l2_c3",
+      emoji: "学",
+      title: "La importancia de la educación",
+      content: "La educación es un valor central en China, influenciado por el confucianismo. El examen imperial (科举, kējǔ) duró más de mil años y marcó la meritocracia. Hoy el 高考 (gāokǎo), examen nacional universitario, es uno de los más competitivos del mundo y determina en gran medida el futuro de los jóvenes."
+    },
+    {
+      id: "l2_c4",
+      emoji: "言",
+      title: "Regiones y dialectos",
+      content: "Aunque el mandarín es la lengua oficial, China tiene decenas de dialectos: cantonés (广东话), shanghainés (沪语), min del sur (闽南语)… Pueden ser mutuamente ininteligibles. La escritura china unificada es lo que ha mantenido cohesionada la comunicación a lo largo de la historia."
+    },
+    {
+      id: "l2_c5",
+      emoji: "港",
+      title: "港澳台 — Hong Kong, Macao y Taiwán",
+      content: "Tres territorios chino-hablantes con realidades muy distintas: 香港 (Hong Kong) y 澳门 (Macao) son Regiones Administrativas Especiales con sus propias monedas y leyes (\"un país, dos sistemas\"). 台湾 (Taiwán) se gobierna de forma independiente desde 1949 pero Pekín la considera parte de China. En los tres se escribe con caracteres tradicionales (繁体字), no simplificados (简体字) como en la China continental."
+    },
+    {
+      id: "l2_c6",
+      emoji: "侨",
+      title: "La diáspora china (华侨)",
+      content: "Hay más de 60 millones de chinos viviendo fuera de China, las mayores comunidades en el sudeste asiático (Indonesia, Tailandia, Malasia), EEUU y Canadá. A los descendientes nacidos fuera se les llama 华人 (huárén), y a los emigrantes con pasaporte chino 华侨 (huáqiáo). Los barrios chinos (唐人街, Tángrénjiē, \"calle de los Tang\") existen en casi todas las grandes ciudades del mundo."
+    },
+    {
+      id: "l2_c7",
+      emoji: "考",
+      title: "HSK: el examen oficial de chino",
+      content: "El HSK (汉语水平考试, Hànyǔ Shuǐpíng Kǎoshì) es el examen oficial de chino para extranjeros, equivalente al TOEFL del inglés. Tiene 6 niveles (HSK 1-6) en la versión clásica y 9 en la nueva versión HSK 3.0. Acabar los temas 1-4 de este libro corresponde aproximadamente a HSK 1; los temas 5-8 cubren parte de HSK 2."
+    },
+    {
+      id: "l2_c8",
+      emoji: "签",
+      title: "Viajar a China: pasaporte y visado",
+      content: "Para entrar en China los españoles necesitan visado salvo estancias cortas (China ha activado pruebas de exención de 15-30 días). El visado de turismo se llama 旅游签证 (lǚyóu qiānzhèng), el de estudios 学生签证. Al llegar hay que registrarse en la comisaría local en 24h si no te alojas en hotel. La aduana china es estricta con la carne, lácteos y semillas."
+    }
+  ],
+  "3": [
+    {
+      id: "l3_c1",
+      emoji: "家",
+      title: "La familia en la cultura china",
+      content: "La familia (家庭, jiātíng) es el núcleo de la sociedad china. El confucianismo establece la piedad filial (孝, xiào) como virtud suprema: respetar y cuidar a los padres y ancianos es una obligación moral profunda. Las decisiones importantes se suelen tomar en consenso familiar."
+    },
+    {
+      id: "l3_c2",
+      emoji: "子",
+      title: "La política del hijo único y sus consecuencias",
+      content: "Vigente de 1980 a 2015, la política del hijo único limitó la mayoría de familias urbanas a un solo descendiente. Esto generó la \"generación de los pequeños emperadores\" y un desequilibrio de género. Desde 2021 se permite tener hasta tres hijos para frenar el envejecimiento de la población."
+    },
+    {
+      id: "l3_c3",
+      emoji: "亲",
+      title: "El sistema de parentesco en chino",
+      content: "El chino tiene palabras distintas para cada familiar según su posición exacta: 爷爷 (yéye, abuelo paterno), 外公 (wàigōng, abuelo materno), 哥哥 (gēge, hermano mayor), 弟弟 (dìdi, hermano menor)… Esta precisión refleja la importancia del orden jerárquico en la familia tradicional china."
+    },
+    {
+      id: "l3_c4",
+      emoji: "节",
+      title: "Celebraciones familiares",
+      content: "Las reuniones familiares más importantes del año son el Año Nuevo Chino (春节, Chūnjié) y el Festival del Medio Otoño (中秋节, Zhōngqiū Jié). Durante la Primavera China (春运, chūnyùn), cientos de millones de personas viajan para reencontrarse con su familia en lo que es la mayor migración humana periódica del mundo."
+    },
+    {
+      id: "l3_c5",
+      emoji: "婚",
+      title: "Bodas chinas: rojo y dos ceremonias",
+      content: "En la boda tradicional china la novia viste de rojo, no de blanco. Hoy se combinan dos ceremonias: la tradicional china por la mañana y otra \"occidental\" con vestido blanco por la tarde. El novio \"rescata\" a la novia en casa de sus padres pagando 红包 (sobres rojos) a las amigas. En el banquete se brinda con cada mesa por turnos — pueden ser 20 brindis o más."
+    },
+    {
+      id: "l3_c6",
+      emoji: "包",
+      title: "红包 — el sobre rojo",
+      content: "El 红包 (hóngbāo) es el sobre rojo con dinero que se regala en bodas, Año Nuevo, cumpleaños o como propina simbólica. Los niños lo reciben de padres y abuelos en 春节. La cantidad suele ser un número par excepto el 4 (asociado a la muerte): el 6 (suerte) y el 8 (riqueza, suena como 发 fā) son los favoritos. Existe la versión digital en WeChat (微信红包), que se ha vuelto un juego social."
+    },
+    {
+      id: "l3_c7",
+      emoji: "老",
+      title: "Cuidar de los ancianos: la nueva ley",
+      content: "La piedad filial (孝, xiào) está incluso recogida en la ley: desde 2013 los hijos están obligados legalmente a visitar a sus padres mayores con regularidad. Muchos abuelos viven con los hijos y cuidan de los nietos mientras los padres trabajan, formando lo que se llama 三代同堂 (sān dài tóngtáng, \"tres generaciones bajo un mismo techo\")."
+    },
+    {
+      id: "l3_c8",
+      emoji: "姓",
+      title: "Los apellidos chinos",
+      content: "Aunque existen miles de apellidos chinos, los 100 más comunes (百家姓) cubren al 85% de la población. Los más frecuentes son 王 (Wáng), 李 (Lǐ), 张 (Zhāng), 刘 (Liú) y 陈 (Chén). La mayoría son monosílabos; los apellidos compuestos como 欧阳 (Ōuyáng) o 司马 (Sīmǎ) son raros y suelen sonar muy \"literarios\". Las mujeres conservan su apellido al casarse."
+    }
+  ],
+  "4": [
+    {
+      id: "l4_c1",
+      emoji: "时",
+      title: "La puntualidad y el tiempo en China",
+      content: "En contextos formales (reuniones de negocios, exámenes, eventos oficiales) la puntualidad es muy valorada. En contextos sociales es algo más flexible. El dicho 时间就是金钱 (shíjiān jiù shì jīnqián, \"el tiempo es oro\") refleja el ritmo frenético de las ciudades chinas modernas."
+    },
+    {
+      id: "l4_c2",
+      emoji: "书",
+      title: "El sistema educativo chino",
+      content: "La jornada escolar en China es larga: los estudiantes pueden tener clases desde las 7h hasta las 17h, más deberes. La cultura del estudio es muy intensa. Las academias extraescolares (补习班, bǔxí bān) son muy comunes, especialmente en matemáticas, inglés y chino. El 高考 determina las oportunidades universitarias."
+    },
+    {
+      id: "l4_c3",
+      emoji: "月",
+      title: "El calendario lunar chino",
+      content: "China usa simultáneamente el calendario gregoriano (para la vida cotidiana y oficial) y el calendario lunar (农历, nónglì, para festividades tradicionales). El Año Nuevo Chino cae siempre entre el 21 de enero y el 20 de febrero. Cada año está asociado a uno de los 12 animales del zodiaco chino."
+    },
+    {
+      id: "l4_c4",
+      emoji: "城",
+      title: "El ritmo de vida en las ciudades chinas",
+      content: "Ciudades como Pekín, Shanghái o Shenzhen tienen un ritmo de vida muy acelerado. La cultura laboral conocida como 996 (9h a 22h, 6 días a la semana) es habitual en tecnología. El metro de Shanghái es el más extenso del mundo. La digitalización es total: se paga con móvil (WeChat Pay / Alipay) en casi todos los comercios."
+    },
+    {
+      id: "l4_c5",
+      emoji: "午",
+      title: "La siesta china (午休)",
+      content: "A diferencia de la imagen del trabajador chino sin descanso, la 午休 (wǔxiū, siesta del mediodía) es un derecho casi sagrado en colegios, oficinas y fábricas. Después de comer (sobre las 12:30), muchas empresas paran 1-2 horas: la gente apoya la cabeza en la mesa o saca un cojín. Las escuelas tienen literalmente una clase de \"dormir\". Reactivar reuniones a las 13h es casi una ofensa."
+    },
+    {
+      id: "l4_c6",
+      emoji: "钟",
+      title: "Una sola zona horaria para todo el país",
+      content: "A pesar de medir 5.000 km de este a oeste (geográficamente 5 husos horarios), toda China usa la 北京时间 (Běijīng shíjiān, hora de Pekín, UTC+8). Esto provoca que en Xinjiang, en el extremo oeste, el sol pueda salir oficialmente a las 9:30 de la mañana. Los uigures usan en paralelo una \"hora local\" no oficial dos horas atrasada para organizarse."
+    },
+    {
+      id: "l4_c7",
+      emoji: "假",
+      title: "Festivos y \"puentes invertidos\"",
+      content: "China tiene 7 festivos oficiales: Año Nuevo, Año Nuevo Chino, 清明节 (Qingming, día de los difuntos), 1 de mayo, 端午节 (barcos del dragón), 中秋 (Medio Otoño) y 1 de octubre (Día Nacional). Para alargar las vacaciones, el gobierno suele \"mover\" fines de semana: se trabaja sábado o domingo a cambio de un puente más largo. Las semanas de 春节 y 国庆 (1 octubre) son las \"Semanas Doradas\" (黄金周)."
+    },
+    {
+      id: "l4_c8",
+      emoji: "校",
+      title: "Horarios escolares y universitarios",
+      content: "Los colegios suelen entrar a las 7:30-8:00 y salir a las 16:30-17:30, con una pausa larga al mediodía para comer y dormir la siesta. En la universidad, las clases empiezan más temprano de lo que el estudiante europeo espera (8:00 es lo normal), y el almuerzo se hace entre 11:30 y 12:30. Las residencias universitarias suelen tener toque de queda sobre las 22:30-23:00."
+    }
+  ],
+  "5": [
+    {
+      id: "l5_c1",
+      emoji: "寿",
+      title: "Cumpleaños y tallarines de longevidad",
+      content: "En los cumpleaños chinos se comen 长寿面 (chángshòu miàn, \"tallarines de la longevidad\"), unos fideos extra largos que no se deben cortar al cocinar ni morder al comer: cuanto más larga la hebra, más larga la vida que simboliza. También se regala la 寿桃 (shòutáo), un panecillo dulce con forma de melocotón, fruta vinculada a la inmortalidad en el taoísmo."
+    },
+    {
+      id: "l5_c2",
+      emoji: "岁",
+      title: "La edad nominal (虚岁) y la edad real",
+      content: "Tradicionalmente, en China se cuenta la edad de dos maneras: la edad real (周岁, zhōusuì) y la edad nominal (虚岁, xūsuì), que añade un año al nacer y otro en cada Año Nuevo Lunar. Por eso un recién nacido puede tener ya \"2 años\" según el cómputo tradicional. Hoy en la vida oficial se usa la edad real, pero el cómputo tradicional sigue presente en familia, horóscopos y bodas."
+    },
+    {
+      id: "l5_c3",
+      emoji: "龙",
+      title: "El zodiaco chino (生肖)",
+      content: "El horóscopo chino (生肖, shēngxiào) asigna a cada año uno de los 12 animales en este orden: 鼠 rata, 牛 buey, 虎 tigre, 兔 conejo, 龙 dragón, 蛇 serpiente, 马 caballo, 羊 cabra, 猴 mono, 鸡 gallo, 狗 perro, 猪 cerdo. El dragón se considera el signo más auspicioso y suele haber un repunte de nacimientos en los años del dragón. La pregunta 你属什么？ (¿de qué animal eres?) sirve también para averiguar la edad con discreción."
+    },
+    {
+      id: "l5_c4",
+      emoji: "礼",
+      title: "Regalos: qué sí y qué no",
+      content: "En China los regalos se ofrecen y se reciben con las dos manos. Se rechazan una o dos veces por cortesía antes de aceptarlos. Las cajas de bombones, fruta o té son regalos seguros. Evita regalar relojes (送钟 suena igual que 送终, \"asistir a un funeral\"), pañuelos blancos, paraguas (伞, sǎn, suena a 散, \"separarse\") o cualquier cosa en grupos de cuatro (4 = 四 sì, parecido a 死 sǐ, \"muerte\")."
+    },
+    {
+      id: "l5_c5",
+      emoji: "蛋",
+      title: "El pastel de cumpleaños chino",
+      content: "El 生日蛋糕 (shēngrì dàngāo) moderno es una importación occidental, popularizado por cadenas como 好利来 (Holiland) o 85度C. Suele ser de nata ligera y fruta fresca — los chinos lo prefieren menos dulce y menos denso que el europeo. La gente joven lo combina con la 长寿面 tradicional: primero los tallarines, después el pastel y los regalos."
+    },
+    {
+      id: "l5_c6",
+      emoji: "麦",
+      title: "KTV: cantar es la fiesta",
+      content: "Las 聚会 (reuniones) más típicas entre amigos suelen acabar en un 唱KTV (karaoke). El KTV chino no es un escenario público sino un salón privado con sofás, comida y bebida; se reserva por horas. Cantar es prácticamente obligatorio — negarse es romper el ambiente. Es habitual ir tras una cena de cumpleaños o de fin de exámenes."
+    },
+    {
+      id: "l5_c7",
+      emoji: "岁",
+      title: "Edades clave en la vida china",
+      content: "La mayoría de edad civil en China es a los 18 años (votar, conducir). La edad legal para beber alcohol es también 18. Pero hay edades simbólicas muy celebradas: 一岁 (primer cumpleaños, 抓周 — el bebé escoge un objeto que predice su futuro), 60 (大寿, primer ciclo completo del zodiaco), y los múltiplos de 10 a partir de los 60, cada vez más fastuosos."
+    },
+    {
+      id: "l5_c8",
+      emoji: "宴",
+      title: "El banquete chino: orden y brindis",
+      content: "En un 宴会 (yànhuì, banquete) la mesa redonda tiene jerarquía clara: el anfitrión se sienta de cara a la puerta, el invitado de honor a su derecha. La comida llega en plato giratorio (转盘); siempre empieza a comer el invitado principal. Brindar (干杯) es ritual social: con superiores, mantén tu vaso ligeramente más bajo que el suyo. No clavar nunca los palillos verticalmente en el arroz — recuerda el incienso de los funerales."
+    }
+  ],
+  "6": [
+    {
+      id: "l6_c1",
+      emoji: "校",
+      title: "El campus universitario chino",
+      content: "Las universidades chinas suelen ser auténticas ciudades cerradas: dentro del 校园 (xiàoyuán) están las residencias (宿舍), comedores (食堂), bibliotecas, bancos, supermercados, polideportivos e incluso hospitales. La mayoría de estudiantes vive en el campus durante toda la carrera. El acceso suele controlarse en la 校门 (xiàomén) con tarjeta estudiantil."
+    },
+    {
+      id: "l6_c2",
+      emoji: "巷",
+      title: "Los 胡同 (hútòng) de Pekín",
+      content: "Los 胡同 son los callejones tradicionales de Pekín, formados por hileras de casas-patio (四合院, sìhéyuàn). Muchos datan de la dinastía Yuan (siglo XIII). Aunque la urbanización moderna ha eliminado muchos, los barrios de 南锣鼓巷 (Nánluógǔxiàng) o 什刹海 (Shíchàhǎi) conservan ese ambiente: bicicletas, vecinos jugando al ajedrez, salones de té y pequeñas tiendas familiares."
+    },
+    {
+      id: "l6_c3",
+      emoji: "向",
+      title: "Orientación cardinal: una obsesión cultural",
+      content: "A diferencia de Europa, los chinos suelen dar direcciones usando los puntos cardinales (北/南/东/西) en lugar de \"izquierda/derecha\". Pekín, diseñada según principios imperiales, está totalmente cuadriculada en ejes norte-sur y este-oeste. Por eso es común oír indicaciones como \"el banco está al norte del comedor\" o \"gira hacia el este en la próxima esquina\"."
+    },
+    {
+      id: "l6_c4",
+      emoji: "饭",
+      title: "El 食堂 universitario",
+      content: "El comedor universitario (食堂) es el centro social del campus: barato, abierto desde temprano hasta tarde y con decenas de ventanillas de cocina regional. Se paga con la tarjeta estudiantil. Las raciones suelen costar entre 8 y 20 yuanes. Es habitual ver a los profesores comiendo en la misma sala que los estudiantes."
+    },
+    {
+      id: "l6_c5",
+      emoji: "宿",
+      title: "La vida en el 宿舍 (dormitorio)",
+      content: "Las residencias universitarias chinas alojan 4-6 estudiantes por habitación, con literas y un escritorio por persona. Hay toque de queda (típicamente 22:30-23:00), corte de luces y duchas comunes. La convivencia tan estrecha genera lazos muy fuertes: a los compañeros de cuarto se les llama 室友 (shìyǒu) y suelen ser amigos para toda la vida. Vivir fuera del campus es raro entre alumnos de grado."
+    },
+    {
+      id: "l6_c6",
+      emoji: "行",
+      title: "Bancos: 中国银行 vs 中国人民银行",
+      content: "No hay que confundir: 中国人民银行 (Banco Popular de China) es el banco central. Para operar como cliente vas a los grandes comerciales: 中国银行 (Bank of China), 工商银行 (ICBC), 建设银行 (CCB), 农业银行 (ABC). Abrir cuenta como extranjero requiere pasaporte y, a veces, tarjeta de residencia. Los cajeros tienen interfaz en inglés y la mayoría aceptan Visa/Mastercard."
+    },
+    {
+      id: "l6_c7",
+      emoji: "位",
+      title: "Cómo pedir indicaciones",
+      content: "En la calle, lo más eficiente es enseñar la dirección en chino (escrita o en el móvil) y preguntar 怎么走？(zěnme zǒu?, \"¿cómo se va?\"). En lugar de \"a la izquierda/derecha\", muchos chinos responderán con puntos cardinales. Aplicaciones como 高德地图 (Gaode Maps) o 百度地图 (Baidu Maps) funcionan mucho mejor que Google Maps, que está bloqueado."
+    },
+    {
+      id: "l6_c8",
+      emoji: "车",
+      title: "Bicicletas y patinetes compartidos",
+      content: "En las ciudades chinas las bicis amarillas (美团 Meituan), azules (哈罗 Hello) y verdes (青桔 Qingju) están en cada esquina: se desbloquean escaneando el QR con el móvil y se dejan en cualquier sitio razonable. Cuestan céntimos por trayecto. Es la forma más rápida de moverse entre el 宿舍, el 食堂 y la 图书馆 en un campus chino."
+    }
+  ],
+  "7": [
+    {
+      id: "l7_c1",
+      emoji: "价",
+      title: "Regatear (讲价) en los mercados",
+      content: "En supermercados y centros comerciales los precios son fijos, pero en mercados callejeros, tiendas de souvenirs o ferias se espera regatear (讲价, jiǎngjià). Una norma orientativa: empieza ofreciendo entre un tercio y la mitad del precio inicial. Frases útiles: 太贵了！(¡muy caro!), 便宜点儿吧 (un poco más barato, va), 算便宜点儿 (hazme un precio mejor)."
+    },
+    {
+      id: "l7_c2",
+      emoji: "斤",
+      title: "El sistema chino de pesos: 斤 y 两",
+      content: "En el mercado la fruta y la verdura se venden en 斤 (jīn), que equivale a 500 g (medio kilo). Un 斤 son 10 两 (liǎng), así que 一两 = 50 g. Cuando preguntes 多少钱一斤？estás preguntando \"¿cuánto cuesta medio kilo?\". Para un kilo se pide 两斤 (dos jin). El sistema métrico oficial coexiste con este sistema tradicional, especialmente en alimentación."
+    },
+    {
+      id: "l7_c3",
+      emoji: "付",
+      title: "Pagar con el móvil: WeChat Pay y Alipay",
+      content: "China ha saltado en buena parte el efectivo y la tarjeta: hoy todo se paga con códigos QR a través de WeChat Pay (微信支付) o Alipay (支付宝). Desde el taxi hasta el puesto de fruta más pequeño aceptan QR. Por eso 可以刷卡吗？(¿se puede pagar con tarjeta?) muchas veces se sustituye por 可以扫码吗？(¿puedo escanear el QR?)."
+    },
+    {
+      id: "l7_c4",
+      emoji: "色",
+      title: "Colores y simbolismo en la ropa",
+      content: "El 红色 (rojo) simboliza la suerte y la felicidad; es el color de bodas, Año Nuevo y sobres regalo (红包, hóngbāo). El 白色 (blanco) y el negro se asocian al luto, por eso se evitan en celebraciones. El 黄色 (amarillo) era el color imperial, reservado al emperador. El 绿色 (verde) tiene una connotación curiosa: regalar un sombrero verde (绿帽子) significa que a alguien le es infiel su pareja."
+    },
+    {
+      id: "l7_c5",
+      emoji: "宝",
+      title: "Taobao y JD: comprar online",
+      content: "El e-commerce chino es probablemente el más avanzado del mundo. 淘宝 (Taobao, del grupo Alibaba) tiene de todo, suele ser barato y se regatea con el vendedor por chat. 京东 (JD.com) es más premium y rápido (entrega en el mismo día en muchas ciudades). 拼多多 (Pinduoduo) ofrece compras grupales con descuento. El 11 de noviembre (双十一, \"doble 11\") es el mayor día de compras del año, mayor que el Black Friday."
+    },
+    {
+      id: "l7_c6",
+      emoji: "场",
+      title: "Mercados húmedos (菜市场)",
+      content: "Aunque los supermercados modernos crecen, en cada barrio sigue habiendo un 菜市场 (càishìchǎng, mercado de verduras y carne). \"Húmedo\" porque el suelo se moja al limpiar pescado y verdura. Ahí se va con bolsa propia, se regatea poco y se compra fresco a diario. Para los chinos mayores es parte fundamental de la rutina y un punto de socialización del barrio."
+    },
+    {
+      id: "l7_c7",
+      emoji: "号",
+      title: "Tallas: del XS chino al XL chino",
+      content: "Las tallas chinas tienden a ser pequeñas en comparación con las europeas. Una M china suele equivaler a una S europea. En camisetas y vaqueros encontrarás dos sistemas: el de tallas (S/M/L/XL) y el numérico tradicional (165/170/175… que es la altura recomendada en cm). En zapatos se usa el sistema europeo o el número del calzado en mm. Pruébate siempre antes de comprar."
+    },
+    {
+      id: "l7_c8",
+      emoji: "票",
+      title: "Tickets y devoluciones (发票)",
+      content: "Cuando pagas en una tienda o restaurante puedes pedir 发票 (fāpiào), la factura oficial impresa con sello rojo. Es válida para gastos de empresa y, en algunos casos, entra en sorteos de la lotería fiscal. Para devolver un producto suele exigirse 发票 + embalaje original; el plazo habitual es 7 días en compras online (sin necesidad de motivo) y 15 días para defectos de fabricación."
+    }
+  ],
+  "8": [
+    {
+      id: "l8_c1",
+      emoji: "医",
+      title: "Medicina tradicional china (中医)",
+      content: "La medicina tradicional china (中医, zhōngyī) sigue muy presente junto a la medicina occidental (西医). Combina hierbas, acupuntura (针灸, zhēnjiǔ), masaje 推拿 (tuīná) y dietética. En la mayoría de hospitales coexisten consultas de 中医 y de 西医, y el paciente puede elegir o combinar. Para el resfriado común mucha gente prefiere remedios herbales como el 板蓝根 (bǎnlángēn)."
+    },
+    {
+      id: "l8_c2",
+      emoji: "挂",
+      title: "挂号: registrarse en el hospital",
+      content: "Antes de ver al médico hay que 挂号 (guàhào), literalmente \"colgar un número\": registrarse en la ventanilla o app del hospital indicando la especialidad (内科 medicina interna, 外科 cirugía, 急诊 urgencias…). Cuanto más prestigioso es el médico, más caro y más difícil conseguir cita. Para urgencias se va a 急诊 directamente."
+    },
+    {
+      id: "l8_c3",
+      emoji: "凉",
+      title: "El miedo al frío y el agua caliente",
+      content: "En la cultura china está muy arraigada la idea de que el frío en el cuerpo provoca enfermedades. Por eso se evita beber agua fría o con hielo, incluso en verano: lo normal es pedir 热水 (rè shuǐ, agua caliente). A las mujeres se les recomienda especialmente cuidarse del frío durante la menstruación y tras dar a luz (坐月子, zuòyuèzi, el \"mes de descanso\" postparto)."
+    },
+    {
+      id: "l8_c4",
+      emoji: "动",
+      title: "Ejercicio matinal en los parques",
+      content: "Pasea por cualquier parque chino a primera hora de la mañana y encontrarás grupos haciendo 太极拳 (tàijíquán), 气功 (qìgōng), baile cuadrado (广场舞), bádminton o caminata. La gente mayor especialmente integra el deporte suave como parte esencial de la rutina diaria. Es habitual la frase 生命在于运动 (shēngmìng zàiyú yùndòng): \"la vida está en el movimiento\"."
+    },
+    {
+      id: "l8_c5",
+      emoji: "药",
+      title: "Farmacias (药店) y automedicación",
+      content: "Las 药店 (yàodiàn) chinas suelen tener dos zonas: 西药 (medicina occidental) y 中药 (hierbas y fórmulas tradicionales). Muchos medicamentos que en Europa requieren receta (antibióticos, ansiolíticos) se compran en China sin ella, aunque la regulación se está endureciendo. Para el resfriado se recomiendan productos como 999 感冒灵 o 板蓝根 (bǎnlángēn). Antes de medicarte por tu cuenta, pregunta — los nombres son distintos."
+    },
+    {
+      id: "l8_c6",
+      emoji: "保",
+      title: "Sanidad pública y seguro médico",
+      content: "China tiene un sistema de seguro médico público (医保, yībǎo) ligado al hukou local que cubre parte de las consultas y medicamentos. Los extranjeros con residencia y contrato pueden acceder. Los hospitales se clasifican por niveles (1-3), siendo los \"3A\" (三甲医院) los grandes hospitales de referencia. Como turista paga directo: una consulta básica cuesta entre 30 y 200 yuanes, y los hospitales internacionales son mucho más caros."
+    },
+    {
+      id: "l8_c7",
+      emoji: "食",
+      title: "Comida y salud: lo \"caliente\" y lo \"frío\"",
+      content: "La dietética china clasifica los alimentos como 热 (calientes), 凉 (fríos) o 温 (templados), independientemente de su temperatura real. Sandía, té verde y pepino son \"fríos\"; jengibre, cordero y chile son \"calientes\". Cuando alguien está enfermo se le aconseja comer 清淡 (qīngdàn, \"ligero y suave\"): congee de arroz (粥), verdura al vapor, evitando frituras, picante y comida fría."
+    },
+    {
+      id: "l8_c8",
+      emoji: "休",
+      title: "Bajas y descanso laboral",
+      content: "Para faltar al trabajo o a clase por enfermedad necesitas un 病假条 (bìngjiàtiáo, justificante médico) sellado por el hospital. El concepto de \"descansar para curarse\" está muy arraigado: la frase 多休息，多喝水 (\"descansa mucho, bebe mucha agua\") es casi una receta universal. Eso sí, la cultura del 996 hace que mucha gente trabaje incluso con fiebre — y se considere \"esfuerzo loable\"."
+    }
+  ]
+};
+
+export default data;

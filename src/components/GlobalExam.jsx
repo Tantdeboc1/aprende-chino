@@ -10,7 +10,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 const TOTAL_TIME = 90; // segundos
 const QUESTIONS_PER_ROUND = 20;
 
-export default function GlobalExam({ goBack, allCharacters, onProgressChange, progress }) {
+export default function GlobalExam({ goBack, allCharacters }) {
   const { t } = useTranslation();
   const [phase, setPhase] = useState('ready'); // 'ready' | 'playing' | 'finished'
   const [questions, setQuestions]   = useState([]);
