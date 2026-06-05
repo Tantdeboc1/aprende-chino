@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { translationPhrases, getCandidates } from '@/data/translationPhrases.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { LESSON_NUMBERS } from '@/styles/lessonColors.js';
+import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
@@ -323,13 +325,9 @@ function playSound(type) {
   } catch (_) {}
 }
 
-function buildRounds() {
-  return shuffle([...translationPhrases]).slice(0, ROUNDS);
-}
-
 // ── Componente principal ─────────────────────────────────────────────────────
-export default function TranslationGame({ goBack }) {
-  const { t } = useTranslation();
+export default function TranslationGame({ goBack, selectedLesson }) {
+  const { t, i18n } = useTranslation();
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -340,16 +338,21 @@ export default function TranslationGame({ goBack }) {
   const [score, setScore]             = useState(0);
   const [done, setDone]               = useState(false);
   const [inputMode, setInputMode]     = useState('pinyin'); // 'pinyin' | 'draw'
+  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
+  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
   const inputRef = useRef(null);
 
-  const initGame = useCallback(() => {
-    setRounds(shuffle([...translationPhrases]).slice(0, ROUNDS));
+  const initGame = useCallback((filter = lessonFilter) => {
+    const pool = filter !== null
+      ? translationPhrases.filter(p => p.lesson === filter)
+      : translationPhrases;
+    setRounds(shuffle([...pool]).slice(0, ROUNDS));
     setCurrentIdx(0); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null); setScore(0);
     setDone(false); setInputMode('pinyin');
-  }, []);
+  }, [lessonFilter]);
 
-  useEffect(() => { initGame(); }, [initGame]);
+  useEffect(() => { initGame(lessonFilter); }, [lessonFilter, initGame]);
 
   useEffect(() => {
     if (!result && inputMode === 'pinyin') inputRef.current?.focus();
@@ -408,7 +411,7 @@ export default function TranslationGame({ goBack }) {
   const handleNext = () => {
     const next = currentIdx + 1;
     if (next >= rounds.length) { setDone(true); return; }
-    setCurrentIdx(next); setBuilt([]); setPinyinInput([]);
+    setCurrentIdx(next); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null);
   };
 
@@ -473,10 +476,39 @@ export default function TranslationGame({ goBack }) {
 
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-4">
 
-        {/* Frase en español */}
+        {/* Filtro de lección */}
+        <div className="flex gap-1.5 flex-wrap">
+          <button
+            onClick={() => setLessonFilter(null)}
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
+              lessonFilter === null
+                ? `${ACCENT_COLOR.bg} text-[#fbf5e6] border-transparent`
+                : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+            }`}
+          >
+            {t('sov_all_lessons') || 'Todas'}
+          </button>
+          {LESSON_NUMBERS.map(n => (
+            <button
+              key={n}
+              onClick={() => setLessonFilter(n)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
+                lessonFilter === n
+                  ? `${ACCENT_COLOR.bg} text-[#fbf5e6] border-transparent`
+                  : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+              }`}
+            >
+              L{n}
+            </button>
+          ))}
+        </div>
+
+        {/* Frase en el idioma del usuario */}
         <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
           <p className="text-xs text-[#928a76] mb-1">{t('translation_translate_label')}</p>
-          <p className="text-[#1c1813] font-semibold text-base leading-snug">{current.es}</p>
+          <p className="text-[#1c1813] font-semibold text-base leading-snug">
+            {current.translations?.[i18n.language] || current.translations?.es || current.es}
+          </p>
         </div>
 
         {/* Zona de construcción */}
@@ -533,7 +565,7 @@ export default function TranslationGame({ goBack }) {
                 if (e.key === 'Backspace' && pinyinInput === '' && built.length > 0) handleDeleteLast();
               }}
               placeholder={t('translation_ime_placeholder')}
-              className={`w-full px-4 py-3 rounded-xl bg-[#fbf5e6] border ${ACCENT_COLOR.border} text-[#1c1813] placeholder-[#928a76] focus:outline-none focus:ring-2 focus:ring-[#c8392f] text-base`}
+              className={`w-full px-4 py-3 rounded-xl bg-[#fbf5e6] border ${ACCENT_COLOR.border} text-[#1c1813] placeholder-[#6e6757] focus:outline-none focus:ring-2 focus:ring-[#c8392f] text-base`}
               autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}
             />
             {candidates.length > 0 && (

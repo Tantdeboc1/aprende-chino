@@ -192,7 +192,7 @@ class AudioCompressor {
         resolve(true);
       };
 
-      audio.onerror = (e) => {
+      audio.onerror = () => {
         reject(new Error(`No se pudo reproducir ${src}`));
       };
 

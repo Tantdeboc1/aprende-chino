@@ -89,6 +89,14 @@ export default function MiniGames({ goBack, navigateTo }) {
       color: 'red',
       badges: [t('badge_easy'), t('badge_vocabulary')],
     },
+    {
+      id: 'pronunciation-practice',
+      title: t('minigames_pronunciation_title', 'Pronunciación'),
+      description: t('minigames_pronunciation_description', 'Di la frase en voz alta y comprueba si te entienden'),
+      cn: '说',
+      color: 'green',
+      badges: [t('badge_medium', 'Media'), t('badge_pronunciation', 'Pronunciación'), '🎙️'],
+    },
   ];
 
   return (

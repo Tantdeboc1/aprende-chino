@@ -61,7 +61,7 @@ export default function ProfileBadge({
       }}>
         <img
           src={avatar.src}
-          alt=""
+          alt={avatar.label || 'Avatar'}
           draggable={false}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />

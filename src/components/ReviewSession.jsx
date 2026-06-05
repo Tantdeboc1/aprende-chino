@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
 import { markDailyActivity } from '@/utils/streak.js';
+import { shuffle } from '@/utils/arrayUtils.js';
 import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 
 // ─── Selección de modo ────────────────────────────────────────────────────────
@@ -344,7 +345,7 @@ export default function ReviewSession({
   const { t } = useTranslation();
 
   // Precalcular las dos colas al montar (no cambian durante la sesión)
-  const dueQueue  = useMemo(() => [...getDueCards(progress, allCharacters)].sort(() => Math.random() - 0.5), []); // eslint-disable-line
+  const dueQueue  = useMemo(() => shuffle(getDueCards(progress, allCharacters)), []); // eslint-disable-line
   const weakQueue = useMemo(() => getWeakCards(progress, allCharacters, 20), []); // eslint-disable-line
 
   // ── Estado de la sesión ──────────────────────────────────────────────────
@@ -405,7 +406,7 @@ export default function ReviewSession({
   }, [current, index, queue, progress, onProgressChange]);
 
   const handleReviewFailed = () => {
-    setQueue(failedQueue.sort(() => Math.random() - 0.5));
+    setQueue(shuffle(failedQueue));
     setFailedQueue([]);
     setIndex(0);
     setFlipped(false);

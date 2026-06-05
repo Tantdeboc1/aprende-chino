@@ -1,12 +1,15 @@
 import { assetUrl } from './utils/assets';
 import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
-import ExamMode from './components/ExamMode.jsx';
+const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
-import LessonDetail from './components/LessonDetail.jsx';
-import SettingsScreen from './components/SettingsScreen.jsx';
-import ReviewSession from './components/ReviewSession.jsx';
+// WelcomeFlow solo se ve la primera vez (sin perfil) — lazy ahorra ~10 kB
+// del bundle inicial a usuarios recurrentes, que son la inmensa mayoría.
+const WelcomeFlow = lazy(() => import('./components/WelcomeFlow.jsx'));
+const LessonDetail = lazy(() => import('./components/LessonDetail.jsx'));
+const SettingsScreen = lazy(() => import('./components/SettingsScreen.jsx'));
+const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
 import SplashScreen from './components/SplashScreen.jsx';
 const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
 import Layout from './components/ui/Layout.jsx';
@@ -74,9 +77,9 @@ export default function App() {
   }, []);
 
   // Datos globales
-  const [appData, setAppData]           = useState(null);
+  const [, setAppData]                  = useState(null);
   const [radicalsData, setRadicalsData] = useState([]);
-  const [isLoading, setIsLoading]       = useState(true);
+  const [, setIsLoading]                = useState(true);
   const [allCharacters, setAllCharacters] = useState([]);
   const [lessonsData, setLessonsData]   = useState([]);
 
@@ -86,7 +89,6 @@ export default function App() {
 
   // Usuario
   const [userName, setUserName] = useState(loadUserName);
-  const [nameInput, setNameInput] = useState('');
 
   const handleSetUserName = (name) => {
     setUserName(name);
@@ -385,59 +387,12 @@ export default function App() {
   // ── WELCOME ──────────────────────────────────────────────────────────────────
   if (screen === 'welcome') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: J.paper }}>
-        <div className="max-w-sm w-full" style={{ background: J.paperHi, borderRadius: 22, padding: 32, border: `1px solid ${J.hair}` }}>
-          <div className="text-center mb-8">
-            <div className="font-cn flex justify-center mb-4"
-              style={{ width: 64, height: 64, borderRadius: 16, background: J.jade, color: J.butter,
-                       fontSize: 36, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-              学
-            </div>
-            <h1 className="font-cn" style={{ fontSize: 32, fontWeight: 700, color: J.ink, margin: '12px 0 4px' }}>
-              学中文
-            </h1>
-            <p style={{ color: J.inkSoft, fontSize: 14 }}>Aprende Chino · HSK 1</p>
-          </div>
-          <div className="space-y-4">
-            <input
-              type="text"
-              placeholder="Como te llamas?"
-              value={nameInput}
-              onChange={e => setNameInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && nameInput.trim()) {
-                  handleSetUserName(nameInput.trim());
-                  setScreen('home');
-                }
-              }}
-              style={{
-                width: '100%', padding: '14px 18px', border: `2px solid ${J.hair}`, borderRadius: 14,
-                fontSize: 16, background: J.paper, color: J.ink, outline: 'none',
-              }}
-              onFocus={e => e.target.style.borderColor = J.jade}
-              onBlur={e => e.target.style.borderColor = J.hair}
-            />
-            <button
-              onClick={() => {
-                if (nameInput.trim()) {
-                  handleSetUserName(nameInput.trim());
-                  setScreen('home');
-                }
-              }}
-              disabled={!nameInput.trim()}
-              style={{
-                width: '100%', padding: '14px 22px', borderRadius: 99, border: 0,
-                background: nameInput.trim() ? J.jade : J.mute2,
-                color: J.paperHi, fontWeight: 700, fontSize: 15,
-                cursor: nameInput.trim() ? 'pointer' : 'default',
-                boxShadow: nameInput.trim() ? '0 4px 12px -4px rgba(31,74,51,0.4)' : 'none',
-              }}
-            >
-              Comenzar →
-            </button>
-          </div>
-        </div>
-      </div>
+      <WelcomeFlow
+        onComplete={(name) => {
+          handleSetUserName(name);
+          setScreen('home');
+        }}
+      />
     );
   }
 
@@ -462,13 +417,17 @@ export default function App() {
   if (screen === 'review') {
     return (
       <Layout activeScreen="review" onNavigate={handleBottomNav}>
-        <ReviewSession
-          allCharacters={allCharacters}
-          progress={progress}
-          onProgressChange={handleProgressChange}
-          goBack={() => setScreen(prevScreen || 'home')}
-          speakChinese={speak}
-        />
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <ReviewSession
+              allCharacters={allCharacters}
+              progress={progress}
+              onProgressChange={handleProgressChange}
+              goBack={() => setScreen(prevScreen || 'home')}
+              speakChinese={speak}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }
@@ -478,18 +437,22 @@ export default function App() {
     const activeLessonData = lessonsData.find(l => l.lesson === selectedLesson);
     return (
       <Layout activeScreen="home" onNavigate={handleBottomNav}>
-        <LessonDetail
-          lessonNum={selectedLesson}
-          lessonData={activeLessonData}
-          characters={allCharacters}
-          progress={progress}
-          onProgressChange={handleProgressChange}
-          goBack={() => setScreen('home')}
-          onStartExercise={handleStartExercise}
-          speakChinese={speak}
-          defaultTab={lessonDetailTab}
-          onTabChange={setLessonDetailTab}
-        />
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <LessonDetail
+              lessonNum={selectedLesson}
+              lessonData={activeLessonData}
+              characters={allCharacters}
+              progress={progress}
+              onProgressChange={handleProgressChange}
+              goBack={() => setScreen('home')}
+              onStartExercise={handleStartExercise}
+              speakChinese={speak}
+              defaultTab={lessonDetailTab}
+              onTabChange={setLessonDetailTab}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }
@@ -545,14 +508,18 @@ export default function App() {
     const activeLessonData = lessonsData.find(l => l.lesson === selectedLesson);
     const examChars = allCharacters.filter(c => c.lesson === selectedLesson && !c.isSupplementary);
     return (
-      <ExamMode
-        characters={examChars}
-        lessonNum={selectedLesson}
-        lessonData={activeLessonData}
-        progress={progress}
-        onProgressChange={handleProgressChange}
-        goBack={() => setScreen('lesson-detail')}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={<AnimatedLoader />}>
+          <ExamMode
+            characters={examChars}
+            lessonNum={selectedLesson}
+            lessonData={activeLessonData}
+            progress={progress}
+            onProgressChange={handleProgressChange}
+            goBack={() => setScreen('lesson-detail')}
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
@@ -592,13 +559,17 @@ export default function App() {
   if (screen === 'settings') {
     return (
       <Layout activeScreen="settings" onNavigate={handleBottomNav}>
-        <SettingsScreen
-          userName={userName}
-          onUserNameChange={handleSetUserName}
-          progress={progress}
-          onProgressChange={handleProgressChange}
-          allCharacters={allCharacters}
-        />
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <SettingsScreen
+              userName={userName}
+              onUserNameChange={handleSetUserName}
+              progress={progress}
+              onProgressChange={handleProgressChange}
+              allCharacters={allCharacters}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }

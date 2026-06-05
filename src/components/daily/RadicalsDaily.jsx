@@ -2,13 +2,10 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { shuffle } from "@/utils/arrayUtils.js";
 
 const TOTAL_QUESTIONS = 10;
 const TIME_LIMIT = 150; // 2.5 minutos en segundos
-
-function rand(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
 export default function RadicalsDaily({ goBack, radicals }) {
   const { t } = useTranslation();
@@ -46,9 +43,9 @@ export default function RadicalsDaily({ goBack, radicals }) {
         : correctRadical.radical;
 
       // Generar opciones incorrectas
-      const allPossibleDistractors = radicals
-        .filter(r => r.radical !== correctRadical.radical)
-        .sort(() => Math.random() - 0.5);
+      const allPossibleDistractors = shuffle(
+        radicals.filter(r => r.radical !== correctRadical.radical)
+      );
 
       const otherRadicals = allPossibleDistractors
         .slice(0, Math.min(3, allPossibleDistractors.length))
@@ -73,7 +70,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
         }
       }
 
-      const allOptions = uniqueOptions.sort(() => Math.random() - 0.5);
+      const allOptions = shuffle(uniqueOptions);
 
       questions.push({
         id: i,

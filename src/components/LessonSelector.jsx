@@ -7,6 +7,10 @@ const LESSON_STYLES = {
   2: { border: 'border-[#b88a3e]', activeBg: 'bg-[#b88a3e]', hoverBorder: 'hover:border-[#b88a3e]', glow: 'shadow-[#b88a3e]/30', text: 'text-[#b88a3e]', titleColor: 'text-[#b88a3e]', num: '二' },
   3: { border: 'border-[#b88a3e]', activeBg: 'bg-[#b88a3e]', hoverBorder: 'hover:border-[#b88a3e]', glow: 'shadow-[#b88a3e]/30', text: 'text-[#b88a3e]', titleColor: 'text-[#b88a3e]', num: '三' },
   4: { border: 'border-[#2f6b4a]', activeBg: 'bg-[#2f6b4a]', hoverBorder: 'hover:border-[#2f6b4a]', glow: 'shadow-[#2f6b4a]/30', text: 'text-[#2f6b4a]', titleColor: 'text-[#5a8f72]', num: '四' },
+  5: { border: 'border-[#c8392f]', activeBg: 'bg-[#c8392f]', hoverBorder: 'hover:border-[#c8392f]', glow: 'shadow-[#c8392f]/30', text: 'text-[#c8392f]', titleColor: 'text-[#c8392f]', num: '五' },
+  6: { border: 'border-[#b88a3e]', activeBg: 'bg-[#b88a3e]', hoverBorder: 'hover:border-[#b88a3e]', glow: 'shadow-[#b88a3e]/30', text: 'text-[#b88a3e]', titleColor: 'text-[#b88a3e]', num: '六' },
+  7: { border: 'border-[#b88a3e]', activeBg: 'bg-[#b88a3e]', hoverBorder: 'hover:border-[#b88a3e]', glow: 'shadow-[#b88a3e]/30', text: 'text-[#b88a3e]', titleColor: 'text-[#b88a3e]', num: '七' },
+  8: { border: 'border-[#2f6b4a]', activeBg: 'bg-[#2f6b4a]', hoverBorder: 'hover:border-[#2f6b4a]', glow: 'shadow-[#2f6b4a]/30', text: 'text-[#2f6b4a]', titleColor: 'text-[#5a8f72]', num: '八' },
 };
 
 export default function LessonSelector({
@@ -55,7 +59,7 @@ export default function LessonSelector({
               onKeyDown={e => e.key === 'Enter' && canConfirm && handleConfirm()}
               placeholder={t('selector_name_placeholder')}
               autoFocus
-              className="w-full max-w-xs mx-auto block px-4 py-3 rounded-xl bg-[#fbf5e6] border-2 border-[rgba(28,24,19,0.18)] focus:border-[#c8392f] focus:outline-none text-[#1c1813] text-center text-lg placeholder-[#928a76]"
+              className="w-full max-w-xs mx-auto block px-4 py-3 rounded-xl bg-[#fbf5e6] border-2 border-[rgba(28,24,19,0.32)] focus:border-[#c8392f] focus:outline-none text-[#1c1813] text-center text-lg placeholder-[#6e6757]"
             />
           </div>
         ) : (

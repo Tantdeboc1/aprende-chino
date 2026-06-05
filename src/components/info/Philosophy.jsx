@@ -14,7 +14,6 @@ export default function Philosophy({ goBack }) {
     let alive = true;
     (async () => {
       try {
-        const lang = i18n.language || 'es';
         const res = await fetch(assetUrl(`data/info.json`));
         const json = await res.json();
         if (!alive) return;

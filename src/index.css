@@ -8,6 +8,9 @@
   --ink-soft: #5b5446;
   --mute: #928a76;
   --hair: rgba(28,24,19,0.10);
+  /* Variantes con contraste AA suficiente sobre fondos paper/paperHi */
+  --mute-strong: #6e6757;       /* texto secundario que debe ser legible */
+  --ui-border: rgba(28,24,19,0.32); /* bordes de inputs visibles (≥3:1) */
   --jade: #2f6b4a;
   --jade-deep: #1f4a33;
   --jade-bg: #cfe1d3;
@@ -36,6 +39,15 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+/* Placeholder accesible por defecto en cualquier input/textarea — WCAG AA.
+   Funciona como red de seguridad: aunque un dev olvide la clase utility,
+   el placeholder será legible. Override siempre posible con placeholder:text-[…] */
+input::placeholder,
+textarea::placeholder {
+  color: var(--mute-strong);
+  opacity: 1; /* Firefox reduce la opacidad por defecto; lo neutralizamos */
 }
 
 /* Flashcard answer reveal */

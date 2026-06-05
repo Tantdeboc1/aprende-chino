@@ -57,9 +57,6 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     [escena, userName]
   );
 
-  // Calcula de qué lado entra el personaje: 'user' a la derecha, otros a la izquierda.
-  const side = escena?.personaje === 'user' ? 'right' : 'left';
-
   const handleAdvance = () => {
     if (idx < total - 1) {
       setIdx(idx + 1);

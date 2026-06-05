@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -19,13 +20,7 @@ function buildRound(lessonFilter) {
   }));
 }
 
-const LESSON_COLORS = {
-  1: { bg: 'bg-[#c8392f]',    border: 'border-[#c8392f]',    text: 'text-[#c8392f]'    },
-  2: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]' },
-  3: { bg: 'bg-[#b88a3e]', border: 'border-[#b88a3e]', text: 'text-[#b88a3e]' },
-  4: { bg: 'bg-[#2f6b4a]',  border: 'border-[#2f6b4a]',  text: 'text-[#2f6b4a]'  },
-};
-const DEFAULT_COLOR = { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]' };
+import { LESSON_COLORS, DEFAULT_LESSON_COLOR as DEFAULT_COLOR, LESSON_NUMBERS } from '@/styles/lessonColors.js';
 
 
 // ── Feedback de sonido via Web Audio API ────────────────────────────────────
@@ -77,7 +72,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const [showHint, setShowHint]       = useState(false);
   const [score, setScore]             = useState(0);
   const [done, setDone]               = useState(false);
-  const [lessonFilter, setLessonFilter] = useState(selectedLesson || null);
+  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
+  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
 
   // Inicializar ronda
   const initRound = useCallback((filter) => {
@@ -263,7 +259,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
           >
             {t('sov_all_lessons')}
           </button>
-          {[1, 2, 3, 4].map(n => (
+          {LESSON_NUMBERS.map(n => (
             <button
               key={n}
               onClick={() => setLessonFilter(n)}

@@ -151,9 +151,9 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             }
           }, 500);
         },
-        onMistake: (strokeNum) => {
+        onMistake: () => {
         },
-        onStrokeStatusChange: (data) => {
+        onStrokeStatusChange: () => {
         }
       });
     } catch (error) {

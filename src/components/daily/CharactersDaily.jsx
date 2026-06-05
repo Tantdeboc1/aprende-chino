@@ -118,7 +118,7 @@ function Daily({ goBack }) {
   const [dailyIndex, setDailyIndex] = useState(null);
   const [dailyAttempts, setDailyAttempts] = useState(0);
   const [dailyComplete, setDailyComplete] = useState(false);
-  const [dateKey, setDateKey] = useState(localDateKey());
+  const [, setDateKey] = useState(localDateKey());
   const [guess, setGuess] = useState("");
 
   // load JSON
@@ -263,7 +263,7 @@ function Daily({ goBack }) {
                       onChange={(e) => setGuess(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && tryGuess()}
                       placeholder={t('daily_your_answer_placeholder')}
-                      className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.18)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#928a76]"
+                      className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.32)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#6e6757]"
                       autoFocus
                       disabled={isBlocked}
                     />

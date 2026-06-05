@@ -1,6 +1,7 @@
 // src/components/learn/Characters/Matching.jsx
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { shuffle } from "@/utils/arrayUtils.js";
 
 function pickN(arr, n) {
   const copy = [...arr];
@@ -30,7 +31,7 @@ export default function Matching({
     const sample = pickN(characters, Math.min(6, Math.floor(characters.length / 2) || 6));
     const chars = sample.map((c, i) => ({ id: `char-${i}`, type: 'char', content: c.char, match: i, data: c }));
     const meanings = sample.map((c, i) => ({ id: `meaning-${i}`, type: 'meaning', content: c.meaning, match: i, data: c }));
-    const all = [...chars, ...meanings].sort(() => Math.random() - 0.5);
+    const all = shuffle([...chars, ...meanings]);
     setPairs(all);
     setSelected([]);
     setMatched([]);

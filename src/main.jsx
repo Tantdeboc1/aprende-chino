@@ -5,6 +5,7 @@ import './index.css';
 import App from './App.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LevelUpHost from './components/LevelUpHost.jsx';
+import { MusicProvider } from './context/MusicContext.jsx';
 import './i18n';
 
 const Spinner = () => (
@@ -16,11 +17,13 @@ const Spinner = () => (
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<Spinner />}>
-        <App />
-      </Suspense>
-      {/* Host global: muestra LevelUpModal cuando se dispara 'xp-notification' */}
-      <LevelUpHost />
+      <MusicProvider>
+        <Suspense fallback={<Spinner />}>
+          <App />
+        </Suspense>
+        {/* Host global: muestra LevelUpModal cuando se dispara 'xp-notification' */}
+        <LevelUpHost />
+      </MusicProvider>
     </ErrorBoundary>
   </StrictMode>,
 );

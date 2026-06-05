@@ -83,7 +83,8 @@ export default function BottomNav({ activeScreen, onNavigate }) {
       }}
     >
       <div className="max-w-lg mx-auto flex justify-around items-end pt-1 pb-3">
-        {items.map(({ key, label, Icon }) => {
+        {items.map((item) => {
+          const { key, label, Icon } = item;
           const active  = isActive(key);
           const accent  = activeAccent(key);
           return (

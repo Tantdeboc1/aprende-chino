@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { playAudioSmart } from "../../../utils/audio";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,6 @@ function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
  * También probamos variantes sin tono (ba, bai, …) por si tus ficheros no incluyen número.
  */
 function candidatesForAudio(target){
-  const toneNums = ["1","2","3","4"];
   const withTones = (bases) => bases.flatMap(b => [b+"1", b+"2", b+"3", b+"4"]);
 
   // Palatales y retroflejas con sílaba típica

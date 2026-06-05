@@ -1,0 +1,1059 @@
+// src/data/grammar/en.js
+// AUTO-GENERADO por scripts/split-i18n-data.mjs — no editar a mano.
+// Fuente: src/data/grammarData.js (estructura multilingüe).
+//
+// Este archivo solo contiene los textos en en. El loader dinámico carga
+// el archivo del idioma activo para minimizar el chunk descargado por el cliente.
+
+const data = {
+  "1": {
+    intro: "In this lesson you learn to greet, ask how someone is and reply. Mandarin Chinese uses few words to express a lot — pay attention to tones.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "你好吗？",
+        pinyin: "Nǐ hǎo ma?",
+        translation: "Are you well? / How are you?",
+        explanation: "The particle 吗 (ma) at the end of any affirmative sentence turns it into a yes/no question. It does not change word order — it is the simplest way to ask in Chinese.",
+        examples: [
+          {
+            zh: "你好吗？",
+            pinyin: "Nǐ hǎo ma?",
+            translation: "Are you well?"
+          },
+          {
+            zh: "他好吗？",
+            pinyin: "Tā hǎo ma?",
+            translation: "Is he well?"
+          },
+          {
+            zh: "你妈妈好吗？",
+            pinyin: "Nǐ māma hǎo ma?",
+            translation: "Is your mum well?"
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "很 + adjetivo",
+        pinyin: "hěn + adj.",
+        translation: "Very + adjective",
+        explanation: "In Chinese, predicative adjectives normally need 很 (hěn) before them. Although 很 can mean \"very\", when it links subject and adjective it works as a neutral copula — not always implying intensity.",
+        examples: [
+          {
+            zh: "我很好。",
+            pinyin: "Wǒ hěn hǎo.",
+            translation: "I am well."
+          },
+          {
+            zh: "她很忙。",
+            pinyin: "Tā hěn máng.",
+            translation: "She is very busy."
+          },
+          {
+            zh: "天气很好。",
+            pinyin: "Tiānqì hěn hǎo.",
+            translation: "The weather is very nice."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "不 + adjetivo / verbo",
+        pinyin: "bù + adj. / v.",
+        translation: "Not + adjective / verb",
+        explanation: "不 (bù) is the general Chinese negator. It goes before the adjective or verb it negates. Note: 不's tone shifts to 2nd tone (bú) when followed by a 4th-tone syllable.",
+        examples: [
+          {
+            zh: "我不好。",
+            pinyin: "Wǒ bù hǎo.",
+            translation: "I am not well."
+          },
+          {
+            zh: "他不忙。",
+            pinyin: "Tā bù máng.",
+            translation: "He is not busy."
+          },
+          {
+            zh: "我不累。",
+            pinyin: "Wǒ bù lèi.",
+            translation: "I am not tired."
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "最近怎么样？",
+        pinyin: "Zuìjìn zěnmeyàng?",
+        translation: "How have you been lately?",
+        explanation: "怎么样 (zěnmeyàng) means \"how?\" or \"how is it?\" and is used to ask about general state. It's more open than 好吗 — allows for more elaborate answers.",
+        examples: [
+          {
+            zh: "你最近怎么样？",
+            pinyin: "Nǐ zuìjìn zěnmeyàng?",
+            translation: "How have you been lately?"
+          },
+          {
+            zh: "工作怎么样？",
+            pinyin: "Gōngzuò zěnmeyàng?",
+            translation: "How is work?"
+          },
+          {
+            zh: "最近不太好。",
+            pinyin: "Zuìjìn bù tài hǎo.",
+            translation: "Not very well lately."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Basic sentence structure",
+        formula: "主语 (sujeto) + 很 + 形容词 (adjetivo)",
+        example: "我 很 好。",
+        examplePinyin: "Wǒ hěn hǎo.",
+        exampleTranslation: "I am well.",
+        note: "Chinese has no \"to be\" verb for adjectives — 很 serves as the linking element."
+      },
+      {
+        id: "s2",
+        title: "Yes/no question",
+        formula: "Affirmative sentence + 吗?",
+        example: "你好 → 你好吗？",
+        examplePinyin: "Nǐ hǎo → Nǐ hǎo ma?",
+        exampleTranslation: "You are well → Are you well?",
+        note: "You just add 吗 at the end. Word order doesn't change."
+      },
+      {
+        id: "s3",
+        title: "Simple negation",
+        formula: "主语 + 不 + 形容词/动词",
+        example: "我 不 好。",
+        examplePinyin: "Wǒ bù hǎo.",
+        exampleTranslation: "I am not well.",
+        note: "不 always goes immediately before the element it negates."
+      }
+    ],
+    tip: "💡 Chinese speakers don't say 我很好吗 — the question is always 你好吗, addressed to the other person. Replying 我很好 (without 吗) is the natural form."
+  },
+  "2": {
+    intro: "In this lesson you learn to introduce yourself, state your nationality and ask others'. The key verb is 是 (shì), equivalent to \"to be\" in identity.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "你是哪国人？",
+        pinyin: "Nǐ shì nǎ guó rén?",
+        translation: "What country are you from? (lit. \"Are you a person of what country?\")",
+        explanation: "哪 (nǎ) means \"what/which?\", 国 is \"country\" and 人 is \"person\". In Chinese nationality is literally \"person of X country\". 哪国 can be replaced by the country name.",
+        examples: [
+          {
+            zh: "你是哪国人？",
+            pinyin: "Nǐ shì nǎ guó rén?",
+            translation: "What country are you from?"
+          },
+          {
+            zh: "你是中国人吗？",
+            pinyin: "Nǐ shì Zhōngguó rén ma?",
+            translation: "Are you Chinese?"
+          },
+          {
+            zh: "他是哪国人？",
+            pinyin: "Tā shì nǎ guó rén?",
+            translation: "What country is he from?"
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "我是 + nacionalidad + 人",
+        pinyin: "Wǒ shì + país + rén",
+        translation: "I am + nationality",
+        explanation: "To state nationality: subject + 是 + country name + 人. The pattern is fixed and very productive — works with any country.",
+        examples: [
+          {
+            zh: "我是西班牙人。",
+            pinyin: "Wǒ shì Xībānyá rén.",
+            translation: "I am Spanish."
+          },
+          {
+            zh: "我是中国人。",
+            pinyin: "Wǒ shì Zhōngguó rén.",
+            translation: "I am Chinese."
+          },
+          {
+            zh: "他是法国人。",
+            pinyin: "Tā shì Fǎguó rén.",
+            translation: "He is French."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "A 也 是 B",
+        pinyin: "A yě shì B",
+        translation: "A is also B",
+        explanation: "也 (yě) means \"also\" and always goes before the verb or adjective, never at the end of the sentence as in some languages. It's a fixed rule in Chinese.",
+        examples: [
+          {
+            zh: "我也是学生。",
+            pinyin: "Wǒ yě shì xuésheng.",
+            translation: "I am also a student."
+          },
+          {
+            zh: "她也是中国人。",
+            pinyin: "Tā yě shì Zhōngguó rén.",
+            translation: "She is also Chinese."
+          },
+          {
+            zh: "他也很忙。",
+            pinyin: "Tā yě hěn máng.",
+            translation: "He is also very busy."
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "不是",
+        pinyin: "bù shì",
+        translation: "Is not / Am not",
+        explanation: "The negation of 是 is always 不是, never 没是. 没 (méi) is used to negate 有 (to have/exist), but 是 is always negated with 不.",
+        examples: [
+          {
+            zh: "我不是日本人。",
+            pinyin: "Wǒ bú shì Rìběn rén.",
+            translation: "I am not Japanese."
+          },
+          {
+            zh: "他不是老师。",
+            pinyin: "Tā bú shì lǎoshī.",
+            translation: "He is not a teacher."
+          },
+          {
+            zh: "这不是我的书。",
+            pinyin: "Zhè bú shì wǒ de shū.",
+            translation: "This is not my book."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Verb 是 (to be — identity)",
+        formula: "主语 + 是 + 名词",
+        example: "我 是 学生。",
+        examplePinyin: "Wǒ shì xuésheng.",
+        exampleTranslation: "I am a student.",
+        note: "是 is only used for identity and classification, not for description (use 很 + adjective for that)."
+      },
+      {
+        id: "s2",
+        title: "Question with an interrogative pronoun",
+        formula: "主语 + 是 + 疑问词 (哪/什么/谁...)?",
+        example: "你是哪国人？",
+        examplePinyin: "Nǐ shì nǎ guó rén?",
+        exampleTranslation: "What country are you from?",
+        note: "With interrogative pronouns (哪, 什么, 谁...) you do NOT add 吗. The pronoun already marks it as a question."
+      },
+      {
+        id: "s3",
+        title: "Position of 也 (also)",
+        formula: "主语 + 也 + 动词/形容词",
+        example: "我 也 是 西班牙人。",
+        examplePinyin: "Wǒ yě shì Xībānyá rén.",
+        exampleTranslation: "I am also Spanish.",
+        note: "也 always goes before the verb, never at the end. Common error: *我是西班牙人也 ❌"
+      }
+    ],
+    tip: "💡 Key difference: 你是哪国人 uses 哪 (which) and does NOT take 吗 at the end. If you ask about something specific with 哪/什么/谁, the interrogative pronoun already marks it as a question."
+  },
+  "3": {
+    intro: "In this lesson you talk about family: how many people there are and who they are. The verb 有 (yǒu) is fundamental — it means both \"to have\" and \"there is/exists\".",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "你家有几口人？",
+        pinyin: "Nǐ jiā yǒu jǐ kǒu rén?",
+        translation: "How many people are there in your family?",
+        explanation: "几 (jǐ) asks for small numbers (usually under 10). 口 (kǒu) is the special classifier for family members — literally \"mouth\". In Chinese, classifiers (量词) are mandatory with numbers.",
+        examples: [
+          {
+            zh: "你家有几口人？",
+            pinyin: "Nǐ jiā yǒu jǐ kǒu rén?",
+            translation: "How many people in your family?"
+          },
+          {
+            zh: "我家有四口人。",
+            pinyin: "Wǒ jiā yǒu sì kǒu rén.",
+            translation: "There are four people in my family."
+          },
+          {
+            zh: "他家有几口人？",
+            pinyin: "Tā jiā yǒu jǐ kǒu rén?",
+            translation: "How many people are in his family?"
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "有 / 没有",
+        pinyin: "yǒu / méiyǒu",
+        translation: "Have / Don't have · There is / There isn't",
+        explanation: "有 (yǒu) is the only verb in Chinese negated with 没 instead of 不. Never say 不有 — always 没有. An important exception to memorise.",
+        examples: [
+          {
+            zh: "我有一个妹妹。",
+            pinyin: "Wǒ yǒu yī gè mèimei.",
+            translation: "I have a younger sister."
+          },
+          {
+            zh: "我没有兄弟。",
+            pinyin: "Wǒ méiyǒu xiōngdì.",
+            translation: "I don't have brothers."
+          },
+          {
+            zh: "家里有人吗？",
+            pinyin: "Jiā lǐ yǒu rén ma?",
+            translation: "Is anyone home?"
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "两 vs 二",
+        pinyin: "liǎng vs èr",
+        translation: "Two (with classifier) vs. Two (cardinal number)",
+        explanation: "Chinese has two words for \"2\": 二 (èr) is the number itself (counting, phone numbers, floors…), 两 (liǎng) is used before classifiers. With people it's always 两个人, never 二个人.",
+        examples: [
+          {
+            zh: "我家有两口人。",
+            pinyin: "Wǒ jiā yǒu liǎng kǒu rén.",
+            translation: "There are two people in my family."
+          },
+          {
+            zh: "两个学生",
+            pinyin: "liǎng gè xuésheng",
+            translation: "two students"
+          },
+          {
+            zh: "第二课",
+            pinyin: "dì èr kè",
+            translation: "lesson number two"
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "个 — el clasificador comodín",
+        pinyin: "gè",
+        translation: "General classifier for people and objects",
+        explanation: "个 (gè) is the most versatile classifier in Chinese. When you don't know which one to use, 个 usually works. It applies to people, objects, abstract ideas… Informally acceptable for almost anything.",
+        examples: [
+          {
+            zh: "一个人",
+            pinyin: "yī gè rén",
+            translation: "one person"
+          },
+          {
+            zh: "三个孩子",
+            pinyin: "sān gè háizi",
+            translation: "three children"
+          },
+          {
+            zh: "两个问题",
+            pinyin: "liǎng gè wèntí",
+            translation: "two questions"
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Structure with 有 (have/there is)",
+        formula: "主语 + 有 + 数量词 + 名词",
+        example: "我 有 两 个 哥哥。",
+        examplePinyin: "Wǒ yǒu liǎng gè gēge.",
+        exampleTranslation: "I have two older brothers.",
+        note: "Order: Subject + 有 + number + classifier + noun. Classifiers always go between number and noun."
+      },
+      {
+        id: "s2",
+        title: "Negation of 有",
+        formula: "主语 + 没有 + 名词",
+        example: "我 没有 兄弟姐妹。",
+        examplePinyin: "Wǒ méiyǒu xiōngdì jiěmèi.",
+        exampleTranslation: "I have no brothers or sisters.",
+        note: "⚠️ Special rule: 有 is the only verb negated with 没, not with 不. 不有 does not exist in standard Chinese."
+      },
+      {
+        id: "s3",
+        title: "Question with 几 (how many?)",
+        formula: "主语 + 有 + 几 + 量词 + 名词？",
+        example: "你 有 几 个 兄弟？",
+        examplePinyin: "Nǐ yǒu jǐ gè xiōngdì?",
+        exampleTranslation: "How many brothers do you have?",
+        note: "几 is used for expected small numbers. For large or unknown amounts use 多少 (duōshao), which doesn't need a classifier."
+      }
+    ],
+    tip: "💡 Golden rule: 有 → 没有 (never 不有). This is the most important exception in basic Chinese. All other verbs are negated with 不."
+  },
+  "4": {
+    intro: "In this lesson you learn to talk about time: hours, days and schedules. Chinese has a very logical system for telling time, and time markers always go before the verb.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "几点？",
+        pinyin: "Jǐ diǎn?",
+        translation: "What time is it? / At what time?",
+        explanation: "点 (diǎn) means \"point/o'clock\". 几点 is the standard question to ask the time. To tell the time: number + 点 (+ 分 fēn for minutes). Very logical structure: 三点半 = half past three.",
+        examples: [
+          {
+            zh: "现在几点？",
+            pinyin: "Xiànzài jǐ diǎn?",
+            translation: "What time is it now?"
+          },
+          {
+            zh: "你几点有课？",
+            pinyin: "Nǐ jǐ diǎn yǒu kè?",
+            translation: "What time do you have class?"
+          },
+          {
+            zh: "八点半",
+            pinyin: "bā diǎn bàn",
+            translation: "half past eight"
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "明天 / 今天 / 昨天",
+        pinyin: "míngtiān / jīntiān / zuótiān",
+        translation: "Tomorrow / Today / Yesterday",
+        explanation: "Time markers in Chinese come at the start of the sentence (before the subject) or right after the subject, but ALWAYS before the verb. Never at the end as in some languages. A key structural difference.",
+        examples: [
+          {
+            zh: "明天我有课。",
+            pinyin: "Míngtiān wǒ yǒu kè.",
+            translation: "Tomorrow I have class."
+          },
+          {
+            zh: "我今天很忙。",
+            pinyin: "Wǒ jīntiān hěn máng.",
+            translation: "I am very busy today."
+          },
+          {
+            zh: "昨天他没有课。",
+            pinyin: "Zuótiān tā méiyǒu kè.",
+            translation: "Yesterday he had no class."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "有课 / 没有课",
+        pinyin: "yǒu kè / méiyǒu kè",
+        translation: "To have class / Not to have class",
+        explanation: "课 (kè) means \"class/lesson\". 有课 is the standard expression for \"to have class\". Combines perfectly with time and hour markers: 明天上午八点我有课 (Tomorrow at 8 in the morning I have class).",
+        examples: [
+          {
+            zh: "你明天有课吗？",
+            pinyin: "Nǐ míngtiān yǒu kè ma?",
+            translation: "Do you have class tomorrow?"
+          },
+          {
+            zh: "我下午没有课。",
+            pinyin: "Wǒ xiàwǔ méiyǒu kè.",
+            translation: "I don't have class in the afternoon."
+          },
+          {
+            zh: "今天有几节课？",
+            pinyin: "Jīntiān yǒu jǐ jié kè?",
+            translation: "How many classes are there today?"
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "上午 / 下午 / 晚上",
+        pinyin: "shàngwǔ / xiàwǔ / wǎnshang",
+        translation: "In the morning / In the afternoon / In the evening",
+        explanation: "To specify the time of day, these markers go before the hour: 下午三点 (three in the afternoon). Chinese clearly distinguishes early morning (早上), late morning (上午), afternoon (下午) and evening/night (晚上).",
+        examples: [
+          {
+            zh: "上午九点有课。",
+            pinyin: "Shàngwǔ jiǔ diǎn yǒu kè.",
+            translation: "There is class at 9 a.m."
+          },
+          {
+            zh: "下午两点半",
+            pinyin: "xiàwǔ liǎng diǎn bàn",
+            translation: "half past two in the afternoon"
+          },
+          {
+            zh: "晚上我不忙。",
+            pinyin: "Wǎnshang wǒ bù máng.",
+            translation: "I'm not busy in the evening."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Time order in Chinese",
+        formula: "time → subject → verb",
+        example: "明天 我 有课。",
+        examplePinyin: "Míngtiān wǒ yǒu kè.",
+        exampleTranslation: "Tomorrow I have class.",
+        note: "In Chinese, time goes at the start, not the end. From general to specific: year → month → day → hour → action."
+      },
+      {
+        id: "s2",
+        title: "Telling the time",
+        formula: "(time of day +) number + 点 (+ 分)",
+        example: "下午 三 点 二十 分。",
+        examplePinyin: "Xiàwǔ sān diǎn èrshí fēn.",
+        exampleTranslation: "Twenty past three in the afternoon.",
+        note: "半 (bàn) = half past. 一刻 (yī kè) = quarter past. For 0X minutes: 零 + minutes (零五分 = five past)."
+      },
+      {
+        id: "s3",
+        title: "Question about schedule",
+        formula: "主语 + 几点 + 动词？",
+        example: "你 几点 有课？",
+        examplePinyin: "Nǐ jǐ diǎn yǒu kè?",
+        exampleTranslation: "What time do you have class?",
+        note: "几点 acts as a time complement. In Chinese: subject + time + verb (not \"verb + at + time\" as in English)."
+      }
+    ],
+    tip: "💡 Time rule in Chinese: always from general to specific. First the year, then the month, the day, the hour. Like Chinese postal addresses that start with the country and end with the house number."
+  },
+  "5": {
+    intro: "In this lesson you talk about dates, birthdays and parties. You learn to congratulate with 祝… (zhù…), to ask age with 多大 (duō dà) and to express your zodiac year with 属 (shǔ). Date order in Chinese is always year → month → day.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "祝你 + deseo",
+        pinyin: "Zhù nǐ + …",
+        translation: "I wish you / May you have…!",
+        explanation: "祝 (zhù) introduces a wish or congratulation. It's followed by the addressee (你, 您, 大家…) and the wish. The fixed pattern for greeting birthdays, new year, holidays, etc.",
+        examples: [
+          {
+            zh: "祝你生日快乐！",
+            pinyin: "Zhù nǐ shēngrì kuàilè!",
+            translation: "Happy birthday!"
+          },
+          {
+            zh: "祝大家新年快乐！",
+            pinyin: "Zhù dàjiā xīnnián kuàilè!",
+            translation: "Happy New Year, everyone!"
+          },
+          {
+            zh: "祝你身体健康。",
+            pinyin: "Zhù nǐ shēntǐ jiànkāng.",
+            translation: "I wish you good health."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "今天几月几号？",
+        pinyin: "Jīntiān jǐ yuè jǐ hào?",
+        translation: "What's the date today? (lit. which month, which day?)",
+        explanation: "To ask/give dates: number + 月 (month) + number + 号 (day). 号 is spoken; 日 (rì) is written/formal. Chinese order is always year → month → day, reverse of some languages.",
+        examples: [
+          {
+            zh: "今天五月十二号。",
+            pinyin: "Jīntiān wǔ yuè shí'èr hào.",
+            translation: "Today is May 12."
+          },
+          {
+            zh: "你的生日是几月几号？",
+            pinyin: "Nǐ de shēngrì shì jǐ yuè jǐ hào?",
+            translation: "When is your birthday?"
+          },
+          {
+            zh: "我的生日是八月二十二号。",
+            pinyin: "Wǒ de shēngrì shì bā yuè èrshí'èr hào.",
+            translation: "My birthday is August 22."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "你今年多大？",
+        pinyin: "Nǐ jīnnián duō dà?",
+        translation: "How old are you this year?",
+        explanation: "多大 (duō dà) literally \"how big?\" is used to ask the age of adults or teens. For small children use 几岁 (jǐ suì), for elders 多大年纪 (duō dà niánjì). Age is given as number + 岁: 我今年二十岁。",
+        examples: [
+          {
+            zh: "你今年多大？",
+            pinyin: "Nǐ jīnnián duō dà?",
+            translation: "How old are you this year?"
+          },
+          {
+            zh: "我今年二十一岁。",
+            pinyin: "Wǒ jīnnián èrshíyī suì.",
+            translation: "I'm 21 this year."
+          },
+          {
+            zh: "他多大？",
+            pinyin: "Tā duō dà?",
+            translation: "How old is he?"
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "我属 + animal",
+        pinyin: "Wǒ shǔ + …",
+        translation: "I'm in the year of the…",
+        explanation: "属 (shǔ) introduces the Chinese zodiac animal of your birth year. Each lunar year corresponds to one of the 12 animals (rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog, pig).",
+        examples: [
+          {
+            zh: "我属龙。",
+            pinyin: "Wǒ shǔ lóng.",
+            translation: "I'm in the year of the dragon."
+          },
+          {
+            zh: "你属什么？",
+            pinyin: "Nǐ shǔ shénme?",
+            translation: "What zodiac animal are you?"
+          },
+          {
+            zh: "她属马。",
+            pinyin: "Tā shǔ mǎ.",
+            translation: "She's in the year of the horse."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Date order",
+        formula: "年 + 月 + 日/号",
+        example: "二〇二六 年 六 月 五 号",
+        examplePinyin: "èr-líng-èr-liù nián liù yuè wǔ hào",
+        exampleTranslation: "June 5, 2026",
+        note: "Always general to specific: year → month → day. Years are read digit by digit."
+      },
+      {
+        id: "s2",
+        title: "Congratulations with 祝",
+        formula: "祝 + recipient + wish",
+        example: "祝 你 生日 快乐！",
+        examplePinyin: "Zhù nǐ shēngrì kuàilè!",
+        exampleTranslation: "Happy birthday!",
+        note: "The recipient comes right after 祝. You can chain wishes: 祝你身体健康，工作顺利。"
+      },
+      {
+        id: "s3",
+        title: "Asking age",
+        formula: "主语 + (今年) + 多大/几岁？",
+        example: "你 今年 多大？",
+        examplePinyin: "Nǐ jīnnián duō dà?",
+        exampleTranslation: "How old are you this year?",
+        note: "几岁 → children · 多大 → teens/adults · 多大年纪 → elderly. Adapting the question to the interlocutor's age is a matter of politeness."
+      }
+    ],
+    tip: "💡 When someone greets you with 生日快乐, a natural reply is 谢谢！ (xièxie). At Chinese parties (聚会) the toast 干杯 (gānbēi, lit. \"dry the glass\") is common — you're expected to finish your drink."
+  },
+  "6": {
+    intro: "In this lesson you learn to talk about places and locations. Directional words (东/南/西/北 + 边) come after the reference place. We use 在 (zài) to indicate where something is and 跟 (gēn) for accompaniment.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "A 在 B 的 + dirección/lado",
+        pinyin: "A zài B de + fāngwèi",
+        translation: "A is + direction/side + of B",
+        explanation: "In Chinese the spatial reference is reversed compared to English: first the reference place (B), then the position (北边, 旁边, 里边…). Literally: \"A in B north-side is\".",
+        examples: [
+          {
+            zh: "图书馆在食堂北边。",
+            pinyin: "Túshūguǎn zài shítáng běibiān.",
+            translation: "The library is north of the canteen."
+          },
+          {
+            zh: "银行在学校旁边。",
+            pinyin: "Yínháng zài xuéxiào pángbiān.",
+            translation: "The bank is next to the school."
+          },
+          {
+            zh: "我家在医院对面。",
+            pinyin: "Wǒ jiā zài yīyuàn duìmiàn.",
+            translation: "My home is across from the hospital."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "… 边 — los sufijos de dirección",
+        pinyin: "… biān",
+        translation: "Side / part",
+        explanation: "边 (biān) or 面 (miàn) are suffixes that turn a direction or position into a locative noun. 北 → 北边 (north side), 里 → 里边 (inside), 上 → 上边 (on top). Without the suffix, these words don't function as standalone locations.",
+        examples: [
+          {
+            zh: "宿舍在西边。",
+            pinyin: "Sùshè zài xībiān.",
+            translation: "The dorm is to the west."
+          },
+          {
+            zh: "书在桌子上边。",
+            pinyin: "Shū zài zhuōzi shàngbiān.",
+            translation: "The book is on top of the table."
+          },
+          {
+            zh: "猫在椅子下边。",
+            pinyin: "Māo zài yǐzi xiàbiān.",
+            translation: "The cat is under the chair."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "跟 + persona + 一起 + verbo",
+        pinyin: "gēn + … + yīqǐ + V",
+        translation: "With … (doing something together)",
+        explanation: "跟 (gēn) means \"with\" and is used for accompaniment. Usually combined with 一起 (yīqǐ, \"together\"). Always goes before the verb, not at the end.",
+        examples: [
+          {
+            zh: "我跟同学一起去食堂。",
+            pinyin: "Wǒ gēn tóngxué yīqǐ qù shítáng.",
+            translation: "I go to the canteen with my classmate."
+          },
+          {
+            zh: "你跟我来。",
+            pinyin: "Nǐ gēn wǒ lái.",
+            translation: "Come with me."
+          },
+          {
+            zh: "她跟老师学汉语。",
+            pinyin: "Tā gēn lǎoshī xué Hànyǔ.",
+            translation: "She learns Chinese with the teacher."
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "别 + verbo",
+        pinyin: "bié + V",
+        translation: "Don't (imperative) / Don't do…",
+        explanation: "别 (bié) is the short form of 不要 (bú yào) and is used for negative imperatives: \"don't do something\". 别…了 softens it (别看了 = \"leave it / stop looking\").",
+        examples: [
+          {
+            zh: "别着急。",
+            pinyin: "Bié zháojí.",
+            translation: "Don't worry."
+          },
+          {
+            zh: "别客气。",
+            pinyin: "Bié kèqi.",
+            translation: "Don't stand on ceremony / You're welcome."
+          },
+          {
+            zh: "别去那儿。",
+            pinyin: "Bié qù nàr.",
+            translation: "Don't go there."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Verb 在 of location",
+        formula: "主语 + 在 + 地点",
+        example: "我 在 图书馆。",
+        examplePinyin: "Wǒ zài túshūguǎn.",
+        exampleTranslation: "I am at the library.",
+        note: "在 also works as a preposition: 我在图书馆看书 = \"I read in the library\". In that case it goes before the main verb."
+      },
+      {
+        id: "s2",
+        title: "Relative location",
+        formula: "A + 在 + B + 方位词 (北边/旁边/里边…)",
+        example: "银行 在 食堂 旁边。",
+        examplePinyin: "Yínháng zài shítáng pángbiān.",
+        exampleTranslation: "The bank is next to the canteen.",
+        note: "The reference (B) comes before the positional suffix, opposite to English. Without the suffix (旁边, 北边…) the sentence is incomplete."
+      },
+      {
+        id: "s3",
+        title: "Accompaniment with 跟",
+        formula: "主语 + 跟 + 同伴 + (一起) + 动词",
+        example: "我 跟 朋友 一起 去。",
+        examplePinyin: "Wǒ gēn péngyou yīqǐ qù.",
+        exampleTranslation: "I go with my friend.",
+        note: "一起 reinforces \"together\". It can be omitted, but sounds more natural with it."
+      }
+    ],
+    tip: "💡 Memorise the order of cardinal points in Chinese: 东南西北 (east-south-west-north). English says \"north-south-east-west\"; Chinese starts with east (where the sun rises)."
+  },
+  "7": {
+    intro: "In this lesson you learn to shop: ask prices, bargain and pay. We use 多少钱 (duōshao qián) for prices, specific classifiers for clothes and fruit (件, 条, 斤…) and the verbs 想 (xiǎng) and 可以 (kěyǐ) to request and permit.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "… 多少钱？",
+        pinyin: "… duōshao qián?",
+        translation: "How much is…?",
+        explanation: "多少 (duōshao) asks for large or unknown quantities and doesn't need a classifier, unlike 几 (jǐ). For prices always use 多少钱. You can add the unit: 多少钱一斤？(how much per jin?).",
+        examples: [
+          {
+            zh: "苹果多少钱一斤？",
+            pinyin: "Píngguǒ duōshao qián yī jīn?",
+            translation: "How much for one jin of apples?"
+          },
+          {
+            zh: "这件衬衫多少钱？",
+            pinyin: "Zhè jiàn chènshān duōshao qián?",
+            translation: "How much is this shirt?"
+          },
+          {
+            zh: "一共多少钱？",
+            pinyin: "Yīgòng duōshao qián?",
+            translation: "How much is it in total?"
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "想 + verbo",
+        pinyin: "xiǎng + V",
+        translation: "Want to / Feel like…",
+        explanation: "想 (xiǎng) as a modal expresses desire or intent: \"I'd like / I want to do something\". Softer than 要 (yào). Negated with 不想.",
+        examples: [
+          {
+            zh: "我想买点儿苹果。",
+            pinyin: "Wǒ xiǎng mǎi diǎnr píngguǒ.",
+            translation: "I want to buy some apples."
+          },
+          {
+            zh: "你想喝什么？",
+            pinyin: "Nǐ xiǎng hē shénme?",
+            translation: "What do you want to drink?"
+          },
+          {
+            zh: "我不想去。",
+            pinyin: "Wǒ bù xiǎng qù.",
+            translation: "I don't want to go."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "可以 + verbo？",
+        pinyin: "kěyǐ + V?",
+        translation: "Can I / May I…?",
+        explanation: "可以 (kěyǐ) is a modal that asks or gives permission. Affirmative reply: 可以 / 当然可以 (of course); negative: 不可以. Don't confuse with 能 (physical ability) or 会 (learned skill).",
+        examples: [
+          {
+            zh: "可以尝一下吗？",
+            pinyin: "Kěyǐ cháng yīxià ma?",
+            translation: "Can I try it?"
+          },
+          {
+            zh: "当然可以。",
+            pinyin: "Dāngrán kěyǐ.",
+            translation: "Of course you can."
+          },
+          {
+            zh: "这儿可以刷卡吗？",
+            pinyin: "Zhèr kěyǐ shuākǎ ma?",
+            translation: "Can I pay by card here?"
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "Clasificadores de objetos",
+        pinyin: "件 / 条 / 斤 / 块",
+        translation: "Pieces, long garments, jin, colloquial yuan",
+        explanation: "Each noun has its own classifier: 件 (jiàn) for upper-body clothes and events; 条 (tiáo) for long thin objects (trousers, skirts, streets); 斤 (jīn) for weight (≈500 g); 块 (kuài) for money colloquially. Formal money is 元 (yuán).",
+        examples: [
+          {
+            zh: "一件衬衫",
+            pinyin: "yī jiàn chènshān",
+            translation: "one shirt"
+          },
+          {
+            zh: "两条牛仔裤",
+            pinyin: "liǎng tiáo niúzǎikù",
+            translation: "two pairs of jeans"
+          },
+          {
+            zh: "三斤苹果",
+            pinyin: "sān jīn píngguǒ",
+            translation: "three jin of apples (~1.5 kg)"
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Asking the price",
+        formula: "item + 多少钱 (+ unit)?",
+        example: "苹果 多少钱 一 斤？",
+        examplePinyin: "Píngguǒ duōshao qián yī jīn?",
+        exampleTranslation: "How much for a jin of apples?",
+        note: "The unit goes at the end. To state a price: number + 块/元 + (一斤/一件…). E.g.: 五块一斤 = 5 yuan per jin."
+      },
+      {
+        id: "s2",
+        title: "Asking permission",
+        formula: "可以 + 动词 + 吗？",
+        example: "可以 试 一下 吗？",
+        examplePinyin: "Kěyǐ shì yīxià ma?",
+        exampleTranslation: "Can I try it on?",
+        note: "一下 (yīxià) after the verb softens the action: \"just a moment, a little\". Very common in polite requests."
+      },
+      {
+        id: "s3",
+        title: "Demonstrative + classifier + noun",
+        formula: "这/那 + 量词 + 名词",
+        example: "这 件 衣服",
+        examplePinyin: "zhè jiàn yīfu",
+        exampleTranslation: "this piece of clothing",
+        note: "With 这/那/哪 the classifier is never optional. Common mistake: *这衣服 ❌ — it must be 这件衣服 ✅."
+      }
+    ],
+    tip: "💡 Money system: 1 元 (yuán, formal) = 1 块 (kuài, colloquial) = 10 角 (jiǎo) = 10 毛 (máo) = 100 分 (fēn). Spoken: 块 and 毛; on invoices and at banks: 元 and 角."
+  },
+  "8": {
+    intro: "In this lesson you talk about health: symptoms, going to the doctor and accepting/refusing treatments. You learn modal verbs 应该 (yīnggāi, should) and 能 (néng, can), the conjunction 还是 (háishi) for choice questions, and nuances with 有点儿 vs. (一)点儿.",
+    patterns: [
+      {
+        id: "p1",
+        pattern: "哪儿 + 不舒服 / 疼？",
+        pinyin: "Nǎr bù shūfu / téng?",
+        translation: "Where does it hurt / where do you feel unwell?",
+        explanation: "To describe pain or discomfort: body part + 疼 (téng, hurt) or + 不舒服 (uncomfortable). In the question, 哪儿 replaces the body part. No 吗 is needed because there's already an interrogative pronoun.",
+        examples: [
+          {
+            zh: "你哪儿不舒服？",
+            pinyin: "Nǐ nǎr bù shūfu?",
+            translation: "What's wrong? / Where do you feel unwell?"
+          },
+          {
+            zh: "我头疼。",
+            pinyin: "Wǒ tóu téng.",
+            translation: "I have a headache."
+          },
+          {
+            zh: "嗓子有点儿疼。",
+            pinyin: "Sǎngzi yǒu diǎnr téng.",
+            translation: "My throat hurts a bit."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        pattern: "应该 / 不应该 + verbo",
+        pinyin: "yīnggāi / bù yīnggāi + V",
+        translation: "Should / Shouldn't do…",
+        explanation: "应该 (yīnggāi) expresses moral or logical obligation/recommendation. Softer than 必须 (bìxū, \"must\"). In negative: 不应该 = \"shouldn't\".",
+        examples: [
+          {
+            zh: "你应该去医院。",
+            pinyin: "Nǐ yīnggāi qù yīyuàn.",
+            translation: "You should go to the hospital."
+          },
+          {
+            zh: "你应该多休息。",
+            pinyin: "Nǐ yīnggāi duō xiūxi.",
+            translation: "You should rest more."
+          },
+          {
+            zh: "不应该吃太多。",
+            pinyin: "Bù yīnggāi chī tài duō.",
+            translation: "You shouldn't eat too much."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        pattern: "A 还是 B？",
+        pinyin: "A háishi B?",
+        translation: "A or B?",
+        explanation: "还是 (háishi) is the conjunction for choice questions. Don't use 或者 (huòzhě, \"or\") in questions — that's for affirmative sentences. Structure: option 1 + 还是 + option 2.",
+        examples: [
+          {
+            zh: "你喝茶还是咖啡？",
+            pinyin: "Nǐ hē chá háishi kāfēi?",
+            translation: "Tea or coffee?"
+          },
+          {
+            zh: "今天去还是明天去？",
+            pinyin: "Jīntiān qù háishi míngtiān qù?",
+            translation: "Going today or tomorrow?"
+          },
+          {
+            zh: "吃中药还是西药？",
+            pinyin: "Chī zhōngyào háishi xīyào?",
+            translation: "Chinese or Western medicine?"
+          }
+        ]
+      },
+      {
+        id: "p4",
+        pattern: "有点儿 + adjetivo  vs.  adjetivo + (一)点儿",
+        pinyin: "yǒu diǎnr + adj.  vs.  adj. + (yī)diǎnr",
+        translation: "A bit (negative) vs. a bit (comparative)",
+        explanation: "Important difference: 有点儿 + adjective goes BEFORE and usually has a negative/uncomfortable nuance (\"a bit annoying\"). (一)点儿 goes AFTER the adjective and appears in comparisons or requests (\"a bit more X\").",
+        examples: [
+          {
+            zh: "我有点儿累。",
+            pinyin: "Wǒ yǒu diǎnr lèi.",
+            translation: "I'm a bit tired. (complaint)"
+          },
+          {
+            zh: "便宜点儿吧！",
+            pinyin: "Piányi diǎnr ba!",
+            translation: "A bit cheaper!"
+          },
+          {
+            zh: "今天有点儿冷。",
+            pinyin: "Jīntiān yǒu diǎnr lěng.",
+            translation: "It's a bit cold today."
+          }
+        ]
+      }
+    ],
+    structures: [
+      {
+        id: "s1",
+        title: "Describing a symptom",
+        formula: "主语 + 部位 + 疼 / 不舒服",
+        example: "我 嗓子 疼。",
+        examplePinyin: "Wǒ sǎngzi téng.",
+        exampleTranslation: "My throat hurts.",
+        note: "The body part works as a secondary subject (\"double subject\" structure). English says \"my X hurts\"; Chinese: \"I, X hurts\"."
+      },
+      {
+        id: "s2",
+        title: "Modal verbs for advice / ability",
+        formula: "应该 + V (advice) · 能 + V (ability/possibility)",
+        example: "你 应该 多 喝 水，今天 不能 上课。",
+        examplePinyin: "Nǐ yīnggāi duō hē shuǐ, jīntiān bù néng shàngkè.",
+        exampleTranslation: "You should drink more water, today you can't go to class.",
+        note: "能 indicates ability or possibility at that moment. 会 indicates a learned skill. 可以 indicates permission. They're not interchangeable."
+      },
+      {
+        id: "s3",
+        title: "Choice question with 还是",
+        formula: "… A + 还是 + B？",
+        example: "你 想 打针 还是 吃药？",
+        examplePinyin: "Nǐ xiǎng dǎzhēn háishi chī yào?",
+        exampleTranslation: "Do you prefer an injection or pills?",
+        note: "In choice questions, do NOT add 吗 at the end. 还是 already marks the question."
+      }
+    ],
+    tip: "💡 Traditional Chinese medicine (中医, zhōngyī) is still very present in Chinese hospitals: your doctor may prescribe 西药 (Western medicine), 中药 (Chinese herbal medicine) or 针灸 (acupuncture). Combining them is common."
+  }
+};
+
+export default data;

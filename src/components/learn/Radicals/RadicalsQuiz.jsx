@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { shuffle } from "@/utils/arrayUtils.js";
 
 export default function RadicalsQuiz({ goBack, radicals }) {
   const { t } = useTranslation();
@@ -44,9 +45,9 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         : correctRadical.radical;
 
       // GENERAR OPCIONES INCORRECTAS - VERSIÓN MEJORADA
-      const allPossibleDistractors = radicals
-        .filter(r => r.radical !== correctRadical.radical) // Solo excluir la correcta
-        .sort(() => Math.random() - 0.5);
+      const allPossibleDistractors = shuffle(
+        radicals.filter(r => r.radical !== correctRadical.radical) // Solo excluir la correcta
+      );
 
       // Tomar hasta 3 distractores, si hay menos usar los disponibles
       const otherRadicals = allPossibleDistractors
@@ -73,8 +74,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         }
       }
 
-      const allOptions = uniqueOptions
-        .sort(() => Math.random() - 0.5);
+      const allOptions = shuffle(uniqueOptions);
 
       questions.push({
         id: i,

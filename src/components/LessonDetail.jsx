@@ -1,14 +1,17 @@
 // src/components/LessonDetail.jsx
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
-import Confetti from 'react-confetti';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
 import { toggleWordDifficult, isWordDifficult } from '@/utils/srs.js';
-import GrammarTab from './GrammarTab.jsx';
-import CulturalTab from './CulturalTab.jsx';
-import grammarData from '@/data/grammarData.js';
+
+// Cargas perezosas: estos componentes/módulos arrastran bastante peso (datos
+// multi-idioma, librería de partículas) y solo se necesitan al abrir su tab
+// o al alcanzar el 100% de la lección. Salen del chunk principal de LessonDetail.
+const GrammarTab   = lazy(() => import('./GrammarTab.jsx'));
+const CulturalTab  = lazy(() => import('./CulturalTab.jsx'));
+const Confetti     = lazy(() => import('react-confetti'));
 
 /* CJK exercise icons — reemplazan emojis */
 const EXERCISE_DEFS = [
@@ -89,11 +92,13 @@ export default function LessonDetail({
   return (
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       {showConfetti && (
-        <Confetti
-          width={width} height={height} recycle={false} numberOfPieces={250} gravity={0.25}
-          colors={[J.jade, J.red, J.butter, J.sand, '#86efac']}
-          style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none' }}
-        />
+        <Suspense fallback={null}>
+          <Confetti
+            width={width} height={height} recycle={false} numberOfPieces={250} gravity={0.25}
+            colors={[J.jade, J.red, J.butter, J.sand, '#86efac']}
+            style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none' }}
+          />
+        </Suspense>
       )}
 
       {/* Header */}
@@ -283,26 +288,30 @@ export default function LessonDetail({
 
         {/* Tab Gramatica */}
         {tab === 'grammar' && (
-          <GrammarTab
-            grammarData={grammarData[lessonNum] || null}
-            accent={{
-              border: `border-jade`,
-              text: J.jade,
-              light: J.jadeMid,
-              icon: J.jadeBg,
-            }}
-          />
+          <Suspense fallback={<div className="pt-6 text-center text-sm" style={{ color: J.mute }}>…</div>}>
+            <GrammarTab
+              lessonNum={lessonNum}
+              accent={{
+                border: `border-jade`,
+                text: J.jade,
+                light: J.jadeMid,
+                icon: J.jadeBg,
+              }}
+            />
+          </Suspense>
         )}
 
         {/* Tab Cultura */}
         {tab === 'culture' && (
-          <CulturalTab
-            lessonNum={lessonNum}
-            accent={{
-              icon: J.jadeBg,
-              ring: `border-jade`,
-            }}
-          />
+          <Suspense fallback={<div className="pt-6 text-center text-sm" style={{ color: J.mute }}>…</div>}>
+            <CulturalTab
+              lessonNum={lessonNum}
+              accent={{
+                icon: J.jadeBg,
+                ring: `border-jade`,
+              }}
+            />
+          </Suspense>
         )}
 
         {/* Tab Practicar */}

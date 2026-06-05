@@ -146,7 +146,9 @@ export function addXP(xp) {
   // Track XP earned for daily challenges
   updateChallengeProgress('earn_xp', xp);
 
-  // Registrar cumplimiento de objetivo diario (solo la primera vez que se cruza)
+  // Registrar cumplimiento de objetivo diario (solo la primera vez que se cruza).
+  // trackAchievement ya despacha su propio evento 'achievement-unlocked', así que
+  // aquí NO reenviamos los logros para no mostrar el toast dos veces.
   const goal = updated.dailyGoal || DAILY_XP_GOAL;
   const newAchievements = [];
   if (prevTodayXP < goal && updated.todayXP >= goal) {
@@ -163,11 +165,12 @@ export function addXP(xp) {
   updated._levelUp = levelUp;
   updated._newAchievements = newAchievements;
 
-  // Dispatch custom event for App.jsx to catch
-  if (levelUp || newAchievements.length) {
+  // Solo la subida de nivel viaja por 'xp-notification'; los logros ya se
+  // notificaron vía 'achievement-unlocked' desde trackAchievement.
+  if (levelUp) {
     try {
       window.dispatchEvent(new CustomEvent('xp-notification', {
-        detail: { levelUp, achievements: newAchievements }
+        detail: { levelUp, achievements: [] }
       }));
     } catch { /* SSR safety */ }
   }

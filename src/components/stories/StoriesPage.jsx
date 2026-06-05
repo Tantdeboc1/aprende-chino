@@ -45,7 +45,6 @@ const ACCENTS = [
 export default function StoriesPage({
   userName,
   speak,
-  onExit,
   progress: lessonProgress,           // progreso de lecciones (vino de App)
   onProgressChange,                   // setter del progreso de lecciones
   allCharacters,                      // para mapear vocab → lección

@@ -94,7 +94,7 @@ function Welcome({ inputName, setInputName, handleWelcome, onAudioInit }) {
             value={inputName}
             onChange={(e) => setInputName(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.18)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#928a76]"
+            className="w-full px-4 py-3 border-2 border-[rgba(28,24,19,0.32)] rounded-lg focus:border-[#c8392f] focus:outline-none text-lg bg-[#f8f1de] text-[#1c1813] placeholder-[#6e6757]"
             disabled={isActivatingAudio}
           />
           <button

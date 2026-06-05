@@ -8,6 +8,7 @@ import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
 import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, updateUserProfile, GENDERS } from '@/utils/userProfile.js';
+import { useMusic } from '@/context/MusicContext.jsx';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -59,17 +60,26 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
         background: 'rgba(0,0,0,0.55)',
         display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
         backdropFilter: 'blur(4px)',
+        overflow: 'hidden',
       }}
     >
       <div
         onClick={e => e.stopPropagation()}
+        onWheel={e => e.stopPropagation()}
+        onTouchMove={e => e.stopPropagation()}
         style={{
           width: '100%', maxWidth: 520,
           background: J.paperHi,
           borderRadius: '22px 22px 0 0',
           padding: '18px 18px 28px',
           maxHeight: '85vh',
+          minHeight: 0,
           overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         {/* Asa */}
@@ -80,10 +90,14 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
 
         <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
           <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: J.ink }}>{t('avatar_picker_title')}</h3>
-          <button onClick={onClose} style={{
-            background: 'transparent', border: 0, cursor: 'pointer',
-            color: J.mute, fontSize: 24, lineHeight: 1, padding: 4,
-          }}>×</button>
+          <button
+            onClick={onClose}
+            aria-label={t('aria_close', 'Cerrar')}
+            style={{
+              background: 'transparent', border: 0, cursor: 'pointer',
+              color: J.mute, fontSize: 24, lineHeight: 1, padding: 4,
+            }}
+          >×</button>
         </div>
 
         {/* Tabs */}
@@ -169,6 +183,7 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
 
 export default function SettingsScreen({ userName, onUserNameChange, progress, onProgressChange, allCharacters }) {
   const { t, i18n } = useTranslation();
+  const music = useMusic();
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [profile, setProfile] = useState(() => loadUserProfile());
@@ -419,7 +434,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               onKeyDown={e => { if (e.key === 'Enter') e.target.blur(); }}
               style={{
                 width: '100%', padding: '10px 14px', background: J.paper,
-                border: `1px solid ${J.hair}`, borderRadius: 12,
+                border: `1px solid ${J.border}`, borderRadius: 12,
                 fontSize: 14, color: J.ink, outline: 'none',
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
@@ -478,6 +493,53 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
             </button>
           </div>
         </JCard>
+
+        {/* ─── Música ──────────────────────────────────────────────────── */}
+        {music && (
+          <>
+            <JSection label={t('settings_music_title')} cn="音乐" />
+            <JCard padding="0">
+              {/* Toggle música de fondo */}
+              <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
+                <div style={{ minWidth: 0 }}>
+                  <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{t('settings_music_label')}</p>
+                  <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_music_credit')}</p>
+                </div>
+                <button
+                  onClick={() => music.toggle()}
+                  aria-pressed={music.enabled}
+                  style={{
+                    flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
+                    cursor: 'pointer', position: 'relative',
+                    background: music.enabled ? J.jade : J.hairS,
+                    transition: 'background 200ms ease',
+                  }}
+                >
+                  <span style={{
+                    position: 'absolute', top: 3, left: music.enabled ? 23 : 3,
+                    width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
+                    transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                  }} />
+                </button>
+              </div>
+
+              {/* Volumen */}
+              <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+                <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+                  <p style={{ margin: 0, fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.04em' }}>{t('settings_volume')}</p>
+                  <span style={{ fontSize: 12, color: J.inkSoft, fontWeight: 700 }}>{Math.round(music.volume * 100)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0" max="1" step="0.05"
+                  value={music.volume}
+                  onChange={e => music.setVolume(parseFloat(e.target.value))}
+                  style={{ width: '100%', accentColor: J.jade, cursor: 'pointer' }}
+                />
+              </div>
+            </JCard>
+          </>
+        )}
 
         {/* ─── Idioma ──────────────────────────────────────────────────── */}
         <JSection label={t('settings_language')} cn="语言" />

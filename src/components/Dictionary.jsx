@@ -69,7 +69,7 @@ export default function Dictionary({
   // ── Normalización ─────────────────────────────────────────────────────────
   const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
   const normalizeBase  = (s) => mapUmlautToV(String(s || "")).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").trim();
-  const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_\-]/g, "").replace(/[1-4]/g, "");
+  const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_-]/g, "").replace(/[1-4]/g, "");
 
   // ── Búsqueda con debounce ─────────────────────────────────────────────────
   const [rawQuery, setRawQuery]         = useState(searchTerm || "");
@@ -214,9 +214,9 @@ export default function Dictionary({
               placeholder={t('dictionary_search_placeholder')}
               value={rawQuery}
               onChange={(e) => setRawQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-lg text-lg"
+              className="w-full pl-10 pr-4 py-3 rounded-lg text-lg placeholder-[#6e6757]"
               style={{
-                border: `2px solid ${J.hair}`, background: J.paperHi, color: J.ink,
+                border: `2px solid ${J.border}`, background: J.paperHi, color: J.ink,
                 outline: 'none',
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
