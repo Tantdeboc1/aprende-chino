@@ -29,6 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Genera src/data/{grammar,cultural}/<lang>.js a partir de los datos
+      # multi-idioma (esos archivos están gitignorados — los crea cada build).
+      - name: Generate i18n data
+        run: node scripts/split-i18n-data.mjs
+
       - name: Build
         run: npx vite build --base=/aprende-chino/
 
