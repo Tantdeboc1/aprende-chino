@@ -389,6 +389,17 @@ export default {
   common_loading: "A carregar…",
   speak_aria: "Reproduzir áudio",
   culture_speak_hint: "Ouvir os hanzi desta ficha",
+  // SRS — etiquetas no vocabulário
+  srs_badge_mastered: "dominada",
+  srs_badge_mastered_title: "Dominada — próxima revisão em >3 semanas",
+  srs_badge_due: "hoje",
+  srs_badge_due_title: "Toca rever hoje",
+  srs_badge_tomorrow: "amanhã",
+  srs_badge_in_days: "em {{n}}d",
+  srs_badge_soon_title: "Próxima revisão em {{n}} dias",
+  srs_badge_leech: "rebelde",
+  srs_badge_leech_title: "Falhaste-a várias vezes seguidas — revê-a",
+  home_srs_leeches: "{{count}} palavras rebeldes à tua espera",
   // Pronúncia
   minigames_pronunciation_title: "Pronúncia",
   minigames_pronunciation_description: "Diz a frase em voz alta e verifica se te entendem",

@@ -3,7 +3,7 @@ import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { getLessonStats } from '@/utils/progress.js';
-import { getDueCount, getSRSStats } from '@/utils/srs.js';
+import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
 import StreakPanel from '@/components/ui/StreakPanel.jsx';
@@ -261,6 +261,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const totalWords  = useMemo(() => allCharacters.filter(c => !c.isSupplementary).length, [allCharacters]);
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
+  const leechCount  = useMemo(() => getLeechCards(progress, allCharacters).length, [progress, allCharacters]);
   const streak      = useMemo(() => getStreak(), []);
   const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
@@ -415,6 +416,14 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
                     : t('home_srs_ok', '¡Al día! {{learned}} palabras aprendidas', { learned: srsStats.learned })
                   }
                 </p>
+                {/* Leeches: palabras que has fallado varias veces seguidas.
+                    Aparecen en el mismo repaso, no requieren acción aparte,
+                    pero las mostramos para que el usuario sepa lo que tiene en danger zone. */}
+                {leechCount > 0 && (
+                  <p className="text-xs mt-1 font-medium" style={{ color: J.redDeep }}>
+                    🐛 {t('home_srs_leeches', '{{count}} palabras rebeldes te esperan', { count: leechCount })}
+                  </p>
+                )}
               </div>
               <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
             </button>

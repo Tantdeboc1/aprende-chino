@@ -399,6 +399,17 @@ export default {
           common_loading: "Chargement…",
           speak_aria: "Lire l'audio",
           culture_speak_hint: "Écouter les hanzi de cette fiche",
+          // SRS — étiquettes du vocabulaire
+          srs_badge_mastered: "maîtrisé",
+          srs_badge_mastered_title: "Maîtrisé — prochaine révision dans >3 semaines",
+          srs_badge_due: "aujourd'hui",
+          srs_badge_due_title: "À réviser aujourd'hui",
+          srs_badge_tomorrow: "demain",
+          srs_badge_in_days: "dans {{n}}j",
+          srs_badge_soon_title: "Prochaine révision dans {{n}} jours",
+          srs_badge_leech: "rebelle",
+          srs_badge_leech_title: "Tu l'as ratée plusieurs fois — révise-la",
+          home_srs_leeches: "{{count}} mots rebelles t'attendent",
           // Prononciation
           minigames_pronunciation_title: "Prononciation",
           minigames_pronunciation_description: "Lis la phrase à voix haute et vois si on te comprend",

@@ -104,6 +104,17 @@ export default {
           common_loading: "Laden…",
           speak_aria: "Audio abspielen",
           culture_speak_hint: "Die Hanzi dieser Karte anhören",
+          // SRS — Vokabel-Badges
+          srs_badge_mastered: "beherrscht",
+          srs_badge_mastered_title: "Beherrscht — nächste Wiederholung in >3 Wochen",
+          srs_badge_due: "heute",
+          srs_badge_due_title: "Heute zu wiederholen",
+          srs_badge_tomorrow: "morgen",
+          srs_badge_in_days: "in {{n}} T.",
+          srs_badge_soon_title: "Nächste Wiederholung in {{n}} Tagen",
+          srs_badge_leech: "hartnäckig",
+          srs_badge_leech_title: "Du hast sie mehrmals hintereinander falsch — wiederhole sie",
+          home_srs_leeches: "{{count}} hartnäckige Wörter warten",
           // Aussprache
           minigames_pronunciation_title: "Aussprache",
           minigames_pronunciation_description: "Sprich den Satz laut aus und prüfe, ob du verstanden wirst",

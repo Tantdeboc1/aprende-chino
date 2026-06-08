@@ -401,6 +401,17 @@ export default {
           common_loading: "Cargando…",
           speak_aria: "Reproducir audio",
           culture_speak_hint: "Escuchar los hanzi de esta ficha",
+          // SRS — etiquetas en la lista de vocabulario
+          srs_badge_mastered: "dominada",
+          srs_badge_mastered_title: "Dominada — repaso en >3 semanas",
+          srs_badge_due: "hoy",
+          srs_badge_due_title: "Toca repasarla hoy",
+          srs_badge_tomorrow: "mañana",
+          srs_badge_in_days: "en {{n}}d",
+          srs_badge_soon_title: "Próxima revisión en {{n}} días",
+          srs_badge_leech: "rebelde",
+          srs_badge_leech_title: "La has fallado varias veces seguidas — dale repaso",
+          home_srs_leeches: "{{count}} palabras rebeldes te esperan",
           // Pronunciación
           minigames_pronunciation_title: "Pronunciación",
           minigames_pronunciation_description: "Di la frase en voz alta y comprueba si te entienden",

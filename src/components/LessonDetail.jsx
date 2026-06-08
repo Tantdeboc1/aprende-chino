@@ -4,7 +4,7 @@ import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
-import { toggleWordDifficult, isWordDifficult } from '@/utils/srs.js';
+import { toggleWordDifficult, isWordDifficult, isLeech, getNextReviewInfo } from '@/utils/srs.js';
 
 // Cargas perezosas: estos componentes/módulos arrastran bastante peso (datos
 // multi-idioma, librería de partículas) y solo se necesitan al abrir su tab
@@ -205,6 +205,8 @@ export default function LessonDetail({
                 const status = getStatus(word.char);
                 const isOpen = selectedCard === word.char;
                 const isDiff = isWordDifficult(progress, word.char);
+                const leech = isLeech(progress, word.char);
+                const review = getNextReviewInfo(progress, word.char);
                 return (
                   <div
                     key={word.char}
@@ -244,6 +246,42 @@ export default function LessonDetail({
                               fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.jadeBg, color: J.jadeDeep,
                             }}>extra</span>
+                          )}
+                          {/* Badge SRS: cuándo toca repasar (o "dominada" si interval ≥ 21d). */}
+                          {review.kind === 'mastered' && (
+                            <span style={{
+                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              background: J.jadeBg, color: J.jadeDeep,
+                            }} title={t('srs_badge_mastered_title', 'Dominada — repaso en >3 semanas')}>
+                              ✓ {t('srs_badge_mastered', 'dominada')}
+                            </span>
+                          )}
+                          {review.kind === 'due' && (
+                            <span style={{
+                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              background: J.redBg, color: J.redDeep,
+                            }} title={t('srs_badge_due_title', 'Toca repasarla hoy')}>
+                              🕐 {t('srs_badge_due', 'hoy')}
+                            </span>
+                          )}
+                          {review.kind === 'soon' && (
+                            <span style={{
+                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              background: J.sandBg2 || J.sandBg, color: J.sandDeep,
+                            }} title={t('srs_badge_soon_title', 'Próxima revisión en {{n}} días', { n: review.days })}>
+                              🕐 {review.days === 1
+                                ? t('srs_badge_tomorrow', 'mañana')
+                                : t('srs_badge_in_days', 'en {{n}}d', { n: review.days })}
+                            </span>
+                          )}
+                          {/* Leech: te ha costado mucho. */}
+                          {leech && (
+                            <span style={{
+                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              background: J.redBg, color: J.redDeep,
+                            }} title={t('srs_badge_leech_title', 'La has fallado varias veces seguidas — dale repaso')}>
+                              🐛 {t('srs_badge_leech', 'rebelde')}
+                            </span>
                           )}
                         </div>
                         <p className="text-sm font-medium mt-0.5 truncate" style={{ color: J.ink }}>{word.meaning}</p>

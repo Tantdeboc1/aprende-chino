@@ -401,6 +401,17 @@ export default {
           common_loading: "Loading…",
           speak_aria: "Play audio",
           culture_speak_hint: "Listen to the hanzi in this card",
+          // SRS — vocab list badges
+          srs_badge_mastered: "mastered",
+          srs_badge_mastered_title: "Mastered — next review in >3 weeks",
+          srs_badge_due: "today",
+          srs_badge_due_title: "Time to review",
+          srs_badge_tomorrow: "tomorrow",
+          srs_badge_in_days: "in {{n}}d",
+          srs_badge_soon_title: "Next review in {{n}} days",
+          srs_badge_leech: "leech",
+          srs_badge_leech_title: "You've missed it several times in a row — review it",
+          home_srs_leeches: "{{count}} stubborn words waiting",
           // Pronunciation
           minigames_pronunciation_title: "Pronunciation",
           minigames_pronunciation_description: "Say the sentence out loud and check if you're understood",

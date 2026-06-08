@@ -389,6 +389,17 @@ export default {
   common_loading: "Caricamento…",
   speak_aria: "Riproduci audio",
   culture_speak_hint: "Ascolta gli hanzi di questa scheda",
+  // SRS — etichette del vocabolario
+  srs_badge_mastered: "padroneggiata",
+  srs_badge_mastered_title: "Padroneggiata — prossima ripetizione tra >3 settimane",
+  srs_badge_due: "oggi",
+  srs_badge_due_title: "Da ripassare oggi",
+  srs_badge_tomorrow: "domani",
+  srs_badge_in_days: "tra {{n}}g",
+  srs_badge_soon_title: "Prossima ripetizione tra {{n}} giorni",
+  srs_badge_leech: "ribelle",
+  srs_badge_leech_title: "L'hai sbagliata più volte di seguito — ripassala",
+  home_srs_leeches: "{{count}} parole ribelli ti aspettano",
   // Pronuncia
   minigames_pronunciation_title: "Pronuncia",
   minigames_pronunciation_description: "Di' la frase ad alta voce e verifica se ti capiscono",

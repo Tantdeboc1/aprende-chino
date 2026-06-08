@@ -13,6 +13,12 @@
 const DEFAULT_EASE = 2.5;
 const MIN_EASE     = 1.3;
 
+// Una palabra se considera "leech" tras este número de fallos consecutivos.
+// 3 es el estándar de Anki — suficiente para detectar palabras problemáticas
+// sin ser tan paranoico como para marcar fallos puntuales.
+export const LEECH_THRESHOLD = 3;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 /**
  * Devuelve los datos SRS de un carácter, con valores por defecto si no existe.
  */
@@ -35,13 +41,16 @@ export function updateSRS(progress, char, quality) {
   const now = Date.now();
 
   let { interval, easeFactor, repetitions } = srs;
+  // Contador de fallos consecutivos — usado para detección de leech.
+  let consecutiveFails = srs.consecutiveFails || 0;
 
   if (quality < 3) {
-    // No recuerda — reiniciar
+    // No recuerda — reiniciar SRS y subir contador de fallos
     repetitions = 0;
     interval    = 1;
+    consecutiveFails++;
   } else {
-    // Recuerda correctamente — avanzar
+    // Recuerda correctamente — avanzar y reiniciar contador de fallos
     if (repetitions === 0)      interval = 1;
     else if (repetitions === 1) interval = 6;
     else                        interval = Math.round(interval * easeFactor);
@@ -50,19 +59,29 @@ export function updateSRS(progress, char, quality) {
     easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
     easeFactor = Math.max(MIN_EASE, easeFactor);
     repetitions++;
+    consecutiveFails = 0;
   }
 
   // Si la palabra está marcada como difícil, limitar el intervalo a 3 días
   if (srs.difficult) interval = Math.min(interval, 3);
 
   // nextReview = ahora + interval días
-  const nextReview = now + interval * 24 * 60 * 60 * 1000;
+  const nextReview = now + interval * DAY_MS;
+
+  // Marca leech si el usuario falla N veces seguidas (umbral configurable).
+  // No suspendemos la carta — solo la flagueamos para que la UI la destaque.
+  const isLeech = consecutiveFails >= LEECH_THRESHOLD;
 
   const updated = { ...progress };
   if (!updated.__srs) updated.__srs = {};
   updated.__srs = {
     ...updated.__srs,
-    [char]: { interval, easeFactor, repetitions, nextReview, lastReviewed: now, difficult: srs.difficult || false },
+    [char]: {
+      interval, easeFactor, repetitions, nextReview, lastReviewed: now,
+      difficult: srs.difficult || false,
+      consecutiveFails,
+      leech: isLeech,
+    },
   };
   return updated;
 }
@@ -203,6 +222,43 @@ export function getWordHealth(progress, char) {
   }
   // known: interval 7-20 días
   return { emoji: '知', color: 'text-[#5a8f72]', level: 'known', labelKey: 'health_known' };
+}
+
+/**
+ * ¿Es una "leech"? Palabra que has fallado LEECH_THRESHOLD veces seguidas.
+ */
+export function isLeech(progress, char) {
+  return progress?.__srs?.[char]?.leech === true;
+}
+
+/**
+ * Devuelve todas las palabras leech (fallos consecutivos ≥ umbral).
+ * Útil para ofrecer una sesión de "rompe el ciclo" con repaso intensivo.
+ */
+export function getLeechCards(progress, allCharacters) {
+  const srs = progress?.__srs || {};
+  return allCharacters.filter(c => srs[c.char]?.leech === true);
+}
+
+/**
+ * Devuelve un descriptor del próximo repaso de una palabra:
+ *   { kind: 'never' }                       → nunca vista
+ *   { kind: 'due', days: 0 }                → pendiente hoy
+ *   { kind: 'soon', days: n }               → en n días (n ≥ 1)
+ *   { kind: 'mastered' }                    → intervalo ≥ 21 días (dominada)
+ *
+ * `mastered` se calcula a partir del intervalo, no del tiempo restante.
+ * Una palabra "mastered" puede tener `days` alto pero la mostramos como dominada.
+ */
+export function getNextReviewInfo(progress, char) {
+  const d = progress?.__srs?.[char];
+  if (!d || d.nextReview === null) return { kind: 'never' };
+  if (d.interval >= 21) return { kind: 'mastered' };
+  const now = Date.now();
+  const diffMs = d.nextReview - now;
+  const days = Math.ceil(diffMs / DAY_MS);
+  if (days <= 0) return { kind: 'due', days: 0 };
+  return { kind: 'soon', days };
 }
 
 /**
