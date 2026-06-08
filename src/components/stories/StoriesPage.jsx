@@ -2,7 +2,8 @@
 // Listado de historias con estado bloqueada/disponible/completada.
 // Guarda el resultado al terminar una historia.
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { STORIES, getStoryById } from '@/data/stories/index.js';
 import {
@@ -11,7 +12,11 @@ import {
   getAllStatuses,
 } from '@/utils/storyProgress.js';
 import { markWordSeen } from '@/utils/progress.js';
-import StoryPlayer from './StoryPlayer.jsx';
+
+// StoryPlayer arrastra mucho código (escenarios, diálogos, ejercicios). Solo
+// se necesita al reproducir una historia concreta — el listado no lo usa.
+// Lazy lo saca del chunk de StoriesPage (que pasa de 85 kB a ~15 kB).
+const StoryPlayer = lazy(() => import('./StoryPlayer.jsx'));
 
 // Al terminar una historia, marca los caracteres del vocabularioObjetivo
 // como "vistos" en la lección a la que pertenecen — así el progreso de
@@ -49,6 +54,7 @@ export default function StoriesPage({
   onProgressChange,                   // setter del progreso de lecciones
   allCharacters,                      // para mapear vocab → lección
 }) {
+  const { t } = useTranslation();
   const [activeStoryId, setActiveStoryId] = useState(null);
   const [storyProgress, setStoryProgress] = useState(() => loadStoryProgress());
   // Metadata del último resultado (XP, primera vez, etc.) — viaja al player
@@ -87,14 +93,16 @@ export default function StoriesPage({
 
   if (activeStory) {
     return (
-      <StoryPlayer
-        story={activeStory}
-        userName={userName}
-        speak={speak}
-        onExit={handleExitFromPlayer}
-        onFinish={handleStoryFinish}
-        resultMeta={lastResultMeta}
-      />
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-sm" style={{ background: J.paper, color: J.mute }}>{t('common_loading', 'Cargando…')}</div>}>
+        <StoryPlayer
+          story={activeStory}
+          userName={userName}
+          speak={speak}
+          onExit={handleExitFromPlayer}
+          onFinish={handleStoryFinish}
+          resultMeta={lastResultMeta}
+        />
+      </Suspense>
     );
   }
 

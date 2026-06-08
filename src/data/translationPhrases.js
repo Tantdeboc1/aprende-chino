@@ -928,7 +928,7 @@ export const pinyinDictionary = {
   tamen:     [{ hanzi: "他们", pinyin: "tāmen" }, { hanzi: "她们", pinyin: "tāmen" }],
   zanmen:    [{ hanzi: "咱们", pinyin: "zánmen" }],
   dajia:     [{ hanzi: "大家", pinyin: "dàjiā" }],
-  men:       [{ hanzi: "们", pinyin: "men" }],
+  // `men:` ahora se define más abajo junto con 门; aquí solo 们 era incompleto.
 
   // ───── Verbo "ser" y otros ─────
   shi:       [{ hanzi: "是", pinyin: "shì" }, { hanzi: "时", pinyin: "shí" }, { hanzi: "十", pinyin: "shí" }, { hanzi: "事", pinyin: "shì" }, { hanzi: "试", pinyin: "shì" }],
@@ -1207,7 +1207,7 @@ export const pinyinDictionary = {
   kuai:      [{ hanzi: "块", pinyin: "kuài" }, { hanzi: "快", pinyin: "kuài" }],
   yuan:      [{ hanzi: "元", pinyin: "yuán" }, { hanzi: "员", pinyin: "yuán" }, { hanzi: "原", pinyin: "yuán" }],
   jiao2:     [{ hanzi: "角", pinyin: "jiǎo" }],
-  mao:       [{ hanzi: "毛", pinyin: "máo" }],
+  // `mao:` se define más abajo junto con 猫; aquí solo 毛 era incompleto.
   fen:       [{ hanzi: "分", pinyin: "fēn" }],
   jin:       [{ hanzi: "斤", pinyin: "jīn" }, { hanzi: "今", pinyin: "jīn" }],
   bai2:      [{ hanzi: "百", pinyin: "bǎi" }],

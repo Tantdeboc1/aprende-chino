@@ -27,6 +27,19 @@ import b08 from '@/assets/avatares/avatares2_HD/avatar2_08.webp';
 import b09 from '@/assets/avatares/avatares2_HD/avatar2_09.webp';
 import b10 from '@/assets/avatares/avatares2_HD/avatar2_10.webp';
 
+// ─── Carpeta 3: avatares3_HD (PNG) ──────────────────────────────────────────
+// Labels y géneros son placeholders — edita en AVATARS según el contenido real.
+import c01 from '@/assets/avatares/avatares3_HD/avatar3_01.webp';
+import c02 from '@/assets/avatares/avatares3_HD/avatar3_02.webp';
+import c03 from '@/assets/avatares/avatares3_HD/avatar3_03.webp';
+import c04 from '@/assets/avatares/avatares3_HD/avatar3_04.webp';
+import c05 from '@/assets/avatares/avatares3_HD/avatar3_05.webp';
+import c06 from '@/assets/avatares/avatares3_HD/avatar3_06.webp';
+import c07 from '@/assets/avatares/avatares3_HD/avatar3_07.webp';
+import c08 from '@/assets/avatares/avatares3_HD/avatar3_08.webp';
+import c09 from '@/assets/avatares/avatares3_HD/avatar3_09.webp';
+import c10 from '@/assets/avatares/avatares3_HD/avatar3_10.webp';
+
 // gender:  'm' = hombre · 'f' = mujer · 'nb' = no binario
 export const AVATARS = [
   { id: 'a01', src: a01, gender: 'm',  label: 'Chico mochila' },
@@ -50,6 +63,18 @@ export const AVATARS = [
   { id: 'b08', src: b08, gender: 'm',  label: 'Karateca' },
   { id: 'b09', src: b09, gender: 'f',  label: 'Orejas de zorro' },
   { id: 'b10', src: b10, gender: 'm',  label: 'Aviador' },
+
+  // Carpeta 3 — labels/género provisionales, ajustar al ver las imágenes.
+  { id: 'c01', src: c01, gender: 'nb', label: 'Avatar 21' },
+  { id: 'c02', src: c02, gender: 'nb', label: 'Avatar 22' },
+  { id: 'c03', src: c03, gender: 'nb', label: 'Avatar 23' },
+  { id: 'c04', src: c04, gender: 'nb', label: 'Avatar 24' },
+  { id: 'c05', src: c05, gender: 'nb', label: 'Avatar 25' },
+  { id: 'c06', src: c06, gender: 'nb', label: 'Avatar 26' },
+  { id: 'c07', src: c07, gender: 'nb', label: 'Avatar 27' },
+  { id: 'c08', src: c08, gender: 'nb', label: 'Avatar 28' },
+  { id: 'c09', src: c09, gender: 'nb', label: 'Avatar 29' },
+  { id: 'c10', src: c10, gender: 'nb', label: 'Avatar 30' },
 ];
 
 export const AVATARS_BY_ID = Object.fromEntries(AVATARS.map(a => [a.id, a]));

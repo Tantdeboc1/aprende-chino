@@ -4,6 +4,15 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { loadCulturalData } from '@/utils/loadContent.js';
+import SpeakButton from '@/components/ui/SpeakButton.jsx';
+
+// Extrae solo los caracteres CJK del texto. Si no quedan caracteres chinos,
+// no merece la pena mostrar el botón de TTS (sería leer cosas raras).
+function extractHanzi(text) {
+  if (!text) return '';
+  // Rango BMP CJK Unified Ideographs (cubre los caracteres frecuentes).
+  return text.replace(/[^一-鿿]+/g, ' ').trim();
+}
 
 export default function CulturalTab({ lessonNum }) {
   const { t, i18n } = useTranslation();
@@ -26,7 +35,7 @@ export default function CulturalTab({ lessonNum }) {
   if (notes === null) {
     return (
       <div className="pt-6 text-center text-sm" style={{ color: J.mute }}>
-        {t('culture_not_available', 'Loading…')}
+        {t('common_loading', 'Cargando…')}
       </div>
     );
   }
@@ -83,13 +92,24 @@ export default function CulturalTab({ lessonNum }) {
             </div>
 
             {/* Contenido expandido */}
-            {isOpen && (
-              <div className="px-4 pb-4 pt-0" style={{ borderTop: `1px solid ${J.hair}` }}>
-                <p className="text-sm leading-relaxed mt-3" style={{ color: J.inkSoft }}>
-                  {note.content}
-                </p>
-              </div>
-            )}
+            {isOpen && (() => {
+              const hanzi = extractHanzi(note.content);
+              return (
+                <div className="px-4 pb-4 pt-0" style={{ borderTop: `1px solid ${J.hair}` }}>
+                  <p className="text-sm leading-relaxed mt-3" style={{ color: J.inkSoft }}>
+                    {note.content}
+                  </p>
+                  {hanzi && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <SpeakButton text={hanzi} size="md" />
+                      <span className="text-xs" style={{ color: J.mute }}>
+                        {t('culture_speak_hint', 'Escuchar los hanzi de esta ficha')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         );
       })}

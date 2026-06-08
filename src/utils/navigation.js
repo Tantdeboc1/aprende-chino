@@ -29,14 +29,9 @@ const SpecialSyllables = lazy(() => import('@/components/learn/Tones/SpecialSyll
 const CharactersDaily  = lazy(() => import('@/components/daily/CharactersDaily.jsx'));
 const RadicalsDaily    = lazy(() => import('@/components/daily/RadicalsDaily.jsx'));
 const TonesDaily       = lazy(() => import('@/components/daily/TonesDaily.jsx'));
-const TimeRace         = lazy(() => import('@/components/minigames/TimeRace.jsx'));
-const PinyinConnection = lazy(() => import('@/components/minigames/PinyinConnection.jsx'));
-const SOVGame          = lazy(() => import('@/components/minigames/SOVGame.jsx'));
-const TranslationGame  = lazy(() => import('@/components/minigames/TranslationGame.jsx'));
-const CompleteSentence = lazy(() => import('@/components/minigames/CompleteSentence.jsx'));
-const DialogueOrder    = lazy(() => import('@/components/minigames/DialogueOrder.jsx'));
-const FindIntruder     = lazy(() => import('@/components/minigames/FindIntruder.jsx'));
-const PronunciationPractice = lazy(() => import('@/components/minigames/PronunciationPractice.jsx'));
+// Los mini-juegos viven en un registro centralizado — añadir uno nuevo se
+// hace solo allí y aquí no hay que tocar nada.
+import { findMinigame } from '@/components/minigames/registry.js';
 
 export function useNavigation(
   screen,
@@ -153,71 +148,18 @@ export function useNavigation(
       };
     }
 
-    if (screen === 'sov-game') {
-      Component = SOVGame;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
+    // Mini-juegos — todos los IDs vienen del registro centralizado. Cada
+    // entrada define su propio buildProps con los props específicos.
+    const minigame = findMinigame(screen);
+    if (minigame) {
+      Component = minigame.component;
+      props = minigame.buildProps({
+        navigateTo,
         selectedLesson,
-        speakChinese: speak,
-      };
-    }
-
-    if (screen === 'time-race') {
-      Component = TimeRace;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
         characters,
         onTrackResult,
-      };
-    }
-
-    if (screen === 'pinyin-connection') {
-      Component = PinyinConnection;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        characters,
-        onTrackResult,
-      };
-    }
-
-    if (screen === 'translation-game') {
-      Component = TranslationGame;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        selectedLesson,
-      };
-    }
-
-    if (screen === 'complete-sentence') {
-      Component = CompleteSentence;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        selectedLesson,
-      };
-    }
-
-    if (screen === 'dialogue-order') {
-      Component = DialogueOrder;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        selectedLesson,
-      };
-    }
-
-    if (screen === 'find-intruder') {
-      Component = FindIntruder;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        selectedLesson,
-      };
-    }
-
-    if (screen === 'pronunciation-practice') {
-      Component = PronunciationPractice;
-      props = {
-        goBack: () => { navigateTo('minigames'); },
-        selectedLesson,
-      };
+        speak,
+      });
     }
 
 

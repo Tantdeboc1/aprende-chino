@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { loadGrammarData } from '@/utils/loadContent.js';
+import SpeakButton from '@/components/ui/SpeakButton.jsx';
 
 function PatternCard({ pattern }) {
   const [open, setOpen] = useState(false);
@@ -19,7 +20,10 @@ function PatternCard({ pattern }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <span className="font-bold text-base leading-tight" style={{ color: J.ink }}>{pattern.pattern}</span>
+            <span className="font-bold text-base leading-tight flex items-center gap-2" style={{ color: J.ink }}>
+              {pattern.pattern}
+              <SpeakButton text={pattern.pattern} />
+            </span>
             <svg
               className={`flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
               style={{ color: J.mute }}
@@ -40,7 +44,10 @@ function PatternCard({ pattern }) {
             <div className="space-y-2">
               {pattern.examples.map((ex, i) => (
                 <div key={i} className="rounded-lg p-3" style={{ background: J.paper }}>
-                  <p className="text-base font-medium" style={{ color: J.ink }}>{ex.zh}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-base font-medium" style={{ color: J.ink }}>{ex.zh}</p>
+                    <SpeakButton text={ex.zh} />
+                  </div>
                   <p className="text-xs mt-0.5" style={{ color: J.jade }}>{ex.pinyin}</p>
                   <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{ex.translation ?? ex.es}</p>
                 </div>
@@ -62,7 +69,10 @@ function StructureCard({ structure }) {
         <p className="text-sm font-mono font-bold tracking-wide" style={{ color: J.jadeMid }}>{structure.formula}</p>
       </div>
       <div className="rounded-lg p-3 mb-2" style={{ background: J.paper }}>
-        <p className="text-base" style={{ color: J.ink }}>{structure.example}</p>
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-base" style={{ color: J.ink }}>{structure.example}</p>
+          <SpeakButton text={structure.example} />
+        </div>
         <p className="text-xs mt-0.5" style={{ color: J.jade }}>{structure.examplePinyin}</p>
         <p className="text-xs mt-0.5 italic" style={{ color: J.mute }}>{structure.exampleTranslation ?? structure.exampleEs}</p>
       </div>
@@ -93,7 +103,7 @@ export default function GrammarTab({ lessonNum }) {
   if (!grammarData) {
     return (
       <div className="pt-6 text-center text-sm" style={{ color: J.mute }}>
-        {t('grammar_not_available', 'Loading…')}
+        {t('common_loading', 'Cargando…')}
       </div>
     );
   }

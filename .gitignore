@@ -9,3 +9,8 @@ dist/
 # Claude Code local preview config
 .claude/launch.json
 
+# Auto-generados por scripts/split-i18n-data.mjs (predev / prebuild / predeploy).
+# Fuente única de verdad: src/data/{grammar,cultural}Data.js
+src/data/grammar/
+src/data/cultural/
+
