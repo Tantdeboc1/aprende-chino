@@ -182,7 +182,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   if (!current) {
     return (
       <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center">
-        <p className="text-[#928a76]">{t('minigames_loading', 'Cargando…')}</p>
+        <p className="text-[#928a76]">{t('common_loading', 'Cargando…')}</p>
       </div>
     );
   }

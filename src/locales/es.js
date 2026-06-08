@@ -398,6 +398,9 @@ export default {
           lesson_8_subtitle: "No me siento bien",
           aria_close: "Cerrar",
           aria_back: "Volver",
+          common_loading: "Cargando…",
+          speak_aria: "Reproducir audio",
+          culture_speak_hint: "Escuchar los hanzi de esta ficha",
           // Pronunciación
           minigames_pronunciation_title: "Pronunciación",
           minigames_pronunciation_description: "Di la frase en voz alta y comprueba si te entienden",

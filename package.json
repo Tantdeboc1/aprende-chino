@@ -11,9 +11,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "vite build --base=/aprende-chino/",
+    "predeploy": "node scripts/split-i18n-data.mjs && vite build --base=/aprende-chino/",
     "deploy": "gh-pages -d dist",
     "split-i18n": "node scripts/split-i18n-data.mjs",
+    "predev": "node scripts/split-i18n-data.mjs",
     "prebuild": "node scripts/split-i18n-data.mjs"
   },
   "dependencies": {

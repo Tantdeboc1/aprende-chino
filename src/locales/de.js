@@ -101,6 +101,9 @@ export default {
           lesson_8_subtitle: "Ich fühle mich nicht wohl",
           aria_close: "Schließen",
           aria_back: "Zurück",
+          common_loading: "Laden…",
+          speak_aria: "Audio abspielen",
+          culture_speak_hint: "Die Hanzi dieser Karte anhören",
           // Aussprache
           minigames_pronunciation_title: "Aussprache",
           minigames_pronunciation_description: "Sprich den Satz laut aus und prüfe, ob du verstanden wirst",

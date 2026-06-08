@@ -17,6 +17,7 @@ import { J } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
+import { MINIGAME_IDS } from './components/minigames/registry.js';
 
 // ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
 function AnimatedLoader() {
@@ -331,14 +332,9 @@ export default function App() {
     ? (dailySection !== null ? 'daily' : 'learn')
     : screen === 'dictionary' ? 'dictionary'
     : screen === 'minigames' ? 'minigames'
-    : screen === 'sov-game' ? 'sov-game'
-    : screen === 'time-race' ? 'time-race'
-    : screen === 'pinyin-connection' ? 'pinyin-connection'
-    : screen === 'translation-game' ? 'translation-game'
     : screen === 'global-exam' ? 'global-exam'
-    : screen === 'complete-sentence' ? 'complete-sentence'
-    : screen === 'dialogue-order' ? 'dialogue-order'
-    : screen === 'find-intruder' ? 'find-intruder'
+    // Cualquier mini-juego del registro pasa su id tal cual.
+    : MINIGAME_IDS.has(screen) ? screen
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
@@ -349,14 +345,13 @@ export default function App() {
   };
 
   const navigateTo = (key) => {
-    if (key === 'sov-game') { setPrevScreen(screen); setScreen('sov-game'); }
-    else if (key === 'time-race') { setPrevScreen(screen); setScreen('time-race'); }
-    else if (key === 'pinyin-connection') { setPrevScreen(screen); setScreen('pinyin-connection'); }
-    else if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
-    else if (key === 'translation-game') { setPrevScreen(screen); setScreen('translation-game'); }
-    else if (key === 'complete-sentence') { setPrevScreen('minigames'); setScreen('complete-sentence'); }
-    else if (key === 'dialogue-order') { setPrevScreen('minigames'); setScreen('dialogue-order'); }
-    else if (key === 'find-intruder') { setPrevScreen('minigames'); setScreen('find-intruder'); }
+    // Cualquier mini-juego del registro: vuelve al listado de minijuegos al salir.
+    if (MINIGAME_IDS.has(key)) {
+      setPrevScreen('minigames');
+      setScreen(key);
+      return;
+    }
+    if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -576,9 +571,7 @@ export default function App() {
 
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
-      screen === 'sov-game' || screen === 'time-race' || screen === 'pinyin-connection' ||
-      screen === 'translation-game' || screen === 'complete-sentence' ||
-      screen === 'dialogue-order' || screen === 'find-intruder') {
+      MINIGAME_IDS.has(screen)) {
     const navScreen = screen === 'dictionary' ? 'dictionary' : screen === 'minigames' ? 'minigames' : 'home';
     const hideNav = screen === 'exercise';
     if (!CurrentComponent) {

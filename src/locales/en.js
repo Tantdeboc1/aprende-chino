@@ -398,6 +398,9 @@ export default {
           lesson_8_subtitle: "I don't feel well",
           aria_close: "Close",
           aria_back: "Back",
+          common_loading: "Loading…",
+          speak_aria: "Play audio",
+          culture_speak_hint: "Listen to the hanzi in this card",
           // Pronunciation
           minigames_pronunciation_title: "Pronunciation",
           minigames_pronunciation_description: "Say the sentence out loud and check if you're understood",
