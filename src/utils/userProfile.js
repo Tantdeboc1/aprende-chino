@@ -8,9 +8,12 @@ import { DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 const LS_KEY = 'aprende-chino-profile';
 
 // gender: 'm' | 'f' | 'nb' | null (sin elegir)
+// useGooglePhoto: cuando el user se loguea con Google, mostramos su foto
+// de perfil por defecto. Si la quita en Ajustes, se respeta el avatarId.
 const DEFAULT_PROFILE = {
   gender: null,
   avatarId: DEFAULT_AVATAR_ID,
+  useGooglePhoto: true,
 };
 
 // Cada id mapea a una clave i18n. `cn` queda hardcoded como decoración.
@@ -42,4 +45,15 @@ export function updateUserProfile(patch) {
   const next = { ...current, ...patch };
   saveUserProfile(next);
   return next;
+}
+
+// Decide qué imagen usar en headers, badges y picker preview.
+// Prioriza foto de Google si está logueado y no ha desactivado el toggle.
+// Devuelve { src, isGoogle } para que el caller pueda decorar diferente
+// (ej. mostrar un borde distinto en la foto de Google).
+export function resolveAvatarSrc(profile, mode, googlePhotoURL, fallbackSrc) {
+  if (mode === 'google' && profile?.useGooglePhoto !== false && googlePhotoURL) {
+    return { src: googlePhotoURL, isGoogle: true };
+  }
+  return { src: fallbackSrc, isGoogle: false };
 }

@@ -433,6 +433,7 @@ export default {
   nav_dictionary: "Dizionario",
   nav_games: "Giochi",
   nav_settings: "Impostazioni",
+  nav_profile: "Profilo",
   home_greeting: "你好, {{name}}",
   home_subtitle: "Cosa impariamo oggi?",
   home_mastered: "padroneggiate",

@@ -15,11 +15,21 @@ const lazyLoaders = {
   pt: () => import('./locales/pt.js'),
 };
 
+// Idiomas que la app entiende. Si el navegador reporta uno fuera de esta
+// lista (ruso, chino, etc.), i18next cae a fallbackLng (inglés).
+const SUPPORTED_LANGS = ['es', 'en', 'fr', 'de', 'it', 'pt'];
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'es',
+    // Inglés como fallback universal — más útil que español para usuarios
+    // de cualquier otro idioma que no tengamos traducido.
+    fallbackLng: 'en',
+    supportedLngs: SUPPORTED_LANGS,
+    // 'languageOnly' colapsa 'es-ES', 'es-MX', 'pt-BR'… a su código base.
+    load: 'languageOnly',
+    nonExplicitSupportedLngs: true,
     debug: false,
     resources: {
       en: { translation: en },
@@ -32,20 +42,36 @@ i18n
     },
   });
 
+// Si el idioma detectado es uno cargado de forma diferida (fr/de/it/pt),
+// fuerza el load justo después de init para evitar que la primera vista
+// se pinte en inglés y haga "flash" cuando llega el bundle.
+const detectedLng = (i18n.language || '').split('-')[0];
+if (lazyLoaders[detectedLng] && !i18n.hasResourceBundle(detectedLng, 'translation')) {
+  lazyLoaders[detectedLng]().then(mod => {
+    i18n.addResourceBundle(detectedLng, 'translation', mod.default, true, true);
+    i18n.changeLanguage(detectedLng);
+  }).catch(() => {});
+}
+
 // Cuando el usuario cambia a FR, DE, IT o PT, se carga el chunk si aún no está
 // loadingLangs evita dobles cargas si el evento se dispara dos veces seguidas
 const loadingLangs = new Set();
 i18n.on('languageChanged', async (lng) => {
-  const loader = lazyLoaders[lng];
-  if (loader && !i18n.hasResourceBundle(lng, 'translation') && !loadingLangs.has(lng)) {
-    loadingLangs.add(lng);
+  // Normalizamos códigos regionales: 'pt-BR' → 'pt', 'fr-CA' → 'fr'.
+  // Sin esto, una visita desde un Chrome con locale regional no encuentra
+  // su loader en `lazyLoaders` y la UI se queda en el fallback.
+  const base = (lng || '').split('-')[0];
+  const loader = lazyLoaders[base];
+  if (loader && !i18n.hasResourceBundle(base, 'translation') && !loadingLangs.has(base)) {
+    loadingLangs.add(base);
     try {
       const mod = await loader();
-      i18n.addResourceBundle(lng, 'translation', mod.default, true, true);
-      // Re-renderizar con las nuevas traducciones
-      i18n.changeLanguage(lng);
+      i18n.addResourceBundle(base, 'translation', mod.default, true, true);
+      // Re-renderizar con las nuevas traducciones (forzamos el código base
+      // para que i18n.language quede consistente con el bundle cargado).
+      i18n.changeLanguage(base);
     } finally {
-      loadingLangs.delete(lng);
+      loadingLangs.delete(base);
     }
   }
 });

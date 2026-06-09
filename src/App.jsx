@@ -9,10 +9,13 @@ import HomeScreen from './components/HomeScreen.jsx';
 const WelcomeFlow = lazy(() => import('./components/WelcomeFlow.jsx'));
 const LessonDetail = lazy(() => import('./components/LessonDetail.jsx'));
 const SettingsScreen = lazy(() => import('./components/SettingsScreen.jsx'));
+const ProfileScreen = lazy(() => import('./components/ProfileScreen.jsx'));
 const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
 import SplashScreen from './components/SplashScreen.jsx';
 const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
+const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
+import { useAuth } from './context/AuthContext.jsx';
 import { J } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { initAudioForIOS } from './utils/audio';
@@ -94,18 +97,45 @@ export default function App() {
   const handleSetUserName = (name) => {
     setUserName(name);
     saveUserName(name);
+    // En modo Google empujamos al instante porque WelcomeFlow ya guardó
+    // el avatar y el género en localStorage justo antes de llamar aquí.
+    if (mode === 'google') pushSnapshot();
   };
+
+  // Auth — gate antes del WelcomeFlow y trigger de sync a Firestore.
+  // remoteRev se incrementa cuando localStorage se hidrata desde fuera
+  // (login inicial o sync de otro dispositivo) → reaccionamos para releer.
+  const { mode, user, pushSnapshot, remoteRev } = useAuth();
 
   // Progreso
   const [progress, setProgress] = useState(() => loadProgress());
+  // Debounce del push remoto para no llamar a Firestore en cada tecla.
+  const pushTimerRef = useRef(null);
   const handleProgressChange = (updated) => {
     setProgress(updated);
     saveProgress(updated);
+    if (mode === 'google') {
+      clearTimeout(pushTimerRef.current);
+      pushTimerRef.current = setTimeout(() => pushSnapshot(), 1500);
+    }
   };
 
   // Pantalla activa
   // 'welcome' | 'home' | 'lesson-detail' | 'intro-detail' | 'exam' | 'exercise' | 'dictionary' | 'minigames' | 'settings'
   const [screen, setScreen] = useState(() => loadUserName() ? 'home' : 'welcome');
+
+  // Cuando entramos por Google o llega un cambio remoto desde otro
+  // dispositivo, AuthContext hidrata localStorage. Reflejamos los cambios
+  // en los useState locales para que el render lo pinte.
+  useEffect(() => {
+    if (mode !== 'google' || !user) return;
+    const remoteName = loadUserName();
+    setUserName(remoteName);
+    setProgress(loadProgress());
+    // Solo forzamos 'welcome' si aún no se eligió pantalla; respetamos la
+    // navegación actual cuando llega un sync remoto a media sesión.
+    setScreen(s => (s === 'welcome' && remoteName) ? 'home' : s);
+  }, [mode, user?.uid, remoteRev]);
   // Pantalla anterior (para volver desde ejercicios)
   const [prevScreen, setPrevScreen] = useState('home');
 
@@ -128,14 +158,23 @@ export default function App() {
   const [isSpeaking, setIsSpeaking]           = useState(false);
   const [audioInitialized, setAudioInitialized] = useState(false);
 
-  // ProfileBadge dispara 'open-settings' desde cualquier pantalla
+  // ProfileBadge → 'open-profile' (avatar de la top bar → stats)
+  // Engranaje dentro de ProfileScreen → 'open-settings' (configuración).
   useEffect(() => {
-    const handler = () => {
+    const toProfile = () => {
+      setPrevScreen(prev => prev || 'home');
+      setScreen('profile');
+    };
+    const toSettings = () => {
       setPrevScreen(prev => prev || 'home');
       setScreen('settings');
     };
-    window.addEventListener('open-settings', handler);
-    return () => window.removeEventListener('open-settings', handler);
+    window.addEventListener('open-profile', toProfile);
+    window.addEventListener('open-settings', toSettings);
+    return () => {
+      window.removeEventListener('open-profile', toProfile);
+      window.removeEventListener('open-settings', toSettings);
+    };
   }, []);
 
   // StoryPlayer dispara story-mode-enter/exit para ocultar la bottom nav
@@ -297,6 +336,7 @@ export default function App() {
     else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
+    else if (key === 'profile')    setScreen('profile');
     else if (key === 'settings')   setScreen('settings');
   };
 
@@ -379,6 +419,16 @@ export default function App() {
     return <SplashScreen progress={splashProgress} onComplete={() => setSplashDone(true)} />;
   }
 
+  // ── LOGIN ────────────────────────────────────────────────────────────────────
+  // Mientras Firebase resuelve la sesión, mostramos el loader animado.
+  if (mode === 'loading') {
+    return <AnimatedLoader />;
+  }
+  // Sin modo elegido aún → puerta de entrada.
+  if (mode === null) {
+    return <LoginScreen />;
+  }
+
   // ── WELCOME ──────────────────────────────────────────────────────────────────
   if (screen === 'welcome') {
     return (
@@ -402,7 +452,7 @@ export default function App() {
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
           onStartReview={() => { setPrevScreen('home'); setScreen('review'); }}
-          onOpenSettings={() => { setPrevScreen('home'); setScreen('settings'); }}
+          onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
         />
       </Layout>
     );
@@ -550,6 +600,24 @@ export default function App() {
     );
   }
 
+  // ── PROFILE (stats y gamificación) ──────────────────────────────────────────
+  if (screen === 'profile') {
+    return (
+      <Layout activeScreen="profile" onNavigate={handleBottomNav}>
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <ProfileScreen
+              userName={userName}
+              progress={progress}
+              allCharacters={allCharacters}
+              onOpenSettings={() => { setPrevScreen('profile'); setScreen('settings'); }}
+            />
+          </Suspense>
+        </ErrorBoundary>
+      </Layout>
+    );
+  }
+
   // ── SETTINGS ─────────────────────────────────────────────────────────────────
   if (screen === 'settings') {
     return (
@@ -562,6 +630,7 @@ export default function App() {
               progress={progress}
               onProgressChange={handleProgressChange}
               allCharacters={allCharacters}
+              onBack={prevScreen === 'profile' ? () => setScreen('profile') : undefined}
             />
           </Suspense>
         </ErrorBoundary>

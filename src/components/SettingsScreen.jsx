@@ -1,14 +1,14 @@
+// src/components/SettingsScreen.jsx
+// Configuración (no stats). Perfil editable, idioma, música, cuenta y
+// datos. Las estadísticas y la racha viven en ProfileScreen.
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { JTopBar, JMark, JLabel, JCard, JSection } from '@/components/jade';
-import { getLessonStats } from '@/utils/progress.js';
-import { getSRSStats } from '@/utils/srs.js';
-import { getStreak } from '@/utils/streak.js';
-import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
+import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
 import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
-import { loadUserProfile, updateUserProfile, GENDERS } from '@/utils/userProfile.js';
+import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { useMusic } from '@/context/MusicContext.jsx';
+import { useAuth } from '@/context/AuthContext.jsx';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -18,29 +18,6 @@ const LANGUAGES = [
   { code: 'it', name: 'Italiano',  cn: '意' },
   { code: 'pt', name: 'Português', cn: '葡' },
 ];
-
-function ProfileRow({ l, v, tag, accent, first }) {
-  return (
-    <div
-      className="flex items-baseline justify-between gap-3"
-      style={{
-        padding: '14px 18px',
-        borderTop: first ? 0 : `1px solid ${J.hair}`,
-      }}
-    >
-      <span style={{ fontSize: 14, color: J.ink, fontWeight: 500 }}>{l}</span>
-      <div className="flex items-baseline gap-2">
-        {tag && (
-          <span style={{ fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.02em' }}>{tag}</span>
-        )}
-        <span style={{
-          fontSize: 14, fontWeight: 800, letterSpacing: '-0.01em',
-          color: accent === 'red' ? J.red : accent === 'jade' ? J.jade : J.ink,
-        }}>{v}</span>
-      </div>
-    </div>
-  );
-}
 
 // ─── Picker de avatar con tabs por género ───────────────────────────────────
 function AvatarPicker({ currentId, gender, onSelect, onClose }) {
@@ -82,7 +59,6 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
           flexDirection: 'column',
         }}
       >
-        {/* Asa */}
         <div style={{
           width: 40, height: 4, borderRadius: 99,
           background: J.hairS, margin: '0 auto 14px',
@@ -100,7 +76,6 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
           >×</button>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-2" style={{ marginBottom: 14 }}>
           {[
             { id: 'all', label: t('avatar_picker_all'), cn: '全部' },
@@ -126,7 +101,6 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
           })}
         </div>
 
-        {/* Grid de avatares */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(88px, 1fr))',
@@ -181,9 +155,11 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
   );
 }
 
-export default function SettingsScreen({ userName, onUserNameChange, progress, onProgressChange, allCharacters }) {
+export default function SettingsScreen({ userName, onUserNameChange, progress, onProgressChange, allCharacters, onBack }) {
   const { t, i18n } = useTranslation();
   const music = useMusic();
+  const { mode, user, signOut, migrateGuestToGoogle } = useAuth();
+  const [migrating, setMigrating] = useState(false);
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [profile, setProfile] = useState(() => loadUserProfile());
@@ -209,218 +185,39 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
   };
 
   const totalWords = allCharacters.filter(c => !c.isSupplementary).length;
-  const srsStats = getSRSStats(progress, allCharacters);
-  const streak = getStreak();
-  const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
-  const equipped = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
-
   const currentAvatar = getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID);
-
-  const days = useMemo(() => {
-    const dateSet = new Set(streak.activityDates || []);
-    return Array.from({ length: 30 }).map((_, i) => {
-      const d = new Date();
-      d.setDate(d.getDate() - (29 - i));
-      const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      return dateSet.has(str) ? 'on' : 'off';
-    });
-  }, [streak.activityDates]);
-
-  const totalStudyMin = useMemo(() => {
-    const sessions = progress?.__sessions || [];
-    const ms = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
-    return Math.round(ms / 60000);
-  }, [progress]);
-
-  const accuracy = useMemo(() => {
-    const srs = progress?.__srs || {};
-    let correct = 0, total = 0;
-    for (const d of Object.values(srs)) {
-      if (d.reviews) { total += d.reviews; correct += d.correct || 0; }
-    }
-    return total > 0 ? Math.round((correct / total) * 100) : 0;
-  }, [progress]);
-
-  const totalMastered = useMemo(() => {
-    let total = 0;
-    for (let i = 1; i <= 4; i++) {
-      total += getLessonStats(progress, i, allCharacters).mastered;
-    }
-    return total;
-  }, [progress, allCharacters]);
+  const effectiveAvatar = resolveAvatarSrc(profile, mode, user?.photoURL, currentAvatar.src);
 
   return (
     <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
       <JTopBar
-        left={<JMark />}
+        left={
+          onBack ? (
+            <button
+              onClick={onBack}
+              style={{
+                background: J.paperHi, border: `1px solid ${J.hair}`,
+                borderRadius: 99, padding: '6px 12px',
+                fontSize: 13, color: J.ink, fontWeight: 700, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 4,
+              }}
+            >
+              ← {t('nav_profile', 'Perfil')}
+            </button>
+          ) : (
+            <JMark />
+          )
+        }
         right={
-          <button style={{ background: 'transparent', border: 0, fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
+          <span style={{ fontSize: 13, color: J.inkSoft, fontWeight: 700 }}>
             {t('nav_settings')}
-          </button>
+          </span>
         }
       />
 
       <div style={{ padding: '6px 20px 24px' }}>
 
-        {/* ─── Cabecera con avatar + nombre ──────────────────────────────── */}
-        <div style={{ marginTop: 8, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 16 }}>
-          <button
-            onClick={() => setShowPicker(true)}
-            aria-label={t('profile_edit_aria')}
-            style={{
-              background: J.paperHi,
-              border: `3px solid ${J.jade}`,
-              borderRadius: '50%',
-              width: 88, height: 88,
-              padding: 0,
-              cursor: 'pointer',
-              overflow: 'hidden',
-              flexShrink: 0,
-              position: 'relative',
-              boxShadow: '0 4px 12px -3px rgba(0,0,0,0.20)',
-            }}
-          >
-            <img
-              src={currentAvatar.src}
-              alt={currentAvatar.label}
-              draggable={false}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            {/* lápiz pequeño en esquina */}
-            <span style={{
-              position: 'absolute', bottom: -2, right: -2,
-              background: J.red, color: J.paperHi,
-              width: 26, height: 26, borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 12,
-              border: `2px solid ${J.paper}`,
-            }}>✎</span>
-          </button>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 26, lineHeight: 1.1, letterSpacing: '-0.025em', color: J.ink }}>
-              {userName || t('settings_default_user')}<span style={{ color: J.red }}>.</span>
-            </h1>
-            <div style={{ marginTop: 6, fontSize: 13.5, color: J.inkSoft, fontWeight: 500 }}>
-              <span style={{ marginRight: 6 }}>{equipped.icon}</span>
-              {equipped.title?.[i18n.language] || equipped.title?.es} · <span className="font-cn">{equipped.zh}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Nivel y XP ────────────────────────────────────────────────── */}
-        <JSection label={t('settings_section_level')} cn="等级" />
-        <div style={{
-          background: J.jade, color: J.paperHi,
-          borderRadius: 18, padding: '18px 20px',
-          marginBottom: 4,
-          position: 'relative', overflow: 'hidden',
-          boxShadow: '0 6px 16px -6px rgba(31,74,51,0.5)',
-        }}>
-          <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, borderRadius: '50%', background: J.jadeDeep, opacity: 0.45 }} />
-          <div style={{ position: 'relative' }}>
-            <div className="flex items-end justify-between">
-              <div>
-                <JLabel color={J.butter}>{t('settings_level_current')}</JLabel>
-                <div className="flex items-baseline gap-2" style={{ marginTop: 4 }}>
-                  <span style={{ fontSize: 56, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
-                    {levelInfo.level}
-                  </span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
-                    Lv.
-                  </span>
-                </div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                  {t('settings_xp_total')}
-                </span>
-                <div style={{ fontSize: 22, fontWeight: 800, color: J.paperHi, marginTop: 4, letterSpacing: '-0.02em' }}>
-                  {(streak.totalXP || 0).toLocaleString()}
-                </div>
-              </div>
-            </div>
-
-            {/* Barra de progreso al siguiente nivel */}
-            {!levelInfo.isMaxLevel ? (
-              <div style={{ marginTop: 14 }}>
-                <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    Lv.{levelInfo.level}
-                  </span>
-                  <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.30)' }}>
-                    <div className="h-full rounded-full transition-all duration-500"
-                      style={{ width: `${levelInfo.progress}%`, background: J.butter }} />
-                  </div>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    Lv.{levelInfo.level + 1}
-                  </span>
-                </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', textAlign: 'center' }}>
-                  {t('settings_xp_to_next', { xp: levelInfo.xpForNext - levelInfo.xpInLevel })}
-                </div>
-              </div>
-            ) : (
-              <div style={{ marginTop: 14, fontSize: 13, color: J.butter, fontWeight: 800, textAlign: 'center' }}>
-                ★ {t('settings_max_level')}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ─── Streak hero (si tiene racha activa) ─────────────────────── */}
-        {streak.currentStreak > 0 && (
-          <div style={{
-            background: J.red, color: J.paperHi, borderRadius: 22,
-            padding: '20px 22px 18px', position: 'relative', overflow: 'hidden',
-            marginTop: 14, marginBottom: 18, boxShadow: '0 8px 24px rgba(200,57,47,0.30)',
-          }}>
-            <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: J.redDeep, opacity: 0.5 }} />
-            <div style={{ position: 'relative' }}>
-              <div className="flex justify-between items-start">
-                <div>
-                  <JLabel color={J.butter}>{t('settings_streak_current')} · 连续</JLabel>
-                  <div className="flex items-baseline gap-2" style={{ marginTop: 8 }}>
-                    <span style={{ fontSize: 64, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
-                      {streak.currentStreak}
-                    </span>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{t('settings_day', { count: streak.currentStreak })}</span>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    {t('settings_streak_record')}
-                  </span>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: J.paperHi, marginTop: 6, letterSpacing: '-0.02em' }}>
-                    {streak.longestStreak || streak.currentStreak}
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-1" style={{ marginTop: 18, gridTemplateColumns: 'repeat(15, 1fr)' }}>
-                {days.map((d, i) => (
-                  <div key={i} style={{
-                    aspectRatio: '1 / 1', borderRadius: 4,
-                    background: d === 'on' ? J.butter : 'rgba(255,255,255,0.12)',
-                  }} />
-                ))}
-              </div>
-              <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(255,255,255,0.65)', fontWeight: 600, letterSpacing: '0.04em' }}>
-                {t('settings_streak_last_30')}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ─── Progreso general ─────────────────────────────────────────── */}
-        <JSection label={t('settings_progress')} cn="进步" />
-        <JCard padding="0">
-          <ProfileRow l={t('settings_progress_chars_learned')} v={srsStats.learned} tag={t('settings_progress_hsk_tag')} first />
-          <ProfileRow l={t('settings_progress_study_time')} v={totalStudyMin > 0 ? `${Math.floor(totalStudyMin / 60)}h ${totalStudyMin % 60}m` : '0m'} tag={t('settings_progress_pace_tag')} />
-          <ProfileRow l={t('settings_progress_accuracy')} v={`${accuracy}%`} tag={accuracy >= 80 ? t('settings_progress_accuracy_good') : t('settings_progress_accuracy_meh')} accent="jade" />
-          <ProfileRow l={t('settings_progress_chars_mastered')} v={totalMastered} tag={t('settings_progress_record_tag')} accent="red" />
-        </JCard>
-
-        {/* ─── Perfil (nick + género) ───────────────────────────────────── */}
+        {/* ─── Perfil (nick + género + avatar) ─────────────────────────── */}
         <JSection label={t('settings_section_profile')} cn="个人资料" />
         <JCard padding="0">
           {/* Nick */}
@@ -468,7 +265,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
             </div>
           </div>
 
-          {/* Avatar (botón abre picker) */}
+          {/* Avatar */}
           <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
             <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_avatar')}</p>
             <button
@@ -481,65 +278,51 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               }}
             >
               <img
-                src={currentAvatar.src}
+                src={effectiveAvatar.src}
                 alt={currentAvatar.label}
+                referrerPolicy="no-referrer"
                 style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10, display: 'block' }}
               />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ margin: 0, fontSize: 13.5, color: J.ink, fontWeight: 700 }}>{currentAvatar.label}</p>
+                <p style={{ margin: 0, fontSize: 13.5, color: J.ink, fontWeight: 700 }}>
+                  {effectiveAvatar.isGoogle ? t('settings_avatar_google_label', 'Foto de Google') : currentAvatar.label}
+                </p>
                 <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_avatar_change_hint')}</p>
               </div>
               <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
             </button>
           </div>
+
+          {/* Toggle: usar foto de Google */}
+          {mode === 'google' && user?.photoURL && (
+            <div className="flex items-center justify-between" style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>
+                  {t('settings_use_google_photo', 'Usar foto de Google')}
+                </p>
+                <p style={{ margin: 0, fontSize: 11, color: J.mute }}>
+                  {t('settings_use_google_photo_hint', 'Si la desactivas se mostrará el avatar elegido')}
+                </p>
+              </div>
+              <button
+                onClick={() => setProfile(updateUserProfile({ useGooglePhoto: !(profile.useGooglePhoto !== false) }))}
+                aria-pressed={profile.useGooglePhoto !== false}
+                style={{
+                  flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
+                  cursor: 'pointer', position: 'relative',
+                  background: profile.useGooglePhoto !== false ? J.jade : J.hairS,
+                  transition: 'background 200ms ease',
+                }}
+              >
+                <span style={{
+                  position: 'absolute', top: 3, left: profile.useGooglePhoto !== false ? 23 : 3,
+                  width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
+                  transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                }} />
+              </button>
+            </div>
+          )}
         </JCard>
-
-        {/* ─── Música ──────────────────────────────────────────────────── */}
-        {music && (
-          <>
-            <JSection label={t('settings_music_title')} cn="音乐" />
-            <JCard padding="0">
-              {/* Toggle música de fondo */}
-              <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
-                <div style={{ minWidth: 0 }}>
-                  <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{t('settings_music_label')}</p>
-                  <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_music_credit')}</p>
-                </div>
-                <button
-                  onClick={() => music.toggle()}
-                  aria-pressed={music.enabled}
-                  style={{
-                    flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
-                    cursor: 'pointer', position: 'relative',
-                    background: music.enabled ? J.jade : J.hairS,
-                    transition: 'background 200ms ease',
-                  }}
-                >
-                  <span style={{
-                    position: 'absolute', top: 3, left: music.enabled ? 23 : 3,
-                    width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
-                    transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
-                  }} />
-                </button>
-              </div>
-
-              {/* Volumen */}
-              <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
-                <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
-                  <p style={{ margin: 0, fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.04em' }}>{t('settings_volume')}</p>
-                  <span style={{ fontSize: 12, color: J.inkSoft, fontWeight: 700 }}>{Math.round(music.volume * 100)}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="0" max="1" step="0.05"
-                  value={music.volume}
-                  onChange={e => music.setVolume(parseFloat(e.target.value))}
-                  style={{ width: '100%', accentColor: J.jade, cursor: 'pointer' }}
-                />
-              </div>
-            </JCard>
-          </>
-        )}
 
         {/* ─── Idioma ──────────────────────────────────────────────────── */}
         <JSection label={t('settings_language')} cn="语言" />
@@ -565,6 +348,111 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
               );
             })}
           </div>
+        </JCard>
+
+        {/* ─── Música ──────────────────────────────────────────────────── */}
+        {music && (
+          <>
+            <JSection label={t('settings_music_title')} cn="音乐" />
+            <JCard padding="0">
+              <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
+                <div style={{ minWidth: 0 }}>
+                  <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{t('settings_music_label')}</p>
+                  <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_music_credit')}</p>
+                </div>
+                <button
+                  onClick={() => music.toggle()}
+                  aria-pressed={music.enabled}
+                  style={{
+                    flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
+                    cursor: 'pointer', position: 'relative',
+                    background: music.enabled ? J.jade : J.hairS,
+                    transition: 'background 200ms ease',
+                  }}
+                >
+                  <span style={{
+                    position: 'absolute', top: 3, left: music.enabled ? 23 : 3,
+                    width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
+                    transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                  }} />
+                </button>
+              </div>
+
+              <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+                <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+                  <p style={{ margin: 0, fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.04em' }}>{t('settings_volume')}</p>
+                  <span style={{ fontSize: 12, color: J.inkSoft, fontWeight: 700 }}>{Math.round(music.volume * 100)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0" max="1" step="0.05"
+                  value={music.volume}
+                  onChange={e => music.setVolume(parseFloat(e.target.value))}
+                  style={{ width: '100%', accentColor: J.jade, cursor: 'pointer' }}
+                />
+              </div>
+            </JCard>
+          </>
+        )}
+
+        {/* ─── Cuenta ─────────────────────────────────────────────────── */}
+        <JSection label={t('settings_section_account', 'Cuenta')} cn="账户" />
+        <JCard padding="14px 18px">
+          {mode === 'google' && (
+            <>
+              {user?.email && (
+                <p style={{
+                  margin: '0 0 10px', fontSize: 12.5, color: J.mute,
+                  fontWeight: 600, textAlign: 'center', wordBreak: 'break-all',
+                }}>
+                  {user.email}
+                </p>
+              )}
+              <button
+                onClick={signOut}
+                style={{
+                  width: '100%', padding: '12px 16px', borderRadius: 14,
+                  border: `1px solid ${J.sandBg}`, background: 'transparent',
+                  color: J.sandDeep, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                }}
+              >
+                {t('settings_sign_out', 'Cerrar sesión')}
+              </button>
+            </>
+          )}
+          {mode === 'guest' && (
+            <>
+              <p style={{
+                margin: '0 0 12px', fontSize: 12.5, color: J.inkSoft,
+                fontWeight: 500, textAlign: 'center', lineHeight: 1.45,
+              }}>
+                {t(
+                  'settings_guest_explanation',
+                  'Estás como invitado. Guarda tu progreso en la nube para no perderlo y poder seguir desde otro dispositivo.',
+                )}
+              </p>
+              <button
+                onClick={async () => {
+                  if (migrating) return;
+                  setMigrating(true);
+                  try { await migrateGuestToGoogle(); }
+                  finally { setMigrating(false); }
+                }}
+                disabled={migrating}
+                style={{
+                  width: '100%', padding: '12px 16px', borderRadius: 14, border: 0,
+                  background: J.jade, color: J.paperHi,
+                  fontSize: 14, fontWeight: 700, cursor: migrating ? 'default' : 'pointer',
+                  opacity: migrating ? 0.6 : 1,
+                  boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
+                }}
+              >
+                {migrating
+                  ? t('settings_save_cloud_busy', 'Conectando…')
+                  : t('settings_save_cloud', 'Guardar progreso en la nube')}
+              </button>
+            </>
+          )}
         </JCard>
 
         {/* ─── Datos ────────────────────────────────────────────────────── */}
@@ -609,16 +497,15 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
           )}
         </JCard>
 
-        {/* ─── Acerca de ───────────────────────────────────────────────── */}
-        <JSection label={t('settings_about')} cn="关于" />
-        <JCard padding="0">
-          <ProfileRow l={t('settings_app_label')} v="Aprende Chino" first />
-          <ProfileRow l={t('settings_version')} v="v0.7" />
-          <ProfileRow l={t('settings_words_included')} v={totalWords} />
-        </JCard>
+        {/* ─── Acerca de (footer compacto) ────────────────────────────── */}
+        <p style={{
+          marginTop: 18, textAlign: 'center', fontSize: 11.5,
+          color: J.mute, fontWeight: 500, letterSpacing: '0.02em',
+        }}>
+          Aprende Chino · v0.7.1 · {t('settings_words_included')}: {totalWords}
+        </p>
       </div>
 
-      {/* Picker de avatares */}
       {showPicker && (
         <AvatarPicker
           currentId={profile.avatarId}

@@ -444,6 +444,7 @@ export default {
           nav_dictionary: "Dictionnaire",
           nav_games: "Jeux",
           nav_settings: "Paramètres",
+          nav_profile: "Profil",
           home_greeting: "你好, {{name}}",
           home_subtitle: "Qu'est-ce qu'on apprend aujourd'hui ?",
           home_mastered: "maîtrisés",

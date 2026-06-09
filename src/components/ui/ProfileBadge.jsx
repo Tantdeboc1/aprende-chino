@@ -1,15 +1,16 @@
 // src/components/ui/ProfileBadge.jsx
 // Avatar circular pequeño + badge de nivel. Clickable: dispara un evento
-// global 'open-settings' que App.jsx escucha para navegar a Ajustes.
+// global 'open-profile' que App.jsx escucha para navegar al Perfil.
 // Diseñado para insertarse en headers (Dictionary, MiniGames, Review, etc.).
 
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { loadUserProfile } from '@/utils/userProfile.js';
+import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
+import { useAuth } from '@/context/AuthContext.jsx';
 
 export default function ProfileBadge({
   size = 40,
@@ -17,16 +18,19 @@ export default function ProfileBadge({
   variant = 'light',   // 'light' = sobre fondos claros, 'dark' = sobre fondos oscuros/jade
 }) {
   const { t } = useTranslation();
-  const profile = useMemo(() => loadUserProfile(), []);
+  const { mode, user, remoteRev } = useAuth();
+  // remoteRev en el dep array para que profile se recargue si llegó un sync.
+  const profile = useMemo(() => loadUserProfile(), [remoteRev]);
   const avatar  = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
   );
-  const streak    = useMemo(() => getStreak(), []);
+  const effective = resolveAvatarSrc(profile, mode, user?.photoURL, avatar.src);
+  const streak    = useMemo(() => getStreak(), [remoteRev]);
   const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
 
   const handleClick = () => {
-    try { window.dispatchEvent(new CustomEvent('open-settings')); } catch {}
+    try { window.dispatchEvent(new CustomEvent('open-profile')); } catch {}
   };
 
   const borderColor = variant === 'dark' ? J.butter : J.jade;
@@ -60,9 +64,10 @@ export default function ProfileBadge({
         margin: '0 auto',
       }}>
         <img
-          src={avatar.src}
+          src={effective.src}
           alt={avatar.label || 'Avatar'}
           draggable={false}
+          referrerPolicy="no-referrer"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
       </span>

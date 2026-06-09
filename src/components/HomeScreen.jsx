@@ -247,7 +247,7 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenSettings }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile }) {
   const { t, i18n } = useTranslation();
   const totalMastered = useMemo(() => {
     let total = 0;
@@ -290,16 +290,16 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         <div className="mt-3 flex items-center gap-3">
           {/* Avatar circular del perfil — clickable para abrir Ajustes */}
           <button
-            onClick={onOpenSettings}
+            onClick={onOpenProfile}
             aria-label={t('profile_edit_aria')}
-            disabled={!onOpenSettings}
+            disabled={!onOpenProfile}
             style={{
               background: J.paperHi,
               border: `2.5px solid ${J.butter}`,
               borderRadius: '50%',
               width: 60, height: 60,
               padding: 0,
-              cursor: onOpenSettings ? 'pointer' : 'default',
+              cursor: onOpenProfile ? 'pointer' : 'default',
               overflow: 'hidden',
               flexShrink: 0,
               boxShadow: '0 4px 12px -3px rgba(0,0,0,0.30)',

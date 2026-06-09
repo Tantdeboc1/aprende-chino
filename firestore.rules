@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Reglas: cada usuario solo puede leer/escribir su propio documento
+// users/{uid}. Nadie puede listar la colección entera ni leer la de otro.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

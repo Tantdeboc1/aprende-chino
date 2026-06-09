@@ -5,6 +5,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 import { STORIES, getStoryById } from '@/data/stories/index.js';
 import {
   loadStoryProgress,
@@ -118,12 +119,15 @@ export default function StoriesPage({
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 18px',
       }}>
-        <div className="flex items-center gap-2">
-          <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: J.red, color: J.paperHi, fontWeight: 700, fontSize: 14 }}>
-            故
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: J.red, color: J.paperHi, fontWeight: 700, fontSize: 14 }}>
+              故
+            </div>
+            <span className="font-bold text-base" style={{ color: J.paperHi }}>Historias</span>
           </div>
-          <span className="font-bold text-base" style={{ color: J.paperHi }}>Historias</span>
+          <ProfileBadge variant="dark" />
         </div>
         <div className="mt-3">
           <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>

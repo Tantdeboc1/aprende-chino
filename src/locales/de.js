@@ -72,6 +72,7 @@ export default {
           nav_dictionary: "Wörterbuch",
           nav_games: "Spiele",
           nav_settings: "Einstellungen",
+          nav_profile: "Profil",
           home_greeting: "你好, {{name}}",
           home_subtitle: "Was lernen wir heute?",
           home_mastered: "beherrscht",

@@ -4,7 +4,7 @@ import { J } from '@/styles/tokens';
 import BottomNav from './BottomNav.jsx';
 
 // Tabs del BottomNav en orden izquierda→derecha
-const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'settings'];
+const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'profile'];
 
 // Mapeo: pantalla activa → índice en NAV_TABS (para swipe)
 function getTabIndex(screen) {
