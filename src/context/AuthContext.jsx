@@ -95,11 +95,21 @@ export function AuthProvider({ children }) {
   // para que App vuelva a leer estado.
   useEffect(() => {
     if (mode !== 'google' || !user) return;
-    const unsub = subscribeRemoteUser(user.uid, (data) => {
+    // subscribeRemoteUser es async (import dinámico de Firestore): si el
+    // efecto se limpia antes de que resuelva, desuscribimos al llegar.
+    let unsub = null;
+    let cancelled = false;
+    subscribeRemoteUser(user.uid, (data) => {
       hydrateLocalFromRemote(data);
       setRemoteRev(r => r + 1);
-    });
-    return () => unsub();
+    }).then((u) => {
+      if (cancelled) u();
+      else unsub = u;
+    }).catch((e) => console.warn('Listener remoto falló:', e));
+    return () => {
+      cancelled = true;
+      if (unsub) unsub();
+    };
   }, [mode, user]);
 
   const signInWithGoogle = useCallback(async () => {

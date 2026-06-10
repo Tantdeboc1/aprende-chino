@@ -18,6 +18,7 @@ import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { J } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
+import { fetchJsonCached } from './utils/dataCache.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
 import { MINIGAME_IDS } from './components/minigames/registry.js';
@@ -276,9 +277,9 @@ export default function App() {
         const tick = () => new Promise(r => setTimeout(r, 80));
 
         setSplashProgress(25); await tick();
-        const res = await fetch(assetUrl('data/libro-data.json'));
-        if (!res.ok) throw new Error('No se pudo cargar libro-data.json');
-        const data = await res.json();
+        // Caché versionada: tras la primera visita estos JSON salen de
+        // localStorage sin tocar la red (se invalidan al subir APP_VERSION).
+        const data = await fetchJsonCached('libro-data', assetUrl('data/libro-data.json'));
         setSplashProgress(55); await tick();
 
         const enriched = [];
@@ -299,9 +300,7 @@ export default function App() {
         const lessonsMeta = data.lessons.map(l => ({ lesson: l.lesson, titleZh: l.titleZh, titleEs: l.titleEs }));
         setSplashProgress(70); await tick();
 
-        const radicalsRes = await fetch(assetUrl('data/radicals-data.json'));
-        if (!radicalsRes.ok) throw new Error('No se pudo cargar radicals-data.json');
-        const radicalsDataRaw = await radicalsRes.json();
+        const radicalsDataRaw = await fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json'));
         setSplashProgress(88); await tick();
         const radicalsEnriched = Object.entries(radicalsDataRaw.radicals).map(([radical, details]) => ({ radical, ...details }));
 

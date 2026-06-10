@@ -47,8 +47,18 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('node_modules/@dicebear')) {
             return 'vendor-dicebear';
           }
-          // Firebase (~150 kB gzip) en su propio chunk: no contamina el
-          // vendor común y el navegador lo cachea entre despliegues.
+          // Firestore separado del resto de Firebase: userStore lo importa
+          // dinámicamente, así que este chunk solo se descarga para
+          // usuarios con cuenta Google (los invitados no lo pagan).
+          // Incluye también el wrapper `firebase/firestore` (sin @): si
+          // cayera en vendor-firebase arrastraría el chunk grande como
+          // dependencia estática y se precargaría en el arranque.
+          if (id.includes('node_modules/@firebase/firestore') ||
+              id.includes('node_modules/firebase/firestore')) {
+            return 'vendor-firestore';
+          }
+          // Firebase app+auth en su propio chunk: no contamina el vendor
+          // común y el navegador lo cachea entre despliegues.
           if (id.includes('node_modules/@firebase') || id.includes('node_modules/firebase')) {
             return 'vendor-firebase';
           }

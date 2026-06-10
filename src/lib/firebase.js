@@ -1,9 +1,11 @@
 // src/lib/firebase.js
 // Inicialización única del SDK de Firebase. El resto de la app importa
 // `auth` y `db` desde aquí — no llamar a initializeApp en otros sitios.
+// Firestore NO se importa aquí: solo lo usan los usuarios con cuenta
+// Google y se carga bajo demanda desde userStore.js (ahorra ~70 kB gzip
+// del arranque a los invitados).
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
 
 // La config web de Firebase NO es secreta: viaja en el bundle del cliente
 // igualmente y la seguridad la dan las reglas de Firestore y los dominios
@@ -22,5 +24,4 @@ const firebaseConfig = {
 
 export const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
-export const db = getFirestore(firebaseApp);
 export const googleProvider = new GoogleAuthProvider();

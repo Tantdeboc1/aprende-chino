@@ -2,8 +2,20 @@
 // Capa de datos del usuario logueado: lectura/escritura del documento
 // `users/{uid}` en Firestore. El modo invitado NO pasa por aquí — sigue
 // usando localStorage directamente vía utils/progress.js y utils/userProfile.js.
-import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
-import { db } from './firebase.js';
+import { firebaseApp } from './firebase.js';
+
+// Firestore se importa dinámicamente: el chunk vendor-firestore solo se
+// descarga cuando hay un usuario Google (los invitados no lo pagan).
+let _fsPromise = null;
+function loadFirestore() {
+  if (!_fsPromise) {
+    _fsPromise = import('firebase/firestore').then(fs => ({
+      fs,
+      db: fs.getFirestore(firebaseApp),
+    }));
+  }
+  return _fsPromise;
+}
 
 // ID aleatorio único por pestaña del navegador. Se incluye en cada
 // escritura a Firestore para que el listener onSnapshot pueda distinguir
@@ -75,7 +87,8 @@ export function clearLocalUserData() {
 // Carga el doc remoto. Si no existe, devuelve null (caller decide si subir
 // el snapshot local para inicializarlo).
 export async function fetchRemoteUser(uid) {
-  const snap = await getDoc(doc(db, 'users', uid));
+  const { fs, db } = await loadFirestore();
+  const snap = await fs.getDoc(fs.doc(db, 'users', uid));
   return snap.exists() ? snap.data() : null;
 }
 
@@ -84,20 +97,23 @@ export async function fetchRemoteUser(uid) {
 // Incluye el clientId para dedupear en el listener (sin esto, cada push
 // dispararía nuestro propio onSnapshot y entraríamos en un loop de hidratación).
 export async function pushRemoteUser(uid, data) {
-  await setDoc(
-    doc(db, 'users', uid),
-    { ...data, clientId: getClientId(), updatedAt: serverTimestamp() },
+  const { fs, db } = await loadFirestore();
+  await fs.setDoc(
+    fs.doc(db, 'users', uid),
+    { ...data, clientId: getClientId(), updatedAt: fs.serverTimestamp() },
     { merge: true },
   );
 }
 
 // Suscribe a cambios en tiempo real del doc del usuario. El callback recibe
 // solo cambios externos (otros dispositivos); los nuestros se filtran por
-// clientId. Devuelve la función para desuscribirse.
-export function subscribeRemoteUser(uid, onExternalChange) {
-  const ref = doc(db, 'users', uid);
+// clientId. ASYNC por el import dinámico de Firestore: resuelve a la
+// función de desuscripción.
+export async function subscribeRemoteUser(uid, onExternalChange) {
+  const { fs, db } = await loadFirestore();
+  const ref = fs.doc(db, 'users', uid);
   const myClient = getClientId();
-  return onSnapshot(ref, (snap) => {
+  return fs.onSnapshot(ref, (snap) => {
     if (!snap.exists()) return;
     const data = snap.data();
     // Las escrituras propias se ignoran. metadata.hasPendingWrites
