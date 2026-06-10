@@ -657,7 +657,9 @@ export default function App() {
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
       MINIGAME_IDS.has(screen)) {
-    const navScreen = screen === 'dictionary' ? 'dictionary' : screen === 'minigames' ? 'minigames' : 'home';
+    // Pasamos la screen tal cual (BottomNav resuelve qué tab resalta,
+    // incluidos los ids de minijuegos). 'exercise' oculta la nav igualmente.
+    const navScreen = screen === 'exercise' ? 'home' : screen;
     const hideNav = screen === 'exercise';
     if (!CurrentComponent) {
       return (

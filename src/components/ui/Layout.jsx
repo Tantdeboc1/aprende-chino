@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { J } from '@/styles/tokens';
 import BottomNav from './BottomNav.jsx';
+import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 
 // Tabs del BottomNav en orden izquierda→derecha
 const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'profile'];
@@ -12,7 +13,8 @@ function getTabIndex(screen) {
   if (direct !== -1) return direct;
   // Pantallas que "pertenecen" a un tab pero no están en el array
   if (['lesson-detail', 'intro-detail', 'exam', 'exercise'].includes(screen)) return 0; // home
-  if (['sov-game', 'time-race', 'pinyin-connection', 'translation-game', 'global-exam', 'complete-sentence', 'dialogue-order', 'find-intruder'].includes(screen)) return 3; // minigames
+  // Cualquier minijuego del registro (+ examen global) pertenece al tab juegos.
+  if (MINIGAME_IDS.has(screen) || screen === 'global-exam') return 4; // minigames
   return -1; // swipe deshabilitado en esta pantalla
 }
 

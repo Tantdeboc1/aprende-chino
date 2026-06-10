@@ -10,6 +10,14 @@ const STREAK_KEY = 'aprende-chino-streak-v1';
 // una historia o varios quizzes.
 const DAILY_XP_GOAL = 120;
 
+// Presets de meta diaria elegibles en onboarding y Ajustes.
+// El XP de referencia: una historia perfecta da 120.
+export const DAILY_GOAL_PRESETS = [
+  { id: 'relaxed', xp: 60,  icon: '🍵' },
+  { id: 'normal',  xp: 120, icon: '🎯' },
+  { id: 'intense', xp: 200, icon: '🔥' },
+];
+
 const MILESTONES = [
   { days: 3,   icon: '🌱', key: 'milestone_3' },
   { days: 7,   icon: '🥉', key: 'milestone_7' },
@@ -183,6 +191,16 @@ export function addXP(xp) {
  */
 export function getStreak() {
   return loadStreak();
+}
+
+/**
+ * Cambia la meta diaria de XP (60/120/200 vía presets, o cualquier número).
+ */
+export function setDailyGoal(xp) {
+  const streak = loadStreak();
+  const updated = { ...streak, dailyGoal: xp };
+  saveStreak(updated);
+  return updated;
 }
 
 /**

@@ -97,6 +97,14 @@ export default function MiniGames({ goBack, navigateTo }) {
       color: 'green',
       badges: [t('badge_medium', 'Media'), t('badge_pronunciation', 'Pronunciación'), '🎙️'],
     },
+    {
+      id: 'dictation-game',
+      title: t('minigames_dictation_title', 'Dictado'),
+      description: t('minigames_dictation_description', 'Escucha el audio y elige el carácter correcto'),
+      cn: '听',
+      color: 'yellow',
+      badges: [t('badge_medium', 'Media'), t('badge_listening', 'Oído'), '🔊'],
+    },
   ];
 
   return (

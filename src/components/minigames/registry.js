@@ -21,6 +21,7 @@ const CompleteSentence     = lazy(() => import('./CompleteSentence.jsx'));
 const DialogueOrder        = lazy(() => import('./DialogueOrder.jsx'));
 const FindIntruder         = lazy(() => import('./FindIntruder.jsx'));
 const PronunciationPractice = lazy(() => import('./PronunciationPractice.jsx'));
+const DictationGame         = lazy(() => import('./DictationGame.jsx'));
 
 /**
  * Helper para fabricar el `goBack` típico que devuelve al listado de juegos.
@@ -97,6 +98,16 @@ export const MINIGAMES = [
     buildProps: (ctx) => ({
       goBack: backToMinigames(ctx),
       selectedLesson: ctx.selectedLesson,
+    }),
+  },
+  {
+    id: 'dictation-game',
+    component: DictationGame,
+    buildProps: (ctx) => ({
+      goBack: backToMinigames(ctx),
+      characters: ctx.characters,
+      speak: ctx.speak,
+      onTrackResult: ctx.onTrackResult,
     }),
   },
 ];

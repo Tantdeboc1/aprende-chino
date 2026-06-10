@@ -1,6 +1,7 @@
 // src/components/ui/BottomNav.jsx
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 
 const HomeIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -63,7 +64,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   const isActive = (key) => {
     if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
-    if (key === 'minigames') return ['minigames','sov-game','time-race','pinyin-connection','translation-game','global-exam','complete-sentence','dialogue-order','find-intruder'].includes(activeScreen);
+    if (key === 'minigames') return activeScreen === 'minigames' || activeScreen === 'global-exam' || MINIGAME_IDS.has(activeScreen);
     return activeScreen === key;
   };
 

@@ -7,6 +7,7 @@ import { J } from '@/styles/tokens';
 import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
 import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@/utils/userProfile.js';
+import { getStreak, setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
@@ -165,6 +166,13 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [profile, setProfile] = useState(() => loadUserProfile());
   const [showPicker, setShowPicker] = useState(false);
+  const [dailyGoal, setDailyGoalState] = useState(() => getStreak().dailyGoal || 120);
+
+  const handleDailyGoalChange = (xp) => {
+    setDailyGoal(xp);
+    setDailyGoalState(xp);
+    pushSnapshot(); // la meta vive en streak data, que ya sincroniza
+  };
 
   const handleNameBlur = () => {
     const trimmed = nameInput.trim();
@@ -329,6 +337,37 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               </button>
             </div>
           )}
+        </JCard>
+
+        {/* ─── Meta diaria ─────────────────────────────────────────────── */}
+        <JSection label={t('settings_daily_goal', 'Meta diaria')} cn="目标" />
+        <JCard padding="14px 18px">
+          <div className="flex flex-wrap gap-2">
+            {DAILY_GOAL_PRESETS.map(p => {
+              const on = dailyGoal === p.xp;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => handleDailyGoalChange(p.xp)}
+                  className="flex items-center gap-2"
+                  style={{
+                    padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
+                    background: on ? J.ink : J.paper,
+                    color: on ? J.paperHi : J.inkSoft,
+                    fontSize: 12.5, fontWeight: 700,
+                  }}
+                >
+                  <span style={{ fontSize: 14 }}>{p.icon}</span>
+                  {t(`settings_goal_${p.id}`,
+                    p.id === 'relaxed' ? 'Relajado' : p.id === 'normal' ? 'Normal' : 'Intenso')}
+                  <span style={{ opacity: 0.7, fontWeight: 600 }}>{p.xp} XP</span>
+                </button>
+              );
+            })}
+          </div>
+          <p style={{ margin: '10px 0 0', fontSize: 11, color: J.mute }}>
+            {t('settings_daily_goal_hint', 'XP que necesitas cada día para mantener tu objetivo. Una historia perfecta da 120 XP.')}
+          </p>
         </JCard>
 
         {/* ─── Idioma ──────────────────────────────────────────────────── */}

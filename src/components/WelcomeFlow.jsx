@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { GENDERS, updateUserProfile } from '@/utils/userProfile.js';
 import { AVATARS, getAvatarsByGender, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
 
-const STEPS = 3;
+const STEPS = 4;
 
 export default function WelcomeFlow({ onComplete }) {
   const { t } = useTranslation();
@@ -13,6 +14,8 @@ export default function WelcomeFlow({ onComplete }) {
   const [name, setName] = useState('');
   const [gender, setGender] = useState(null);
   const [avatarId, setAvatarId] = useState(null);
+  // 'normal' preseleccionado: el usuario puede pasar el paso sin pensar.
+  const [goalXp, setGoalXp] = useState(120);
 
   // Galería filtrada por género; si el filtro deja muy pocos (p. ej. 'nb'),
   // se muestran todos para que siempre haya variedad donde elegir.
@@ -25,7 +28,8 @@ export default function WelcomeFlow({ onComplete }) {
   const canNext =
     step === 0 ? !!trimmedName :
     step === 1 ? !!gender :
-    !!avatarId;
+    step === 2 ? !!avatarId :
+    true; // paso 3 (meta) siempre tiene valor preseleccionado
 
   const goNext = () => {
     if (!canNext) return;
@@ -33,6 +37,7 @@ export default function WelcomeFlow({ onComplete }) {
       setStep(s => s + 1);
     } else {
       updateUserProfile({ gender, avatarId: avatarId || DEFAULT_AVATAR_ID });
+      setDailyGoal(goalXp);
       onComplete(trimmedName);
     }
   };
@@ -156,6 +161,51 @@ export default function WelcomeFlow({ onComplete }) {
                         boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
                       }}>✓</span>
                     )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── Paso 3: Meta diaria ── */}
+        {step === 3 && (
+          <div>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 6px' }}>
+              {t('welcome_step_goal_title', '¿Cuánto quieres practicar al día?')}
+            </h2>
+            <p style={{ fontSize: 12.5, color: J.inkSoft, textAlign: 'center', margin: '0 0 18px' }}>
+              {t('welcome_step_goal_hint', 'Puedes cambiarlo cuando quieras en Ajustes')}
+            </p>
+            <div className="flex flex-col gap-3">
+              {DAILY_GOAL_PRESETS.map(p => {
+                const on = goalXp === p.xp;
+                const label = t(`settings_goal_${p.id}`,
+                  p.id === 'relaxed' ? 'Relajado' : p.id === 'normal' ? 'Normal' : 'Intenso');
+                const desc = t(`welcome_goal_${p.id}_desc`,
+                  p.id === 'relaxed' ? 'Unos minutos al día'
+                  : p.id === 'normal' ? 'Una historia o varios ejercicios'
+                  : 'Para avanzar rápido');
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => setGoalXp(p.xp)}
+                    className="flex items-center gap-3 w-full"
+                    style={{
+                      padding: '14px 18px', borderRadius: 14, cursor: 'pointer', textAlign: 'left',
+                      background: on ? J.jade : J.paper,
+                      border: `2px solid ${on ? J.jadeDeep : J.hair}`,
+                      color: on ? J.paperHi : J.ink,
+                      transition: 'all 180ms ease',
+                    }}
+                  >
+                    <span style={{ fontSize: 22 }}>{p.icon}</span>
+                    <span style={{ flex: 1 }}>
+                      <span style={{ display: 'block', fontSize: 15, fontWeight: 700 }}>
+                        {label} · {p.xp} XP
+                      </span>
+                      <span style={{ display: 'block', fontSize: 12, opacity: 0.8 }}>{desc}</span>
+                    </span>
                   </button>
                 );
               })}
