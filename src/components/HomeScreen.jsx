@@ -8,8 +8,9 @@ import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
 import StreakPanel from '@/components/ui/StreakPanel.jsx';
 import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
-import { loadUserProfile } from '@/utils/userProfile.js';
+import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { useAuth } from '@/context/AuthContext.jsx';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
@@ -265,11 +266,15 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const streak      = useMemo(() => getStreak(), []);
   const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
-  const profile     = useMemo(() => loadUserProfile(), []);
+  const { mode, user, remoteRev } = useAuth();
+  // remoteRev en deps: si llega un sync remoto, el perfil se relee.
+  const profile     = useMemo(() => loadUserProfile(), [remoteRev]);
   const avatar      = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
   );
+  // Prioriza la foto de Google (igual que ProfileBadge y Ajustes).
+  const effectiveAvatar = resolveAvatarSrc(profile, mode, user?.photoURL, avatar.src);
 
   return (
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
@@ -306,8 +311,9 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
             }}
           >
             <img
-              src={avatar.src}
+              src={effectiveAvatar.src}
               alt={avatar.label || 'Avatar'}
+              referrerPolicy="no-referrer"
               draggable={false}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
