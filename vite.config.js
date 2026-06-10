@@ -1,11 +1,88 @@
 // vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig(({ mode }) => ({
   base: '/',
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      // autoUpdate: el SW nuevo se activa solo; la siguiente visita ya usa
+      // la versión nueva. Evita el clásico "usuarios atascados en versión
+      // vieja" sin necesidad de banner de actualización.
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Aprende Chino · HSK 1',
+        short_name: 'Aprende Chino',
+        description: 'Aprende caracteres chinos HSK-1 con ejercicios interactivos',
+        lang: 'es',
+        display: 'standalone',
+        orientation: 'portrait',
+        theme_color: '#2f6b4a',
+        background_color: '#f4ecdc',
+        icons: [
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+      },
+      workbox: {
+        // Precache: solo el shell (JS/CSS/HTML/iconos). El audio (35 MB),
+        // la música y las ilustraciones webp (3,2 MB de fondos/avatares)
+        // van por caché runtime — se guardan al primer uso.
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        globIgnores: ['audio/**', 'music/**'],
+        navigateFallback: 'index.html',
+        runtimeCaching: [
+          {
+            // mp3 de pronunciación y música: se cachean al primer uso.
+            urlPattern: ({ url }) => url.pathname.includes('/audio/') || url.pathname.includes('/music/'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'media',
+              expiration: { maxEntries: 600, maxAgeSeconds: 60 * 60 * 24 * 180 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // Ilustraciones (fondos de historias, avatares): al primer uso.
+            urlPattern: ({ url }) => url.pathname.endsWith('.webp'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 180 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // JSON de datos (info.json, hsk1-data.json…): red primero con
+            // caché de respaldo para offline.
+            urlPattern: ({ url }) => url.pathname.includes('/data/') && url.pathname.endsWith('.json'),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'data-json' },
+          },
+          {
+            // CSS de Google Fonts.
+            urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'google-fonts-css' },
+          },
+          {
+            // Ficheros woff2 de Google Fonts (inmutables).
+            urlPattern: ({ url }) => url.origin === 'https://fonts.gstatic.com',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-files',
+              expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   // En PRODUCCIÓN elimina console.* y debugger automáticamente (vía esbuild,
   // el minificador por defecto de Vite). En dev se mantienen para debug.
   // Excluye console.warn/error porque suelen ser señales legítimas.
