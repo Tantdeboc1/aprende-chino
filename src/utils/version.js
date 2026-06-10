@@ -1,2 +1,4 @@
 // src/utils/version.js
-export const APP_VERSION = 'v0.3.0';
+// Única fuente de verdad de la versión visible en la UI.
+// Mantener alineada con package.json al hacer release.
+export const APP_VERSION = 'v0.7.1';

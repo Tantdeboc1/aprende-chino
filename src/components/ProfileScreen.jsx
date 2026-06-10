@@ -92,9 +92,12 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
   }, [progress]);
 
   const totalMastered = useMemo(() => {
+    // Lecciones presentes en los datos (8 hoy; si se añaden más, esto
+    // las recoge solo en lugar de un rango hardcodeado).
+    const lessons = [...new Set(allCharacters.map(c => c.lesson).filter(Boolean))];
     let total = 0;
-    for (let i = 1; i <= 4; i++) {
-      total += getLessonStats(progress, i, allCharacters).mastered;
+    for (const n of lessons) {
+      total += getLessonStats(progress, n, allCharacters).mastered;
     }
     return total;
   }, [progress, allCharacters]);

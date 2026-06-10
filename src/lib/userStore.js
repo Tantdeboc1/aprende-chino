@@ -21,20 +21,55 @@ const LS_USERNAME = 'aprende-chino-username';
 const LS_PROFILE  = 'aprende-chino-profile';
 const LS_PROGRESS = 'aprende-chino-progress-v1';
 
+// Resto de claves localStorage que componen el estado del usuario. Se
+// sincronizan como strings crudos (en el campo `extra` del doc) para no
+// acoplar este módulo al formato interno de cada subsistema.
+const LS_EXTRA_KEYS = [
+  'aprende-chino-streak-v1',       // racha + XP total
+  'aprende-chino-leveling-v1',     // título equipado
+  'aprende-chino-story-progress',  // historias completadas
+  'aprende-chino-story-difficulty',
+  'aprende-chino-challenges-v1',   // retos diarios
+  'aprende-chino-favorites',       // favoritos del diccionario
+  'dailyProgress_v1',              // ejercicios diarios
+];
+
 function readLocalSnapshot() {
   let profile = null, progress = {}, userName = '';
   try { userName = localStorage.getItem(LS_USERNAME) || ''; } catch {}
   try { const raw = localStorage.getItem(LS_PROFILE);  if (raw) profile  = JSON.parse(raw); } catch {}
   try { const raw = localStorage.getItem(LS_PROGRESS); if (raw) progress = JSON.parse(raw); } catch {}
-  return { userName, profile, progress };
+  const extra = {};
+  for (const key of LS_EXTRA_KEYS) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw !== null) extra[key] = raw;
+    } catch {}
+  }
+  return { userName, profile, progress, extra };
 }
 
-function writeLocalSnapshot({ userName, profile, progress }) {
+function writeLocalSnapshot({ userName, profile, progress, extra }) {
   try {
     if (userName) localStorage.setItem(LS_USERNAME, userName);
     if (profile)  localStorage.setItem(LS_PROFILE,  JSON.stringify(profile));
     if (progress) localStorage.setItem(LS_PROGRESS, JSON.stringify(progress));
+    if (extra) {
+      for (const key of LS_EXTRA_KEYS) {
+        if (typeof extra[key] === 'string') localStorage.setItem(key, extra[key]);
+      }
+    }
   } catch {}
+}
+
+// Borra todos los datos de usuario del dispositivo. Se llama al cerrar
+// sesión para que la siguiente cuenta (Google o invitado) empiece limpia
+// y no herede —ni suba a su doc— los datos del usuario anterior.
+export function clearLocalUserData() {
+  const all = [LS_USERNAME, LS_PROFILE, LS_PROGRESS, ...LS_EXTRA_KEYS];
+  for (const key of all) {
+    try { localStorage.removeItem(key); } catch {}
+  }
 }
 
 // Carga el doc remoto. Si no existe, devuelve null (caller decide si subir
@@ -81,6 +116,7 @@ export function hydrateLocalFromRemote(remote) {
     userName: remote.userName,
     profile:  remote.profile,
     progress: remote.progress,
+    extra:    remote.extra,
   });
 }
 

@@ -136,6 +136,23 @@ export default function App() {
     // navegación actual cuando llega un sync remoto a media sesión.
     setScreen(s => (s === 'welcome' && remoteName) ? 'home' : s);
   }, [mode, user?.uid, remoteRev]);
+
+  // Tras cerrar sesión (mode → null), AuthContext borró localStorage.
+  // Reseteamos el estado en memoria para que el siguiente usuario
+  // (Google o invitado) no vea los datos del anterior.
+  useEffect(() => {
+    if (mode !== null) return;
+    clearTimeout(pushTimerRef.current);
+    const name = loadUserName();
+    setUserName(name);
+    setProgress(loadProgress());
+    // Tras signOut el nombre quedó borrado → 'welcome'. Usuarios antiguos
+    // (con nombre pero sin modo elegido aún) conservan su 'home'.
+    setScreen(name ? 'home' : 'welcome');
+  }, [mode]);
+
+  // No dejar un push pendiente al desmontar.
+  useEffect(() => () => clearTimeout(pushTimerRef.current), []);
   // Pantalla anterior (para volver desde ejercicios)
   const [prevScreen, setPrevScreen] = useState('home');
 

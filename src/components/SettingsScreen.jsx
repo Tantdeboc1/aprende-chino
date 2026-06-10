@@ -9,6 +9,7 @@ import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
+import { APP_VERSION } from '@/utils/version.js';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -155,10 +156,10 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
   );
 }
 
-export default function SettingsScreen({ userName, onUserNameChange, progress, onProgressChange, allCharacters, onBack }) {
+export default function SettingsScreen({ userName, onUserNameChange, onProgressChange, allCharacters, onBack }) {
   const { t, i18n } = useTranslation();
   const music = useMusic();
-  const { mode, user, signOut, migrateGuestToGoogle } = useAuth();
+  const { mode, user, signOut, migrateGuestToGoogle, pushSnapshot } = useAuth();
   const [migrating, setMigrating] = useState(false);
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -175,12 +176,18 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
     setShowResetConfirm(false);
   };
 
-  const handleGenderChange = (g) => {
-    setProfile(updateUserProfile({ gender: g }));
+  // Tras cualquier cambio de perfil, sincroniza con Firestore (no-op en
+  // modo invitado). Sin esto, el género/avatar solo viajaba a la nube
+  // cuando además cambiaba el progreso.
+  const applyProfilePatch = (patch) => {
+    setProfile(updateUserProfile(patch));
+    pushSnapshot();
   };
 
+  const handleGenderChange = (g) => applyProfilePatch({ gender: g });
+
   const handleAvatarChange = (avatarId) => {
-    setProfile(updateUserProfile({ avatarId }));
+    applyProfilePatch({ avatarId });
     setShowPicker(false);
   };
 
@@ -305,7 +312,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
                 </p>
               </div>
               <button
-                onClick={() => setProfile(updateUserProfile({ useGooglePhoto: !(profile.useGooglePhoto !== false) }))}
+                onClick={() => applyProfilePatch({ useGooglePhoto: !(profile.useGooglePhoto !== false) })}
                 aria-pressed={profile.useGooglePhoto !== false}
                 style={{
                   flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
@@ -502,7 +509,7 @@ export default function SettingsScreen({ userName, onUserNameChange, progress, o
           marginTop: 18, textAlign: 'center', fontSize: 11.5,
           color: J.mute, fontWeight: 500, letterSpacing: '0.02em',
         }}>
-          Aprende Chino · v0.7.1 · {t('settings_words_included')}: {totalWords}
+          Aprende Chino · {APP_VERSION} · {t('settings_words_included')}: {totalWords}
         </p>
       </div>
 

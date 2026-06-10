@@ -5,11 +5,14 @@
 //   - 'guest'    → usuario eligió "continuar como invitado", todo en localStorage
 //   - null       → no ha pasado por LoginScreen aún
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut as fbSignOut } from 'firebase/auth';
+import {
+  onAuthStateChanged, signInWithPopup, signInWithRedirect,
+  signOut as fbSignOut,
+} from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase.js';
 import {
   fetchRemoteUser, pushRemoteUser, subscribeRemoteUser,
-  hydrateLocalFromRemote, snapshotLocal,
+  hydrateLocalFromRemote, snapshotLocal, clearLocalUserData,
 } from '@/lib/userStore.js';
 
 const LS_MODE = 'aprende-chino-auth-mode'; // 'google' | 'guest'
@@ -61,6 +64,11 @@ export function AuthProvider({ children }) {
             }
           } else if (remote) {
             hydrateLocalFromRemote(remote);
+            // Docs creados antes de sincronizar racha/historias/etc. no
+            // tienen `extra`: se completa con lo local de este dispositivo.
+            if (!remote.extra) {
+              await pushRemoteUser(fbUser.uid, snapshotLocal());
+            }
           } else {
             // Primer login con esta cuenta: subimos el snapshot local
             // (sea de invitado o de un dispositivo vacío).
@@ -100,6 +108,23 @@ export function AuthProvider({ children }) {
       await signInWithPopup(auth, googleProvider);
       try { localStorage.setItem(LS_MODE, 'google'); } catch {}
     } catch (e) {
+      // Muchos navegadores móviles bloquean popups: caemos a redirect.
+      // Tras el redirect, onAuthStateChanged se dispara al volver a cargar
+      // la app, así que no hace falta gestionar getRedirectResult aparte.
+      if (e?.code === 'auth/popup-blocked' ||
+          e?.code === 'auth/operation-not-supported-in-this-environment') {
+        try {
+          try { localStorage.setItem(LS_MODE, 'google'); } catch {}
+          await signInWithRedirect(auth, googleProvider);
+          return;
+        } catch (e2) {
+          console.error('Login Google (redirect) falló:', e2);
+          setError(e2.message || 'Login failed');
+          return;
+        }
+      }
+      // Cancelado por el usuario: no es un error que mostrar.
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') return;
       console.error('Login Google falló:', e);
       setError(e.message || 'Login failed');
     }
@@ -120,6 +145,10 @@ export function AuthProvider({ children }) {
   const signOut = useCallback(async () => {
     try { await fbSignOut(auth); } catch {}
     try { localStorage.removeItem(LS_MODE); } catch {}
+    // Borra los datos locales: la copia del usuario vive en su doc de
+    // Firestore. Sin esto, la siguiente cuenta que entre en este
+    // dispositivo heredaría (y subiría a su doc) el progreso del anterior.
+    clearLocalUserData();
     setMode(null);
   }, []);
 

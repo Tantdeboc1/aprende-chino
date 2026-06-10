@@ -47,6 +47,11 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('node_modules/@dicebear')) {
             return 'vendor-dicebear';
           }
+          // Firebase (~150 kB gzip) en su propio chunk: no contamina el
+          // vendor común y el navegador lo cachea entre despliegues.
+          if (id.includes('node_modules/@firebase') || id.includes('node_modules/firebase')) {
+            return 'vendor-firebase';
+          }
           if (id.includes('node_modules/lucide-react')) {
             return 'vendor-icons';
           }

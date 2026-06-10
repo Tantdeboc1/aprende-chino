@@ -31,11 +31,12 @@ export function computeBadges(progress, allCharacters) {
   const streak = getStreak();
   const levelInfo = getLevelInfo(streak.totalXP || 0);
 
-  // Agregados por lección (recorremos las 8 actuales del HSK1).
+  // Agregados por lección — derivadas de los datos, no de un rango fijo.
+  const lessonNums = [...new Set(allCharacters.map(c => c.lesson).filter(Boolean))];
   let totalMastered = 0;
   let lessonsHalfDone = 0;
-  for (let i = 1; i <= 8; i++) {
-    const s = getLessonStats(progress, i, allCharacters);
+  for (const n of lessonNums) {
+    const s = getLessonStats(progress, n, allCharacters);
     totalMastered += s.mastered;
     if (s.total > 0 && (s.mastered / s.total) >= 0.5) lessonsHalfDone++;
   }
