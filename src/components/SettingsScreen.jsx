@@ -8,6 +8,7 @@ import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
 import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getStreak, setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
+import { introsEnabled, setIntrosEnabled } from '@/utils/gameIntroPrefs.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
@@ -167,6 +168,13 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const [profile, setProfile] = useState(() => loadUserProfile());
   const [showPicker, setShowPicker] = useState(false);
   const [dailyGoal, setDailyGoalState] = useState(() => getStreak().dailyGoal || 120);
+  const [showIntros, setShowIntros] = useState(() => introsEnabled());
+
+  const handleIntrosToggle = () => {
+    const next = !showIntros;
+    setIntrosEnabled(next); // al activar limpia también los "no volver a mostrar"
+    setShowIntros(next);
+  };
 
   const handleDailyGoalChange = (xp) => {
     setDailyGoal(xp);
@@ -368,6 +376,37 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           <p style={{ margin: '10px 0 0', fontSize: 11, color: J.mute }}>
             {t('settings_daily_goal_hint', 'XP que necesitas cada día para mantener tu objetivo. Una historia perfecta da 120 XP.')}
           </p>
+        </JCard>
+
+        {/* ─── Minijuegos ──────────────────────────────────────────────── */}
+        <JSection label={t('settings_section_games', 'Minijuegos')} cn="游戏" />
+        <JCard padding="0">
+          <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>
+                {t('settings_game_intros_label', 'Explicaciones de los juegos')}
+              </p>
+              <p style={{ margin: 0, fontSize: 11, color: J.mute }}>
+                {t('settings_game_intros_hint', 'Mostrar las instrucciones antes de cada minijuego. Al activarlo se restauran también las ocultadas con "No volver a mostrar".')}
+              </p>
+            </div>
+            <button
+              onClick={handleIntrosToggle}
+              aria-pressed={showIntros}
+              style={{
+                flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
+                cursor: 'pointer', position: 'relative', marginLeft: 12,
+                background: showIntros ? J.jade : J.hairS,
+                transition: 'background 200ms ease',
+              }}
+            >
+              <span style={{
+                position: 'absolute', top: 3, left: showIntros ? 23 : 3,
+                width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
+                transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+              }} />
+            </button>
+          </div>
         </JCard>
 
         {/* ─── Idioma ──────────────────────────────────────────────────── */}

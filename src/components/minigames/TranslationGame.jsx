@@ -6,6 +6,9 @@ import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { LESSON_NUMBERS } from '@/styles/lessonColors.js';
 import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import GameIntro from './GameIntro.jsx';
+import GameResults from './GameResults.jsx';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
@@ -328,6 +331,7 @@ function playSound(type) {
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function TranslationGame({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
+  const [started, setStarted] = useState(() => !shouldShowIntro('translation-game'));
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -420,26 +424,37 @@ export default function TranslationGame({ goBack, selectedLesson }) {
     inputRef.current?.focus();
   };
 
+  // ── Pantalla de explicación ───────────────────────────────────────────────
+  if (!started) {
+    return (
+      <GameIntro
+        gameId="translation-game"
+        cn="译"
+        title={t('translation_title')}
+        subtitle={t('translation_subtitle')}
+        steps={[
+          t('translation_intro_1', 'Lee la frase y tradúcela escribiéndola en caracteres chinos.'),
+          t('translation_intro_2', 'Escribe pinyin sin tonos y toca el candidato correcto para añadir cada palabra.'),
+          t('translation_intro_3', 'También puedes dibujar los caracteres a mano con el modo "Dibujar".'),
+          t('translation_intro_4', 'Son 8 frases por ronda. Puedes filtrar por lección.'),
+        ]}
+        onStart={() => setStarted(true)}
+        onBack={goBack}
+      />
+    );
+  }
+
   // ── Pantalla final ────────────────────────────────────────────────────────
   if (done) {
-    const pct = rounds.length > 0 ? Math.round((score / rounds.length) * 100) : 0;
-    const emoji = pct === 100 ? '\u{1F3C6}' : pct >= 70 ? '\u{1F44F}' : '\u{1F4AA}';
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center p-6">
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-8 max-w-sm w-full text-center shadow-sm">
-          <div className="text-6xl mb-4">{emoji}</div>
-          <h2 className="text-2xl font-bold text-[#1c1813] mb-1">{t('translation_results_title')}</h2>
-          <p className="text-[#928a76] mb-6">{t('translation_results_subtitle')}</p>
-          <div className="flex justify-center gap-8 mb-8">
-            <div><p className="text-4xl font-bold text-[#1c1813]">{score}/{rounds.length}</p><p className="text-xs text-[#928a76] mt-1">{t('translation_correct_label')}</p></div>
-            <div><p className="text-4xl font-bold text-[#1c1813]">{pct}%</p><p className="text-xs text-[#928a76] mt-1">{t('translation_accuracy_label')}</p></div>
-          </div>
-          <div className="space-y-2">
-            <button onClick={initGame} className={`w-full py-3 rounded-xl ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#1c1813] font-bold transition-colors`}>{t('translation_play_again')}</button>
-            <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-medium transition-colors">{t('translation_back')}</button>
-          </div>
-        </div>
-      </div>
+      <GameResults
+        title={t('translation_results_title')}
+        subtitle={t('translation_results_subtitle')}
+        correct={score}
+        wrong={rounds.length - score}
+        onPlayAgain={initGame}
+        onBack={goBack}
+      />
     );
   }
 

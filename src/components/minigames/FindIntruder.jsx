@@ -10,6 +10,9 @@ import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import GameIntro from './GameIntro.jsx';
+import GameResults from './GameResults.jsx';
 
 import { LESSON_COLORS, LESSON_NUMBERS } from '@/styles/lessonColors.js';
 const DEFAULT_COLOR = { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]' };
@@ -26,6 +29,7 @@ function buildRound(lessonFilter) {
 
 export default function FindIntruder({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
+  const [started, setStarted] = useState(() => !shouldShowIntro('find-intruder'));
 
   const [rounds, setRounds]             = useState([]);
   const [currentIdx, setCurrentIdx]     = useState(0);
@@ -87,36 +91,37 @@ export default function FindIntruder({ goBack, selectedLesson }) {
     setShowHint(false);
   };
 
+  // Pantalla de explicación
+  if (!started) {
+    return (
+      <GameIntro
+        gameId="find-intruder"
+        cn="找"
+        title={t('intruder_title')}
+        subtitle={t('intruder_subtitle')}
+        steps={[
+          t('intruder_intro_1', 'Verás 4 caracteres: tres comparten categoría y uno es el intruso.'),
+          t('intruder_intro_2', 'Toca el carácter que no pertenece al grupo.'),
+          t('intruder_intro_3', 'Usa el botón "Pista" si necesitas una ayuda.'),
+          t('intruder_intro_4', 'Son 8 rondas. Puedes filtrar por lección.'),
+        ]}
+        onStart={() => setStarted(true)}
+        onBack={goBack}
+      />
+    );
+  }
+
   // Resultados
   if (done) {
-    const pct = rounds.length > 0 ? Math.round((score / rounds.length) * 100) : 0;
-    const emoji = pct === 100 ? '' : pct >= 70 ? '' : '';
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center p-6">
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-8 max-w-sm w-full text-center shadow-sm">
-          <div className="text-6xl mb-4">{emoji}</div>
-          <h2 className="text-2xl font-bold text-[#1c1813] mb-1">{t('intruder_results_title')}</h2>
-          <p className="text-[#928a76] mb-6">{t('intruder_results_subtitle')}</p>
-          <div className="flex justify-center gap-8 mb-8">
-            <div>
-              <p className="text-4xl font-bold text-[#1c1813]">{score}/{rounds.length}</p>
-              <p className="text-xs text-[#928a76] mt-1">{t('sov_correct_label')}</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-[#1c1813]">{pct}%</p>
-              <p className="text-xs text-[#928a76] mt-1">{t('sov_accuracy_label')}</p>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <button onClick={() => initRound(lessonFilter)} className="w-full py-3 rounded-xl bg-[#c8392f] hover:bg-[#8b1f1a] text-[#fbf5e6] font-bold transition-colors">
-              {t('sov_play_again')}
-            </button>
-            <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-medium transition-colors">
-              {t('sov_back')}
-            </button>
-          </div>
-        </div>
-      </div>
+      <GameResults
+        title={t('intruder_results_title')}
+        subtitle={t('intruder_results_subtitle')}
+        correct={score}
+        wrong={rounds.length - score}
+        onPlayAgain={() => initRound(lessonFilter)}
+        onBack={goBack}
+      />
     );
   }
 

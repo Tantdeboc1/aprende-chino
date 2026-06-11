@@ -6,6 +6,9 @@ import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import GameIntro from './GameIntro.jsx';
+import GameResults from './GameResults.jsx';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -61,7 +64,8 @@ function playSound(type) {
 }
 
 export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [started, setStarted] = useState(() => !shouldShowIntro('sov-game'));
 
   // Estado de la ronda
   const [rounds, setRounds]           = useState([]);
@@ -95,6 +99,12 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const current = rounds[currentIdx];
   const accent  = LESSON_COLORS[current?.lesson] || DEFAULT_COLOR;
 
+  // Los datos traen translations/hints por idioma; resolvemos según el idioma
+  // activo con fallback a español.
+  const lang = i18n.language?.split('-')[0];
+  const currentTranslation = current?.translations?.[lang] || current?.translations?.es || current?.translation || '';
+  const currentHint        = current?.hints?.[lang] || current?.hints?.es || current?.hint || '';
+
   // Mover chip de disponibles → zona respuesta
   const handlePickWord = (item) => {
     if (result) return;
@@ -119,7 +129,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
       setScore(s => s + 1);
     } else {
       // Reproducir audio de la frase correcta al fallar
-      speakChinese?.({ hanzi: current.sentence, pinyin: current.hint || '' });
+      speakChinese?.({ hanzi: current.sentence, pinyin: '' });
     }
     playSound(correct ? 'correct' : 'incorrect');
     if (correct) hapticSuccess(); else hapticError();
@@ -147,42 +157,37 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     setShowHint(false);
   };
 
+  // ── Pantalla de explicación ─────────────────────────────────────────────────
+  if (!started) {
+    return (
+      <GameIntro
+        gameId="sov-game"
+        cn="序"
+        title={t('sov_title')}
+        subtitle={t('sov_subtitle')}
+        steps={[
+          t('sov_intro_1', 'Lee la traducción y ordena las palabras chinas para formar la frase correcta.'),
+          t('sov_intro_2', 'Toca una palabra para añadirla a tu respuesta; tócala de nuevo para quitarla.'),
+          t('sov_intro_3', 'Si te atascas, usa el botón "Pista" para ver una ayuda de gramática.'),
+          t('sov_intro_4', 'Son 8 frases por ronda. Puedes filtrar por lección.'),
+        ]}
+        onStart={() => setStarted(true)}
+        onBack={goBack}
+      />
+    );
+  }
+
   // ── Pantalla de resultados finales ──────────────────────────────────────────
   if (done) {
-    const pct = rounds.length > 0 ? Math.round((score / rounds.length) * 100) : 0;
-    const emoji = pct === 100 ? '' : pct >= 70 ? '' : '';
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center p-6">
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-8 max-w-sm w-full text-center shadow-sm">
-          <div className="text-6xl mb-4">{emoji}</div>
-          <h2 className="text-2xl font-bold text-[#1c1813] mb-1">{t('sov_results_title')}</h2>
-          <p className="text-[#928a76] mb-6">{t('sov_results_subtitle')}</p>
-          <div className="flex justify-center gap-8 mb-8">
-            <div>
-              <p className="text-4xl font-bold text-[#1c1813]">{score}/{rounds.length}</p>
-              <p className="text-xs text-[#928a76] mt-1">{t('sov_correct_label')}</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-[#1c1813]">{pct}%</p>
-              <p className="text-xs text-[#928a76] mt-1">{t('sov_accuracy_label')}</p>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <button
-              onClick={() => initRound(lessonFilter)}
-              className="w-full py-3 rounded-xl bg-[#c8392f] hover:bg-[#8b1f1a] text-[#fbf5e6] font-bold transition-colors"
-            >
-              {t('sov_play_again')}
-            </button>
-            <button
-              onClick={goBack}
-              className="w-full py-2.5 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-medium transition-colors"
-            >
-              {t('sov_back')}
-            </button>
-          </div>
-        </div>
-      </div>
+      <GameResults
+        title={t('sov_results_title')}
+        subtitle={t('sov_results_subtitle')}
+        correct={score}
+        wrong={rounds.length - score}
+        onPlayAgain={() => initRound(lessonFilter)}
+        onBack={goBack}
+      />
     );
   }
 
@@ -277,12 +282,12 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
         {/* Traducción */}
         <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
           <p className="text-xs text-[#928a76] mb-1">{t('sov_translate_label')}</p>
-          <p className="text-[#1c1813] font-semibold text-base leading-snug">{current.translation}</p>
+          <p className="text-[#1c1813] font-semibold text-base leading-snug">{currentTranslation}</p>
 
           {showHint && (
             <div className="mt-2 pt-2 border-t border-[rgba(28,24,19,0.10)]">
               <p className="text-xs text-[#928a76] mb-0.5">{t('sov_hint_label')}</p>
-              <p className="text-[#b88a3e] text-sm">{current.hint}</p>
+              <p className="text-[#b88a3e] text-sm">{currentHint}</p>
             </div>
           )}
         </div>

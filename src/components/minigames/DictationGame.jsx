@@ -2,14 +2,16 @@
 // Dictado (comprensión auditiva): suena el audio de una palabra y hay que
 // elegir el carácter correcto entre 4. Entrena la destreza inversa a los
 // demás juegos — reconocer de oído, no de vista.
-import ConfettiCelebration from "@/components/ui/ConfettiCelebration.jsx";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { ArrowLeft, RefreshCw, Volume2 } from "lucide-react";
+import { ArrowLeft, Volume2 } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
-import Button from "@/components/ui/Button.jsx";
 import { useTranslation } from "react-i18next";
+import { J } from '@/styles/tokens';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
+import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import GameIntro from './GameIntro.jsx';
+import GameResults from './GameResults.jsx';
 
 const TOTAL_ROUNDS = 10;
 
@@ -18,6 +20,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   const [gameState, setGameState] = useState('ready'); // 'ready' | 'playing' | 'finished'
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);      // 'correct' | 'incorrect' | null
   const [selected, setSelected] = useState(null);
@@ -70,12 +73,19 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     setTimeout(() => playAudio(q.correct), 350);
   }, [generateQuestion, playAudio]);
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     setScore(0);
+    setWrongCount(0);
     setRound(1);
     setGameState('playing');
     nextRound();
-  };
+  }, [nextRound]);
+
+  // Saltar la explicación si el usuario marcó "no volver a mostrar"
+  useEffect(() => {
+    if (!shouldShowIntro('dictation-game')) startGame();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleAnswer = (option) => {
     if (feedback) return;
@@ -86,6 +96,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
       setFeedback('correct');
       hapticSuccess();
     } else {
+      setWrongCount(w => w + 1);
       setFeedback('incorrect');
       hapticError();
     }
@@ -104,49 +115,23 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   // Cancela cualquier timeout de audio pendiente al desmontar.
   useEffect(() => () => { speakingRef.current = true; }, []);
 
-  // ── Pantalla de inicio ──────────────────────────────────────────────
+  // ── Pantalla de explicación ─────────────────────────────────────────
   if (gameState === 'ready') {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] p-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="mb-8">
-            <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4">
-              <ArrowLeft className="mr-2" />
-              {t('minigames_back_to_minigames')}
-            </button>
-            <h1 className="text-3xl font-bold text-[#1c1813] text-center">
-              {t('minigames_dictation_title', 'Dictado')}
-            </h1>
-            <p className="text-[#928a76] text-center">
-              {t('minigames_dictation_subtitle', 'Escucha y elige el carácter correcto')}
-            </p>
-          </div>
-          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
-            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-[#5b5446]">
-              <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
-                <p>{t('minigames_dictation_instructions_1', 'Escucharás la pronunciación de una palabra en chino.')}</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
-                <p>{t('minigames_dictation_instructions_2', 'Elige entre 4 opciones el carácter que corresponde al sonido.')}</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
-                <p>{t('minigames_dictation_instructions_3', 'Puedes repetir el audio tantas veces como quieras con el botón 🔊.')}</p>
-              </div>
-              <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
-                <p>{t('minigames_dictation_instructions_4', 'Son 10 rondas. ¡Afina el oído con los tonos!')}</p>
-              </div>
-            </div>
-          </div>
-          <button onClick={startGame} className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg">
-            {t('minigames_start_game_button')}
-          </button>
-        </div>
-      </div>
+      <GameIntro
+        gameId="dictation-game"
+        cn="听"
+        title={t('minigames_dictation_title', 'Dictado')}
+        subtitle={t('minigames_dictation_subtitle', 'Escucha y elige el carácter correcto')}
+        steps={[
+          t('minigames_dictation_instructions_1', 'Escucharás la pronunciación de una palabra en chino.'),
+          t('minigames_dictation_instructions_2', 'Elige entre 4 opciones el carácter que corresponde al sonido.'),
+          t('minigames_dictation_instructions_3', 'Puedes repetir el audio tantas veces como quieras con el botón 🔊.'),
+          t('minigames_dictation_instructions_4', 'Son 10 rondas. ¡Afina el oído con los tonos!'),
+        ]}
+        onStart={startGame}
+        onBack={goBack}
+      />
     );
   }
 
@@ -154,48 +139,38 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   if (gameState === 'finished') {
     const pct = Math.round((score / TOTAL_ROUNDS) * 100);
     return (
-      <>
-        {pct >= 70 && <ConfettiCelebration />}
-        <div className="min-h-screen bg-[#f4ecdc] p-4 flex items-center justify-center">
-          <Container>
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-[#b88a3e] mb-4">
-                {pct >= 70
-                  ? t('minigames_dictation_good_ear', '¡Buen oído!')
-                  : t('minigames_dictation_keep_training', 'Sigue entrenando el oído')}
-              </h2>
-              <p className="text-xl text-[#5b5446] mb-2">{t('minigames_final_score_message')}</p>
-              <p className="text-6xl font-bold text-[#1c1813] mb-8">{score} / {TOTAL_ROUNDS}</p>
-              <div className="flex justify-center gap-4">
-                <Button onClick={startGame} variant="action">
-                  <RefreshCw className="inline-block mr-2"/> {t('minigames_play_again_button')}
-                </Button>
-                <button onClick={goBack} className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 px-6 rounded-lg transition flex items-center gap-2">
-                  <ArrowLeft size={18}/> {t('radicals_back_button')}
-                </button>
-              </div>
-            </div>
-          </Container>
-        </div>
-      </>
+      <GameResults
+        title={pct >= 70
+          ? t('minigames_dictation_good_ear', '¡Buen oído!')
+          : t('minigames_dictation_keep_training', 'Sigue entrenando el oído')}
+        subtitle={t('minigames_dictation_title', 'Dictado')}
+        correct={score}
+        wrong={wrongCount}
+        onPlayAgain={startGame}
+        onBack={goBack}
+      />
     );
   }
 
   // ── Pantalla de juego ───────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#f4ecdc] p-4">
+    <div className="min-h-screen p-4" style={{ background: J.paper }}>
       <Container>
         <div className="mb-6">
-          <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813]">
+          <button onClick={goBack} className="flex items-center transition-colors"
+            style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer' }}>
             <ArrowLeft className="mr-2" />
             {t('minigames_back_to_minigames')}
           </button>
         </div>
 
         {/* HUD */}
-        <div className="mb-6 flex justify-between items-center text-[#1c1813] font-bold text-xl">
-          <div>{t('minigames_score_label_hud')} <span className="text-[#b88a3e]">{score}</span></div>
-          <div className="text-[#5b5446] text-base font-semibold">{round} / {TOTAL_ROUNDS}</div>
+        <div className="mb-6 flex justify-between items-center font-bold text-xl" style={{ color: J.ink }}>
+          <div className="flex items-center gap-3 text-sm font-semibold">
+            <span style={{ color: J.jade }}>★ {score}</span>
+            <span style={{ color: J.red }}>✕ {wrongCount}</span>
+          </div>
+          <div className="text-base font-semibold" style={{ color: J.inkSoft }}>{round} / {TOTAL_ROUNDS}</div>
         </div>
 
         {question && (
@@ -207,36 +182,45 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
               className="mx-auto mb-8 flex items-center justify-center rounded-full transition active:scale-95"
               style={{
                 width: 130, height: 130,
-                background: '#2f6b4a', color: '#f0c862',
+                background: J.jade, color: J.butter,
                 border: 0, cursor: 'pointer',
                 boxShadow: '0 8px 24px -8px rgba(31,74,51,0.55)',
               }}
             >
               <Volume2 size={56} />
             </button>
-            <p className="text-[#928a76] text-sm mb-6 -mt-4">
+            <p className="text-sm mb-6 -mt-4" style={{ color: J.mute }}>
               {t('minigames_dictation_tap_to_replay', 'Toca para volver a escuchar')}
             </p>
 
             {/* Opciones: 4 caracteres grandes */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
               {question.options.map((opt) => {
-                let cls = "bg-[#f8f1de] hover:bg-[#bdb39a]";
+                let bg = J.paperHi, border = J.hair, color = J.ink, pulse = '';
                 if (feedback) {
-                  if (opt.char === question.correct.char) cls = "bg-[#2f6b4a] text-[#fbf5e6] animate-pulse";
-                  else if (opt.char === selected) cls = "bg-[#c8392f] text-[#fbf5e6]";
+                  if (opt.char === question.correct.char) {
+                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; pulse = 'animate-pulse';
+                  } else if (opt.char === selected) {
+                    bg = J.redBg; border = J.red; color = J.redDeep;
+                  } else {
+                    color = J.mute2;
+                  }
                 }
                 return (
-                  <Button
+                  <button
                     key={opt.char}
                     onClick={() => handleAnswer(opt)}
                     disabled={!!feedback}
-                    className={`h-28 flex flex-col items-center justify-center gap-1 ${cls}`}
+                    className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${pulse}`}
+                    style={{
+                      background: bg, border: `2px solid ${border}`, color,
+                      cursor: feedback ? 'default' : 'pointer',
+                    }}
                   >
                     <span className="font-cn text-4xl font-bold">{opt.char}</span>
                     {/* Al resolver, muestra el pinyin como feedback didáctico */}
                     {feedback && <span className="text-xs opacity-80">{opt.pinyin}</span>}
-                  </Button>
+                  </button>
                 );
               })}
             </div>

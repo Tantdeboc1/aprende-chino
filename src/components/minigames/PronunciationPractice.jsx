@@ -21,6 +21,9 @@ import { scorePronunciation } from '@/utils/pronunciationScore.js';
 import { speakChineseEnhanced } from '@/utils/tts-enhanced.js';
 import { LESSON_COLORS, LESSON_NUMBERS, DEFAULT_LESSON_COLOR } from '@/styles/lessonColors.js';
 import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import GameIntro from './GameIntro.jsx';
+import GameResults from './GameResults.jsx';
 
 const ROUNDS = 6;
 
@@ -50,6 +53,7 @@ function errorMessage(code, t) {
 export default function PronunciationPractice({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
   const supported = isSpeechRecognitionSupported();
+  const [started, setStarted] = useState(() => !shouldShowIntro('pronunciation-practice'));
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -153,29 +157,38 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     );
   }
 
+  // ── Pantalla de explicación ───────────────────────────────────────
+  if (!started) {
+    return (
+      <GameIntro
+        gameId="pronunciation-practice"
+        cn="说"
+        title={t('pronunciation_title', 'Pronunciación')}
+        subtitle={t('pronunciation_subtitle', 'Lee la frase en voz alta')}
+        steps={[
+          t('pronunciation_intro_1', 'Lee la frase en chino que aparece en pantalla.'),
+          t('pronunciation_intro_2', 'Pulsa el micrófono y dila en voz alta.'),
+          t('pronunciation_intro_3', 'Recibirás una nota según lo bien que se te entienda; puedes escuchar la frase correcta.'),
+          t('pronunciation_intro_4', 'Son 6 frases por ronda. Necesitas dar permiso de micrófono.'),
+        ]}
+        onStart={() => setStarted(true)}
+        onBack={goBack}
+      />
+    );
+  }
+
   // ── Pantalla final ────────────────────────────────────────────────
   if (done) {
     const avg = rounds.length > 0 ? Math.round(totalScore / rounds.length) : 0;
-    const emoji = avg >= 90 ? '🏆' : avg >= 70 ? '👏' : '💪';
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center p-6">
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-8 max-w-sm w-full text-center shadow-sm">
-          <div className="text-6xl mb-4">{emoji}</div>
-          <h2 className="text-2xl font-bold text-[#1c1813] mb-1">
-            {t('pronunciation_results_title', 'Resultado')}
-          </h2>
-          <p className="text-[#928a76] mb-6">{t('pronunciation_results_subtitle', 'Tu nota media de pronunciación')}</p>
-          <p className="text-5xl font-bold text-[#c8392f] mb-6">{avg}</p>
-          <div className="space-y-2">
-            <button onClick={startGame} className="w-full py-3 rounded-xl bg-[#c8392f] hover:bg-[#8b1f1a] text-[#fbf5e6] font-bold transition-colors">
-              {t('translation_play_again', 'Otra ronda')}
-            </button>
-            <button onClick={goBack} className="w-full py-2.5 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-medium transition-colors">
-              {t('translation_back', 'Volver')}
-            </button>
-          </div>
-        </div>
-      </div>
+      <GameResults
+        title={t('pronunciation_results_title', 'Resultado')}
+        subtitle={t('pronunciation_results_subtitle', 'Tu nota media de pronunciación')}
+        score={avg}
+        scoreLabel={t('pronunciation_avg_label', 'Nota media')}
+        onPlayAgain={startGame}
+        onBack={goBack}
+      />
     );
   }
 
