@@ -6,16 +6,35 @@
 //   - null       → no ha pasado por LoginScreen aún
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import {
-  onAuthStateChanged, signInWithPopup, signInWithRedirect,
-  signOut as fbSignOut,
-} from 'firebase/auth';
-import { auth, googleProvider } from '@/lib/firebase.js';
-import {
   fetchRemoteUser, pushRemoteUser, subscribeRemoteUser,
   hydrateLocalFromRemote, snapshotLocal, clearLocalUserData,
 } from '@/lib/userStore.js';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const LS_MODE = 'aprende-chino-auth-mode'; // 'google' | 'guest'
+const LS_MODE = STORAGE_KEYS.AUTH_MODE; // 'google' | 'guest'
+
+// Carga diferida del SDK de Firebase Auth + la app inicializada. Importar
+// 'firebase/auth' y 'firebase.js' de forma estática metía ~50 kB gzip en el
+// arranque para TODOS. Con import() dinámico, solo se descarga cuando hace
+// falta: usuarios Google que vuelven (auth-mode='google') o cualquiera que
+// pulse "Continuar con Google". Invitados y visitantes nuevos no lo pagan.
+let _authPromise = null;
+function loadFirebaseAuth() {
+  if (!_authPromise) {
+    _authPromise = Promise.all([
+      import('firebase/auth'),
+      import('@/lib/firebase.js'),
+    ]).then(([fbAuth, fb]) => ({
+      onAuthStateChanged: fbAuth.onAuthStateChanged,
+      signInWithPopup: fbAuth.signInWithPopup,
+      signInWithRedirect: fbAuth.signInWithRedirect,
+      signOut: fbAuth.signOut,
+      auth: fb.auth,
+      googleProvider: fb.googleProvider,
+    }));
+  }
+  return _authPromise;
+}
 
 const AuthContext = createContext(null);
 
@@ -39,11 +58,19 @@ export function AuthProvider({ children }) {
   // sepa que viene de modo invitado y aplique merge/confirm en vez de
   // dejar ganar al remoto automáticamente.
   const pendingMigrationRef = useRef(false);
+  // unsubscribe del listener onAuthStateChanged y flag de "ya enganchado",
+  // para no engancharlo dos veces (mount + signInWithGoogle).
+  const authUnsubRef = useRef(null);
+  const listenerAttachedRef = useRef(false);
 
-  // Subscribe a cambios de sesión. onAuthStateChanged dispara una vez al
-  // montar con el usuario restaurado (o null) → resolvemos `mode` ahí.
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (fbUser) => {
+  // Engancha el listener onAuthStateChanged (cargando Firebase de forma
+  // diferida). Idempotente: solo lo hace una vez. Lo llaman tanto el efecto
+  // de montaje (para usuarios Google que vuelven) como signInWithGoogle.
+  const attachAuthListener = useCallback(async () => {
+    if (listenerAttachedRef.current) return;
+    listenerAttachedRef.current = true;
+    const fb = await loadFirebaseAuth();
+    authUnsubRef.current = fb.onAuthStateChanged(fb.auth, async (fbUser) => {
       if (fbUser) {
         const isMigrating = pendingMigrationRef.current;
         pendingMigrationRef.current = false;
@@ -87,8 +114,29 @@ export function AuthProvider({ children }) {
         setMode(stored === 'guest' ? 'guest' : null);
       }
     });
-    return () => unsub();
   }, []);
+
+  // Resolución del modo al arrancar SIN cargar Firebase salvo que haga falta:
+  //   - 'guest'  → resolvemos al instante, Firebase nunca se carga.
+  //   - 'google' → enganchamos el listener (carga Firebase) para restaurar sesión.
+  //   - null     → visitante nuevo: mostramos LoginScreen ya; Firebase se
+  //                cargará solo si pulsa "Continuar con Google".
+  useEffect(() => {
+    let stored = null;
+    try { stored = localStorage.getItem(LS_MODE); } catch {}
+
+    if (stored === 'guest') {
+      setMode('guest');
+    } else if (stored === 'google') {
+      attachAuthListener();
+    } else {
+      setMode(null);
+    }
+
+    return () => {
+      if (authUnsubRef.current) authUnsubRef.current();
+    };
+  }, [attachAuthListener]);
 
   // Listener en tiempo real del doc del usuario logueado. Si otro dispositivo
   // escribe (clientId distinto), hidratamos localStorage y subimos remoteRev
@@ -114,8 +162,13 @@ export function AuthProvider({ children }) {
 
   const signInWithGoogle = useCallback(async () => {
     setError(null);
+    // Aseguramos el listener ANTES de loguear: para visitantes nuevos
+    // (mode=null) no se enganchó al montar, y sin él no se procesaría el
+    // resultado del login.
+    await attachAuthListener();
+    const fb = await loadFirebaseAuth();
     try {
-      await signInWithPopup(auth, googleProvider);
+      await fb.signInWithPopup(fb.auth, fb.googleProvider);
       try { localStorage.setItem(LS_MODE, 'google'); } catch {}
     } catch (e) {
       // Muchos navegadores móviles bloquean popups: caemos a redirect.
@@ -125,7 +178,7 @@ export function AuthProvider({ children }) {
           e?.code === 'auth/operation-not-supported-in-this-environment') {
         try {
           try { localStorage.setItem(LS_MODE, 'google'); } catch {}
-          await signInWithRedirect(auth, googleProvider);
+          await fb.signInWithRedirect(fb.auth, fb.googleProvider);
           return;
         } catch (e2) {
           console.error('Login Google (redirect) falló:', e2);
@@ -138,7 +191,7 @@ export function AuthProvider({ children }) {
       console.error('Login Google falló:', e);
       setError(e.message || 'Login failed');
     }
-  }, []);
+  }, [attachAuthListener]);
 
   // Versión "desde invitado": marca el flag para que el handler de auth
   // aplique merge en vez de dejar ganar al remoto silenciosamente.
@@ -153,7 +206,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signOut = useCallback(async () => {
-    try { await fbSignOut(auth); } catch {}
+    try { const fb = await loadFirebaseAuth(); await fb.signOut(fb.auth); } catch {}
     try { localStorage.removeItem(LS_MODE); } catch {}
     // Borra los datos locales: la copia del usuario vive en su doc de
     // Firestore. Sin esto, la siguiente cuenta que entre en este

@@ -71,7 +71,10 @@ export default function GameResults({ title, subtitle, correct, wrong, score, sc
 
           <div className="flex gap-3">
             <button
-              onClick={onPlayAgain}
+              // Envolvemos en arrow para NO pasar el evento de clic como
+              // argumento: varios juegos usan handlers con parámetros
+              // (p. ej. initGame(filter)) y recibir el evento los rompía.
+              onClick={() => onPlayAgain?.()}
               className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"
               style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
             >

@@ -2,8 +2,9 @@
 // Racha diaria de estudio + sistema XP — persiste en localStorage
 import { trackAchievement, checkLevelUp } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const STREAK_KEY = 'aprende-chino-streak-v1';
+const STREAK_KEY = STORAGE_KEYS.STREAK;
 
 // XP diario objetivo. Una historia perfecta da 120 XP, así que con el daily
 // goal a 50 se rompía siempre. Lo subimos para que sea un reto real: hacer

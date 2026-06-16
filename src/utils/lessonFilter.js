@@ -4,8 +4,8 @@
 // reinicia al cerrar el navegador.
 //
 // Uso típico en cada minijuego:
-//   const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(propSelectedLesson));
-//   useEffect(() => saveLessonFilter(lessonFilter), [lessonFilter]);
+//   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
+import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'minigamesLessonFilter';
 
@@ -44,4 +44,17 @@ export function clearLessonFilter() {
   } catch {
     /* noop */
   }
+}
+
+/**
+ * Hook que encapsula el patrón repetido en todos los minijuegos: estado del
+ * filtro inicializado desde sessionStorage (con `selectedLesson` como fallback)
+ * y persistencia automática en cada cambio.
+ * @param {number|null} selectedLesson  lección preseleccionada (de props)
+ * @returns {[number|null, Function]}   [lessonFilter, setLessonFilter]
+ */
+export function useLessonFilter(selectedLesson = null) {
+  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
+  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
+  return [lessonFilter, setLessonFilter];
 }

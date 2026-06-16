@@ -142,6 +142,11 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('node_modules/lucide-react')) {
             return 'vendor-icons';
           }
+          // Sentry en su propio chunk: solo se importa dinámicamente cuando
+          // hay VITE_SENTRY_DSN, así no contamina el vendor común ni el arranque.
+          if (id.includes('node_modules/@sentry')) {
+            return 'vendor-sentry';
+          }
           // Resto de dependencias de terceros → vendor común
           return 'vendor';
         },

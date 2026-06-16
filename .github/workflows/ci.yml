@@ -1,0 +1,40 @@
+name: CI
+
+# Barrera de calidad: lint + tests + build en cada push y pull request.
+# El deploy (deploy-pages.yml) sigue corriendo solo en main; esto cubre
+# también las ramas y PRs para cazar regresiones antes de fusionar.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+      # Los datos multi-idioma (src/data/{grammar,cultural}/<lang>.js) están
+      # gitignorados; el build los necesita generados primero.
+      - name: Generate i18n data
+        run: node scripts/split-i18n-data.mjs
+
+      - name: Build
+        run: npx vite build

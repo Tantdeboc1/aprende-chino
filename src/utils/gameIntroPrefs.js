@@ -3,7 +3,9 @@
 // - Cada juego puede ocultarse individualmente ("No volver a mostrar").
 // - Desde Ajustes se puede desactivar/reactivar todo de golpe; al reactivar
 //   se limpian también los ocultados individuales.
-const KEY = 'gameIntroPrefs';
+import { STORAGE_KEYS } from './storageKeys.js';
+
+const KEY = STORAGE_KEYS.GAME_INTRO_PREFS;
 
 function load() {
   try {

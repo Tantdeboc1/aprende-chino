@@ -1,5 +1,6 @@
 // src/utils/leveling.js
 // Sistema de niveles, títulos y logros
+import { STORAGE_KEYS } from './storageKeys.js';
 
 // ── Niveles ──────────────────────────────────────────────────────────────────
 const LEVELS = [
@@ -253,7 +254,7 @@ const ACHIEVEMENTS = [
 ];
 
 // ── Persistencia ─────────────────────────────────────────────────────────────
-const LEVEL_KEY = 'aprende-chino-leveling-v1';
+const LEVEL_KEY = STORAGE_KEYS.LEVELING;
 
 const DEFAULT_STATE = {
   selectedTitle: null,          // id del título equipado (null = usa el de nivel)

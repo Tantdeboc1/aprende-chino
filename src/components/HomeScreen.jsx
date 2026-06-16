@@ -6,6 +6,7 @@ import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
+import { getLevelMastery, isLevelExamUnlocked, loadLevelExamResult, UNLOCK_MASTERY_PCT } from '@/utils/levelExam.js';
 import StreakPanel from '@/components/ui/StreakPanel.jsx';
 import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
@@ -61,7 +62,19 @@ function DailyCharacter({ allCharacters }) {
       } catch { if (!cancelled) setStatus('error'); }
     }).catch(() => { if (!cancelled) setStatus('error'); });
 
-    return () => { cancelled = true; };
+    // Cleanup: además de cancelar la carga pendiente, paramos la animación en
+    // bucle y limpiamos el SVG que HanziWriter inyectó. Sin esto, el bucle
+    // seguía mutando el DOM tras desmontar (fuga + errores de removeChild de
+    // React al reconciliar el árbol).
+    return () => {
+      cancelled = true;
+      const w = writerRef.current;
+      if (w) {
+        try { w.pauseAnimation?.(); } catch { /* noop */ }
+        writerRef.current = null;
+      }
+      if (containerRef.current) containerRef.current.innerHTML = '';
+    };
   }, [daily]);
 
   if (!daily) return null;
@@ -248,8 +261,11 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam }) {
   const { t, i18n } = useTranslation();
+  const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
+  const examUnlocked = useMemo(() => isLevelExamUnlocked(progress, allCharacters), [progress, allCharacters]);
+  const examResult   = useMemo(() => loadLevelExamResult(), [progress]);
   const totalMastered = useMemo(() => {
     let total = 0;
     for (let i = 1; i <= 4; i++) {
@@ -467,6 +483,49 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               />
             ))}
           </div>
+        </div>
+
+        {/* Examen Final del nivel (certificación) */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
+            {t('home_section_certification', 'Certificación')}
+          </p>
+          <button
+            onClick={onStartLevelExam}
+            className="w-full rounded-2xl p-4 flex items-center gap-4 text-left transition-transform active:scale-[0.99]"
+            style={{
+              background: J.paperHi,
+              border: `1px solid ${examResult?.passed ? J.jade : examUnlocked ? J.red : J.hair}`,
+              cursor: 'pointer',
+            }}
+          >
+            <div className="font-cn flex items-center justify-center flex-shrink-0"
+              style={{
+                width: 48, height: 48, borderRadius: 14, fontSize: 26, fontWeight: 700,
+                background: examResult?.passed ? J.jadeBg : examUnlocked ? J.redBg : J.sandBg,
+                color: examResult?.passed ? J.jade : examUnlocked ? J.red : J.sand,
+              }}>
+              {examResult?.passed ? '证' : examUnlocked ? '试' : '关'}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-sm" style={{ color: J.ink }}>
+                {t('level_exam_title', 'Examen Final · HSK 1')}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: J.inkSoft }}>
+                {examResult?.passed
+                  ? `${t('level_exam_already_passed', 'Nivel superado')} · ${t('level_exam_best', 'mejor')} ${examResult.bestPct}%`
+                  : examUnlocked
+                    ? t('level_exam_ready_hint', '¡Desbloqueado! Certifícate ahora')
+                    : `${t('level_exam_locked_hint', 'Domina el vocabulario para desbloquear')} · ${examMastery.pct}/${UNLOCK_MASTERY_PCT}%`}
+              </p>
+              {!examUnlocked && (
+                <div className="h-1.5 rounded-full overflow-hidden mt-2" style={{ background: J.hair }}>
+                  <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.round((examMastery.pct / UNLOCK_MASTERY_PCT) * 100))}%`, background: J.sand }} />
+                </div>
+              )}
+            </div>
+            <span style={{ color: J.mute, fontSize: 18 }}>→</span>
+          </button>
         </div>
 
       </div>

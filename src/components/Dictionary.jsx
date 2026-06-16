@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import CharacterSheet from "@/components/ui/CharacterSheet.jsx";
 import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
+import { STORAGE_KEYS } from "@/utils/storageKeys.js";
 
 const LESSON_COLORS = {
   1: { bg: J.redBg, fg: J.redDeep, border: J.red },
@@ -14,7 +15,7 @@ const LESSON_COLORS = {
   4: { bg: J.jadeBg, fg: J.jadeDeep, border: J.jade },
 };
 
-const FAV_KEY = 'aprende-chino-favorites';
+const FAV_KEY = STORAGE_KEYS.FAVORITES;
 
 function loadFavorites() {
   try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); }

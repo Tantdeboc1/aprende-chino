@@ -5,7 +5,7 @@ import { translationPhrases, getCandidates } from '@/data/translationPhrases.js'
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { LESSON_NUMBERS } from '@/styles/lessonColors.js';
-import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
@@ -342,8 +342,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   const [score, setScore]             = useState(0);
   const [done, setDone]               = useState(false);
   const [inputMode, setInputMode]     = useState('pinyin'); // 'pinyin' | 'draw'
-  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
-  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
+  const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
   const inputRef = useRef(null);
 
   const initGame = useCallback((filter = lessonFilter) => {
@@ -452,7 +451,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
         subtitle={t('translation_results_subtitle')}
         correct={score}
         wrong={rounds.length - score}
-        onPlayAgain={initGame}
+        onPlayAgain={() => initGame(lessonFilter)}
         onBack={goBack}
       />
     );
@@ -542,7 +541,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
                 className={`px-2 py-1 rounded-lg text-xl font-bold transition-all ${
                   result === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' :
                   result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' : 'bg-[#c8392f] text-[#fbf5e6] cursor-default') :
-                  `${ACCENT_COLOR.bg} text-[#1c1813] hover:opacity-75 active:scale-95`
+                  `${ACCENT_COLOR.bg} text-[#fbf5e6] hover:opacity-75 active:scale-95`
                 }`}>
                 {block}
               </button>
@@ -640,7 +639,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
               )}
               <button onClick={handleCheck} disabled={builtText.length === 0}
                 className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${
-                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#1c1813]` : 'bg-[#f8f1de] text-[#928a76] cursor-not-allowed'
+                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#fbf5e6]` : 'bg-[#f8f1de] text-[#928a76] cursor-not-allowed'
                 }`}>
                 {t('translation_check_button')}
               </button>

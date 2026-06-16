@@ -9,10 +9,14 @@ import { MusicProvider } from './context/MusicContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import './i18n';
 import { registerSW } from 'virtual:pwa-register';
+import { initErrorTracking } from './utils/errorTracking.js';
 
 // Service worker PWA — solo existe en builds de producción (en dev el
 // plugin está desactivado y registerSW es un no-op).
 registerSW({ immediate: true });
+
+// Seguimiento de errores: handlers globales siempre; Sentry solo si hay DSN.
+initErrorTracking();
 
 const Spinner = () => (
   <div className="fixed inset-0 bg-[#f4ecdc] flex items-center justify-center">

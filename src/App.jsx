@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
+const LevelExam = lazy(() => import('./components/LevelExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
 // WelcomeFlow solo se ve la primera vez (sin perfil) — lazy ahorra ~10 kB
 // del bundle inicial a usuarios recurrentes, que son la inmensa mayoría.
@@ -18,6 +19,7 @@ import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { J } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
+import { STORAGE_KEYS } from './utils/storageKeys.js';
 import { fetchJsonCached } from './utils/dataCache.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
@@ -69,7 +71,7 @@ function AnimatedLoader() {
 }
 
 // ── Persistencia ──────────────────────────────────────────────────────────────
-const LS_USERNAME = 'aprende-chino-username';
+const LS_USERNAME = STORAGE_KEYS.USERNAME;
 function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
 function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
 
@@ -469,6 +471,7 @@ export default function App() {
           onSelectIntro={goToIntro}
           onStartReview={() => { setPrevScreen('home'); setScreen('review'); }}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
+          onStartLevelExam={() => { setPrevScreen('home'); setScreen('level-exam'); }}
         />
       </Layout>
     );
@@ -591,6 +594,16 @@ export default function App() {
         allCharacters={allCharacters}
         progress={progress}
         onProgressChange={handleProgressChange}
+        goBack={() => setScreen(prevScreen || 'home')}
+      />
+    );
+  }
+
+  if (screen === 'level-exam') {
+    return (
+      <LevelExam
+        allCharacters={allCharacters}
+        progress={progress}
         goBack={() => setScreen(prevScreen || 'home')}
       />
     );

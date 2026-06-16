@@ -2,14 +2,19 @@
 // Capa de datos del usuario logueado: lectura/escritura del documento
 // `users/{uid}` en Firestore. El modo invitado NO pasa por aquí — sigue
 // usando localStorage directamente vía utils/progress.js y utils/userProfile.js.
-import { firebaseApp } from './firebase.js';
+import { STORAGE_KEYS, SYNCED_EXTRA_KEYS } from '@/utils/storageKeys.js';
 
-// Firestore se importa dinámicamente: el chunk vendor-firestore solo se
-// descarga cuando hay un usuario Google (los invitados no lo pagan).
+// Firestore Y firebase.js (initializeApp) se importan dinámicamente: así el
+// SDK de Firebase no entra en el bundle de arranque. Solo se descarga cuando
+// hay un usuario Google que toca Firestore — invitados y visitantes nuevos
+// no lo pagan.
 let _fsPromise = null;
 function loadFirestore() {
   if (!_fsPromise) {
-    _fsPromise = import('firebase/firestore').then(fs => ({
+    _fsPromise = Promise.all([
+      import('firebase/firestore'),
+      import('./firebase.js'),
+    ]).then(([fs, { firebaseApp }]) => ({
       fs,
       db: fs.getFirestore(firebaseApp),
     }));
@@ -29,22 +34,15 @@ export function getClientId() {
   return _clientId;
 }
 
-const LS_USERNAME = 'aprende-chino-username';
-const LS_PROFILE  = 'aprende-chino-profile';
-const LS_PROGRESS = 'aprende-chino-progress-v1';
+const LS_USERNAME = STORAGE_KEYS.USERNAME;
+const LS_PROFILE  = STORAGE_KEYS.PROFILE;
+const LS_PROGRESS = STORAGE_KEYS.PROGRESS;
 
 // Resto de claves localStorage que componen el estado del usuario. Se
 // sincronizan como strings crudos (en el campo `extra` del doc) para no
 // acoplar este módulo al formato interno de cada subsistema.
-const LS_EXTRA_KEYS = [
-  'aprende-chino-streak-v1',       // racha + XP total
-  'aprende-chino-leveling-v1',     // título equipado
-  'aprende-chino-story-progress',  // historias completadas
-  'aprende-chino-story-difficulty',
-  'aprende-chino-challenges-v1',   // retos diarios
-  'aprende-chino-favorites',       // favoritos del diccionario
-  'dailyProgress_v1',              // ejercicios diarios
-];
+// Origen de verdad: STORAGE_KEYS / SYNCED_EXTRA_KEYS en utils/storageKeys.js.
+const LS_EXTRA_KEYS = SYNCED_EXTRA_KEYS;
 
 function readLocalSnapshot() {
   let profile = null, progress = {}, userName = '';

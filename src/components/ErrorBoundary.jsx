@@ -1,5 +1,6 @@
 // src/components/ErrorBoundary.jsx
 import { Component } from 'react';
+import { captureError } from '@/utils/errorTracking.js';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -12,10 +13,8 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    // Silent in production — remove console.error if you have a logging service
-    if (import.meta.env.DEV) {
-      console.error('[ErrorBoundary]', error, info.componentStack);
-    }
+    // Reporta al servicio de error tracking (Sentry si hay DSN; si no, log en dev).
+    captureError(error, { componentStack: info?.componentStack, boundary: 'ErrorBoundary' });
   }
 
   handleReset = () => {

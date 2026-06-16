@@ -11,8 +11,9 @@ import DialogueBox from './DialogueBox.jsx';
 import SceneBackground from './SceneBackground.jsx';
 import ExerciseBlock from './ExerciseBlock.jsx';
 import StoryResults from './StoryResults.jsx';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const LS_DIFFICULTY = 'aprende-chino-story-difficulty';
+const LS_DIFFICULTY = STORAGE_KEYS.STORY_DIFFICULTY;
 const DIFFICULTIES = [
   { id: 'facil',   label: 'Fácil',   desc: 'Chino + pinyin siempre visibles' },
   { id: 'normal',  label: 'Normal',  desc: 'Pinyin se revela al tocar' },

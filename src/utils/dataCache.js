@@ -3,8 +3,9 @@
 // radicals-data). Solo cambian entre releases, así que se invalidan por
 // APP_VERSION: al subir versión, la primera visita refresca la caché.
 import { APP_VERSION } from './version.js';
+import { STORAGE_KEYS } from './storageKeys.js';
 
-const PREFIX = 'aprende-chino-datacache:';
+const PREFIX = STORAGE_KEYS.DATACACHE_PREFIX;
 
 function readCache(name) {
   try {

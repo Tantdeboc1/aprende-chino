@@ -9,7 +9,7 @@ import { playSound } from '@/utils/gameAudio.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
-import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
@@ -36,8 +36,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
   const [showTranslation, setShowTranslation] = useState(false);
   const [score, setScore]               = useState(0);
   const [done, setDone]                 = useState(false);
-  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
-  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
+  const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   const initRound = useCallback((filter) => {
     const r = buildRound(filter);

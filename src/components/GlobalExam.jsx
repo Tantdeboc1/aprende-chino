@@ -218,9 +218,9 @@ export default function GlobalExam({ goBack, allCharacters }) {
       <div className="max-w-lg mx-auto">
         {/* HUD */}
         <div className="flex items-center justify-between mb-3 pt-2">
-          <button onClick={goBack} className="p-1 transition-colors"
+          <button onClick={goBack} aria-label={t('exam_back_button', 'Salir del examen')} className="p-1 transition-colors"
             style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div className="flex items-center gap-3 text-sm font-semibold">
             <span style={{ color: J.jade }}>★ {score}</span>

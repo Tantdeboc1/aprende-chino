@@ -2,8 +2,9 @@
 // Sistema de progreso por palabra, guardado en localStorage
 import { initSRSCard } from './srs.js';
 import { markDailyActivity } from './streak.js';
+import { STORAGE_KEYS } from './storageKeys.js';
 
-const STORAGE_KEY = 'aprende-chino-progress-v1';
+const STORAGE_KEY = STORAGE_KEYS.PROGRESS;
 
 export function loadProgress() {
   try {

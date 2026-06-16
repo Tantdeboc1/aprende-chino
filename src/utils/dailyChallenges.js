@@ -1,7 +1,8 @@
 // src/utils/dailyChallenges.js
 // Sistema de retos diarios — 3 misiones rotativas por día
+import { STORAGE_KEYS } from './storageKeys.js';
 
-const CHALLENGE_KEY = 'aprende-chino-challenges-v1';
+const CHALLENGE_KEY = STORAGE_KEYS.CHALLENGES;
 
 // ── Tipos de reto disponibles ─────────────────────────────────────────────────
 const CHALLENGE_TEMPLATES = [

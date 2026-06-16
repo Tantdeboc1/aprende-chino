@@ -1,8 +1,9 @@
 // === daily-logic.js ===
 // Utilities for Daily challenge rotation, hints, and persistence
+import { STORAGE_KEYS } from './storageKeys.js';
 
 export const MAX_ATTEMPTS = 5;
-const STORAGE_KEY = "dailyProgress_v1";
+const STORAGE_KEY = STORAGE_KEYS.DAILY_PROGRESS;
 
 // Deterministic pick for a given date (rotates daily)
 export function pickDailyChar(dictionary, date = new Date()) {

@@ -18,6 +18,11 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
   const writableChars = characters.filter(c => c.char && c.char.length === 1);
 
   const currentCharacter = writableChars[currentIndex];
+  // Clave primitiva estable: writableChars se recrea con .filter() en cada
+  // render, así que currentCharacter es un objeto nuevo cada vez. Usar el
+  // carácter como dependencia evita que el useEffect destruya y recree el
+  // writer en cada render (lo que cancelaba el quiz a medias).
+  const charKey = currentCharacter?.char || currentCharacter?.hanzi;
 
   // Efecto principal - CON CLEANUP AGGRESIVO
   useEffect(() => {
@@ -71,6 +76,10 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
 
 
       } catch (error) {
+        // No rompemos la UI si hanzi-writer falla (carácter sin datos, red
+        // caída al cargar el módulo…), pero lo dejamos en consola para poder
+        // diagnosticarlo en vez de tragarlo en silencio.
+        console.warn('[HanziWriting] no se pudo inicializar el writer:', error);
       }
     };
 
@@ -93,7 +102,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         }
       }
     };
-  }, [currentCharacter, activeTab]);
+  }, [charKey, activeTab]);
 
   const animateCharacter = () => {
     if (writerInstanceRef.current && activeTab === 'view') {

@@ -9,8 +9,9 @@
 
 import { STORIES } from '@/data/stories/index.js';
 import { addXP } from './streak.js';
+import { STORAGE_KEYS } from './storageKeys.js';
 
-const LS_KEY = 'aprende-chino-story-progress';
+const LS_KEY = STORAGE_KEYS.STORY_PROGRESS;
 
 // ─── Tabla de XP por historia ───────────────────────────────────────────────
 export const STORY_XP = {

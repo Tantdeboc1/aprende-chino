@@ -4,8 +4,9 @@
 // los datos nuevos para no romper compatibilidad.
 
 import { DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const LS_KEY = 'aprende-chino-profile';
+const LS_KEY = STORAGE_KEYS.PROFILE;
 
 // gender: 'm' | 'f' | 'nb' | null (sin elegir)
 // useGooglePhoto: cuando el user se loguea con Google, mostramos su foto

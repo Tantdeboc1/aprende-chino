@@ -151,6 +151,7 @@ export default function WelcomeFlow({ onComplete }) {
                     }}
                   >
                     <img src={av.src} alt={av.label} draggable={false}
+                      loading="lazy" decoding="async"
                       style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10, display: 'block' }} />
                     {selected && (
                       <span style={{

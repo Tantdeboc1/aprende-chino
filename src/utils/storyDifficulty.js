@@ -1,8 +1,9 @@
 // src/utils/storyDifficulty.js
 // Lectura compartida del nivel de dificultad para el modo Story.
 // La fuente de verdad es localStorage (StoryPlayer la persiste).
+import { STORAGE_KEYS } from './storageKeys.js';
 
-const LS_KEY = 'aprende-chino-story-difficulty';
+const LS_KEY = STORAGE_KEYS.STORY_DIFFICULTY;
 
 export function getStoryDifficulty() {
   try { return localStorage.getItem(LS_KEY) || 'normal'; }

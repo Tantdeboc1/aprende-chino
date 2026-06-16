@@ -1,7 +1,8 @@
 // src/context/MusicContext.jsx
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const LS_KEY = 'music-settings';
+const LS_KEY = STORAGE_KEYS.MUSIC_SETTINGS;
 
 function loadSettings() {
   try {

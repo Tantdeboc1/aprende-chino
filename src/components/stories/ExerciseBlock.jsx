@@ -2,7 +2,7 @@
 // Orquesta los 3 bloques de ejercicios en orden (traducción → completar →
 // comprensión), trackea puntuación y avisa al padre al terminar.
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { J } from '@/styles/tokens';
 import ExTranslation from './ExTranslation.jsx';
 import ExFillBlank from './ExFillBlank.jsx';
@@ -59,11 +59,18 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
     }
   };
 
-  if (!currentBlock) {
-    // Sin ejercicios definidos: termina con 0/0
-    onComplete(0, 0);
-    return null;
-  }
+  // Sin ejercicios definidos: terminamos con 0/0. Se hace en un efecto (no
+  // durante el render) para no llamar al setState del padre en pleno render.
+  // El ref evita disparar onComplete más de una vez.
+  const completedRef = useRef(false);
+  useEffect(() => {
+    if (!currentBlock && !completedRef.current) {
+      completedRef.current = true;
+      onComplete(0, 0);
+    }
+  }, [currentBlock, onComplete]);
+
+  if (!currentBlock) return null;
 
   // Pantalla de transición entre bloques (incluye intro)
   if (showingTransition) {

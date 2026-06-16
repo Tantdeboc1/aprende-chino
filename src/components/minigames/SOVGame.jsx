@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
-import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
@@ -76,8 +76,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const [showHint, setShowHint]       = useState(false);
   const [score, setScore]             = useState(0);
   const [done, setDone]               = useState(false);
-  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
-  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
+  const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   // Inicializar ronda
   const initRound = useCallback((filter) => {

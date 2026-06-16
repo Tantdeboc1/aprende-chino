@@ -20,7 +20,7 @@ import {
 import { scorePronunciation } from '@/utils/pronunciationScore.js';
 import { speakChineseEnhanced } from '@/utils/tts-enhanced.js';
 import { LESSON_COLORS, LESSON_NUMBERS, DEFAULT_LESSON_COLOR } from '@/styles/lessonColors.js';
-import { loadLessonFilter, saveLessonFilter } from '@/utils/lessonFilter.js';
+import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
@@ -62,8 +62,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   const [errorMsg, setErrorMsg]       = useState(null);
   const [totalScore, setTotalScore]   = useState(0);
   const [done, setDone]               = useState(false);
-  const [lessonFilter, setLessonFilter] = useState(() => loadLessonFilter(selectedLesson || null));
-  useEffect(() => { saveLessonFilter(lessonFilter); }, [lessonFilter]);
+  const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   // Para evitar warnings cuando el componente se desmonta mid-recognition
   const aliveRef = useRef(true);
