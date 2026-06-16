@@ -24,8 +24,16 @@ export async function initErrorTracking() {
     captureError(e.reason, { source: 'unhandledrejection' });
   });
 
-  const dsn = import.meta.env.VITE_SENTRY_DSN;
-  if (!dsn) return; // Sin DSN → solo handlers locales; no se carga el SDK.
+  // El DSN de Sentry es PÚBLICO por diseño (solo permite ENVIAR errores, no
+  // leer nada). Lo dejamos como fallback hardcodeado para el build de CI/Pages,
+  // que no tiene acceso al .env — mismo criterio que la config de Firebase.
+  // Una variable de entorno VITE_SENTRY_DSN lo sobreescribe si la defines.
+  const dsn = import.meta.env.VITE_SENTRY_DSN
+    || 'https://29142858b727601a7b68d32ea2c16254@o4511574932783104.ingest.de.sentry.io/4511574936911952';
+
+  // Solo activamos Sentry en PRODUCCIÓN: en desarrollo local no queremos
+  // inundar el panel con nuestros propios errores y pruebas.
+  if (!dsn || !import.meta.env.PROD) return;
 
   try {
     const Sentry = await import('@sentry/react');
