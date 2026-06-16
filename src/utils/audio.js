@@ -1,6 +1,11 @@
 // src/utils/audio.js (VERSIÓN COMPLETA CON FIX PARA iOS)
 import { speakChinese } from "./tts";
 
+// Extensión de los ficheros de audio de pronunciación. Centralizada para que,
+// si re-codificas el banco con scripts/convert-audio.mjs (Opus/AAC), solo haya
+// que cambiarla aquí: 'mp3' → 'opus' (o 'm4a').
+const AUDIO_EXT = 'opus';
+
 // ---- Carga perezosa del manifiesto ----
 let manifestSet = null;
 let manifestLoaded = false;
@@ -310,7 +315,7 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
   const variants = variantsFor(key);
 
   for (const name of variants) {
-    const candidate = `audio/${category}/${name}.mp3`;
+    const candidate = `audio/${category}/${name}.${AUDIO_EXT}`;
 
     if (set.has(name)) {
       try {
