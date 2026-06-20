@@ -10,7 +10,7 @@ import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
-import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -26,7 +26,7 @@ function buildRound(lessonFilter) {
 
 export default function CompleteSentence({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
-  const [started, setStarted] = useState(() => !shouldShowIntro('complete-sentence'));
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('complete-sentence');
 
   const [rounds, setRounds]             = useState([]);
   const [currentIdx, setCurrentIdx]     = useState(0);
@@ -34,7 +34,6 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   const [result, setResult]             = useState(null);
   const [showHint, setShowHint]         = useState(false);
   const [score, setScore]               = useState(0);
-  const [done, setDone]                 = useState(false);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   const initRound = useCallback((filter) => {
@@ -42,7 +41,6 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
     setRounds(r);
     setCurrentIdx(0);
     setScore(0);
-    setDone(false);
     setSelected(null);
     setResult(null);
     setShowHint(false);
@@ -77,7 +75,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   const handleNext = () => {
     const next = currentIdx + 1;
     if (next >= rounds.length) {
-      setDone(true);
+      finish();
       trackAchievement('complete_quiz', 1);
       updateChallengeProgress('complete_quizzes', 1);
       updateChallengeProgress('play_different_games', 'CompleteSentence');
@@ -94,7 +92,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   };
 
   // Pantalla de explicación
-  if (!started) {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="complete-sentence"
@@ -107,21 +105,21 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
           t('complete_intro_3', 'Usa el botón "Pista" si necesitas ver el pinyin.'),
           t('complete_intro_4', 'Son 8 frases por ronda. Puedes filtrar por lección.'),
         ]}
-        onStart={() => setStarted(true)}
+        onStart={start}
         onBack={goBack}
       />
     );
   }
 
   // Pantalla resultados
-  if (done) {
+  if (isFinished) {
     return (
       <GameResults
         title={t('complete_results_title')}
         subtitle={t('complete_results_subtitle')}
         correct={score}
         wrong={rounds.length - score}
-        onPlayAgain={() => initRound(lessonFilter)}
+        onPlayAgain={() => { restart(); initRound(lessonFilter); }}
         onBack={goBack}
       />
     );

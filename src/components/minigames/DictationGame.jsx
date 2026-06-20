@@ -10,6 +10,7 @@ import { J } from '@/styles/tokens';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -17,7 +18,9 @@ const TOTAL_ROUNDS = 10;
 
 export default function DictationGame({ goBack, characters = [], speak, onTrackResult }) {
   const { t } = useTranslation();
-  const [gameState, setGameState] = useState('ready'); // 'ready' | 'playing' | 'finished'
+  // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
+  // startGame() (genera la primera ronda además de cambiar de fase).
+  const { isIntro, isFinished, start, finish } = useGamePhase('dictation-game', { autoSkip: false });
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
@@ -64,22 +67,22 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
 
   const nextRound = useCallback(() => {
     const q = generateQuestion();
-    if (!q) { setGameState('finished'); return; }
+    if (!q) { finish(); return; }
     setQuestion(q);
     setFeedback(null);
     setSelected(null);
     // Reproducir el audio al entrar en la ronda (pequeño delay para que
     // el cambio de pantalla no se coma el inicio del sonido).
     setTimeout(() => playAudio(q.correct), 350);
-  }, [generateQuestion, playAudio]);
+  }, [generateQuestion, playAudio, finish]);
 
   const startGame = useCallback(() => {
     setScore(0);
     setWrongCount(0);
     setRound(1);
-    setGameState('playing');
+    start();
     nextRound();
-  }, [nextRound]);
+  }, [nextRound, start]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -104,7 +107,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
 
     setTimeout(() => {
       if (round >= TOTAL_ROUNDS) {
-        setGameState('finished');
+        finish();
       } else {
         setRound(r => r + 1);
         nextRound();
@@ -116,7 +119,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   useEffect(() => () => { speakingRef.current = true; }, []);
 
   // ── Pantalla de explicación ─────────────────────────────────────────
-  if (gameState === 'ready') {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="dictation-game"
@@ -136,7 +139,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   }
 
   // ── Pantalla final ──────────────────────────────────────────────────
-  if (gameState === 'finished') {
+  if (isFinished) {
     const pct = Math.round((score / TOTAL_ROUNDS) * 100);
     return (
       <GameResults

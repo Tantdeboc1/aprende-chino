@@ -21,7 +21,7 @@ import { scorePronunciation } from '@/utils/pronunciationScore.js';
 import { speakChineseEnhanced } from '@/utils/tts-enhanced.js';
 import { LESSON_COLORS, LESSON_NUMBERS, DEFAULT_LESSON_COLOR } from '@/styles/lessonColors.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
-import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -53,7 +53,7 @@ function errorMessage(code, t) {
 export default function PronunciationPractice({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
   const supported = isSpeechRecognitionSupported();
-  const [started, setStarted] = useState(() => !shouldShowIntro('pronunciation-practice'));
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('pronunciation-practice');
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -61,7 +61,6 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   const [scoreInfo, setScoreInfo]     = useState(null);     // { score, level, charMatches, normRecognized, ... }
   const [errorMsg, setErrorMsg]       = useState(null);
   const [totalScore, setTotalScore]   = useState(0);
-  const [done, setDone]               = useState(false);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   // Para evitar warnings cuando el componente se desmonta mid-recognition
@@ -76,7 +75,6 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     setErrorMsg(null);
     setStatus('idle');
     setTotalScore(0);
-    setDone(false);
   }, [lessonFilter]);
 
   useEffect(() => { startGame(); }, [startGame]);
@@ -119,7 +117,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
 
   const handleNext = () => {
     if (currentIdx + 1 >= rounds.length) {
-      setDone(true);
+      finish();
       return;
     }
     setCurrentIdx(i => i + 1);
@@ -157,7 +155,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   }
 
   // ── Pantalla de explicación ───────────────────────────────────────
-  if (!started) {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="pronunciation-practice"
@@ -170,14 +168,14 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
           t('pronunciation_intro_3', 'Recibirás una nota según lo bien que se te entienda; puedes escuchar la frase correcta.'),
           t('pronunciation_intro_4', 'Son 6 frases por ronda. Necesitas dar permiso de micrófono.'),
         ]}
-        onStart={() => setStarted(true)}
+        onStart={start}
         onBack={goBack}
       />
     );
   }
 
   // ── Pantalla final ────────────────────────────────────────────────
-  if (done) {
+  if (isFinished) {
     const avg = rounds.length > 0 ? Math.round(totalScore / rounds.length) : 0;
     return (
       <GameResults
@@ -185,7 +183,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
         subtitle={t('pronunciation_results_subtitle', 'Tu nota media de pronunciación')}
         score={avg}
         scoreLabel={t('pronunciation_avg_label', 'Nota media')}
-        onPlayAgain={startGame}
+        onPlayAgain={() => { restart(); startGame(); }}
         onBack={goBack}
       />
     );

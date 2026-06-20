@@ -6,7 +6,7 @@ import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { LESSON_NUMBERS } from '@/styles/lessonColors.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
-import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -331,7 +331,7 @@ function playSound(type) {
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function TranslationGame({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
-  const [started, setStarted] = useState(() => !shouldShowIntro('translation-game'));
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('translation-game');
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
@@ -340,7 +340,6 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   const [candidates, setCandidates]   = useState([]);
   const [result, setResult]           = useState(null);
   const [score, setScore]             = useState(0);
-  const [done, setDone]               = useState(false);
   const [inputMode, setInputMode]     = useState('pinyin'); // 'pinyin' | 'draw'
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
   const inputRef = useRef(null);
@@ -352,7 +351,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
     setRounds(shuffle([...pool]).slice(0, ROUNDS));
     setCurrentIdx(0); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null); setScore(0);
-    setDone(false); setInputMode('pinyin');
+    setInputMode('pinyin');
   }, [lessonFilter]);
 
   useEffect(() => { initGame(lessonFilter); }, [lessonFilter, initGame]);
@@ -413,7 +412,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
 
   const handleNext = () => {
     const next = currentIdx + 1;
-    if (next >= rounds.length) { setDone(true); return; }
+    if (next >= rounds.length) { finish(); return; }
     setCurrentIdx(next); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null);
   };
@@ -424,7 +423,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   };
 
   // ── Pantalla de explicación ───────────────────────────────────────────────
-  if (!started) {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="translation-game"
@@ -437,21 +436,21 @@ export default function TranslationGame({ goBack, selectedLesson }) {
           t('translation_intro_3', 'También puedes dibujar los caracteres a mano con el modo "Dibujar".'),
           t('translation_intro_4', 'Son 8 frases por ronda. Puedes filtrar por lección.'),
         ]}
-        onStart={() => setStarted(true)}
+        onStart={start}
         onBack={goBack}
       />
     );
   }
 
   // ── Pantalla final ────────────────────────────────────────────────────────
-  if (done) {
+  if (isFinished) {
     return (
       <GameResults
         title={t('translation_results_title')}
         subtitle={t('translation_results_subtitle')}
         correct={score}
         wrong={rounds.length - score}
-        onPlayAgain={() => initGame(lessonFilter)}
+        onPlayAgain={() => { restart(); initGame(lessonFilter); }}
         onBack={goBack}
       />
     );

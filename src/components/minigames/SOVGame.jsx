@@ -6,7 +6,7 @@ import sovData from '@/data/sovData.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
-import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -65,7 +65,7 @@ function playSound(type) {
 
 export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const { t, i18n } = useTranslation();
-  const [started, setStarted] = useState(() => !shouldShowIntro('sov-game'));
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('sov-game');
 
   // Estado de la ronda
   const [rounds, setRounds]           = useState([]);
@@ -75,7 +75,6 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const [result, setResult]           = useState(null);  // null | 'correct' | 'incorrect'
   const [showHint, setShowHint]       = useState(false);
   const [score, setScore]             = useState(0);
-  const [done, setDone]               = useState(false);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   // Inicializar ronda
@@ -84,7 +83,6 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
     setRounds(r);
     setCurrentIdx(0);
     setScore(0);
-    setDone(false);
     setPlaced([]);
     setAvailable(r.length > 0 ? r[0].shuffled.map((w, i) => ({ word: w, id: i })) : []);
     setResult(null);
@@ -138,7 +136,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   const handleNext = () => {
     const next = currentIdx + 1;
     if (next >= rounds.length) {
-      setDone(true);
+      finish();
       return;
     }
     setCurrentIdx(next);
@@ -157,7 +155,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   };
 
   // ── Pantalla de explicación ─────────────────────────────────────────────────
-  if (!started) {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="sov-game"
@@ -170,21 +168,21 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
           t('sov_intro_3', 'Si te atascas, usa el botón "Pista" para ver una ayuda de gramática.'),
           t('sov_intro_4', 'Son 8 frases por ronda. Puedes filtrar por lección.'),
         ]}
-        onStart={() => setStarted(true)}
+        onStart={start}
         onBack={goBack}
       />
     );
   }
 
   // ── Pantalla de resultados finales ──────────────────────────────────────────
-  if (done) {
+  if (isFinished) {
     return (
       <GameResults
         title={t('sov_results_title')}
         subtitle={t('sov_results_subtitle')}
         correct={score}
         wrong={rounds.length - score}
-        onPlayAgain={() => initRound(lessonFilter)}
+        onPlayAgain={() => { restart(); initRound(lessonFilter); }}
         onBack={goBack}
       />
     );

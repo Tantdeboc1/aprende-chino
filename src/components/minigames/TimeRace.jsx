@@ -6,13 +6,16 @@ import { J } from '@/styles/tokens';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
 // --- Componente Principal ---
 export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
-  const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
+  // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
+  // startGame() (genera la primera pregunta además de cambiar de fase).
+  const { isIntro, isPlaying, isFinished, start, finish } = useGamePhase('time-race', { autoSkip: false });
   const [score, setScore] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
@@ -57,9 +60,9 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     setCorrectCount(0);
     setWrongCount(0);
     setTimeLeft(60); timeLeftRef.current = 60;
-    setGameState('playing');
+    start();
     generateQuestion();
-  }, [generateQuestion]);
+  }, [generateQuestion, start]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -98,10 +101,10 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
 
   // Temporizador del juego
   useEffect(() => {
-    if (gameState !== 'playing') return;
+    if (!isPlaying) return;
 
     if (timeLeft <= 0) {
-      setGameState('finished');
+      finish();
       return;
     }
 
@@ -110,12 +113,12 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState, timeLeft]);
+  }, [isPlaying, timeLeft, finish]);
 
   // --- Renderizado ---
 
   // Pantalla de explicación
-  if (gameState === 'ready') {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="time-race"
@@ -135,7 +138,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   }
 
   // Pantalla de Fin de Juego
-  if (gameState === 'finished') {
+  if (isFinished) {
     return (
       <GameResults
         title={t('minigames_time_up_message')}

@@ -10,7 +10,7 @@ import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
-import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
+import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -26,7 +26,7 @@ function buildRound(lessonFilter) {
 
 export default function DialogueOrder({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
-  const [started, setStarted] = useState(() => !shouldShowIntro('dialogue-order'));
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('dialogue-order');
 
   const [rounds, setRounds]             = useState([]);
   const [currentIdx, setCurrentIdx]     = useState(0);
@@ -35,7 +35,6 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
   const [result, setResult]             = useState(null);
   const [showTranslation, setShowTranslation] = useState(false);
   const [score, setScore]               = useState(0);
-  const [done, setDone]                 = useState(false);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
   const initRound = useCallback((filter) => {
@@ -43,7 +42,6 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
     setRounds(r);
     setCurrentIdx(0);
     setScore(0);
-    setDone(false);
     setPlaced([]);
     setAvailable(r.length > 0 ? shuffle(r[0].lines.map((l, i) => ({ ...l, id: i }))) : []);
     setResult(null);
@@ -83,7 +81,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
   const handleNext = () => {
     const next = currentIdx + 1;
     if (next >= rounds.length) {
-      setDone(true);
+      finish();
       trackAchievement('complete_quiz', 1);
       updateChallengeProgress('complete_quizzes', 1);
       updateChallengeProgress('play_different_games', 'DialogueOrder');
@@ -108,7 +106,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
   };
 
   // Pantalla de explicación
-  if (!started) {
+  if (isIntro) {
     return (
       <GameIntro
         gameId="dialogue-order"
@@ -121,21 +119,21 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
           t('dialogue_intro_3', 'Puedes ver la traducción como ayuda antes de comprobar.'),
           t('dialogue_intro_4', 'Son 6 diálogos por ronda. Puedes filtrar por lección.'),
         ]}
-        onStart={() => setStarted(true)}
+        onStart={start}
         onBack={goBack}
       />
     );
   }
 
   // Resultados
-  if (done) {
+  if (isFinished) {
     return (
       <GameResults
         title={t('dialogue_results_title')}
         subtitle={t('dialogue_results_subtitle')}
         correct={score}
         wrong={rounds.length - score}
-        onPlayAgain={() => initRound(lessonFilter)}
+        onPlayAgain={() => { restart(); initRound(lessonFilter); }}
         onBack={goBack}
       />
     );
