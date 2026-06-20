@@ -73,14 +73,8 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
   return (
     <>
       <div
-        className="min-h-screen transition-opacity duration-150 mx-auto"
-        style={{
-          opacity: visible ? 1 : 0, background: J.paper, color: J.ink,
-          // En móvil ocupa todo el ancho; en pantallas grandes se limita y
-          // centra (mismo ancho que los botones de BottomNav, max-w-lg=512px)
-          // para no estirar tarjetas y cabeceras de borde a borde en desktop.
-          maxWidth: 512,
-        }}
+        className="min-h-screen transition-opacity duration-150"
+        style={{ opacity: visible ? 1 : 0, background: J.paper, color: J.ink }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
