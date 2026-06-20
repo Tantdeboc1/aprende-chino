@@ -14,3 +14,7 @@ dist/
 src/data/grammar/
 src/data/cultural/
 
+# Auto-generado por scripts/copy-hanzi-data.mjs (predev / prebuild / predeploy).
+# Datos de trazos de HanziWriter copiados de node_modules/hanzi-writer-data.
+public/hanzi-data/
+

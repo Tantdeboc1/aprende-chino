@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 const LESSON_BADGE = {
   1: { bg: J.redBg, fg: J.redDeep, border: J.red },
@@ -30,6 +31,7 @@ function HanziWriterCanvas({ char }) {
       if (cancelled || !containerRef.current) return;
       try {
         const writer = HanziWriter.create(containerRef.current, char, {
+          charDataLoader: hanziCharDataLoader,
           width: 180,
           height: 180,
           padding: 10,

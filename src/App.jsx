@@ -1,4 +1,5 @@
 import { assetUrl } from './utils/assets';
+import { hanziCharDataLoader } from './utils/hanziCharData.js';
 import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
@@ -39,6 +40,7 @@ function AnimatedLoader() {
         const HanziWriter = (await import('hanzi-writer')).default;
         if (cancelled || !canvasRef.current) return;
         writer = HanziWriter.create(canvasRef.current, '学', {
+          charDataLoader: hanziCharDataLoader,
           width: 80, height: 80, padding: 5,
           strokeColor: J.jade, radicalColor: J.red,
           drawingWidth: 3, showCharacter: false, showOutline: true,

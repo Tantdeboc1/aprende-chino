@@ -53,10 +53,22 @@ if (lazyLoaders[detectedLng] && !i18n.hasResourceBundle(detectedLng, 'translatio
   }).catch(() => {});
 }
 
+// Mantiene <html lang> sincronizado con el idioma activo. Importa para
+// lectores de pantalla (pronunciación correcta) y SEO. index.html arranca con
+// lang="es"; aquí lo corregimos al idioma real detectado y en cada cambio.
+function syncHtmlLang(lng) {
+  const base = (lng || '').split('-')[0];
+  if (base && typeof document !== 'undefined') {
+    document.documentElement.lang = base;
+  }
+}
+syncHtmlLang(i18n.language);
+
 // Cuando el usuario cambia a FR, DE, IT o PT, se carga el chunk si aún no está
 // loadingLangs evita dobles cargas si el evento se dispara dos veces seguidas
 const loadingLangs = new Set();
 i18n.on('languageChanged', async (lng) => {
+  syncHtmlLang(lng);
   // Normalizamos códigos regionales: 'pt-BR' → 'pt', 'fr-CA' → 'fr'.
   // Sin esto, una visita desde un Chrome con locale regional no encuentra
   // su loader en `lazyLoaders` y la UI se queda en el fallback.

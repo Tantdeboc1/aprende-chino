@@ -36,5 +36,8 @@ jobs:
       - name: Generate i18n data
         run: node scripts/split-i18n-data.mjs
 
+      - name: Copy HanziWriter stroke data
+        run: node scripts/copy-hanzi-data.mjs
+
       - name: Build
         run: npx vite build

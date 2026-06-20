@@ -64,6 +64,18 @@ export default defineConfig(({ mode }) => ({
             options: { cacheName: 'data-json' },
           },
           {
+            // Datos de trazos de HanziWriter (auto-alojados en /hanzi-data/).
+            // Inmutables por carácter → CacheFirst: se guardan al primer uso y
+            // las animaciones funcionan offline a partir de entonces.
+            urlPattern: ({ url }) => url.pathname.includes('/hanzi-data/') && url.pathname.endsWith('.json'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'hanzi-data',
+              expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
             // CSS de Google Fonts.
             urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
             handler: 'StaleWhileRevalidate',

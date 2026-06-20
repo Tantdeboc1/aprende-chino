@@ -13,11 +13,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "predeploy": "node scripts/split-i18n-data.mjs && vite build --base=/aprende-chino/",
+    "predeploy": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs && vite build --base=/aprende-chino/",
     "deploy": "gh-pages -d dist",
     "split-i18n": "node scripts/split-i18n-data.mjs",
-    "predev": "node scripts/split-i18n-data.mjs",
-    "prebuild": "node scripts/split-i18n-data.mjs"
+    "copy-hanzi-data": "node scripts/copy-hanzi-data.mjs",
+    "predev": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs",
+    "prebuild": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs"
   },
   "dependencies": {
     "@dicebear/collection": "^9.4.2",
@@ -25,6 +26,7 @@
     "@sentry/react": "^10.58.0",
     "firebase": "^12.14.0",
     "hanzi-writer": "^3.7.3",
+    "hanzi-writer-data": "^2.0.1",
     "i18next": "^25.6.0",
     "i18next-browser-languagedetector": "^8.2.0",
     "lucide-react": "^0.544.0",
@@ -37,6 +39,8 @@
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@tailwindcss/postcss": "^4.1.14",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",

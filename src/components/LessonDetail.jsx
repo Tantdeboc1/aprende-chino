@@ -1,5 +1,6 @@
 // src/components/LessonDetail.jsx
 import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
+import { useMedia } from 'react-use';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
@@ -41,6 +42,8 @@ export default function LessonDetail({
 }) {
   const [tab, setTab] = useState(defaultTab);
   const { width, height } = useWindowSize();
+  // Accesibilidad: respeta "reducir movimiento" — sin confetti animado.
+  const reduceMotion = useMedia('(prefers-reduced-motion: reduce)', false);
 
   const handleTabChange = (id) => {
     setTab(id);
@@ -91,7 +94,7 @@ export default function LessonDetail({
 
   return (
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
-      {showConfetti && (
+      {showConfetti && !reduceMotion && (
         <Suspense fallback={null}>
           <Confetti
             width={width} height={height} recycle={false} numberOfPieces={250} gravity={0.25}

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
+import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const { t } = useTranslation();
@@ -55,6 +56,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
 
         // Configuración básica y robusta
         const options = {
+          charDataLoader: hanziCharDataLoader,
           width: 200,
           height: 200,
           padding: 5,

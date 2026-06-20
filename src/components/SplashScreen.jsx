@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { J } from '@/styles/tokens';
+import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 const MIN_DISPLAY_MS = 4000;
 
@@ -24,6 +25,7 @@ export default function SplashScreen({ progress, onComplete }) {
         if (!mounted || !writerRef.current) return;
         writerRef.current.innerHTML = '';
         const writer = HW.default.create(writerRef.current, '学', {
+          charDataLoader: hanziCharDataLoader,
           width: 130, height: 130, padding: 8,
           strokeColor: J.jade, radicalColor: J.red,
           strokeAnimationSpeed: 1.8, delayBetweenStrokes: 80,

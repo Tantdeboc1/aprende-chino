@@ -35,6 +35,13 @@ export async function initErrorTracking() {
   // inundar el panel con nuestros propios errores y pruebas.
   if (!dsn || !import.meta.env.PROD) return;
 
+  // Y solo desde el dominio oficial: como el DSN viaja en el bundle, cualquier
+  // fork desplegado en otro github.io enviaría sus errores a NUESTRO Sentry.
+  // Acotamos por hostname (ampliable con VITE_SENTRY_ALLOWED_HOSTS, lista CSV).
+  const allowedHosts = (import.meta.env.VITE_SENTRY_ALLOWED_HOSTS || 'tantdeboc1.github.io')
+    .split(',').map((h) => h.trim()).filter(Boolean);
+  if (!allowedHosts.includes(window.location.hostname)) return;
+
   try {
     const Sentry = await import('@sentry/react');
     Sentry.init({

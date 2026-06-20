@@ -80,3 +80,16 @@ textarea::placeholder {
 /* CJK font utility */
 .font-cn { font-family: "Noto Sans SC", "PingFang SC", sans-serif; }
 .font-cn-serif { font-family: "Noto Serif SC", "Songti SC", serif; }
+
+/* Accesibilidad — respeta "reducir movimiento" del sistema (WCAG 2.3.3).
+   Neutraliza animaciones y transiciones CSS (fadeIn, slide-up, spinner,
+   transiciones de Layout/BottomNav) para usuarios con sensibilidad al
+   movimiento. El confetti (JS) se desactiva aparte en ConfettiCelebration. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

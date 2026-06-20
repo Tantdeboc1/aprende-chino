@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { markWritingPractice, getWritingCount } from '@/utils/progress.js';
+import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 export default function HanziWriting({ goBack, characters, speakChinese, progress, onProgressChange }) {
   const { t } = useTranslation();
@@ -48,6 +49,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         const HanziWriter = await import('hanzi-writer');
 
         const options = {
+          charDataLoader: hanziCharDataLoader,
           width: 200,
           height: 200,
           padding: 10,

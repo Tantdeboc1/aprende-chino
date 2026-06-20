@@ -2,6 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
@@ -42,6 +43,7 @@ function DailyCharacter({ allCharacters }) {
       if (cancelled || !containerRef.current) return;
       try {
         const writer = HanziWriter.create(containerRef.current, singleChar, {
+          charDataLoader: hanziCharDataLoader,
           width: 100,
           height: 100,
           padding: 8,

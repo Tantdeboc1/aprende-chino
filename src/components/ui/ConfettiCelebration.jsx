@@ -1,5 +1,6 @@
 // src/components/ui/ConfettiCelebration.jsx
 import { useState, useEffect, lazy, Suspense } from "react";
+import { useMedia } from "react-use";
 import { useWindowSize } from "@/hooks/useWindowSize.js";
 
 // react-confetti es relativamente pesado (~30 kB). Lo cargamos dinámicamente
@@ -9,6 +10,9 @@ const Confetti = lazy(() => import("react-confetti"));
 export default function ConfettiCelebration() {
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(true);
+  // Accesibilidad: si el usuario pide reducir movimiento (WCAG 2.3.3), no
+  // lanzamos el confetti animado (cientos de partículas en movimiento).
+  const reduceMotion = useMedia("(prefers-reduced-motion: reduce)", false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,7 +22,7 @@ export default function ConfettiCelebration() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!showConfetti) return null;
+  if (reduceMotion || !showConfetti) return null;
 
   return (
     <Suspense fallback={null}>
