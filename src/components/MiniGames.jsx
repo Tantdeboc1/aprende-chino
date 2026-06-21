@@ -21,6 +21,19 @@ function Badge({ text, color }) {
   );
 }
 
+// Secciones por destreza (marco MCER / 听说读写) + base lingüística + examen.
+// El orden sigue el clásico chino 听-说-读-写. Cada juego declara en qué
+// `categorias` aparece (puede estar en varias). Las claves de categoría son
+// internas; los títulos visibles salen de i18n.
+const SECTIONS = [
+  { cat: 'oral_comp', cn: '听', titleKey: 'minigames_section_listening', titleDefault: 'Comprensión oral' },
+  { cat: 'oral_exp',  cn: '说', titleKey: 'minigames_section_speaking',  titleDefault: 'Expresión oral' },
+  { cat: 'lectura',   cn: '读', titleKey: 'minigames_section_reading',   titleDefault: 'Comprensión escrita' },
+  { cat: 'escritura', cn: '写', titleKey: 'minigames_section_writing',   titleDefault: 'Expresión escrita' },
+  { cat: 'base',      cn: '基', titleKey: 'minigames_section_base',      titleDefault: 'Base lingüística' },
+  { cat: 'examen',    cn: '试', titleKey: 'minigames_section_exam',      titleDefault: 'Examen' },
+];
+
 export default function MiniGames({ goBack, navigateTo }) {
   const { t } = useTranslation();
 
@@ -32,6 +45,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '序',
       color: 'red',
       badges: [t('badge_medium'), t('badge_grammar')],
+      categorias: ['escritura'],
     },
     {
       id: 'time-race',
@@ -40,6 +54,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '速',
       color: 'green',
       badges: [t('badge_90s'), t('badge_easy'), t('badge_speed')],
+      categorias: ['base'],
     },
     {
       id: 'pinyin-connection',
@@ -48,6 +63,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '音',
       color: 'blue',
       badges: [t('badge_medium'), t('badge_pronunciation')],
+      categorias: ['base'],
     },
     {
       id: 'global-exam',
@@ -56,6 +72,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '试',
       color: 'yellow',
       badges: [t('badge_90s'), t('badge_hard'), t('badge_hsk1')],
+      categorias: ['examen'],
     },
     {
       id: 'translation-game',
@@ -64,6 +81,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '译',
       color: 'purple',
       badges: [t('badge_hard'), t('badge_construction')],
+      categorias: ['escritura'],
     },
     {
       id: 'complete-sentence',
@@ -72,6 +90,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '填',
       color: 'green',
       badges: [t('badge_easy'), t('badge_grammar')],
+      categorias: ['escritura'],
     },
     {
       id: 'dialogue-order',
@@ -80,6 +99,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '话',
       color: 'blue',
       badges: [t('badge_medium'), t('badge_grammar')],
+      categorias: ['lectura', 'escritura'],
     },
     {
       id: 'find-intruder',
@@ -88,6 +108,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '找',
       color: 'red',
       badges: [t('badge_easy'), t('badge_vocabulary')],
+      categorias: ['lectura', 'base'],
     },
     {
       id: 'pronunciation-practice',
@@ -96,6 +117,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '说',
       color: 'green',
       badges: [t('badge_medium', 'Media'), t('badge_pronunciation', 'Pronunciación'), '🎙️'],
+      categorias: ['oral_exp'],
     },
     {
       id: 'dictation-game',
@@ -104,6 +126,16 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '听',
       color: 'yellow',
       badges: [t('badge_medium', 'Media'), t('badge_listening', 'Oído'), '🔊'],
+      categorias: ['oral_comp'],
+    },
+    {
+      id: 'reading-comprehension',
+      title: t('minigames_reading_title', 'Comprensión lectora'),
+      description: t('minigames_reading_description', 'Lee una historia corta en chino y responde preguntas sobre ella'),
+      cn: '读',
+      color: 'green',
+      badges: [t('badge_medium'), t('badge_reading', 'Lectura'), '📖'],
+      categorias: ['lectura'],
     },
   ];
 
@@ -125,38 +157,54 @@ export default function MiniGames({ goBack, navigateTo }) {
           <h2 className="text-3xl sm:text-4xl font-bold font-cn mb-1" style={{ color: J.ink }}>
             小游戏
           </h2>
-          <p className="text-lg" style={{ color: J.inkSoft }}>{t('minigames_title')}</p>
+          <p className="text-lg" style={{ color: J.inkSoft }}>{t('minigames_practice_by_skill', 'Practica por destrezas')}</p>
           <p className="text-sm mt-1" style={{ color: J.mute }}>{t('minigames_subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-4xl mx-auto">
-          {games.map((game) => {
-            const c = GAME_STYLES[game.color];
+        <div className="max-w-4xl mx-auto space-y-8">
+          {SECTIONS.map((section) => {
+            const sectionGames = games.filter((g) => g.categorias.includes(section.cat));
+            if (sectionGames.length === 0) return null;
             return (
-              <button
-                key={game.id}
-                onClick={() => navigateTo(game.id)}
-                className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
-                style={{
-                  background: J.paperHi, border: `1px solid ${J.hair}`,
-                  cursor: 'pointer',
-                }}
-              >
-                <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ background: c.bg, color: c.fg, fontWeight: 700 }}>
-                  {game.cn}
+              <section key={section.cat}>
+                <div className="flex items-center gap-2.5 mb-3 px-1">
+                  <span className="font-cn text-2xl leading-none" style={{ color: J.red }}>{section.cn}</span>
+                  <h3 className="text-lg font-bold" style={{ color: J.ink }}>
+                    {t(section.titleKey, section.titleDefault)}
+                  </h3>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-bold mb-1 leading-tight" style={{ color: J.ink }}>{game.title}</h3>
-                  <p className="text-xs leading-snug mb-3" style={{ color: J.inkSoft }}>{game.description}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {game.badges.map((b, i) => (
-                      <Badge key={i} text={b} color={c} />
-                    ))}
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {sectionGames.map((game) => {
+                    const c = GAME_STYLES[game.color];
+                    return (
+                      <button
+                        key={`${section.cat}-${game.id}`}
+                        onClick={() => navigateTo(game.id)}
+                        className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
+                        style={{
+                          background: J.paperHi, border: `1px solid ${J.hair}`,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
+                          style={{ background: c.bg, color: c.fg, fontWeight: 700 }}>
+                          {game.cn}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-bold mb-1 leading-tight" style={{ color: J.ink }}>{game.title}</h3>
+                          <p className="text-xs leading-snug mb-3" style={{ color: J.inkSoft }}>{game.description}</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {game.badges.map((b, i) => (
+                              <Badge key={i} text={b} color={c} />
+                            ))}
+                          </div>
+                        </div>
+                        <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
+                      </button>
+                    );
+                  })}
                 </div>
-                <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
-              </button>
+              </section>
             );
           })}
         </div>
