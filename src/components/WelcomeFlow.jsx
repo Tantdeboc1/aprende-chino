@@ -36,7 +36,11 @@ export default function WelcomeFlow({ onComplete }) {
     if (step < STEPS - 1) {
       setStep(s => s + 1);
     } else {
-      updateUserProfile({ gender, avatarId: avatarId || DEFAULT_AVATAR_ID });
+      // El usuario eligió un avatar de forma explícita en el onboarding: ese
+      // avatar manda. Desactivamos la foto de Google (si entra con Google)
+      // para que se vea lo que ha elegido — si la prefiere, la reactiva con el
+      // interruptor de Ajustes. Mismo criterio que al elegir avatar en Ajustes.
+      updateUserProfile({ gender, avatarId: avatarId || DEFAULT_AVATAR_ID, useGooglePhoto: false });
       setDailyGoal(goalXp);
       onComplete(trimmedName);
     }
