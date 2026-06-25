@@ -1,11 +1,13 @@
 // src/components/minigames/GameResults.jsx
 // Pantalla de resultados compartida por los minijuegos, con el mismo estilo
 // que la de GlobalExam: aciertos en verde, fallos en rojo y precisión.
+import { useEffect } from 'react';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { recordMinigameScore } from '@/utils/minigameScores.js';
 
-export default function GameResults({ title, subtitle, correct, wrong, score, scoreLabel, onPlayAgain, onBack }) {
+export default function GameResults({ gameId, title, subtitle, correct, wrong, score, scoreLabel, onPlayAgain, onBack }) {
   const { t } = useTranslation();
   // Con aciertos/fallos la precisión sale de ellos; si el juego solo tiene
   // una nota 0-100 (p. ej. pronunciación), esa nota hace de precisión.
@@ -15,6 +17,13 @@ export default function GameResults({ title, subtitle, correct, wrong, score, sc
     ? (total > 0 ? Math.round((correct / total) * 100) : 0)
     : Math.round(score || 0);
   const good = pct >= 70;
+
+  // Punto único donde TODOS los minijuegos terminan: si el juego declara su
+  // `gameId`, guardamos aquí su mejor puntuación (recordMinigameScore toma el
+  // máximo, así que repetir o el doble-render de StrictMode es inofensivo).
+  useEffect(() => {
+    if (gameId) recordMinigameScore(gameId, pct);
+  }, [gameId, pct]);
   const celebrate = hasCounts ? correct > 0 : good;
 
   return (

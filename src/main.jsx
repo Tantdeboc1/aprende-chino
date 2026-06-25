@@ -12,7 +12,9 @@ import { registerSW } from 'virtual:pwa-register';
 import { initErrorTracking } from './utils/errorTracking.js';
 
 // Service worker PWA — solo existe en builds de producción (en dev el
-// plugin está desactivado y registerSW es un no-op).
+// plugin está desactivado y registerSW es un no-op). En modo 'prompt'
+// (ver vite.config.js) NO pasamos onNeedRefresh: el SW nuevo se queda en
+// espera sin recargar a mitad de sesión y entra en el próximo arranque.
 registerSW({ immediate: true });
 
 // Seguimiento de errores: handlers globales siempre; Sentry solo si hay DSN.

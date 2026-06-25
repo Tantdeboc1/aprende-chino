@@ -3,6 +3,7 @@ import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
 import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
+import { getBestScore } from "@/utils/minigameScores.js";
 
 const GAME_STYLES = {
   red:    { bg: J.redBg,   fg: J.redDeep,  border: J.red },
@@ -69,7 +70,7 @@ export default function MiniGames({ goBack, navigateTo }) {
       id: 'global-exam',
       title: t('minigames_global_exam_title'),
       description: t('minigames_global_exam_description'),
-      cn: '试',
+      cn: '考',
       color: 'yellow',
       badges: [t('badge_90s'), t('badge_hard'), t('badge_hsk1')],
       categorias: ['examen'],
@@ -114,25 +115,43 @@ export default function MiniGames({ goBack, navigateTo }) {
       id: 'pronunciation-practice',
       title: t('minigames_pronunciation_title', 'Pronunciación'),
       description: t('minigames_pronunciation_description', 'Di la frase en voz alta y comprueba si te entienden'),
-      cn: '说',
+      cn: '念',
       color: 'green',
       badges: [t('badge_medium', 'Media'), t('badge_pronunciation', 'Pronunciación'), '🎙️'],
+      categorias: ['oral_exp'],
+    },
+    {
+      id: 'echo-speaking',
+      title: t('echo_title', 'Repite la frase'),
+      description: t('echo_description', 'Escucha una frase y repítela de oído, sin verla'),
+      cn: '跟',
+      color: 'red',
+      badges: [t('badge_hard', 'Difícil'), t('badge_pronunciation', 'Pronunciación'), '🎧'],
       categorias: ['oral_exp'],
     },
     {
       id: 'dictation-game',
       title: t('minigames_dictation_title', 'Dictado'),
       description: t('minigames_dictation_description', 'Escucha el audio y elige el carácter correcto'),
-      cn: '听',
+      cn: '默',
       color: 'yellow',
       badges: [t('badge_medium', 'Media'), t('badge_listening', 'Oído'), '🔊'],
+      categorias: ['oral_comp'],
+    },
+    {
+      id: 'tones-ear',
+      title: t('tones_ear_title', 'Tonos al oído'),
+      description: t('tones_ear_description', 'Escucha una sílaba e identifica el tono que has oído'),
+      cn: '调',
+      color: 'blue',
+      badges: [t('badge_medium', 'Media'), t('badge_listening', 'Oído'), '🎵'],
       categorias: ['oral_comp'],
     },
     {
       id: 'reading-comprehension',
       title: t('minigames_reading_title', 'Comprensión lectora'),
       description: t('minigames_reading_description', 'Lee una historia corta en chino y responde preguntas sobre ella'),
-      cn: '读',
+      cn: '阅',
       color: 'green',
       badges: [t('badge_medium'), t('badge_reading', 'Lectura'), '📖'],
       categorias: ['lectura'],
@@ -176,6 +195,7 @@ export default function MiniGames({ goBack, navigateTo }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {sectionGames.map((game) => {
                     const c = GAME_STYLES[game.color];
+                    const best = getBestScore(game.id);
                     return (
                       <button
                         key={`${section.cat}-${game.id}`}
@@ -191,7 +211,17 @@ export default function MiniGames({ goBack, navigateTo }) {
                           {game.cn}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-base font-bold mb-1 leading-tight" style={{ color: J.ink }}>{game.title}</h3>
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <h4 className="text-base font-bold leading-tight" style={{ color: J.ink }}>{game.title}</h4>
+                            {best !== null && (
+                              <span
+                                className="text-[11px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+                                style={{ background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jadeMid}` }}
+                              >
+                                {t('minigames_best_score', 'Mejor')} {best}%
+                              </span>
+                            )}
+                          </div>
                           <p className="text-xs leading-snug mb-3" style={{ color: J.inkSoft }}>{game.description}</p>
                           <div className="flex flex-wrap gap-1.5">
                             {game.badges.map((b, i) => (

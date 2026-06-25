@@ -1,7 +1,8 @@
-// src/components/minigames/DictationGame.jsx
-// Dictado (comprensión auditiva): suena el audio de una palabra y hay que
-// elegir el carácter correcto entre 4. Entrena la destreza inversa a los
-// demás juegos — reconocer de oído, no de vista.
+// src/components/minigames/ToneEar.jsx
+// Tonos al oído (comprensión auditiva): suena una sílaba y hay que identificar
+// su TONO (1-4), no el carácter. Entrena justo lo que más cuesta en chino:
+// distinguir los tonos de oído. Hermano del Dictado, pero un nivel más
+// abstracto — aquí el carácter es secundario; lo que importa es la melodía.
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ArrowLeft, Volume2 } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
@@ -16,26 +17,40 @@ import GameResults from './GameResults.jsx';
 
 const TOTAL_ROUNDS = 10;
 
-export default function DictationGame({ goBack, characters = [], speak, onTrackResult }) {
+// Los 4 tonos del mandarín: número, marca diacrítica y nombre chino. El campo
+// `name` se traduce vía i18n; el símbolo y el hanzi son universales.
+const TONES = [
+  { tone: 1, mark: 'ˉ', zh: '一声', key: 'tone_first',  def: '1er tono' },
+  { tone: 2, mark: 'ˊ', zh: '二声', key: 'tone_second', def: '2º tono' },
+  { tone: 3, mark: 'ˇ', zh: '三声', key: 'tone_third',  def: '3er tono' },
+  { tone: 4, mark: 'ˋ', zh: '四声', key: 'tone_fourth', def: '4º tono' },
+];
+
+// Solo sílabas únicas con tono claro 1-4: el carácter debe ser monosílabo
+// (pinyin numérico sin espacios) para que "el tono" no sea ambiguo, y dejamos
+// fuera el tono neutro (0).
+function isSingleToned(c) {
+  const pn = String(c?.pinyinNumeric || '').trim();
+  return pn.length > 0 && !/\s/.test(pn) && c.tone >= 1 && c.tone <= 4;
+}
+
+export default function ToneEar({ goBack, characters = [], speak, onTrackResult }) {
   const { t } = useTranslation();
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera ronda además de cambiar de fase).
-  const { isIntro, isFinished, start, finish } = useGamePhase('dictation-game', { autoSkip: false });
+  const { isIntro, isFinished, start, finish } = useGamePhase('tones-ear', { autoSkip: false });
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
-  const [question, setQuestion] = useState(null);
-  const [feedback, setFeedback] = useState(null);      // 'correct' | 'incorrect' | null
-  const [selected, setSelected] = useState(null);
-  // Evita doble audio si el usuario pulsa replay mientras suena.
+  const [question, setQuestion] = useState(null);   // { char }
+  const [feedback, setFeedback] = useState(null);    // 'correct' | 'incorrect' | null
+  const [selected, setSelected] = useState(null);    // tono elegido
   const speakingRef = useRef(false);
 
   const playAudio = useCallback(async (charObj) => {
     if (!charObj || speakingRef.current) return;
     speakingRef.current = true;
     try {
-      // Pasamos pinyin numérico + hanzi: tts-enhanced intenta el mp3 y cae
-      // a TTS del navegador si no existe.
       await speak?.({ pinyin: charObj.pinyinNumeric, hanzi: charObj.char });
     } finally {
       speakingRef.current = false;
@@ -43,26 +58,9 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
   }, [speak]);
 
   const generateQuestion = useCallback(() => {
-    if (characters.length < 4) return null;
-    const shuffled = shuffleArray(characters);
-    const correct = shuffled[0];
-    // Distractores con carácter distinto (y a poder ser pinyin distinto,
-    // para que no haya dos opciones que suenen igual).
-    const distractors = [];
-    const seenChars = new Set([correct.char]);
-    const seenSounds = new Set([correct.pinyinNumeric]);
-    for (const c of shuffled.slice(1)) {
-      if (seenChars.has(c.char) || seenSounds.has(c.pinyinNumeric)) continue;
-      seenChars.add(c.char);
-      seenSounds.add(c.pinyinNumeric);
-      distractors.push(c);
-      if (distractors.length === 3) break;
-    }
-    if (distractors.length < 3) return null;
-    return {
-      correct,
-      options: shuffleArray([correct, ...distractors]),
-    };
+    const pool = characters.filter(isSingleToned);
+    if (pool.length === 0) return null;
+    return { char: shuffleArray(pool)[0] };
   }, [characters]);
 
   const nextRound = useCallback(() => {
@@ -71,9 +69,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     setQuestion(q);
     setFeedback(null);
     setSelected(null);
-    // Reproducir el audio al entrar en la ronda (pequeño delay para que
-    // el cambio de pantalla no se coma el inicio del sonido).
-    setTimeout(() => playAudio(q.correct), 350);
+    setTimeout(() => playAudio(q.char), 350);
   }, [generateQuestion, playAudio, finish]);
 
   const startGame = useCallback(() => {
@@ -84,16 +80,15 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     nextRound();
   }, [nextRound, start]);
 
-  // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
-    if (!shouldShowIntro('dictation-game')) startGame();
+    if (!shouldShowIntro('tones-ear')) startGame();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAnswer = (option) => {
+  const handleAnswer = (toneOpt) => {
     if (feedback) return;
-    setSelected(option.char);
-    const isCorrect = option.char === question.correct.char;
+    setSelected(toneOpt.tone);
+    const isCorrect = toneOpt.tone === question.char.tone;
     if (isCorrect) {
       setScore(s => s + 1);
       setFeedback('correct');
@@ -103,7 +98,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
       setFeedback('incorrect');
       hapticError();
     }
-    onTrackResult?.(question.correct, isCorrect);
+    onTrackResult?.(question.char, isCorrect);
 
     setTimeout(() => {
       if (round >= TOTAL_ROUNDS) {
@@ -112,25 +107,25 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
         setRound(r => r + 1);
         nextRound();
       }
-    }, 1100);
+    }, 1200);
   };
 
-  // Cancela cualquier timeout de audio pendiente al desmontar.
+  // Cancela cualquier audio pendiente al desmontar.
   useEffect(() => () => { speakingRef.current = true; }, []);
 
   // ── Pantalla de explicación ─────────────────────────────────────────
   if (isIntro) {
     return (
       <GameIntro
-        gameId="dictation-game"
+        gameId="tones-ear"
         cn="听"
-        title={t('minigames_dictation_title', 'Dictado')}
-        subtitle={t('minigames_dictation_subtitle', 'Escucha y elige el carácter correcto')}
+        title={t('tones_ear_title', 'Tonos al oído')}
+        subtitle={t('tones_ear_subtitle', 'Escucha y reconoce el tono')}
         steps={[
-          t('minigames_dictation_instructions_1', 'Escucharás la pronunciación de una palabra en chino.'),
-          t('minigames_dictation_instructions_2', 'Elige entre 4 opciones el carácter que corresponde al sonido.'),
-          t('minigames_dictation_instructions_3', 'Puedes repetir el audio tantas veces como quieras con el botón 🔊.'),
-          t('minigames_dictation_instructions_4', 'Son 10 rondas. ¡Afina el oído con los tonos!'),
+          t('tones_ear_instructions_1', 'Escucharás una sílaba en chino.'),
+          t('tones_ear_instructions_2', 'Elige cuál de los 4 tonos has oído (1.º ˉ, 2.º ˊ, 3.º ˇ, 4.º ˋ).'),
+          t('tones_ear_instructions_3', 'Puedes repetir el audio las veces que quieras con el botón 🔊.'),
+          t('tones_ear_instructions_4', 'Son 10 rondas. ¡Afina el oído para los tonos!'),
         ]}
         onStart={startGame}
         onBack={goBack}
@@ -143,11 +138,11 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     const pct = Math.round((score / TOTAL_ROUNDS) * 100);
     return (
       <GameResults
-        gameId="dictation-game"
+        gameId="tones-ear"
         title={pct >= 70
-          ? t('minigames_dictation_good_ear', '¡Buen oído!')
-          : t('minigames_dictation_keep_training', 'Sigue entrenando el oído')}
-        subtitle={t('minigames_dictation_title', 'Dictado')}
+          ? t('tones_ear_good_ear', '¡Oído fino!')
+          : t('tones_ear_keep_training', 'Sigue entrenando los tonos')}
+        subtitle={t('tones_ear_title', 'Tonos al oído')}
         correct={score}
         wrong={wrongCount}
         onPlayAgain={startGame}
@@ -179,10 +174,10 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
 
         {question && (
           <div className="text-center">
-            {/* Botón grande de audio — el protagonista de la pantalla */}
+            {/* Botón grande de audio — protagonista de la pantalla */}
             <button
-              onClick={() => playAudio(question.correct)}
-              aria-label={t('minigames_dictation_replay', 'Repetir audio')}
+              onClick={() => playAudio(question.char)}
+              aria-label={t('tones_ear_replay', 'Repetir audio')}
               className="mx-auto mb-8 flex items-center justify-center rounded-full transition active:scale-95"
               style={{
                 width: 130, height: 130,
@@ -194,17 +189,17 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
               <Volume2 size={56} />
             </button>
             <p className="text-sm mb-6 -mt-4" style={{ color: J.mute }}>
-              {t('minigames_dictation_tap_to_replay', 'Toca para volver a escuchar')}
+              {t('tones_ear_which_tone', '¿Qué tono has oído?')}
             </p>
 
-            {/* Opciones: 4 caracteres grandes */}
+            {/* Opciones: los 4 tonos */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
-              {question.options.map((opt) => {
+              {TONES.map((opt) => {
                 let bg = J.paperHi, border = J.hair, color = J.ink, pulse = '';
                 if (feedback) {
-                  if (opt.char === question.correct.char) {
+                  if (opt.tone === question.char.tone) {
                     bg = J.jadeBg; border = J.jade; color = J.jadeDeep; pulse = 'animate-pulse';
-                  } else if (opt.char === selected) {
+                  } else if (opt.tone === selected) {
                     bg = J.redBg; border = J.red; color = J.redDeep;
                   } else {
                     color = J.mute2;
@@ -212,7 +207,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
                 }
                 return (
                   <button
-                    key={opt.char}
+                    key={opt.tone}
                     onClick={() => handleAnswer(opt)}
                     disabled={!!feedback}
                     className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${pulse}`}
@@ -221,13 +216,20 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
                       cursor: feedback ? 'default' : 'pointer',
                     }}
                   >
-                    <span className="font-cn text-4xl font-bold">{opt.char}</span>
-                    {/* Al resolver, muestra el pinyin como feedback didáctico */}
-                    {feedback && <span className="text-xs opacity-80">{opt.pinyin}</span>}
+                    <span className="text-4xl font-bold leading-none">{opt.tone}<span className="text-2xl ml-0.5 align-top">{opt.mark}</span></span>
+                    <span className="font-cn text-sm opacity-80">{opt.zh}</span>
                   </button>
                 );
               })}
             </div>
+
+            {/* Al resolver, muestra el carácter y su pinyin como refuerzo */}
+            {feedback && (
+              <div className="mt-6 flex items-center justify-center gap-3" style={{ color: J.inkSoft }}>
+                <span className="font-cn text-3xl font-bold" style={{ color: J.ink }}>{question.char.char}</span>
+                <span className="text-lg">{question.char.pinyin}</span>
+              </div>
+            )}
           </div>
         )}
       </Container>

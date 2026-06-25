@@ -446,6 +446,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="translation-game"
         title={t('translation_results_title')}
         subtitle={t('translation_results_subtitle')}
         correct={score}

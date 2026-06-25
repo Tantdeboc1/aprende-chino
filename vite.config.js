@@ -9,10 +9,16 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     VitePWA({
-      // autoUpdate: el SW nuevo se activa solo; la siguiente visita ya usa
-      // la versión nueva. Evita el clásico "usuarios atascados en versión
-      // vieja" sin necesidad de banner de actualización.
-      registerType: 'autoUpdate',
+      // 'prompt' (no 'autoUpdate'): el SW nuevo se queda EN ESPERA y toma el
+      // control en el siguiente arranque (cuando se cierran las pestañas), en
+      // lugar de activarse a mitad de sesión. Con 'autoUpdate' el plugin hacía
+      // window.location.reload() al activarse un SW actualizado (isUpdate),
+      // provocando la "doble carga": abrir → cargar versión cacheada → el SW
+      // nuevo activa → recarga forzada. 'prompt' lo evita y además mantiene la
+      // sesión actual con assets coherentes (sin riesgo de chunk mismatch). No
+      // mostramos banner: simplemente la versión nueva entra en la próxima
+      // visita (ver registerSW en src/main.jsx).
+      registerType: 'prompt',
       manifest: {
         name: 'Aprende Chino · HSK 1',
         short_name: 'Aprende Chino',

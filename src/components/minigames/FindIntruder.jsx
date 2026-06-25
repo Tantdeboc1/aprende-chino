@@ -112,6 +112,7 @@ export default function FindIntruder({ goBack, selectedLesson }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="find-intruder"
         title={t('intruder_results_title')}
         subtitle={t('intruder_results_subtitle')}
         correct={score}

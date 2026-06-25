@@ -178,6 +178,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="sov-game"
         title={t('sov_results_title')}
         subtitle={t('sov_results_subtitle')}
         correct={score}

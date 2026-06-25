@@ -141,6 +141,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="time-race"
         title={t('minigames_time_up_message')}
         subtitle={t('minigames_time_race_title')}
         correct={correctCount}

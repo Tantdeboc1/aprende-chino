@@ -1,11 +1,12 @@
-// src/components/minigames/PronunciationPractice.jsx
-// Mini-juego: pronuncia la frase en chino. Usa Web Speech API para reconocer
-// la voz del usuario y compara con la frase esperada (algoritmo Levenshtein
-// sobre caracteres CJK).
+// src/components/minigames/EchoSpeaking.jsx
+// Repite la frase / shadowing (expresión oral): suena una frase en chino y hay
+// que REPETIRLA de oído, SIN verla. Es el hermano "ciego" de Pronunciación:
+// allí lees el texto en pantalla; aquí entrenas oído→boca (escuchar, retener y
+// reproducir), y el texto solo se revela tras el intento como corrección.
 //
-// Requiere permiso de micrófono y un navegador con SpeechRecognition
-// (Chrome/Edge/Safari; Firefox no soportado a 2026).
-
+// Requiere micrófono y un navegador con SpeechRecognition (Chrome/Edge/Safari;
+// Firefox no soportado a 2026). Reutiliza el reconocimiento y el scoring de
+// Pronunciación para no duplicar lógica.
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translationPhrases } from '@/data/translationPhrases.js';
@@ -34,7 +35,7 @@ function pickRounds(lessonFilter) {
   return shuffle([...pool]).slice(0, ROUNDS);
 }
 
-// Mensajes de error en idioma actual con fallback
+// Mensajes de error en idioma actual con fallback (idéntico a Pronunciación).
 function errorMessage(code, t) {
   switch (code) {
     case SpeechErrorCode.NO_PERMISSION:
@@ -50,29 +51,29 @@ function errorMessage(code, t) {
   }
 }
 
-export default function PronunciationPractice({ goBack, selectedLesson }) {
+export default function EchoSpeaking({ goBack, selectedLesson }) {
   const { t, i18n } = useTranslation();
   const supported = isSpeechRecognitionSupported();
-  const { isIntro, isFinished, start, finish, restart } = useGamePhase('pronunciation-practice');
+  const { isIntro, isFinished, start, finish, restart } = useGamePhase('echo-speaking');
 
   const [rounds, setRounds]           = useState([]);
   const [currentIdx, setCurrentIdx]   = useState(0);
   const [status, setStatus]           = useState('idle');   // idle | listening | processing | result | error
-  const [scoreInfo, setScoreInfo]     = useState(null);     // { score, level, charMatches, normRecognized, ... }
+  const [scoreInfo, setScoreInfo]     = useState(null);
   const [errorMsg, setErrorMsg]       = useState(null);
+  const [revealed, setRevealed]       = useState(false);    // texto visible (tras intento o "Rendirse")
   const [totalScore, setTotalScore]   = useState(0);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
-  // Para evitar warnings cuando el componente se desmonta mid-recognition
   const aliveRef = useRef(true);
   useEffect(() => () => { aliveRef.current = false; }, []);
 
   const startGame = useCallback(() => {
-    const r = pickRounds(lessonFilter);
-    setRounds(r);
+    setRounds(pickRounds(lessonFilter));
     setCurrentIdx(0);
     setScoreInfo(null);
     setErrorMsg(null);
+    setRevealed(false);
     setStatus('idle');
     setTotalScore(0);
   }, [lessonFilter]);
@@ -80,6 +81,22 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   useEffect(() => { startGame(); }, [startGame]);
 
   const current = rounds[currentIdx];
+
+  // Reproduce la frase a repetir (es el "enunciado" del ejercicio).
+  const handlePlay = () => {
+    if (!current) return;
+    try { speakChineseEnhanced(current.hanzi); } catch (_) {}
+  };
+
+  // Auto-reproduce la frase al entrar en cada ronda (pequeño delay para que el
+  // cambio de pantalla no se coma el inicio del audio).
+  useEffect(() => {
+    if (isIntro || isFinished || !current) return;
+    const id = setTimeout(() => {
+      try { speakChineseEnhanced(current.hanzi); } catch (_) {}
+    }, 400);
+    return () => clearTimeout(id);
+  }, [current, isIntro, isFinished]);
 
   const handleListen = async () => {
     if (!current || status === 'listening' || status === 'processing') return;
@@ -92,10 +109,10 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
       setStatus('processing');
       const info = scorePronunciation(current.hanzi, transcript);
       setScoreInfo(info);
+      setRevealed(true);      // tras el intento, mostramos la frase como corrección
       setStatus('result');
       setTotalScore(prev => prev + info.score);
 
-      // Feedback háptico + sonido + XP
       if (info.level === 'perfect' || info.level === 'good') {
         hapticSuccess(); playSound('correct');
         addXP(info.level === 'perfect' ? 10 : 5);
@@ -110,10 +127,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     }
   };
 
-  const handlePlayCorrect = () => {
-    if (!current) return;
-    try { speakChineseEnhanced(current.hanzi); } catch (_) {}
-  };
+  const handleReveal = () => setRevealed(true);
 
   const handleNext = () => {
     if (currentIdx + 1 >= rounds.length) {
@@ -123,6 +137,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     setCurrentIdx(i => i + 1);
     setScoreInfo(null);
     setErrorMsg(null);
+    setRevealed(false);
     setStatus('idle');
   };
 
@@ -158,15 +173,15 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   if (isIntro) {
     return (
       <GameIntro
-        gameId="pronunciation-practice"
-        cn="说"
-        title={t('pronunciation_title', 'Pronunciación')}
-        subtitle={t('pronunciation_subtitle', 'Lee la frase en voz alta')}
+        gameId="echo-speaking"
+        cn="跟"
+        title={t('echo_title', 'Repite la frase')}
+        subtitle={t('echo_subtitle', 'Escucha y repite sin mirar')}
         steps={[
-          t('pronunciation_intro_1', 'Lee la frase en chino que aparece en pantalla.'),
-          t('pronunciation_intro_2', 'Pulsa el micrófono y dila en voz alta.'),
-          t('pronunciation_intro_3', 'Recibirás una nota según lo bien que se te entienda; puedes escuchar la frase correcta.'),
-          t('pronunciation_intro_4', 'Son 6 frases por ronda. Necesitas dar permiso de micrófono.'),
+          t('echo_intro_1', 'Sonará una frase en chino. Escúchala con atención (puedes repetirla con 🔊).'),
+          t('echo_intro_2', 'Pulsa el micrófono y repítela en voz alta de memoria, sin verla escrita.'),
+          t('echo_intro_3', 'Tras tu intento se revela la frase y recibes una nota según lo bien que se te entienda.'),
+          t('echo_intro_4', 'Son 6 frases por ronda. Necesitas dar permiso de micrófono.'),
         ]}
         onStart={start}
         onBack={goBack}
@@ -179,9 +194,9 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     const avg = rounds.length > 0 ? Math.round(totalScore / rounds.length) : 0;
     return (
       <GameResults
-        gameId="pronunciation-practice"
-        title={t('pronunciation_results_title', 'Resultado')}
-        subtitle={t('pronunciation_results_subtitle', 'Tu nota media de pronunciación')}
+        gameId="echo-speaking"
+        title={t('echo_results_title', 'Resultado')}
+        subtitle={t('echo_results_subtitle', 'Tu nota media repitiendo de oído')}
         score={avg}
         scoreLabel={t('pronunciation_avg_label', 'Nota media')}
         onPlayAgain={() => { restart(); startGame(); }}
@@ -198,29 +213,21 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     );
   }
 
-  // Renderiza la frase esperada con marca por carácter cuando hay resultado
+  // Renderiza la frase con marca por carácter cuando hay resultado (igual que
+  // Pronunciación): aciertos en verde, fallos en rojo.
   const renderExpected = () => {
     if (!scoreInfo) {
       return <span className="text-[#1c1813]">{current.hanzi}</span>;
     }
-    // Usamos las matches sobre la versión normalizada — para colorear los hanzi
-    // del original alineamos por orden de carácter saltando puntuación.
     const matches = scoreInfo.charMatches;
     let mi = 0;
     return [...current.hanzi].map((ch, i) => {
-      // Si el carácter es puntuación o espacio, no se contó: dibujarlo gris.
       if (/[。，！？、；：（）「」'"".,!?;:()[\]{}\s]/.test(ch)) {
         return <span key={i} className="text-[#928a76]">{ch}</span>;
       }
       const ok = matches[mi++];
       return (
-        <span
-          key={i}
-          className="font-bold"
-          style={{ color: ok ? '#2f6b4a' : '#c8392f' }}
-        >
-          {ch}
-        </span>
+        <span key={i} className="font-bold" style={{ color: ok ? '#2f6b4a' : '#c8392f' }}>{ch}</span>
       );
     });
   };
@@ -238,8 +245,8 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
         </button>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#1c1813]">{t('pronunciation_title', 'Pronunciación')}</h1>
-            <p className="text-sm text-[#928a76]">{t('pronunciation_subtitle', 'Lee la frase en voz alta')}</p>
+            <h1 className="text-lg font-bold text-[#1c1813]">{t('echo_title', 'Repite la frase')}</h1>
+            <p className="text-sm text-[#928a76]">{t('echo_subtitle', 'Escucha y repite sin mirar')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${accent.text}`}>{Math.round(totalScore / Math.max(1, status === 'result' ? currentIdx + 1 : currentIdx))}</p>
@@ -279,25 +286,43 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
           ))}
         </div>
 
-        {/* Frase esperada */}
+        {/* Botón grande de audio — el "enunciado" a repetir */}
         <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-5 text-center">
-          <p className="text-xs text-[#928a76] mb-2">{t('pronunciation_say_this', 'Di esto en voz alta')}</p>
-          <p className="text-3xl font-bold leading-snug mb-2">{renderExpected()}</p>
-          <p className="text-sm text-[#5a8f72] mb-1">{current.pinyin}</p>
-          <p className="text-xs text-[#928a76] italic">
-            {current.translations?.[i18n.language] || current.translations?.es}
-          </p>
-          {/* Botón para oír la pronunciación correcta */}
+          <p className="text-xs text-[#928a76] mb-3">{t('echo_listen_prompt', 'Escucha y repite')}</p>
           <button
-            onClick={handlePlayCorrect}
-            className="mt-3 text-xs px-3 py-1.5 rounded-lg bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] transition-colors inline-flex items-center gap-1.5"
-            aria-label={t('pronunciation_play_correct', 'Oír pronunciación correcta')}
+            onClick={handlePlay}
+            aria-label={t('echo_replay', 'Repetir audio')}
+            className="mx-auto mb-1 flex items-center justify-center rounded-full transition active:scale-95"
+            style={{ width: 96, height: 96, background: '#2f6b4a', color: '#f3d27a', border: 0, cursor: 'pointer', boxShadow: '0 8px 24px -8px rgba(31,74,51,0.55)' }}
           >
-            <span>🔊</span> {t('pronunciation_play_correct', 'Oír pronunciación')}
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
           </button>
+
+          {/* Frase: oculta hasta el intento (o "Rendirse") */}
+          <div className="mt-4 min-h-[64px] flex flex-col items-center justify-center">
+            {revealed ? (
+              <>
+                <p className="text-3xl font-bold leading-snug mb-2">{renderExpected()}</p>
+                <p className="text-sm text-[#5a8f72] mb-1">{current.pinyin}</p>
+                <p className="text-xs text-[#928a76] italic">
+                  {current.translations?.[i18n.language] || current.translations?.es}
+                </p>
+              </>
+            ) : (
+              <button
+                onClick={handleReveal}
+                className="text-xs px-3 py-1.5 rounded-lg bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] transition-colors"
+              >
+                {t('echo_reveal', 'No la pillo — mostrar frase')}
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Resultado */}
+        {/* Resultado de lo que dijo el usuario */}
         {scoreInfo && (
           <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
             <div className="flex items-baseline justify-between mb-2">
@@ -347,7 +372,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
                 ? t('pronunciation_listening', 'Escuchando…')
                 : status === 'processing'
                   ? t('pronunciation_processing', 'Procesando…')
-                  : t('pronunciation_record', 'Grabar')}
+                  : t('echo_record', 'Repetir')}
             </button>
           ) : (
             <>

@@ -945,6 +945,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
   if (fase === 'resultado') {
     return (
       <GameResults
+        gameId="reading-comprehension"
         title="阅读理解"
         subtitle={historiaActiva?.titulo}
         correct={resultados.correctas}

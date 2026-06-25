@@ -22,6 +22,8 @@ const DialogueOrder        = lazy(() => import('./DialogueOrder.jsx'));
 const FindIntruder         = lazy(() => import('./FindIntruder.jsx'));
 const PronunciationPractice = lazy(() => import('./PronunciationPractice.jsx'));
 const DictationGame         = lazy(() => import('./DictationGame.jsx'));
+const ToneEar               = lazy(() => import('./ToneEar.jsx'));
+const EchoSpeaking          = lazy(() => import('./EchoSpeaking.jsx'));
 const ReadingComprehension  = lazy(() => import('./ReadingComprehension.jsx'));
 
 /**
@@ -104,6 +106,24 @@ export const MINIGAMES = [
   {
     id: 'dictation-game',
     component: DictationGame,
+    buildProps: (ctx) => ({
+      goBack: backToMinigames(ctx),
+      characters: ctx.characters,
+      speak: ctx.speak,
+      onTrackResult: ctx.onTrackResult,
+    }),
+  },
+  {
+    id: 'echo-speaking',
+    component: EchoSpeaking,
+    buildProps: (ctx) => ({
+      goBack: backToMinigames(ctx),
+      selectedLesson: ctx.selectedLesson,
+    }),
+  },
+  {
+    id: 'tones-ear',
+    component: ToneEar,
     buildProps: (ctx) => ({
       goBack: backToMinigames(ctx),
       characters: ctx.characters,

@@ -128,6 +128,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   if (isFinished) {
     return (
       <GameResults
+        gameId="pinyin-connection"
         title={t('minigames_time_up_message')}
         subtitle={t('minigames_pinyin_connection_title')}
         correct={correctCount}

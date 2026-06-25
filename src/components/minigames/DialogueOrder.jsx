@@ -129,6 +129,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="dialogue-order"
         title={t('dialogue_results_title')}
         subtitle={t('dialogue_results_subtitle')}
         correct={score}

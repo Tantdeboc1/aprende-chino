@@ -115,6 +115,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   if (isFinished) {
     return (
       <GameResults
+        gameId="complete-sentence"
         title={t('complete_results_title')}
         subtitle={t('complete_results_subtitle')}
         correct={score}

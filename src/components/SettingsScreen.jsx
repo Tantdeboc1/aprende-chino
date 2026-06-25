@@ -203,7 +203,11 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const handleGenderChange = (g) => applyProfilePatch({ gender: g });
 
   const handleAvatarChange = (avatarId) => {
-    applyProfilePatch({ avatarId });
+    // Elegir un avatar de forma explícita significa "quiero este avatar":
+    // desactivamos el uso de la foto de Google para que el cambio se vea de
+    // inmediato. Si no, resolveAvatarSrc seguiría priorizando la foto de
+    // Google (useGooglePhoto arranca en true) y el avatar nunca aparecería.
+    applyProfilePatch({ avatarId, useGooglePhoto: false });
     setShowPicker(false);
   };
 
