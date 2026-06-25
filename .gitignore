@@ -18,3 +18,5 @@ src/data/cultural/
 # Datos de trazos de HanziWriter copiados de node_modules/hanzi-writer-data.
 public/hanzi-data/
 
+# Git worktrees creados por Claude Code (no deben commitearse)
+.claude/worktrees/
