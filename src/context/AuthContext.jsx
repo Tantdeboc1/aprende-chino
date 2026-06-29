@@ -104,6 +104,11 @@ export function AuthProvider({ children }) {
         } catch (e) {
           console.warn('Sync inicial falló:', e);
         }
+        // Publica el perfil social (código de amigo + stats visibles). Best
+        // effort y diferido: si falla, la app sigue; se reintenta en cada push.
+        import('@/lib/socialStore.js')
+          .then(s => s.syncPublicProfile({ uid: fbUser.uid, photoURL: fbUser.photoURL }))
+          .catch(e => console.warn('Sync perfil público falló:', e));
         setUser(fbUser);
         setMode('google');
         setRemoteRev(r => r + 1);
@@ -212,6 +217,9 @@ export function AuthProvider({ children }) {
     // Firestore. Sin esto, la siguiente cuenta que entre en este
     // dispositivo heredaría (y subiría a su doc) el progreso del anterior.
     clearLocalUserData();
+    // Limpia la caché social (código de amigo memorizado) para que la
+    // siguiente cuenta no reutilice el código del usuario anterior.
+    try { const s = await import('@/lib/socialStore.js'); s.clearSocialCache(); } catch {}
     setMode(null);
   }, []);
 
@@ -221,6 +229,13 @@ export function AuthProvider({ children }) {
       await pushRemoteUser(user.uid, snapshotLocal());
     } catch (e) {
       console.warn('Push remoto falló:', e);
+    }
+    // Mantiene el perfil público (nivel, XP, racha) al día para los amigos.
+    try {
+      const s = await import('@/lib/socialStore.js');
+      await s.syncPublicProfile({ uid: user.uid, photoURL: user.photoURL });
+    } catch (e) {
+      console.warn('Sync perfil público falló:', e);
     }
   }, [mode, user]);
 

@@ -12,6 +12,7 @@ const WelcomeFlow = lazy(() => import('./components/WelcomeFlow.jsx'));
 const LessonDetail = lazy(() => import('./components/LessonDetail.jsx'));
 const SettingsScreen = lazy(() => import('./components/SettingsScreen.jsx'));
 const ProfileScreen = lazy(() => import('./components/ProfileScreen.jsx'));
+const FriendsScreen = lazy(() => import('./components/FriendsScreen.jsx'));
 const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
 import SplashScreen from './components/SplashScreen.jsx';
 const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
@@ -191,11 +192,17 @@ export default function App() {
       setPrevScreen(prev => prev || 'home');
       setScreen('settings');
     };
+    const toFriends = () => {
+      setPrevScreen('profile');
+      setScreen('friends');
+    };
     window.addEventListener('open-profile', toProfile);
     window.addEventListener('open-settings', toSettings);
+    window.addEventListener('open-friends', toFriends);
     return () => {
       window.removeEventListener('open-profile', toProfile);
       window.removeEventListener('open-settings', toSettings);
+      window.removeEventListener('open-friends', toFriends);
     };
   }, []);
 
@@ -642,6 +649,22 @@ export default function App() {
               progress={progress}
               allCharacters={allCharacters}
               onOpenSettings={() => { setPrevScreen('profile'); setScreen('settings'); }}
+            />
+          </Suspense>
+        </ErrorBoundary>
+      </Layout>
+    );
+  }
+
+  // ── FRIENDS (amistades) ──────────────────────────────────────────────────────
+  if (screen === 'friends') {
+    return (
+      <Layout activeScreen="profile" onNavigate={handleBottomNav}>
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <FriendsScreen
+              userName={userName}
+              onBack={() => setScreen('profile')}
             />
           </Suspense>
         </ErrorBoundary>
