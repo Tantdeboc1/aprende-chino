@@ -97,7 +97,7 @@ export default function FriendsScreen({ userName, onBack }) {
     return (
       <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
         <JTopBar left={<JMark />} />
-        <div style={{ padding: '6px 20px 24px' }}>
+        <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
           {onBack && <BackButton label={t('friends_back', 'Perfil')} onClick={onBack} />}
           <JSection label={t('friends_title', 'Amigos')} cn="朋友" />
           <JCard>
@@ -163,7 +163,7 @@ export default function FriendsScreen({ userName, onBack }) {
   return (
     <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
       <JTopBar left={<JMark />} />
-      <div style={{ padding: '6px 20px 24px' }}>
+      <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
         {onBack && <BackButton label={t('friends_back', 'Perfil')} onClick={onBack} />}
 
         <h1 style={{ margin: '10px 0 0', fontWeight: 700, fontSize: 26, letterSpacing: '-0.025em', color: J.ink }}>
@@ -176,7 +176,7 @@ export default function FriendsScreen({ userName, onBack }) {
         {/* ─── Mi código de amigo ──────────────────────────────────────────── */}
         <JSection label={t('friends_my_code', 'Tu código de amigo')} cn="好友码" />
         <div style={{
-          background: J.jade, color: J.paperHi, borderRadius: 18, padding: '18px 20px',
+          background: J.jade, color: J.onAccent, borderRadius: 18, padding: '18px 20px',
           boxShadow: '0 6px 16px -6px rgba(31,74,51,0.5)',
         }}>
           <JLabel color={J.butter}>{t('friends_my_code', 'Tu código de amigo')}</JLabel>
@@ -189,7 +189,7 @@ export default function FriendsScreen({ userName, onBack }) {
           <div className="flex gap-2" style={{ marginTop: 14 }}>
             <button onClick={handleCopy} disabled={!myCode}
               style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: 0,
-                       background: 'rgba(255,255,255,0.16)', color: J.paperHi, fontSize: 13,
+                       background: 'rgba(255,255,255,0.16)', color: J.onAccent, fontSize: 13,
                        fontWeight: 700, cursor: myCode ? 'pointer' : 'default' }}>
               {copied ? t('friends_copied', '¡Copiado!') : t('friends_copy', 'Copiar')}
             </button>
@@ -221,7 +221,7 @@ export default function FriendsScreen({ userName, onBack }) {
           />
           <button type="submit" disabled={busy}
             style={{ padding: '12px 18px', borderRadius: 12, border: 0, background: J.red,
-                     color: J.paperHi, fontSize: 14, fontWeight: 700,
+                     color: J.onAccent, fontSize: 14, fontWeight: 700,
                      cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.7 : 1 }}>
             {t('friends_add_button', 'Enviar')}
           </button>
@@ -251,7 +251,7 @@ export default function FriendsScreen({ userName, onBack }) {
                     </div>
                     <button onClick={() => acceptRequest(req)} aria-label={t('friends_accept', 'Aceptar')}
                       style={{ padding: '8px 14px', borderRadius: 10, border: 0, background: J.jade,
-                               color: J.paperHi, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>
+                               color: J.onAccent, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>
                       {t('friends_accept', 'Aceptar')}
                     </button>
                     <button onClick={() => declineRequest(req)} aria-label={t('friends_decline', 'Rechazar')}

@@ -199,15 +199,15 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           <div className="mb-6">
             <button
               onClick={goBack}
-              className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
+              className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]"
             >
               <ArrowLeft className="mr-2" />
               {t('writing_back_to_writing')}
             </button>
           </div>
-          <div className="text-center text-[#1c1813]">
+          <div className="text-center text-[var(--ink)]">
             <h2 className="text-2xl font-bold mb-4">{t('writing_no_radicals_available')}</h2>
-            <p className="text-[#5b5446]">
+            <p className="text-[var(--ink-soft)]">
               {t('writing_no_radicals_description')}
             </p>
           </div>
@@ -223,7 +223,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         <div className="mb-6">
           <button
             onClick={goBack}
-            className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
+            className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]"
           >
             <ArrowLeft className="mr-2" />
             {t('writing_back_to_writing')}
@@ -232,13 +232,13 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
 
         {/* Radical Info */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-[#1c1813] mb-2">
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-2">
             {currentRadical.char}
           </h2>
-          <p className="text-xl text-[#5b5446] mb-1">
+          <p className="text-xl text-[var(--ink-soft)] mb-1">
             {currentRadical.pinyin} - {currentRadical.meaning}
           </p>
-          <p className="text-[#928a76]">
+          <p className="text-[var(--mute)]">
             {currentIndex + 1} de {validRadicals.length} • {currentRadical.strokeCount} trazos
           </p>
         </div>
@@ -249,8 +249,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             onClick={() => handleTabChange('view')}
             className={`flex-1 py-3 font-semibold transition-colors ${
               activeTab === 'view'
-                ? 'text-[#2f6b4a] border-b-2 border-[#2f6b4a]'
-                : 'text-[#928a76] hover:text-[#5b5446]'
+                ? 'text-[var(--jade)] border-b-2 border-[var(--jade)]'
+                : 'text-[var(--mute)] hover:text-[var(--ink-soft)]'
             }`}
           >
             {t('writing_view_order_tab')}
@@ -259,8 +259,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             onClick={() => handleTabChange('practice')}
             className={`flex-1 py-3 font-semibold transition-colors ${
               activeTab === 'practice'
-                ? 'text-[#c8392f] border-b-2 border-[#c8392f]'
-                : 'text-[#928a76] hover:text-[#5b5446]'
+                ? 'text-[var(--red)] border-b-2 border-[var(--red)]'
+                : 'text-[var(--mute)] hover:text-[var(--ink-soft)]'
             }`}
           >
             {t('writing_practice_tab')}
@@ -268,7 +268,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         </div>
 
         {/* Writing Area */}
-        <div className="bg-white dark:bg-[#fbf5e6] rounded-2xl p-8 shadow-lg mb-6">
+        <div className="bg-white dark:bg-[var(--paper-hi)] rounded-2xl p-8 shadow-lg mb-6">
           <div
             ref={writerRef}
             className="mx-auto mb-6 flex justify-center items-center bg-transparent rounded-lg"
@@ -284,13 +284,13 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
               <button
                 onClick={animateCharacter}
                 disabled={isPlaying}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] disabled:bg-[#928a76] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] disabled:bg-[var(--mute)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {isPlaying ? t('writing_animating_button') : t('writing_view_stroke_order_button')}
               </button>
               <button
                 onClick={() => speakChinese({ hanzi: currentRadical.char, pinyin: currentRadical.pinyin })}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_pronounce_button')}
               </button>
@@ -300,19 +300,19 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
               <button
                 onClick={startPractice}
                 disabled={isPlaying}
-                className="bg-[#c8392f] hover:bg-[#8b1f1a] disabled:bg-[#928a76] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--red)] hover:bg-[var(--red-deep)] disabled:bg-[var(--mute)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {isPlaying ? t('writing_practicing_button') : t('writing_start_practice_button')}
               </button>
               <button
                 onClick={resetPractice}
-                className="bg-[#b88a3e] hover:bg-[#b88a3e] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--sand)] hover:bg-[var(--sand)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_reset_button')}
               </button>
               <button
                 onClick={() => speakChinese({ hanzi: currentRadical.char, pinyin: currentRadical.pinyin })}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_pronounce_button')}
               </button>
@@ -321,9 +321,9 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         </div>
 
         {/* Radical Info */}
-        <div className="bg-[#fbf5e6] rounded-xl p-6 mb-6">
-          <h3 className="text-xl font-bold text-[#1c1813] mb-3">{t('writing_radical_info_header')}</h3>
-          <div className="grid md:grid-cols-2 gap-4 text-[#5b5446]">
+        <div className="bg-[var(--paper-hi)] rounded-xl p-6 mb-6">
+          <h3 className="text-xl font-bold text-[var(--ink)] mb-3">{t('writing_radical_info_header')}</h3>
+          <div className="grid md:grid-cols-2 gap-4 text-[var(--ink-soft)]">
             <div>
               <p><strong>{t('writing_meaning_label')}</strong> {currentRadical.meaning}</p>
               <p><strong>{t('writing_pinyin_label')}</strong> {currentRadical.pinyin}</p>
@@ -335,7 +335,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           </div>
           {currentRadical.examples && (
             <div className="mt-4 pt-4 border-t border-[rgba(28,24,19,0.10)]">
-              <p className="text-[#1c1813]"><strong>{t('writing_examples_label')}</strong> {currentRadical.examples}</p>
+              <p className="text-[var(--ink)]"><strong>{t('writing_examples_label')}</strong> {currentRadical.examples}</p>
             </div>
           )}
         </div>
@@ -345,14 +345,14 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           <button
             onClick={prevRadical}
             disabled={currentIndex === 0}
-            className="bg-[#bdb39a] hover:bg-[#f8f1de] disabled:bg-[#fbf5e6] text-[#1c1813] px-6 py-2 rounded-lg transition-colors"
+            className="bg-[var(--mute2)] hover:bg-[var(--paper-hi2)] disabled:bg-[var(--paper-hi)] text-[var(--ink)] px-6 py-2 rounded-lg transition-colors"
           >
             ← {t('writing_previous_button')}
           </button>
           <button
             onClick={nextRadical}
             disabled={currentIndex === validRadicals.length - 1}
-            className="bg-[#bdb39a] hover:bg-[#f8f1de] disabled:bg-[#fbf5e6] text-[#1c1813] px-6 py-2 rounded-lg transition-colors"
+            className="bg-[var(--mute2)] hover:bg-[var(--paper-hi2)] disabled:bg-[var(--paper-hi)] text-[var(--ink)] px-6 py-2 rounded-lg transition-colors"
           >
             {t('writing_next_button')} →
           </button>

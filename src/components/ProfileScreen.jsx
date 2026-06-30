@@ -151,7 +151,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
         }
       />
 
-      <div style={{ padding: '6px 20px 24px' }}>
+      <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
 
         {/* ─── Cabecera con avatar + nombre ──────────────────────────────── */}
         <div style={{ marginTop: 8, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -192,7 +192,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
         {/* ─── Nivel y XP ────────────────────────────────────────────────── */}
         <JSection label={t('settings_section_level')} cn="等级" />
         <div style={{
-          background: J.jade, color: J.paperHi,
+          background: J.jade, color: J.onAccent,
           borderRadius: 18, padding: '18px 20px',
           marginBottom: 4,
           position: 'relative', overflow: 'hidden',
@@ -216,7 +216,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
                 <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                   {t('settings_xp_total')}
                 </span>
-                <div style={{ fontSize: 22, fontWeight: 800, color: J.paperHi, marginTop: 4, letterSpacing: '-0.02em' }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: J.onAccent, marginTop: 4, letterSpacing: '-0.02em' }}>
                   {(streak.totalXP || 0).toLocaleString()}
                 </div>
               </div>
@@ -251,7 +251,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
         {/* ─── Streak hero ─────────────────────────────────────────────── */}
         {streak.currentStreak > 0 && (
           <div style={{
-            background: J.red, color: J.paperHi, borderRadius: 22,
+            background: J.red, color: J.onAccent, borderRadius: 22,
             padding: '20px 22px 18px', position: 'relative', overflow: 'hidden',
             marginTop: 14, marginBottom: 18, boxShadow: '0 8px 24px rgba(200,57,47,0.30)',
           }}>
@@ -271,7 +271,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
                   <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                     {t('settings_streak_record')}
                   </span>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: J.paperHi, marginTop: 6, letterSpacing: '-0.02em' }}>
+                  <div style={{ fontSize: 24, fontWeight: 800, color: J.onAccent, marginTop: 6, letterSpacing: '-0.02em' }}>
                     {streak.longestStreak || streak.currentStreak}
                   </div>
                 </div>
@@ -342,35 +342,13 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           </div>
         </JCard>
 
-        {/* ─── Amigos ─────────────────────────────────────────────────── */}
-        {mode === 'google' && (
-          <button
-            onClick={() => window.dispatchEvent(new CustomEvent('open-friends'))}
-            style={{
-              width: '100%', marginTop: 18,
-              padding: '14px 18px', borderRadius: 14, border: `1px solid ${J.jadeMid}`,
-              background: J.jadeBg, color: J.jadeDeep,
-              fontSize: 14, fontWeight: 700, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-            {t('friends_title', 'Amigos')}
-          </button>
-        )}
-
         {/* ─── Compartir perfil ───────────────────────────────────────── */}
         <button
           onClick={handleShare}
           style={{
             width: '100%', marginTop: 18,
             padding: '14px 18px', borderRadius: 14, border: 0,
-            background: J.red, color: J.paperHi,
+            background: J.red, color: J.onAccent,
             fontSize: 14, fontWeight: 700, cursor: 'pointer',
             boxShadow: '0 4px 12px -4px rgba(200,57,47,0.45)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,

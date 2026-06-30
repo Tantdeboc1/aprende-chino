@@ -2,7 +2,7 @@
 // Bottom-sheet con trazos animados HanziWriter al tocar una entrada del diccionario
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { J } from '@/styles/tokens';
+import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 const LESSON_BADGE = {
@@ -20,24 +20,25 @@ function HanziWriterCanvas({ char }) {
   useEffect(() => {
     if (!char || !containerRef.current) return;
     setStatus('loading');
-
-    // Limpiar instancia anterior
-    if (containerRef.current) containerRef.current.innerHTML = '';
     writerRef.current = null;
 
     let cancelled = false;
+    // Host imperativo (ver HomeScreen): HanziWriter pinta su SVG en este div,
+    // fuera del control de React, para evitar el 'removeChild' al cerrar la hoja.
+    const host = document.createElement('div');
+    containerRef.current.appendChild(host);
 
     import('hanzi-writer').then(({ default: HanziWriter }) => {
-      if (cancelled || !containerRef.current) return;
+      if (cancelled) return;
       try {
-        const writer = HanziWriter.create(containerRef.current, char, {
+        const writer = HanziWriter.create(host, char, {
           charDataLoader: hanziCharDataLoader,
           width: 180,
           height: 180,
           padding: 10,
-          strokeColor: J.ink,
-          radicalColor: J.red,
-          outlineColor: J.mute2,
+          strokeColor: resolveColor(J.ink),
+          radicalColor: resolveColor(J.red),
+          outlineColor: resolveColor(J.mute2),
           drawingWidth: 4,
           strokeAnimationSpeed: 1,
           delayBetweenStrokes: 100,
@@ -61,7 +62,11 @@ function HanziWriterCanvas({ char }) {
       if (!cancelled) setStatus('error');
     });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      try { writerRef.current?.pauseAnimation?.(); } catch { /* noop */ }
+      try { host.remove(); } catch { /* noop */ }
+    };
   }, [char]);
 
   const handleAnimate = () => {

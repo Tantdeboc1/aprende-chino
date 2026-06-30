@@ -85,7 +85,7 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
               // (p. ej. initGame(filter)) y recibir el evento los rompía.
               onClick={() => onPlayAgain?.()}
               className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"
-              style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+              style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
             >
               {t('minigames_play_again_button')}
             </button>

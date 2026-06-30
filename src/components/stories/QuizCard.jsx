@@ -64,7 +64,7 @@ export default function QuizCard({
       padding: '22px 22px 18px',
       backdropFilter: 'blur(8px)',
       WebkitBackdropFilter: 'blur(8px)',
-      color: J.paperHi,
+      color: J.onAccent,
     }}>
       <div style={{ marginBottom: 16 }}>
         <div className="font-cn" style={{ fontSize: 24, fontWeight: 700, lineHeight: 1.35 }}>

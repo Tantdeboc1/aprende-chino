@@ -1,40 +1,86 @@
 @import "tailwindcss";
 
+/* ─── Tema claro (Jade Pop) ────────────────────────────────────────────────
+   Origen de verdad de TODOS los colores. styles/tokens.js (`J`) referencia
+   estas variables, así que los ~1500 estilos inline heredan el tema solo.
+   El bloque .dark más abajo solo redefine los NEUTROS (papel/tinta/grises);
+   los acentos (jade/rojo/arena/oro) se mantienen para no romper contrastes. */
 :root {
   color-scheme: light;
+  /* Superficies / papel */
   --paper: #f4ecdc;
   --paper-hi: #fbf5e6;
+  --paper-hi2: #f8f1de;
+  /* Texto / tinta */
   --ink: #1c1813;
   --ink-soft: #5b5446;
   --mute: #928a76;
+  --mute2: #bdb39a;
+  --mute-strong: #6e6757;        /* texto secundario legible (AA) */
+  /* Líneas / bordes */
   --hair: rgba(28,24,19,0.10);
-  /* Variantes con contraste AA suficiente sobre fondos paper/paperHi */
-  --mute-strong: #6e6757;       /* texto secundario que debe ser legible */
+  --hair-s: rgba(28,24,19,0.18);
   --ui-border: rgba(28,24,19,0.32); /* bordes de inputs visibles (≥3:1) */
+  /* Acentos (no se invierten en oscuro) */
   --jade: #2f6b4a;
   --jade-deep: #1f4a33;
   --jade-bg: #cfe1d3;
+  --jade-mid: #5a8f72;
   --red: #c8392f;
   --red-deep: #8b1f1a;
   --red-bg: #f0d6cf;
   --sand: #b88a3e;
   --sand-deep: #7a5722;
   --sand-bg: #e8d4a8;
+  --sand-bg2: #f0e0bc;
   --butter: #f0c862;
+  /* Texto/iconos SIEMPRE claros sobre superficies de color (jade/rojo/arena).
+     Separado de --paper-hi para que la superficie pueda oscurecerse sin
+     arrastrar el texto que va encima de los acentos. */
+  --on-accent: #fbf5e6;
+  /* Sombras en capas (cálidas) — pulido cohesivo */
+  --shadow-sm: 0 1px 2px rgba(28,24,19,0.06), 0 1px 3px rgba(28,24,19,0.09);
+  --shadow-md: 0 2px 6px -2px rgba(28,24,19,0.10), 0 6px 16px -6px rgba(28,24,19,0.18);
+  --shadow-lg: 0 8px 20px -6px rgba(28,24,19,0.16), 0 16px 36px -10px rgba(28,24,19,0.24);
+}
+
+/* ─── Tema oscuro «Tinta» ───────────────────────────────────────────────────
+   Tinta clara sobre carbón cálido. Solo neutros; los acentos quedan igual. */
+.dark {
+  color-scheme: dark;
+  --paper: #15120d;
+  --paper-hi: #211c15;
+  --paper-hi2: #2a241b;
+  --ink: #f1ead9;
+  --ink-soft: #c5bca6;
+  --mute: #9c927d;
+  --mute2: #6f6857;
+  --mute-strong: #b3a98f;
+  --hair: rgba(255,255,255,0.09);
+  --hair-s: rgba(255,255,255,0.16);
+  --ui-border: rgba(255,255,255,0.26);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40);
+  --shadow-md: 0 2px 6px -2px rgba(0,0,0,0.40), 0 6px 16px -6px rgba(0,0,0,0.55);
+  --shadow-lg: 0 8px 20px -6px rgba(0,0,0,0.50), 0 16px 36px -10px rgba(0,0,0,0.65);
 }
 
 html {
   color-scheme: light;
 }
+html.dark { color-scheme: dark; }
 
 body {
-  background: var(--paper) !important;
+  background-color: var(--paper) !important;
+  /* Grano washi muy tenue para que el fondo no sea un color plano. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat: repeat;
   color: var(--ink) !important;
   min-height: 100vh;
   margin: 0;
   font-family: "Geist", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -80,6 +126,40 @@ textarea::placeholder {
 /* CJK font utility */
 .font-cn { font-family: "Noto Sans SC", "PingFang SC", sans-serif; }
 .font-cn-serif { font-family: "Noto Serif SC", "Songti SC", serif; }
+
+/* ─── Entrada escalonada (stagger) ──────────────────────────────────────────
+   Aplica .j-rise a un contenedor: sus hijos directos entran con un fundido
+   hacia arriba en cascada. Se reproduce al montar (cambio de pantalla). */
+@keyframes jRise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.j-rise > * {
+  animation: jRise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.j-rise > *:nth-child(1) { animation-delay: 40ms; }
+.j-rise > *:nth-child(2) { animation-delay: 80ms; }
+.j-rise > *:nth-child(3) { animation-delay: 120ms; }
+.j-rise > *:nth-child(4) { animation-delay: 160ms; }
+.j-rise > *:nth-child(5) { animation-delay: 200ms; }
+.j-rise > *:nth-child(6) { animation-delay: 240ms; }
+.j-rise > *:nth-child(7) { animation-delay: 280ms; }
+.j-rise > *:nth-child(8) { animation-delay: 320ms; }
+.j-rise > *:nth-child(n+9) { animation-delay: 360ms; }
+
+/* ─── Feedback táctil ───────────────────────────────────────────────────────
+   Todos los botones se "hunden" levemente al pulsar (los que ya traen su
+   propio active:scale de Tailwind ganan por especificidad y conservan el suyo).
+   Las tarjetas clicables (.j-press-card) se elevan al pasar el cursor y se
+   hunden al pulsar. */
+button { transition: transform 0.12s ease; }
+button:active:not(:disabled) { transform: scale(0.97); }
+
+.j-press-card { transition: transform 0.16s ease, box-shadow 0.22s ease; }
+@media (hover: hover) {
+  .j-press-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+}
+.j-press-card:active { transform: scale(0.99); }
 
 /* Accesibilidad — respeta "reducir movimiento" del sistema (WCAG 2.3.3).
    Neutraliza animaciones y transiciones CSS (fadeIn, slide-up, spinner,

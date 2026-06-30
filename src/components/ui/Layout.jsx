@@ -5,7 +5,7 @@ import BottomNav from './BottomNav.jsx';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 
 // Tabs del BottomNav en orden izquierda→derecha
-const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'profile'];
+const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'friends', 'profile'];
 
 // Mapeo: pantalla activa → índice en NAV_TABS (para swipe)
 function getTabIndex(screen) {

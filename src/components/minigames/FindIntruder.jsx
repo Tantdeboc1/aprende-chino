@@ -15,7 +15,7 @@ import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
 import { LESSON_COLORS, LESSON_NUMBERS } from '@/styles/lessonColors.js';
-const DEFAULT_COLOR = { bg: 'bg-[#c8392f]', border: 'border-[#c8392f]', text: 'text-[#c8392f]' };
+const DEFAULT_COLOR = { bg: 'bg-[var(--red)]', border: 'border-[var(--red)]', text: 'text-[var(--red)]' };
 
 function buildRound(lessonFilter) {
   const pool = lessonFilter !== null
@@ -125,10 +125,10 @@ export default function FindIntruder({ goBack, selectedLesson }) {
 
   if (rounds.length === 0 || !current) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center gap-4 p-6">
+      <div className="min-h-screen bg-[var(--paper)] flex flex-col items-center justify-center gap-4 p-6">
         <p className="text-4xl"></p>
-        <p className="text-[#928a76] text-center">{t('sov_no_data')}</p>
-        <button onClick={() => setLessonFilter(null)} className="px-4 py-2 rounded-lg bg-[#f8f1de] text-[#5b5446] text-sm hover:bg-[#bdb39a] transition-colors">
+        <p className="text-[var(--mute)] text-center">{t('sov_no_data')}</p>
+        <button onClick={() => setLessonFilter(null)} className="px-4 py-2 rounded-lg bg-[var(--paper-hi2)] text-[var(--ink-soft)] text-sm hover:bg-[var(--mute2)] transition-colors">
           {t('sov_all_lessons')}
         </button>
       </div>
@@ -136,24 +136,24 @@ export default function FindIntruder({ goBack, selectedLesson }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4ecdc] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-8">
       {/* Header */}
-      <div className={`bg-[#fbf5e6] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
-        <button onClick={goBack} className="flex items-center gap-1.5 text-[#928a76] hover:text-[#1c1813] text-sm mb-3 transition-colors">
+      <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
+        <button onClick={goBack} className="flex items-center gap-1.5 text-[var(--mute)] hover:text-[var(--ink)] text-sm mb-3 transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           {t('sov_back')}
         </button>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#1c1813]">{t('intruder_title')}</h1>
-            <p className="text-sm text-[#928a76]">{t('intruder_subtitle')}</p>
+            <h1 className="text-lg font-bold text-[var(--ink)]">{t('intruder_title')}</h1>
+            <p className="text-sm text-[var(--mute)]">{t('intruder_subtitle')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${accent.text}`}>{score}</p>
-            <p className="text-xs text-[#928a76]">{currentIdx + 1}/{rounds.length}</p>
+            <p className="text-xs text-[var(--mute)]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
-        <div className="mt-3 h-1.5 bg-[#f8f1de] rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[var(--paper-hi2)] rounded-full overflow-hidden">
           <div className={`h-full ${accent.bg} rounded-full transition-all duration-500`} style={{ width: `${((currentIdx + (result ? 1 : 0)) / rounds.length) * 100}%` }} />
         </div>
       </div>
@@ -161,27 +161,27 @@ export default function FindIntruder({ goBack, selectedLesson }) {
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-5">
         {/* Filtro */}
         <div className="flex gap-2 flex-wrap">
-          <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[#c8392f] text-[#fbf5e6] border-transparent' : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
+          <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[var(--red)] text-[var(--on-accent)] border-transparent' : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
             {t('sov_all_lessons')}
           </button>
           {LESSON_NUMBERS.map(n => (
-            <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[#fbf5e6] border-transparent` : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
+            <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[var(--on-accent)] border-transparent` : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
               L{n}
             </button>
           ))}
         </div>
 
         {/* Instrucción */}
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4 text-center">
-          <p className="text-[#1c1813] font-semibold text-base">{t('intruder_question')}</p>
-          <p className="text-[#928a76] text-xs mt-1">{t('intruder_question_hint')}</p>
+        <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4 text-center">
+          <p className="text-[var(--ink)] font-semibold text-base">{t('intruder_question')}</p>
+          <p className="text-[var(--mute)] text-xs mt-1">{t('intruder_question_hint')}</p>
         </div>
 
         {/* Pista */}
         {showHint && (
-          <div className="bg-[#e8d4a8]/20 border border-[#b88a3e]/50 rounded-xl p-3">
-            <p className="text-xs text-[#928a76] mb-0.5">{t('sov_hint_label')}</p>
-            <p className="text-[#b88a3e] text-sm">{current.hint?.[lang] || current.hint?.es}</p>
+          <div className="bg-[var(--sand-bg)]/20 border border-[var(--sand)]/50 rounded-xl p-3">
+            <p className="text-xs text-[var(--mute)] mb-0.5">{t('sov_hint_label')}</p>
+            <p className="text-[var(--sand)] text-sm">{current.hint?.[lang] || current.hint?.es}</p>
           </div>
         )}
 
@@ -190,11 +190,11 @@ export default function FindIntruder({ goBack, selectedLesson }) {
           {current.shuffledItems.map((item, i) => {
             const isIntruder = item === current.intruder;
             const isSelected = selected === item;
-            let cardClass = 'bg-[#fbf5e6] border-[rgba(28,24,19,0.18)] hover:border-[#928a76]';
+            let cardClass = 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.18)] hover:border-[var(--mute)]';
             if (result) {
-              if (isIntruder) cardClass = 'bg-[#f0d6cf]/40 border-[#c8392f]';
-              else if (isSelected) cardClass = 'bg-[#f0d6cf]/30 border-[#c8392f]';
-              else cardClass = 'bg-[#cfe1d3]/20 border-[#2f6b4a]/50';
+              if (isIntruder) cardClass = 'bg-[var(--red-bg)]/40 border-[var(--red)]';
+              else if (isSelected) cardClass = 'bg-[var(--red-bg)]/30 border-[var(--red)]';
+              else cardClass = 'bg-[var(--jade-bg)]/20 border-[var(--jade)]/50';
             }
             return (
               <button
@@ -203,9 +203,9 @@ export default function FindIntruder({ goBack, selectedLesson }) {
                 disabled={!!result}
                 className={`aspect-square rounded-2xl border-2 flex flex-col items-center justify-center transition-all active:scale-95 ${cardClass}`}
               >
-                <span className="text-4xl font-bold text-[#1c1813] mb-1">{item}</span>
+                <span className="text-4xl font-bold text-[var(--ink)] mb-1">{item}</span>
                 {result && isIntruder && (
-                  <span className="text-xs text-[#c8392f] font-bold mt-1">{t('intruder_this_one')}</span>
+                  <span className="text-xs text-[var(--red)] font-bold mt-1">{t('intruder_this_one')}</span>
                 )}
               </button>
             );
@@ -214,25 +214,25 @@ export default function FindIntruder({ goBack, selectedLesson }) {
 
         {/* Feedback */}
         {result === 'correct' && (
-          <div className="bg-[#cfe1d3]/30 border border-[#2f6b4a] rounded-xl p-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-2xl"></span>
-              <p className="text-[#2f6b4a] font-bold text-sm">{t('sov_correct')}</p>
+              <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
             </div>
-            <p className="text-[#5b5446] text-xs">
+            <p className="text-[var(--ink-soft)] text-xs">
               {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
             </p>
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[#f0d6cf]/30 border border-[#c8392f] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-2xl"></span>
-              <p className="text-[#c8392f] font-bold text-sm">{t('sov_incorrect')}</p>
+              <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
             </div>
-            <p className="text-xs text-[#928a76]">{t('intruder_correct_was')}</p>
-            <p className="text-[#1c1813] font-bold text-lg mt-0.5">{current.intruder}</p>
-            <p className="text-[#5b5446] text-xs mt-1">
+            <p className="text-xs text-[var(--mute)]">{t('intruder_correct_was')}</p>
+            <p className="text-[var(--ink)] font-bold text-lg mt-0.5">{current.intruder}</p>
+            <p className="text-[var(--ink-soft)] text-xs mt-1">
               {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
             </p>
           </div>
@@ -243,14 +243,14 @@ export default function FindIntruder({ goBack, selectedLesson }) {
           {!result && (
             <>
               {!showHint && (
-                <button onClick={() => setShowHint(true)} className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
+                <button onClick={() => setShowHint(true)} className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
                   {t('sov_hint_button')}
                 </button>
               )}
             </>
           )}
           {result && (
-            <button onClick={handleNext} className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${result === 'correct' ? 'bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6]' : 'bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446]'}`}>
+            <button onClick={handleNext} className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${result === 'correct' ? 'bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)]' : 'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink-soft)]'}`}>
               {currentIdx + 1 >= rounds.length ? t('sov_see_results') : t('sov_next_button')} →
             </button>
           )}

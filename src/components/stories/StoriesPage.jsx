@@ -115,22 +115,22 @@ export default function StoriesPage({
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       {/* Header */}
       <div style={{
-        background: J.jade, color: J.paperHi,
+        background: J.jade, color: J.onAccent,
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 18px',
       }}>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ background: J.red, color: J.paperHi, fontWeight: 700, fontSize: 14 }}>
+              style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
               故
             </div>
-            <span className="font-bold text-base" style={{ color: J.paperHi }}>Historias</span>
+            <span className="font-bold text-base" style={{ color: J.onAccent }}>Historias</span>
           </div>
           <ProfileBadge variant="dark" />
         </div>
         <div className="mt-3">
-          <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>
+          <h1 className="text-xl font-bold" style={{ color: J.onAccent }}>
             Aprende en contexto
           </h1>
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>

@@ -166,7 +166,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
     return (
       <div className="min-h-screen p-4">
         <Container>
-          <div className="text-center text-[#1c1813]">{t('writing_no_characters_available')}</div>
+          <div className="text-center text-[var(--ink)]">{t('writing_no_characters_available')}</div>
         </Container>
       </div>
     );
@@ -178,7 +178,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         <div className="mb-6">
           <button
             onClick={goBack}
-            className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
+            className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]"
           >
             <ArrowLeft className="mr-2" />
             {t('writing_back_to_writing')}
@@ -186,18 +186,18 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         </div>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-[#1c1813] mb-2">
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-2">
             {currentCharacter.char || currentCharacter.hanzi}
           </h2>
-          <p className="text-xl text-[#5b5446] mb-1">
+          <p className="text-xl text-[var(--ink-soft)] mb-1">
             {currentCharacter.pinyin} - {currentCharacter.meaning}
           </p>
           <div className="flex items-center justify-center gap-3 text-sm">
-            <p className="text-[#928a76]">{currentIndex + 1} de {writableChars.length}</p>
+            <p className="text-[var(--mute)]">{currentIndex + 1} de {writableChars.length}</p>
             {(() => {
               const count = getWritingCount(progress, currentCharacter.char || currentCharacter.hanzi);
               return count > 0 ? (
-                <span className="bg-[#cfe1d3]/40 text-[#2f6b4a] border border-[#2f6b4a]/ px-2 py-0.5 rounded-full text-xs font-semibold">
+                <span className="bg-[var(--jade-bg)]/40 text-[var(--jade)] border border-[var(--jade)]/ px-2 py-0.5 rounded-full text-xs font-semibold">
                   practicado {count}×
                 </span>
               ) : null;
@@ -211,8 +211,8 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
             onClick={() => handleTabChange('view')}
             className={`flex-1 py-3 font-semibold transition-colors ${
               activeTab === 'view'
-                ? 'text-[#c8392f] border-b-2 border-[#c8392f]'
-                : 'text-[#928a76] hover:text-[#5b5446]'
+                ? 'text-[var(--red)] border-b-2 border-[var(--red)]'
+                : 'text-[var(--mute)] hover:text-[var(--ink-soft)]'
             }`}
           >
             {t('writing_view_order_tab')}
@@ -221,8 +221,8 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
             onClick={() => handleTabChange('practice')}
             className={`flex-1 py-3 font-semibold transition-colors ${
               activeTab === 'practice'
-                ? 'text-[#2f6b4a] border-b-2 border-[#2f6b4a]'
-                : 'text-[#928a76] hover:text-[#5b5446]'
+                ? 'text-[var(--jade)] border-b-2 border-[var(--jade)]'
+                : 'text-[var(--mute)] hover:text-[var(--ink-soft)]'
             }`}
           >
             {t('writing_practice_tab')}
@@ -230,7 +230,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         </div>
 
         {/* Área de escritura - CON FONDO TRANSPARENTE */}
-        <div className="bg-white dark:bg-[#fbf5e6] rounded-2xl p-8 shadow-lg mb-6">
+        <div className="bg-white dark:bg-[var(--paper-hi)] rounded-2xl p-8 shadow-lg mb-6">
           <div
             ref={writerRef}
             className="mx-auto mb-6 flex justify-center items-center"
@@ -250,14 +250,14 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
               <button
                 onClick={animateCharacter}
                 disabled={isPlaying}
-                className="bg-[#c8392f] hover:bg-[#8b1f1a] disabled:bg-[#928a76] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--red)] hover:bg-[var(--red-deep)] disabled:bg-[var(--mute)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {isPlaying ? t('writing_animating_button') : t('writing_view_stroke_order_button')}
               </button>
 
               <button
                 onClick={() => speakChinese({ hanzi: currentCharacter.char || currentCharacter.hanzi, pinyin: currentCharacter.pinyin })}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_pronounce_button')}
               </button>
@@ -267,21 +267,21 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
               <button
                 onClick={startPractice}
                 disabled={isPlaying}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] disabled:bg-[#928a76] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] disabled:bg-[var(--mute)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {isPlaying ? t('writing_practicing_button') : t('writing_start_practice_button')}
               </button>
 
               <button
                 onClick={resetPractice}
-                className="bg-[#b88a3e] hover:bg-[#b88a3e] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--sand)] hover:bg-[var(--sand)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_reset_button')}
               </button>
 
               <button
                 onClick={() => speakChinese({ hanzi: currentCharacter.char || currentCharacter.hanzi, pinyin: currentCharacter.pinyin })}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 {t('writing_pronounce_button')}
               </button>
@@ -294,7 +294,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           <button
             onClick={prevCharacter}
             disabled={currentIndex === 0}
-            className="bg-[#bdb39a] hover:bg-[#f8f1de] disabled:bg-[#fbf5e6] text-[#1c1813] px-6 py-2 rounded-lg transition-colors"
+            className="bg-[var(--mute2)] hover:bg-[var(--paper-hi2)] disabled:bg-[var(--paper-hi)] text-[var(--ink)] px-6 py-2 rounded-lg transition-colors"
           >
             ← {t('writing_previous_button')}
           </button>
@@ -302,8 +302,8 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           <button
             onClick={nextCharacter}
             disabled={currentIndex === writableChars.length - 1}
-            className="bg-[#bdb39a] hover:bg-[#f8f1de] disabled:bg-gray
--800 text-[#1c1813] px-6 py-2 rounded-lg transition-colors"
+            className="bg-[var(--mute2)] hover:bg-[var(--paper-hi2)] disabled:bg-gray
+-800 text-[var(--ink)] px-6 py-2 rounded-lg transition-colors"
           >
             {t('writing_next_button')} →
           </button>

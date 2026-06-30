@@ -105,7 +105,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             border: `1px solid ${J.hairS}`,
             maxWidth: 420,
             width: '100%',
-            color: J.paperHi,
+            color: J.onAccent,
           }}>
             <p style={{ fontSize: 11, letterSpacing: '0.16em', color: J.butter, fontWeight: 700, margin: 0 }}>
               TEMA {story.tema} · HISTORIA {story.historia}
@@ -134,7 +134,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                       borderRadius: 999,
                       padding: '4px 10px',
                       fontSize: 12,
-                      color: J.paperHi,
+                      color: J.onAccent,
                     }}>
                       <span className="font-cn">{c?.nombre}</span>
                       {c?.pinyin ? <span style={{ opacity: 0.6, marginLeft: 6 }}>{c.pinyin}</span> : null}
@@ -158,7 +158,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                     style={{
                       background: difficulty === d.id ? J.jade : 'rgba(255,255,255,0.06)',
                       border: `1px solid ${difficulty === d.id ? J.jadeDeep : 'rgba(255,255,255,0.12)'}`,
-                      color: J.paperHi,
+                      color: J.onAccent,
                       borderRadius: 12,
                       padding: '8px 6px',
                       fontSize: 12,
@@ -182,7 +182,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                 marginTop: 20,
                 width: '100%',
                 background: J.red,
-                color: J.paperHi,
+                color: J.onAccent,
                 border: 0,
                 borderRadius: 14,
                 padding: '14px 18px',
@@ -312,7 +312,7 @@ function TopBar({ onExit, title, subtitle, progress }) {
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
         border: '1px solid rgba(255,255,255,0.18)',
-        color: J.paperHi,
+        color: J.onAccent,
         borderRadius: 999,
         padding: '7px 14px',
         fontSize: 12.5,
@@ -333,7 +333,7 @@ function TopBar({ onExit, title, subtitle, progress }) {
         border: '1px solid rgba(255,255,255,0.10)',
       }}>
         <p style={{
-          margin: 0, fontSize: 13, fontWeight: 700, color: J.paperHi, lineHeight: 1.2,
+          margin: 0, fontSize: 13, fontWeight: 700, color: J.onAccent, lineHeight: 1.2,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>{title}</p>
         {subtitle && (

@@ -10,6 +10,11 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import './i18n';
 import { registerSW } from 'virtual:pwa-register';
 import { initErrorTracking } from './utils/errorTracking.js';
+import { initTheme } from './utils/theme.js';
+
+// Aplica el tema guardado ANTES del primer render para evitar parpadeo
+// (no se puede usar script inline en index.html por la CSP).
+initTheme();
 
 // Service worker PWA — solo existe en builds de producción (en dev el
 // plugin está desactivado y registerSW es un no-op). En modo 'prompt'
@@ -21,8 +26,8 @@ registerSW({ immediate: true });
 initErrorTracking();
 
 const Spinner = () => (
-  <div className="fixed inset-0 bg-[#f4ecdc] flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-[#c8392f] border-t-transparent rounded-full animate-spin" />
+  <div className="fixed inset-0 bg-[var(--paper)] flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-[var(--red)] border-t-transparent rounded-full animate-spin" />
   </div>
 );
 

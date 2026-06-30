@@ -25,6 +25,7 @@ const DictationGame         = lazy(() => import('./DictationGame.jsx'));
 const ToneEar               = lazy(() => import('./ToneEar.jsx'));
 const EchoSpeaking          = lazy(() => import('./EchoSpeaking.jsx'));
 const ReadingComprehension  = lazy(() => import('./ReadingComprehension.jsx'));
+const CefrExam              = lazy(() => import('./CefrExam.jsx'));
 
 /**
  * Helper para fabricar el `goBack` típico que devuelve al listado de juegos.
@@ -138,6 +139,15 @@ export const MINIGAMES = [
       goBack: backToMinigames(ctx),
       speak: ctx.speak,
       characters: ctx.allCharacters,
+    }),
+  },
+  {
+    id: 'cefr-exam',
+    component: CefrExam,
+    buildProps: (ctx) => ({
+      goBack: backToMinigames(ctx),
+      speak: ctx.speak,
+      allCharacters: ctx.allCharacters,
     }),
   },
 ];

@@ -43,7 +43,7 @@ export async function initErrorTracking() {
   if (!allowedHosts.includes(window.location.hostname)) return;
 
   try {
-    const Sentry = await import('@sentry/react');
+    const Sentry = await import('@sentry/browser');
     Sentry.init({
       dsn,
       environment: import.meta.env.MODE,

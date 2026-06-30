@@ -12,10 +12,10 @@ import GameResults from './GameResults.jsx';
 
 const ROUNDS = 8;
 const ACCENT_COLOR = {
-  bg: 'bg-[#c8392f]',
-  border: 'border-[#c8392f]',
-  text: 'text-[#c8392f]',
-  hover: 'hover:bg-[#8b1f1a]',
+  bg: 'bg-[var(--red)]',
+  border: 'border-[var(--red)]',
+  text: 'text-[var(--red)]',
+  hover: 'hover:bg-[var(--red-deep)]',
 };
 
 // ── Google IME Handwriting API ──────────────────────────────────────────────
@@ -222,28 +222,28 @@ function HandwritingPanel({ onCharSelected }) {
   };
 
   const canvasBorder =
-    status === 'success'     ? 'border-[#2f6b4a]' :
-    status === 'recognizing' ? 'border-[#c8392f] animate-pulse' :
-    strokeCount > 0          ? 'border-[#c8392f]' :
+    status === 'success'     ? 'border-[var(--jade)]' :
+    status === 'recognizing' ? 'border-[var(--red)] animate-pulse' :
+    strokeCount > 0          ? 'border-[var(--red)]' :
                                'border-[rgba(28,24,19,0.18)]';
 
   return (
-    <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-2xl p-4 space-y-3">
+    <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-2xl p-4 space-y-3">
       {/* Cabecera */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold text-[#c8392f] uppercase tracking-wide">Dibujar hanzi</p>
+          <p className="text-xs font-semibold text-[var(--red)] uppercase tracking-wide">Dibujar hanzi</p>
           {strokeCount > 0 && (
-            <span className="text-xs text-[#928a76]">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-[var(--mute)]">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
           )}
         </div>
         <div className="flex gap-2">
           <button onClick={handleUndo} disabled={strokeCount === 0}
-            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] transition-colors disabled:opacity-30">
+            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] transition-colors disabled:opacity-30">
             ↩ Deshacer
           </button>
           <button onClick={handleClear} disabled={strokeCount === 0}
-            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#c8392f] hover:border-[#c8392f] transition-colors disabled:opacity-30">
+            className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--red)] hover:border-[var(--red)] transition-colors disabled:opacity-30">
             Borrar
           </button>
         </div>
@@ -255,7 +255,7 @@ function HandwritingPanel({ onCharSelected }) {
           ref={canvasRef}
           width={CANVAS_SIZE}
           height={CANVAS_SIZE}
-          className={`rounded-xl border-2 bg-[#f4ecdc] touch-none cursor-crosshair transition-colors duration-300 ${canvasBorder}`}
+          className={`rounded-xl border-2 bg-[var(--paper)] touch-none cursor-crosshair transition-colors duration-300 ${canvasBorder}`}
           style={{ width: CANVAS_SIZE, height: CANVAS_SIZE }}
           onPointerDown={onDown}
           onPointerMove={onMove}
@@ -266,29 +266,29 @@ function HandwritingPanel({ onCharSelected }) {
 
       {/* Estado */}
       {status === 'recognizing' && (
-        <p className="text-center text-xs text-[#c8392f] animate-pulse">Reconociendo…</p>
+        <p className="text-center text-xs text-[var(--red)] animate-pulse">Reconociendo…</p>
       )}
       {status === 'success' && (
-        <p className="text-center text-xs text-[#2f6b4a] font-semibold">✓ Añadido</p>
+        <p className="text-center text-xs text-[var(--jade)] font-semibold">✓ Añadido</p>
       )}
       {status === 'error' && (
-        <p className="text-center text-xs text-[#c8392f]">Sin conexión. Prueba el modo Pinyin.</p>
+        <p className="text-center text-xs text-[var(--red)]">Sin conexión. Prueba el modo Pinyin.</p>
       )}
       {status === 'idle' && candidates.length === 0 && strokeCount === 0 && (
-        <p className="text-center text-xs text-[#928a76]">Dibuja un carácter y espera los candidatos</p>
+        <p className="text-center text-xs text-[var(--mute)]">Dibuja un carácter y espera los candidatos</p>
       )}
 
       {/* Candidatos */}
       {candidates.length > 0 && status !== 'success' && (
         <div>
-          <p className="text-xs text-[#928a76] mb-2">Toca el carácter correcto:</p>
+          <p className="text-xs text-[var(--mute)] mb-2">Toca el carácter correcto:</p>
           <div className="flex flex-wrap gap-2">
             {candidates.map((ch, i) => (
               <button key={i} onClick={() => handleSelect(ch)}
-                className={`rounded-xl border-2 font-bold transition-all active:scale-95 text-[#1c1813]
+                className={`rounded-xl border-2 font-bold transition-all active:scale-95 text-[var(--ink)]
                   ${i === 0
-                    ? 'w-14 h-14 text-3xl border-[#c8392f] bg-[#f0d6cf]/60 hover:bg-[#8b1f1a]/70 shadow-lg shadow-[#c8392f]/20'
-                    : 'w-12 h-12 text-2xl border-[rgba(28,24,19,0.18)] bg-[#f8f1de] hover:border-[#c8392f] hover:bg-[#f0d6cf]/40'
+                    ? 'w-14 h-14 text-3xl border-[var(--red)] bg-[var(--red-bg)]/60 hover:bg-[var(--red-deep)]/70 shadow-lg shadow-[var(--red)]/20'
+                    : 'w-12 h-12 text-2xl border-[rgba(28,24,19,0.18)] bg-[var(--paper-hi2)] hover:border-[var(--red)] hover:bg-[var(--red-bg)]/40'
                   }`}>
                 {ch}
               </button>
@@ -458,32 +458,32 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   }
 
   if (rounds.length === 0 || !current) {
-    return <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center"><p className="text-[#928a76]">{t('minigames_loading')}</p></div>;
+    return <div className="min-h-screen bg-[var(--paper)] flex items-center justify-center"><p className="text-[var(--mute)]">{t('minigames_loading')}</p></div>;
   }
 
   const builtText = built.join('');
   const progress = ((currentIdx + (result ? 1 : 0)) / rounds.length) * 100;
 
   return (
-    <div className="min-h-screen bg-[#f4ecdc] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-8">
 
       {/* Header */}
-      <div className={`bg-[#fbf5e6] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${ACCENT_COLOR.border} px-4 pt-10 pb-4`}>
-        <button onClick={goBack} className="flex items-center gap-1.5 text-[#928a76] hover:text-[#1c1813] text-sm mb-3 transition-colors">
+      <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${ACCENT_COLOR.border} px-4 pt-10 pb-4`}>
+        <button onClick={goBack} className="flex items-center gap-1.5 text-[var(--mute)] hover:text-[var(--ink)] text-sm mb-3 transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           {t('translation_back')}
         </button>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#1c1813]">{t('translation_title')}</h1>
-            <p className="text-sm text-[#928a76]">{t('translation_subtitle')}</p>
+            <h1 className="text-lg font-bold text-[var(--ink)]">{t('translation_title')}</h1>
+            <p className="text-sm text-[var(--mute)]">{t('translation_subtitle')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${ACCENT_COLOR.text}`}>{score}</p>
-            <p className="text-xs text-[#928a76]">{currentIdx + 1}/{rounds.length}</p>
+            <p className="text-xs text-[var(--mute)]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
-        <div className="mt-3 h-1.5 bg-[#f8f1de] rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[var(--paper-hi2)] rounded-full overflow-hidden">
           <div className={`h-full ${ACCENT_COLOR.bg} rounded-full transition-all duration-500`} style={{ width: `${progress}%` }} />
         </div>
       </div>
@@ -496,8 +496,8 @@ export default function TranslationGame({ goBack, selectedLesson }) {
             onClick={() => setLessonFilter(null)}
             className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
               lessonFilter === null
-                ? `${ACCENT_COLOR.bg} text-[#fbf5e6] border-transparent`
-                : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+                ? `${ACCENT_COLOR.bg} text-[var(--on-accent)] border-transparent`
+                : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
             }`}
           >
             {t('sov_all_lessons') || 'Todas'}
@@ -508,8 +508,8 @@ export default function TranslationGame({ goBack, selectedLesson }) {
               onClick={() => setLessonFilter(n)}
               className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
                 lessonFilter === n
-                  ? `${ACCENT_COLOR.bg} text-[#fbf5e6] border-transparent`
-                  : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+                  ? `${ACCENT_COLOR.bg} text-[var(--on-accent)] border-transparent`
+                  : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
               }`}
             >
               L{n}
@@ -518,36 +518,36 @@ export default function TranslationGame({ goBack, selectedLesson }) {
         </div>
 
         {/* Frase en el idioma del usuario */}
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
-          <p className="text-xs text-[#928a76] mb-1">{t('translation_translate_label')}</p>
-          <p className="text-[#1c1813] font-semibold text-base leading-snug">
+        <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
+          <p className="text-xs text-[var(--mute)] mb-1">{t('translation_translate_label')}</p>
+          <p className="text-[var(--ink)] font-semibold text-base leading-snug">
             {current.translations?.[i18n.language] || current.translations?.es || current.es}
           </p>
         </div>
 
         {/* Zona de construcción */}
         <div>
-          <p className="text-xs text-[#928a76] mb-2">{t('translation_built_zone')}</p>
+          <p className="text-xs text-[var(--mute)] mb-2">{t('translation_built_zone')}</p>
           <div className={`min-h-[56px] rounded-xl border-2 p-3 flex flex-wrap items-center gap-1.5 transition-colors ${
-            result === 'correct'   ? 'border-[#2f6b4a] bg-[#cfe1d3]/20' :
-            result === 'incorrect' ? 'border-[#c8392f] bg-[#f0d6cf]/20'     :
-            builtText.length > 0  ? `${ACCENT_COLOR.border} bg-[#fbf5e6]` :
-                                    'border-[rgba(28,24,19,0.18)] bg-[#fbf5e6]/50 border-dashed'
+            result === 'correct'   ? 'border-[var(--jade)] bg-[var(--jade-bg)]/20' :
+            result === 'incorrect' ? 'border-[var(--red)] bg-[var(--red-bg)]/20'     :
+            builtText.length > 0  ? `${ACCENT_COLOR.border} bg-[var(--paper-hi)]` :
+                                    'border-[rgba(28,24,19,0.18)] bg-[var(--paper-hi)]/50 border-dashed'
           }`}>
-            {builtText.length === 0 && !result && <p className="text-[#928a76] text-sm">{t('translation_built_placeholder')}</p>}
+            {builtText.length === 0 && !result && <p className="text-[var(--mute)] text-sm">{t('translation_built_placeholder')}</p>}
             {built.map((block, i) => (
               <button key={i} onClick={() => !result && setBuilt(prev => prev.filter((_, idx) => idx !== i))}
                 disabled={!!result}
                 className={`px-2 py-1 rounded-lg text-xl font-bold transition-all ${
-                  result === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' :
-                  result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-default' : 'bg-[#c8392f] text-[#fbf5e6] cursor-default') :
-                  `${ACCENT_COLOR.bg} text-[#fbf5e6] hover:opacity-75 active:scale-95`
+                  result === 'correct' ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-default' :
+                  result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-default' : 'bg-[var(--red)] text-[var(--on-accent)] cursor-default') :
+                  `${ACCENT_COLOR.bg} text-[var(--on-accent)] hover:opacity-75 active:scale-95`
                 }`}>
                 {block}
               </button>
             ))}
             {builtText.length > 0 && !result && (
-              <button onClick={handleDeleteLast} className="ml-auto text-[#928a76] hover:text-[#c8392f] text-xs px-2 py-1 rounded transition-colors">&#x232B;</button>
+              <button onClick={handleDeleteLast} className="ml-auto text-[var(--mute)] hover:text-[var(--red)] text-xs px-2 py-1 rounded transition-colors">&#x232B;</button>
             )}
           </div>
         </div>
@@ -557,13 +557,13 @@ export default function TranslationGame({ goBack, selectedLesson }) {
           <div className="flex gap-2">
             <button onClick={() => setInputMode('pinyin')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
-                inputMode === 'pinyin' ? 'bg-[#f0d6cf]/50 border-[#c8392f] text-[#c8392f]' : 'bg-[#fbf5e6] border-[rgba(28,24,19,0.10)] text-[#928a76] hover:border-[rgba(28,24,19,0.18)]'
+                inputMode === 'pinyin' ? 'bg-[var(--red-bg)]/50 border-[var(--red)] text-[var(--red)]' : 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.10)] text-[var(--mute)] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
               ⌨️ Pinyin IME
             </button>
             <button onClick={() => setInputMode('draw')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
-                inputMode === 'draw' ? 'bg-[#f0d6cf]/50 border-[#c8392f] text-[#c8392f]' : 'bg-[#fbf5e6] border-[rgba(28,24,19,0.10)] text-[#928a76] hover:border-[rgba(28,24,19,0.18)]'
+                inputMode === 'draw' ? 'bg-[var(--red-bg)]/50 border-[var(--red)] text-[var(--red)]' : 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.10)] text-[var(--mute)] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
               Dibujar
             </button>
@@ -579,16 +579,16 @@ export default function TranslationGame({ goBack, selectedLesson }) {
                 if (e.key === 'Backspace' && pinyinInput === '' && built.length > 0) handleDeleteLast();
               }}
               placeholder={t('translation_ime_placeholder')}
-              className={`w-full px-4 py-3 rounded-xl bg-[#fbf5e6] border ${ACCENT_COLOR.border} text-[#1c1813] placeholder-[#6e6757] focus:outline-none focus:ring-2 focus:ring-[#c8392f] text-base`}
+              className={`w-full px-4 py-3 rounded-xl bg-[var(--paper-hi)] border ${ACCENT_COLOR.border} text-[var(--ink)] placeholder-[var(--mute-strong)] focus:outline-none focus:ring-2 focus:ring-[var(--red)] text-base`}
               autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}
             />
             {candidates.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {candidates.map((c, i) => (
                   <button key={i} onClick={() => handleSelectCandidate(c)}
-                    className="flex flex-col items-center px-3 py-2 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] border border-[rgba(28,24,19,0.18)] hover:border-[#c8392f] transition-all active:scale-95">
-                    <span className="text-[#1c1813] text-xl font-bold leading-none">{c.hanzi}</span>
-                    <span className="text-[#c8392f] text-xs mt-0.5">{c.pinyin}</span>
+                    className="flex flex-col items-center px-3 py-2 rounded-xl bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] border border-[rgba(28,24,19,0.18)] hover:border-[var(--red)] transition-all active:scale-95">
+                    <span className="text-[var(--ink)] text-xl font-bold leading-none">{c.hanzi}</span>
+                    <span className="text-[var(--red)] text-xs mt-0.5">{c.pinyin}</span>
                   </button>
                 ))}
               </div>
@@ -603,27 +603,27 @@ export default function TranslationGame({ goBack, selectedLesson }) {
 
         {/* Feedback */}
         {result === 'correct' && (
-          <div className="bg-[#cfe1d3]/30 border border-[#2f6b4a] rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
             <span className="text-2xl">&#x2705;</span>
             <div>
-              <p className="text-[#2f6b4a] font-bold text-sm">{t('translation_correct')}</p>
-              <p className="text-[#1c1813] text-lg font-bold leading-tight">{current.hanzi}</p>
-              {current.pinyin && <p className="text-[#5a8f72] text-sm mt-0.5">{current.pinyin}</p>}
+              <p className="text-[var(--jade)] font-bold text-sm">{t('translation_correct')}</p>
+              <p className="text-[var(--ink)] text-lg font-bold leading-tight">{current.hanzi}</p>
+              {current.pinyin && <p className="text-[var(--jade-mid)] text-sm mt-0.5">{current.pinyin}</p>}
             </div>
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[#f0d6cf]/30 border border-[#c8392f] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">&#x274C;</span>
               <div>
-                <p className="text-[#c8392f] font-bold text-sm">{t('translation_incorrect')}</p>
-                <p className="text-xs text-[#928a76]">{t('translation_your_answer')}: <span className="text-[#1c1813]">{builtText || '—'}</span></p>
+                <p className="text-[var(--red)] font-bold text-sm">{t('translation_incorrect')}</p>
+                <p className="text-xs text-[var(--mute)]">{t('translation_your_answer')}: <span className="text-[var(--ink)]">{builtText || '—'}</span></p>
               </div>
             </div>
-            <p className="text-xs text-[#928a76] mb-0.5">{t('translation_correct_answer')}</p>
-            <p className="text-[#1c1813] font-bold text-lg leading-tight">{current.hanzi}</p>
-            {current.pinyin && <p className="text-[#c8392f] text-sm mt-0.5">{current.pinyin}</p>}
+            <p className="text-xs text-[var(--mute)] mb-0.5">{t('translation_correct_answer')}</p>
+            <p className="text-[var(--ink)] font-bold text-lg leading-tight">{current.hanzi}</p>
+            {current.pinyin && <p className="text-[var(--red)] text-sm mt-0.5">{current.pinyin}</p>}
           </div>
         )}
 
@@ -633,35 +633,35 @@ export default function TranslationGame({ goBack, selectedLesson }) {
             <>
               {builtText.length > 0 && (
                 <button onClick={handleClearBuilt}
-                  className="py-3 px-4 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
+                  className="py-3 px-4 rounded-xl border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
                   {t('translation_clear_button')}
                 </button>
               )}
               <button onClick={handleCheck} disabled={builtText.length === 0}
                 className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${
-                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[#fbf5e6]` : 'bg-[#f8f1de] text-[#928a76] cursor-not-allowed'
+                  builtText.length > 0 ? `${ACCENT_COLOR.bg} ${ACCENT_COLOR.hover} text-[var(--on-accent)]` : 'bg-[var(--paper-hi2)] text-[var(--mute)] cursor-not-allowed'
                 }`}>
                 {t('translation_check_button')}
               </button>
             </>
           )}
           {result === 'correct' && (
-            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold text-sm transition-colors">
+            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold text-sm transition-colors">
               {currentIdx + 1 >= rounds.length ? t('translation_see_results') : t('translation_next_button')} &rarr;
             </button>
           )}
           {result === 'incorrect' && (
-            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-bold text-sm transition-colors">
+            <button onClick={handleNext} className="flex-1 py-3 rounded-xl bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink-soft)] font-bold text-sm transition-colors">
               {currentIdx + 1 >= rounds.length ? t('translation_see_results') : t('translation_next_button')} &rarr;
             </button>
           )}
         </div>
 
         {!result && inputMode === 'pinyin' && (
-          <p className="text-center text-xs text-[#928a76]">{t('translation_ime_help')}</p>
+          <p className="text-center text-xs text-[var(--mute)]">{t('translation_ime_help')}</p>
         )}
         {!result && inputMode === 'draw' && (
-          <p className="text-center text-xs text-[#928a76]">{t('translation_draw_help')}</p>
+          <p className="text-center text-xs text-[var(--mute)]">{t('translation_draw_help')}</p>
         )}
 
       </div>

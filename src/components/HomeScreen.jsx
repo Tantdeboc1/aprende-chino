@@ -1,7 +1,7 @@
 // src/components/HomeScreen.jsx
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { J } from '@/styles/tokens';
+import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
@@ -19,7 +19,6 @@ import { useAuth } from '@/context/AuthContext.jsx';
 function DailyCharacter({ allCharacters }) {
   const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
-  const writerRef    = useRef(null);
   const [status, setStatus] = useState('loading');
 
   const daily = useMemo(() => {
@@ -32,24 +31,30 @@ function DailyCharacter({ allCharacters }) {
   useEffect(() => {
     if (!daily || !containerRef.current) return;
     setStatus('loading');
-    if (containerRef.current) containerRef.current.innerHTML = '';
-    writerRef.current = null;
     let cancelled = false;
+
+    // Host imperativo: HanziWriter inyecta su SVG en este div, que NO está
+    // gestionado por React (lo creamos y lo quitamos nosotros). Así React solo
+    // gestiona el contenedor externo y nunca intenta borrar el SVG de HanziWriter
+    // al desmontar — eso provocaba el 'removeChild: node is not a child' de React 19.
+    const host = document.createElement('div');
+    containerRef.current.appendChild(host);
+    let writer = null;
 
     // HanziWriter solo soporta 1 carácter — usar el primero si hay varios
     const singleChar = daily.char.length > 1 ? daily.char[0] : daily.char;
 
     import('hanzi-writer').then(({ default: HanziWriter }) => {
-      if (cancelled || !containerRef.current) return;
+      if (cancelled) return;
       try {
-        const writer = HanziWriter.create(containerRef.current, singleChar, {
+        writer = HanziWriter.create(host, singleChar, {
           charDataLoader: hanziCharDataLoader,
           width: 100,
           height: 100,
           padding: 8,
-          strokeColor: J.paperHi,
-          radicalColor: J.butter,
-          outlineColor: J.jadeDeep,
+          strokeColor: resolveColor(J.onAccent),
+          radicalColor: resolveColor(J.butter),
+          outlineColor: resolveColor(J.jadeDeep),
           drawingWidth: 5,
           strokeAnimationSpeed: 0.8,
           delayBetweenStrokes: 150,
@@ -60,22 +65,13 @@ function DailyCharacter({ allCharacters }) {
           },
           onLoadCharDataError: () => { if (!cancelled) setStatus('error'); },
         });
-        writerRef.current = writer;
       } catch { if (!cancelled) setStatus('error'); }
     }).catch(() => { if (!cancelled) setStatus('error'); });
 
-    // Cleanup: además de cancelar la carga pendiente, paramos la animación en
-    // bucle y limpiamos el SVG que HanziWriter inyectó. Sin esto, el bucle
-    // seguía mutando el DOM tras desmontar (fuga + errores de removeChild de
-    // React al reconciliar el árbol).
     return () => {
       cancelled = true;
-      const w = writerRef.current;
-      if (w) {
-        try { w.pauseAnimation?.(); } catch { /* noop */ }
-        writerRef.current = null;
-      }
-      if (containerRef.current) containerRef.current.innerHTML = '';
+      try { writer?.pauseAnimation?.(); } catch { /* noop */ }
+      try { host.remove(); } catch { /* noop */ }
     };
   }, [daily]);
 
@@ -88,24 +84,24 @@ function DailyCharacter({ allCharacters }) {
         <div
           ref={containerRef}
           className="w-[100px] h-[100px] rounded-xl"
-          style={{ background: `${J.jadeDeep}90`, border: `1px solid ${J.jadeDeep}` }}
+          style={{ background: `color-mix(in srgb, ${J.jadeDeep} 56%, transparent)`, border: `1px solid ${J.jadeDeep}` }}
         />
         {status === 'loading' && (
           <div className="absolute inset-0 flex items-center justify-center rounded-xl"
-            style={{ background: `${J.jadeDeep}b0` }}>
+            style={{ background: `color-mix(in srgb, ${J.jadeDeep} 69%, transparent)` }}>
             <div className="w-5 h-5 rounded-full animate-spin"
               style={{ border: `2px solid ${J.butter}`, borderTopColor: 'transparent' }} />
           </div>
         )}
         {status === 'error' && (
           <div className="absolute inset-0 flex items-center justify-center rounded-xl">
-            <span className="text-4xl font-bold font-cn" style={{ color: J.paperHi }}>{daily.char}</span>
+            <span className="text-4xl font-bold font-cn" style={{ color: J.onAccent }}>{daily.char}</span>
           </div>
         )}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: J.butter }}>{t('daily_character_of_day')}</p>
-        <p className="text-2xl font-bold font-cn leading-tight" style={{ color: J.paperHi }}>{daily.char}</p>
+        <p className="text-2xl font-bold font-cn leading-tight" style={{ color: J.onAccent }}>{daily.char}</p>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>{daily.pinyin}</p>
         <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.6)' }}>{daily.meanings?.[i18n.language] || daily.meaning}</p>
         {daily.radical && daily.radical !== '—' && (
@@ -298,16 +294,16 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       {/* Header */}
       <div style={{
-        background: J.jade, color: J.paperHi,
+        background: J.jade, color: J.onAccent,
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 16px',
       }}>
         <div className="flex items-center gap-2">
           <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: J.red, color: J.paperHi, fontWeight: 700, fontSize: 14 }}>
+            style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
             学
           </div>
-          <span className="font-bold text-base" style={{ color: J.paperHi }}>{t('app_brand')}</span>
+          <span className="font-bold text-base" style={{ color: J.onAccent }}>{t('app_brand')}</span>
         </div>
 
         <div className="mt-3 flex items-center gap-3">
@@ -338,7 +334,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           </button>
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>
+            <h1 className="text-xl font-bold" style={{ color: J.onAccent }}>
               {t('home_greeting', { name: userName || t('home_default_username') })}
             </h1>
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
@@ -372,11 +368,11 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         {/* Stats rápidas */}
         <div className="flex gap-2 mt-3">
           <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
-            <p className="font-bold text-lg" style={{ color: J.paperHi }}>{totalMastered}</p>
+            <p className="font-bold text-lg" style={{ color: J.onAccent }}>{totalMastered}</p>
             <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_mastered')}</p>
           </div>
           <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
-            <p className="font-bold text-lg" style={{ color: J.paperHi }}>
+            <p className="font-bold text-lg" style={{ color: J.onAccent }}>
               {totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0}%
             </p>
             <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_completed')}</p>
@@ -392,7 +388,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
       </div>
 
       {/* Contenido */}
-      <div className="px-4 pt-5 space-y-6">
+      <div className="px-4 pt-5 space-y-6 j-rise">
 
         {/* Carácter del día */}
         <DailyCharacter allCharacters={allCharacters} />
@@ -431,7 +427,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
                   <span className="font-semibold text-sm" style={{ color: J.ink }}>{t('home_srs_title', 'Repasar ahora')}</span>
                   {dueCount > 0 && (
                     <span className="text-xs font-bold px-1.5 py-0.5 rounded-full"
-                      style={{ background: J.red, color: J.paperHi }}>{dueCount}</span>
+                      style={{ background: J.red, color: J.onAccent }}>{dueCount}</span>
                   )}
                 </div>
                 <p className="text-xs" style={{ color: J.mute }}>

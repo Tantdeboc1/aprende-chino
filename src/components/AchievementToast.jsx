@@ -47,7 +47,7 @@ export default function AchievementToast({ achievement, onClose, stackIndex = 0 
         maxWidth: 'calc(100vw - 36px)',
         width: 340,
         background: `linear-gradient(135deg, ${J.jade} 0%, ${J.jadeDeep} 100%)`,
-        color: J.paperHi,
+        color: J.onAccent,
         borderRadius: 16,
         border: `2px solid ${J.butter}`,
         padding: '12px 14px',
@@ -86,7 +86,7 @@ export default function AchievementToast({ achievement, onClose, stackIndex = 0 
           </p>
           <p style={{
             margin: '3px 0 0', fontSize: 15, fontWeight: 800,
-            color: J.paperHi, lineHeight: 1.2,
+            color: J.onAccent, lineHeight: 1.2,
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {title}

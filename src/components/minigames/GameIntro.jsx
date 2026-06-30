@@ -45,7 +45,7 @@ export default function GameIntro({ gameId, cn, title, subtitle, steps, onStart,
             <div key={i} className="flex items-start gap-3">
               <div
                 className="font-cn rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5"
-                style={{ background: J.sand, color: J.paperHi }}
+                style={{ background: J.sand, color: J.onAccent }}
               >
                 {CN_NUMERALS[i] || i + 1}
               </div>
@@ -70,7 +70,7 @@ export default function GameIntro({ gameId, cn, title, subtitle, steps, onStart,
         <button
           onClick={handleStart}
           className="w-full font-bold py-4 rounded-xl text-lg transition-colors"
-          style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+          style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
         >
           {t('minigames_start_game_button')}
         </button>

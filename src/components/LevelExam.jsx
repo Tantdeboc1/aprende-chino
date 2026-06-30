@@ -188,7 +188,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
 
             <button onClick={startExam}
               className="w-full py-3 rounded-xl font-bold text-sm transition-colors"
-              style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}>
+              style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}>
               {t('level_exam_start', 'Empezar examen')} →
             </button>
           </div>
@@ -244,7 +244,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
             <div className="flex gap-3">
               <button onClick={startExam}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"
-                style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}>
+                style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}>
                 {t('level_exam_retry', 'Repetir')}
               </button>
               <button onClick={goBack}

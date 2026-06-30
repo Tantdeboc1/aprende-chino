@@ -127,37 +127,37 @@ export default function TonesDaily({ goBack, speakChinese }) {
   // Pantalla de inicio
   if (!quizStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
-              className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+              className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               <ArrowLeft className="mr-2" />
               {t('daily_back_to_challenges')}
             </button>
-            <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('daily_tones_challenge_title')}</h1>
-            <p className="text-[#928a76] text-center">{t('tones_quiz_auditory_identification')}</p>
+            <h1 className="text-3xl font-bold text-[var(--ink)] text-center">{t('daily_tones_challenge_title')}</h1>
+            <p className="text-[var(--mute)] text-center">{t('tones_quiz_auditory_identification')}</p>
           </div>
 
-          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
-            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-[#5b5446]">
+          <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+            <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
+            <div className="space-y-3 text-[var(--ink-soft)]">
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
                 <p>{t('daily_tones_challenge_instructions_1')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
                 <p>{t('daily_tones_challenge_instructions_2')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
                 <p><strong>{t('daily_tones_challenge_instructions_3')}</strong></p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
                 <p>{t('daily_tones_challenge_instructions_4')}</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function TonesDaily({ goBack, speakChinese }) {
 
           <button
             onClick={initQuiz}
-            className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
           >
             {t('daily_start_challenge_button')}
           </button>
@@ -181,36 +181,36 @@ export default function TonesDaily({ goBack, speakChinese }) {
     const seconds = timeUsed % 60;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
-              className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+              className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               <ArrowLeft className="mr-2" />
               {t('daily_back_to_challenges')}
             </button>
           </div>
 
-          <div className="bg-[#fbf5e6] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] text-center">
+          <div className="bg-[var(--paper-hi)] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] text-center">
             <div className="text-6xl mb-4"></div>
-            <h2 className="text-3xl font-bold text-[#1c1813] mb-4">{t('daily_challenge_completed_title')}</h2>
+            <h2 className="text-3xl font-bold text-[var(--ink)] mb-4">{t('daily_challenge_completed_title')}</h2>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="bg-[#f8f1de] rounded-lg p-4">
-                <div className="text-2xl font-bold text-[#1c1813]">{score}/10</div>
-                <div className="text-[#928a76] text-sm">{t('daily_correct_questions_label')}</div>
+              <div className="bg-[var(--paper-hi2)] rounded-lg p-4">
+                <div className="text-2xl font-bold text-[var(--ink)]">{score}/10</div>
+                <div className="text-[var(--mute)] text-sm">{t('daily_correct_questions_label')}</div>
               </div>
-              <div className="bg-[#f8f1de] rounded-lg p-4">
-                <div className="text-2xl font-bold text-[#1c1813]">
+              <div className="bg-[var(--paper-hi2)] rounded-lg p-4">
+                <div className="text-2xl font-bold text-[var(--ink)]">
                   {minutes}:{seconds.toString().padStart(2, '0')}
                 </div>
-                <div className="text-[#928a76] text-sm">{t('daily_time_used_label')}</div>
+                <div className="text-[var(--mute)] text-sm">{t('daily_time_used_label')}</div>
               </div>
             </div>
 
-            <div className="text-[#928a76] mb-6">
+            <div className="text-[var(--mute)] mb-6">
               {score === 10 ? t('daily_score_perfect') :
                score >= 7 ? t('daily_score_excellent') :
                score >= 5 ? t('daily_score_good_try') :
@@ -220,13 +220,13 @@ export default function TonesDaily({ goBack, speakChinese }) {
             <div className="flex space-x-4 justify-center">
               <button
                 onClick={handleRestart}
-                className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 px-6 rounded-lg transition"
+                className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 px-6 rounded-lg transition"
               >
                 {t('radicals_retry_button')}
               </button>
               <button
                 onClick={goBack}
-                className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 px-6 rounded-lg transition"
+                className="bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] font-semibold py-3 px-6 rounded-lg transition"
               >
                 ↩️ {t('radicals_back_button')}
               </button>
@@ -239,10 +239,10 @@ export default function TonesDaily({ goBack, speakChinese }) {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4"></div>
-          <h2 className="text-xl font-bold text-[#1c1813]">{t('radicals_loading_questions')}</h2>
+          <h2 className="text-xl font-bold text-[var(--ink)]">{t('radicals_loading_questions')}</h2>
         </div>
       </div>
     );
@@ -251,25 +251,25 @@ export default function TonesDaily({ goBack, speakChinese }) {
   const currentQ = questions[currentQuestion];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={goBack}
-            className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+            className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
           >
             <ArrowLeft className="mr-2" />
             {t('daily_back_to_challenges')}
           </button>
 
           <div className="flex justify-between items-center mb-2">
-            <h1 className="text-2xl font-bold text-[#1c1813]">{t('daily_tones_challenge_title')}</h1>
+            <h1 className="text-2xl font-bold text-[var(--ink)]">{t('daily_tones_challenge_title')}</h1>
             <div className="flex items-center space-x-4">
-              <div className="text-[#928a76]">
+              <div className="text-[var(--mute)]">
                 {currentQuestion + 1}/10
               </div>
-              <div className="flex items-center bg-[#c8392f] text-[#fbf5e6] px-3 py-1 rounded-lg">
+              <div className="flex items-center bg-[var(--red)] text-[var(--on-accent)] px-3 py-1 rounded-lg">
                 <Clock className="w-4 h-4 mr-2" />
                 {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
               </div>
@@ -277,28 +277,28 @@ export default function TonesDaily({ goBack, speakChinese }) {
           </div>
 
           {/* Barra de progreso */}
-          <div className="w-full bg-[#f8f1de] rounded-full h-2">
+          <div className="w-full bg-[var(--paper-hi2)] rounded-full h-2">
             <div
-              className="bg-[#2f6b4a] h-2 rounded-full transition-all duration-300"
+              className="bg-[var(--jade)] h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / 10) * 100}%` }}
             ></div>
           </div>
         </div>
 
         {/* Pregunta */}
-        <div className="bg-[#fbf5e6] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] mb-6 text-center">
-          <h3 className="text-lg text-[#928a76] mb-4">{t('tones_what_tone_do_you_hear')}</h3>
+        <div className="bg-[var(--paper-hi)] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] mb-6 text-center">
+          <h3 className="text-lg text-[var(--mute)] mb-4">{t('tones_what_tone_do_you_hear')}</h3>
 
           {/* Botón de escuchar */}
           <button
             onClick={listen}
-            className="mx-auto mb-8 px-8 py-5 rounded-xl bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] text-xl font-bold shadow-lg transition transform hover:scale-105 flex items-center"
+            className="mx-auto mb-8 px-8 py-5 rounded-xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] text-xl font-bold shadow-lg transition transform hover:scale-105 flex items-center"
           >
             <Volume2 className="mr-3 w-6 h-6" />
             {t('tones_listen_button')}
           </button>
 
-          <h4 className="text-lg text-[#928a76] mb-6">{t('radicals_select_correct_radical')}</h4>
+          <h4 className="text-lg text-[var(--mute)] mb-6">{t('radicals_select_correct_radical')}</h4>
 
           {/* Opciones de respuesta */}
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
@@ -306,15 +306,15 @@ export default function TonesDaily({ goBack, speakChinese }) {
               const isCorrect = isAnswered && opt.num === currentQ.tone;
               const isWrong = isAnswered && selectedAnswer === opt.num && selectedAnswer !== currentQ.tone;
 
-              let buttonClass = "bg-[#f8f1de] hover:bg-[#bdb39a] border-[rgba(28,24,19,0.18)]";
+              let buttonClass = "bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] border-[rgba(28,24,19,0.18)]";
 
               if (isAnswered) {
                 if (isCorrect) {
-                  buttonClass = "bg-[#2f6b4a] border-[#2f6b4a]";
+                  buttonClass = "bg-[var(--jade)] border-[var(--jade)]";
                 } else if (isWrong) {
-                  buttonClass = "bg-[#c8392f] border-[#c8392f]";
+                  buttonClass = "bg-[var(--red)] border-[var(--red)]";
                 } else {
-                  buttonClass = "bg-[#bdb39a] border-[rgba(28,24,19,0.18)] opacity-50";
+                  buttonClass = "bg-[var(--mute2)] border-[rgba(28,24,19,0.18)] opacity-50";
                 }
               }
 
@@ -323,7 +323,7 @@ export default function TonesDaily({ goBack, speakChinese }) {
                   key={opt.num}
                   onClick={() => handleAnswerSelect(opt.num)}
                   disabled={isAnswered}
-                  className={`${buttonClass} border-2 rounded-xl p-4 text-lg font-semibold text-[#1c1813] transition disabled:cursor-not-allowed`}
+                  className={`${buttonClass} border-2 rounded-xl p-4 text-lg font-semibold text-[var(--ink)] transition disabled:cursor-not-allowed`}
                 >
                   {t(`tones_tone_option_${opt.num}`)}
                 </button>
@@ -336,14 +336,14 @@ export default function TonesDaily({ goBack, speakChinese }) {
             <div className="mt-6">
               <p className="text-lg mb-3">
                 {selectedAnswer === currentQ.tone ? (
-                  <span className="text-[#2f6b4a] font-bold">{t('tones_quiz_correct')}</span>
+                  <span className="text-[var(--jade)] font-bold">{t('tones_quiz_correct')}</span>
                 ) : (
-                  <span className="text-[#c8392f] font-bold">{t('tones_quiz_incorrect', { tone: currentQ.tone })}</span>
+                  <span className="text-[var(--red)] font-bold">{t('tones_quiz_incorrect', { tone: currentQ.tone })}</span>
                 )}
               </p>
               <button
                 onClick={handleNextQuestion}
-                className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 rounded-lg transition"
+                className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition"
               >
                 {currentQuestion < 9 ? t('radicals_next_question_button') : t('radicals_view_results_button')}
               </button>

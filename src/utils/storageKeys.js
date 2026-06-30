@@ -21,12 +21,14 @@ export const STORAGE_KEYS = {
   FAVORITES:        'aprende-chino-favorites',
   DAILY_PROGRESS:   'dailyProgress_v1',
   LEVEL_EXAM:       'aprende-chino-level-exam-v1',
+  CEFR_EXAM:        'aprende-chino-cefr-exam-v1',
 
   // Solo locales (no se suben a la nube)
   DAILY_INDEX:      'dailyIndex_v1',
   AUTH_MODE:        'aprende-chino-auth-mode',
   GAME_INTRO_PREFS: 'gameIntroPrefs',
   MUSIC_SETTINGS:   'music-settings',
+  THEME:            'aprende-chino-theme',   // 'light' | 'dark' | 'system'
 
   // Prefijo para la caché de datos versionada (se concatena con el nombre)
   DATACACHE_PREFIX: 'aprende-chino-datacache:',
@@ -45,4 +47,5 @@ export const SYNCED_EXTRA_KEYS = [
   STORAGE_KEYS.FAVORITES,
   STORAGE_KEYS.DAILY_PROGRESS,
   STORAGE_KEYS.LEVEL_EXAM,
+  STORAGE_KEYS.CEFR_EXAM,
 ];

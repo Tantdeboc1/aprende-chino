@@ -807,7 +807,7 @@ function StoryReader({ story, dict, maxLen, onBack, onContinue, speak }) {
         <button
           onClick={onContinue}
           className="w-full py-3.5 rounded-xl font-bold text-base transition-all active:scale-[0.98]"
-          style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+          style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
         >
           {t('reading_answer_questions', 'Responder preguntas')} →
         </button>

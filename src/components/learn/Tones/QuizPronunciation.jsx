@@ -134,37 +134,37 @@ export default function QuizPronunciation({ goBack }) {
   // PANTALLA DE INSTRUCCIONES
   if (!quizStarted) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
-              className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+              className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               <ArrowLeft className="mr-2" />
               {t('tones_back_to_pronunciation')}
             </button>
-            <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('tones_pronunciation_quiz_title')}</h1>
-            <p className="text-[#928a76] text-center">{t('tones_quiz_auditory_identification')}</p>
+            <h1 className="text-3xl font-bold text-[var(--ink)] text-center">{t('tones_pronunciation_quiz_title')}</h1>
+            <p className="text-[var(--mute)] text-center">{t('tones_quiz_auditory_identification')}</p>
           </div>
 
-          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
-            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-[#5b5446]">
+          <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+            <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
+            <div className="space-y-3 text-[var(--ink-soft)]">
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
                 <p>{t('tones_pronunciation_quiz_instructions_1')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
                 <p>{t('tones_pronunciation_quiz_instructions_2')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
                 <p><strong>{t('tones_pronunciation_quiz_instructions_3')}</strong></p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
                 <p>{t('tones_pronunciation_quiz_instructions_4')}</p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function QuizPronunciation({ goBack }) {
 
           <button
             onClick={initQuiz}
-            className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
           >
             {t('radicals_start_quiz_button')}
           </button>
@@ -218,17 +218,17 @@ export default function QuizPronunciation({ goBack }) {
   // Fin del quiz
   if (idx >= questions.length) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center p-4">
-        <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
+      <div className="min-h-screen bg-[var(--paper)] flex items-center justify-center p-4">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
           <div className="text-6xl mb-4"></div>
-          <h2 className="text-3xl font-bold text-[#1c1813] mb-4">{t('tones_quiz_completed_pronunciation_title')}</h2>
-          <p className="text-5xl font-bold text-[#c8392f] mb-6">{score}/{questions.length}</p>
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-4">{t('tones_quiz_completed_pronunciation_title')}</h2>
+          <p className="text-5xl font-bold text-[var(--red)] mb-6">{score}/{questions.length}</p>
           <div className="flex gap-3">
             <button
               onClick={initQuiz}
-              className="flex-1 bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 rounded-lg transition"
+              className="flex-1 bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition"
             >{t('tones_play_again_button')}</button>
-            <button onClick={goBack} className="flex-1 bg-[#c8392f] hover:bg-[#8b1f1a] text-[#fbf5e6] font-semibold py-3 rounded-lg transition">{t('radicals_back_button')}</button>
+            <button onClick={goBack} className="flex-1 bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition">{t('radicals_back_button')}</button>
           </div>
         </div>
       </div>
@@ -236,22 +236,22 @@ export default function QuizPronunciation({ goBack }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4ecdc] p-4">
+    <div className="min-h-screen bg-[var(--paper)] p-4">
       <div className="max-w-2xl mx-auto pt-8">
         <div className="mb-6 flex justify-between items-center">
-          <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] text-sm">
+          <button onClick={goBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] text-sm">
             <ArrowLeft className="mr-2" />
             {t('tones_back_to_pronunciation')}
           </button>
 
           <div className="text-center">
-            <span className="text-[#5b5446] font-semibold text-base block">
+            <span className="text-[var(--ink-soft)] font-semibold text-base block">
               {idx + 1}/{questions.length} | {t('quiz_score_label', { score })}
             </span>
             {/* Barra de progreso */}
-            <div className="w-32 bg-[#f8f1de] rounded-full h-1.5 mt-1 mx-auto">
+            <div className="w-32 bg-[var(--paper-hi2)] rounded-full h-1.5 mt-1 mx-auto">
               <div
-                className="bg-[#2f6b4a] h-1.5 rounded-full transition-all duration-300"
+                className="bg-[var(--jade)] h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${((idx + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -260,17 +260,17 @@ export default function QuizPronunciation({ goBack }) {
           {/* Botón de reiniciar */}
           <button
             onClick={initQuiz}
-            className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-1.5 px-3 rounded-lg transition text-sm"
+            className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
             {t('matching_reset_button')}
           </button>
         </div>
 
-        <div className="bg-[#fbf5e6] rounded-2xl shadow-sm p-8 text-center border border-[rgba(28,24,19,0.10)]">
-          <h2 className="text-2xl font-bold text-[#1c1813] mb-4">{t('tones_what_sound_do_you_hear')}</h2>
-          <p className="text-[#5b5446] mb-6">{t('tones_pronunciation_quiz_prompt')}</p>
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 text-center border border-[rgba(28,24,19,0.10)]">
+          <h2 className="text-2xl font-bold text-[var(--ink)] mb-4">{t('tones_what_sound_do_you_hear')}</h2>
+          <p className="text-[var(--ink-soft)] mb-6">{t('tones_pronunciation_quiz_prompt')}</p>
 
-          <button onClick={listen} disabled={playing} className="mx-auto mb-8 px-8 py-5 rounded-xl bg-[#2f6b4a] hover:bg-[#1f4a33] disabled:bg-[#bdb39a] text-[#fbf5e6] text-xl font-bold shadow-lg transition">
+          <button onClick={listen} disabled={playing} className="mx-auto mb-8 px-8 py-5 rounded-xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] disabled:bg-[var(--mute2)] text-[var(--on-accent)] text-xl font-bold shadow-lg transition">
             {t('tones_listen_button')}
           </button>
 
@@ -279,11 +279,11 @@ export default function QuizPronunciation({ goBack }) {
               const isCorrect = showResult && opt === q.correct;
               const isWrong = showResult && selected === opt && opt !== q.correct;
               const base = "p-4 rounded-lg text-lg font-semibold transition";
-              let cls = "bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813]";
+              let cls = "bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)]";
               if (showResult) {
-                if (isCorrect) cls = "bg-[#2f6b4a] text-[#fbf5e6]";
-                else if (isWrong) cls = "bg-[#c8392f] text-[#fbf5e6]";
-                else cls = "bg-[#bdb39a] text-[#928a76]";
+                if (isCorrect) cls = "bg-[var(--jade)] text-[var(--on-accent)]";
+                else if (isWrong) cls = "bg-[var(--red)] text-[var(--on-accent)]";
+                else cls = "bg-[var(--mute2)] text-[var(--mute)]";
               }
               return (
                 <button key={opt} onClick={() => answer(opt)} disabled={showResult} className={base + ' ' + cls}>
@@ -294,7 +294,7 @@ export default function QuizPronunciation({ goBack }) {
           </div>
 
           {showResult && (
-            <button onClick={next} className="w-full mt-6 bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 rounded-lg transition">
+            <button onClick={next} className="w-full mt-6 bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition">
               {idx + 1 >= questions.length ? t('radicals_view_results_button') : t('radicals_next_question_button')}
             </button>
           )}

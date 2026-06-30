@@ -104,7 +104,7 @@ export default function DialogueBox({
         border: `1px solid ${J.hairS}`,
         borderRadius: 18,
         padding: '18px 18px 14px',
-        color: J.paperHi,
+        color: J.onAccent,
         backdropFilter: 'blur(6px)',
         WebkitBackdropFilter: 'blur(6px)',
         cursor: 'pointer',
@@ -121,7 +121,7 @@ export default function DialogueBox({
         <div style={{
           display: 'inline-block',
           background: J.jade,
-          color: J.paperHi,
+          color: J.onAccent,
           fontSize: 12,
           fontWeight: 700,
           letterSpacing: '0.04em',
@@ -139,7 +139,7 @@ export default function DialogueBox({
             style={{
               background: playing ? J.red : 'rgba(255,255,255,0.10)',
               border: `1px solid ${playing ? J.redDeep : 'rgba(255,255,255,0.18)'}`,
-              color: J.paperHi,
+              color: J.onAccent,
               borderRadius: 999,
               width: 30, height: 30,
               display: 'inline-flex',
@@ -174,7 +174,7 @@ export default function DialogueBox({
           fontSize: 26,
           lineHeight: 1.35,
           fontWeight: 600,
-          color: J.paperHi,
+          color: J.onAccent,
           margin: 0,
           minHeight: 36,
         }}

@@ -81,7 +81,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
           maxWidth: 420, width: '100%', margin: '0 auto',
           background: 'rgba(20,16,12,0.82)', borderRadius: 20,
           border: `1px solid ${J.hairS}`, padding: '28px 24px',
-          textAlign: 'center', color: J.paperHi,
+          textAlign: 'center', color: J.onAccent,
         }}>
           <p style={{ fontSize: 11, letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
             BLOQUE {blockIdx + 1} / {blocks.length}
@@ -99,7 +99,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
             onClick={() => setShowingTransition(false)}
             style={{
               marginTop: 22, width: '100%',
-              background: J.red, color: J.paperHi,
+              background: J.red, color: J.onAccent,
               border: 0, borderRadius: 14,
               padding: '13px 18px', fontSize: 15, fontWeight: 700,
               cursor: 'pointer',

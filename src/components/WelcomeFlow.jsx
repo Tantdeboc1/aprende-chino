@@ -86,7 +86,7 @@ export default function WelcomeFlow({ onComplete }) {
               value={name}
               onChange={e => setName(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') goNext(); }}
-              className="placeholder-[#6e6757]"
+              className="placeholder-[var(--mute-strong)]"
               style={{
                 width: '100%', padding: '14px 18px', border: `2px solid ${J.border}`, borderRadius: 14,
                 fontSize: 16, background: J.paper, color: J.ink, outline: 'none',
@@ -237,7 +237,7 @@ export default function WelcomeFlow({ onComplete }) {
             style={{
               flex: 1, padding: '14px 22px', borderRadius: 99, border: 0,
               background: canNext ? J.jade : J.mute2,
-              color: J.paperHi, fontWeight: 700, fontSize: 15,
+              color: J.onAccent, fontWeight: 700, fontSize: 15,
               cursor: canNext ? 'pointer' : 'default',
               boxShadow: canNext ? '0 4px 12px -4px rgba(31,74,51,0.4)' : 'none',
             }}

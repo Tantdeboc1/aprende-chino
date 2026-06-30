@@ -12,6 +12,7 @@ import { introsEnabled, setIntrosEnabled } from '@/utils/gameIntroPrefs.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
+import { getThemePref, setThemePref } from '@/utils/theme.js';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -169,6 +170,12 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const [showPicker, setShowPicker] = useState(false);
   const [dailyGoal, setDailyGoalState] = useState(() => getStreak().dailyGoal || 120);
   const [showIntros, setShowIntros] = useState(() => introsEnabled());
+  const [theme, setTheme] = useState(() => getThemePref());
+
+  const handleThemeChange = (pref) => {
+    setThemePref(pref); // aplica la clase .dark al instante
+    setTheme(pref);
+  };
 
   const handleIntrosToggle = () => {
     const next = !showIntros;
@@ -439,6 +446,39 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           </div>
         </JCard>
 
+        {/* ─── Apariencia (tema claro/oscuro) ──────────────────────────── */}
+        <JSection label={t('settings_appearance', 'Apariencia')} cn="外观" />
+        <JCard padding="14px 18px">
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: 'light',  icon: '☀️', label: t('theme_light', 'Claro') },
+              { id: 'dark',   icon: '🌙', label: t('theme_dark', 'Oscuro') },
+              { id: 'system', icon: '🖥️', label: t('theme_system', 'Sistema') },
+            ].map(opt => {
+              const on = theme === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => handleThemeChange(opt.id)}
+                  className="flex items-center gap-2"
+                  style={{
+                    padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
+                    background: on ? J.ink : J.paper,
+                    color: on ? J.paperHi : J.inkSoft,
+                    fontSize: 12.5, fontWeight: 700,
+                  }}
+                >
+                  <span style={{ fontSize: 14 }}>{opt.icon}</span>
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+          <p style={{ margin: '10px 0 0', fontSize: 11, color: J.mute }}>
+            {t('settings_appearance_hint', '«Sistema» sigue el modo claro/oscuro de tu dispositivo.')}
+          </p>
+        </JCard>
+
         {/* ─── Música ──────────────────────────────────────────────────── */}
         {music && (
           <>
@@ -530,7 +570,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 disabled={migrating}
                 style={{
                   width: '100%', padding: '12px 16px', borderRadius: 14, border: 0,
-                  background: J.jade, color: J.paperHi,
+                  background: J.jade, color: J.onAccent,
                   fontSize: 14, fontWeight: 700, cursor: migrating ? 'default' : 'pointer',
                   opacity: migrating ? 0.6 : 1,
                   boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
@@ -575,7 +615,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                   onClick={handleReset}
                   style={{
                     flex: 1, padding: '12px', borderRadius: 99, border: 0,
-                    background: J.red, color: J.paperHi, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                    background: J.red, color: J.onAccent, fontSize: 14, fontWeight: 700, cursor: 'pointer',
                     boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
                   }}
                 >

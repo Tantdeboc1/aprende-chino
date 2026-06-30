@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { J } from '@/styles/tokens';
+import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 const MIN_DISPLAY_MS = 4000;
@@ -17,31 +17,36 @@ export default function SplashScreen({ progress, onComplete }) {
   }, []);
 
   useEffect(() => {
+    if (!writerRef.current) return;
     let mounted = true;
+    let writer = null;
+    // Host imperativo: HanziWriter pinta su SVG aquí, fuera del control de React,
+    // para evitar el 'removeChild' al desmontar (ver HomeScreen / AnimatedLoader).
+    const host = document.createElement('div');
+    writerRef.current.appendChild(host);
+
     (async () => {
-      if (!writerRef.current) return;
       try {
         const HW = await import('hanzi-writer');
-        if (!mounted || !writerRef.current) return;
-        writerRef.current.innerHTML = '';
-        const writer = HW.default.create(writerRef.current, '学', {
+        if (!mounted) return;
+        writer = HW.default.create(host, '学', {
           charDataLoader: hanziCharDataLoader,
           width: 130, height: 130, padding: 8,
-          strokeColor: J.jade, radicalColor: J.red,
+          strokeColor: resolveColor(J.jade), radicalColor: resolveColor(J.red),
           strokeAnimationSpeed: 1.8, delayBetweenStrokes: 80,
           showOutline: true, showCharacter: false,
-          outlineColor: J.mute2,
+          outlineColor: resolveColor(J.mute2),
         });
         writerInst.current = writer;
         setTimeout(() => { if (mounted) writer.animateCharacter(); }, 400);
       } catch (_) {}
     })();
+
     return () => {
       mounted = false;
-      if (writerInst.current) {
-        try { writerRef.current && (writerRef.current.innerHTML = ''); } catch (_) {}
-        writerInst.current = null;
-      }
+      try { writer?.pauseAnimation?.(); } catch (_) {}
+      try { host.remove(); } catch (_) {}
+      writerInst.current = null;
     };
   }, []);
 

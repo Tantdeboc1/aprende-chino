@@ -124,39 +124,39 @@ export default function RadicalsQuiz({ goBack, radicals }) {
 
   if (!quizStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <button
               onClick={goBack}
-                          className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+                          className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
           >
             <ArrowLeft className="mr-2" />
             {t('radicals_back_to_radicals')}
           </button>
-          <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('radicals_title')}</h1>
-          <p className="text-[#928a76] text-center">{t('radicals_quiz_identification_title')}</p>
+          <h1 className="text-3xl font-bold text-[var(--ink)] text-center">{t('radicals_title')}</h1>
+          <p className="text-[var(--mute)] text-center">{t('radicals_quiz_identification_title')}</p>
         </div>
 
         {/* Instrucciones */}
-        <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
-          <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
-          <div className="space-y-3 text-[#5b5446]">
+        <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+          <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
+          <div className="space-y-3 text-[var(--ink-soft)]">
             <div className="flex items-start">
-              <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+              <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
               <p>{t('radicals_quiz_instructions_1')}</p>
             </div>
             <div className="flex items-start">
-              <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+              <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
               <p>{t('radicals_quiz_instructions_2')}</p>
             </div>
             <div className="flex items-start">
-              <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+              <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
               <p>{t('radicals_quiz_instructions_3')}</p>
             </div>
             <div className="flex items-start">
-              <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+              <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
               <p>{t('radicals_quiz_instructions_4')}</p>
             </div>
           </div>
@@ -165,7 +165,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         {/* Botón empezar */}
         <button
           onClick={startQuiz}
-          className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
+          className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
         >
           {t('radicals_start_quiz_button')}
         </button>
@@ -176,13 +176,13 @@ export default function RadicalsQuiz({ goBack, radicals }) {
 
   if (quizFinished) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <button
               onClick={goBack}
-                          className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+                          className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
           >
             <ArrowLeft className="mr-2" />
             {t('radicals_back_to_radicals')}
@@ -190,15 +190,15 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         </div>
 
         {/* Resultados */}
-        <div className="bg-[#fbf5e6] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] text-center">
+        <div className="bg-[var(--paper-hi)] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] text-center">
           <div className="text-6xl mb-4"></div>
-          <h2 className="text-3xl font-bold text-[#1c1813] mb-4">{t('radicals_quiz_completed_title')}</h2>
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-4">{t('radicals_quiz_completed_title')}</h2>
 
-          <div className="bg-[#f8f1de] rounded-lg p-6 mb-6">
-            <div className="text-4xl font-bold text-[#1c1813] mb-2">
+          <div className="bg-[var(--paper-hi2)] rounded-lg p-6 mb-6">
+            <div className="text-4xl font-bold text-[var(--ink)] mb-2">
               {score}/10
             </div>
-            <div className="text-[#928a76]">
+            <div className="text-[var(--mute)]">
               {score >= 8 ? t('radicals_quiz_score_excellent') :
                score >= 6 ? t('radicals_quiz_score_good') :
                t('radicals_quiz_score_practice')}
@@ -208,13 +208,13 @@ export default function RadicalsQuiz({ goBack, radicals }) {
           <div className="flex space-x-4 justify-center">
             <button
               onClick={handleRestartQuiz}
-              className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-3 px-6 rounded-lg transition"
+              className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 px-6 rounded-lg transition"
             >
               {t('radicals_retry_button')}
             </button>
             <button
               onClick={goBack}
-              className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-3 px-6 rounded-lg transition"
+              className="bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] font-semibold py-3 px-6 rounded-lg transition"
             >
               ↩️ {t('radicals_back_button')}
             </button>
@@ -227,10 +227,10 @@ export default function RadicalsQuiz({ goBack, radicals }) {
 
   if (quizQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4"></div>
-          <h2 className="text-xl font-bold text-[#1c1813]">{t('radicals_loading_questions')}</h2>
+          <h2 className="text-xl font-bold text-[var(--ink)]">{t('radicals_loading_questions')}</h2>
         </div>
       </div>
     );
@@ -239,44 +239,44 @@ export default function RadicalsQuiz({ goBack, radicals }) {
   const currentQ = quizQuestions[currentQuestion];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fbf5e6] to-[#f4ecdc] p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={goBack}
-            className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+            className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
           >
             <ArrowLeft className="mr-2" />
             {t('radicals_back_to_radicals')}
           </button>
 
           <div className="flex justify-between items-center mb-2">
-            <h1 className="text-2xl font-bold text-[#1c1813]">{t('radicals_identify_radicals_title')}</h1>
-            <div className="text-[#928a76]">
+            <h1 className="text-2xl font-bold text-[var(--ink)]">{t('radicals_identify_radicals_title')}</h1>
+            <div className="text-[var(--mute)]">
               {currentQuestion + 1}/10
             </div>
           </div>
 
           {/* Barra de progreso */}
-          <div className="w-full bg-[#f8f1de] rounded-full h-2">
+          <div className="w-full bg-[var(--paper-hi2)] rounded-full h-2">
             <div
-              className="bg-[#2f6b4a] h-2 rounded-full transition-all duration-300"
+              className="bg-[var(--jade)] h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / 10) * 100}%` }}
             ></div>
           </div>
         </div>
 
         {/* Pregunta */}
-        <div className="bg-[#fbf5e6] rounded-xl p-4 sm:p-8 border border-[rgba(28,24,19,0.10)] mb-6 text-center">
-          <h3 className="text-lg text-[#928a76] mb-4">{t('radicals_question_header')}</h3>
+        <div className="bg-[var(--paper-hi)] rounded-xl p-4 sm:p-8 border border-[rgba(28,24,19,0.10)] mb-6 text-center">
+          <h3 className="text-lg text-[var(--mute)] mb-4">{t('radicals_question_header')}</h3>
 
           {/* Carácter objetivo */}
-          <div className="text-6xl sm:text-8xl font-bold text-[#1c1813] mb-4 sm:mb-8 py-2 sm:py-4">
+          <div className="text-6xl sm:text-8xl font-bold text-[var(--ink)] mb-4 sm:mb-8 py-2 sm:py-4">
             {currentQ.targetChar}
           </div>
 
-          <h4 className="text-lg text-[#928a76] mb-4 sm:mb-6">{t('radicals_select_correct_radical')}</h4>
+          <h4 className="text-lg text-[var(--mute)] mb-4 sm:mb-6">{t('radicals_select_correct_radical')}</h4>
 
           {/* Opciones de respuesta */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -284,15 +284,15 @@ export default function RadicalsQuiz({ goBack, radicals }) {
               const isCorrect = option === currentQ.correctAnswer;
               const isSelected = selectedAnswer === option;
 
-              let buttonClass = "bg-[#f8f1de] hover:bg-[#bdb39a] border-[rgba(28,24,19,0.18)]";
+              let buttonClass = "bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] border-[rgba(28,24,19,0.18)]";
 
               if (isAnswered) {
                 if (isCorrect) {
-                  buttonClass = "bg-[#2f6b4a] border-[#2f6b4a]";
+                  buttonClass = "bg-[var(--jade)] border-[var(--jade)]";
                 } else if (isSelected && !isCorrect) {
-                  buttonClass = "bg-[#c8392f] border-[#c8392f]";
+                  buttonClass = "bg-[var(--red)] border-[var(--red)]";
                 } else {
-                  buttonClass = "bg-[#f8f1de] border-[rgba(28,24,19,0.18)] opacity-50";
+                  buttonClass = "bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] opacity-50";
                 }
               }
 
@@ -301,7 +301,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
                   key={index}
                   onClick={() => handleAnswerSelect(option)}
                   disabled={isAnswered}
-                  className={`${buttonClass} border-2 rounded-xl p-6 text-4xl font-bold text-[#1c1813] transition disabled:cursor-not-allowed`}
+                  className={`${buttonClass} border-2 rounded-xl p-6 text-4xl font-bold text-[var(--ink)] transition disabled:cursor-not-allowed`}
                 >
                   {option}
                 </button>
@@ -314,7 +314,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
         {isAnswered && (
           <button
             onClick={handleNextQuestion}
-            className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
           >
             {currentQuestion < 9 ? t('radicals_next_question_button') : t('radicals_view_results_button')}
           </button>

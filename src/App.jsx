@@ -19,7 +19,7 @@ const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
 const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
-import { J } from '@/styles/tokens';
+import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { STORAGE_KEYS } from './utils/storageKeys.js';
 import { fetchJsonCached } from './utils/dataCache.js';
@@ -29,40 +29,48 @@ import { MINIGAME_IDS } from './components/minigames/registry.js';
 
 // ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
 function AnimatedLoader() {
-  const canvasRef = useRef(null);
-  const writerRef = useRef(null);
+  const hostWrapRef = useRef(null);
 
   useEffect(() => {
+    if (!hostWrapRef.current) return;
     let cancelled = false;
     let writer = null;
+    // Host imperativo (ver HomeScreen): HanziWriter inyecta su SVG aquí, fuera
+    // del árbol que React gestiona, para evitar el 'removeChild' al desmontar
+    // (este loader aparece/desaparece en cada navegación a una pantalla lazy).
+    const host = document.createElement('div');
+    hostWrapRef.current.appendChild(host);
 
-    async function init() {
+    (async () => {
       try {
         const HanziWriter = (await import('hanzi-writer')).default;
-        if (cancelled || !canvasRef.current) return;
-        writer = HanziWriter.create(canvasRef.current, '学', {
+        if (cancelled) return;
+        writer = HanziWriter.create(host, '学', {
           charDataLoader: hanziCharDataLoader,
           width: 80, height: 80, padding: 5,
-          strokeColor: J.jade, radicalColor: J.red,
+          strokeColor: resolveColor(J.jade), radicalColor: resolveColor(J.red),
           drawingWidth: 3, showCharacter: false, showOutline: true,
-          outlineColor: J.mute2,
+          outlineColor: resolveColor(J.mute2),
         });
-        writerRef.current = writer;
-        function loop() {
+        const loop = () => {
           if (cancelled) return;
           writer.animateCharacter({ onComplete: () => { if (!cancelled) setTimeout(loop, 400); } });
-        }
+        };
         loop();
       } catch (_) {}
-    }
-    init();
-    return () => { cancelled = true; writerRef.current = null; };
+    })();
+
+    return () => {
+      cancelled = true;
+      try { writer?.pauseAnimation?.(); } catch { /* noop */ }
+      try { host.remove(); } catch { /* noop */ }
+    };
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: J.paper }}>
-      <div className="relative">
-        <canvas ref={canvasRef} width={80} height={80} />
+      <div className="relative" style={{ width: 80, height: 80 }}>
+        <div ref={hostWrapRef} style={{ width: 80, height: 80 }} />
         <div className="absolute rounded-full animate-spin"
           style={{ width: 92, height: 92, top: -6, left: -6, border: `2px solid ${J.hair}`, borderTopColor: J.jade }} />
       </div>
@@ -79,12 +87,8 @@ function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
 function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
 
 export default function App() {
-  // Jade Pop theme — warm cream paper
-  useEffect(() => {
-    document.documentElement.classList.remove('dark');
-    document.body.style.backgroundColor = J.paper;
-    document.body.style.color = J.ink;
-  }, []);
+  // El tema (claro/oscuro/sistema) lo aplica initTheme() en main.jsx antes
+  // del primer render; aquí ya no forzamos nada para no pisar la preferencia.
 
   // Datos globales
   const [, setAppData]                  = useState(null);
@@ -192,17 +196,11 @@ export default function App() {
       setPrevScreen(prev => prev || 'home');
       setScreen('settings');
     };
-    const toFriends = () => {
-      setPrevScreen('profile');
-      setScreen('friends');
-    };
     window.addEventListener('open-profile', toProfile);
     window.addEventListener('open-settings', toSettings);
-    window.addEventListener('open-friends', toFriends);
     return () => {
       window.removeEventListener('open-profile', toProfile);
       window.removeEventListener('open-settings', toSettings);
-      window.removeEventListener('open-friends', toFriends);
     };
   }, []);
 
@@ -363,6 +361,7 @@ export default function App() {
     else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
+    else if (key === 'friends')    setScreen('friends');
     else if (key === 'profile')    setScreen('profile');
     else if (key === 'settings')   setScreen('settings');
   };
@@ -659,13 +658,10 @@ export default function App() {
   // ── FRIENDS (amistades) ──────────────────────────────────────────────────────
   if (screen === 'friends') {
     return (
-      <Layout activeScreen="profile" onNavigate={handleBottomNav}>
+      <Layout activeScreen="friends" onNavigate={handleBottomNav}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
-            <FriendsScreen
-              userName={userName}
-              onBack={() => setScreen('profile')}
-            />
+            <FriendsScreen userName={userName} />
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -723,7 +719,7 @@ export default function App() {
   return (
     <Layout activeScreen="home" onNavigate={handleBottomNav}>
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[#928a76]">Pantalla desconocida: {screen}</p>
+        <p className="text-[var(--mute)]">Pantalla desconocida: {screen}</p>
       </div>
     </Layout>
   );

@@ -94,7 +94,7 @@ export default function DailyChallenges() {
                 <button
                   onClick={() => handleClaim(challenge.id)}
                   className="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors animate-pulse"
-                  style={{ background: J.sand, color: J.paperHi, border: 0, cursor: 'pointer' }}
+                  style={{ background: J.sand, color: J.onAccent, border: 0, cursor: 'pointer' }}
                 >
                   +{challenge.xpReward} XP
                 </button>
@@ -118,7 +118,7 @@ export default function DailyChallenges() {
           <button
             onClick={handleClaimBonus}
             className="w-full py-2.5 font-bold text-sm rounded-xl transition-all animate-pulse"
-            style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+            style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
           >
             ★ {t('challenges_claim_bonus')} +50 XP
           </button>

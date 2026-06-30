@@ -36,9 +36,9 @@ export default function DailyIndex({ goBack, setDailySection }) {
 
   const getBorderColor = (color) => {
     const colors = {
-      blue: 'hover:border-[#2f6b4a]',
-      green: 'hover:border-[#2f6b4a]',
-      purple: 'hover:border-[#c8392f]'
+      blue: 'hover:border-[var(--jade)]',
+      green: 'hover:border-[var(--jade)]',
+      purple: 'hover:border-[var(--red)]'
     };
     return colors[color] || colors.blue;
   };
@@ -49,7 +49,7 @@ export default function DailyIndex({ goBack, setDailySection }) {
         <div className="mb-6">
           <button
             onClick={goBack}
-            className="flex items-center text-[#5b5446] hover:text-[#1c1813]"
+            className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]"
           >
             <ArrowLeft className="mr-2" />
             {t('daily_back_to_menu')}
@@ -57,8 +57,8 @@ export default function DailyIndex({ goBack, setDailySection }) {
         </div>
 
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#1c1813] mb-2">{t('daily_challenges_title')}</h2>
-          <p className="text-lg sm:text-xl text-[#5b5446]">{t('daily_challenges_subtitle')}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] mb-2">{t('daily_challenges_title')}</h2>
+          <p className="text-lg sm:text-xl text-[var(--ink-soft)]">{t('daily_challenges_subtitle')}</p>
         </div>
 
         {/* Grid de desafíos */}
@@ -70,14 +70,14 @@ export default function DailyIndex({ goBack, setDailySection }) {
               onClick={() => {
                 setDailySection(challenge.id);
               }}
-              className={`bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] ${getBorderColor(challenge.color)}`}
+              className={`bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] ${getBorderColor(challenge.color)}`}
             >
               <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{challenge.emoji}</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#1c1813] mb-2">
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--ink)] mb-2">
                 {challenge.title}
               </h3>
-              <p className="text-base sm:text-lg text-[#5b5446] mb-2">{challenge.description}</p>
-              <p className="text-sm text-[#928a76]">{challenge.time}</p>
+              <p className="text-base sm:text-lg text-[var(--ink-soft)] mb-2">{challenge.description}</p>
+              <p className="text-sm text-[var(--mute)]">{challenge.time}</p>
             </Button>
           ))}
         </div>

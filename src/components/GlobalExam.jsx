@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
-import { shuffle } from '@/utils/arrayUtils.js';
+import { buildMeaningQuestions } from '@/utils/quizEngine.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 const TOTAL_TIME = 90; // segundos
@@ -25,16 +25,9 @@ export default function GlobalExam({ goBack, allCharacters }) {
   const pool = allCharacters.filter(c => !c.isSupplementary);
 
   const startGame = useCallback(() => {
-    const count = Math.min(QUESTIONS_PER_ROUND, pool.length);
-    const picked = shuffle([...pool]).slice(0, count);
-    const qs = picked.map(correct => {
-      const distractors = shuffle(pool.filter(c => c.char !== correct.char))
-        .slice(0, 3)
-        .map(c => c.meaning);
-      const options = shuffle([correct.meaning, ...distractors]);
-      return { correct, options };
-    });
-    setQuestions(qs);
+    // El motor de quiz genera las preguntas carácter→significado (antes esta
+    // misma lógica estaba duplicada aquí). Devuelve { correct, answer, options }.
+    setQuestions(buildMeaningQuestions(pool, QUESTIONS_PER_ROUND));
     setQIndex(0);
     setScore(0);
     setWrong(0);
@@ -112,7 +105,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
             ].map((info, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div className="font-cn rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5"
-                  style={{ background: J.sand, color: J.paperHi }}>
+                  style={{ background: J.sand, color: J.onAccent }}>
                   {['一','二','三','四'][i]}
                 </div>
                 <p className="text-sm" style={{ color: J.inkSoft }}>{info}</p>
@@ -123,7 +116,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
           <button
             onClick={startGame}
             className="w-full font-bold py-4 rounded-xl text-lg transition-colors"
-            style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+            style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
           >
             {t('global_exam_start_button')}
           </button>
@@ -188,7 +181,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
               <button
                 onClick={startGame}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"
-                style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+                style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
               >
                 {t('global_exam_repeat_button')}
               </button>

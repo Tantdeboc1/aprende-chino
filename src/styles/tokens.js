@@ -1,44 +1,61 @@
 // Design tokens — Jade Pop · Rojo
 // Color logic: jade = progress, red = achievement, sand = try again, butter = on jade/red only
+//
+// IMPORTANTE: los colores ya NO son hex literales — apuntan a variables CSS
+// definidas en src/index.css (:root para claro, .dark para oscuro). Así los
+// ~1500 estilos inline que usan `J.*` cambian de tema automáticamente al
+// poner/quitar la clase .dark, sin tocar cada componente.
+//
+// Excepción: para texto/iconos que van SOBRE superficies de color (jade/rojo/
+// arena) usa `J.onAccent` (siempre claro), no `J.paperHi` (que es superficie y
+// se oscurece en modo noche).
 export const J = {
   // Paper / surface
-  paper:    '#f4ecdc',
-  paperHi:  '#fbf5e6',
-  paperHi2: '#f8f1de',
+  paper:    'var(--paper)',
+  paperHi:  'var(--paper-hi)',
+  paperHi2: 'var(--paper-hi2)',
 
   // Ink / text
-  ink:      '#1c1813',
-  inkSoft:  '#5b5446',
-  mute:     '#928a76',
-  mute2:    '#bdb39a',
+  ink:      'var(--ink)',
+  inkSoft:  'var(--ink-soft)',
+  mute:     'var(--mute)',
+  mute2:    'var(--mute2)',
   // Para texto que necesita contraste WCAG AA sobre paper/paperHi (≥4.5:1).
-  // Úsalo en placeholders de inputs y en cualquier texto pequeño "secundario"
-  // que deba seguir siendo legible. mute (#928a76) solo cumple AA en texto grande.
-  muteStrong: '#6e6757',
-  hair:     'rgba(28,24,19,0.10)',
-  hairS:    'rgba(28,24,19,0.18)',
+  muteStrong: 'var(--mute-strong)',
+  hair:     'var(--hair)',
+  hairS:    'var(--hair-s)',
   // Borde de UI más visible para inputs en reposo — cumple SC 1.4.11 (≥3:1).
-  border:   'rgba(28,24,19,0.32)',
+  border:   'var(--ui-border)',
+
+  // Texto/iconos claros sobre superficies de color (jade/red/sand). Constante
+  // entre temas: una superficie jade lleva texto claro tanto en claro como en
+  // oscuro, mientras que paperHi (superficie) sí se oscurece.
+  onAccent: 'var(--on-accent)',
 
   // Jade (protagonist)
-  jade:     '#2f6b4a',
-  jadeDeep: '#1f4a33',
-  jadeBg:   '#cfe1d3',
-  jadeMid:  '#5a8f72',
+  jade:     'var(--jade)',
+  jadeDeep: 'var(--jade-deep)',
+  jadeBg:   'var(--jade-bg)',
+  jadeMid:  'var(--jade-mid)',
 
   // Red / Cinabrio — achievement, NOT error
-  red:      '#c8392f',
-  redDeep:  '#8b1f1a',
-  redBg:    '#f0d6cf',
+  red:      'var(--red)',
+  redDeep:  'var(--red-deep)',
+  redBg:    'var(--red-bg)',
 
   // Sand (warm neutral)
-  sand:     '#b88a3e',
-  sandDeep: '#7a5722',
-  sandBg:   '#e8d4a8',
-  sandBg2:  '#f0e0bc',
+  sand:     'var(--sand)',
+  sandDeep: 'var(--sand-deep)',
+  sandBg:   'var(--sand-bg)',
+  sandBg2:  'var(--sand-bg2)',
 
   // Butter (gold — only on jade or red surfaces)
-  butter:   '#f0c862',
+  butter:   'var(--butter)',
+
+  // Sombras en capas (pulido cohesivo) — se adaptan al tema.
+  shadowSm: 'var(--shadow-sm)',
+  shadowMd: 'var(--shadow-md)',
+  shadowLg: 'var(--shadow-lg)',
 
   // Typography
   sans:     '"Geist", system-ui, sans-serif',
@@ -46,3 +63,16 @@ export const J = {
   cnSerif:  '"Noto Serif SC", "Songti SC", serif',
   mono:     '"Geist Mono", monospace',
 };
+
+// Resuelve un token 'var(--x)' a su color computado (hex/rgb). Necesario para
+// librerías que pintan en canvas y NO entienden variables CSS — sobre todo
+// HanziWriter (colorStringToVals falla con 'var(--jade)'). Para CSS normal
+// usa J.* directamente; esto es solo para esos casos puntuales.
+export function resolveColor(value) {
+  if (typeof value === 'string' && value.startsWith('var(') && typeof window !== 'undefined') {
+    const name = value.slice(4, -1).trim(); // 'var(--jade)' → '--jade'
+    const resolved = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    if (resolved) return resolved;
+  }
+  return value;
+}

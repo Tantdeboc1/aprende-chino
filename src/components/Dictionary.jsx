@@ -215,7 +215,7 @@ export default function Dictionary({
               placeholder={t('dictionary_search_placeholder')}
               value={rawQuery}
               onChange={(e) => setRawQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-lg text-lg placeholder-[#6e6757]"
+              className="w-full pl-10 pr-4 py-3 rounded-lg text-lg placeholder-[var(--mute-strong)]"
               style={{
                 border: `2px solid ${J.border}`, background: J.paperHi, color: J.ink,
                 outline: 'none',

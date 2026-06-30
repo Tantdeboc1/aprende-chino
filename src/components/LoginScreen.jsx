@@ -88,7 +88,7 @@ export default function LoginScreen() {
           disabled={busy}
           style={{
             width: '100%', padding: '14px 18px', borderRadius: 14, border: 0,
-            background: J.jade, color: J.paperHi,
+            background: J.jade, color: J.onAccent,
             fontWeight: 700, fontSize: 15, cursor: 'pointer',
             boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
           }}

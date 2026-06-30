@@ -97,40 +97,40 @@ export default function Matching({
   // Pantalla de instrucciones
   if (showInstructions) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] p-4">
+      <div className="min-h-screen bg-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <button
               onClick={goBack}
-              className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition mb-4"
+              className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               ← {t('quiz_back_button')}
             </button>
-            <h1 className="text-3xl font-bold text-[#1c1813] text-center">{t('matching_title')}</h1>
-            <p className="text-[#928a76] text-center">{t('matching_subtitle')}</p>
+            <h1 className="text-3xl font-bold text-[var(--ink)] text-center">{t('matching_title')}</h1>
+            <p className="text-[var(--mute)] text-center">{t('matching_subtitle')}</p>
           </div>
 
-          <div className="bg-[#fbf5e6] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
-            <h2 className="text-xl font-bold text-[#1c1813] mb-4">{t('quiz_instructions_title')}</h2>
-            <div className="space-y-3 text-[#5b5446]">
+          <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+            <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
+            <div className="space-y-3 text-[var(--ink-soft)]">
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">1</div>
                 <p>{t('matching_instructions_1')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">2</div>
                 <p>{t('matching_instructions_2')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">3</div>
                 <p>{t('matching_instructions_3').replace(/<\/?1>/g, '')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">4</div>
                 <p>{t('matching_instructions_4').replace(/<\/?1>/g, '')}</p>
               </div>
               <div className="flex items-start">
-                <div className="bg-[#2f6b4a] text-[#fbf5e6] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">5</div>
+                <div className="bg-[var(--jade)] text-[var(--on-accent)] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1">5</div>
                 <p>{t('matching_instructions_5')}</p>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Matching({
 
           <button
             onClick={init}
-            className="w-full bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
           >
             {t('matching_start_button')}
           </button>
@@ -148,47 +148,47 @@ export default function Matching({
   }
 
   return (
-          <div className="min-h-screen bg-[#f4ecdc] p-4">
+          <div className="min-h-screen bg-[var(--paper)] p-4">
       <div className="max-w-5xl mx-auto pt-6">
         <div className="mb-4 flex justify-between items-center">
-          <button onClick={goBack} className="flex items-center text-[#5b5446] hover:text-[#1c1813] transition text-sm">
+          <button onClick={goBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition text-sm">
             ← {t('quiz_back_button')}
           </button>
           <div className="text-center">
-            <span className="text-[#5b5446] font-semibold text-base">
+            <span className="text-[var(--ink-soft)] font-semibold text-base">
               {t('matching_pairs_header')} {matched.length}/{pairs.length / 2 || 0}
             </span>
-            <div className="w-24 bg-[#f8f1de] rounded-full h-1.5 mt-1 mx-auto">
+            <div className="w-24 bg-[var(--paper-hi2)] rounded-full h-1.5 mt-1 mx-auto">
               <div
-                className="bg-[#2f6b4a] h-1.5 rounded-full transition-all duration-300"
+                className="bg-[var(--jade)] h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${(matched.length / (pairs.length / 2)) * 100 || 0}%` }}
               />
             </div>
           </div>
           <button
             onClick={init}
-            className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-1.5 px-3 rounded-lg transition text-sm"
+            className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-1.5 px-3 rounded-lg transition text-sm"
           >
             {t('matching_reset_button')}
           </button>
         </div>
 
-        <div className="bg-[#fbf5e6] rounded-xl shadow-sm p-6 border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-xl shadow-sm p-6 border border-[rgba(28,24,19,0.10)]">
           {done ? (
             <div className="text-center py-8">
               <div className="text-5xl mb-4"></div>
-              <h2 className="text-2xl font-bold text-[#1c1813] mb-2">{t('matching_completed_title')}</h2>
-              <p className="text-[#5b5446] text-lg mb-6">{t('matching_completed_subtitle')}</p>
+              <h2 className="text-2xl font-bold text-[var(--ink)] mb-2">{t('matching_completed_title')}</h2>
+              <p className="text-[var(--ink-soft)] text-lg mb-6">{t('matching_completed_subtitle')}</p>
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={init}
-                  className="bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-semibold py-2 px-6 rounded-lg transition text-base"
+                  className="bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-2 px-6 rounded-lg transition text-base"
                 >
                   {t('quiz_play_again_button')}
                 </button>
                 <button
                   onClick={goBack}
-                  className="bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] font-semibold py-2 px-6 rounded-lg transition text-base border border-[rgba(28,24,19,0.10)]"
+                  className="bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] font-semibold py-2 px-6 rounded-lg transition text-base border border-[rgba(28,24,19,0.10)]"
                 >
                   {t('quiz_back_button')}
                 </button>
@@ -198,7 +198,7 @@ export default function Matching({
             <div className="grid grid-cols-2 gap-3 sm:gap-6">
               {/* Columna Caracteres */}
               <div className="space-y-3">
-                <h4 className="text-center font-bold text-[#5b5446] mb-4 text-lg">{t('matching_characters_header')}</h4>
+                <h4 className="text-center font-bold text-[var(--ink-soft)] mb-4 text-lg">{t('matching_characters_header')}</h4>
                 {pairs.filter(p => p.type === 'char').map((item) => {
                   const state = getCardState(item);
                   return (
@@ -209,12 +209,12 @@ export default function Matching({
                       className={`
                         w-full p-4 rounded-lg font-semibold transition-all duration-200 min-h-[90px] flex items-center justify-center
                         ${state === 'matched'
-                          ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-not-allowed opacity-70'
+                          ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-not-allowed opacity-70'
                           : state === 'selected'
-                          ? 'bg-[#2f6b4a] text-[#fbf5e6] transform scale-105 shadow-md'
+                          ? 'bg-[var(--jade)] text-[var(--on-accent)] transform scale-105 shadow-md'
                           : state === 'incorrect'
-                          ? 'bg-[#c8392f] text-[#fbf5e6] animate-pulse shadow-md'
-                          : 'bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] hover:shadow-md'
+                          ? 'bg-[var(--red)] text-[var(--on-accent)] animate-pulse shadow-md'
+                          : 'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] hover:shadow-md'
                         }
                       `}
                     >
@@ -226,7 +226,7 @@ export default function Matching({
 
               {/* Columna Significados */}
               <div className="space-y-3">
-                <h4 className="text-center font-bold text-[#5b5446] mb-4 text-lg">{t('matching_meanings_header')}</h4>
+                <h4 className="text-center font-bold text-[var(--ink-soft)] mb-4 text-lg">{t('matching_meanings_header')}</h4>
                 {pairs.filter(p => p.type === 'meaning').map((item) => {
                   const state = getCardState(item);
                   return (
@@ -237,12 +237,12 @@ export default function Matching({
                       className={`
                         w-full p-4 rounded-lg font-semibold transition-all duration-200 min-h-[90px] flex items-center justify-center
                         ${state === 'matched'
-                          ? 'bg-[#2f6b4a] text-[#fbf5e6] cursor-not-allowed opacity-70'
+                          ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-not-allowed opacity-70'
                           : state === 'selected'
-                          ? 'bg-[#2f6b4a] text-[#fbf5e6] transform scale-105 shadow-md'
+                          ? 'bg-[var(--jade)] text-[var(--on-accent)] transform scale-105 shadow-md'
                           : state === 'incorrect'
-                          ? 'bg-[#c8392f] text-[#fbf5e6] animate-pulse shadow-md'
-                          : 'bg-[#f8f1de] hover:bg-[#bdb39a] text-[#1c1813] hover:shadow-md'
+                          ? 'bg-[var(--red)] text-[var(--on-accent)] animate-pulse shadow-md'
+                          : 'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] hover:shadow-md'
                         }
                       `}
                     >

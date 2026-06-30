@@ -124,7 +124,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
           <div style={{
             position: 'absolute', inset: -22,
             borderRadius: '50%',
-            background: `radial-gradient(circle, ${J.butter}40 0%, transparent 70%)`,
+            background: `radial-gradient(circle, color-mix(in srgb, ${J.butter} 25%, transparent) 0%, transparent 70%)`,
             animation: 'lu-pulse 1.6s ease-in-out infinite',
           }} />
           {/* Avatar */}
@@ -164,7 +164,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
 
         {/* Título nuevo */}
         <div style={{
-          background: J.jade, color: J.paperHi,
+          background: J.jade, color: J.onAccent,
           borderRadius: 14, padding: '10px 14px',
           marginTop: 14,
           animation: 'lu-fade 500ms ease-out 400ms both',
@@ -174,7 +174,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
           </div>
           <div style={{ marginTop: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <span style={{ fontSize: 24 }}>{levelUp.icon}</span>
-            <span style={{ fontSize: 17, fontWeight: 800, color: J.paperHi }}>
+            <span style={{ fontSize: 17, fontWeight: 800, color: J.onAccent }}>
               {titleLoc}
             </span>
           </div>
@@ -188,7 +188,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
           onClick={onClose}
           style={{
             marginTop: 20, width: '100%',
-            background: J.red, color: J.paperHi,
+            background: J.red, color: J.onAccent,
             border: 0, borderRadius: 14,
             padding: '14px 18px',
             fontSize: 15, fontWeight: 800, letterSpacing: '0.02em',

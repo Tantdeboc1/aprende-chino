@@ -100,7 +100,7 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam, t, language }) {
         <button
           onClick={onNewExam}
           className="w-full py-4 font-bold rounded-xl transition-colors"
-          style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+          style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
         >
           {t('exam_start_now_button')}
         </button>
@@ -170,7 +170,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
           <button
             onClick={onBack}
             className="flex-1 py-4 font-bold rounded-xl transition-colors"
-            style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+            style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
           >
             {t('exam_back_to_hub')}
           </button>

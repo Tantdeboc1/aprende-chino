@@ -192,12 +192,12 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   // ── Pantalla de carga / sin datos ───────────────────────────────────────────
   if (rounds.length === 0) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center gap-4 p-6">
+      <div className="min-h-screen bg-[var(--paper)] flex flex-col items-center justify-center gap-4 p-6">
         <p className="text-4xl"></p>
-        <p className="text-[#928a76] text-center">{t('sov_no_data')}</p>
+        <p className="text-[var(--mute)] text-center">{t('sov_no_data')}</p>
         <button
           onClick={() => setLessonFilter(null)}
-          className="px-4 py-2 rounded-lg bg-[#f8f1de] text-[#5b5446] text-sm hover:bg-[#bdb39a] transition-colors"
+          className="px-4 py-2 rounded-lg bg-[var(--paper-hi2)] text-[var(--ink-soft)] text-sm hover:bg-[var(--mute2)] transition-colors"
         >
           {t('sov_all_lessons')}
         </button>
@@ -206,21 +206,21 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
   }
   if (!current) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex items-center justify-center">
-        <p className="text-[#928a76]">{t('minigames_loading')}</p>
+      <div className="min-h-screen bg-[var(--paper)] flex items-center justify-center">
+        <p className="text-[var(--mute)]">{t('minigames_loading')}</p>
       </div>
     );
   }
 
   // ── Juego principal ──────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#f4ecdc] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-8">
 
       {/* Header */}
-      <div className={`bg-[#fbf5e6] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
+      <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
         <button
           onClick={goBack}
-          className="flex items-center gap-1.5 text-[#928a76] hover:text-[#1c1813] text-sm mb-3 transition-colors"
+          className="flex items-center gap-1.5 text-[var(--mute)] hover:text-[var(--ink)] text-sm mb-3 transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M15 18l-6-6 6-6"/>
@@ -230,17 +230,17 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
 
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#1c1813]">{t('sov_title')}</h1>
-            <p className="text-sm text-[#928a76]">{t('sov_subtitle')}</p>
+            <h1 className="text-lg font-bold text-[var(--ink)]">{t('sov_title')}</h1>
+            <p className="text-sm text-[var(--mute)]">{t('sov_subtitle')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${accent.text}`}>{score}</p>
-            <p className="text-xs text-[#928a76]">{currentIdx + 1}/{rounds.length}</p>
+            <p className="text-xs text-[var(--mute)]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
 
         {/* Barra de progreso */}
-        <div className="mt-3 h-1.5 bg-[#f8f1de] rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[var(--paper-hi2)] rounded-full overflow-hidden">
           <div
             className={`h-full ${accent.bg} rounded-full transition-all duration-500`}
             style={{ width: `${((currentIdx + (result ? 1 : 0)) / rounds.length) * 100}%` }}
@@ -256,8 +256,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
             onClick={() => setLessonFilter(null)}
             className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${
               lessonFilter === null
-                ? 'bg-[#c8392f] text-[#fbf5e6] border-transparent'
-                : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+                ? 'bg-[var(--red)] text-[var(--on-accent)] border-transparent'
+                : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
             }`}
           >
             {t('sov_all_lessons')}
@@ -268,8 +268,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
               onClick={() => setLessonFilter(n)}
               className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${
                 lessonFilter === n
-                  ? `${LESSON_COLORS[n].bg} text-[#fbf5e6] border-transparent`
-                  : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
+                  ? `${LESSON_COLORS[n].bg} text-[var(--on-accent)] border-transparent`
+                  : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
               }`}
             >
               L{n}
@@ -278,40 +278,40 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
         </div>
 
         {/* Traducción */}
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
-          <p className="text-xs text-[#928a76] mb-1">{t('sov_translate_label')}</p>
-          <p className="text-[#1c1813] font-semibold text-base leading-snug">{currentTranslation}</p>
+        <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
+          <p className="text-xs text-[var(--mute)] mb-1">{t('sov_translate_label')}</p>
+          <p className="text-[var(--ink)] font-semibold text-base leading-snug">{currentTranslation}</p>
 
           {showHint && (
             <div className="mt-2 pt-2 border-t border-[rgba(28,24,19,0.10)]">
-              <p className="text-xs text-[#928a76] mb-0.5">{t('sov_hint_label')}</p>
-              <p className="text-[#b88a3e] text-sm">{currentHint}</p>
+              <p className="text-xs text-[var(--mute)] mb-0.5">{t('sov_hint_label')}</p>
+              <p className="text-[var(--sand)] text-sm">{currentHint}</p>
             </div>
           )}
         </div>
 
         {/* Zona de respuesta */}
         <div>
-          <p className="text-xs text-[#928a76] mb-2">{t('sov_answer_zone')}</p>
+          <p className="text-xs text-[var(--mute)] mb-2">{t('sov_answer_zone')}</p>
           <div
             className={`min-h-[52px] rounded-xl border-2 p-3 flex flex-wrap gap-2 transition-colors ${
-              result === 'correct'   ? 'border-[#2f6b4a] bg-[#cfe1d3]/20' :
-              result === 'incorrect' ? 'border-[#c8392f] bg-[#f0d6cf]/20'     :
-              placed.length > 0     ? `${accent.border} bg-[#fbf5e6]`     :
-                                      'border-[rgba(28,24,19,0.18)] bg-[#fbf5e6]/50 border-dashed'
+              result === 'correct'   ? 'border-[var(--jade)] bg-[var(--jade-bg)]/20' :
+              result === 'incorrect' ? 'border-[var(--red)] bg-[var(--red-bg)]/20'     :
+              placed.length > 0     ? `${accent.border} bg-[var(--paper-hi)]`     :
+                                      'border-[rgba(28,24,19,0.18)] bg-[var(--paper-hi)]/50 border-dashed'
             }`}
           >
             {placed.length === 0 && (
-              <p className="text-[#928a76] text-sm self-center">{t('sov_drop_here')}</p>
+              <p className="text-[var(--mute)] text-sm self-center">{t('sov_drop_here')}</p>
             )}
             {placed.map(item => (
               <button
                 key={item.id}
                 onClick={() => handleRemoveWord(item)}
                 disabled={!!result}
-                className={`px-4 py-2 rounded-lg text-[#1c1813] font-bold text-lg transition-all
-                  ${result === 'correct'   ? 'bg-[#2f6b4a] cursor-default' :
-                    result === 'incorrect' ? 'bg-[#c8392f] cursor-default'   :
+                className={`px-4 py-2 rounded-lg text-[var(--ink)] font-bold text-lg transition-all
+                  ${result === 'correct'   ? 'bg-[var(--jade)] cursor-default' :
+                    result === 'incorrect' ? 'bg-[var(--red)] cursor-default'   :
                                             `${accent.bg} hover:opacity-80 active:scale-95`}
                 `}
               >
@@ -323,42 +323,42 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
 
         {/* Chips disponibles */}
         <div>
-          <p className="text-xs text-[#928a76] mb-2">{t('sov_words_label')}</p>
+          <p className="text-xs text-[var(--mute)] mb-2">{t('sov_words_label')}</p>
           <div className="flex flex-wrap gap-2">
             {available.map(item => (
               <button
                 key={item.id}
                 onClick={() => handlePickWord(item)}
                 disabled={!!result}
-                className="px-4 py-2 rounded-lg bg-[#f8f1de] hover:bg-[#bdb39a] active:scale-95 text-[#1c1813] font-bold text-lg transition-all border border-[rgba(28,24,19,0.18)] hover:border-[rgba(28,24,19,0.18)]"
+                className="px-4 py-2 rounded-lg bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] active:scale-95 text-[var(--ink)] font-bold text-lg transition-all border border-[rgba(28,24,19,0.18)] hover:border-[rgba(28,24,19,0.18)]"
               >
                 {item.word}
               </button>
             ))}
             {available.length === 0 && !result && (
-              <p className="text-xs text-[#928a76] italic">{t('sov_all_placed')}</p>
+              <p className="text-xs text-[var(--mute)] italic">{t('sov_all_placed')}</p>
             )}
           </div>
         </div>
 
         {/* Feedback de resultado */}
         {result === 'correct' && (
-          <div className="bg-[#cfe1d3]/30 border border-[#2f6b4a] rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
             <span className="text-2xl"></span>
             <div>
-              <p className="text-[#2f6b4a] font-bold text-sm">{t('sov_correct')}</p>
-              <p className="text-[#5b5446] text-sm">{current.sentence}</p>
+              <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
+              <p className="text-[var(--ink-soft)] text-sm">{current.sentence}</p>
             </div>
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[#f0d6cf]/30 border border-[#c8392f] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl"></span>
-              <p className="text-[#c8392f] font-bold text-sm">{t('sov_incorrect')}</p>
+              <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
             </div>
-            <p className="text-xs text-[#928a76]">{t('sov_correct_answer')}</p>
-            <p className="text-[#1c1813] font-bold text-base mt-0.5">{current.sentence}</p>
+            <p className="text-xs text-[var(--mute)]">{t('sov_correct_answer')}</p>
+            <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence}</p>
           </div>
         )}
 
@@ -369,7 +369,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
               {!showHint && (
                 <button
                   onClick={() => setShowHint(true)}
-                  className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors"
+                  className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors"
                 >
                   {t('sov_hint_button')}
                 </button>
@@ -379,8 +379,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
                 disabled={placed.length === 0}
                 className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors
                   ${placed.length > 0
-                    ? `${accent.bg} hover:opacity-90 text-[#1c1813]`
-                    : 'bg-[#f8f1de] text-[#928a76] cursor-not-allowed'
+                    ? `${accent.bg} hover:opacity-90 text-[var(--ink)]`
+                    : 'bg-[var(--paper-hi2)] text-[var(--mute)] cursor-not-allowed'
                   }`}
               >
                 {t('sov_check_button')}
@@ -391,7 +391,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
           {result === 'correct' && (
             <button
               onClick={handleNext}
-              className="flex-1 py-3 rounded-xl bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6] font-bold text-sm transition-colors"
+              className="flex-1 py-3 rounded-xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold text-sm transition-colors"
             >
               {currentIdx + 1 >= rounds.length ? t('sov_see_results') : t('sov_next_button')} →
             </button>
@@ -401,13 +401,13 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
             <div className="flex gap-3 flex-1">
               <button
                 onClick={handleRetry}
-                className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] text-sm font-medium transition-colors"
+                className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] text-sm font-medium transition-colors"
               >
                 {t('sov_retry_button')}
               </button>
               <button
                 onClick={handleNext}
-                className="flex-1 py-3 rounded-xl bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446] font-bold text-sm transition-colors"
+                className="flex-1 py-3 rounded-xl bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink-soft)] font-bold text-sm transition-colors"
               >
                 {currentIdx + 1 >= rounds.length ? t('sov_see_results') : t('sov_next_button')}
               </button>

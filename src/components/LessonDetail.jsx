@@ -106,7 +106,7 @@ export default function LessonDetail({
 
       {/* Header */}
       <div style={{
-        background: J.jade, color: J.paperHi,
+        background: J.jade, color: J.onAccent,
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 16px',
       }}>
@@ -121,7 +121,7 @@ export default function LessonDetail({
             <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: J.butter, marginBottom: 2 }}>
               Lección {lessonNum}
             </p>
-            <h1 className="text-xl font-bold leading-snug" style={{ color: J.paperHi }}>
+            <h1 className="text-xl font-bold leading-snug" style={{ color: J.onAccent }}>
               {lessonData?.titleEs || ''}
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.75)' }}>{lessonData?.titleZh || ''}</p>

@@ -15,7 +15,7 @@ import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
 import { LESSON_COLORS, LESSON_NUMBERS } from '@/styles/lessonColors.js';
-const DEFAULT_COLOR = { bg: 'bg-[#2f6b4a]', border: 'border-[#2f6b4a]', text: 'text-[#2f6b4a]' };
+const DEFAULT_COLOR = { bg: 'bg-[var(--jade)]', border: 'border-[var(--jade)]', text: 'text-[var(--jade)]' };
 
 function buildRound(lessonFilter) {
   const pool = lessonFilter !== null
@@ -128,10 +128,10 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
 
   if (rounds.length === 0 || !current) {
     return (
-      <div className="min-h-screen bg-[#f4ecdc] flex flex-col items-center justify-center gap-4 p-6">
+      <div className="min-h-screen bg-[var(--paper)] flex flex-col items-center justify-center gap-4 p-6">
         <p className="text-4xl"></p>
-        <p className="text-[#928a76] text-center">{t('sov_no_data')}</p>
-        <button onClick={() => setLessonFilter(null)} className="px-4 py-2 rounded-lg bg-[#f8f1de] text-[#5b5446] text-sm hover:bg-[#bdb39a] transition-colors">
+        <p className="text-[var(--mute)] text-center">{t('sov_no_data')}</p>
+        <button onClick={() => setLessonFilter(null)} className="px-4 py-2 rounded-lg bg-[var(--paper-hi2)] text-[var(--ink-soft)] text-sm hover:bg-[var(--mute2)] transition-colors">
           {t('sov_all_lessons')}
         </button>
       </div>
@@ -139,24 +139,24 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f4ecdc] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-8">
       {/* Header */}
-      <div className={`bg-[#fbf5e6] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
-        <button onClick={goBack} className="flex items-center gap-1.5 text-[#928a76] hover:text-[#1c1813] text-sm mb-3 transition-colors">
+      <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
+        <button onClick={goBack} className="flex items-center gap-1.5 text-[var(--mute)] hover:text-[var(--ink)] text-sm mb-3 transition-colors">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
           {t('sov_back')}
         </button>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-[#1c1813]">{t('complete_title')}</h1>
-            <p className="text-sm text-[#928a76]">{t('complete_subtitle')}</p>
+            <h1 className="text-lg font-bold text-[var(--ink)]">{t('complete_title')}</h1>
+            <p className="text-sm text-[var(--mute)]">{t('complete_subtitle')}</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${accent.text}`}>{score}</p>
-            <p className="text-xs text-[#928a76]">{currentIdx + 1}/{rounds.length}</p>
+            <p className="text-xs text-[var(--mute)]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
-        <div className="mt-3 h-1.5 bg-[#f8f1de] rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[var(--paper-hi2)] rounded-full overflow-hidden">
           <div className={`h-full ${accent.bg} rounded-full transition-all duration-500`} style={{ width: `${((currentIdx + (result ? 1 : 0)) / rounds.length) * 100}%` }} />
         </div>
       </div>
@@ -164,40 +164,40 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-5">
         {/* Filtro */}
         <div className="flex gap-2 flex-wrap">
-          <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[#2f6b4a] text-[#fbf5e6] border-transparent' : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
+          <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[var(--jade)] text-[var(--on-accent)] border-transparent' : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
             {t('sov_all_lessons')}
           </button>
           {LESSON_NUMBERS.map(n => (
-            <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[#fbf5e6] border-transparent` : 'bg-[#fbf5e6] text-[#928a76] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
+            <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[var(--on-accent)] border-transparent` : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
               L{n}
             </button>
           ))}
         </div>
 
         {/* Traducción */}
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
-          <p className="text-xs text-[#928a76] mb-1">{t('complete_translate_label')}</p>
-          <p className="text-[#1c1813] font-semibold text-base leading-snug">
+        <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
+          <p className="text-xs text-[var(--mute)] mb-1">{t('complete_translate_label')}</p>
+          <p className="text-[var(--ink)] font-semibold text-base leading-snug">
             {current.translations?.[i18n.language] || current.translations?.es}
           </p>
           {showHint && (
             <div className="mt-2 pt-2 border-t border-[rgba(28,24,19,0.10)]">
-              <p className="text-xs text-[#928a76] mb-0.5">{t('sov_hint_label')}</p>
-              <p className="text-[#b88a3e] text-sm">{current.hint}</p>
+              <p className="text-xs text-[var(--mute)] mb-0.5">{t('sov_hint_label')}</p>
+              <p className="text-[var(--sand)] text-sm">{current.hint}</p>
             </div>
           )}
         </div>
 
         {/* Frase con hueco */}
-        <div className="bg-[#fbf5e6] border border-[rgba(28,24,19,0.10)] rounded-xl p-5 text-center">
-          <p className="text-xs text-[#928a76] mb-3">{t('complete_sentence_label')}</p>
-          <p className="text-2xl font-bold text-[#1c1813] leading-relaxed">
+        <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-5 text-center">
+          <p className="text-xs text-[var(--mute)] mb-3">{t('complete_sentence_label')}</p>
+          <p className="text-2xl font-bold text-[var(--ink)] leading-relaxed">
             {parts[0]}
             <span className={`inline-block min-w-[2.5rem] mx-1 px-2 py-1 rounded-lg border-2 border-dashed transition-all ${
-              result === 'correct' ? 'border-[#2f6b4a] bg-[#cfe1d3]/30 text-[#2f6b4a]' :
-              result === 'incorrect' ? 'border-[#c8392f] bg-[#f0d6cf]/30 text-[#c8392f]' :
-              selected ? `${accent.border} bg-[#f8f1de] text-[#1c1813]` :
-              'border-[rgba(28,24,19,0.18)] text-[#928a76]'
+              result === 'correct' ? 'border-[var(--jade)] bg-[var(--jade-bg)]/30 text-[var(--jade)]' :
+              result === 'incorrect' ? 'border-[var(--red)] bg-[var(--red-bg)]/30 text-[var(--red)]' :
+              selected ? `${accent.border} bg-[var(--paper-hi2)] text-[var(--ink)]` :
+              'border-[rgba(28,24,19,0.18)] text-[var(--mute)]'
             }`}>
               {selected || '___'}
             </span>
@@ -207,16 +207,16 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
 
         {/* Opciones */}
         <div>
-          <p className="text-xs text-[#928a76] mb-2">{t('complete_options_label')}</p>
+          <p className="text-xs text-[var(--mute)] mb-2">{t('complete_options_label')}</p>
           <div className="grid grid-cols-2 gap-3">
             {shuffledOptions.map((option, i) => {
               const isSelected = selected === option;
               const isCorrectAnswer = option === current.answer;
-              let btnClass = 'bg-[#f8f1de] border-[rgba(28,24,19,0.18)] text-[#1c1813] hover:bg-[#bdb39a]';
+              let btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--ink)] hover:bg-[var(--mute2)]';
               if (result) {
-                if (isCorrectAnswer) btnClass = 'bg-[#2f6b4a] border-[#2f6b4a] text-[#fbf5e6]';
-                else if (isSelected && !isCorrectAnswer) btnClass = 'bg-[#c8392f] border-[#c8392f] text-[#fbf5e6]';
-                else btnClass = 'bg-[#f8f1de] border-[rgba(28,24,19,0.18)] text-[#928a76]';
+                if (isCorrectAnswer) btnClass = 'bg-[var(--jade)] border-[var(--jade)] text-[var(--on-accent)]';
+                else if (isSelected && !isCorrectAnswer) btnClass = 'bg-[var(--red)] border-[var(--red)] text-[var(--on-accent)]';
+                else btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--mute)]';
               }
               return (
                 <button
@@ -234,34 +234,34 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
 
         {/* Feedback */}
         {result === 'correct' && (
-          <div className="bg-[#cfe1d3]/30 border border-[#2f6b4a] rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
             <span className="text-2xl"></span>
             <div>
-              <p className="text-[#2f6b4a] font-bold text-sm">{t('sov_correct')}</p>
-              <p className="text-[#5b5446] text-sm">{current.sentence.replace('___', current.answer)}</p>
+              <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
+              <p className="text-[var(--ink-soft)] text-sm">{current.sentence.replace('___', current.answer)}</p>
             </div>
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[#f0d6cf]/30 border border-[#c8392f] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl"></span>
-              <p className="text-[#c8392f] font-bold text-sm">{t('sov_incorrect')}</p>
+              <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
             </div>
-            <p className="text-xs text-[#928a76]">{t('sov_correct_answer')}</p>
-            <p className="text-[#1c1813] font-bold text-base mt-0.5">{current.sentence.replace('___', current.answer)}</p>
+            <p className="text-xs text-[var(--mute)]">{t('sov_correct_answer')}</p>
+            <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence.replace('___', current.answer)}</p>
           </div>
         )}
 
         {/* Botones */}
         <div className="flex gap-3">
           {!result && !showHint && (
-            <button onClick={() => setShowHint(true)} className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[#928a76] hover:text-[#1c1813] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
+            <button onClick={() => setShowHint(true)} className="flex-1 py-3 rounded-xl border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] text-sm font-medium transition-colors">
               {t('sov_hint_button')}
             </button>
           )}
           {result && (
-            <button onClick={handleNext} className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${result === 'correct' ? 'bg-[#2f6b4a] hover:bg-[#1f4a33] text-[#fbf5e6]' : 'bg-[#f8f1de] hover:bg-[#bdb39a] text-[#5b5446]'}`}>
+            <button onClick={handleNext} className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${result === 'correct' ? 'bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)]' : 'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink-soft)]'}`}>
               {currentIdx + 1 >= rounds.length ? t('sov_see_results') : t('sov_next_button')} →
             </button>
           )}

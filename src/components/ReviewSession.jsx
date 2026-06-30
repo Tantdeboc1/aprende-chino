@@ -15,7 +15,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
     <div className="min-h-screen flex flex-col pb-24" style={{ background: J.paper }}>
       {/* Header */}
       <div style={{
-        background: J.jade, color: J.paperHi,
+        background: J.jade, color: J.onAccent,
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 16px',
       }}>
@@ -29,7 +29,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
           </button>
           <ProfileBadge variant="dark" />
         </div>
-        <h1 className="text-xl font-bold" style={{ color: J.paperHi }}>
+        <h1 className="text-xl font-bold" style={{ color: J.onAccent }}>
           {t('srs_mode_title', '¿Qué tipo de repaso?')}
         </h1>
       </div>
@@ -316,7 +316,7 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
             <button
               onClick={onReviewAgain}
               className="w-full py-3 rounded-xl font-bold text-sm active:scale-[0.98] transition-all"
-              style={{ background: J.red, color: J.paperHi, border: 0, cursor: 'pointer' }}
+              style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
             >
               {t('srs_review_again', 'Repasar las que fallé')} ({again})
             </button>

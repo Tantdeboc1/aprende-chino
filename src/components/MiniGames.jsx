@@ -67,6 +67,15 @@ export default function MiniGames({ goBack, navigateTo }) {
       categorias: ['base'],
     },
     {
+      id: 'cefr-exam',
+      title: t('cefr_card_title', 'Examen MCER · A1'),
+      description: t('cefr_card_description', 'Certifica tu A1 por destrezas: 听 oír · 读 leer · 写 escribir'),
+      cn: '证',
+      color: 'green',
+      badges: ['A1', t('badge_skills', '听读写'), '🎓'],
+      categorias: ['examen'],
+    },
+    {
       id: 'global-exam',
       title: t('minigames_global_exam_title'),
       description: t('minigames_global_exam_description'),
@@ -174,7 +183,7 @@ export default function MiniGames({ goBack, navigateTo }) {
 
         <div className="text-center mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold font-cn mb-1" style={{ color: J.ink }}>
-            小游戏
+            技能
           </h2>
           <p className="text-lg" style={{ color: J.inkSoft }}>{t('minigames_practice_by_skill', 'Practica por destrezas')}</p>
           <p className="text-sm mt-1" style={{ color: J.mute }}>{t('minigames_subtitle')}</p>

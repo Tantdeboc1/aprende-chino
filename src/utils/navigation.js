@@ -5,9 +5,7 @@ import { updateChallengeProgress } from './dailyChallenges.js';
 import { initSRSCard, updateSRS } from './srs.js';
 
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
-const Menu             = lazy(() => import('@/components/menu'));
 const Dictionary       = lazy(() => import('@/components/Dictionary.jsx'));
-const InfoIndex        = lazy(() => import('@/components/info/index.jsx'));
 const MiniGames        = lazy(() => import('@/components/MiniGames.jsx'));
 const LearnMenu        = lazy(() => import('@/components/learn/LearnMenu.jsx'));
 const DailyIndex       = lazy(() => import('@/components/daily/DailyIndex.jsx'));
@@ -42,7 +40,6 @@ export function useNavigation(
   toneSection,
   dailySection,
   {
-    userName,
     characters,
     allCharacters,
     radicals,
@@ -97,25 +94,6 @@ export function useNavigation(
     };
 
     // === RUTAS PRINCIPALES ===
-    if (screen === 'menu') {
-      Component = Menu;
-      props = {
-        userName,
-        navigateTo: (key) => {
-          if (key === 'learn' && selectedLesson !== null) {
-            setScreen('lesson-hub');
-          } else {
-            navigateTo(key);
-          }
-        },
-        dailyComplete: false,
-        selectedLesson,
-        setSelectedLesson,
-        lessonsData,
-        onChangeLessons: () => setScreen('lesson-select'),
-      };
-    }
-
     if (screen === 'dictionary') {
       Component = Dictionary;
       props = {
@@ -134,10 +112,6 @@ export function useNavigation(
       };
     }
 
-    if (screen === 'info') {
-      Component = InfoIndex;
-      props = { goBack: () => setScreen('menu') };
-    }
 
     // === MINI-JUEGOS ===
     if (screen === 'minigames') {
@@ -348,7 +322,7 @@ export function useNavigation(
   }, [
     screen, learnSection, writingSection, radicalSection,
     characterSection, toneSection, dailySection,
-    userName, characters, allCharacters, radicals, speak, navigateTo,
+    characters, allCharacters, radicals, speak, navigateTo,
     setLearnSection, setCharacterSection, setToneSection, setRadicalSection,
     setWritingSection, setDailySection, setScreen,
     searchTerm, setSearchTerm,

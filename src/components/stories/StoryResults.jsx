@@ -24,7 +24,7 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
         background: 'rgba(20,16,12,0.84)',
         border: `1px solid ${J.hairS}`,
         borderRadius: 24, padding: '28px 24px',
-        color: J.paperHi, textAlign: 'center',
+        color: J.onAccent, textAlign: 'center',
       }}>
         <p style={{ fontSize: 11, letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
           HISTORIA COMPLETADA
@@ -90,7 +90,7 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
           <button
             onClick={onExit}
             style={{
-              background: J.jade, color: J.paperHi, border: 0,
+              background: J.jade, color: J.onAccent, border: 0,
               borderRadius: 14, padding: '13px 18px',
               fontSize: 14, fontWeight: 700, cursor: 'pointer',
             }}
@@ -100,7 +100,7 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
           <button
             onClick={onRetry}
             style={{
-              background: 'rgba(255,255,255,0.08)', color: J.paperHi,
+              background: 'rgba(255,255,255,0.08)', color: J.onAccent,
               border: `1px solid rgba(255,255,255,0.18)`,
               borderRadius: 14, padding: '11px 18px',
               fontSize: 13, fontWeight: 600, cursor: 'pointer',
