@@ -4,7 +4,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { READING_STORIES, loc } from '@/data/readingStories.js';
+import { loc } from '@/utils/loc.js';
+import { loadReadingStories } from '@/utils/loadContent.js';
 import { cancelSpeak } from '@/utils/tts-enhanced.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
@@ -28,9 +29,17 @@ function StorySelector({ onSelect }) {
   const [temaFiltro, setTemaFiltro] = useState(null);
   const progreso = loadReadingProgress();
 
+  // Historias del idioma activo (chunk por idioma, ver loadContent.js).
+  const [stories, setStories] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    loadReadingStories(lang).then(data => { if (alive) setStories(data); });
+    return () => { alive = false; };
+  }, [lang]);
+
   const historias = temaFiltro
-    ? READING_STORIES.filter(s => s.tema === temaFiltro)
-    : READING_STORIES;
+    ? (stories || []).filter(s => s.tema === temaFiltro)
+    : (stories || []);
 
   return (
     <div className="min-h-screen pb-8" style={{ background: J.paper }}>

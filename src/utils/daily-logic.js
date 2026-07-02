@@ -8,8 +8,10 @@ const STORAGE_KEY = STORAGE_KEYS.DAILY_PROGRESS;
 // Deterministic pick for a given date (rotates daily)
 export function pickDailyChar(dictionary, date = new Date()) {
   if (!Array.isArray(dictionary) || dictionary.length === 0) return null;
-  const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const key = day.toISOString().slice(0, 10);
+  // Clave con la fecha LOCAL (como streak.js). Antes se construía con
+  // toISOString() (UTC) sobre la medianoche local: en husos UTC+ la clave
+  // llevaba la fecha del día anterior.
+  const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   const idx = Math.abs(hashString(key)) % dictionary.length;
   return { ...dictionary[idx], index: idx, dateKey: key };
 }

@@ -1,6 +1,7 @@
 // scripts/split-i18n-data.mjs
-// Lee grammarData.js y culturalData.js (con campos `{es,en,fr,de,it,pt}`)
-// y genera 12 archivos: src/data/grammar/{lang}.js y src/data/cultural/{lang}.js
+// Lee grammarData.js, culturalData.js, readingStories.js y translationPhrases.js
+// (con campos `{es,en,fr,de,it,pt}`) y genera 24 archivos:
+// src/data/{grammar,cultural,reading,phrases}/{lang}.js
 // con strings planos del idioma correspondiente.
 //
 // Sirve para que el cliente solo descargue el idioma actual.
@@ -74,14 +75,14 @@ function toJs(value, indent = 0) {
   return JSON.stringify(value);
 }
 
-async function writeLangFiles(name, sourceData) {
+async function writeLangFiles(name, sourceData, sourceFile = `${name}Data.js`) {
   const outDir = join(ROOT, 'src', 'data', name);
   await mkdir(outDir, { recursive: true });
   for (const lang of LANGS) {
     const resolved = resolveLang(sourceData, lang);
     const body = `// src/data/${name}/${lang}.js
 // AUTO-GENERADO por scripts/split-i18n-data.mjs — no editar a mano.
-// Fuente: src/data/${name}Data.js (estructura multilingüe).
+// Fuente: src/data/${sourceFile} (estructura multilingüe).
 //
 // Este archivo solo contiene los textos en ${lang}. El loader dinámico carga
 // el archivo del idioma activo para minimizar el chunk descargado por el cliente.
@@ -100,11 +101,15 @@ async function main() {
   // con T() ya evaluado a objetos {es, en, ...}.
   const grammarMod = await import(pathToFileURL(join(ROOT, 'src', 'data', 'grammarData.js')).href);
   const culturalMod = await import(pathToFileURL(join(ROOT, 'src', 'data', 'culturalData.js')).href);
+  const readingMod = await import(pathToFileURL(join(ROOT, 'src', 'data', 'readingStories.js')).href);
+  const phrasesMod = await import(pathToFileURL(join(ROOT, 'src', 'data', 'translationPhrases.js')).href);
 
   console.log('Generando archivos por idioma…');
   await writeLangFiles('grammar', grammarMod.default);
   await writeLangFiles('cultural', culturalMod.default);
-  console.log('Listo. 12 archivos generados.');
+  await writeLangFiles('reading', readingMod.READING_STORIES, 'readingStories.js');
+  await writeLangFiles('phrases', phrasesMod.translationPhrases, 'translationPhrases.js');
+  console.log('Listo. 24 archivos generados.');
 }
 
 main().catch(err => {

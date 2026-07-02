@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import completeSentenceData from '@/data/completeSentenceData.js';
+import { loc, baseLang } from '@/utils/loc.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
@@ -178,7 +179,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
         <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
           <p className="text-xs text-[var(--mute)] mb-1">{t('complete_translate_label')}</p>
           <p className="text-[var(--ink)] font-semibold text-base leading-snug">
-            {current.translations?.[i18n.language] || current.translations?.es}
+            {loc(current.translations, baseLang(i18n.language))}
           </p>
           {showHint && (
             <div className="mt-2 pt-2 border-t border-[rgba(28,24,19,0.10)]">

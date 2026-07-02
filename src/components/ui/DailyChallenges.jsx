@@ -1,26 +1,28 @@
 // src/components/ui/DailyChallenges.jsx
 // Panel de retos diarios para HomeScreen
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { getDailyChallenges, claimChallengeReward, claimAllCompletedBonus } from '@/utils/dailyChallenges.js';
 import { addXP } from '@/utils/streak.js';
+import { useLocalSnapshot, bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 
 export default function DailyChallenges() {
   const { t } = useTranslation();
-  const [refresh, setRefresh] = useState(0);
-  const data = useMemo(() => getDailyChallenges(), [refresh]);
+  // bumpLocalDataRev tras reclamar: además de este panel, actualiza en vivo
+  // el resto de suscriptores que leen XP/racha (badge de nivel, StreakPanel…).
+  const data = useLocalSnapshot(getDailyChallenges);
 
   const handleClaim = useCallback((challengeId) => {
     const xp = claimChallengeReward(challengeId);
     if (xp > 0) addXP(xp);
-    setRefresh(r => r + 1);
+    bumpLocalDataRev();
   }, []);
 
   const handleClaimBonus = useCallback(() => {
     const xp = claimAllCompletedBonus();
     if (xp > 0) addXP(xp);
-    setRefresh(r => r + 1);
+    bumpLocalDataRev();
   }, []);
 
   const completedCount = data.challenges.filter(c => c.completed).length;

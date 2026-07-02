@@ -1,7 +1,9 @@
 // src/components/minigames/TranslationGame.jsx
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translationPhrases, getCandidates } from '@/data/translationPhrases.js';
+import { getCandidates } from '@/data/pinyinDictionary.js';
+import { useTranslationPhrases } from '@/hooks/useTranslationPhrases.js';
+import { loc } from '@/utils/loc.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { LESSON_NUMBERS } from '@/styles/lessonColors.js';
@@ -343,16 +345,19 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   const [inputMode, setInputMode]     = useState('pinyin'); // 'pinyin' | 'draw'
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
   const inputRef = useRef(null);
+  // Frases del idioma activo (chunk por idioma); null mientras carga.
+  const phrases = useTranslationPhrases();
 
   const initGame = useCallback((filter = lessonFilter) => {
+    if (!phrases) return;
     const pool = filter !== null
-      ? translationPhrases.filter(p => p.lesson === filter)
-      : translationPhrases;
+      ? phrases.filter(p => p.lesson === filter)
+      : phrases;
     setRounds(shuffle([...pool]).slice(0, ROUNDS));
     setCurrentIdx(0); setBuilt([]); setPinyinInput('');
     setCandidates([]); setResult(null); setScore(0);
     setInputMode('pinyin');
-  }, [lessonFilter]);
+  }, [lessonFilter, phrases]);
 
   useEffect(() => { initGame(lessonFilter); }, [lessonFilter, initGame]);
 
@@ -521,7 +526,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
         <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
           <p className="text-xs text-[var(--mute)] mb-1">{t('translation_translate_label')}</p>
           <p className="text-[var(--ink)] font-semibold text-base leading-snug">
-            {current.translations?.[i18n.language] || current.translations?.es || current.es}
+            {loc(current.translations, i18n.language)}
           </p>
         </div>
 

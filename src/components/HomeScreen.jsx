@@ -13,6 +13,8 @@ import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { useAuth } from '@/context/AuthContext.jsx';
+import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
+import { loc, baseLang } from '@/utils/loc.js';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
@@ -103,7 +105,7 @@ function DailyCharacter({ allCharacters }) {
         <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: J.butter }}>{t('daily_character_of_day')}</p>
         <p className="text-2xl font-bold font-cn leading-tight" style={{ color: J.onAccent }}>{daily.char}</p>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>{daily.pinyin}</p>
-        <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.6)' }}>{daily.meanings?.[i18n.language] || daily.meaning}</p>
+        <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.6)' }}>{daily.meanings?.[baseLang(i18n.language)] || daily.meaning}</p>
         {daily.radical && daily.radical !== '—' && (
           <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
             {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.7)' }}>{daily.radical}</span>
@@ -263,7 +265,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const { t, i18n } = useTranslation();
   const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
   const examUnlocked = useMemo(() => isLevelExamUnlocked(progress, allCharacters), [progress, allCharacters]);
-  const examResult   = useMemo(() => loadLevelExamResult(), [progress]);
+  // Se relee cuando cambia progress (aprobar el examen actualiza ambos).
+  const examResult   = useLocalSnapshot(loadLevelExamResult, [progress]);
   const totalMastered = useMemo(() => {
     let total = 0;
     for (let i = 1; i <= 4; i++) {
@@ -277,12 +280,12 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
   const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
   const leechCount  = useMemo(() => getLeechCards(progress, allCharacters).length, [progress, allCharacters]);
-  const streak      = useMemo(() => getStreak(), []);
+  const streak      = useLocalSnapshot(getStreak);
   const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
-  const { mode, user, remoteRev } = useAuth();
-  // remoteRev en deps: si llega un sync remoto, el perfil se relee.
-  const profile     = useMemo(() => loadUserProfile(), [remoteRev]);
+  const { mode, user } = useAuth();
+  // useLocalSnapshot: si llega un sync remoto, el perfil se relee.
+  const profile     = useLocalSnapshot(loadUserProfile);
   const avatar      = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
@@ -341,7 +344,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('home_subtitle')}</p>
               <span className="text-xs font-bold px-2 py-0.5 rounded-full"
                 style={{ background: 'rgba(0,0,0,0.2)', color: J.butter }}>
-                {equipped.icon} {equipped.title?.[i18n.language] || equipped.title?.es} · {equipped.zh}
+                {equipped.icon} {loc(equipped.title, baseLang(i18n.language))} · {equipped.zh}
               </span>
             </div>
           </div>

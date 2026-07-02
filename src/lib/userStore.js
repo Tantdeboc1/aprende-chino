@@ -61,7 +61,12 @@ function readLocalSnapshot() {
 
 function writeLocalSnapshot({ userName, profile, progress, extra }) {
   try {
-    if (userName) localStorage.setItem(LS_USERNAME, userName);
+    // userName vacío también se aplica (borra el local): si el remoto no
+    // tiene nombre, este dispositivo no debe conservar el del usuario anterior.
+    if (typeof userName === 'string') {
+      if (userName) localStorage.setItem(LS_USERNAME, userName);
+      else localStorage.removeItem(LS_USERNAME);
+    }
     if (profile)  localStorage.setItem(LS_PROFILE,  JSON.stringify(profile));
     if (progress) localStorage.setItem(LS_PROGRESS, JSON.stringify(progress));
     if (extra) {
@@ -90,8 +95,13 @@ export async function fetchRemoteUser(uid) {
   return snap.exists() ? snap.data() : null;
 }
 
-// Sobrescribe el doc remoto con el snapshot dado. Usar merge:true para no
-// borrar campos que añadamos en el futuro desde otros dispositivos.
+// Sobrescribe el doc remoto con el snapshot dado.
+// mergeFields (no merge:true): cada campo listado se REEMPLAZA entero en vez
+// de fusionarse. Con merge:true, Firestore fusiona mapas recursivamente, así
+// que subir `progress: {}` tras un "Borrar progreso" no borraba nada del doc
+// y el progreso viejo resucitaba en el siguiente login. Con mergeFields el
+// doc remoto queda siempre igual al snapshot local, y los campos desconocidos
+// (de versiones futuras) se conservan.
 // Incluye el clientId para dedupear en el listener (sin esto, cada push
 // dispararía nuestro propio onSnapshot y entraríamos en un loop de hidratación).
 export async function pushRemoteUser(uid, data) {
@@ -99,7 +109,7 @@ export async function pushRemoteUser(uid, data) {
   await fs.setDoc(
     fs.doc(db, 'users', uid),
     { ...data, clientId: getClientId(), updatedAt: fs.serverTimestamp() },
-    { merge: true },
+    { mergeFields: ['userName', 'profile', 'progress', 'extra', 'clientId', 'updatedAt'] },
   );
 }
 

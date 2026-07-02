@@ -11,6 +11,7 @@ import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { useAuth } from '@/context/AuthContext.jsx';
+import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 
 export default function ProfileBadge({
   size = 40,
@@ -18,15 +19,15 @@ export default function ProfileBadge({
   variant = 'light',   // 'light' = sobre fondos claros, 'dark' = sobre fondos oscuros/jade
 }) {
   const { t } = useTranslation();
-  const { mode, user, remoteRev } = useAuth();
-  // remoteRev en el dep array para que profile se recargue si llegó un sync.
-  const profile = useMemo(() => loadUserProfile(), [remoteRev]);
+  const { mode, user } = useAuth();
+  // useLocalSnapshot relee perfil y racha si llega un sync remoto.
+  const profile = useLocalSnapshot(loadUserProfile);
   const avatar  = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
   );
   const effective = resolveAvatarSrc(profile, mode, user?.photoURL, avatar.src);
-  const streak    = useMemo(() => getStreak(), [remoteRev]);
+  const streak    = useLocalSnapshot(getStreak);
   const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
 
   const handleClick = () => {

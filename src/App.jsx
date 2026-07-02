@@ -19,6 +19,7 @@ const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
 const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
 import { STORAGE_KEYS } from './utils/storageKeys.js';
@@ -86,14 +87,40 @@ const LS_USERNAME = STORAGE_KEYS.USERNAME;
 function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
 function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
 
+// ── Historial del navegador (hash routing) ────────────────────────────────────
+// Cada pantalla se refleja en location.hash y el botón atrás del sistema
+// (hardware back en Android, gesto atrás) navega dentro de la app en vez de
+// cerrarla. También habilita deep links básicos (#/lesson/3, #/stories…).
+// El estado interno de los ejercicios (sub-secciones) no se codifica en la URL:
+// volver a #/exercise tras recargar muestra el menú de ejercicios.
+const HASH_SCREENS = new Set([
+  'home', 'review', 'stories', 'dictionary', 'minigames', 'friends',
+  'profile', 'settings', 'intro-detail', 'exam', 'global-exam',
+  'level-exam', 'exercise',
+]);
+
+function screenToHash(screen, selectedLesson) {
+  if (screen === 'lesson-detail') return `#/lesson/${selectedLesson}`;
+  if (HASH_SCREENS.has(screen) || MINIGAME_IDS.has(screen)) return `#/${screen}`;
+  return null; // welcome y pantallas gate no entran al historial
+}
+
+function parseHash(hash) {
+  const m = String(hash || '').match(/^#\/(.+)$/);
+  if (!m) return null;
+  const path = m[1];
+  const lesson = path.match(/^lesson\/(\d{1,2})$/);
+  if (lesson) return { screen: 'lesson-detail', lesson: Number(lesson[1]) };
+  if (HASH_SCREENS.has(path) || MINIGAME_IDS.has(path)) return { screen: path };
+  return null;
+}
+
 export default function App() {
   // El tema (claro/oscuro/sistema) lo aplica initTheme() en main.jsx antes
   // del primer render; aquí ya no forzamos nada para no pisar la preferencia.
 
   // Datos globales
-  const [, setAppData]                  = useState(null);
   const [radicalsData, setRadicalsData] = useState([]);
-  const [, setIsLoading]                = useState(true);
   const [allCharacters, setAllCharacters] = useState([]);
   const [lessonsData, setLessonsData]   = useState([]);
 
@@ -113,9 +140,10 @@ export default function App() {
   };
 
   // Auth — gate antes del WelcomeFlow y trigger de sync a Firestore.
-  // remoteRev se incrementa cuando localStorage se hidrata desde fuera
-  // (login inicial o sync de otro dispositivo) → reaccionamos para releer.
-  const { mode, user, pushSnapshot, remoteRev } = useAuth();
+  // localRev cambia cuando localStorage se hidrata desde fuera (login inicial
+  // o sync de otro dispositivo) → reaccionamos para releer.
+  const { mode, user, pushSnapshot } = useAuth();
+  const localRev = useLocalDataRev();
 
   // Progreso
   const [progress, setProgress] = useState(() => loadProgress());
@@ -130,9 +158,12 @@ export default function App() {
     }
   };
 
+  // Deep link inicial (#/lesson/3, #/stories…): solo si ya hay perfil creado.
+  const [initialNav] = useState(() => (loadUserName() ? parseHash(window.location.hash) : null));
+
   // Pantalla activa
   // 'welcome' | 'home' | 'lesson-detail' | 'intro-detail' | 'exam' | 'exercise' | 'dictionary' | 'minigames' | 'settings'
-  const [screen, setScreen] = useState(() => loadUserName() ? 'home' : 'welcome');
+  const [screen, setScreen] = useState(() => initialNav?.screen || (loadUserName() ? 'home' : 'welcome'));
 
   // Cuando entramos por Google o llega un cambio remoto desde otro
   // dispositivo, AuthContext hidrata localStorage. Reflejamos los cambios
@@ -145,7 +176,7 @@ export default function App() {
     // Solo forzamos 'welcome' si aún no se eligió pantalla; respetamos la
     // navegación actual cuando llega un sync remoto a media sesión.
     setScreen(s => (s === 'welcome' && remoteName) ? 'home' : s);
-  }, [mode, user?.uid, remoteRev]);
+  }, [mode, user?.uid, localRev]);
 
   // Tras cerrar sesión (mode → null), AuthContext borró localStorage.
   // Reseteamos el estado en memoria para que el siguiente usuario
@@ -167,7 +198,7 @@ export default function App() {
   const [prevScreen, setPrevScreen] = useState('home');
 
   // Lección seleccionada (para lesson-detail y ejercicios)
-  const [selectedLesson, setSelectedLesson] = useState(1);
+  const [selectedLesson, setSelectedLesson] = useState(initialNav?.lesson ?? 1);
   // Pestaña activa en LessonDetail (para restaurarla al volver)
   const [lessonDetailTab, setLessonDetailTab] = useState('vocab');
 
@@ -181,8 +212,37 @@ export default function App() {
   const [searchTerm,       setSearchTerm]       = useState('');
   const [showSupplementary, setShowSupplementary] = useState(true);
 
+  // Sincroniza pantalla → location.hash. La primera vez usa replaceState para
+  // no crear una entrada extra al arrancar; después, cada cambio de pantalla
+  // crea una entrada (pushState) para que "atrás" recorra la navegación.
+  const isFirstHashSyncRef = useRef(true);
+  useEffect(() => {
+    const target = screenToHash(screen, selectedLesson);
+    if (!target) return;
+    const first = isFirstHashSyncRef.current;
+    isFirstHashSyncRef.current = false;
+    if (window.location.hash === target) return; // cambio venido de popstate
+    if (first) history.replaceState(null, '', target);
+    else history.pushState(null, '', target);
+  }, [screen, selectedLesson]);
+
+  // Botón atrás del navegador/sistema → restaura la pantalla del hash.
+  useEffect(() => {
+    const onPop = () => {
+      const parsed = parseHash(window.location.hash);
+      if (!parsed || !loadUserName()) return;
+      // Mismo reset de sub-secciones que la navegación normal: al volver a
+      // #/exercise no hay estado en la URL, así que se muestra su menú.
+      setLearnSection(null); setCharacterSection(null); setToneSection(null);
+      setRadicalSection(null); setWritingSection(null); setDailySection(null);
+      if (parsed.lesson != null) setSelectedLesson(parsed.lesson);
+      setScreen(parsed.screen);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
   // Audio
-  const [isSpeaking, setIsSpeaking]           = useState(false);
   const [audioInitialized, setAudioInitialized] = useState(false);
 
   // ProfileBadge → 'open-profile' (avatar de la top bar → stats)
@@ -224,15 +284,19 @@ export default function App() {
     }
   };
 
+  // Guard con ref (no con estado): dos taps rápidos veían ambos el estado
+  // sin actualizar (el setState aún no había re-renderizado) y solapaban
+  // dos audios. La ref se actualiza síncronamente y cierra esa ventana.
+  const speakingRef = useRef(false);
   const speak = async (keyOrText, opts = {}) => {
     if (!audioInitialized) await initializeAudio();
-    if (isSpeaking) return;
+    if (speakingRef.current) return;
+    speakingRef.current = true;
     try {
-      setIsSpeaking(true);
       const { speakChineseEnhanced } = await import('./utils/tts-enhanced.js');
       await speakChineseEnhanced(keyOrText, { category: opts.category || 'pronunciation' });
     } catch (e) { console.error('Error speak:', e); }
-    finally { setIsSpeaking(false); }
+    finally { speakingRef.current = false; }
   };
 
   // Cargar datos
@@ -251,7 +315,6 @@ export default function App() {
 
     async function loadData() {
       try {
-        setIsLoading(true);
         setSplashProgress(10);
         const VOWELS = "aeiouvü";
         const TONE_MAP = {
@@ -315,14 +378,11 @@ export default function App() {
 
         setAllCharacters(enriched);
         setLessonsData(lessonsMeta);
-        setAppData({ bookTitle: data.bookTitle });
         setRadicalsData(radicalsEnriched);
         setSplashProgress(100);
       } catch (e) {
         console.error('Error al cargar datos:', e);
         setSplashProgress(100); // completar splash aunque haya error
-      } finally {
-        setIsLoading(false);
       }
     }
     loadData();

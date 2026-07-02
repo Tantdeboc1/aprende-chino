@@ -10,6 +10,7 @@ import {
   hydrateLocalFromRemote, snapshotLocal, clearLocalUserData,
 } from '@/lib/userStore.js';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
+import { bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 
 const LS_MODE = STORAGE_KEYS.AUTH_MODE; // 'google' | 'guest'
 
@@ -50,9 +51,9 @@ export function AuthProvider({ children }) {
   const [user, setUser]   = useState(null);     // FirebaseUser | null
   const [mode, setMode]   = useState('loading'); // 'loading' | 'google' | 'guest' | null
   const [error, setError] = useState(null);
-  // Contador que App.jsx observa para re-hidratar su useState cuando
-  // localStorage cambia desde fuera (login inicial o sync remoto).
-  const [remoteRev, setRemoteRev] = useState(0);
+  // Cuando localStorage se hidrata desde fuera (login inicial o sync remoto)
+  // se llama a bumpLocalDataRev(): los componentes suscritos con
+  // useLocalSnapshot/useLocalDataRev releen su estado (ver useLocalSnapshot.js).
 
   // Flag activado por migrateGuestToGoogle() para que el handler de auth
   // sepa que viene de modo invitado y aplique merge/confirm en vez de
@@ -111,7 +112,7 @@ export function AuthProvider({ children }) {
           .catch(e => console.warn('Sync perfil público falló:', e));
         setUser(fbUser);
         setMode('google');
-        setRemoteRev(r => r + 1);
+        bumpLocalDataRev();
       } else {
         setUser(null);
         let stored = null;
@@ -144,8 +145,8 @@ export function AuthProvider({ children }) {
   }, [attachAuthListener]);
 
   // Listener en tiempo real del doc del usuario logueado. Si otro dispositivo
-  // escribe (clientId distinto), hidratamos localStorage y subimos remoteRev
-  // para que App vuelva a leer estado.
+  // escribe (clientId distinto), hidratamos localStorage y avisamos vía
+  // bumpLocalDataRev para que los componentes suscritos vuelvan a leer estado.
   useEffect(() => {
     if (mode !== 'google' || !user) return;
     // subscribeRemoteUser es async (import dinámico de Firestore): si el
@@ -154,7 +155,7 @@ export function AuthProvider({ children }) {
     let cancelled = false;
     subscribeRemoteUser(user.uid, (data) => {
       hydrateLocalFromRemote(data);
-      setRemoteRev(r => r + 1);
+      bumpLocalDataRev();
     }).then((u) => {
       if (cancelled) u();
       else unsub = u;
@@ -241,7 +242,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, mode, error, remoteRev,
+      user, mode, error,
       signInWithGoogle, migrateGuestToGoogle, continueAsGuest,
       signOut, pushSnapshot,
     }}>

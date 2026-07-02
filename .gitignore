@@ -10,9 +10,12 @@ dist/
 .claude/launch.json
 
 # Auto-generados por scripts/split-i18n-data.mjs (predev / prebuild / predeploy).
-# Fuente única de verdad: src/data/{grammar,cultural}Data.js
+# Fuente única de verdad: src/data/{grammar,cultural}Data.js, readingStories.js
+# y translationPhrases.js
 src/data/grammar/
 src/data/cultural/
+src/data/reading/
+src/data/phrases/
 
 # Auto-generado por scripts/copy-hanzi-data.mjs (predev / prebuild / predeploy).
 # Datos de trazos de HanziWriter copiados de node_modules/hanzi-writer-data.

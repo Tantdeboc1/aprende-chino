@@ -27,12 +27,35 @@ const culturalLoaders = {
   pt: () => import('@/data/cultural/pt.js'),
 };
 
+const readingLoaders = {
+  es: () => import('@/data/reading/es.js'),
+  en: () => import('@/data/reading/en.js'),
+  fr: () => import('@/data/reading/fr.js'),
+  de: () => import('@/data/reading/de.js'),
+  it: () => import('@/data/reading/it.js'),
+  pt: () => import('@/data/reading/pt.js'),
+};
+
+const phrasesLoaders = {
+  es: () => import('@/data/phrases/es.js'),
+  en: () => import('@/data/phrases/en.js'),
+  fr: () => import('@/data/phrases/fr.js'),
+  de: () => import('@/data/phrases/de.js'),
+  it: () => import('@/data/phrases/it.js'),
+  pt: () => import('@/data/phrases/pt.js'),
+};
+
 // Caché en memoria para no re-descargar el mismo idioma varias veces.
 const grammarCache = new Map();
 const culturalCache = new Map();
+const readingCache = new Map();
+const phrasesCache = new Map();
 
 function pickLoader(loaders, lang) {
-  return loaders[lang] || loaders.en || loaders.es;
+  // Normaliza códigos regionales ('es-ES' → 'es'): sin esto, un locale
+  // regional no encontraba su loader y caía al fallback en inglés.
+  const base = String(lang || '').split('-')[0];
+  return loaders[base] || loaders.en || loaders.es;
 }
 
 /**
@@ -56,5 +79,29 @@ export async function loadCulturalData(lang) {
   if (culturalCache.has(lang)) return culturalCache.get(lang);
   const mod = await pickLoader(culturalLoaders, lang)();
   culturalCache.set(lang, mod.default);
+  return mod.default;
+}
+
+/**
+ * Devuelve las historias de comprensión lectora del idioma indicado.
+ * @param {string} lang
+ * @returns {Promise<Array>}  Array de historias (textos ya resueltos al idioma)
+ */
+export async function loadReadingStories(lang) {
+  if (readingCache.has(lang)) return readingCache.get(lang);
+  const mod = await pickLoader(readingLoaders, lang)();
+  readingCache.set(lang, mod.default);
+  return mod.default;
+}
+
+/**
+ * Devuelve las frases de traducción/pronunciación del idioma indicado.
+ * @param {string} lang
+ * @returns {Promise<Array>}  Array de frases ({ id, lesson, hanzi, pinyin, translations: string })
+ */
+export async function loadTranslationPhrases(lang) {
+  if (phrasesCache.has(lang)) return phrasesCache.get(lang);
+  const mod = await pickLoader(phrasesLoaders, lang)();
+  phrasesCache.set(lang, mod.default);
   return mod.default;
 }

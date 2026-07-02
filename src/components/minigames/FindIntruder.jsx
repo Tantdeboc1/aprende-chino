@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import intruderData from '@/data/intruderData.js';
+import { baseLang } from '@/utils/loc.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
@@ -53,7 +54,7 @@ export default function FindIntruder({ goBack, selectedLesson }) {
 
   const current = rounds[currentIdx];
   const accent  = LESSON_COLORS[current?.lesson] || DEFAULT_COLOR;
-  const lang    = i18n.language;
+  const lang    = baseLang(i18n.language); // 'es-ES' → 'es' (los datos van por código base)
 
   const handleSelect = (item) => {
     if (result) return;

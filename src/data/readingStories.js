@@ -11,13 +11,11 @@
 // se dejan como string porque son neutras al idioma. Usa `loc()` para resolver
 // el valor según el idioma activo.
 
-// Resuelve un campo que puede ser un string neutro (p. ej. hanzi) o un objeto
-// { es, en, it, fr, de, pt }. Cae a inglés y luego a español si falta el idioma.
-export function loc(value, lang) {
-  if (value == null) return '';
-  if (typeof value === 'string') return value;
-  return value[lang] || value.en || value.es || Object.values(value)[0] || '';
-}
+// NOTA: este archivo es la fuente multilingüe. El cliente NO lo importa en
+// runtime: scripts/split-i18n-data.mjs genera src/data/reading/{lang}.js con
+// los textos ya resueltos y loadContent.js carga solo el idioma activo.
+// `loc()` vive en src/utils/loc.js (se re-exporta aquí por compatibilidad).
+export { loc } from '../utils/loc.js';
 
 // Opciones reutilizadas
 const SI = { es: 'Sí', en: 'Yes', it: 'Sì', fr: 'Oui', de: 'Ja', pt: 'Sim' };

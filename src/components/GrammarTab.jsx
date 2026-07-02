@@ -9,10 +9,17 @@ function PatternCard({ pattern }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
-      <button
+      {/* div con rol de botón (no <button>): dentro va el SpeakButton y un
+          <button> no puede contener otro <button> (HTML inválido — React 19
+          lo señala como futuro error de hidratación). */}
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
         onClick={() => setOpen(!open)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}
         className="w-full flex items-start gap-3 p-4 text-left"
-        style={{ background: 'none', border: 0, cursor: 'pointer' }}
+        style={{ cursor: 'pointer' }}
       >
         <div className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-cn"
           style={{ background: J.jadeBg, color: J.jadeDeep, fontWeight: 700, fontSize: 13 }}>
@@ -35,7 +42,7 @@ function PatternCard({ pattern }) {
           <p className="text-sm mt-0.5" style={{ color: J.jade }}>{pattern.pinyin}</p>
           <p className="text-sm mt-0.5 italic" style={{ color: J.inkSoft }}>"{pattern.translation}"</p>
         </div>
-      </button>
+      </div>
 
       {open && (
         <div className="px-4 pb-4 pt-3 space-y-3" style={{ borderTop: `1px solid ${J.hair}` }}>

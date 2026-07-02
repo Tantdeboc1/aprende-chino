@@ -78,8 +78,13 @@ function generateDailyChallenges(dateStr) {
   const seed = dateHash(dateStr);
   const rng = seededRandom(seed);
 
-  // Seleccionar 3 tipos diferentes
-  const shuffled = [...CHALLENGE_TEMPLATES].sort(() => rng() - 0.5);
+  // Seleccionar 3 tipos diferentes — Fisher-Yates con el rng sembrado:
+  // determinista por fecha y sin el sesgo de sort(() => rng() - 0.5).
+  const shuffled = [...CHALLENGE_TEMPLATES];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   const selected = shuffled.slice(0, 3);
 
   return selected.map((template, idx) => {

@@ -8,7 +8,8 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translationPhrases } from '@/data/translationPhrases.js';
+import { useTranslationPhrases } from '@/hooks/useTranslationPhrases.js';
+import { loc } from '@/utils/loc.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
@@ -27,10 +28,10 @@ import GameResults from './GameResults.jsx';
 
 const ROUNDS = 6;
 
-function pickRounds(lessonFilter) {
+function pickRounds(phrases, lessonFilter) {
   const pool = lessonFilter !== null
-    ? translationPhrases.filter(p => p.lesson === lessonFilter)
-    : translationPhrases;
+    ? phrases.filter(p => p.lesson === lessonFilter)
+    : phrases;
   return shuffle([...pool]).slice(0, ROUNDS);
 }
 
@@ -67,15 +68,19 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   const aliveRef = useRef(true);
   useEffect(() => () => { aliveRef.current = false; }, []);
 
+  // Frases del idioma activo (chunk por idioma); null mientras carga.
+  const phrases = useTranslationPhrases();
+
   const startGame = useCallback(() => {
-    const r = pickRounds(lessonFilter);
+    if (!phrases) return;
+    const r = pickRounds(phrases, lessonFilter);
     setRounds(r);
     setCurrentIdx(0);
     setScoreInfo(null);
     setErrorMsg(null);
     setStatus('idle');
     setTotalScore(0);
-  }, [lessonFilter]);
+  }, [lessonFilter, phrases]);
 
   useEffect(() => { startGame(); }, [startGame]);
 
@@ -285,7 +290,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
           <p className="text-3xl font-bold leading-snug mb-2">{renderExpected()}</p>
           <p className="text-sm text-[var(--jade-mid)] mb-1">{current.pinyin}</p>
           <p className="text-xs text-[var(--mute)] italic">
-            {current.translations?.[i18n.language] || current.translations?.es}
+            {loc(current.translations, i18n.language)}
           </p>
           {/* Botón para oír la pronunciación correcta */}
           <button

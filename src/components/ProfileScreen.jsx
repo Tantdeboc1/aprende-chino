@@ -14,6 +14,7 @@ import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { computeBadges } from '@/utils/badges.js';
 import { useAuth } from '@/context/AuthContext.jsx';
+import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 
 // URL pública de la app — se incluye en el texto compartido para que quien
 // lo reciba pueda abrirla. Si en el futuro tenéis dominio propio, cambiad aquí.
@@ -54,12 +55,13 @@ function GearIcon({ size = 22 }) {
 
 export default function ProfileScreen({ userName, progress, allCharacters, onOpenSettings }) {
   const { t, i18n } = useTranslation();
-  const { mode, user, remoteRev } = useAuth();
-  const profile = useMemo(() => loadUserProfile(), [remoteRev]);
+  const { mode, user } = useAuth();
+  // useLocalSnapshot relee perfil y racha si llega un sync remoto.
+  const profile = useLocalSnapshot(loadUserProfile);
   const [shareNote, setShareNote] = useState(null); // feedback fugaz para el botón compartir
 
   const srsStats = getSRSStats(progress, allCharacters);
-  const streak = useMemo(() => getStreak(), [remoteRev]);
+  const streak = useLocalSnapshot(getStreak);
   const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
 
@@ -103,9 +105,10 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
   }, [progress, allCharacters]);
 
   // Catálogo evaluado: cada item tiene `earned` (boolean) según los datos.
-  const badges = useMemo(
+  // useLocalSnapshot: los badges también leen localStorage (racha, historias…).
+  const badges = useLocalSnapshot(
     () => computeBadges(progress, allCharacters),
-    [progress, allCharacters, remoteRev],
+    [progress, allCharacters],
   );
   const earnedCount = badges.filter(b => b.earned).length;
 

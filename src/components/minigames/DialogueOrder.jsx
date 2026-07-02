@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import dialogueOrderData from '@/data/dialogueOrderData.js';
+import { baseLang } from '@/utils/loc.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { playSound } from '@/utils/gameAudio.js';
@@ -152,7 +153,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
     );
   }
 
-  const lang = i18n.language;
+  const lang = baseLang(i18n.language); // 'es-ES' → 'es' (las traducciones van por código base)
 
   return (
     <div className="min-h-screen bg-[var(--paper)] pb-8">
