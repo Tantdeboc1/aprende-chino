@@ -3,7 +3,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
-import { markDailyActivity } from '@/utils/streak.js';
+import { markDailyActivity, addXP } from '@/utils/streak.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 
@@ -385,6 +385,9 @@ export default function ReviewSession({
   const handleRate = useCallback((quality) => {
     if (!current) return;
     markDailyActivity();
+    // Recordar la tarjeta (bien/fácil) cuenta como acierto de estudio,
+    // igual que en el % de acierto del resumen (good + easy).
+    if (quality >= 4) addXP(2);
 
     const updated = updateSRS(progress, current.char, quality);
     onProgressChange(updated);

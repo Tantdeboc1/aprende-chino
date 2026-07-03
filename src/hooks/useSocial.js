@@ -114,13 +114,26 @@ export function useSocial() {
   );
 
   // ─── Acciones ──────────────────────────────────────────────────────────────
-  const addByCode = useCallback(async (rawCode) => {
+  // Fase 1: resuelve un código a { uid, profile } para que la UI confirme
+  // "¿enviar a Fulanito?" antes de crear nada.
+  const lookupCode = useCallback(async (rawCode) => {
     const m = await getStore();
     const toUid = await m.resolveFriendCode(rawCode);
     if (!toUid) { const e = new Error('not-found'); e.code = 'not-found'; throw e; }
     if (toUid === uid) { const e = new Error('self'); e.code = 'self'; throw e; }
+    if (friendUidSet.has(toUid)) { const e = new Error('already-friends'); e.code = 'already-friends'; throw e; }
+    const profile = await m.fetchPublicProfile(toUid);
+    return { uid: toUid, profile };
+  }, [uid, friendUidSet, getStore]);
+
+  // Fase 2: envía la invitación al destino ya resuelto/confirmado.
+  const sendRequestTo = useCallback(async (target) => {
+    const m = await getStore();
     const mine = me || await m.fetchPublicProfile(uid);
-    await m.sendFriendRequest({ fromUid: uid, toUid, fromPublic: mine });
+    await m.sendFriendRequest({
+      fromUid: uid, toUid: target.uid,
+      fromPublic: mine, toPublic: target.profile,
+    });
   }, [uid, me, getStore]);
 
   const acceptRequest = useCallback(async (req) => {
@@ -151,7 +164,8 @@ export function useSocial() {
     friends,
     incoming: incomingShown,
     outgoing: outgoingShown,
-    addByCode,
+    lookupCode,
+    sendRequestTo,
     acceptRequest,
     declineRequest,
     cancelRequest,

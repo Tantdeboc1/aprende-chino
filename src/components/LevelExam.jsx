@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { shuffle } from '@/utils/arrayUtils.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import {
   getLevelMastery, isLevelExamUnlocked, saveLevelExamResult, loadLevelExamResult,
@@ -91,6 +93,13 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
     // Las no respondidas (por tiempo) cuentan como falladas sobre el total.
     const total = questions.length || TOTAL_QUESTIONS;
     const res = saveLevelExamResult({ correct: finalCorrect, total });
+    // XP del examen de nivel: perfecto +20, aprobado +10.
+    if (finalCorrect === total) {
+      addXP(20);
+      trackAchievement('perfect_score', 1);
+    } else if (res.passedThisAttempt) {
+      addXP(10);
+    }
     setOutcome({ ...res, total, answered });
     setPhase('finished');
   }, [questions.length]);

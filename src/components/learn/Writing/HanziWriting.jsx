@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { markWritingPractice, getWritingCount } from '@/utils/progress.js';
+import { addXP } from '@/utils/streak.js';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 
 export default function HanziWriting({ goBack, characters, speakChinese, progress, onProgressChange }) {
@@ -125,6 +126,9 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
             const char = currentCharacter.char || currentCharacter.hanzi;
             onProgressChange(markWritingPractice(progress || {}, char));
           }
+          // Escribir un carácter completo con sus trazos cuesta más que un
+          // acierto de quiz: +5 XP.
+          addXP(5);
           setTimeout(() => {
             if (writerInstanceRef.current) writerInstanceRef.current.showOutline();
           }, 1000);

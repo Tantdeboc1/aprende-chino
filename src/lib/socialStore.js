@@ -15,7 +15,7 @@
 // Solo lo usan usuarios con cuenta Google. Firestore se importa de forma
 // diferida (igual que userStore) para no penalizar el arranque de invitados.
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
-import { getStreak } from '@/utils/streak.js';
+import { getStreak, getWeeklyXP } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { loadUserProfile } from '@/utils/userProfile.js';
 
@@ -142,6 +142,7 @@ export async function syncPublicProfile({ uid, photoURL }) {
       photoURL: useGoogle ? photoURL : null,
       level,
       totalXP,
+      weeklyXP: getWeeklyXP(),
       currentStreak: streak.currentStreak || 0,
       friendCode: code,
       updatedAt: fs.serverTimestamp(),
@@ -168,8 +169,10 @@ export async function resolveFriendCode(code) {
 
 // ─── Invitaciones ───────────────────────────────────────────────────────────
 // Envía una invitación de `fromUid` a `toUid`. `fromPublic` es el perfil
-// público del emisor (para pintar la tarjeta sin un read extra en el receptor).
-export async function sendFriendRequest({ fromUid, toUid, fromPublic }) {
+// público del emisor (para pintar la tarjeta sin un read extra en el
+// receptor) y `toPublic` el del destinatario (para que el emisor vea a quién
+// invitó en "enviadas", también sin read extra).
+export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }) {
   if (!fromUid || !toUid) throw new Error('uid faltante');
   if (fromUid === toUid) { const e = new Error('self'); e.code = 'self'; throw e; }
   const { fs, db } = await loadFirestore();
@@ -192,6 +195,9 @@ export async function sendFriendRequest({ fromUid, toUid, fromPublic }) {
       fromName: (fromPublic?.displayName || '').slice(0, 100),
       fromAvatarId: fromPublic?.avatarId || null,
       fromPhotoURL: fromPublic?.photoURL || null,
+      toName: (toPublic?.displayName || '').slice(0, 100),
+      toAvatarId: toPublic?.avatarId || null,
+      toPhotoURL: toPublic?.photoURL || null,
       createdAt: fs.serverTimestamp(),
     },
   );

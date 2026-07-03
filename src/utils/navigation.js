@@ -3,6 +3,7 @@ import { useMemo, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
 import { updateChallengeProgress } from './dailyChallenges.js';
 import { initSRSCard, updateSRS } from './srs.js';
+import { addXP } from './streak.js';
 
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
 const Dictionary       = lazy(() => import('@/components/Dictionary.jsx'));
@@ -79,6 +80,9 @@ export function useNavigation(
       if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
       let updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
       if (isCorrect) {
+        // XP por acierto en el estudio "serio" (Quiz de caracteres y los
+        // minijuegos que reportan por aquí sin dar XP propio).
+        addXP(2);
         updateChallengeProgress('correct_answers', 1);
       } else {
         // Penalizar el SRS: iniciar tarjeta si no existe, luego resetear intervalo

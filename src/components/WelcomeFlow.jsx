@@ -3,8 +3,9 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { GENDERS, updateUserProfile } from '@/utils/userProfile.js';
-import { AVATARS, getAvatarsByGender, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
-import { setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
+import { AVATARS, getAvatarsByGender, isAvatarUnlocked, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { setDailyGoal, DAILY_GOAL_PRESETS, getStreak } from '@/utils/streak.js';
+import { getLevelInfo } from '@/utils/leveling.js';
 
 const STEPS = 4;
 
@@ -18,10 +19,14 @@ export default function WelcomeFlow({ onComplete }) {
   const [goalXp, setGoalXp] = useState(120);
 
   // Galería filtrada por género; si el filtro deja muy pocos (p. ej. 'nb'),
-  // se muestran todos para que siempre haya variedad donde elegir.
+  // se muestran todos para que siempre haya variedad donde elegir. Los
+  // avatares con desbloqueo por nivel no aparecen en el onboarding (un
+  // usuario nuevo es nivel 1; uno migrado conserva su nivel).
   const gallery = useMemo(() => {
-    const filtered = getAvatarsByGender(gender);
-    return filtered.length >= 4 ? filtered : AVATARS;
+    const level = getLevelInfo(getStreak().totalXP || 0).level;
+    const unlocked = (list) => list.filter(a => isAvatarUnlocked(a, level));
+    const filtered = unlocked(getAvatarsByGender(gender));
+    return filtered.length >= 4 ? filtered : unlocked(AVATARS);
   }, [gender]);
 
   const trimmedName = name.trim();

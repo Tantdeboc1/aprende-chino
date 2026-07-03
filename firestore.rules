@@ -41,7 +41,7 @@ service cloud.firestore {
       allow write: if isOwner(uid)
         && request.resource.data.keys().hasOnly(
              ['uid', 'displayName', 'avatarId', 'photoURL',
-              'level', 'totalXP', 'currentStreak', 'friendCode', 'updatedAt'])
+              'level', 'totalXP', 'weeklyXP', 'currentStreak', 'friendCode', 'updatedAt'])
         && request.resource.data.uid == uid
         && (request.resource.data.displayName is string
             && request.resource.data.displayName.size() <= 100);
@@ -69,9 +69,13 @@ service cloud.firestore {
         && request.resource.data.from != request.resource.data.to
         && reqId == request.resource.data.from + '_' + request.resource.data.to
         && request.resource.data.keys().hasOnly(
-             ['from', 'to', 'fromName', 'fromAvatarId', 'fromPhotoURL', 'createdAt'])
+             ['from', 'to', 'fromName', 'fromAvatarId', 'fromPhotoURL',
+              'toName', 'toAvatarId', 'toPhotoURL', 'createdAt'])
         && request.resource.data.fromName is string
-        && request.resource.data.fromName.size() <= 100;
+        && request.resource.data.fromName.size() <= 100
+        && (!request.resource.data.keys().hasAny(['toName'])
+            || (request.resource.data.toName is string
+                && request.resource.data.toName.size() <= 100));
       allow delete: if request.auth != null
         && (request.auth.uid == resource.data.from || request.auth.uid == resource.data.to);
     }

@@ -65,16 +65,18 @@ export const AVATARS = [
   { id: 'b10', src: b10, gender: 'm',  label: 'Aviador' },
 
   // Carpeta 3 — labels/género provisionales, ajustar al ver las imágenes.
-  { id: 'c01', src: c01, gender: 'nb', label: 'Avatar 21' },
-  { id: 'c02', src: c02, gender: 'nb', label: 'Avatar 22' },
-  { id: 'c03', src: c03, gender: 'nb', label: 'Avatar 23' },
-  { id: 'c04', src: c04, gender: 'nb', label: 'Avatar 24' },
-  { id: 'c05', src: c05, gender: 'nb', label: 'Avatar 25' },
-  { id: 'c06', src: c06, gender: 'nb', label: 'Avatar 26' },
-  { id: 'c07', src: c07, gender: 'nb', label: 'Avatar 27' },
-  { id: 'c08', src: c08, gender: 'nb', label: 'Avatar 28' },
-  { id: 'c09', src: c09, gender: 'nb', label: 'Avatar 29' },
-  { id: 'c10', src: c10, gender: 'nb', label: 'Avatar 30' },
+  // Estos diez se desbloquean subiendo de nivel (minLevel); son la
+  // recompensa tangible del sistema de niveles. Sin minLevel = libre.
+  { id: 'c01', src: c01, gender: 'nb', label: 'Avatar 21', minLevel: 3 },
+  { id: 'c02', src: c02, gender: 'nb', label: 'Avatar 22', minLevel: 5 },
+  { id: 'c03', src: c03, gender: 'nb', label: 'Avatar 23', minLevel: 7 },
+  { id: 'c04', src: c04, gender: 'nb', label: 'Avatar 24', minLevel: 9 },
+  { id: 'c05', src: c05, gender: 'nb', label: 'Avatar 25', minLevel: 11 },
+  { id: 'c06', src: c06, gender: 'nb', label: 'Avatar 26', minLevel: 13 },
+  { id: 'c07', src: c07, gender: 'nb', label: 'Avatar 27', minLevel: 15 },
+  { id: 'c08', src: c08, gender: 'nb', label: 'Avatar 28', minLevel: 18 },
+  { id: 'c09', src: c09, gender: 'nb', label: 'Avatar 29', minLevel: 21 },
+  { id: 'c10', src: c10, gender: 'nb', label: 'Avatar 30', minLevel: 25 },
 ];
 
 export const AVATARS_BY_ID = Object.fromEntries(AVATARS.map(a => [a.id, a]));
@@ -89,4 +91,25 @@ export const DEFAULT_AVATAR_ID = 'a01';
 export function getAvatarsByGender(gender) {
   if (!gender) return AVATARS;
   return AVATARS.filter(a => a.gender === gender);
+}
+
+// ─── Desbloqueo por nivel ───────────────────────────────────────────────────
+
+export function isAvatarUnlocked(avatar, level) {
+  return !avatar?.minLevel || (level || 1) >= avatar.minLevel;
+}
+
+// Avatares que se desbloquean exactamente en `level` (para el modal de
+// subida de nivel).
+export function getAvatarUnlocksAtLevel(level) {
+  return AVATARS.filter(a => a.minLevel === level);
+}
+
+// Próximo desbloqueo por encima de `level`: { level, avatars } o null si ya
+// está todo desbloqueado.
+export function getNextAvatarUnlock(level) {
+  const pending = AVATARS.filter(a => a.minLevel && a.minLevel > (level || 1));
+  if (pending.length === 0) return null;
+  const nextLevel = Math.min(...pending.map(a => a.minLevel));
+  return { level: nextLevel, avatars: pending.filter(a => a.minLevel === nextLevel) };
 }

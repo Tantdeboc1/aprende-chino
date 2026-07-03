@@ -38,14 +38,26 @@ const DEFAULT_STREAK = {
   todayXP: 0,             // XP ganado hoy
   todayXPDate: null,      // fecha del todayXP (para resetear al cambiar de día)
   totalXP: 0,             // XP acumulado total
+  xpByDay: {},            // XP por día de los últimos 7 días { 'YYYY-MM-DD': xp }
   dailyGoal: DAILY_XP_GOAL,
   // Milestones alcanzados
   unlockedMilestones: [], // array de days alcanzados [3, 7, 14, ...]
 };
 
-function todayStr() {
-  const d = new Date();
+function dateStr(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function todayStr() {
+  return dateStr(new Date());
+}
+
+// Fecha (local) de hace 6 días: el límite inferior de la ventana "últimos
+// 7 días" (hoy incluido). Las claves YYYY-MM-DD se comparan como strings.
+function weekCutoffStr() {
+  const d = new Date();
+  d.setDate(d.getDate() - 6);
+  return dateStr(d);
 }
 
 export function loadStreak() {
@@ -56,6 +68,7 @@ export function loadStreak() {
       ...stored,
       activityDates: Array.isArray(stored.activityDates) ? stored.activityDates : [],
       unlockedMilestones: Array.isArray(stored.unlockedMilestones) ? stored.unlockedMilestones : [],
+      xpByDay: (stored.xpByDay && typeof stored.xpByDay === 'object') ? stored.xpByDay : {},
     };
     // Reset todayXP si cambió de día
     const today = todayStr();
@@ -152,6 +165,15 @@ export function addXP(xp) {
   updated.todayXPDate = today;
   updated.totalXP = prevTotalXP + xp;
 
+  // XP por día (ranking semanal de amigos): suma de hoy + poda a 7 días.
+  const cutoff = weekCutoffStr();
+  const byDay = { ...(updated.xpByDay || {}) };
+  byDay[today] = (byDay[today] || 0) + xp;
+  for (const k of Object.keys(byDay)) {
+    if (k < cutoff) delete byDay[k];
+  }
+  updated.xpByDay = byDay;
+
   // Track XP earned for daily challenges
   updateChallengeProgress('earn_xp', xp);
 
@@ -192,6 +214,20 @@ export function addXP(xp) {
  */
 export function getStreak() {
   return loadStreak();
+}
+
+/**
+ * XP ganado en los últimos 7 días (hoy incluido). Alimenta el ranking
+ * semanal de amigos vía el perfil público.
+ */
+export function getWeeklyXP() {
+  const streak = loadStreak();
+  const cutoff = weekCutoffStr();
+  let sum = 0;
+  for (const [day, xp] of Object.entries(streak.xpByDay || {})) {
+    if (day >= cutoff) sum += xp || 0;
+  }
+  return sum;
 }
 
 /**

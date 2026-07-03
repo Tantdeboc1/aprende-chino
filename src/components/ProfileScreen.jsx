@@ -13,6 +13,7 @@ import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
 import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { computeBadges } from '@/utils/badges.js';
+import { loc, baseLang } from '@/utils/loc.js';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 
@@ -182,7 +183,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             </h1>
             <div style={{ marginTop: 6, fontSize: 13.5, color: J.inkSoft, fontWeight: 500 }}>
               <span style={{ marginRight: 6 }}>{equipped.icon}</span>
-              {equipped.title?.[i18n.language] || equipped.title?.es} · <span className="font-cn">{equipped.zh}</span>
+              {loc(equipped.title, baseLang(i18n.language))} · <span className="font-cn">{equipped.zh}</span>
             </div>
             {mode === 'google' && user?.email && (
               <p style={{ margin: '4px 0 0', fontSize: 12, color: J.mute, fontWeight: 500, wordBreak: 'break-all' }}>

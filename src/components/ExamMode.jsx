@@ -3,6 +3,8 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { saveExamResult, getExamHistory } from '@/utils/progress.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
@@ -242,6 +244,14 @@ export default function ExamMode({
           wrongChars: newWrong.map(c => c.char),
         });
         onProgressChange(updated);
+        // XP por examen: perfecto +20, aprobado (≥70%, nota 良/优) +10.
+        const pct = Math.round((newScore / total) * 100);
+        if (newScore === total) {
+          addXP(20);
+          trackAchievement('perfect_score', 1);
+        } else if (pct >= 70) {
+          addXP(10);
+        }
         setScore(newScore);
         setWrongChars(newWrong);
         setPhase('results');

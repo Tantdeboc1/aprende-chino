@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { buildMeaningQuestions } from '@/utils/quizEngine.js';
+import { addXP } from '@/utils/streak.js';
+import { trackAchievement } from '@/utils/leveling.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 
 const TOTAL_TIME = 90; // segundos
@@ -53,6 +55,21 @@ export default function GlobalExam({ goBack, allCharacters }) {
     }, 1000);
     return () => clearInterval(id);
   }, [phase]);
+
+  // XP al terminar la ronda (llega aquí por tiempo o por última pregunta):
+  // perfecto (todas las preguntas acertadas) +20, aprobado (≥80%) +10.
+  useEffect(() => {
+    if (phase !== 'finished') return;
+    const total = score + wrong;
+    if (total === 0) return;
+    const pct = Math.round((score / total) * 100);
+    if (wrong === 0 && score === questions.length) {
+      addXP(20);
+      trackAchievement('perfect_score', 1);
+    } else if (pct >= 80) {
+      addXP(10);
+    }
+  }, [phase, score, wrong, questions.length]);
 
   const handleAnswer = (opt) => {
     if (feedback) return;

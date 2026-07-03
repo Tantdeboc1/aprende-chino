@@ -10,7 +10,8 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { loadUserProfile } from '@/utils/userProfile.js';
-import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { loc, baseLang } from '@/utils/loc.js';
+import { getAvatarById, getAvatarUnlocksAtLevel, getNextAvatarUnlock, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 
 // Genera N puntos de confeti con posiciones, colores y delays aleatorios
 function makeConfetti(n = 40) {
@@ -44,7 +45,11 @@ export default function LevelUpModal({ levelUp, onClose }) {
 
   if (!levelUp) return null;
 
-  const titleLoc = levelUp.title?.[i18n.language] || levelUp.title?.es || '';
+  const titleLoc = loc(levelUp.title, baseLang(i18n.language));
+  // Recompensa tangible: avatares que se desbloquean justo en este nivel,
+  // o el próximo desbloqueo como zanahoria.
+  const unlockedAvatars = getAvatarUnlocksAtLevel(levelUp.level);
+  const nextUnlock = unlockedAvatars.length === 0 ? getNextAvatarUnlock(levelUp.level) : null;
 
   return createPortal(
     <div
@@ -182,6 +187,42 @@ export default function LevelUpModal({ levelUp, onClose }) {
             {levelUp.zh}
           </div>
         </div>
+
+        {/* Avatar desbloqueado en este nivel / próximo desbloqueo */}
+        {unlockedAvatars.length > 0 && (
+          <div style={{
+            marginTop: 12, borderRadius: 14, padding: '10px 14px',
+            background: J.paperHi, border: `1px solid ${J.butter}`,
+            animation: 'lu-fade 500ms ease-out 550ms both',
+          }}>
+            <div style={{ fontSize: 11, letterSpacing: '0.14em', color: J.sandDeep, fontWeight: 800, textTransform: 'uppercase' }}>
+              {t('levelup_avatar_unlocked', '¡Avatar desbloqueado!')}
+            </div>
+            <div style={{ marginTop: 8, display: 'flex', justifyContent: 'center', gap: 10 }}>
+              {unlockedAvatars.map(av => (
+                <img
+                  key={av.id}
+                  src={av.src}
+                  alt={av.label}
+                  draggable={false}
+                  style={{
+                    width: 52, height: 52, borderRadius: '50%',
+                    objectFit: 'cover', border: `3px solid ${J.butter}`,
+                    boxShadow: '0 4px 12px -4px rgba(0,0,0,0.4)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {nextUnlock && (
+          <p style={{
+            marginTop: 12, marginBottom: 0, fontSize: 12.5, color: J.mute, fontWeight: 600,
+            animation: 'lu-fade 500ms ease-out 550ms both',
+          }}>
+            🔒 {t('levelup_next_avatar', 'Próximo avatar al nivel {{level}}', { level: nextUnlock.level })}
+          </p>
+        )}
 
         {/* Botón */}
         <button

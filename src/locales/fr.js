@@ -1086,6 +1086,10 @@ export default {
           levelup_level: "Niveau",
           levelup_new_title: "Nouveau titre",
           levelup_continue: "Continuer !",
+          levelup_avatar_unlocked: "Avatar débloqué !",
+          levelup_next_avatar: "Prochain avatar au niveau {{level}}",
+          avatar_locked_level: "Se débloque au niveau {{level}}",
+          avatar_locked_badge: "Niv. {{level}}",
 
           achievement_unlocked: "Succès débloqué !",
 
@@ -1117,6 +1121,10 @@ export default {
           friends_decline: "Refuser",
           friends_outgoing: "Invitations envoyées",
           friends_pending: "En attente d'acceptation",
+          friends_confirm_send: "Envoyer l'invitation ?",
+          friends_confirm_yes: "Envoyer",
+          friends_rank_weekly: "7 jours",
+          friends_rank_total: "Total",
           friends_cancel: "Annuler",
           friends_ranking: "Classement",
           friends_count: "amis",

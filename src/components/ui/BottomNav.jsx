@@ -2,6 +2,7 @@
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
+import { useIncomingRequestCount } from '@/hooks/useIncomingRequestCount.js';
 
 const HomeIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -60,6 +61,8 @@ const FriendsIcon = () => (
 
 export default function BottomNav({ activeScreen, onNavigate }) {
   const { t } = useTranslation();
+  // Invitaciones de amistad recibidas → badge en "Amigos" (0 para invitados).
+  const incomingCount = useIncomingRequestCount();
 
   const items = [
     { key: 'home',       label: t('nav_home'),       Icon: HomeIcon },
@@ -106,11 +109,26 @@ export default function BottomNav({ activeScreen, onNavigate }) {
             >
               <span
                 className="flex items-center justify-center w-11 h-7 rounded-full transition-all duration-200"
-                style={{ background: active ? accent.bg : 'transparent' }}
+                style={{ background: active ? accent.bg : 'transparent', position: 'relative' }}
               >
                 <span style={{ color: active ? accent.color : J.mute2, transition: 'color 200ms' }}>
                   <Icon />
                 </span>
+                {key === 'friends' && incomingCount > 0 && (
+                  <span
+                    aria-label={t('friends_incoming', 'Invitaciones recibidas')}
+                    style={{
+                      position: 'absolute', top: -3, right: 2,
+                      minWidth: 15, height: 15, padding: '0 3px',
+                      borderRadius: 99, background: J.red, color: '#fff',
+                      fontSize: 9.5, fontWeight: 800, lineHeight: 1,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      boxShadow: `0 0 0 2px ${J.paperHi}`,
+                    }}
+                  >
+                    {incomingCount > 9 ? '9+' : incomingCount}
+                  </span>
+                )}
               </span>
               <span
                 className="text-[10px] font-semibold leading-none transition-colors duration-200"

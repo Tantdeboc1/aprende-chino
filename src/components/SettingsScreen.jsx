@@ -5,9 +5,10 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
-import { AVATARS, getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { AVATARS, getAvatarById, isAvatarUnlocked, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getStreak, setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
+import { getLevelInfo } from '@/utils/leveling.js';
 import { introsEnabled, setIntrosEnabled } from '@/utils/gameIntroPrefs.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
@@ -27,6 +28,8 @@ const LANGUAGES = [
 function AvatarPicker({ currentId, gender, onSelect, onClose }) {
   const { t } = useTranslation();
   const [tab, setTab] = useState(gender || 'all');
+  // Nivel del usuario para el gating de avatares desbloqueables.
+  const userLevel = useMemo(() => getLevelInfo(getStreak().totalXP || 0).level, []);
 
   const filtered = useMemo(() => {
     if (tab === 'all') return AVATARS;
@@ -112,23 +115,27 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
         }}>
           {filtered.map(av => {
             const selected = av.id === currentId;
+            // El avatar equipado nunca se bloquea, aunque su nivel sea mayor
+            // (usuarios que lo eligieron antes de existir el gating).
+            const locked = !selected && !isAvatarUnlocked(av, userLevel);
             return (
               <button
                 key={av.id}
-                onClick={() => onSelect(av.id)}
+                onClick={() => { if (!locked) onSelect(av.id); }}
+                aria-disabled={locked}
                 style={{
                   background: selected ? J.jade : J.paper,
                   border: `2px solid ${selected ? J.jadeDeep : J.hair}`,
                   borderRadius: 14,
                   padding: 6,
-                  cursor: 'pointer',
+                  cursor: locked ? 'default' : 'pointer',
                   transition: 'transform 150ms ease, background 200ms ease',
                   transform: selected ? 'scale(1.04)' : 'scale(1)',
                   position: 'relative',
                   aspectRatio: '1 / 1',
                   overflow: 'hidden',
                 }}
-                title={av.label}
+                title={locked ? t('avatar_locked_level', 'Se desbloquea al nivel {{level}}', { level: av.minLevel }) : av.label}
               >
                 <img
                   src={av.src}
@@ -138,8 +145,24 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
                     width: '100%', height: '100%',
                     objectFit: 'cover', borderRadius: 10,
                     display: 'block',
+                    filter: locked ? 'grayscale(1) brightness(0.75)' : 'none',
+                    opacity: locked ? 0.6 : 1,
                   }}
                 />
+                {locked && (
+                  <span style={{
+                    position: 'absolute', inset: 0,
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'center', gap: 2,
+                    color: '#fff', fontSize: 16,
+                    textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+                  }}>
+                    🔒
+                    <span style={{ fontSize: 10.5, fontWeight: 800 }}>
+                      {t('avatar_locked_badge', 'Nv. {{level}}', { level: av.minLevel })}
+                    </span>
+                  </span>
+                )}
                 {selected && (
                   <span style={{
                     position: 'absolute', top: 4, right: 4,
