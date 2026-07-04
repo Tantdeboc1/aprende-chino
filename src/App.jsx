@@ -16,6 +16,7 @@ const FriendsScreen = lazy(() => import('./components/FriendsScreen.jsx'));
 const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
 import SplashScreen from './components/SplashScreen.jsx';
 const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
+const ChinaMap = lazy(() => import('./components/china/ChinaMap.jsx'));
 const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
@@ -540,7 +541,21 @@ export default function App() {
           onStartReview={() => { setPrevScreen('home'); setScreen('review'); }}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
           onStartLevelExam={() => { setPrevScreen('home'); setScreen('level-exam'); }}
+          onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}
         />
+      </Layout>
+    );
+  }
+
+  // ── EXPLORA CHINA (mapa de provincias) ───────────────────────────────────────
+  if (screen === 'chinaMap') {
+    return (
+      <Layout activeScreen="home" onNavigate={handleBottomNav}>
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <ChinaMap goBack={() => setScreen(prevScreen || 'home')} />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }

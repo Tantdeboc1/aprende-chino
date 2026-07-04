@@ -261,7 +261,7 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam, onOpenChinaMap }) {
   const { t, i18n } = useTranslation();
   const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
   const examUnlocked = useMemo(() => isLevelExamUnlocked(progress, allCharacters), [progress, allCharacters]);
@@ -528,6 +528,34 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
             <span style={{ color: J.mute, fontSize: 18 }}>→</span>
           </button>
         </div>
+
+        {/* Explora China (mapa de provincias) */}
+        {onOpenChinaMap && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
+              {t('home_section_explore', 'Cultura')}
+            </p>
+            <button
+              onClick={onOpenChinaMap}
+              className="w-full rounded-2xl p-4 flex items-center gap-4 text-left transition-transform active:scale-[0.99]"
+              style={{ background: J.paperHi, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
+            >
+              <div className="font-cn flex items-center justify-center flex-shrink-0"
+                style={{ width: 48, height: 48, borderRadius: 14, fontSize: 26, fontWeight: 700, background: J.jadeBg, color: J.jade }}>
+                图
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-sm" style={{ color: J.ink }}>
+                  {t('china_title', 'Explora China')} 🗺️
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: J.inkSoft }}>
+                  {t('china_home_hint', 'Gastronomía, dialectos y turismo por provincia')}
+                </p>
+              </div>
+              <span style={{ color: J.mute, fontSize: 18 }}>→</span>
+            </button>
+          </div>
+        )}
 
       </div>
     </div>

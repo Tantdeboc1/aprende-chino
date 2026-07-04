@@ -1,5 +1,16 @@
 // src/locales/es.js
 export default {
+  // ── Explora China (mapa de provincias) ──
+  china_title: "Explora China",
+  china_subtitle: "Toca una provincia para descubrirla",
+  china_map_disclaimer: "{{n}} provincias · toca cualquiera para explorar",
+  china_gastronomy: "Gastronomía",
+  china_dialects: "Dialectos",
+  china_tourism: "Zonas turísticas",
+  china_home_hint: "Gastronomía, dialectos y turismo por provincia",
+  home_section_explore: "Cultura",
+  common_back: "Volver",
+  common_close: "Cerrar",
   // translation: {
           // --- Welcome Screen ---
           welcome_title: "Aprende Chino",
