@@ -1,5 +1,12 @@
 // src/locales/de.js
 export default {
+  // ── Explora China (accesibilidad / controles) ──
+  china_a11y_map: "Karte Chinas nach Provinzen",
+  china_zoom_in: "Vergrößern",
+  china_zoom_out: "Verkleinern",
+  china_zoom_reset: "Zoom zurücksetzen",
+  china_pick_hint: "Wähle eine Provinz auf der Karte",
+  china_listen: "Namen anhören",
   // ── Explora China (mapa de provincias) ──
   china_title: "China entdecken",
   china_subtitle: "Tippe auf eine Provinz, um sie zu entdecken",

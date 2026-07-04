@@ -1,4 +1,7 @@
-// src/data/provinces.js
+// src/data/provinces.source.js
+// FUENTE multilingüe — NO se importa en el cliente. De aquí se generan
+// provinces/base.js y provinces/{lang}.js con:
+//   node scripts/china-map/split-provinces.mjs
 // ─────────────────────────────────────────────────────────────────────────────
 // Feature "Explora China": datos de las 34 divisiones provinciales.
 //

@@ -553,7 +553,7 @@ export default function App() {
       <Layout activeScreen="home" onNavigate={handleBottomNav}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
-            <ChinaMap goBack={() => setScreen(prevScreen || 'home')} />
+            <ChinaMap goBack={() => setScreen(prevScreen || 'home')} speakChinese={speak} />
           </Suspense>
         </ErrorBoundary>
       </Layout>
