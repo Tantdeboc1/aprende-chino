@@ -26,8 +26,16 @@ jobs:
         with:
           node-version: 22
 
+      # Reintentos ante fallos de red transitorios (ECONNRESET) del registro npm.
       - name: Install dependencies
-        run: npm ci
+        run: |
+          for i in 1 2 3; do
+            npm ci --fetch-retries=5 --fetch-retry-mintimeout=10000 --fetch-retry-maxtimeout=60000 && exit 0
+            echo "npm ci falló (intento $i); reintentando en 15s…" >&2
+            sleep 15
+          done
+          echo "npm ci falló tras 3 intentos" >&2
+          exit 1
 
       # Genera src/data/{grammar,cultural}/<lang>.js a partir de los datos
       # multi-idioma (esos archivos están gitignorados — los crea cada build).
