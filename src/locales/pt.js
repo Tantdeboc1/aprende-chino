@@ -426,6 +426,7 @@ export default {
   pronunciation_say_this: "Diz isto em voz alta",
   pronunciation_record: "Gravar",
   pronunciation_listening: "A ouvir…",
+  pronunciation_stop: "Terminar",
   pronunciation_processing: "A processar…",
   pronunciation_you_said: "Disseste",
   pronunciation_retry: "Tentar de novo",

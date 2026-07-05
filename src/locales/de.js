@@ -148,6 +148,7 @@ export default {
           pronunciation_say_this: "Sag das laut",
           pronunciation_record: "Aufnehmen",
           pronunciation_listening: "Ich höre…",
+          pronunciation_stop: "Fertig",
           pronunciation_processing: "Verarbeite…",
           pronunciation_you_said: "Du hast gesagt",
           pronunciation_retry: "Noch mal",

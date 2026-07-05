@@ -11,29 +11,25 @@
 // MiniGames.jsx (`games` array). Eso es TODO. No hay que tocar App.jsx
 // ni navigation.js: ambos derivan su comportamiento de este registro.
 
-import { lazy } from 'react';
+import { lazy, memo } from 'react';
 
-const SOVGame              = lazy(() => import('./SOVGame.jsx'));
-const TimeRace             = lazy(() => import('./TimeRace.jsx'));
-const PinyinConnection     = lazy(() => import('./PinyinConnection.jsx'));
-const TranslationGame      = lazy(() => import('./TranslationGame.jsx'));
-const CompleteSentence     = lazy(() => import('./CompleteSentence.jsx'));
-const DialogueOrder        = lazy(() => import('./DialogueOrder.jsx'));
-const FindIntruder         = lazy(() => import('./FindIntruder.jsx'));
-const PronunciationPractice = lazy(() => import('./PronunciationPractice.jsx'));
-const DictationGame         = lazy(() => import('./DictationGame.jsx'));
-const ToneEar               = lazy(() => import('./ToneEar.jsx'));
-const EchoSpeaking          = lazy(() => import('./EchoSpeaking.jsx'));
-const ReadingComprehension  = lazy(() => import('./ReadingComprehension.jsx'));
-const CefrExam              = lazy(() => import('./CefrExam.jsx'));
-
-/**
- * Helper para fabricar el `goBack` típico que devuelve al listado de juegos.
- * @param {object} ctx — el contexto de navegación pasado al registro.
- */
-function backToMinigames(ctx) {
-  return () => { ctx.navigateTo('minigames'); };
-}
+// Cada juego va envuelto en memo(): sus props ya llegan estables desde
+// navigation.js (goBack, onTrackResult, speak… memoizados), así el juego NO se
+// re-renderiza cuando App re-renderiza por un cambio de `progress` a mitad de
+// partida. lazy() se conserva para el code-splitting por juego.
+const SOVGame              = memo(lazy(() => import('./SOVGame.jsx')));
+const TimeRace             = memo(lazy(() => import('./TimeRace.jsx')));
+const PinyinConnection     = memo(lazy(() => import('./PinyinConnection.jsx')));
+const TranslationGame      = memo(lazy(() => import('./TranslationGame.jsx')));
+const CompleteSentence     = memo(lazy(() => import('./CompleteSentence.jsx')));
+const DialogueOrder        = memo(lazy(() => import('./DialogueOrder.jsx')));
+const FindIntruder         = memo(lazy(() => import('./FindIntruder.jsx')));
+const PronunciationPractice = memo(lazy(() => import('./PronunciationPractice.jsx')));
+const DictationGame         = memo(lazy(() => import('./DictationGame.jsx')));
+const ToneEar               = memo(lazy(() => import('./ToneEar.jsx')));
+const EchoSpeaking          = memo(lazy(() => import('./EchoSpeaking.jsx')));
+const ReadingComprehension  = memo(lazy(() => import('./ReadingComprehension.jsx')));
+const CefrExam              = memo(lazy(() => import('./CefrExam.jsx')));
 
 /** Mini-juegos disponibles, en el orden lógico. */
 export const MINIGAMES = [
@@ -41,7 +37,7 @@ export const MINIGAMES = [
     id: 'sov-game',
     component: SOVGame,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
       speakChinese: ctx.speak,
     }),
@@ -50,7 +46,7 @@ export const MINIGAMES = [
     id: 'time-race',
     component: TimeRace,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       characters: ctx.characters,
       onTrackResult: ctx.onTrackResult,
     }),
@@ -59,7 +55,7 @@ export const MINIGAMES = [
     id: 'pinyin-connection',
     component: PinyinConnection,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       characters: ctx.characters,
       onTrackResult: ctx.onTrackResult,
     }),
@@ -68,7 +64,7 @@ export const MINIGAMES = [
     id: 'translation-game',
     component: TranslationGame,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -76,7 +72,7 @@ export const MINIGAMES = [
     id: 'complete-sentence',
     component: CompleteSentence,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -84,7 +80,7 @@ export const MINIGAMES = [
     id: 'dialogue-order',
     component: DialogueOrder,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -92,7 +88,7 @@ export const MINIGAMES = [
     id: 'find-intruder',
     component: FindIntruder,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -100,7 +96,7 @@ export const MINIGAMES = [
     id: 'pronunciation-practice',
     component: PronunciationPractice,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -108,7 +104,7 @@ export const MINIGAMES = [
     id: 'dictation-game',
     component: DictationGame,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       characters: ctx.characters,
       speak: ctx.speak,
       onTrackResult: ctx.onTrackResult,
@@ -118,7 +114,7 @@ export const MINIGAMES = [
     id: 'echo-speaking',
     component: EchoSpeaking,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
     }),
   },
@@ -126,7 +122,7 @@ export const MINIGAMES = [
     id: 'tones-ear',
     component: ToneEar,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       characters: ctx.characters,
       speak: ctx.speak,
       onTrackResult: ctx.onTrackResult,
@@ -136,7 +132,7 @@ export const MINIGAMES = [
     id: 'reading-comprehension',
     component: ReadingComprehension,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       speak: ctx.speak,
       characters: ctx.allCharacters,
     }),
@@ -145,7 +141,7 @@ export const MINIGAMES = [
     id: 'cefr-exam',
     component: CefrExam,
     buildProps: (ctx) => ({
-      goBack: backToMinigames(ctx),
+      goBack: ctx.goBackMinigames,
       speak: ctx.speak,
       allCharacters: ctx.allCharacters,
     }),

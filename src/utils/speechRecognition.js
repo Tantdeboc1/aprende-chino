@@ -33,14 +33,18 @@ export const SpeechErrorCode = {
  * Reconoce una frase hablada. Devuelve una promesa con el transcript.
  *
  * @param {object} opts
- * @param {string}  [opts.lang='zh-CN']  Idioma esperado.
- * @param {number}  [opts.maxAlternatives=3]  Cuántas alternativas pedir.
- * @param {number}  [opts.timeoutMs=8000]  Timeout total antes de abortar.
+ * @param {string}   [opts.lang='zh-CN']  Idioma esperado.
+ * @param {number}   [opts.maxAlternatives=3]  Cuántas alternativas pedir.
+ * @param {number}   [opts.timeoutMs=8000]  Timeout total antes de abortar.
+ * @param {function} [opts.onControls]  Se invoca (una vez, tras arrancar) con
+ *          `{ stop, abort }`. `stop()` cierra la captura y resuelve con lo
+ *          reconocido hasta ese momento (para que el usuario termine cuando
+ *          quiera); `abort()` cancela sin resultado.
  * @returns {Promise<{ transcript: string, alternatives: string[], confidence: number }>}
  *          La promesa se rechaza con `{ code, message }` si algo falla.
  *          Códigos posibles: ver `SpeechErrorCode`.
  */
-export function recognize({ lang = 'zh-CN', maxAlternatives = 3, timeoutMs = 8000 } = {}) {
+export function recognize({ lang = 'zh-CN', maxAlternatives = 3, timeoutMs = 8000, onControls } = {}) {
   return new Promise((resolve, reject) => {
     if (!SpeechRecognitionClass) {
       reject({ code: SpeechErrorCode.UNSUPPORTED, message: 'Speech Recognition no soportado' });
@@ -111,6 +115,15 @@ export function recognize({ lang = 'zh-CN', maxAlternatives = 3, timeoutMs = 800
 
     try {
       rec.start();
+      // Exponemos los controles solo tras arrancar con éxito. stop() finaliza la
+      // captura → el navegador emite onresult con lo dicho hasta ahora; si no se
+      // captó nada, onend lo tratará como "no se detectó voz".
+      if (typeof onControls === 'function') {
+        onControls({
+          stop:  () => { try { rec.stop();  } catch (_) {} },
+          abort: () => { try { rec.abort(); } catch (_) {} },
+        });
+      }
     } catch (err) {
       // start() puede tirar si ya hay un reconocimiento en curso
       settled = true;

@@ -438,6 +438,7 @@ export default {
           pronunciation_say_this: "Say this out loud",
           pronunciation_record: "Record",
           pronunciation_listening: "Listening…",
+          pronunciation_stop: "Finish",
           pronunciation_processing: "Processing…",
           pronunciation_you_said: "You said",
           pronunciation_retry: "Try again",

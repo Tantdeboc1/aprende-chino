@@ -27,7 +27,7 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
         setLoading(false);
       } catch (e) {
         if (!mounted) return;
-        setError(t('tones_syllables_error'));
+        setError('tones_syllables_error');
         setLoading(false);
       }
     }
@@ -75,7 +75,7 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
 
         {error && (
           <div className="bg-[var(--red-bg)] text-[var(--red-deep)] border border-[var(--red)] rounded-md p-3 mb-4">
-            {error}
+            {t(error)}
           </div>
         )}
 

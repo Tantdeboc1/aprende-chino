@@ -26,7 +26,7 @@ export default function Vowels({ goBack, speakChinese }) {
         }
       } catch (e) {
         if (mounted) {
-          setError(t('tones_vowels_error'));
+          setError('tones_vowels_error');
           setLoading(false);
         }
       }
@@ -80,7 +80,7 @@ export default function Vowels({ goBack, speakChinese }) {
 
         {error && (
           <div className="bg-[var(--red-bg)] text-[var(--red-deep)] border border-[var(--red)] rounded-md p-3 mb-4">
-            {error}
+            {t(error)}
           </div>
         )}
 

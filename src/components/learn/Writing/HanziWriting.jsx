@@ -31,7 +31,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
     isMountedRef.current = true;
 
     const initWriter = async () => {
-      if (!currentCharacter || !writerRef.current || !isMountedRef.current) return;
+      if (!charKey || !writerRef.current || !isMountedRef.current) return;
 
 
       try {
@@ -73,7 +73,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         // Crear NUEVA instancia
         writerInstanceRef.current = HanziWriter.default.create(
           writerRef.current,
-          currentCharacter.char || currentCharacter.hanzi,
+          charKey,
           options
         );
 

@@ -1,6 +1,6 @@
 import { assetUrl } from './utils/assets';
 import { hanziCharDataLoader } from './utils/hanziCharData.js';
-import { useState, useEffect, useMemo, Suspense, lazy, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, Suspense, lazy, useRef } from "react";
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
 const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
@@ -97,7 +97,7 @@ function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else loc
 const HASH_SCREENS = new Set([
   'home', 'review', 'stories', 'dictionary', 'minigames', 'friends',
   'profile', 'settings', 'intro-detail', 'exam', 'global-exam',
-  'level-exam', 'exercise',
+  'level-exam', 'exercise', 'chinaMap',
 ]);
 
 function screenToHash(screen, selectedLesson) {
@@ -146,18 +146,32 @@ export default function App() {
   const { mode, user, pushSnapshot } = useAuth();
   const localRev = useLocalDataRev();
 
+  // Espejos en ref de valores volátiles: permiten que los callbacks que se
+  // pasan hacia abajo (speak, navigateTo, handleProgressChange…) sean estables
+  // con useCallback([]) sin capturar valores obsoletos. Así un cambio de
+  // `progress`/`mode`/`screen` no recrea esos callbacks ni cascada re-renders
+  // de la pantalla activa (p. ej. un minijuego a mitad de partida).
+  const modeRef = useRef(mode);
+  const pushSnapshotRef = useRef(pushSnapshot);
+  useEffect(() => { modeRef.current = mode; }, [mode]);
+  useEffect(() => { pushSnapshotRef.current = pushSnapshot; }, [pushSnapshot]);
+
   // Progreso
   const [progress, setProgress] = useState(() => loadProgress());
+  const progressRef = useRef(progress);
+  useEffect(() => { progressRef.current = progress; }, [progress]);
+  const getProgress = useCallback(() => progressRef.current, []);
   // Debounce del push remoto para no llamar a Firestore en cada tecla.
   const pushTimerRef = useRef(null);
-  const handleProgressChange = (updated) => {
+  const handleProgressChange = useCallback((updated) => {
+    progressRef.current = updated; // sincronía inmediata para getProgress()
     setProgress(updated);
     saveProgress(updated);
-    if (mode === 'google') {
+    if (modeRef.current === 'google') {
       clearTimeout(pushTimerRef.current);
-      pushTimerRef.current = setTimeout(() => pushSnapshot(), 1500);
+      pushTimerRef.current = setTimeout(() => pushSnapshotRef.current(), 1500);
     }
-  };
+  }, []);
 
   // Deep link inicial (#/lesson/3, #/stories…): solo si ya hay perfil creado.
   const [initialNav] = useState(() => (loadUserName() ? parseHash(window.location.hash) : null));
@@ -170,7 +184,7 @@ export default function App() {
   // dispositivo, AuthContext hidrata localStorage. Reflejamos los cambios
   // en los useState locales para que el render lo pinte.
   useEffect(() => {
-    if (mode !== 'google' || !user) return;
+    if (mode !== 'google' || !user?.uid) return;
     const remoteName = loadUserName();
     setUserName(remoteName);
     setProgress(loadProgress());
@@ -197,6 +211,12 @@ export default function App() {
   useEffect(() => () => clearTimeout(pushTimerRef.current), []);
   // Pantalla anterior (para volver desde ejercicios)
   const [prevScreen, setPrevScreen] = useState('home');
+  // Espejos en ref para que navigateTo/handleBottomNav/goBackToLesson sean
+  // estables (no dependan de screen/prevScreen en sus closures).
+  const screenRef = useRef(screen);
+  const prevScreenRef = useRef(prevScreen);
+  useEffect(() => { screenRef.current = screen; }, [screen]);
+  useEffect(() => { prevScreenRef.current = prevScreen; }, [prevScreen]);
 
   // Lección seleccionada (para lesson-detail y ejercicios)
   const [selectedLesson, setSelectedLesson] = useState(initialNav?.lesson ?? 1);
@@ -243,8 +263,8 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  // Audio
-  const [audioInitialized, setAudioInitialized] = useState(false);
+  // Audio — el estado "inicializado" vive en audioInitializedRef (ver más abajo),
+  // no en useState: nadie lo renderiza y así `speak` puede ser estable.
 
   // ProfileBadge → 'open-profile' (avatar de la top bar → stats)
   // Engranaje dentro de ProfileScreen → 'open-settings' (configuración).
@@ -278,19 +298,22 @@ export default function App() {
     };
   }, []);
 
-  const initializeAudio = async () => {
-    if (!audioInitialized) {
-      try { await initAudioForIOS(); setAudioInitialized(true); }
+  const audioInitializedRef = useRef(false);
+  const initializeAudio = useCallback(async () => {
+    if (!audioInitializedRef.current) {
+      try { await initAudioForIOS(); audioInitializedRef.current = true; }
       catch (e) { console.error('Error audio:', e); }
     }
-  };
+  }, []);
 
   // Guard con ref (no con estado): dos taps rápidos veían ambos el estado
   // sin actualizar (el setState aún no había re-renderizado) y solapaban
   // dos audios. La ref se actualiza síncronamente y cierra esa ventana.
   const speakingRef = useRef(false);
-  const speak = async (keyOrText, opts = {}) => {
-    if (!audioInitialized) await initializeAudio();
+  // `speak` es estable (useCallback []) para no recrear los props de la pantalla
+  // activa en cada re-render de App; lee su estado vía refs.
+  const speak = useCallback(async (keyOrText, opts = {}) => {
+    await initializeAudio();
     if (speakingRef.current) return;
     speakingRef.current = true;
     try {
@@ -298,7 +321,7 @@ export default function App() {
       await speakChineseEnhanced(keyOrText, { category: opts.category || 'pronunciation' });
     } catch (e) { console.error('Error speak:', e); }
     finally { speakingRef.current = false; }
-  };
+  }, [initializeAudio]);
 
   // Cargar datos
   useEffect(() => {
@@ -365,6 +388,7 @@ export default function App() {
               pinyin: fromNumericToMarked(pNum), pinyinNumeric: pNum,
               pinyinPlain: pNum.replace(/[1-4]/g, '').replace(/\s+/g, ''),
               tone: toneFromNumeric(pNum), audioKeys: audioKeysFromNumeric(pNum),
+              isSupplementary: !!word.isSupplementary,
               lesson: lesson.lesson, lessonTitle: lesson.titleEs,
             });
           }
@@ -413,10 +437,10 @@ export default function App() {
   };
 
   // Navegar desde bottom nav
-  const handleBottomNav = (key) => {
+  const handleBottomNav = useCallback((key) => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
-    setPrevScreen(screen);
+    setPrevScreen(screenRef.current);
     if (key === 'home')            setScreen('home');
     else if (key === 'review')     setScreen('review');
     else if (key === 'stories')    setScreen('stories');
@@ -425,7 +449,7 @@ export default function App() {
     else if (key === 'friends')    setScreen('friends');
     else if (key === 'profile')    setScreen('profile');
     else if (key === 'settings')   setScreen('settings');
-  };
+  }, []);
 
   // Iniciar ejercicio desde LessonDetail
   const handleStartExercise = (exerciseKey) => {
@@ -465,24 +489,24 @@ export default function App() {
     : null;
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
-  const goBackToLesson = () => {
+  const goBackToLesson = useCallback(() => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
-    setScreen(prevScreen || 'home');
-  };
+    setScreen(prevScreenRef.current || 'home');
+  }, []);
 
-  const navigateTo = (key) => {
+  const navigateTo = useCallback((key) => {
     // Cualquier mini-juego del registro: vuelve al listado de minijuegos al salir.
     if (MINIGAME_IDS.has(key)) {
       setPrevScreen('minigames');
       setScreen(key);
       return;
     }
-    if (key === 'global-exam') { setPrevScreen(screen); setScreen('global-exam'); }
+    if (key === 'global-exam') { setPrevScreen(screenRef.current); setScreen('global-exam'); }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
-  };
+  }, [handleBottomNav]);
 
   const { CurrentComponent, componentProps } = useNavigation(
     navScreen || screen, learnSection, writingSection, radicalSection,
@@ -497,7 +521,7 @@ export default function App() {
       lessonsData,
       goBack: goBackToLesson,
       hubMode: false, goBackToHub: goBackToLesson,
-      progress, onProgressChange: handleProgressChange,
+      progress, getProgress, onProgressChange: handleProgressChange,
     }
   );
 
@@ -673,22 +697,30 @@ export default function App() {
   // ── GLOBAL EXAM ──────────────────────────────────────────────────────────────
   if (screen === 'global-exam') {
     return (
-      <GlobalExam
-        allCharacters={allCharacters}
-        progress={progress}
-        onProgressChange={handleProgressChange}
-        goBack={() => setScreen(prevScreen || 'home')}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={<AnimatedLoader />}>
+          <GlobalExam
+            allCharacters={allCharacters}
+            progress={progress}
+            onProgressChange={handleProgressChange}
+            goBack={() => setScreen(prevScreen || 'home')}
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
   if (screen === 'level-exam') {
     return (
-      <LevelExam
-        allCharacters={allCharacters}
-        progress={progress}
-        goBack={() => setScreen(prevScreen || 'home')}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={<AnimatedLoader />}>
+          <LevelExam
+            allCharacters={allCharacters}
+            progress={progress}
+            goBack={() => setScreen(prevScreen || 'home')}
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 

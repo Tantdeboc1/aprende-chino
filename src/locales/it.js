@@ -426,6 +426,7 @@ export default {
   pronunciation_say_this: "Di' questo ad alta voce",
   pronunciation_record: "Registra",
   pronunciation_listening: "Ascolto…",
+  pronunciation_stop: "Termina",
   pronunciation_processing: "Elaboro…",
   pronunciation_you_said: "Hai detto",
   pronunciation_retry: "Riprova",

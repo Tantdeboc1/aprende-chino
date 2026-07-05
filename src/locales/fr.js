@@ -436,6 +436,7 @@ export default {
           pronunciation_say_this: "Dis ceci à voix haute",
           pronunciation_record: "Enregistrer",
           pronunciation_listening: "J'écoute…",
+          pronunciation_stop: "Terminer",
           pronunciation_processing: "Traitement…",
           pronunciation_you_said: "Tu as dit",
           pronunciation_retry: "Réessayer",

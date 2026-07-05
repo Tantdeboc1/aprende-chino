@@ -17,6 +17,12 @@ const LESSON_COLORS = {
 
 const FAV_KEY = STORAGE_KEYS.FAVORITES;
 
+// ── Normalización (puras, a nivel de módulo para que sean estables y no entren
+// como dependencias de los useMemo de filtrado) ─────────────────────────────
+const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
+const normalizeBase  = (s) => mapUmlautToV(String(s || "")).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").trim();
+const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_-]/g, "").replace(/[1-4]/g, "");
+
 function loadFavorites() {
   try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); }
   catch { return new Set(); }
@@ -66,11 +72,6 @@ export default function Dictionary({
       return next;
     });
   };
-
-  // ── Normalización ─────────────────────────────────────────────────────────
-  const mapUmlautToV   = (s) => (s || "").replace(/ü|ü/gi, "v");
-  const normalizeBase  = (s) => mapUmlautToV(String(s || "")).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").trim();
-  const normToneAgnost = (s) => normalizeBase(s).replace(/[\s_-]/g, "").replace(/[1-4]/g, "");
 
   // ── Búsqueda con debounce ─────────────────────────────────────────────────
   const [rawQuery, setRawQuery]         = useState(searchTerm || "");

@@ -1,5 +1,5 @@
 // src/components/learn/Radicals/RadicalsQuiz2.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { shuffle } from "@/utils/arrayUtils.js";
@@ -14,15 +14,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
 
-  // Generar preguntas del quiz
-  useEffect(() => {
-    if (radicals.length > 0) {
-      const generatedQuestions = generateQuestions();
-      setQuizQuestions(generatedQuestions);
-    }
-  }, [radicals]);
-
-  const generateQuestions = () => {
+  const generateQuestions = useCallback(() => {
     const questions = [];
     const usedRadicals = new Set();
 
@@ -53,7 +45,14 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
     }
 
     return questions;
-  };
+  }, [radicals]);
+
+  // Generar preguntas del quiz
+  useEffect(() => {
+    if (radicals.length > 0) {
+      setQuizQuestions(generateQuestions());
+    }
+  }, [radicals, generateQuestions]);
 
   const handleAnswerSelect = (answer) => {
     if (isAnswered) return;

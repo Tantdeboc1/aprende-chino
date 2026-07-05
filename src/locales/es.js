@@ -438,6 +438,7 @@ export default {
           pronunciation_say_this: "Di esto en voz alta",
           pronunciation_record: "Grabar",
           pronunciation_listening: "Escuchando…",
+          pronunciation_stop: "Terminar",
           pronunciation_processing: "Procesando…",
           pronunciation_you_said: "Has dicho",
           pronunciation_retry: "Reintentar",

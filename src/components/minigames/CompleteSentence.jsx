@@ -55,7 +55,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   // Memoizar opciones barajadas para evitar re-shuffle en cada render
   const shuffledOptions = useMemo(
     () => current ? shuffle([...current.options]) : [],
-    [currentIdx, rounds]
+    [current]
   );
   const parts = current ? current.sentence.split('___') : ['', ''];
 

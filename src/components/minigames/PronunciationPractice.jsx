@@ -66,7 +66,10 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
 
   // Para evitar warnings cuando el componente se desmonta mid-recognition
   const aliveRef = useRef(true);
-  useEffect(() => () => { aliveRef.current = false; }, []);
+  // Controles de la grabación en curso ({ stop, abort }); permiten terminar
+  // la grabación pulsando de nuevo el botón, sin esperar al timeout.
+  const controlsRef = useRef(null);
+  useEffect(() => () => { aliveRef.current = false; controlsRef.current?.abort(); }, []);
 
   // Frases del idioma activo (chunk por idioma); null mientras carga.
   const phrases = useTranslationPhrases();
@@ -86,13 +89,21 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
 
   const current = rounds[currentIdx];
 
+  // Termina la grabación en curso a petición del usuario (segundo toque).
+  const handleStopListening = () => {
+    controlsRef.current?.stop();
+  };
+
   const handleListen = async () => {
     if (!current || status === 'listening' || status === 'processing') return;
     setStatus('listening');
     setErrorMsg(null);
     setScoreInfo(null);
     try {
-      const { transcript } = await recognize({ lang: 'zh-CN', timeoutMs: 9000 });
+      const { transcript } = await recognize({
+        lang: 'zh-CN', timeoutMs: 9000,
+        onControls: (c) => { controlsRef.current = c; },
+      });
       if (!aliveRef.current) return;
       setStatus('processing');
       const info = scorePronunciation(current.hanzi, transcript);
@@ -338,18 +349,20 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
         <div className="flex gap-2">
           {status !== 'result' ? (
             <button
-              onClick={handleListen}
-              disabled={status === 'listening' || status === 'processing'}
+              onClick={status === 'listening' ? handleStopListening : handleListen}
+              disabled={status === 'processing'}
               className={`flex-1 py-4 rounded-xl font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 ${
                 status === 'listening'
                   ? 'bg-[var(--red)] text-[var(--on-accent)] animate-pulse'
                   : 'bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)]'
               } disabled:opacity-60 disabled:cursor-not-allowed`}
-              aria-label={t('pronunciation_record', 'Grabar')}
+              aria-label={status === 'listening'
+                ? t('pronunciation_stop', 'Terminar grabación')
+                : t('pronunciation_record', 'Grabar')}
             >
-              <span className="text-xl">{status === 'listening' ? '🎙️' : '🎤'}</span>
+              <span className="text-xl">{status === 'listening' ? '⏹️' : status === 'processing' ? '⏳' : '🎤'}</span>
               {status === 'listening'
-                ? t('pronunciation_listening', 'Escuchando…')
+                ? t('pronunciation_stop', 'Terminar')
                 : status === 'processing'
                   ? t('pronunciation_processing', 'Procesando…')
                   : t('pronunciation_record', 'Grabar')}

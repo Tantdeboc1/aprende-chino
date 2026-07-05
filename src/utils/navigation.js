@@ -1,5 +1,5 @@
 // src/utils/navigation.js
-import { useMemo, lazy } from 'react';
+import { useMemo, useCallback, useRef, lazy } from 'react';
 import { markWordResult, markWordSeen } from './progress.js';
 import { updateChallengeProgress } from './dailyChallenges.js';
 import { initSRSCard, updateSRS } from './srs.js';
@@ -64,9 +64,44 @@ export function useNavigation(
     hubMode,
     goBackToHub,
     progress,
+    getProgress,
     onProgressChange,
   }
 ) {
+
+  // Lee el progreso más reciente sin capturarlo en la closure (getProgress lo
+  // resuelve desde una ref en App). Así estos callbacks son ESTABLES y no
+  // recrean los props ni re-renderizan la pantalla activa cada vez que cambia
+  // `progress` al responder un ejercicio. Fallback defensivo por si no llega.
+  const readProgress = getProgress || (() => progress);
+  const readProgressRef = useRef(readProgress);
+  readProgressRef.current = readProgress;
+
+  // Callbacks de feedback: actualizan el progreso al responder ejercicios.
+  // Estables (useCallback []) para que React.memo pueda saltarse re-renders.
+  const onTrackResult = useCallback((charObj, isCorrect) => {
+    if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
+    let updated = markWordResult(readProgressRef.current(), charObj.lesson, charObj.char, isCorrect);
+    if (isCorrect) {
+      // XP por acierto en el estudio "serio" (Quiz de caracteres y los
+      // minijuegos que reportan por aquí sin dar XP propio).
+      addXP(2);
+      updateChallengeProgress('correct_answers', 1);
+    } else {
+      // Penalizar el SRS: iniciar tarjeta si no existe, luego resetear intervalo
+      updated = initSRSCard(updated, charObj.char);
+      updated = updateSRS(updated, charObj.char, 0); // quality 0 = resetea a 1 día
+    }
+    onProgressChange(updated);
+  }, [onProgressChange]);
+  const onTrackSeen = useCallback((charObj) => {
+    if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
+    onProgressChange(markWordSeen(readProgressRef.current(), charObj.lesson, charObj.char));
+  }, [onProgressChange]);
+
+  // Botón "atrás" estable para los minijuegos (vuelve al listado). Evita que
+  // cada recomputación fabrique un goBack nuevo que rompería el React.memo.
+  const goBackMinigames = useCallback(() => { navigateTo('minigames'); }, [navigateTo]);
 
   const { CurrentComponent, componentProps } = useMemo(() => {
     let Component = null;
@@ -74,28 +109,6 @@ export function useNavigation(
 
     // Si estamos en modo hub, el botón atrás vuelve al hub
     const hubOr = (fallback) => hubMode ? goBackToHub : fallback;
-
-    // Callbacks de feedback visual: actualizan el progreso al responder ejercicios
-    const onTrackResult = (charObj, isCorrect) => {
-      if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
-      let updated = markWordResult(progress, charObj.lesson, charObj.char, isCorrect);
-      if (isCorrect) {
-        // XP por acierto en el estudio "serio" (Quiz de caracteres y los
-        // minijuegos que reportan por aquí sin dar XP propio).
-        addXP(2);
-        updateChallengeProgress('correct_answers', 1);
-      } else {
-        // Penalizar el SRS: iniciar tarjeta si no existe, luego resetear intervalo
-        updated = initSRSCard(updated, charObj.char);
-        updated = updateSRS(updated, charObj.char, 0); // quality 0 = resetea a 1 día
-      }
-      onProgressChange(updated);
-    };
-    const onTrackSeen = (charObj) => {
-      if (!charObj?.lesson || !charObj?.char || !onProgressChange) return;
-      const updated = markWordSeen(progress, charObj.lesson, charObj.char);
-      onProgressChange(updated);
-    };
 
     // === RUTAS PRINCIPALES ===
     if (screen === 'dictionary') {
@@ -133,6 +146,7 @@ export function useNavigation(
       Component = minigame.component;
       props = minigame.buildProps({
         navigateTo,
+        goBackMinigames,
         selectedLesson,
         characters,
         allCharacters,
@@ -333,6 +347,7 @@ export function useNavigation(
     selectedLesson, setSelectedLesson, showSupplementary, setShowSupplementary,
     lessonsData, goBack, hubMode, goBackToHub,
     progress, onProgressChange,
+    onTrackResult, onTrackSeen, goBackMinigames,
   ]);
 
   return { CurrentComponent, componentProps };
