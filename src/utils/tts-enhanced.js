@@ -1,5 +1,6 @@
 // === src/utils/tts-enhanced.js (SISTEMA MEJORADO - SIN CONFLICTOS) ===
 import { playAudioSmart } from './audio';
+import { getVoiceRate } from './soundPrefs.js';
 
 /**
  * Habla texto usando Web Speech API (TTS del navegador)
@@ -17,7 +18,7 @@ function speakWithTTS(text) {
 
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'zh-CN'; // Chino mandarín
-      utterance.rate = 0.8; // Velocidad más lenta para mejor comprensión
+      utterance.rate = getVoiceRate(); // 0.8 lenta (default) | 1.0 normal — ver Ajustes
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
 

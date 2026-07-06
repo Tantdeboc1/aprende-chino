@@ -1,5 +1,7 @@
 // src/utils/gameAudio.js
 // Shared AudioContext for minigame sound effects — avoids creating a new context on every call
+import { effectsEnabled } from './soundPrefs.js';
+
 let sharedCtx = null;
 
 function getAudioContext() {
@@ -15,6 +17,7 @@ function getAudioContext() {
 
 export function playSound(type) {
   try {
+    if (!effectsEnabled()) return; // silenciado desde Ajustes
     const ctx = getAudioContext();
     if (type === 'correct') {
       [523.25, 783.99].forEach((freq, i) => {

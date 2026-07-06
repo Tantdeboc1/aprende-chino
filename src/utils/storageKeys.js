@@ -28,6 +28,7 @@ export const STORAGE_KEYS = {
   AUTH_MODE:        'aprende-chino-auth-mode',
   GAME_INTRO_PREFS: 'gameIntroPrefs',
   MUSIC_SETTINGS:   'music-settings',
+  SOUND_PREFS:      'aprende-chino-sound-prefs', // efectos, vibración, velocidad voz
   THEME:            'aprende-chino-theme',   // 'light' | 'dark' | 'system'
 
   // Prefijo para la caché de datos versionada (se concatena con el nombre)

@@ -12,6 +12,7 @@ import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -88,6 +89,14 @@ export default function FindIntruder({ goBack, selectedLesson }) {
     setResult(null);
     setShowHint(false);
   };
+
+  // Accesibilidad: teclas 1-4 eligen el carácter, Enter pasa de ronda.
+  useKeyAnswers({
+    count: current?.shuffledItems.length || 0,
+    onSelect: !isIntro && !isFinished && current && !result
+      ? (i) => handleSelect(current.shuffledItems[i]) : null,
+    onNext: !isIntro && !isFinished && result ? handleNext : null,
+  });
 
   // Pantalla de explicación
   if (isIntro) {
@@ -213,31 +222,33 @@ export default function FindIntruder({ goBack, selectedLesson }) {
           })}
         </div>
 
-        {/* Feedback */}
-        {result === 'correct' && (
-          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl"></span>
-              <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
+        {/* Feedback (aria-live para lectores de pantalla) */}
+        <div aria-live="polite" role="status">
+          {result === 'correct' && (
+            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-2xl"></span>
+                <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
+              </div>
+              <p className="text-[var(--ink-soft)] text-xs">
+                {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
+              </p>
             </div>
-            <p className="text-[var(--ink-soft)] text-xs">
-              {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
-            </p>
-          </div>
-        )}
-        {result === 'incorrect' && (
-          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl"></span>
-              <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
+          )}
+          {result === 'incorrect' && (
+            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-2xl"></span>
+                <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
+              </div>
+              <p className="text-xs text-[var(--mute)]">{t('intruder_correct_was')}</p>
+              <p className="text-[var(--ink)] font-bold text-lg mt-0.5">{current.intruder}</p>
+              <p className="text-[var(--ink-soft)] text-xs mt-1">
+                {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
+              </p>
             </div>
-            <p className="text-xs text-[var(--mute)]">{t('intruder_correct_was')}</p>
-            <p className="text-[var(--ink)] font-bold text-lg mt-0.5">{current.intruder}</p>
-            <p className="text-[var(--ink-soft)] text-xs mt-1">
-              {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
-            </p>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Botones */}
         <div className="flex gap-3">

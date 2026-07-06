@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock, Volume2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 // Mismo banco de tonos que el QuizTone
 const TONE_BANK = [
@@ -116,6 +117,14 @@ export default function TonesDaily({ goBack, speakChinese }) {
     clearInterval(timerRef.current);
     initQuiz();
   };
+
+  // Accesibilidad: teclas 1-4 = tono 1..4, Enter pasa de pregunta.
+  const inPlayKeys = quizStarted && !quizFinished && !!questions[currentQuestion];
+  useKeyAnswers({
+    count: 4,
+    onSelect: inPlayKeys && !isAnswered ? (i) => handleAnswerSelect(i + 1) : null,
+    onNext: inPlayKeys && isAnswered ? handleNextQuestion : null,
+  });
 
   const listen = () => {
     if (!questions[currentQuestion]) return;

@@ -63,8 +63,12 @@ clave de firma; solo hay que colocarlo en la ruta correcta.
 
 ## 4. Checklist de la ficha de Play (obligatorio)
 
-- [ ] **Política de privacidad publicada** en una URL pública (usar `docs/PRIVACY.md`,
-      súbela a `https://<DOMINIO>/privacy` o similar) — **obligatoria por usar micrófono**.
+- [x] **Política de privacidad publicada** — ya se sirve con la app en
+      `https://<DOMINIO>/aprende-chino/privacidad.html` (fuente: `public/privacidad.html`;
+      `docs/PRIVACY.md` queda como borrador). Obligatoria por usar micrófono.
+- [x] **Eliminación de cuenta en la app** (requisito de Play): Ajustes → Cuenta →
+      "Eliminar cuenta y datos" borra Firestore (users, publicProfiles, friendCodes,
+      friendRequests, friendships) + cuenta de Auth + datos locales.
 - [ ] **Formulario "Seguridad de los datos"** completado (ver `docs/play-data-safety.md`).
 - [ ] Permiso `RECORD_AUDIO` declarado y justificado (uso: reconocimiento de voz
       para ejercicios de pronunciación; sin grabación ni almacenamiento).

@@ -7,6 +7,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -98,6 +99,13 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
       }
     }, 800);
   };
+
+  // Accesibilidad: teclas 1-4 responden (avanza solo, sin Enter).
+  useKeyAnswers({
+    count: currentQuestion?.options.length || 0,
+    onSelect: isPlaying && currentQuestion && !feedback
+      ? (i) => handleAnswer(currentQuestion.options[i]) : null,
+  });
 
   // Temporizador del juego
   useEffect(() => {

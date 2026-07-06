@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { playAudioSmart } from "../../../utils/audio";
 import { useTranslation } from "react-i18next";
 import { shuffle } from '@/utils/arrayUtils.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 
 /**
  * Quiz de pronunciación (consonantes y vocales)
@@ -131,6 +132,32 @@ export default function QuizPronunciation({ goBack }) {
     setQuizStarted(true);
   };
 
+  // Estado derivado + handlers ANTES de los early-returns (los hooks no
+  // pueden ir tras un return condicional).
+  const inPlay = quizStarted && questions.length > 0 && idx < questions.length;
+  const current = inPlay ? questions[idx] : null;
+
+  const answer = (opt) => {
+    if (!current || showResult) return;
+    setSelected(opt);
+    setShowResult(true);
+    if (opt === current.correct) setScore(s => s + 1);
+  };
+
+  const next = () => {
+    if (idx + 1 >= questions.length) { setIdx(idx + 1); return; }
+    setIdx(idx + 1);
+    setSelected(null);
+    setShowResult(false);
+  };
+
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de pregunta.
+  useKeyAnswers({
+    count: current?.options.length || 0,
+    onSelect: inPlay && !showResult ? (i) => answer(current.options[i]) : null,
+    onNext: inPlay && showResult ? next : null,
+  });
+
   // PANTALLA DE INSTRUCCIONES
   if (!quizStarted) {
     return (
@@ -199,20 +226,6 @@ export default function QuizPronunciation({ goBack }) {
       await playAudioSmart("pronunciation", q.correct, q.correct);
     }
     setPlaying(false);
-  };
-
-  const answer = (opt) => {
-    if (showResult) return;
-    setSelected(opt);
-    setShowResult(true);
-    if (opt === q.correct) setScore(s => s + 1);
-  };
-
-  const next = () => {
-    if (idx + 1 >= questions.length) { setIdx(idx + 1); return; }
-    setIdx(idx + 1);
-    setSelected(null);
-    setShowResult(false);
   };
 
   // Fin del quiz

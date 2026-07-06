@@ -1,16 +1,27 @@
 // src/main.jsx
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
+// Fuentes chinas auto-alojadas (antes Google Fonts en runtime): mismos woff2
+// troceados por unicode-range — el navegador solo descarga los trozos que usa,
+// ahora desde nuestro origen (offline-friendly, sin terceros, CSP más estricta).
+// Pesos: 400/500/700 Sans y 400/700 Serif; 600 y 800 resuelven a 700.
+import '@fontsource/noto-sans-sc/400.css';
+import '@fontsource/noto-sans-sc/500.css';
+import '@fontsource/noto-sans-sc/700.css';
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/700.css';
 import './index.css';
 import App from './App.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LevelUpHost from './components/LevelUpHost.jsx';
+import UpdateToast from './components/ui/UpdateToast.jsx';
 import { MusicProvider } from './context/MusicContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import './i18n';
 import { registerSW } from 'virtual:pwa-register';
 import { initErrorTracking } from './utils/errorTracking.js';
 import { initTheme } from './utils/theme.js';
+import { setNeedRefresh } from './utils/pwaUpdate.js';
 
 // Aplica el tema guardado ANTES del primer render para evitar parpadeo
 // (no se puede usar script inline en index.html por la CSP).
@@ -18,9 +29,17 @@ initTheme();
 
 // Service worker PWA — solo existe en builds de producción (en dev el
 // plugin está desactivado y registerSW es un no-op). En modo 'prompt'
-// (ver vite.config.js) NO pasamos onNeedRefresh: el SW nuevo se queda en
-// espera sin recargar a mitad de sesión y entra en el próximo arranque.
-registerSW({ immediate: true });
+// (ver vite.config.js) el SW nuevo queda EN ESPERA sin recargar a mitad de
+// sesión; onNeedRefresh muestra un toast (UpdateToast) con el botón
+// "Actualizar" — si el usuario lo ignora, la versión nueva entra igualmente
+// en el próximo arranque.
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    // updateSW(true) activa el SW en espera y recarga con los assets nuevos.
+    setNeedRefresh(() => updateSW(true));
+  },
+});
 
 // Seguimiento de errores: handlers globales siempre; Sentry solo si hay DSN.
 initErrorTracking();
@@ -41,6 +60,8 @@ createRoot(document.getElementById('root')).render(
           </Suspense>
           {/* Host global: muestra LevelUpModal cuando se dispara 'xp-notification' */}
           <LevelUpHost />
+          {/* Aviso de nueva versión del SW (modo 'prompt') */}
+          <UpdateToast />
         </MusicProvider>
       </AuthProvider>
     </ErrorBoundary>

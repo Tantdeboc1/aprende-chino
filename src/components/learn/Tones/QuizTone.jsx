@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 /**
  * Quiz de tonos (audio-only)
@@ -68,6 +69,32 @@ export default function QuizTone({ goBack, speakChinese }) {
     setShowResult(false);
     setQuizStarted(true);
   };
+
+  // Estado derivado + handlers ANTES de los early-returns (los hooks no
+  // pueden ir tras un return condicional).
+  const inPlay = quizStarted && questions.length > 0 && idx < questions.length;
+  const current = inPlay ? questions[idx] : null;
+
+  const answer = (toneNum) => {
+    if (!current || showResult) return;
+    setSelected(toneNum);
+    setShowResult(true);
+    if (toneNum === current.tone) setScore(s => s + 1);
+  };
+
+  const next = () => {
+    if (idx + 1 >= questions.length) return setIdx(idx + 1);
+    setIdx(idx + 1);
+    setSelected(null);
+    setShowResult(false);
+  };
+
+  // Accesibilidad: teclas 1-4 = tono 1..4, Enter pasa de pregunta.
+  useKeyAnswers({
+    count: TONE_OPTIONS.length,
+    onSelect: inPlay && !showResult ? (i) => answer(TONE_OPTIONS[i].num) : null,
+    onNext: inPlay && showResult ? next : null,
+  });
 
   // PANTALLA DE INSTRUCCIONES
   if (!quizStarted) {
@@ -138,20 +165,6 @@ export default function QuizTone({ goBack, speakChinese }) {
     if (typeof speakChinese === 'function') {
       speakChinese(q.pinyinToSpeak, { category: 'pronunciation' });
     }
-  };
-
-  const answer = (toneNum) => {
-    if (showResult) return;
-    setSelected(toneNum);
-    setShowResult(true);
-    if (toneNum === q.tone) setScore(s => s + 1);
-  };
-
-  const next = () => {
-    if (idx + 1 >= questions.length) return setIdx(idx + 1);
-    setIdx(idx + 1);
-    setSelected(null);
-    setShowResult(false);
   };
 
   if (idx >= questions.length) {

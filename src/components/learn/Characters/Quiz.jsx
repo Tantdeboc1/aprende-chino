@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { shuffle } from "@/utils/arrayUtils.js";
+import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 function pickN(arr, n) {
   const copy = [...arr];
@@ -51,6 +52,33 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
   useEffect(() => {
     if (!showInstructions) initQuiz(quizMode);
   }, [characters]); // eslint-disable-line
+
+  // Estado derivado (antes de los early-returns, para poder colgar el hook
+  // de teclado — los hooks no pueden ir tras un return condicional).
+  const inPlay  = !showInstructions && questions.length > 0 && index < questions.length;
+  const current = inPlay ? questions[index] : null;
+
+  const handleAnswer = (opt) => {
+    if (!current || showResult) return;
+    setSelected(opt);
+    setShowResult(true);
+    const isCorrect = opt.char === current.correct.char;
+    if (isCorrect) setScore(s => s + 1);
+    onTrackResult?.(current.correct, isCorrect);
+  };
+
+  const next = () => {
+    setIndex(i => i + 1);
+    setSelected(null);
+    setShowResult(false);
+  };
+
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de pregunta.
+  useKeyAnswers({
+    count: current?.options.length || 0,
+    onSelect: inPlay && !showResult ? (i) => handleAnswer(current.options[i]) : null,
+    onNext: inPlay && showResult ? next : null,
+  });
 
   // ── Pantalla de instrucciones + selector de modo ──────────────────────────
   if (showInstructions) {
@@ -147,23 +175,8 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
     );
   }
 
-  const question = questions[index];
+  const question = current;
   const mode     = question.mode;
-
-  const handleAnswer = (opt) => {
-    if (showResult) return;
-    setSelected(opt);
-    setShowResult(true);
-    const isCorrect = opt.char === question.correct.char;
-    if (isCorrect) setScore(s => s + 1);
-    onTrackResult?.(question.correct, isCorrect);
-  };
-
-  const next = () => {
-    setIndex(i => i + 1);
-    setSelected(null);
-    setShowResult(false);
-  };
 
   // ── Estímulo según modo ────────────────────────────────────────────────────
   const Stimulus = () => {
@@ -232,6 +245,14 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
         </div>
 
         <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-4 sm:p-8 border border-[rgba(28,24,19,0.10)]">
+          {/* Anuncio para lectores de pantalla (el feedback visual es solo color) */}
+          <div aria-live="polite" className="sr-only">
+            {showResult && (
+              selected?.char === question.correct.char
+                ? t('quiz_a11y_correct', 'Correcto')
+                : `${t('quiz_a11y_incorrect', 'Incorrecto')}. ${question.correct.char} = ${question.correct.meaning}`
+            )}
+          </div>
           <Stimulus />
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4">

@@ -12,6 +12,7 @@ import { trackAchievement } from '@/utils/leveling.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -91,6 +92,14 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
     setResult(null);
     setShowHint(false);
   };
+
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de frase.
+  useKeyAnswers({
+    count: shuffledOptions.length,
+    onSelect: !isIntro && !isFinished && current && !result
+      ? (i) => handleSelect(shuffledOptions[i]) : null,
+    onNext: !isIntro && !isFinished && result ? handleNext : null,
+  });
 
   // Pantalla de explicación
   if (isIntro) {
@@ -233,26 +242,29 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
           </div>
         </div>
 
-        {/* Feedback */}
-        {result === 'correct' && (
-          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
-            <span className="text-2xl"></span>
-            <div>
-              <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
-              <p className="text-[var(--ink-soft)] text-sm">{current.sentence.replace('___', current.answer)}</p>
-            </div>
-          </div>
-        )}
-        {result === 'incorrect' && (
-          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
-            <div className="flex items-center gap-3 mb-2">
+        {/* Feedback (aria-live: la región vive siempre en el DOM para que los
+            lectores de pantalla anuncien el resultado al aparecer) */}
+        <div aria-live="polite" role="status">
+          {result === 'correct' && (
+            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
               <span className="text-2xl"></span>
-              <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
+              <div>
+                <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
+                <p className="text-[var(--ink-soft)] text-sm">{current.sentence.replace('___', current.answer)}</p>
+              </div>
             </div>
-            <p className="text-xs text-[var(--mute)]">{t('sov_correct_answer')}</p>
-            <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence.replace('___', current.answer)}</p>
-          </div>
-        )}
+          )}
+          {result === 'incorrect' && (
+            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-2xl"></span>
+                <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
+              </div>
+              <p className="text-xs text-[var(--mute)]">{t('sov_correct_answer')}</p>
+              <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence.replace('___', current.answer)}</p>
+            </div>
+          )}
+        </div>
 
         {/* Botones */}
         <div className="flex gap-3">

@@ -23,6 +23,8 @@
   "dependencies": {
     "@dicebear/collection": "^9.4.2",
     "@dicebear/core": "^9.4.2",
+    "@fontsource/noto-sans-sc": "^5.2.9",
+    "@fontsource/noto-serif-sc": "^5.2.9",
     "firebase": "^12.14.0",
     "hanzi-writer": "^3.7.3",
     "hanzi-writer-data": "^2.0.1",

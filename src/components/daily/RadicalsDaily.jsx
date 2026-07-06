@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { shuffle } from "@/utils/arrayUtils.js";
+import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 const TOTAL_QUESTIONS = 10;
 const TIME_LIMIT = 150; // 2.5 minutos en segundos
@@ -140,6 +141,15 @@ export default function RadicalsDaily({ goBack, radicals }) {
     clearInterval(timerRef.current);
     initQuiz();
   };
+
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de pregunta.
+  const currentQKeys = questions[currentQuestion];
+  const inPlayKeys = quizStarted && !quizFinished && !!currentQKeys;
+  useKeyAnswers({
+    count: currentQKeys?.options.length || 0,
+    onSelect: inPlayKeys && !isAnswered ? (i) => handleAnswerSelect(currentQKeys.options[i]) : null,
+    onNext: inPlayKeys && isAnswered ? handleNextQuestion : null,
+  });
 
   // Pantalla de inicio
   if (!quizStarted) {

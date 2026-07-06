@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { shuffle } from "@/utils/arrayUtils.js";
+import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 export default function RadicalsQuiz({ goBack, radicals }) {
   const { t } = useTranslation();
@@ -121,6 +122,15 @@ export default function RadicalsQuiz({ goBack, radicals }) {
     setQuizStarted(true);
   };
 
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de pregunta.
+  const currentQ = quizQuestions[currentQuestion];
+  const inPlay = quizStarted && !quizFinished && !!currentQ;
+  useKeyAnswers({
+    count: currentQ?.options.length || 0,
+    onSelect: inPlay && !isAnswered ? (i) => handleAnswerSelect(currentQ.options[i]) : null,
+    onNext: inPlay && isAnswered ? handleNextQuestion : null,
+  });
+
   if (!quizStarted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
@@ -235,7 +245,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
     );
   }
 
-  const currentQ = quizQuestions[currentQuestion];
+  // currentQ ya está declarado arriba (junto al hook de teclado).
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">

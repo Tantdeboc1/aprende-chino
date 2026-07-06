@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import completeSentenceData from '@/data/completeSentenceData.js';
 import { buildMeaningQuestions } from '@/utils/quizEngine.js';
@@ -131,6 +132,13 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
       }
     }, 850);
   };
+
+  // Accesibilidad: teclas 1-4 responden (avanza solo tras el feedback).
+  useKeyAnswers({
+    count: current?.options.length || 0,
+    onSelect: phase === 'playing' && current && !locked
+      ? (i) => answer(current.options[i]) : null,
+  });
 
   const skillLabel = (id) => t(SKILL_META[id].i18nKey, SKILL_META[id].def);
 

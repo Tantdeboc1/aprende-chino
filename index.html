@@ -13,7 +13,8 @@
                         por 'self' — ya no se necesita cdn.jsdelivr.net.
         - frame-src   : iframe/popup de OAuth (authDomain + accounts.google.com)
         - img-src     : avatares DiceBear (data:) y foto de perfil de Google
-        - style/font  : Google Fonts
+      Las fuentes (Noto Sans/Serif SC) se auto-alojan vía @fontsource — van
+      cubiertas por 'self', ya no se necesita fonts.googleapis/gstatic.
       Si añades un servicio nuevo (otra API, CDN…), amplía el directivo aquí.
     -->
     <meta http-equiv="Content-Security-Policy" content="
@@ -22,8 +23,8 @@
       object-src 'none';
       form-action 'self';
       script-src 'self' https://apis.google.com https://*.firebaseapp.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com data:;
+      style-src 'self' 'unsafe-inline';
+      font-src 'self' data:;
       img-src 'self' data: https://lh3.googleusercontent.com https://*.googleusercontent.com;
       connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com wss://*.firestore.googleapis.com https://*.ingest.de.sentry.io https://*.ingest.sentry.io https://inputtools.google.com;
       frame-src https://*.firebaseapp.com https://accounts.google.com https://apis.google.com;
@@ -32,9 +33,6 @@
     <meta name="description" content="Aprende caracteres chinos HSK-1 con ejercicios interactivos" />
     <meta name="theme-color" content="#2f6b4a" />
     <title>学习中文 - Aprende Chino HSK-1</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

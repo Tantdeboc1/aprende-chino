@@ -31,14 +31,41 @@ export default defineConfig(({ mode }) => ({
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          // maskable: Android recorta el icono en círculo/squircle; sin esta
+          // variante el launcher lo mete en un fondo blanco. Clave para TWA.
+          { src: 'icons/icon-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
           { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+        // Accesos rápidos al mantener pulsado el icono (Android/TWA). Las URLs
+        // son relativas al manifest → respetan el base (/aprende-chino/ en Pages)
+        // y usan el hash routing existente (deep links de App.jsx).
+        shortcuts: [
+          {
+            name: 'Repaso diario',
+            short_name: 'Repaso',
+            url: './#/review',
+            icons: [{ src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+          },
+          {
+            name: 'Historias',
+            short_name: 'Historias',
+            url: './#/stories',
+            icons: [{ src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+          },
+          {
+            name: 'Minijuegos',
+            short_name: 'Destrezas',
+            url: './#/minigames',
+            icons: [{ src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+          },
         ],
       },
       workbox: {
         // Precache: solo el shell (JS/CSS/HTML/iconos). El audio (35 MB),
-        // la música y las ilustraciones webp (3,2 MB de fondos/avatares)
-        // van por caché runtime — se guardan al primer uso.
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // la música, las ilustraciones webp (3,2 MB) y los trozos woff2 de las
+        // fuentes auto-alojadas (~500 slices por unicode-range) van por caché
+        // runtime — se guardan al primer uso.
+        globPatterns: ['**/*.{js,css,html,svg,png}'],
         globIgnores: ['audio/**', 'music/**'],
         navigateFallback: 'index.html',
         runtimeCaching: [
@@ -82,18 +109,14 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
-            // CSS de Google Fonts.
-            urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'google-fonts-css' },
-          },
-          {
-            // Ficheros woff2 de Google Fonts (inmutables).
-            urlPattern: ({ url }) => url.origin === 'https://fonts.gstatic.com',
+            // Trozos woff2 de las fuentes auto-alojadas (@fontsource, con hash
+            // en el nombre → inmutables). CacheFirst: cada slice se guarda al
+            // primer uso y los hanzi se pintan offline a partir de entonces.
+            urlPattern: ({ url, sameOrigin }) => sameOrigin && url.pathname.endsWith('.woff2'),
             handler: 'CacheFirst',
             options: {
-              cacheName: 'google-fonts-files',
-              expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheName: 'fonts',
+              expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 365 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

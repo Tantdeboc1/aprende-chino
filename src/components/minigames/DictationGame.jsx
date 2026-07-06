@@ -11,6 +11,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -114,6 +115,13 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
       }
     }, 1100);
   };
+
+  // Accesibilidad: teclas 1-4 eligen el carácter (avanza solo, sin Enter).
+  useKeyAnswers({
+    count: question?.options.length || 0,
+    onSelect: !isIntro && !isFinished && question && !feedback
+      ? (i) => handleAnswer(question.options[i]) : null,
+  });
 
   // Cancela cualquier timeout de audio pendiente al desmontar.
   useEffect(() => () => { speakingRef.current = true; }, []);

@@ -1,7 +1,7 @@
 // src/components/SettingsScreen.jsx
 // Configuración (no stats). Perfil editable, idioma, música, cuenta y
 // datos. Las estadísticas y la racha viven en ProfileScreen.
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
@@ -14,6 +14,9 @@ import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
 import { getThemePref, setThemePref } from '@/utils/theme.js';
+import { downloadBackup, restoreBackup } from '@/utils/backup.js';
+import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
+import { assetUrl } from '@/utils/assets';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -23,6 +26,37 @@ const LANGUAGES = [
   { code: 'it', name: 'Italiano',  cn: '意' },
   { code: 'pt', name: 'Português', cn: '葡' },
 ];
+
+// ─── Toggle reutilizable (mismo estilo que música/intros) ────────────────────
+function PrefToggle({ label, hint, value, onChange, first = false }) {
+  return (
+    <div
+      className="flex items-center justify-between"
+      style={{ padding: '14px 18px', borderTop: first ? 'none' : `1px solid ${J.hair}` }}
+    >
+      <div style={{ minWidth: 0 }}>
+        <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{label}</p>
+        {hint && <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{hint}</p>}
+      </div>
+      <button
+        onClick={onChange}
+        aria-pressed={value}
+        style={{
+          flexShrink: 0, width: 48, height: 28, borderRadius: 99, border: 0,
+          cursor: 'pointer', position: 'relative', marginLeft: 12,
+          background: value ? J.jade : J.hairS,
+          transition: 'background 200ms ease',
+        }}
+      >
+        <span style={{
+          position: 'absolute', top: 3, left: value ? 23 : 3,
+          width: 22, height: 22, borderRadius: '50%', background: J.paperHi,
+          transition: 'left 200ms ease', boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+        }} />
+      </button>
+    </div>
+  );
+}
 
 // ─── Picker de avatar con tabs por género ───────────────────────────────────
 function AvatarPicker({ currentId, gender, onSelect, onClose }) {
@@ -185,7 +219,7 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
 export default function SettingsScreen({ userName, onUserNameChange, onProgressChange, allCharacters, onBack }) {
   const { t, i18n } = useTranslation();
   const music = useMusic();
-  const { mode, user, signOut, migrateGuestToGoogle, pushSnapshot } = useAuth();
+  const { mode, user, signOut, migrateGuestToGoogle, pushSnapshot, deleteAccount } = useAuth();
   const [migrating, setMigrating] = useState(false);
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -220,6 +254,41 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const handleReset = () => {
     onProgressChange({});
     setShowResetConfirm(false);
+  };
+
+  // ── Sonido: efectos, vibración y velocidad de la voz ────────────────
+  const [soundPrefs, setSoundPrefsState] = useState(() => getSoundPrefs());
+  const patchSound = (patch) => setSoundPrefsState(setSoundPrefs(patch));
+
+  // ── Eliminar cuenta (modo Google): doble confirmación ───────────────
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const handleDeleteAccount = async () => {
+    if (deleting) return;
+    setDeleting(true);
+    try { await deleteAccount(); } // al terminar, signOut → App vuelve a LoginScreen
+    finally { setDeleting(false); setShowDeleteConfirm(false); }
+  };
+
+  // ── Exportar / importar progreso (backup local en JSON) ─────────────
+  const importInputRef = useRef(null);
+  const [importMsg, setImportMsg] = useState(null); // { ok: bool, text: string }
+
+  const handleImportFile = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // permite re-seleccionar el mismo archivo
+    if (!file) return;
+    try {
+      const text = await file.text();
+      restoreBackup(text);
+      // En modo Google subimos el snapshot importado (si no, el pull de la
+      // nube en el próximo arranque pisaría lo importado).
+      if (mode === 'google') { try { await pushSnapshot(); } catch { /* noop */ } }
+      setImportMsg({ ok: true, text: t('settings_import_ok', 'Progreso importado. Recargando…') });
+      setTimeout(() => window.location.reload(), 900);
+    } catch {
+      setImportMsg({ ok: false, text: t('settings_import_error', 'Archivo no válido: usa un backup exportado desde la app.') });
+    }
   };
 
   // Tras cualquier cambio de perfil, sincroniza con Firestore (no-op en
@@ -547,6 +616,54 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           </>
         )}
 
+        {/* ─── Sonido (efectos, vibración, velocidad de voz) ───────────── */}
+        <JSection label={t('settings_sound_title', 'Sonido y vibración')} cn="音效" />
+        <JCard padding="0">
+          <PrefToggle
+            first
+            label={t('settings_effects_label', 'Efectos de sonido')}
+            hint={t('settings_effects_hint', 'Sonidos de acierto y error en los ejercicios.')}
+            value={soundPrefs.effects}
+            onChange={() => patchSound({ effects: !soundPrefs.effects })}
+          />
+          <PrefToggle
+            label={t('settings_haptics_label', 'Vibración')}
+            hint={t('settings_haptics_hint', 'Vibración al responder (según dispositivo).')}
+            value={soundPrefs.haptics}
+            onChange={() => patchSound({ haptics: !soundPrefs.haptics })}
+          />
+          <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
+            <p style={{ margin: '0 0 8px', fontSize: 14, color: J.ink, fontWeight: 600 }}>
+              {t('settings_voice_rate_label', 'Velocidad de la voz')}
+            </p>
+            <div className="flex gap-2">
+              {[
+                { rate: 0.8, label: t('settings_voice_rate_slow', 'Lenta') },
+                { rate: 1.0, label: t('settings_voice_rate_normal', 'Normal') },
+              ].map(opt => {
+                const on = soundPrefs.voiceRate === opt.rate;
+                return (
+                  <button
+                    key={opt.rate}
+                    onClick={() => patchSound({ voiceRate: opt.rate })}
+                    style={{
+                      padding: '7px 16px', borderRadius: 99, border: 0, cursor: 'pointer',
+                      background: on ? J.ink : J.paper,
+                      color: on ? J.paperHi : J.inkSoft,
+                      fontSize: 12.5, fontWeight: 700,
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+            <p style={{ margin: '8px 0 0', fontSize: 11, color: J.mute }}>
+              {t('settings_voice_rate_hint', 'Afecta a la pronunciación leída por voz (TTS).')}
+            </p>
+          </div>
+        </JCard>
+
         {/* ─── Cuenta ─────────────────────────────────────────────────── */}
         <JSection label={t('settings_section_account', 'Cuenta')} cn="账户" />
         <JCard padding="14px 18px">
@@ -570,6 +687,54 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               >
                 {t('settings_sign_out', 'Cerrar sesión')}
               </button>
+
+              {/* Eliminar cuenta y todos los datos (requisito de Google Play).
+                  Doble confirmación: primero desplegar, luego confirmar. */}
+              {!showDeleteConfirm ? (
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  style={{
+                    width: '100%', marginTop: 10, padding: '10px 16px', borderRadius: 14,
+                    border: 0, background: 'transparent',
+                    color: J.mute, fontSize: 12.5, fontWeight: 700, cursor: 'pointer',
+                  }}
+                >
+                  {t('settings_delete_account', 'Eliminar cuenta y datos')}
+                </button>
+              ) : (
+                <div className="space-y-3" style={{ marginTop: 12 }}>
+                  <p style={{ fontSize: 13, color: J.redDeep, textAlign: 'center', fontWeight: 600, lineHeight: 1.45 }}>
+                    {t('settings_delete_account_confirm',
+                      'Se borrará tu progreso de la nube, tus amistades y tu cuenta. Esto no se puede deshacer. ¿Seguro?')}
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setShowDeleteConfirm(false)}
+                      disabled={deleting}
+                      style={{
+                        flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
+                        background: J.paperHi, color: J.ink, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                      }}
+                    >
+                      {t('settings_cancel')}
+                    </button>
+                    <button
+                      onClick={handleDeleteAccount}
+                      disabled={deleting}
+                      style={{
+                        flex: 1, padding: '12px', borderRadius: 99, border: 0,
+                        background: J.red, color: J.onAccent, fontSize: 14, fontWeight: 700,
+                        cursor: deleting ? 'default' : 'pointer', opacity: deleting ? 0.6 : 1,
+                        boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
+                      }}
+                    >
+                      {deleting
+                        ? t('settings_delete_account_busy', 'Borrando…')
+                        : t('settings_delete_account_do', 'Borrar todo')}
+                    </button>
+                  </div>
+                </div>
+              )}
             </>
           )}
           {mode === 'guest' && (
@@ -610,6 +775,46 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         {/* ─── Datos ────────────────────────────────────────────────────── */}
         <JSection label={t('settings_data')} cn="数据" />
         <JCard padding="14px 18px">
+          {/* Backup local: exportar/importar el progreso a un archivo JSON.
+              Clave para invitados (sin nube): si borran datos del navegador
+              lo pierden todo. */}
+          <div className="flex gap-2" style={{ marginBottom: 12 }}>
+            <button
+              onClick={downloadBackup}
+              style={{
+                flex: 1, padding: '12px 10px', borderRadius: 14,
+                border: `1px solid ${J.hair}`, background: J.paperHi,
+                color: J.ink, fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
+              }}
+            >
+              ⬇ {t('settings_export', 'Exportar progreso')}
+            </button>
+            <button
+              onClick={() => importInputRef.current?.click()}
+              style={{
+                flex: 1, padding: '12px 10px', borderRadius: 14,
+                border: `1px solid ${J.hair}`, background: J.paperHi,
+                color: J.ink, fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
+              }}
+            >
+              ⬆ {t('settings_import', 'Importar progreso')}
+            </button>
+            <input
+              ref={importInputRef}
+              type="file"
+              accept=".json,application/json"
+              onChange={handleImportFile}
+              style={{ display: 'none' }}
+            />
+          </div>
+          {importMsg && (
+            <p role="status" style={{
+              fontSize: 12.5, textAlign: 'center', marginBottom: 12,
+              color: importMsg.ok ? J.jadeDeep : J.redDeep, fontWeight: 600,
+            }}>
+              {importMsg.text}
+            </p>
+          )}
           {!showResetConfirm ? (
             <button
               onClick={() => setShowResetConfirm(true)}
@@ -655,6 +860,15 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           color: J.mute, fontWeight: 500, letterSpacing: '0.02em',
         }}>
           Aprende Chino · {APP_VERSION} · {t('settings_words_included')}: {totalWords}
+          {' · '}
+          <a
+            href={assetUrl('privacidad.html')}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: J.mute, textDecoration: 'underline' }}
+          >
+            {t('settings_privacy_link', 'Privacidad')}
+          </a>
         </p>
       </div>
 

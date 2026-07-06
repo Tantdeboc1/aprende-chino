@@ -59,18 +59,28 @@ export default function TappableHanzi({ text, dict, maxLen = 4, className, style
           style={{
             position: 'fixed', inset: 0, zIndex: 60,
             background: 'rgba(28,24,19,0.45)',
-            display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+            // Centrado en pantalla (antes salía como bottom-sheet pegado abajo).
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 20,
           }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-t-3xl px-5 pt-5 pb-8"
-            style={{ background: J.paperHi, borderTop: `3px solid ${J.jade}` }}
+            className="w-full max-w-sm rounded-3xl px-5 pt-5 pb-5"
+            style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderTop: `3px solid ${J.jade}`, boxShadow: J.shadowLg }}
           >
             <div className="flex items-start gap-4">
+              {/* Ancho automático + nowrap: las palabras de 2+ hanzi se leen en
+                  horizontal, como se escriben (antes el ancho fijo las partía
+                  en vertical). La fuente se reduce en palabras largas. */}
               <div
                 className="font-cn flex items-center justify-center flex-shrink-0 rounded-2xl"
-                style={{ width: 64, height: 64, background: J.jadeBg, color: J.jadeDeep, fontSize: 34, fontWeight: 700 }}
+                style={{
+                  minWidth: 64, height: 64, padding: '0 14px',
+                  whiteSpace: 'nowrap',
+                  background: J.jadeBg, color: J.jadeDeep,
+                  fontSize: sel.char.length > 2 ? 24 : 34, fontWeight: 700,
+                }}
               >
                 {sel.char}
               </div>

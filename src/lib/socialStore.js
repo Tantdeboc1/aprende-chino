@@ -228,6 +228,51 @@ export async function removeFriend({ myUid, otherUid }) {
   await fs.deleteDoc(fs.doc(db, 'friendships', pairId(myUid, otherUid)));
 }
 
+// ─── Borrado de cuenta (derecho de supresión / requisito de Google Play) ────
+// Borra TODOS los datos del usuario en Firestore: código de amigo, invitaciones
+// (enviadas y recibidas), amistades, perfil público y el doc privado users/{uid}.
+// Best-effort por documento: un fallo puntual no impide borrar el resto.
+// Requiere las reglas con `allow delete` en users/ y publicProfiles/ (ver
+// firestore.rules — hay que desplegarlas a mano).
+export async function deleteAccountData(uid) {
+  const { fs, db } = await loadFirestore();
+  let failures = 0;
+  const attempt = async (fn) => {
+    try { await fn(); } catch (e) { failures++; console.warn('[deleteAccount]', e); }
+  };
+
+  // 1. Código de amigo (el code está en el perfil público).
+  await attempt(async () => {
+    const snap = await fs.getDoc(fs.doc(db, 'publicProfiles', uid));
+    const code = snap.exists() ? snap.data().friendCode : null;
+    if (code) await fs.deleteDoc(fs.doc(db, 'friendCodes', code));
+  });
+
+  // 2. Invitaciones enviadas y recibidas.
+  await attempt(async () => {
+    const sent = await fs.getDocs(fs.query(fs.collection(db, 'friendRequests'), fs.where('from', '==', uid)));
+    await Promise.all(sent.docs.map(d => fs.deleteDoc(d.ref)));
+  });
+  await attempt(async () => {
+    const received = await fs.getDocs(fs.query(fs.collection(db, 'friendRequests'), fs.where('to', '==', uid)));
+    await Promise.all(received.docs.map(d => fs.deleteDoc(d.ref)));
+  });
+
+  // 3. Amistades.
+  await attempt(async () => {
+    const friendships = await fs.getDocs(fs.query(fs.collection(db, 'friendships'), fs.where('members', 'array-contains', uid)));
+    await Promise.all(friendships.docs.map(d => fs.deleteDoc(d.ref)));
+  });
+
+  // 4. Perfil público y doc privado (al final: si algo de arriba falla,
+  //    reintentar el borrado completo sigue siendo posible con la sesión viva).
+  await attempt(() => fs.deleteDoc(fs.doc(db, 'publicProfiles', uid)));
+  await attempt(() => fs.deleteDoc(fs.doc(db, 'users', uid)));
+
+  clearSocialCache();
+  return failures === 0;
+}
+
 // ─── Suscripciones en tiempo real ───────────────────────────────────────────
 // Cada una es async por el import dinámico de Firestore: resuelve a la función
 // de desuscripción. El caller debe gestionar el caso "se desmontó antes".

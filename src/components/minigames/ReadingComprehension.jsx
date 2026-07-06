@@ -12,6 +12,7 @@ import { playSound } from '@/utils/gameAudio.js';
 import { addXP } from '@/utils/streak.js';
 import { updateChallengeProgress } from '@/utils/dailyChallenges.js';
 import { loadReadingProgress, recordReadingResult } from '@/utils/readingProgress.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import TappableHanzi from './TappableHanzi.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -237,6 +238,13 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
     setResultado(null);
   };
 
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de pregunta.
+  useKeyAnswers({
+    count: opcionesBarajadas.length,
+    onSelect: !resultado ? handleRespuesta : null,
+    onNext: resultado ? handleSiguiente : null,
+  });
+
   return (
     <div className="min-h-screen pb-8" style={{ background: J.paper }}>
       <div className="px-4 pt-10 pb-4" style={{ background: J.paperHi, borderBottom: `1px solid ${J.hair}`, borderLeft: `4px solid ${J.red}` }}>
@@ -301,24 +309,26 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           })}
         </div>
 
-        {/* Feedback */}
-        {resultado === 'correct' && (
-          <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
-            <span className="text-xl">✓</span>
-            <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
-          </div>
-        )}
-        {resultado === 'incorrect' && (
-          <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xl">✗</span>
-              <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+        {/* Feedback (aria-live para lectores de pantalla) */}
+        <div aria-live="polite" role="status">
+          {resultado === 'correct' && (
+            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+              <span className="text-xl">✓</span>
+              <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
             </div>
-            <p className="text-xs" style={{ color: J.inkSoft }}>
-              {t('reading_correct_answer_is', 'La respuesta correcta es:')} <strong>{loc(opcionCorrecta, lang)}</strong>
-            </p>
-          </div>
-        )}
+          )}
+          {resultado === 'incorrect' && (
+            <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xl">✗</span>
+                <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+              </div>
+              <p className="text-xs" style={{ color: J.inkSoft }}>
+                {t('reading_correct_answer_is', 'La respuesta correcta es:')} <strong>{loc(opcionCorrecta, lang)}</strong>
+              </p>
+            </div>
+          )}
+        </div>
 
         {resultado && (
           <button
@@ -507,6 +517,13 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
     setResultado(null);
   };
 
+  // Accesibilidad: 1 = Verdadero, 2 = Falso; Enter pasa de afirmación.
+  useKeyAnswers({
+    count: 2,
+    onSelect: !resultado ? (i) => responder(i === 0) : null,
+    onNext: resultado ? siguiente : null,
+  });
+
   const botonVF = (val, label) => {
     let bg = J.paperHi, border = J.hair, color = J.ink;
     if (resultado) {
@@ -555,18 +572,20 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           {botonVF(false, t('reading_false', 'Falso'))}
         </div>
 
-        {resultado === 'correct' && (
-          <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
-            <span className="text-xl">✓</span>
-            <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
-          </div>
-        )}
-        {resultado === 'incorrect' && (
-          <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
-            <span className="text-xl">✗</span>
-            <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
-          </div>
-        )}
+        <div aria-live="polite" role="status">
+          {resultado === 'correct' && (
+            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+              <span className="text-xl">✓</span>
+              <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
+            </div>
+          )}
+          {resultado === 'incorrect' && (
+            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+              <span className="text-xl">✗</span>
+              <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+            </div>
+          )}
+        </div>
 
         {resultado && (
           <button
@@ -632,6 +651,13 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
     setResultado(null);
   };
 
+  // Accesibilidad: teclas 1-4 responden, Enter pasa de frase.
+  useKeyAnswers({
+    count: opciones.length,
+    onSelect: !resultado ? responder : null,
+    onNext: resultado ? siguiente : null,
+  });
+
   const correcta = opciones.find(o => o.correcta)?.op;
   const fraseRellena = resultado
     ? item.texto.replace('＿＿', correcta)
@@ -683,23 +709,25 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
           })}
         </div>
 
-        {resultado === 'correct' && (
-          <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
-            <span className="text-xl">✓</span>
-            <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
-          </div>
-        )}
-        {resultado === 'incorrect' && (
-          <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xl">✗</span>
-              <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+        <div aria-live="polite" role="status">
+          {resultado === 'correct' && (
+            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+              <span className="text-xl">✓</span>
+              <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
             </div>
-            <p className="text-xs" style={{ color: J.inkSoft }}>
-              {t('reading_correct_answer_is', 'La respuesta correcta es:')} <strong className="font-cn">{correcta}</strong>
-            </p>
-          </div>
-        )}
+          )}
+          {resultado === 'incorrect' && (
+            <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xl">✗</span>
+                <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+              </div>
+              <p className="text-xs" style={{ color: J.inkSoft }}>
+                {t('reading_correct_answer_is', 'La respuesta correcta es:')} <strong className="font-cn">{correcta}</strong>
+              </p>
+            </div>
+          )}
+        </div>
 
         {resultado && (
           <button

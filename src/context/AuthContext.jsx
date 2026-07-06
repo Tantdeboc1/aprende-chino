@@ -30,6 +30,7 @@ function loadFirebaseAuth() {
       signInWithPopup: fbAuth.signInWithPopup,
       signInWithRedirect: fbAuth.signInWithRedirect,
       signOut: fbAuth.signOut,
+      deleteUser: fbAuth.deleteUser,
       auth: fb.auth,
       googleProvider: fb.googleProvider,
     }));
@@ -224,6 +225,31 @@ export function AuthProvider({ children }) {
     setMode(null);
   }, []);
 
+  // Borrado de cuenta (requisito de Google Play y derecho de supresión):
+  // 1) borra todos los datos en Firestore, 2) intenta borrar la cuenta de
+  // Firebase Auth (puede requerir login reciente — si falla, los DATOS ya no
+  // existen, que es lo importante), 3) cierra sesión y limpia lo local.
+  const deleteAccount = useCallback(async () => {
+    if (mode !== 'google' || !user) return { ok: false };
+    let dataOk = false;
+    try {
+      const s = await import('@/lib/socialStore.js');
+      dataOk = await s.deleteAccountData(user.uid);
+    } catch (e) {
+      console.warn('Borrado de datos falló:', e);
+    }
+    try {
+      const fb = await loadFirebaseAuth();
+      if (fb.auth.currentUser) await fb.deleteUser(fb.auth.currentUser);
+    } catch (e) {
+      // p. ej. auth/requires-recent-login: la cuenta de Auth queda, pero sin
+      // ningún dato asociado. El usuario puede reintentar tras re-loguear.
+      console.warn('Borrado de cuenta Auth falló (los datos sí se borraron):', e);
+    }
+    await signOut();
+    return { ok: dataOk };
+  }, [mode, user, signOut]);
+
   const pushSnapshot = useCallback(async () => {
     if (mode !== 'google' || !user) return;
     try {
@@ -244,7 +270,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{
       user, mode, error,
       signInWithGoogle, migrateGuestToGoogle, continueAsGuest,
-      signOut, pushSnapshot,
+      signOut, pushSnapshot, deleteAccount,
     }}>
       {children}
     </AuthContext.Provider>
