@@ -16,6 +16,7 @@ import { computeBadges } from '@/utils/badges.js';
 import { loc, baseLang } from '@/utils/loc.js';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 // URL pública de la app — se incluye en el texto compartido para que quien
 // lo reciba pueda abrirla. Si en el futuro tenéis dominio propio, cambiad aquí.
@@ -126,7 +127,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     const text = `${lines.join('\n')}\n\n${APP_URL}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: 'Aprende Chino', text, url: APP_URL });
+        await navigator.share({ title: APP_NAME, text, url: APP_URL });
       } else {
         await navigator.clipboard.writeText(text);
         setShareNote('copied');

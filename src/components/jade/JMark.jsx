@@ -1,4 +1,5 @@
 import { J } from '@/styles/tokens';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 export default function JMark() {
   return (
@@ -18,7 +19,7 @@ export default function JMark() {
         学
       </div>
       <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: J.ink }}>
-        Aprende Chino
+        {APP_NAME}
       </span>
     </div>
   );

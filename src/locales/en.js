@@ -18,6 +18,7 @@ export default {
   home_section_explore: "Culture",
   common_back: "Back",
   common_close: "Close",
+  app_tagline: "Learn Chinese",
   update_available: "A new version is available",
   update_reload: "Update",
   settings_export: "Export progress",
@@ -40,7 +41,7 @@ export default {
   settings_privacy_link: "Privacy",
   // translation: {
           // --- Welcome Screen ---
-          welcome_title: "Learn Chinese",
+          welcome_title: "HanyuPath",
           welcome_placeholder: "Write your name...",
           welcome_button: "Start!",
           welcome_activating_audio: "Activating audio...",
@@ -81,7 +82,7 @@ export default {
           characters_matching_title: "Matching Game",
           // --- Radicals Submenu ---
           radicals_title: "Chinese Radicals",
-          radicals_back_to_learn: "Learn",
+          radicals_back_to_learn: "Back",
           radicals_theory_title: "Theory",
           radicals_theory_description: "Learn the basic radicals",
           radicals_quiz1_title: "Identification Quiz",
@@ -90,7 +91,7 @@ export default {
           radicals_quiz2_description: "Guess the meaning",
           // --- Tones Submenu ---
           tones_title: "Chinese Tones",
-          tones_back_to_learn: "Learn",
+          tones_back_to_learn: "Back",
           tones_vowels_title: "Vowels with Tones",
           tones_consonants_title: "Consonants with Tones",
           tones_syllables_title: "Special Syllables",
@@ -106,7 +107,7 @@ export default {
           // --- Progressive Lessons (Characters) ---
           lessons_title: "Progressive Lessons",
           lessons_subtitle: "Review 6 characters per lesson",
-          lessons_back_button: "Characters",
+          lessons_back_button: "Back",
           lessons_next_button: "Next Lesson",
           lessons_prev_button: "Previous Lesson",
           lessons_complete_button: "Complete",
@@ -147,7 +148,7 @@ export default {
           matching_meanings_header: "Meanings",
 
           // --- Writing ---
-          writing_back_to_writing: "Writing",
+          writing_back_to_writing: "Back",
           writing_no_characters_available: "No characters available",
           writing_view_order_tab: "View Order",
           writing_practice_tab: "Practice",
@@ -881,7 +882,7 @@ export default {
 
           // --- Hardcoded strings now translated ---
           daily_character_of_day: "Character of the day",
-          app_brand: "Learn Chinese",
+          app_brand: "HanyuPath",
           dictionary_favorites_button: "Favorites",
           dictionary_extra_vocab: "Extra vocabulary",
           dictionary_main_words: "main words",
@@ -960,7 +961,7 @@ export default {
 
           // --- Bug fix: hardcoded strings ---
           loader_loading: "Loading…",
-          welcome_app_subtitle: "Learn Chinese · HSK 1",
+          welcome_app_subtitle: "Learn Chinese",
           welcome_name_placeholder: "What's your name?",
           welcome_start_button: "Start →",
           welcome_step_gender_title: "How do you identify?",
@@ -978,7 +979,7 @@ export default {
           intro_writing_desc: "Stroke practice",
           fallback_section_unavailable: "Section not available.",
           fallback_unknown_screen: "Unknown screen:",
-          splash_title: "Learn Chinese",
+          splash_title: "HanyuPath",
           splash_loading: "Loading...",
           splash_ready: "All set!",
           error_boundary_title: "Something went wrong",
@@ -1174,7 +1175,7 @@ export default {
           friends_copy: "Copy",
           friends_copied: "Copied!",
           friends_share: "Share",
-          friends_share_text: "Add me on Learn Chinese with my friend code",
+          friends_share_text: "Add me on HanyuPath with my friend code",
           friends_add: "Add friend",
           friends_add_placeholder: "Your friend's code",
           friends_add_button: "Send",

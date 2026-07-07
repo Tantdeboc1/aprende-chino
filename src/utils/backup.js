@@ -36,7 +36,9 @@ export function downloadBackup() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `aprende-chino-progreso-${new Date().toISOString().slice(0, 10)}.json`;
+  // Nombre visible del archivo (marca nueva). OJO: el campo `app` del JSON
+  // sigue siendo 'aprende-chino' — es el identificador de compatibilidad.
+  a.download = `hanyupath-progreso-${new Date().toISOString().slice(0, 10)}.json`;
   document.body.appendChild(a);
   a.click();
   a.remove();

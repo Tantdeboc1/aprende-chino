@@ -1,4 +1,4 @@
-# Publicar "Aprende Chino" en Google Play
+# Publicar "HanyuPath: Learn Chinese" en Google Play
 
 Guía y checklist para empaquetar la PWA y subirla a Google Play. El punto
 delicado es el **micrófono** (reconocimiento de voz); todo lo demás es estándar.

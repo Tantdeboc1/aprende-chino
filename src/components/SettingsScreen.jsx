@@ -17,6 +17,7 @@ import { getThemePref, setThemePref } from '@/utils/theme.js';
 import { downloadBackup, restoreBackup } from '@/utils/backup.js';
 import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
 import { assetUrl } from '@/utils/assets';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -859,7 +860,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           marginTop: 18, textAlign: 'center', fontSize: 11.5,
           color: J.mute, fontWeight: 500, letterSpacing: '0.02em',
         }}>
-          Aprende Chino · {APP_VERSION} · {t('settings_words_included')}: {totalWords}
+          {APP_NAME} · {APP_VERSION} · {t('settings_words_included')}: {totalWords}
           {' · '}
           <a
             href={assetUrl('privacidad.html')}

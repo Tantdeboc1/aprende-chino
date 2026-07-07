@@ -13,6 +13,7 @@ import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getStreak, getWeeklyXP } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { formatCode, normalizeCode } from '@/lib/socialStore.js';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 const APP_URL = 'https://aprende-chino-hsk1.vercel.app/';
 
@@ -184,9 +185,9 @@ export default function FriendsScreen({ userName, onBack }) {
 
   const handleShareCode = async () => {
     if (!myCode) return;
-    const text = `${t('friends_share_text', 'Añádeme en Aprende Chino con mi código de amigo')}: ${formatCode(myCode)}\n\n${APP_URL}`;
+    const text = `${t('friends_share_text', `Añádeme en ${APP_NAME} con mi código de amigo`)}: ${formatCode(myCode)}\n\n${APP_URL}`;
     try {
-      if (navigator.share) await navigator.share({ title: 'Aprende Chino', text, url: APP_URL });
+      if (navigator.share) await navigator.share({ title: APP_NAME, text, url: APP_URL });
       else { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
     } catch { /* cancelado */ }
   };

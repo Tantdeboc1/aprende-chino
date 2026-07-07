@@ -3,6 +3,7 @@ import { useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { APP_NAME } from '@/utils/appInfo.js';
 import { getLessonStats } from '@/utils/progress.js';
 import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
@@ -306,7 +307,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
             style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
             学
           </div>
-          <span className="font-bold text-base" style={{ color: J.onAccent }}>{t('app_brand')}</span>
+          {/* La marca no se traduce; el tagline sí (app_tagline) */}
+          <span className="font-bold text-base" style={{ color: J.onAccent }}>{APP_NAME}</span>
         </div>
 
         <div className="mt-3 flex items-center gap-3">

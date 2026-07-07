@@ -18,6 +18,7 @@ export default {
   home_section_explore: "Kultur",
   common_back: "Zurück",
   common_close: "Schließen",
+  app_tagline: "Chinesisch lernen",
   update_available: "Eine neue Version ist verfügbar",
   update_reload: "Aktualisieren",
   settings_export: "Fortschritt exportieren",
@@ -40,7 +41,7 @@ export default {
   settings_privacy_link: "Datenschutz",
   // translation: {
           // --- Welcome Screen ---
-          welcome_title: "Chinesisch lernen",
+          welcome_title: "HanyuPath",
           welcome_placeholder: "Schreib deinen Namen...",
           welcome_button: "Starten!",
           welcome_activating_audio: "Audio wird aktiviert...",
@@ -81,7 +82,7 @@ export default {
           characters_matching_title: "Paare finden",
           // --- Radicals Submenu ---
           radicals_title: "Chinesische Radikale",
-          radicals_back_to_learn: "Lernen",
+          radicals_back_to_learn: "Zurück",
           radicals_theory_title: "Theorie",
           radicals_theory_description: "Lerne die grundlegenden Radikale",
           radicals_quiz1_title: "Identifikations-Quiz",
@@ -90,7 +91,7 @@ export default {
           radicals_quiz2_description: "Rate die Bedeutung",
           // --- Tones Submenu ---
           tones_title: "Chinesische Töne",
-          tones_back_to_learn: "Lernen",
+          tones_back_to_learn: "Zurück",
           tones_vowels_title: "Vokale mit Tönen",
           tones_consonants_title: "Konsonanten mit Tönen",
           tones_syllables_title: "Besondere Silben",
@@ -457,7 +458,7 @@ export default {
           translation_play_again: "Nochmal spielen",
 
           daily_character_of_day: "Zeichen des Tages",
-          app_brand: "Chinesisch lernen",
+          app_brand: "HanyuPath",
           dictionary_favorites_button: "Favoriten",
           dictionary_extra_vocab: "Zusatzvokabeln",
           dictionary_main_words: "Hauptwörter",
@@ -536,7 +537,7 @@ export default {
 
           // --- Bug fix: hardcoded strings ---
           loader_loading: "Wird geladen…",
-          welcome_app_subtitle: "Chinesisch lernen · HSK 1",
+          welcome_app_subtitle: "Chinesisch lernen",
           welcome_name_placeholder: "Wie heißt du?",
           welcome_start_button: "Starten →",
           welcome_step_gender_title: "Womit identifizierst du dich?",
@@ -554,7 +555,7 @@ export default {
           intro_writing_desc: "Strichübungen",
           fallback_section_unavailable: "Bereich nicht verfügbar.",
           fallback_unknown_screen: "Unbekannter Bildschirm:",
-          splash_title: "Chinesisch lernen",
+          splash_title: "HanyuPath",
           splash_loading: "Wird geladen...",
           splash_ready: "Alles bereit!",
           error_boundary_title: "Etwas ist schiefgelaufen",
@@ -748,7 +749,7 @@ export default {
           friends_copy: "Kopieren",
           friends_copied: "Kopiert!",
           friends_share: "Teilen",
-          friends_share_text: "Füge mich bei Chinesisch Lernen mit meinem Freundescode hinzu",
+          friends_share_text: "Füge mich bei HanyuPath mit meinem Freundescode hinzu",
           friends_add: "Freund hinzufügen",
           friends_add_placeholder: "Code deines Freundes",
           friends_add_button: "Senden",

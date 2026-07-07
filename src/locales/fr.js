@@ -18,6 +18,7 @@ export default {
   home_section_explore: "Culture",
   common_back: "Retour",
   common_close: "Fermer",
+  app_tagline: "Apprends le chinois",
   update_available: "Une nouvelle version est disponible",
   update_reload: "Mettre à jour",
   settings_export: "Exporter la progression",
@@ -40,7 +41,7 @@ export default {
   settings_privacy_link: "Confidentialité",
   // translation: {
           // --- Welcome Screen ---
-          welcome_title: "Apprendre le Chinois",
+          welcome_title: "HanyuPath",
           welcome_placeholder: "Écrivez votre nom...",
           welcome_button: "Commencer !",
           welcome_activating_audio: "Activation de l'audio...",
@@ -81,7 +82,7 @@ export default {
           characters_matching_title: "Jeu d'association",
           // --- Radicals Submenu ---
           radicals_title: "Radicaux Chinois",
-          radicals_back_to_learn: "Apprendre",
+          radicals_back_to_learn: "Retour",
           radicals_theory_title: "Théorie",
           radicals_theory_description: "Apprenez les radicaux de base",
           radicals_quiz1_title: "Quiz d'Identification",
@@ -90,7 +91,7 @@ export default {
           radicals_quiz2_description: "Devinez la signification",
           // --- Tones Submenu ---
           tones_title: "Tons Chinois",
-          tones_back_to_learn: "Apprendre",
+          tones_back_to_learn: "Retour",
           tones_vowels_title: "Voyelles avec Tons",
           tones_consonants_title: "Consonnes avec Tons",
           tones_syllables_title: "Syllabes Spéciales",
@@ -106,7 +107,7 @@ export default {
           // --- Progressive Lessons (Characters) ---
           lessons_title: "Leçons Progressives",
           lessons_subtitle: "Révisez 6 caractères par leçon",
-          lessons_back_button: "Caractères",
+          lessons_back_button: "Retour",
           lessons_next_button: "Leçon Suivante",
           lessons_prev_button: "Leçon Précédente",
           lessons_complete_button: "Terminer",
@@ -147,7 +148,7 @@ export default {
           matching_meanings_header: "Significations",
 
           // --- Writing ---
-          writing_back_to_writing: "Écriture",
+          writing_back_to_writing: "Retour",
           writing_no_characters_available: "Aucun caractère disponible",
           writing_view_order_tab: "Voir l'Ordre",
           writing_practice_tab: "Pratiquer",
@@ -853,7 +854,7 @@ export default {
 
           // --- Hardcoded strings now translated ---
           daily_character_of_day: "Caractère du jour",
-          app_brand: "Apprends le Chinois",
+          app_brand: "HanyuPath",
           dictionary_favorites_button: "Favoris",
           dictionary_extra_vocab: "Vocabulaire extra",
           dictionary_main_words: "mots principaux",
@@ -932,7 +933,7 @@ export default {
 
           // --- Bug fix: hardcoded strings ---
           loader_loading: "Chargement…",
-          welcome_app_subtitle: "Apprends le Chinois · HSK 1",
+          welcome_app_subtitle: "Apprends le chinois",
           welcome_name_placeholder: "Comment tu t'appelles ?",
           welcome_start_button: "Commencer →",
           welcome_step_gender_title: "À quoi t'identifies-tu ?",
@@ -950,7 +951,7 @@ export default {
           intro_writing_desc: "Pratique des traits",
           fallback_section_unavailable: "Section non disponible.",
           fallback_unknown_screen: "Écran inconnu :",
-          splash_title: "Apprends le Chinois",
+          splash_title: "HanyuPath",
           splash_loading: "Chargement...",
           splash_ready: "Tout est prêt !",
           error_boundary_title: "Quelque chose a mal tourné",
@@ -1144,7 +1145,7 @@ export default {
           friends_copy: "Copier",
           friends_copied: "Copié !",
           friends_share: "Partager",
-          friends_share_text: "Ajoute-moi sur Apprends le Chinois avec mon code ami",
+          friends_share_text: "Ajoute-moi sur HanyuPath avec mon code ami",
           friends_add: "Ajouter un ami",
           friends_add_placeholder: "Code de ton ami",
           friends_add_button: "Envoyer",

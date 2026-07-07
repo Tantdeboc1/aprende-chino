@@ -6,6 +6,7 @@ import { GENDERS, updateUserProfile } from '@/utils/userProfile.js';
 import { AVATARS, getAvatarsByGender, isAvatarUnlocked, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { setDailyGoal, DAILY_GOAL_PRESETS, getStreak } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 const STEPS = 4;
 
@@ -64,7 +65,9 @@ export default function WelcomeFlow({ onComplete }) {
                      fontSize: 32, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
             学
           </div>
-          <p style={{ color: J.inkSoft, fontSize: 13, marginTop: 10 }}>{t('welcome_app_subtitle')}</p>
+          {/* Marca fija + tagline traducido */}
+          <p style={{ color: J.ink, fontSize: 16, fontWeight: 700, marginTop: 10, marginBottom: 0 }}>{APP_NAME}</p>
+          <p style={{ color: J.inkSoft, fontSize: 13, marginTop: 2 }}>{t('app_tagline', 'Learn Chinese')}</p>
         </div>
 
         {/* Indicador de paso */}

@@ -1,4 +1,4 @@
-# Política de privacidad — Aprende Chino
+# Política de privacidad — HanyuPath
 
 **Última actualización: 5 de julio de 2026**
 
@@ -7,7 +7,7 @@
 > Google Play exige una política de privacidad accesible por URL porque la app
 > solicita permiso de micrófono.
 
-Esta política describe qué datos trata la aplicación **Aprende Chino** (en
+Esta política describe qué datos trata la aplicación **HanyuPath** (en
 adelante, "la app") y con qué fin. La app está pensada para aprender chino
 mandarín y puede usarse **como invitado** (sin cuenta) o **iniciando sesión con
 Google**.

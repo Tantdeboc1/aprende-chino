@@ -20,10 +20,13 @@ export default defineConfig(({ mode }) => ({
       // visita (ver registerSW en src/main.jsx).
       registerType: 'prompt',
       manifest: {
-        name: 'Aprende Chino · HSK 1',
-        short_name: 'Aprende Chino',
-        description: 'Aprende caracteres chinos HSK-1 con ejercicios interactivos',
-        lang: 'es',
+        // La marca "HanyuPath" es fija (no se traduce); el tagline sí se
+        // localiza en la app y en la ficha de Play, pero el manifest es
+        // estático → usamos la versión en inglés.
+        name: 'HanyuPath: Learn Chinese',
+        short_name: 'HanyuPath',
+        description: 'Learn Chinese with interactive exercises',
+        lang: 'en',
         display: 'standalone',
         orientation: 'portrait',
         theme_color: '#2f6b4a',

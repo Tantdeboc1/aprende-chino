@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { APP_NAME } from '@/utils/appInfo.js';
 
 const MIN_DISPLAY_MS = 4000;
 
 export default function SplashScreen({ progress, onComplete }) {
+  const { t } = useTranslation();
   const writerRef  = useRef(null);
   const writerInst = useRef(null);
   const startTime  = useRef(Date.now());
@@ -77,10 +80,10 @@ export default function SplashScreen({ progress, onComplete }) {
         </div>
         <div>
           <h1 style={{ fontWeight: 700, fontSize: 24, letterSpacing: '-0.02em', color: J.ink, margin: 0 }}>
-            Aprende Chino
+            {APP_NAME}
           </h1>
           <p style={{ color: J.mute, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0 }}>
-            HSK 1
+            {t('app_tagline', 'Learn Chinese')}
           </p>
         </div>
       </div>

@@ -236,15 +236,38 @@ export default function App() {
   // Sincroniza pantalla → location.hash. La primera vez usa replaceState para
   // no crear una entrada extra al arrancar; después, cada cambio de pantalla
   // crea una entrada (pushState) para que "atrás" recorra la navegación.
+  //
+  // Siembra de Home: si la app ARRANCA en una pantalla interna (deep link o
+  // recarga en #/minigames, #/lesson/3…), esa sería la única entrada del
+  // historial y el primer "atrás" del sistema sacaría al usuario de la app.
+  // Para evitarlo, en la primera sincronización dejamos #/home como entrada
+  // base (replaceState) y la pantalla real encima (pushState): "atrás" lleva
+  // a Home en vez de salir. Solo desde Home el atrás sale de la app (el
+  // comportamiento estándar de Android).
   const isFirstHashSyncRef = useRef(true);
   useEffect(() => {
     const target = screenToHash(screen, selectedLesson);
     if (!target) return;
     const first = isFirstHashSyncRef.current;
     isFirstHashSyncRef.current = false;
-    if (window.location.hash === target) return; // cambio venido de popstate
-    if (first) history.replaceState(null, '', target);
-    else history.pushState(null, '', target);
+    if (window.location.hash === target) {
+      // Deep link/recarga: el hash ya es el destino. Sembrar Home debajo.
+      if (first && target !== '#/home') {
+        history.replaceState(null, '', '#/home');
+        history.pushState(null, '', target);
+      }
+      return; // (resto de casos: cambio venido de popstate)
+    }
+    if (first) {
+      if (target !== '#/home') {
+        history.replaceState(null, '', '#/home');
+        history.pushState(null, '', target);
+      } else {
+        history.replaceState(null, '', target);
+      }
+    } else {
+      history.pushState(null, '', target);
+    }
   }, [screen, selectedLesson]);
 
   // Botón atrás del navegador/sistema → restaura la pantalla del hash.
