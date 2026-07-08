@@ -34,4 +34,10 @@ export default defineConfig([
       'react-refresh/only-export-components': 'warn',
     },
   },
+  {
+    // Archivos que corren en Node (configs de build y tests E2E): tienen
+    // `process`, etc. — no aplicamos el entorno de navegador aquí.
+    files: ['vite.config.js', 'playwright.config.js', 'e2e/**/*.{js,jsx}'],
+    languageOptions: { globals: globals.node },
+  },
 ])

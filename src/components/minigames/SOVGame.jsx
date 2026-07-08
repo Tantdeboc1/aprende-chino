@@ -9,6 +9,7 @@ import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
+import LessonFilterBar from './LessonFilterBar.jsx';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -23,7 +24,7 @@ function buildRound(lessonFilter) {
   }));
 }
 
-import { LESSON_COLORS, DEFAULT_LESSON_COLOR as DEFAULT_COLOR, LESSON_NUMBERS } from '@/styles/lessonColors.js';
+import { LESSON_COLORS, DEFAULT_LESSON_COLOR as DEFAULT_COLOR } from '@/styles/lessonColors.js';
 
 
 // ── Feedback de sonido via Web Audio API ────────────────────────────────────
@@ -251,31 +252,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-5">
 
         {/* Filtro de lección */}
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => setLessonFilter(null)}
-            className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${
-              lessonFilter === null
-                ? 'bg-[var(--red)] text-[var(--on-accent)] border-transparent'
-                : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
-            }`}
-          >
-            {t('sov_all_lessons')}
-          </button>
-          {LESSON_NUMBERS.map(n => (
-            <button
-              key={n}
-              onClick={() => setLessonFilter(n)}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${
-                lessonFilter === n
-                  ? `${LESSON_COLORS[n].bg} text-[var(--on-accent)] border-transparent`
-                  : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'
-              }`}
-            >
-              L{n}
-            </button>
-          ))}
-        </div>
+        <LessonFilterBar value={lessonFilter} onChange={setLessonFilter} />
 
         {/* Traducción */}
         <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">

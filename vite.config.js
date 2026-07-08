@@ -2,7 +2,26 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { fileURLToPath, URL } from 'node:url'
+import { APP_VERSION } from './src/utils/version.js'
+
+// Subida de sourcemaps a Sentry (solo build-time, cero peso en runtime).
+// Se activa SOLO si hay SENTRY_AUTH_TOKEN en el entorno (build de release/CI);
+// los builds normales no lo cargan. Requiere además SENTRY_ORG y SENTRY_PROJECT.
+// El `release` debe coincidir con el que envía errorTracking.js (APP_VERSION).
+const sentryPlugins = process.env.SENTRY_AUTH_TOKEN
+  ? [sentryVitePlugin({
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: { name: APP_VERSION },
+      telemetry: false,
+      // Sube los .map (generados por build.sourcemap:'hidden') y los BORRA del
+      // dist tras subirlos, para no publicarlos en GitHub Pages.
+      sourcemaps: { filesToDeleteAfterUpload: ['./dist/**/*.map'] },
+    })]
+  : [];
 
 export default defineConfig(({ mode }) => ({
   base: '/',
@@ -126,6 +145,9 @@ export default defineConfig(({ mode }) => ({
         ],
       },
     }),
+    // Al final: opera sobre el bundle ya generado (sube sourcemaps a Sentry).
+    // Vacío si no hay SENTRY_AUTH_TOKEN → no afecta a los builds normales.
+    ...sentryPlugins,
   ],
   // En PRODUCCIÓN elimina console.* y debugger automáticamente (vía esbuild,
   // el minificador por defecto de Vite). En dev se mantienen para debug.

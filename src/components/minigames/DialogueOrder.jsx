@@ -14,8 +14,9 @@ import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
+import LessonFilterBar from './LessonFilterBar.jsx';
 
-import { LESSON_COLORS, LESSON_NUMBERS } from '@/styles/lessonColors.js';
+import { LESSON_COLORS } from '@/styles/lessonColors.js';
 const DEFAULT_COLOR = { bg: 'bg-[var(--jade)]', border: 'border-[var(--jade)]', text: 'text-[var(--jade)]' };
 
 function buildRound(lessonFilter) {
@@ -180,16 +181,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
 
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-5">
         {/* Filtro */}
-        <div className="flex gap-2 flex-wrap">
-          <button onClick={() => setLessonFilter(null)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === null ? 'bg-[var(--jade)] text-[var(--on-accent)] border-transparent' : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
-            {t('sov_all_lessons')}
-          </button>
-          {LESSON_NUMBERS.map(n => (
-            <button key={n} onClick={() => setLessonFilter(n)} className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors ${lessonFilter === n ? `${LESSON_COLORS[n].bg} text-[var(--on-accent)] border-transparent` : 'bg-[var(--paper-hi)] text-[var(--mute)] border-[rgba(28,24,19,0.10)] hover:border-[rgba(28,24,19,0.18)]'}`}>
-              L{n}
-            </button>
-          ))}
-        </div>
+        <LessonFilterBar value={lessonFilter} onChange={setLessonFilter} allAccentClass="bg-[var(--jade)]" />
 
         {/* Zona de respuesta (diálogo ordenado) */}
         <div>
