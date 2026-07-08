@@ -305,7 +305,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         <div className="flex items-center gap-2">
           <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
             style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
-            学
+            路
           </div>
           {/* La marca no se traduce; el tagline sí (app_tagline) */}
           <span className="font-bold text-base" style={{ color: J.onAccent }}>{APP_NAME}</span>

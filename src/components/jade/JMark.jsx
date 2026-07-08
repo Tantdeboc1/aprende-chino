@@ -16,7 +16,7 @@ export default function JMark() {
           fontWeight: 700,
         }}
       >
-        学
+        路
       </div>
       <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: J.ink }}>
         {APP_NAME}

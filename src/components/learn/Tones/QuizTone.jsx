@@ -258,7 +258,7 @@ export default function QuizTone({ goBack, speakChinese }) {
                   key={opt.num}
                   onClick={() => answer(opt.num)}
                   disabled={showResult}
-                  className={`${base} ${cls}`}
+                  className={`${base} ${cls} ${isCorrect ? 'j-pop' : isWrong ? 'j-shake' : ''}`}
                 >
                   {t(`tones_tone_option_${opt.num}`)}
                 </button>

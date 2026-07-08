@@ -201,17 +201,23 @@ export default function FindIntruder({ goBack, selectedLesson }) {
             const isIntruder = item === current.intruder;
             const isSelected = selected === item;
             let cardClass = 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.18)] hover:border-[var(--mute)]';
+            let animClass = '';
             if (result) {
               if (isIntruder) cardClass = 'bg-[var(--red-bg)]/40 border-[var(--red)]';
               else if (isSelected) cardClass = 'bg-[var(--red-bg)]/30 border-[var(--red)]';
               else cardClass = 'bg-[var(--jade-bg)]/20 border-[var(--jade)]/50';
+              // Microanimación de feedback: rebote al acertar la intrusa,
+              // sacudida al fallar, y rebote de la intrusa real para revelarla.
+              if (isSelected && result === 'correct') animClass = 'j-pop';
+              else if (isSelected && result === 'incorrect') animClass = 'j-shake';
+              else if (isIntruder && result === 'incorrect') animClass = 'j-pop';
             }
             return (
               <button
                 key={i}
                 onClick={() => handleSelect(item)}
                 disabled={!!result}
-                className={`aspect-square rounded-2xl border-2 flex flex-col items-center justify-center transition-all active:scale-95 ${cardClass}`}
+                className={`aspect-square rounded-2xl border-2 flex flex-col items-center justify-center transition-all active:scale-95 ${cardClass} ${animClass}`}
               >
                 <span className="text-4xl font-bold text-[var(--ink)] mb-1">{item}</span>
                 {result && isIntruder && (
@@ -225,7 +231,7 @@ export default function FindIntruder({ goBack, selectedLesson }) {
         {/* Feedback (aria-live para lectores de pantalla) */}
         <div aria-live="polite" role="status">
           {result === 'correct' && (
-            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3">
+            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 animate-fade-in">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-2xl"></span>
                 <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
@@ -236,7 +242,7 @@ export default function FindIntruder({ goBack, selectedLesson }) {
             </div>
           )}
           {result === 'incorrect' && (
-            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-2xl"></span>
                 <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>

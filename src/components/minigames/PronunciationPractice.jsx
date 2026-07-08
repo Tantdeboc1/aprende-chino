@@ -315,7 +315,10 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
 
         {/* Resultado */}
         {scoreInfo && (
-          <div className="bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4">
+          <div className={`bg-[var(--paper-hi)] border border-[rgba(28,24,19,0.10)] rounded-xl p-4 ${
+            scoreInfo.level === 'fail' ? 'j-shake' :
+            (scoreInfo.level === 'perfect' || scoreInfo.level === 'good') ? 'j-pop' : 'animate-fade-in'
+          }`}>
             <div className="flex items-baseline justify-between mb-2">
               <p className="text-xs text-[var(--mute)]">{t('pronunciation_you_said', 'Has dicho')}</p>
               <p className={`text-xl font-bold ${

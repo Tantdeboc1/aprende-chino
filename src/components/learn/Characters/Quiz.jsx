@@ -269,7 +269,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
                       ? 'bg-[var(--red)] text-[var(--on-accent)]'
                       : 'bg-[var(--paper-hi2)] text-[var(--mute)]'
                     : 'bg-[var(--paper-hi2)] hover:bg-[var(--paper-hi2)] hover:border-[var(--mute)] text-[var(--ink)] border border-[rgba(28,24,19,0.10)]'
-                }`}
+                } ${showResult ? (isCorrectOpt(opt) ? 'j-pop' : opt === selected ? 'j-shake' : '') : ''}`}
               >
                 {optionLabel(opt)}
               </button>
@@ -278,7 +278,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
 
           {/* Ejemplo de uso en fallo */}
           {showResult && selected?.char !== question.correct.char && question.correct.examples?.length > 0 && (
-            <div className="mt-4 p-3 bg-[var(--red-bg)]/20 border border-[var(--red)]/40 rounded-xl text-left">
+            <div className="mt-4 p-3 bg-[var(--red-bg)]/20 border border-[var(--red)]/40 rounded-xl text-left animate-fade-in">
               <p className="text-xs text-[var(--mute)] mb-1.5">Ejemplo de uso:</p>
               <p className="text-sm text-[var(--ink)] leading-relaxed">{question.correct.examples[0]}</p>
               {question.correct.examples[1] && (

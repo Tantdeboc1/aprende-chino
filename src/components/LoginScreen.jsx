@@ -46,7 +46,7 @@ export default function LoginScreen() {
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            学
+            路
           </div>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: J.ink, margin: '16px 0 6px' }}>
             {t('login_title', '¡Bienvenido!')}

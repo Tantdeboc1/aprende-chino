@@ -223,17 +223,22 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
               const isSelected = selected === option;
               const isCorrectAnswer = option === current.answer;
               let btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--ink)] hover:bg-[var(--mute2)]';
+              let animClass = '';
               if (result) {
                 if (isCorrectAnswer) btnClass = 'bg-[var(--jade)] border-[var(--jade)] text-[var(--on-accent)]';
                 else if (isSelected && !isCorrectAnswer) btnClass = 'bg-[var(--red)] border-[var(--red)] text-[var(--on-accent)]';
                 else btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--mute)]';
+                // Microanimación: rebote en la correcta (acierto o revelación),
+                // sacudida en la opción errónea elegida.
+                if (isSelected && !isCorrectAnswer) animClass = 'j-shake';
+                else if (isCorrectAnswer) animClass = 'j-pop';
               }
               return (
                 <button
                   key={i}
                   onClick={() => handleSelect(option)}
                   disabled={!!result}
-                  className={`py-3 px-4 rounded-xl border-2 font-bold text-xl transition-all active:scale-95 ${btnClass}`}
+                  className={`py-3 px-4 rounded-xl border-2 font-bold text-xl transition-all active:scale-95 ${btnClass} ${animClass}`}
                 >
                   {option}
                 </button>
@@ -246,7 +251,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
             lectores de pantalla anuncien el resultado al aparecer) */}
         <div aria-live="polite" role="status">
           {result === 'correct' && (
-            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
+            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3 animate-fade-in">
               <span className="text-2xl"></span>
               <div>
                 <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
@@ -255,7 +260,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
             </div>
           )}
           {result === 'incorrect' && (
-            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl"></span>
                 <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>

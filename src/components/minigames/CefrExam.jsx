@@ -329,7 +329,7 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
           else if (locked && isPicked && !isAnswer) { bg = J.redBg; color = J.redDeep; border = J.red; }
           return (
             <button key={i} onClick={() => answer(opt)} disabled={locked}
-              className={current.skill === 'writing' ? 'font-cn' : ''}
+              className={`${current.skill === 'writing' ? 'font-cn' : ''} ${locked && isAnswer ? 'j-pop' : locked && isPicked && !isAnswer ? 'j-shake' : ''}`}
               style={{
                 padding: current.skill === 'writing' ? '16px' : '14px 16px',
                 borderRadius: 14, border: `1.5px solid ${border}`, background: bg, color,

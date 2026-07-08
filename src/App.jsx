@@ -47,7 +47,7 @@ function AnimatedLoader() {
       try {
         const HanziWriter = (await import('hanzi-writer')).default;
         if (cancelled) return;
-        writer = HanziWriter.create(host, '学', {
+        writer = HanziWriter.create(host, '路', {
           charDataLoader: hanziCharDataLoader,
           width: 80, height: 80, padding: 5,
           strokeColor: resolveColor(J.jade), radicalColor: resolveColor(J.red),

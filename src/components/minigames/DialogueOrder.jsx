@@ -212,7 +212,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
                   result === 'correct'   ? 'bg-[var(--jade)]/50 cursor-default' :
                   result === 'incorrect' ? (item.id === i ? 'bg-[var(--jade)]/30 border border-[var(--jade)]/' : 'bg-[var(--red)]/30 border border-[var(--red)]/50') :
                                           'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] active:scale-[0.98]'
-                }`}
+                } ${result === 'incorrect' ? (item.id === i ? 'j-pop' : 'j-shake') : ''}`}
               >
                 <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                   item.speaker === 'A' ? 'bg-[var(--jade-bg)]/60 text-[var(--jade)]' : 'bg-[var(--red-bg)]/60 text-[var(--red)]'
@@ -251,7 +251,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
 
         {/* Resultado correcto: mostrar diálogo completo */}
         {result === 'correct' && (
-          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 animate-fade-in">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl"></span>
               <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
@@ -269,7 +269,7 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
         )}
 
         {result === 'incorrect' && (
-          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl"></span>
               <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>

@@ -63,7 +63,7 @@ export default function WelcomeFlow({ onComplete }) {
           <div className="font-cn flex justify-center"
             style={{ width: 56, height: 56, borderRadius: 16, background: J.jade, color: J.butter,
                      fontSize: 32, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            学
+            路
           </div>
           {/* Marca fija + tagline traducido */}
           <p style={{ color: J.ink, fontSize: 16, fontWeight: 700, marginTop: 10, marginBottom: 0 }}>{APP_NAME}</p>

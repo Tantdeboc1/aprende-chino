@@ -208,12 +208,12 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
             {/* Opciones: 4 caracteres grandes */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
               {question.options.map((opt) => {
-                let bg = J.paperHi, border = J.hair, color = J.ink, pulse = '';
+                let bg = J.paperHi, border = J.hair, color = J.ink, animCls = '';
                 if (feedback) {
                   if (opt.char === question.correct.char) {
-                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; pulse = 'animate-pulse';
+                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; animCls = 'j-pop';
                   } else if (opt.char === selected) {
-                    bg = J.redBg; border = J.red; color = J.redDeep;
+                    bg = J.redBg; border = J.red; color = J.redDeep; animCls = 'j-shake';
                   } else {
                     color = J.mute2;
                   }
@@ -223,7 +223,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
                     key={opt.char}
                     onClick={() => handleAnswer(opt)}
                     disabled={!!feedback}
-                    className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${pulse}`}
+                    className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${animCls}`}
                     style={{
                       background: bg, border: `2px solid ${border}`, color,
                       cursor: feedback ? 'default' : 'pointer',

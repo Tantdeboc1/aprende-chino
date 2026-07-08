@@ -161,6 +161,27 @@ button:active:not(:disabled) { transform: scale(0.97); }
 }
 .j-press-card:active { transform: scale(0.99); }
 
+/* ─── Feedback de acierto/fallo en minijuegos ───────────────────────────────
+   .j-shake: sacudida horizontal breve al fallar.
+   .j-pop:   rebote de escala al acertar (o para revelar la respuesta correcta).
+   Se aplican añadiendo la clase tras responder; el bloque de
+   prefers-reduced-motion de más abajo las neutraliza automáticamente. */
+@keyframes jShake {
+  10%, 90%     { transform: translateX(-1px); }
+  20%, 80%     { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-5px); }
+  40%, 60%     { transform: translateX(5px); }
+}
+.j-shake { animation: jShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+@keyframes jPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+.j-pop { animation: jPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
 /* Accesibilidad — respeta "reducir movimiento" del sistema (WCAG 2.3.3).
    Neutraliza animaciones y transiciones CSS (fadeIn, slide-up, spinner,
    transiciones de Layout/BottomNav) para usuarios con sensibilidad al

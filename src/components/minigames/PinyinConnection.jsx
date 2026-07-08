@@ -179,12 +179,12 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
 
             <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
               {currentQuestion.options.map((option, i) => {
-                let bg = J.paperHi, border = J.hair, color = J.ink, pulse = '';
+                let bg = J.paperHi, border = J.hair, color = J.ink, animCls = '';
                 if (feedback) {
                   if (option === currentQuestion.correctPinyin) {
-                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; pulse = 'animate-pulse';
+                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; animCls = 'j-pop';
                   } else if (option === selectedAnswer) {
-                    bg = J.redBg; border = J.red; color = J.redDeep;
+                    bg = J.redBg; border = J.red; color = J.redDeep; animCls = 'j-shake';
                   } else {
                     color = J.mute2;
                   }
@@ -195,7 +195,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
                     key={i}
                     onClick={() => handleAnswer(option)}
                     disabled={!!feedback}
-                    className={`p-3 rounded-xl font-semibold text-lg transition-colors h-24 flex items-center justify-center text-center leading-tight ${pulse}`}
+                    className={`p-3 rounded-xl font-semibold text-lg transition-colors h-24 flex items-center justify-center text-center leading-tight ${animCls}`}
                     style={{
                       background: bg, border: `2px solid ${border}`, color,
                       cursor: feedback ? 'default' : 'pointer',

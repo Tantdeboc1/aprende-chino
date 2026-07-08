@@ -52,6 +52,7 @@ async function recognizeStrokes(strokes, width, height) {
 
 // ── Panel de escritura a mano ─────────────────────────────────────────────
 function HandwritingPanel({ onCharSelected }) {
+  const { t } = useTranslation();
   const canvasRef     = useRef(null);
   const strokesRef    = useRef([]);      // trazos completados [{x,y,t}[]]
   const currentRef    = useRef(null);    // trazo en curso
@@ -234,19 +235,19 @@ function HandwritingPanel({ onCharSelected }) {
       {/* Cabecera */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold text-[var(--red)] uppercase tracking-wide">Dibujar hanzi</p>
+          <p className="text-xs font-semibold text-[var(--red)] uppercase tracking-wide">{t('translation_draw_header', 'Dibujar hanzi')}</p>
           {strokeCount > 0 && (
-            <span className="text-xs text-[var(--mute)]">{strokeCount} trazo{strokeCount !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-[var(--mute)]">{t('translation_stroke_count', { count: strokeCount })}</span>
           )}
         </div>
         <div className="flex gap-2">
           <button onClick={handleUndo} disabled={strokeCount === 0}
             className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--ink)] hover:border-[rgba(28,24,19,0.18)] transition-colors disabled:opacity-30">
-            ↩ Deshacer
+            {t('translation_undo', '↩ Deshacer')}
           </button>
           <button onClick={handleClear} disabled={strokeCount === 0}
             className="text-xs px-2 py-1 rounded-lg border border-[rgba(28,24,19,0.18)] text-[var(--mute)] hover:text-[var(--red)] hover:border-[var(--red)] transition-colors disabled:opacity-30">
-            Borrar
+            {t('translation_erase', 'Borrar')}
           </button>
         </div>
       </div>
@@ -268,22 +269,22 @@ function HandwritingPanel({ onCharSelected }) {
 
       {/* Estado */}
       {status === 'recognizing' && (
-        <p className="text-center text-xs text-[var(--red)] animate-pulse">Reconociendo…</p>
+        <p className="text-center text-xs text-[var(--red)] animate-pulse">{t('translation_recognizing', 'Reconociendo…')}</p>
       )}
       {status === 'success' && (
-        <p className="text-center text-xs text-[var(--jade)] font-semibold">✓ Añadido</p>
+        <p className="text-center text-xs text-[var(--jade)] font-semibold">{t('translation_added', '✓ Añadido')}</p>
       )}
       {status === 'error' && (
-        <p className="text-center text-xs text-[var(--red)]">Sin conexión. Prueba el modo Pinyin.</p>
+        <p className="text-center text-xs text-[var(--red)]">{t('translation_offline', 'Sin conexión. Prueba el modo Pinyin.')}</p>
       )}
       {status === 'idle' && candidates.length === 0 && strokeCount === 0 && (
-        <p className="text-center text-xs text-[var(--mute)]">Dibuja un carácter y espera los candidatos</p>
+        <p className="text-center text-xs text-[var(--mute)]">{t('translation_draw_instruction', 'Dibuja un carácter y espera los candidatos')}</p>
       )}
 
       {/* Candidatos */}
       {candidates.length > 0 && status !== 'success' && (
         <div>
-          <p className="text-xs text-[var(--mute)] mb-2">Toca el carácter correcto:</p>
+          <p className="text-xs text-[var(--mute)] mb-2">{t('translation_pick_candidate', 'Toca el carácter correcto:')}</p>
           <div className="flex flex-wrap gap-2">
             {candidates.map((ch, i) => (
               <button key={i} onClick={() => handleSelect(ch)}
@@ -547,7 +548,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
                   result === 'correct' ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-default' :
                   result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'bg-[var(--jade)] text-[var(--on-accent)] cursor-default' : 'bg-[var(--red)] text-[var(--on-accent)] cursor-default') :
                   `${ACCENT_COLOR.bg} text-[var(--on-accent)] hover:opacity-75 active:scale-95`
-                }`}>
+                } ${result === 'incorrect' ? (blockStatuses[i] === 'correct' ? 'j-pop' : 'j-shake') : ''}`}>
                 {block}
               </button>
             ))}
@@ -564,13 +565,13 @@ export default function TranslationGame({ goBack, selectedLesson }) {
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
                 inputMode === 'pinyin' ? 'bg-[var(--red-bg)]/50 border-[var(--red)] text-[var(--red)]' : 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.10)] text-[var(--mute)] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
-              ⌨️ Pinyin IME
+              ⌨️ {t('translation_mode_pinyin', 'Pinyin IME')}
             </button>
             <button onClick={() => setInputMode('draw')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all border ${
                 inputMode === 'draw' ? 'bg-[var(--red-bg)]/50 border-[var(--red)] text-[var(--red)]' : 'bg-[var(--paper-hi)] border-[rgba(28,24,19,0.10)] text-[var(--mute)] hover:border-[rgba(28,24,19,0.18)]'
               }`}>
-              Dibujar
+              {t('translation_mode_draw', 'Dibujar')}
             </button>
           </div>
         )}
@@ -608,7 +609,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
 
         {/* Feedback */}
         {result === 'correct' && (
-          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3 animate-fade-in">
             <span className="text-2xl">&#x2705;</span>
             <div>
               <p className="text-[var(--jade)] font-bold text-sm">{t('translation_correct')}</p>
@@ -618,7 +619,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">&#x274C;</span>
               <div>

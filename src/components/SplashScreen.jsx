@@ -32,7 +32,7 @@ export default function SplashScreen({ progress, onComplete }) {
       try {
         const HW = await import('hanzi-writer');
         if (!mounted) return;
-        writer = HW.default.create(host, '学', {
+        writer = HW.default.create(host, '路', {
           charDataLoader: hanziCharDataLoader,
           width: 130, height: 130, padding: 8,
           strokeColor: resolveColor(J.jade), radicalColor: resolveColor(J.red),
@@ -76,7 +76,7 @@ export default function SplashScreen({ progress, onComplete }) {
           className="font-cn flex items-center justify-center"
           style={{ width: 44, height: 44, borderRadius: 14, background: J.jade, color: J.butter, fontSize: 24, fontWeight: 700 }}
         >
-          学
+          路
         </div>
         <div>
           <h1 style={{ fontWeight: 700, fontSize: 24, letterSpacing: '-0.02em', color: J.ink, margin: 0 }}>

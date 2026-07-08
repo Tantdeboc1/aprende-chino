@@ -1,7 +1,7 @@
 // scripts/generate-pwa-icons.mjs
-// Genera los iconos PWA (192/512 + maskable) a partir de un SVG inline:
-// el logo 学 en butter sobre el jade de la marca. Ejecutar manualmente
-// cuando cambie el diseño: node scripts/generate-pwa-icons.mjs
+// Genera los iconos PWA (192/512 + maskable 192/512) a partir de un SVG inline:
+// el logo 路 (lù = camino, marca HanyuPath) en butter sobre el jade de la marca.
+// Ejecutar manualmente cuando cambie el diseño: node scripts/generate-pwa-icons.mjs
 import sharp from 'sharp';
 import { mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -24,14 +24,17 @@ function logoSvg(size, { rounded, glyphRatio }) {
   <rect width="${size}" height="${size}" rx="${radius}" fill="${JADE}"/>
   <text x="50%" y="50%" dy="${Math.round(fontSize * 0.36)}"
     text-anchor="middle" fill="${BUTTER}" font-size="${fontSize}" font-weight="700"
-    font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, SimHei, sans-serif">学</text>
+    font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, SimHei, sans-serif">路</text>
 </svg>`);
 }
 
+// 路 es un compuesto izquierda-derecha (足 + 各), más ancho que 学: se usa un
+// glyphRatio algo menor para dejar aire a los lados y no tocar los bordes.
 const jobs = [
-  { file: 'icon-192.png',          size: 192, rounded: true,  glyphRatio: 0.58 },
-  { file: 'icon-512.png',          size: 512, rounded: true,  glyphRatio: 0.58 },
-  { file: 'icon-maskable-512.png', size: 512, rounded: false, glyphRatio: 0.46 },
+  { file: 'icon-192.png',          size: 192, rounded: true,  glyphRatio: 0.54 },
+  { file: 'icon-512.png',          size: 512, rounded: true,  glyphRatio: 0.54 },
+  { file: 'icon-maskable-192.png', size: 192, rounded: false, glyphRatio: 0.42 },
+  { file: 'icon-maskable-512.png', size: 512, rounded: false, glyphRatio: 0.42 },
 ];
 
 for (const { file, size, rounded, glyphRatio } of jobs) {

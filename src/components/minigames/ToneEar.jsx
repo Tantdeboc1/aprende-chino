@@ -203,12 +203,12 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
             {/* Opciones: los 4 tonos */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
               {TONES.map((opt) => {
-                let bg = J.paperHi, border = J.hair, color = J.ink, pulse = '';
+                let bg = J.paperHi, border = J.hair, color = J.ink, animCls = '';
                 if (feedback) {
                   if (opt.tone === question.char.tone) {
-                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; pulse = 'animate-pulse';
+                    bg = J.jadeBg; border = J.jade; color = J.jadeDeep; animCls = 'j-pop';
                   } else if (opt.tone === selected) {
-                    bg = J.redBg; border = J.red; color = J.redDeep;
+                    bg = J.redBg; border = J.red; color = J.redDeep; animCls = 'j-shake';
                   } else {
                     color = J.mute2;
                   }
@@ -218,7 +218,7 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
                     key={opt.tone}
                     onClick={() => handleAnswer(opt)}
                     disabled={!!feedback}
-                    className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${pulse}`}
+                    className={`h-28 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors ${animCls}`}
                     style={{
                       background: bg, border: `2px solid ${border}`, color,
                       cursor: feedback ? 'default' : 'pointer',
@@ -233,7 +233,7 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
 
             {/* Al resolver, muestra el carácter y su pinyin como refuerzo */}
             {feedback && (
-              <div className="mt-6 flex items-center justify-center gap-3" style={{ color: J.inkSoft }}>
+              <div className="mt-6 flex items-center justify-center gap-3 animate-fade-in" style={{ color: J.inkSoft }}>
                 <span className="font-cn text-3xl font-bold" style={{ color: J.ink }}>{question.char.char}</span>
                 <span className="text-lg">{question.char.pinyin}</span>
               </div>

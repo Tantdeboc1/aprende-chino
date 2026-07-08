@@ -299,7 +299,7 @@ export default function QuizPronunciation({ goBack }) {
                 else cls = "bg-[var(--mute2)] text-[var(--mute)]";
               }
               return (
-                <button key={opt} onClick={() => answer(opt)} disabled={showResult} className={base + ' ' + cls}>
+                <button key={opt} onClick={() => answer(opt)} disabled={showResult} className={base + ' ' + cls + (isCorrect ? ' j-pop' : isWrong ? ' j-shake' : '')}>
                   {opt}
                 </button>
               );

@@ -299,7 +299,7 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
                 key={idx}
                 onClick={() => handleRespuesta(idx)}
                 disabled={!!resultado}
-                className="w-full text-left rounded-xl px-4 py-3 text-sm font-medium transition-all active:scale-[0.98]"
+                className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium transition-all active:scale-[0.98] ${resultado && esCorrecta ? 'j-pop' : resultado && esSeleccionada ? 'j-shake' : ''}`}
                 style={{ background: bg, border: `1px solid ${border}`, color, cursor: resultado ? 'default' : 'pointer' }}
               >
                 <span className="font-bold mr-2" style={{ color: J.mute }}>{['A', 'B', 'C', 'D'][idx]}.</span>
@@ -312,13 +312,13 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
         {/* Feedback (aria-live para lectores de pantalla) */}
         <div aria-live="polite" role="status">
           {resultado === 'correct' && (
-            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+            <div className="rounded-xl p-3 flex items-center gap-2 animate-fade-in" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
               <span className="text-xl">✓</span>
               <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
             </div>
           )}
           {resultado === 'incorrect' && (
-            <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+            <div className="rounded-xl p-3 animate-fade-in" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xl">✗</span>
                 <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
@@ -411,7 +411,7 @@ function OrderEventsExercise({ story, onBack, onFinish, t }) {
                 key={idx}
                 onClick={() => removeAt(idx)}
                 disabled={comprobado}
-                className="w-full text-left rounded-lg px-3 py-2 flex items-start gap-2"
+                className={`w-full text-left rounded-lg px-3 py-2 flex items-start gap-2 ${comprobado ? (item.orig === idx ? 'j-pop' : 'j-shake') : ''}`}
                 style={{ background: bg, border: `1px solid ${border}`, color, cursor: comprobado ? 'default' : 'pointer' }}
               >
                 <span className="font-bold text-xs mt-0.5" style={{ color: J.mute }}>{idx + 1}.</span>
@@ -534,7 +534,7 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
       <button
         onClick={() => responder(val)}
         disabled={!!resultado}
-        className="flex-1 py-4 rounded-xl font-bold text-base transition-all active:scale-[0.98]"
+        className={`flex-1 py-4 rounded-xl font-bold text-base transition-all active:scale-[0.98] ${resultado && val === item.correcta ? 'j-pop' : resultado && val === elegido ? 'j-shake' : ''}`}
         style={{ background: bg, border: `1px solid ${border}`, color, cursor: resultado ? 'default' : 'pointer' }}
       >
         {val ? '✓' : '✗'} {label}
@@ -574,13 +574,13 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
 
         <div aria-live="polite" role="status">
           {resultado === 'correct' && (
-            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+            <div className="rounded-xl p-3 flex items-center gap-2 animate-fade-in" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
               <span className="text-xl">✓</span>
               <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
             </div>
           )}
           {resultado === 'incorrect' && (
-            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+            <div className="rounded-xl p-3 flex items-center gap-2 animate-fade-in" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
               <span className="text-xl">✗</span>
               <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
             </div>
@@ -700,7 +700,7 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
                 key={i}
                 onClick={() => responder(i)}
                 disabled={!!resultado}
-                className="py-3 rounded-xl font-cn text-lg font-bold transition-all active:scale-[0.98]"
+                className={`py-3 rounded-xl font-cn text-lg font-bold transition-all active:scale-[0.98] ${resultado && esCorrecta ? 'j-pop' : resultado && esSeleccionada ? 'j-shake' : ''}`}
                 style={{ background: bg, border: `1px solid ${border}`, color, cursor: resultado ? 'default' : 'pointer' }}
               >
                 {op}
@@ -711,13 +711,13 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
 
         <div aria-live="polite" role="status">
           {resultado === 'correct' && (
-            <div className="rounded-xl p-3 flex items-center gap-2" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
+            <div className="rounded-xl p-3 flex items-center gap-2 animate-fade-in" style={{ background: J.jadeBg, border: `1px solid ${J.jade}` }}>
               <span className="text-xl">✓</span>
               <p className="text-sm font-bold" style={{ color: J.jadeDeep }}>{t('reading_correct', '¡Correcto!')}</p>
             </div>
           )}
           {resultado === 'incorrect' && (
-            <div className="rounded-xl p-3" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+            <div className="rounded-xl p-3 animate-fade-in" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xl">✗</span>
                 <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>

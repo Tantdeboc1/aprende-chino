@@ -1,6 +1,7 @@
 // src/context/MusicContext.jsx
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
+import { assetUrl } from '@/utils/assets.js';
 
 const LS_KEY = STORAGE_KEYS.MUSIC_SETTINGS;
 
@@ -28,9 +29,19 @@ export function MusicProvider({ children }) {
 
   // Inicializar el elemento Audio una sola vez
   useEffect(() => {
-    const audio        = new Audio('/music/background.mp3');
+    // assetUrl → respeta el base (/aprende-chino/ en Pages); con ruta absoluta
+    // '/music/...' daba 404 en producción.
+    // preload:'none' → NO descargar el MP3 hasta que el usuario active la música
+    // (está off por defecto). Evita una petición inútil que además se abortaba
+    // al desmontar/recargar (ECONNRESET/ERR_ABORTED) y gasta datos a todos.
+    // OJO: preload='none' se fija ANTES de asignar src. Con la URL en el
+    // constructor (new Audio(url)) el navegador ya empieza a descargar antes de
+    // poder desactivar el preload → por eso seguía bajando el MP3.
+    const audio        = new Audio();
+    audio.preload      = 'none';
     audio.loop         = true;
     audio.volume       = loadSettings().volume;
+    audio.src          = assetUrl('music/background.mp3');
     audioRef.current   = audio;
 
     audio.addEventListener('canplaythrough', () => setReady(true), { once: true });

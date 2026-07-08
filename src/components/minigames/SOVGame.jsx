@@ -299,7 +299,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
               result === 'incorrect' ? 'border-[var(--red)] bg-[var(--red-bg)]/20'     :
               placed.length > 0     ? `${accent.border} bg-[var(--paper-hi)]`     :
                                       'border-[rgba(28,24,19,0.18)] bg-[var(--paper-hi)]/50 border-dashed'
-            }`}
+            } ${result === 'correct' ? 'j-pop' : result === 'incorrect' ? 'j-shake' : ''}`}
           >
             {placed.length === 0 && (
               <p className="text-[var(--mute)] text-sm self-center">{t('sov_drop_here')}</p>
@@ -343,7 +343,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
 
         {/* Feedback de resultado */}
         {result === 'correct' && (
-          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3">
+          <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3 animate-fade-in">
             <span className="text-2xl"></span>
             <div>
               <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
@@ -352,7 +352,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
           </div>
         )}
         {result === 'incorrect' && (
-          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3">
+          <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl"></span>
               <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
