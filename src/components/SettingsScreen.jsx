@@ -342,7 +342,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         }
       />
 
-      <div style={{ padding: '6px 20px 24px' }}>
+      <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
 
         {/* ─── Perfil (nick + género + avatar) ─────────────────────────── */}
         <JSection label={t('settings_section_profile')} cn="个人资料" />

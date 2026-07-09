@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { useExitAnimation } from '@/hooks/useExitAnimation.js';
 
 const LESSON_BADGE = {
   1: { bg: J.redBg, fg: J.redDeep, border: J.red },
@@ -127,18 +128,20 @@ function HanziWriterCanvas({ char }) {
 export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorite, isFav, progress }) {
   const { t } = useTranslation();
   const sheetRef = useRef(null);
+  // Cierre animado: el sheet baja y el backdrop se funde antes de desmontar.
+  const { closing, requestClose } = useExitAnimation(onClose, 200);
 
   // Cerrar al hacer tap fuera
   const handleBackdrop = (e) => {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) requestClose();
   };
 
   // Cerrar con Escape
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    const handler = (e) => { if (e.key === 'Escape') requestClose(); };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [onClose]);
+  }, [requestClose]);
 
   if (!char) return null;
 
@@ -151,14 +154,18 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
   return (
     /* Backdrop */
     <div
-      className="fixed inset-0 z-[100] flex items-end justify-center"
-      style={{ background: 'rgba(28,24,19,0.5)' }}
+      className="fixed inset-0 z-[100] flex items-end justify-center j-fade-in"
+      style={{
+        background: 'rgba(28,24,19,0.5)',
+        transition: 'opacity 200ms ease',
+        opacity: closing ? 0 : 1,
+      }}
       onClick={handleBackdrop}
     >
       {/* Sheet */}
       <div
         ref={sheetRef}
-        className="w-full max-w-lg rounded-t-3xl px-5 pt-4 pb-8 animate-slide-up"
+        className={`w-full max-w-lg rounded-t-3xl px-5 pt-4 pb-8 ${closing ? 'j-slide-down' : 'animate-slide-up'}`}
         style={{ maxHeight: '90dvh', overflowY: 'auto', background: J.paper, borderTop: `1px solid ${J.hair}` }}
       >
         {/* Handle */}
@@ -195,7 +202,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             )}
           </div>
           <button
-            onClick={onClose}
+            onClick={requestClose}
             aria-label="Cerrar"
             className="p-1"
             style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer', fontSize: 20, fontWeight: 700 }}

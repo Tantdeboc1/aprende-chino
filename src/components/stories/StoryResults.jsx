@@ -2,6 +2,7 @@
 // Pantalla final tras los ejercicios: muestra puntuación + valoración.
 
 import { J } from '@/styles/tokens';
+import { useCountUp } from '@/hooks/useCountUp.js';
 
 function getValoracion(pct) {
   if (pct >= 95) return { titulo: '完美! · ¡Perfecto!',     color: J.butter, descr: 'Lo bordaste.' };
@@ -13,6 +14,9 @@ function getValoracion(pct) {
 export default function StoryResults({ story, score, total, xpGanado = 0, isFirstTime = false, onRetry, onExit }) {
   const pct = total > 0 ? Math.round((score / total) * 100) : 0;
   const v = getValoracion(pct);
+  // Números animados: puntuación grande y XP (con pop al asentarse).
+  const scoreAnim = useCountUp(score);
+  const xpAnim = useCountUp(xpGanado, { duration: 500, delay: 500 });
 
   return (
     <div style={{
@@ -44,8 +48,8 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
           <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.14em', margin: 0, textTransform: 'uppercase' }}>
             Puntuación
           </p>
-          <p style={{ fontSize: 42, fontWeight: 800, margin: '4px 0 0', color: v.color, lineHeight: 1 }}>
-            {score}<span style={{ fontSize: 22, color: 'rgba(255,255,255,0.5)' }}> / {total}</span>
+          <p className={scoreAnim.done ? 'j-pop' : ''} style={{ fontSize: 42, fontWeight: 800, margin: '4px 0 0', color: v.color, lineHeight: 1 }}>
+            {scoreAnim.value}<span style={{ fontSize: 22, color: 'rgba(255,255,255,0.5)' }}> / {total}</span>
           </p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: '4px 0 0' }}>
             {pct}% de aciertos
@@ -74,8 +78,8 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
             <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(240,200,98,0.85)', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
               {isFirstTime ? 'Recompensa' : 'Mejora'}
             </p>
-            <p style={{ fontSize: 20, fontWeight: 800, color: J.butter, margin: '2px 0 0' }}>
-              +{xpGanado} XP
+            <p className={xpAnim.done ? 'j-pop' : ''} style={{ fontSize: 20, fontWeight: 800, color: J.butter, margin: '2px 0 0' }}>
+              +{xpAnim.value} XP
             </p>
           </div>
         )}

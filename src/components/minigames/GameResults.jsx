@@ -6,6 +6,7 @@ import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { recordMinigameScore } from '@/utils/minigameScores.js';
+import { useCountUp } from '@/hooks/useCountUp.js';
 
 export default function GameResults({ gameId, title, subtitle, correct, wrong, score, scoreLabel, onPlayAgain, onBack }) {
   const { t } = useTranslation();
@@ -25,6 +26,12 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
     if (gameId) recordMinigameScore(gameId, pct);
   }, [gameId, pct]);
   const celebrate = hasCounts ? correct > 0 : good;
+
+  // Números animados (0 → valor) con un pop al asentarse el principal.
+  const scoreAnim   = useCountUp(typeof score === 'number' ? score : 0);
+  const correctAnim = useCountUp(hasCounts ? correct : 0, { duration: 500 });
+  const wrongAnim   = useCountUp(hasCounts ? wrong : 0, { duration: 500 });
+  const pctAnim     = useCountUp(pct, { duration: 700 });
 
   return (
     <>
@@ -50,22 +57,22 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
           {typeof score === 'number' && (
             <div className="mb-6">
               <p className="text-sm" style={{ color: J.inkSoft }}>{scoreLabel || t('minigames_final_score_message')}</p>
-              <p className="text-5xl font-bold" style={{ color: J.ink }}>{score}</p>
+              <p className={`text-5xl font-bold ${scoreAnim.done ? 'j-pop' : ''}`} style={{ color: J.ink }}>{scoreAnim.value}</p>
             </div>
           )}
 
           {hasCounts ? (
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="rounded-xl p-3" style={{ background: J.jadeBg }}>
-                <p className="text-2xl font-bold" style={{ color: J.jade }}>{correct}</p>
+                <p className="text-2xl font-bold" style={{ color: J.jade }}>{correctAnim.value}</p>
                 <p className="text-xs mt-0.5" style={{ color: J.jadeDeep }}>{t('global_exam_correct_label')}</p>
               </div>
               <div className="rounded-xl p-3" style={{ background: J.redBg }}>
-                <p className="text-2xl font-bold" style={{ color: J.red }}>{wrong}</p>
+                <p className="text-2xl font-bold" style={{ color: J.red }}>{wrongAnim.value}</p>
                 <p className="text-xs mt-0.5" style={{ color: J.redDeep }}>{t('global_exam_errors_label')}</p>
               </div>
               <div className="rounded-xl p-3" style={{ background: good ? J.jadeBg : J.sandBg }}>
-                <p className="text-2xl font-bold" style={{ color: good ? J.jade : J.sand }}>{pct}%</p>
+                <p className={`text-2xl font-bold ${pctAnim.done ? 'j-pop' : ''}`} style={{ color: good ? J.jade : J.sand }}>{pctAnim.value}%</p>
                 <p className="text-xs mt-0.5" style={{ color: J.mute }}>{t('global_exam_accuracy_label')}</p>
               </div>
             </div>

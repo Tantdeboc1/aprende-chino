@@ -105,7 +105,8 @@ textarea::placeholder {
   animation: fadeIn 0.3s ease both;
 }
 
-/* Bottom-sheet */
+/* Bottom-sheet (entrada). La salida es .j-slide-down; ambas se orquestan con
+   useExitAnimation (mantiene montado el sheet hasta acabar la animación). */
 @keyframes slide-up {
   from { transform: translateY(100%); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
@@ -113,6 +114,20 @@ textarea::placeholder {
 .animate-slide-up {
   animation: slide-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
+@keyframes slide-down {
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+.j-slide-down {
+  animation: slide-down 0.2s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+/* Fade puro (sin desplazamiento) — backdrops de modales/sheets */
+@keyframes jFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.j-fade-in { animation: jFade 0.2s ease both; }
 
 /* 3D flashcard */
 .perspective { perspective: 1000px; }

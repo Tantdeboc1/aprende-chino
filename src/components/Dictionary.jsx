@@ -292,7 +292,7 @@ export default function Dictionary({
                 {/* Carácter principal */}
                 <div className="text-6xl text-center mb-3 font-cn" style={{ color: J.ink }}>{char.char}</div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2.5 j-rise">
                   {/* Pinyin + audio */}
                   <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
                     <span className="text-sm font-semibold" style={{ color: J.mute }}>{t('dictionary_pinyin')}</span>

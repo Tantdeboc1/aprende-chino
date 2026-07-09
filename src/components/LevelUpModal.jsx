@@ -12,6 +12,7 @@ import { J } from '@/styles/tokens';
 import { loadUserProfile } from '@/utils/userProfile.js';
 import { loc, baseLang } from '@/utils/loc.js';
 import { getAvatarById, getAvatarUnlocksAtLevel, getNextAvatarUnlock, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
+import { useExitAnimation } from '@/hooks/useExitAnimation.js';
 
 // Genera N puntos de confeti con posiciones, colores y delays aleatorios
 function makeConfetti(n = 40) {
@@ -31,12 +32,21 @@ function makeConfetti(n = 40) {
 export default function LevelUpModal({ levelUp, onClose }) {
   const { t, i18n } = useTranslation();
   const [entered, setEntered] = useState(false);
+  // Cierre animado: la tarjeta se encoge y el overlay se funde antes de
+  // desmontar (la entrada ya era animada; la salida era un corte seco).
+  const { closing, requestClose } = useExitAnimation(onClose, 220);
   const profile = useMemo(() => loadUserProfile(), []);
   const avatar = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
   );
-  const confetti = useMemo(() => makeConfetti(50), []);
+  // En pantallas pequeñas (≈móviles de gama baja) menos partículas: 50 capas
+  // compuestas + halo + anillo giratorio podían dar tirones justo en la
+  // celebración. En pantallas grandes se mantiene la densidad original.
+  const confetti = useMemo(
+    () => makeConfetti(window.innerWidth < 480 ? 28 : 50),
+    []
+  );
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setEntered(true));
@@ -53,15 +63,19 @@ export default function LevelUpModal({ levelUp, onClose }) {
 
   return createPortal(
     <div
-      onClick={onClose}
+      onClick={requestClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(15, 10, 5, 0.78)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
+        background: 'rgba(15, 10, 5, 0.82)',
+        // blur(4px): visualmente casi idéntico sobre un fondo tan oscuro y
+        // la mitad de coste GPU que 8px (es la pantalla más cargada de la app).
+        backdropFilter: 'blur(4px)',
+        WebkitBackdropFilter: 'blur(4px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 20,
         overflow: 'hidden',
+        transition: 'opacity 220ms ease',
+        opacity: closing ? 0 : 1,
       }}
     >
       {/* Confeti */}
@@ -95,9 +109,11 @@ export default function LevelUpModal({ levelUp, onClose }) {
           padding: '28px 26px 24px',
           textAlign: 'center',
           boxShadow: '0 24px 70px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(240,200,98,0.4)',
-          transform: entered ? 'scale(1) translateY(0)' : 'scale(0.9) translateY(20px)',
-          opacity: entered ? 1 : 0,
-          transition: 'transform 520ms cubic-bezier(0.22,1,0.36,1), opacity 380ms ease-out',
+          transform: (entered && !closing) ? 'scale(1) translateY(0)' : 'scale(0.9) translateY(20px)',
+          opacity: (entered && !closing) ? 1 : 0,
+          transition: closing
+            ? 'transform 220ms cubic-bezier(0.4,0,1,1), opacity 200ms ease-in'
+            : 'transform 520ms cubic-bezier(0.22,1,0.36,1), opacity 380ms ease-out',
         }}
       >
         {/* Etiqueta arriba */}
@@ -226,7 +242,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
 
         {/* Botón */}
         <button
-          onClick={onClose}
+          onClick={requestClose}
           style={{
             marginTop: 20, width: '100%',
             background: J.red, color: J.onAccent,

@@ -136,12 +136,16 @@ export default function BottomNav({ activeScreen, onNavigate }) {
               >
                 {label}
               </span>
-              {active && (
-                <span
-                  className="w-1 h-1 rounded-full mt-0.5"
-                  style={{ background: accent.color }}
-                />
-              )}
+              {/* Siempre montado: escala 0→1 con rebote al activarse (si fuera
+                  render condicional aparecería de golpe, sin transición). */}
+              <span
+                className="w-1 h-1 rounded-full mt-0.5"
+                style={{
+                  background: accent.color,
+                  transform: active ? 'scale(1)' : 'scale(0)',
+                  transition: 'transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+              />
             </button>
           );
         })}

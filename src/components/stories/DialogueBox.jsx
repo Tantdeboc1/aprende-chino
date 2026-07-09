@@ -9,6 +9,16 @@ import { useEffect, useRef, useState } from 'react';
 import { J } from '@/styles/tokens';
 
 const TYPE_SPEED_MS = 35;
+// Cadencia natural: tras un signo de puntuación el typewriter respira antes
+// de seguir, como haría un hablante (pausa larga al cerrar frase, media en
+// comas y pausas menores).
+const PAUSE_FULL  = /[。！？…]/; // fin de frase → pausa larga
+const PAUSE_HALF  = /[，、；：]/; // pausa media
+function delayAfter(ch) {
+  if (PAUSE_FULL.test(ch)) return TYPE_SPEED_MS * 8;
+  if (PAUSE_HALF.test(ch)) return TYPE_SPEED_MS * 4;
+  return TYPE_SPEED_MS;
+}
 
 export default function DialogueBox({
   speakerName,
@@ -47,7 +57,7 @@ export default function DialogueBox({
         setDone(true);
         return;
       }
-      timerRef.current = setTimeout(tick, TYPE_SPEED_MS);
+      timerRef.current = setTimeout(tick, delayAfter(chars[i - 1]));
     };
     timerRef.current = setTimeout(tick, TYPE_SPEED_MS);
 

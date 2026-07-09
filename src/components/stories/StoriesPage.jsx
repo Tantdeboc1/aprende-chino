@@ -151,7 +151,7 @@ export default function StoriesPage({
             Mapa de historias
           </p>
 
-          <div className="space-y-3">
+          <div className="space-y-3 j-rise">
             {STORIES.map((s, i) => {
               const status = statuses[s.id];
               const accent = ACCENTS[(s.tema - 1) % ACCENTS.length];

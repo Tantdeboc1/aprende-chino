@@ -18,9 +18,26 @@ function getTabIndex(screen) {
   return -1; // swipe deshabilitado en esta pantalla
 }
 
+// Dirección de entrada de la pantalla nueva según la navegación:
+//  - entre tabs distintos → desliza desde el lado hacia el que se navega
+//    (coherente con el swipe: swipe izquierda = tab siguiente = entra por
+//    la derecha)
+//  - drill-in dentro del mismo tab (home → lección, menú → minijuego…) y
+//    pantallas fuera de tabs (ajustes) → sube ligeramente
+function getEnterOffset(fromScreen, toScreen) {
+  const a = getTabIndex(fromScreen);
+  const b = getTabIndex(toScreen);
+  if (a !== -1 && b !== -1 && a !== b) {
+    return b > a ? 'translateX(18px)' : 'translateX(-18px)';
+  }
+  return 'translateY(14px)';
+}
+
 export default function Layout({ children, activeScreen, onNavigate, hideNav }) {
   const [visible, setVisible] = useState(false);
   const prevScreen = useRef(activeScreen);
+  // Offset inicial de la transición en curso (solo transform+opacity → GPU).
+  const enterOffset = useRef('translateY(14px)');
 
   // Swipe tracking
   const touchStart = useRef(null);
@@ -28,6 +45,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
 
   useEffect(() => {
     if (prevScreen.current !== activeScreen) {
+      enterOffset.current = getEnterOffset(prevScreen.current, activeScreen);
       setVisible(false);
       const id = requestAnimationFrame(() => {
         requestAnimationFrame(() => setVisible(true));
@@ -73,8 +91,17 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
   return (
     <>
       <div
-        className="min-h-screen transition-opacity duration-150"
-        style={{ opacity: visible ? 1 : 0, background: J.paper, color: J.ink }}
+        className="min-h-screen"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'none' : enterOffset.current,
+          // El bloque global de prefers-reduced-motion (index.css) fuerza
+          // transition-duration:0.01ms con !important → esta transición se
+          // neutraliza sola para quien pide menos movimiento.
+          transition: 'opacity 180ms ease-out, transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1)',
+          background: J.paper,
+          color: J.ink,
+        }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >

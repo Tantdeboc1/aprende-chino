@@ -189,7 +189,7 @@ export default function MiniGames({ goBack, navigateTo }) {
           <p className="text-sm mt-1" style={{ color: J.mute }}>{t('minigames_subtitle')}</p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8 j-rise">
           {SECTIONS.map((section) => {
             const sectionGames = games.filter((g) => g.categorias.includes(section.cat));
             if (sectionGames.length === 0) return null;
