@@ -13,9 +13,7 @@ import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getStreak, getWeeklyXP } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { formatCode, normalizeCode } from '@/lib/socialStore.js';
-import { APP_NAME } from '@/utils/appInfo.js';
-
-const APP_URL = 'https://aprende-chino-hsk1.vercel.app/';
+import { APP_NAME, APP_URL } from '@/utils/appInfo.js';
 
 // Resuelve la imagen de un perfil público (foto Google o avatar del catálogo).
 function avatarSrcOf(profile) {

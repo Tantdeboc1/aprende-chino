@@ -16,11 +16,7 @@ import { computeBadges } from '@/utils/badges.js';
 import { loc, baseLang } from '@/utils/loc.js';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
-import { APP_NAME } from '@/utils/appInfo.js';
-
-// URL pública de la app — se incluye en el texto compartido para que quien
-// lo reciba pueda abrirla. Si en el futuro tenéis dominio propio, cambiad aquí.
-const APP_URL = 'https://aprende-chino-hsk1.vercel.app/';
+import { APP_NAME, APP_URL } from '@/utils/appInfo.js';
 
 function ProfileRow({ l, v, tag, accent, first }) {
   return (
