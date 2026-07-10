@@ -1,0 +1,1 @@
+import{s as a}from"./arrayUtils-Direv13U.js";function s(i){return i?.meaning||i?.meanings?.es||""}function u(i,t,r=4){const e=i.filter(n=>n.char&&s(n));return a([...e]).slice(0,Math.min(t,e.length)).map(n=>{const o=a(e.filter(f=>f.char!==n.char)).slice(0,r-1).map(s);return{correct:n,answer:s(n),options:a([s(n),...o])}})}export{u as b};

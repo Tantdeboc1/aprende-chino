@@ -1,0 +1,1 @@
+import{j as s}from"./vendor-react-jH9PZ-w6.js";function d({children:r,className:a="",...o}){return s.jsx("div",{className:`bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 border border-[rgba(28,24,19,0.10)] ${a}`,...o,children:r})}export{d as C};

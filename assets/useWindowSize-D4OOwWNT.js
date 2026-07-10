@@ -1,0 +1,1 @@
+import{r as i}from"./vendor-react-jH9PZ-w6.js";function o(){const[n,t]=i.useState({width:window.innerWidth,height:window.innerHeight});return i.useEffect(()=>{const e=()=>t({width:window.innerWidth,height:window.innerHeight});return window.addEventListener("resize",e),()=>window.removeEventListener("resize",e)},[]),n}export{o as u};

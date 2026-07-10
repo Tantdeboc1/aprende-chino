@@ -1,0 +1,1 @@
+import{j as o}from"./vendor-react-jH9PZ-w6.js";import{J as n}from"./index-CaAxt_Li.js";function p({children:t,color:e=n.mute,size:r=11}){return o.jsx("span",{style:{fontSize:r,letterSpacing:"0.14em",textTransform:"uppercase",color:e,fontWeight:700},children:t})}export{p as J};

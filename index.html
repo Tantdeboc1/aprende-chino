@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      Content-Security-Policy: defensa en profundidad frente a inyección de
+      scripts. Lista solo los orígenes que la app usa de verdad:
+        - script-src  : el propio bundle + apis.google.com (popup de login Google)
+        - connect-src : Firebase Auth/Firestore (incl. websocket), Sentry y el
+                        reconocimiento de escritura del minijuego de traducción
+                        (inputtools.google.com). Los trazos de HanziWriter ahora
+                        se sirven desde nuestro dominio (/hanzi-data/), cubiertos
+                        por 'self' — ya no se necesita cdn.jsdelivr.net.
+        - frame-src   : iframe/popup de OAuth (authDomain + accounts.google.com)
+        - img-src     : avatares DiceBear (data:) y foto de perfil de Google
+      Las fuentes (Noto Sans/Serif SC) se auto-alojan vía @fontsource — van
+      cubiertas por 'self', ya no se necesita fonts.googleapis/gstatic.
+      Si añades un servicio nuevo (otra API, CDN…), amplía el directivo aquí.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      base-uri 'self';
+      object-src 'none';
+      form-action 'self';
+      script-src 'self' https://apis.google.com https://*.firebaseapp.com;
+      style-src 'self' 'unsafe-inline';
+      font-src 'self' data:;
+      img-src 'self' data: https://lh3.googleusercontent.com https://*.googleusercontent.com;
+      connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com wss://*.firestore.googleapis.com https://*.ingest.de.sentry.io https://*.ingest.sentry.io https://inputtools.google.com;
+      frame-src https://*.firebaseapp.com https://accounts.google.com https://apis.google.com;
+    " />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="HanyuPath — Learn Chinese with interactive exercises" />
+    <meta name="theme-color" content="#2f6b4a" />
+    <!-- Favicon de pestaña e icono de "añadir a inicio" (iOS). El icono de
+         instalación PWA lo aporta el manifest (vite-plugin-pwa). Rutas con '/'
+         inicial: Vite les antepone el base (/aprende-chino/ en Pages). -->
+    <link rel="icon" type="image/png" href="/aprende-chino/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/aprende-chino/icons/icon-192.png" />
+    <title>HanyuPath — Learn Chinese</title>
+    <script type="module" crossorigin src="/aprende-chino/assets/index-CaAxt_Li.js"></script>
+    <link rel="modulepreload" crossorigin href="/aprende-chino/assets/vendor-react-jH9PZ-w6.js">
+    <link rel="modulepreload" crossorigin href="/aprende-chino/assets/vendor-i18n-CG-y4t6O.js">
+    <link rel="stylesheet" crossorigin href="/aprende-chino/assets/index-sPUPr-cj.css">
+  <link rel="manifest" href="/aprende-chino/manifest.webmanifest"></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

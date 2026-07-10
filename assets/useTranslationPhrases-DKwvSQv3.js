@@ -1,0 +1,1 @@
+import{r as a}from"./vendor-react-jH9PZ-w6.js";import{l}from"./loadContent-CRwu2uFx.js";import{u}from"./vendor-i18n-CG-y4t6O.js";function c(){const{i18n:e}=u(),s=(e.language||"es").split("-")[0],[r,n]=a.useState(null);return a.useEffect(()=>{let t=!0;return l(s).then(o=>{t&&n(o)}),()=>{t=!1}},[s]),r}export{c as u};

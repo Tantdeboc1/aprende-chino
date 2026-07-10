@@ -1,0 +1,2788 @@
+{
+  "bookTitle": "El Nuevo Libro de Chino Práctico (3ª Edición)",
+  "bookTitleEs": "El Nuevo Libro de Chino Práctico (3ª Edición)",
+  "lessons": [
+    {
+      "lesson": 1,
+      "titleZh": "你最近怎么样",
+      "titleEs": "¿Cómo has estado últimamente?",
+      "words": [
+        {
+          "char": "你",
+          "pinyin": "ni3",
+          "meaning": "tú",
+          "type": "Pron.",
+          "examples": [
+            "你好",
+            "认识你"
+          ],
+          "isSupplementary": false,
+          "radical": "亻"
+        },
+        {
+          "char": "好",
+          "pinyin": "hao3",
+          "meaning": "bueno; bien; vale",
+          "type": "Adj.",
+          "examples": [
+            "你好",
+            "很好",
+            "好吃"
+          ],
+          "isSupplementary": false,
+          "radical": "女"
+        },
+        {
+          "char": "我",
+          "pinyin": "wo3",
+          "meaning": "yo; mí",
+          "type": "Pron.",
+          "examples": [
+            "我是",
+            "我叫",
+            "我妈妈"
+          ],
+          "isSupplementary": false,
+          "radical": "戈"
+        },
+        {
+          "char": "叫",
+          "pinyin": "jiao4",
+          "meaning": "llamarse; llamar",
+          "type": "V.",
+          "examples": [
+            "叫什么",
+            "叫什么名字"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "请问",
+          "pinyin": "qing3wen4",
+          "meaning": "¿podría preguntar?; disculpe",
+          "type": "V.",
+          "examples": [
+            "请问你叫什么名字"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "请",
+          "pinyin": "qing3",
+          "meaning": "por favor; solicitar; invitar",
+          "type": "V.",
+          "examples": [
+            "请进",
+            "请坐"
+          ],
+          "isSupplementary": false,
+          "radical": "讠"
+        },
+        {
+          "char": "问",
+          "pinyin": "wen4",
+          "meaning": "preguntar",
+          "type": "V.",
+          "examples": [
+            "请问",
+            "问老师"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "什么",
+          "pinyin": "shen2me",
+          "meaning": "qué",
+          "type": "Pr.int.",
+          "examples": [
+            "什么名字",
+            "叫什么",
+            "什么意思"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "名字",
+          "pinyin": "ming2zi",
+          "meaning": "nombre",
+          "type": "S.",
+          "examples": [
+            "什么名字",
+            "叫什么名字"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "姓",
+          "pinyin": "xing4",
+          "meaning": "apellidarse / apellido",
+          "type": "V./S.",
+          "examples": [
+            "姓宋",
+            "姓马",
+            "你贵姓"
+          ],
+          "isSupplementary": false,
+          "radical": "女"
+        },
+        {
+          "char": "认识",
+          "pinyin": "ren4shi",
+          "meaning": "conocer",
+          "type": "V.",
+          "examples": [
+            "认识你",
+            "认识马大为"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "很",
+          "pinyin": "hen3",
+          "meaning": "muy",
+          "type": "Adv.",
+          "examples": [
+            "很好",
+            "很忙",
+            "很高兴"
+          ],
+          "isSupplementary": false,
+          "radical": "彳"
+        },
+        {
+          "char": "高兴",
+          "pinyin": "gao1xing4",
+          "meaning": "contento; feliz",
+          "type": "Adj.",
+          "examples": [
+            "很高兴",
+            "真高兴"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "也",
+          "pinyin": "ye3",
+          "meaning": "también",
+          "type": "Adv.",
+          "examples": [
+            "也很好",
+            "也认识你",
+            "也很高兴"
+          ],
+          "isSupplementary": false,
+          "radical": "乙"
+        },
+        {
+          "char": "在",
+          "pinyin": "zai4",
+          "meaning": "estar (en un lugar)",
+          "type": "V.",
+          "examples": [
+            "在哪儿",
+            "在北京"
+          ],
+          "isSupplementary": false,
+          "radical": "土"
+        },
+        {
+          "char": "吗",
+          "pinyin": "ma",
+          "meaning": "partícula interrogativa de sí/no",
+          "type": "Pt.m.",
+          "examples": [
+            "你好吗",
+            "忙吗",
+            "是吗"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "进",
+          "pinyin": "jin4",
+          "meaning": "entrar",
+          "type": "V.",
+          "examples": [
+            "进来",
+            "请进"
+          ],
+          "isSupplementary": false,
+          "radical": "辶"
+        },
+        {
+          "char": "坐",
+          "pinyin": "zuo4",
+          "meaning": "sentarse",
+          "type": "V.",
+          "examples": [
+            "坐下",
+            "请坐"
+          ],
+          "isSupplementary": false,
+          "radical": "土"
+        },
+        {
+          "char": "谢谢",
+          "pinyin": "xie4xie",
+          "meaning": "gracias; agradecer",
+          "type": "V.",
+          "examples": [
+            "谢谢你",
+            "谢谢老师"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "最近",
+          "pinyin": "zui4jin4",
+          "meaning": "últimamente; recientemente",
+          "type": "Adv.",
+          "examples": [
+            "你最近怎么样",
+            "最近很忙"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "怎么样",
+          "pinyin": "zen3me yang4",
+          "meaning": "¿cómo está?; ¿qué tal?",
+          "type": "Pr.int.",
+          "examples": [
+            "你最近怎么样",
+            "汉语怎么样"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "呢",
+          "pinyin": "ne",
+          "meaning": "partícula para preguntas elípticas",
+          "type": "Pt.m.",
+          "examples": [
+            "你呢",
+            "他呢"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "忙",
+          "pinyin": "mang2",
+          "meaning": "ocupado/a",
+          "type": "Adj.",
+          "examples": [
+            "很忙",
+            "不忙",
+            "特别忙"
+          ],
+          "isSupplementary": false,
+          "radical": "忄"
+        },
+        {
+          "char": "不",
+          "pinyin": "bu4",
+          "meaning": "no; partícula de negación",
+          "type": "Adv.",
+          "examples": [
+            "不忙",
+            "不好",
+            "不大",
+            "不对"
+          ],
+          "isSupplementary": false,
+          "radical": "一"
+        },
+        {
+          "char": "太",
+          "pinyin": "tai4",
+          "meaning": "demasiado; extremadamente",
+          "type": "Adv.",
+          "examples": [
+            "太好了",
+            "太忙",
+            "太累"
+          ],
+          "isSupplementary": false,
+          "radical": "大"
+        },
+        {
+          "char": "他",
+          "pinyin": "ta1",
+          "meaning": "él",
+          "type": "Pron.",
+          "examples": [
+            "他是",
+            "他很忙",
+            "他叫什么"
+          ],
+          "isSupplementary": false,
+          "radical": "亻"
+        },
+        {
+          "char": "困",
+          "pinyin": "kun4",
+          "meaning": "soñoliento/a",
+          "type": "Adj.",
+          "examples": [
+            "很困",
+            "太困了"
+          ],
+          "isSupplementary": true,
+          "radical": "囗"
+        },
+        {
+          "char": "渴",
+          "pinyin": "ke3",
+          "meaning": "sediento; tener sed",
+          "type": "Adj.",
+          "examples": [
+            "很渴",
+            "不渴"
+          ],
+          "isSupplementary": true,
+          "radical": "氵"
+        },
+        {
+          "char": "饿",
+          "pinyin": "e4",
+          "meaning": "hambriento; tener hambre",
+          "type": "Adj.",
+          "examples": [
+            "很饿",
+            "太饿了"
+          ],
+          "isSupplementary": true,
+          "radical": "饣"
+        },
+        {
+          "char": "累",
+          "pinyin": "lei4",
+          "meaning": "cansado/a",
+          "type": "Adj.",
+          "examples": [
+            "很累",
+            "太累",
+            "累不累"
+          ],
+          "isSupplementary": true,
+          "radical": "糸"
+        },
+        {
+          "char": "还行",
+          "pinyin": "hai2 xing2",
+          "meaning": "no está mal; más o menos",
+          "type": "Adj.",
+          "examples": [
+            "还行吧",
+            "还行还行"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "马马虎虎",
+          "pinyin": "ma2ma2 hu1hu1",
+          "meaning": "más o menos; regular; así así",
+          "type": "Adj.",
+          "examples": [
+            "我汉语马马虎虎"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "她",
+          "pinyin": "ta1",
+          "meaning": "ella",
+          "type": "Pron.",
+          "examples": [
+            "她是",
+            "她很忙",
+            "她妈妈"
+          ],
+          "isSupplementary": true,
+          "radical": "女"
+        }
+      ]
+    },
+    {
+      "lesson": 2,
+      "titleZh": "你是哪国人？",
+      "titleEs": "¿De qué país eres?",
+      "words": [
+        {
+          "char": "老师",
+          "pinyin": "lao3shi1",
+          "meaning": "profesor/a",
+          "type": "S.",
+          "examples": [
+            "老师好",
+            "你是老师吗"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "早上",
+          "pinyin": "zao3shang",
+          "meaning": "mañana (temprano)",
+          "type": "S.",
+          "examples": [
+            "早上好",
+            "早上七点"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "早",
+          "pinyin": "zao3",
+          "meaning": "temprano; buenos días",
+          "type": "Adj.",
+          "examples": [
+            "早上",
+            "很早",
+            "你早"
+          ],
+          "isSupplementary": false,
+          "radical": "日"
+        },
+        {
+          "char": "你们",
+          "pinyin": "ni3men",
+          "meaning": "vosotros; ustedes",
+          "type": "Pron.",
+          "examples": [
+            "你们好",
+            "你们是哪国人"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "们",
+          "pinyin": "men",
+          "meaning": "sufijo plural",
+          "type": "Suf.",
+          "examples": [
+            "你们",
+            "他们",
+            "我们"
+          ],
+          "isSupplementary": false,
+          "radical": "亻"
+        },
+        {
+          "char": "是",
+          "pinyin": "shi4",
+          "meaning": "ser; es/soy/son",
+          "type": "V.",
+          "examples": [
+            "我是",
+            "你是哪国人",
+            "这是"
+          ],
+          "isSupplementary": false,
+          "radical": "日"
+        },
+        {
+          "char": "这",
+          "pinyin": "zhe4",
+          "meaning": "esto; este/esta",
+          "type": "Pron.",
+          "examples": [
+            "这是",
+            "这是我朋友",
+            "这是什么"
+          ],
+          "isSupplementary": false,
+          "radical": "辶"
+        },
+        {
+          "char": "朋友",
+          "pinyin": "peng2you",
+          "meaning": "amigo/a",
+          "type": "S.",
+          "examples": [
+            "好朋友",
+            "我朋友",
+            "老朋友"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "刚",
+          "pinyin": "gang1",
+          "meaning": "recién; acabar de",
+          "type": "Adv.",
+          "examples": [
+            "刚到",
+            "刚认识",
+            "刚来北京"
+          ],
+          "isSupplementary": false,
+          "radical": "刀"
+        },
+        {
+          "char": "您",
+          "pinyin": "nin2",
+          "meaning": "usted (formal)",
+          "type": "Pron.",
+          "examples": [
+            "您好",
+            "您贵姓"
+          ],
+          "isSupplementary": false,
+          "radical": "心"
+        },
+        {
+          "char": "到",
+          "pinyin": "dao4",
+          "meaning": "llegar; alcanzar",
+          "type": "V.",
+          "examples": [
+            "刚到",
+            "到哪儿",
+            "到北京"
+          ],
+          "isSupplementary": false,
+          "radical": "刀"
+        },
+        {
+          "char": "贵姓",
+          "pinyin": "gui4xing4",
+          "meaning": "¿cuál es su apellido? (formal)",
+          "type": "S.",
+          "examples": [
+            "您贵姓"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "哪",
+          "pinyin": "na3",
+          "meaning": "cuál; qué (de varios)",
+          "type": "Pr.int.",
+          "examples": [
+            "哪国人",
+            "在哪儿",
+            "你是哪国人"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "国",
+          "pinyin": "guo2",
+          "meaning": "país",
+          "type": "S.",
+          "examples": [
+            "哪国人",
+            "中国",
+            "美国"
+          ],
+          "isSupplementary": false,
+          "radical": "囗"
+        },
+        {
+          "char": "人",
+          "pinyin": "ren2",
+          "meaning": "persona; gente",
+          "type": "S.",
+          "examples": [
+            "哪国人",
+            "中国人",
+            "一个人"
+          ],
+          "isSupplementary": false,
+          "radical": "人"
+        },
+        {
+          "char": "学习",
+          "pinyin": "xue2xi2",
+          "meaning": "estudiar; aprender",
+          "type": "V.",
+          "examples": [
+            "学习汉语",
+            "学习什么",
+            "一起学习"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "学",
+          "pinyin": "xue2",
+          "meaning": "estudiar",
+          "type": "V.",
+          "examples": [
+            "学汉语",
+            "学什么",
+            "刚学"
+          ],
+          "isSupplementary": false,
+          "radical": "子"
+        },
+        {
+          "char": "汉语",
+          "pinyin": "han4yu3",
+          "meaning": "idioma chino; mandarín",
+          "type": "S.",
+          "examples": [
+            "学习汉语",
+            "说汉语",
+            "汉语课"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "再见",
+          "pinyin": "zai4jian4",
+          "meaning": "adiós; hasta luego",
+          "type": "V.",
+          "examples": [
+            "老师再见",
+            "再见"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "点心",
+          "pinyin": "dian3xin1",
+          "meaning": "bocadillos; dim sum",
+          "type": "S.",
+          "examples": [
+            "喜欢点心",
+            "吃点心",
+            "小点心"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "好吃",
+          "pinyin": "hao3chi1",
+          "meaning": "delicioso; sabroso",
+          "type": "Adj.",
+          "examples": [
+            "很好吃",
+            "不好吃",
+            "真好吃"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "吃",
+          "pinyin": "chi1",
+          "meaning": "comer",
+          "type": "V.",
+          "examples": [
+            "吃点心",
+            "吃饭",
+            "吃饺子"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "爸爸",
+          "pinyin": "ba4ba",
+          "meaning": "papá; padre",
+          "type": "S.",
+          "examples": [
+            "我爸爸",
+            "爸爸很忙"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "喜欢",
+          "pinyin": "xi3huan",
+          "meaning": "gustar; que gusta",
+          "type": "V.",
+          "examples": [
+            "喜欢点心",
+            "喜欢学汉语",
+            "很喜欢"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "和",
+          "pinyin": "he2",
+          "meaning": "y; con",
+          "type": "Conj.",
+          "examples": [
+            "我和你",
+            "米饭和点心"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "米饭",
+          "pinyin": "mi3fan4",
+          "meaning": "arroz (cocido)",
+          "type": "S.",
+          "examples": [
+            "喜欢吃米饭",
+            "米饭和点心"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "饭",
+          "pinyin": "fan4",
+          "meaning": "arroz; comida",
+          "type": "S.",
+          "examples": [
+            "吃饭",
+            "米饭",
+            "早饭"
+          ],
+          "isSupplementary": false,
+          "radical": "饣"
+        },
+        {
+          "char": "妈妈",
+          "pinyin": "ma1ma",
+          "meaning": "mamá; madre",
+          "type": "S.",
+          "examples": [
+            "我妈妈",
+            "妈妈喜欢"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "面条儿",
+          "pinyin": "mian4tiao2r",
+          "meaning": "tallarines; fideos",
+          "type": "S.",
+          "examples": [
+            "吃面条儿",
+            "不喜欢吃面条儿"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "饺子",
+          "pinyin": "jiao3zi",
+          "meaning": "jiaozi; ravioles chinos",
+          "type": "S.",
+          "examples": [
+            "不吃饺子",
+            "喜欢吃饺子"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "包子",
+          "pinyin": "bao1zi",
+          "meaning": "baozi; bollo relleno al vapor",
+          "type": "S.",
+          "examples": [
+            "吃包子",
+            "不喜欢吃包子"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "大",
+          "pinyin": "da4",
+          "meaning": "grande",
+          "type": "Adj.",
+          "examples": [
+            "大人",
+            "很大",
+            "大包子"
+          ],
+          "isSupplementary": false,
+          "radical": "大"
+        },
+        {
+          "char": "小",
+          "pinyin": "xiao3",
+          "meaning": "pequeño",
+          "type": "Adj.",
+          "examples": [
+            "很小",
+            "小点心",
+            "小狗"
+          ],
+          "isSupplementary": false,
+          "radical": "小"
+        },
+        {
+          "char": "看",
+          "pinyin": "kan4",
+          "meaning": "mirar; ver",
+          "type": "V.",
+          "examples": [
+            "看电影",
+            "看照片",
+            "你看"
+          ],
+          "isSupplementary": false,
+          "radical": "目"
+        },
+        {
+          "char": "那",
+          "pinyin": "na4",
+          "meaning": "aquel; aquello/a",
+          "type": "Pron.",
+          "examples": [
+            "那是",
+            "那是我爸爸",
+            "那是面条儿"
+          ],
+          "isSupplementary": false,
+          "radical": "阝"
+        },
+        {
+          "char": "都",
+          "pinyin": "dou1",
+          "meaning": "todos; ambos",
+          "type": "Adv.",
+          "examples": [
+            "都很好",
+            "都很好吃",
+            "都喜欢"
+          ],
+          "isSupplementary": false,
+          "radical": "阝"
+        },
+        {
+          "char": "要",
+          "pinyin": "yao4",
+          "meaning": "querer; quisiera",
+          "type": "V.",
+          "examples": [
+            "要包子",
+            "不要饺子",
+            "我要"
+          ],
+          "isSupplementary": false,
+          "radical": "覀"
+        },
+        {
+          "char": "中国",
+          "pinyin": "zhong1guo2",
+          "meaning": "China",
+          "type": "NP.",
+          "examples": [
+            "来中国",
+            "中国人",
+            "中国文化"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "西班牙",
+          "pinyin": "xi1ban1ya2",
+          "meaning": "España",
+          "type": "NP.",
+          "examples": [
+            "西班牙人",
+            "我是西班牙人"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "法国",
+          "pinyin": "fa3guo2",
+          "meaning": "Francia",
+          "type": "NP.",
+          "examples": [
+            "法国人",
+            "去法国"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "德国",
+          "pinyin": "de2guo2",
+          "meaning": "Alemania",
+          "type": "NP.",
+          "examples": [
+            "德国人",
+            "去德国"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "英国",
+          "pinyin": "ying1guo2",
+          "meaning": "Reino Unido; Inglaterra",
+          "type": "NP.",
+          "examples": [
+            "英国人",
+            "去英国"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "美国",
+          "pinyin": "mei3guo2",
+          "meaning": "Estados Unidos",
+          "type": "NP.",
+          "examples": [
+            "美国人",
+            "去美国"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "日本",
+          "pinyin": "ri4ben3",
+          "meaning": "Japón",
+          "type": "NP.",
+          "examples": [
+            "日本人",
+            "去日本"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "同学",
+          "pinyin": "tong2xue2",
+          "meaning": "compañero/a de clase",
+          "type": "S.",
+          "examples": [
+            "我同学",
+            "你们班同学"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "面包",
+          "pinyin": "mian4bao1",
+          "meaning": "pan",
+          "type": "S.",
+          "examples": [
+            "吃面包",
+            "喜欢吃面包"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "汉堡包",
+          "pinyin": "han4bao3bao1",
+          "meaning": "hamburguesa",
+          "type": "S.",
+          "examples": [
+            "吃汉堡包",
+            "喜欢吃汉堡包"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "比萨饼",
+          "pinyin": "bi3sa4bing3",
+          "meaning": "pizza",
+          "type": "S.",
+          "examples": [
+            "吃比萨饼",
+            "喜欢吃比萨饼"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        }
+      ]
+    },
+    {
+      "lesson": 3,
+      "titleZh": "你家有几口人？",
+      "titleEs": "¿Cuántas personas hay en tu familia?",
+      "words": [
+        {
+          "char": "家",
+          "pinyin": "jia1",
+          "meaning": "familia; casa",
+          "type": "S.",
+          "examples": [
+            "我们家",
+            "你家",
+            "回家"
+          ],
+          "isSupplementary": false,
+          "radical": "宀"
+        },
+        {
+          "char": "有",
+          "pinyin": "you3",
+          "meaning": "tener; haber",
+          "type": "V.",
+          "examples": [
+            "有几口人",
+            "有照片",
+            "有时间"
+          ],
+          "isSupplementary": false,
+          "radical": "月"
+        },
+        {
+          "char": "几",
+          "pinyin": "ji3",
+          "meaning": "cuánto (menos de 10)",
+          "type": "Pr.int.",
+          "examples": [
+            "几口人",
+            "几个",
+            "几点"
+          ],
+          "isSupplementary": false,
+          "radical": "几"
+        },
+        {
+          "char": "口",
+          "pinyin": "kou3",
+          "meaning": "clasificador para personas de una familia",
+          "type": "Clas.",
+          "examples": [
+            "几口人",
+            "六口人"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "的",
+          "pinyin": "de",
+          "meaning": "partícula posesiva o modificadora",
+          "type": "Pt.est.",
+          "examples": [
+            "我的",
+            "你的照片",
+            "中国的"
+          ],
+          "isSupplementary": false,
+          "radical": "白"
+        },
+        {
+          "char": "照片",
+          "pinyin": "zhao4pian4",
+          "meaning": "foto; fotografía",
+          "type": "S.",
+          "examples": [
+            "看照片",
+            "我的照片",
+            "一张照片"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "做",
+          "pinyin": "zuo4",
+          "meaning": "hacer",
+          "type": "V.",
+          "examples": [
+            "做什么",
+            "做工作",
+            "做饭"
+          ],
+          "isSupplementary": false,
+          "radical": "亻"
+        },
+        {
+          "char": "工作",
+          "pinyin": "gong1zuo4",
+          "meaning": "trabajar / trabajo; empleo",
+          "type": "V./S.",
+          "examples": [
+            "不工作",
+            "找工作",
+            "做工作"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "医生",
+          "pinyin": "yi1sheng1",
+          "meaning": "médico/a; doctor/a",
+          "type": "S.",
+          "examples": [
+            "我是医生",
+            "你是医生吗"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "哥哥",
+          "pinyin": "ge1ge",
+          "meaning": "hermano mayor",
+          "type": "S.",
+          "examples": [
+            "我哥哥",
+            "我哥哥是老师"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "弟弟",
+          "pinyin": "di4di",
+          "meaning": "hermano menor",
+          "type": "S.",
+          "examples": [
+            "我弟弟",
+            "我弟弟很帅"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "一共",
+          "pinyin": "yi1gong4",
+          "meaning": "en total",
+          "type": "Adv.",
+          "examples": [
+            "一共几口人",
+            "一共几个"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "个",
+          "pinyin": "ge",
+          "meaning": "clasificador de uso general",
+          "type": "Clas.",
+          "examples": [
+            "几个",
+            "一个",
+            "两个人"
+          ],
+          "isSupplementary": false,
+          "radical": "亻"
+        },
+        {
+          "char": "两",
+          "pinyin": "liang3",
+          "meaning": "dos (con clasificador)",
+          "type": "Num.",
+          "examples": [
+            "两个人",
+            "两口人",
+            "两张照片"
+          ],
+          "isSupplementary": false,
+          "radical": "一"
+        },
+        {
+          "char": "姐姐",
+          "pinyin": "jie3jie",
+          "meaning": "hermana mayor",
+          "type": "S.",
+          "examples": [
+            "我姐姐",
+            "我姐姐很漂亮"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "还",
+          "pinyin": "hai2",
+          "meaning": "además; también; todavía",
+          "type": "Adv.",
+          "examples": [
+            "还有",
+            "还有朋友",
+            "还好"
+          ],
+          "isSupplementary": false,
+          "radical": "辶"
+        },
+        {
+          "char": "谁",
+          "pinyin": "shei2",
+          "meaning": "quién",
+          "type": "Pr.int.",
+          "examples": [
+            "还有谁",
+            "这是谁",
+            "谁是老师"
+          ],
+          "isSupplementary": false,
+          "radical": "讠"
+        },
+        {
+          "char": "妹妹",
+          "pinyin": "mei4mei",
+          "meaning": "hermana menor",
+          "type": "S.",
+          "examples": [
+            "我妹妹",
+            "我妹妹很漂亮"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "没有",
+          "pinyin": "mei2you3",
+          "meaning": "no; no hay; no tener",
+          "type": "V.",
+          "examples": [
+            "没有照片",
+            "没有朋友",
+            "没有人"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "没",
+          "pinyin": "mei2",
+          "meaning": "no (negación de 有)",
+          "type": "V.",
+          "examples": [
+            "没有",
+            "没去",
+            "没好"
+          ],
+          "isSupplementary": false,
+          "radical": "氵"
+        },
+        {
+          "char": "狗",
+          "pinyin": "gou3",
+          "meaning": "perro",
+          "type": "S.",
+          "examples": [
+            "小狗",
+            "我的小狗"
+          ],
+          "isSupplementary": false,
+          "radical": "犭"
+        },
+        {
+          "char": "真",
+          "pinyin": "zhen1",
+          "meaning": "verdaderamente; de verdad",
+          "type": "Adv./Adj.",
+          "examples": [
+            "真好",
+            "真忙",
+            "真高兴",
+            "真漂亮"
+          ],
+          "isSupplementary": false,
+          "radical": "目"
+        },
+        {
+          "char": "漂亮",
+          "pinyin": "piao4liang",
+          "meaning": "hermoso/a; bonito/a",
+          "type": "Adj.",
+          "examples": [
+            "真漂亮",
+            "很漂亮"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "喝",
+          "pinyin": "he1",
+          "meaning": "beber",
+          "type": "V.",
+          "examples": [
+            "喝什么",
+            "喝茶",
+            "喝咖啡"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "茶",
+          "pinyin": "cha2",
+          "meaning": "té",
+          "type": "S.",
+          "examples": [
+            "喝茶",
+            "喜欢喝茶",
+            "一杯茶"
+          ],
+          "isSupplementary": false,
+          "radical": "艹"
+        },
+        {
+          "char": "咖啡",
+          "pinyin": "ka1fei1",
+          "meaning": "café",
+          "type": "S.",
+          "examples": [
+            "喝咖啡",
+            "喜欢喝咖啡",
+            "一杯咖啡"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "张",
+          "pinyin": "zhang1",
+          "meaning": "clasificador para objetos planos",
+          "type": "Clas.",
+          "examples": [
+            "一张照片",
+            "两张照片"
+          ],
+          "isSupplementary": false,
+          "radical": "弓"
+        },
+        {
+          "char": "女儿",
+          "pinyin": "nv3er2",
+          "meaning": "hija",
+          "type": "S.",
+          "examples": [
+            "我女儿",
+            "女儿很漂亮"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "女",
+          "pinyin": "nv3",
+          "meaning": "femenino; mujer",
+          "type": "Adj.",
+          "examples": [
+            "女儿",
+            "女老师",
+            "女生"
+          ],
+          "isSupplementary": false,
+          "radical": "女"
+        },
+        {
+          "char": "今年",
+          "pinyin": "jin1nian2",
+          "meaning": "este año",
+          "type": "S.",
+          "examples": [
+            "今年很忙",
+            "今年几岁"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "年",
+          "pinyin": "nian2",
+          "meaning": "año",
+          "type": "S.",
+          "examples": [
+            "今年",
+            "2025年",
+            "一年"
+          ],
+          "isSupplementary": false,
+          "radical": "干"
+        },
+        {
+          "char": "岁",
+          "pinyin": "sui4",
+          "meaning": "año (de edad)",
+          "type": "Clas.",
+          "examples": [
+            "几岁",
+            "五岁",
+            "二十岁"
+          ],
+          "isSupplementary": false,
+          "radical": "山"
+        },
+        {
+          "char": "今天",
+          "pinyin": "jin1tian1",
+          "meaning": "hoy",
+          "type": "S.",
+          "examples": [
+            "今天几点",
+            "今天很忙",
+            "今天上午"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "天",
+          "pinyin": "tian1",
+          "meaning": "día; cielo",
+          "type": "S.",
+          "examples": [
+            "今天",
+            "一天",
+            "两天"
+          ],
+          "isSupplementary": false,
+          "radical": "大"
+        },
+        {
+          "char": "钢琴",
+          "pinyin": "gang1qin2",
+          "meaning": "piano",
+          "type": "S.",
+          "examples": [
+            "学钢琴",
+            "钢琴课"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "课",
+          "pinyin": "ke4",
+          "meaning": "clase; lección",
+          "type": "S.",
+          "examples": [
+            "汉语课",
+            "钢琴课",
+            "没有课"
+          ],
+          "isSupplementary": false,
+          "radical": "讠"
+        },
+        {
+          "char": "孩子",
+          "pinyin": "hai2zi",
+          "meaning": "niño/a; hijo/a",
+          "type": "S.",
+          "examples": [
+            "中国孩子",
+            "一个孩子"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "啊",
+          "pinyin": "a",
+          "meaning": "partícula de confirmación o exclamación",
+          "type": "Pt.m.",
+          "examples": [
+            "真漂亮啊",
+            "好啊",
+            "是啊"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "晚上",
+          "pinyin": "wan3shang",
+          "meaning": "noche; por la noche",
+          "type": "S.",
+          "examples": [
+            "晚上工作",
+            "晚上学习",
+            "今天晚上"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "晚",
+          "pinyin": "wan3",
+          "meaning": "tarde; noche",
+          "type": "Adj.",
+          "examples": [
+            "晚上",
+            "去晚了",
+            "不晚"
+          ],
+          "isSupplementary": false,
+          "radical": "日"
+        },
+        {
+          "char": "英语",
+          "pinyin": "ying1yu3",
+          "meaning": "idioma inglés",
+          "type": "S.",
+          "examples": [
+            "英语课",
+            "学英语",
+            "说英语"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "律师",
+          "pinyin": "lv4shi1",
+          "meaning": "abogado/a",
+          "type": "S.",
+          "examples": [
+            "我是律师",
+            "你是律师吗"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "记者",
+          "pinyin": "ji4zhe3",
+          "meaning": "reportero/a; periodista",
+          "type": "S.",
+          "examples": [
+            "我是记者",
+            "他是记者"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "服务员",
+          "pinyin": "fu2wu4yuan2",
+          "meaning": "camarero/a; empleado de servicio",
+          "type": "S.",
+          "examples": [
+            "服务员！",
+            "他是服务员"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "经理",
+          "pinyin": "jing1li3",
+          "meaning": "gerente; director/a",
+          "type": "S.",
+          "examples": [
+            "他是经理",
+            "王经理"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "工程师",
+          "pinyin": "gong1cheng2shi1",
+          "meaning": "ingeniero/a",
+          "type": "S.",
+          "examples": [
+            "我是工程师",
+            "他是工程师"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "学生",
+          "pinyin": "xue2sheng",
+          "meaning": "estudiante",
+          "type": "S.",
+          "examples": [
+            "我是学生",
+            "中国学生",
+            "你们班学生"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "商人",
+          "pinyin": "shang1ren2",
+          "meaning": "comerciante; autónomo",
+          "type": "S.",
+          "examples": [
+            "他是商人",
+            "我爸爸是商人"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "先生",
+          "pinyin": "xian1sheng",
+          "meaning": "Sr.; señor; marido",
+          "type": "S.",
+          "examples": [
+            "王先生",
+            "陈先生"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "太太",
+          "pinyin": "tai4tai",
+          "meaning": "Sra.; señora; esposa",
+          "type": "S.",
+          "examples": [
+            "王太太",
+            "她太太"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "男朋友",
+          "pinyin": "nan2peng2you",
+          "meaning": "novio",
+          "type": "S.",
+          "examples": [
+            "他男朋友",
+            "找男朋友"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "女朋友",
+          "pinyin": "nv3peng2you",
+          "meaning": "novia",
+          "type": "S.",
+          "examples": [
+            "他女朋友",
+            "找女朋友"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "可乐",
+          "pinyin": "ke3le4",
+          "meaning": "coca cola",
+          "type": "S.",
+          "examples": [
+            "喝可乐",
+            "不好喝"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "牛奶",
+          "pinyin": "niu2nai3",
+          "meaning": "leche",
+          "type": "S.",
+          "examples": [
+            "喝牛奶",
+            "喜欢喝牛奶",
+            "一杯牛奶"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "豆浆",
+          "pinyin": "dou4jiang1",
+          "meaning": "leche de soja",
+          "type": "S.",
+          "examples": [
+            "豆浆好喝",
+            "喜欢喝豆浆"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "水",
+          "pinyin": "shui3",
+          "meaning": "agua",
+          "type": "S.",
+          "examples": [
+            "喝水",
+            "一杯水",
+            "喜欢喝水"
+          ],
+          "isSupplementary": true,
+          "radical": "水"
+        },
+        {
+          "char": "杯",
+          "pinyin": "bei1",
+          "meaning": "taza; vaso; copa",
+          "type": "Clas.",
+          "examples": [
+            "一杯水",
+            "一杯咖啡",
+            "一杯茶"
+          ],
+          "isSupplementary": true,
+          "radical": "木"
+        },
+        {
+          "char": "帅",
+          "pinyin": "shuai4",
+          "meaning": "guapo",
+          "type": "Adj.",
+          "examples": [
+            "很帅",
+            "真帅",
+            "他很帅"
+          ],
+          "isSupplementary": true,
+          "radical": "巾"
+        }
+      ]
+    },
+    {
+      "lesson": 4,
+      "titleZh": "你明天几点有课？",
+      "titleEs": "¿A qué hora tienes clase mañana?",
+      "words": [
+        {
+          "char": "明天",
+          "pinyin": "ming2tian1",
+          "meaning": "mañana (el día siguiente)",
+          "type": "S.",
+          "examples": [
+            "明天早上",
+            "明天下午",
+            "明天几点"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "多",
+          "pinyin": "duo1",
+          "meaning": "mucho; más",
+          "type": "Adj./Adv.",
+          "examples": [
+            "很多",
+            "多人",
+            "多少"
+          ],
+          "isSupplementary": false,
+          "radical": "夕"
+        },
+        {
+          "char": "特别",
+          "pinyin": "te4bie2",
+          "meaning": "especialmente; muy",
+          "type": "Adv.",
+          "examples": [
+            "特别忙",
+            "特别喜欢",
+            "特别好"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "点（钟）",
+          "pinyin": "dian3",
+          "meaning": "en punto (hora)",
+          "type": "Clas.",
+          "examples": [
+            "几点",
+            "两点钟",
+            "八点半"
+          ],
+          "isSupplementary": false,
+          "radical": "火"
+        },
+        {
+          "char": "上午",
+          "pinyin": "shang4wu3",
+          "meaning": "mañana; antes del mediodía",
+          "type": "S.",
+          "examples": [
+            "今天上午",
+            "上午的课",
+            "明天上午"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "半",
+          "pinyin": "ban4",
+          "meaning": "mitad; media (hora)",
+          "type": "Num.",
+          "examples": [
+            "八点半",
+            "半本书"
+          ],
+          "isSupplementary": false,
+          "radical": "十"
+        },
+        {
+          "char": "语法",
+          "pinyin": "yu3fa3",
+          "meaning": "gramática",
+          "type": "S.",
+          "examples": [
+            "学语法",
+            "练语法",
+            "汉语语法"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "汉字",
+          "pinyin": "han4zi4",
+          "meaning": "carácter chino",
+          "type": "S.",
+          "examples": [
+            "学汉字",
+            "写汉字",
+            "多少个汉字"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "下午",
+          "pinyin": "xia4wu3",
+          "meaning": "tarde (después del mediodía)",
+          "type": "S.",
+          "examples": [
+            "下午上课",
+            "下午课",
+            "今天下午"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "下",
+          "pinyin": "xia4",
+          "meaning": "abajo; siguiente",
+          "type": "S.",
+          "examples": [
+            "下午",
+            "下课",
+            "坐下"
+          ],
+          "isSupplementary": false,
+          "radical": "一"
+        },
+        {
+          "char": "口语",
+          "pinyin": "kou3yu3",
+          "meaning": "idioma hablado; expresión oral",
+          "type": "S.",
+          "examples": [
+            "练口语",
+            "说口语",
+            "口语课"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "对了",
+          "pinyin": "dui4 le",
+          "meaning": "a propósito; oye (para cambiar tema)",
+          "type": "V.",
+          "examples": [
+            "对了，你明天有课吗"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "时间",
+          "pinyin": "shi2jian1",
+          "meaning": "tiempo; hora",
+          "type": "S.",
+          "examples": [
+            "有时间",
+            "没时间",
+            "什么时间"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "电影",
+          "pinyin": "dian4ying3",
+          "meaning": "película; cine",
+          "type": "S.",
+          "examples": [
+            "看电影",
+            "喜欢看电影",
+            "有意思的电影"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "一起",
+          "pinyin": "yi1qi3",
+          "meaning": "juntos; a la vez",
+          "type": "Adv.",
+          "examples": [
+            "一起去",
+            "一起工作",
+            "一起学习"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "去",
+          "pinyin": "qu4",
+          "meaning": "ir",
+          "type": "V.",
+          "examples": [
+            "一起去",
+            "去学校",
+            "去哪儿"
+          ],
+          "isSupplementary": false,
+          "radical": "土"
+        },
+        {
+          "char": "吧",
+          "pinyin": "ba",
+          "meaning": "partícula de sugerencia o consulta",
+          "type": "Pt.m.",
+          "examples": [
+            "去吧",
+            "行吧",
+            "好吧"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "行",
+          "pinyin": "xing2",
+          "meaning": "estar bien; vale; poder",
+          "type": "V./S.",
+          "examples": [
+            "行不行",
+            "不行",
+            "还行"
+          ],
+          "isSupplementary": false,
+          "radical": "彳"
+        },
+        {
+          "char": "恐怕",
+          "pinyin": "kong3pa4",
+          "meaning": "me temo que; tal vez",
+          "type": "Adv.",
+          "examples": [
+            "恐怕不行",
+            "恐怕没时间"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "练习",
+          "pinyin": "lian4xi2",
+          "meaning": "practicar; ejercicio",
+          "type": "V./S.",
+          "examples": [
+            "练习口语",
+            "练习汉字",
+            "练习听力"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "现在",
+          "pinyin": "xian4zai4",
+          "meaning": "ahora; actualmente",
+          "type": "S.",
+          "examples": [
+            "现在几点",
+            "现在去",
+            "现在很忙"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "差",
+          "pinyin": "cha4",
+          "meaning": "faltar; carecer",
+          "type": "V.",
+          "examples": [
+            "差五分八点",
+            "差一点"
+          ],
+          "isSupplementary": false,
+          "radical": "工"
+        },
+        {
+          "char": "分",
+          "pinyin": "fen1",
+          "meaning": "minuto",
+          "type": "Clas.",
+          "examples": [
+            "差五分八点",
+            "十点十分"
+          ],
+          "isSupplementary": false,
+          "radical": "刀"
+        },
+        {
+          "char": "回",
+          "pinyin": "hui2",
+          "meaning": "regresar; volver",
+          "type": "V.",
+          "examples": [
+            "回家",
+            "回国",
+            "回学校"
+          ],
+          "isSupplementary": false,
+          "radical": "囗"
+        },
+        {
+          "char": "学校",
+          "pinyin": "xue2xiao4",
+          "meaning": "escuela; colegio",
+          "type": "S.",
+          "examples": [
+            "回学校",
+            "我们学校",
+            "去学校"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "班",
+          "pinyin": "ban1",
+          "meaning": "clase (grupo de estudiantes)",
+          "type": "S.",
+          "examples": [
+            "我们班",
+            "你们班",
+            "我们班活动"
+          ],
+          "isSupplementary": false,
+          "radical": "王"
+        },
+        {
+          "char": "活动",
+          "pinyin": "huo2dong4",
+          "meaning": "actividad; evento",
+          "type": "S.",
+          "examples": [
+            "有活动",
+            "我们班的活动"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "听说",
+          "pinyin": "ting1shuo1",
+          "meaning": "se dice; he oído que",
+          "type": "V.",
+          "examples": [
+            "刚听说",
+            "听说这个电影很好"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "听",
+          "pinyin": "ting1",
+          "meaning": "escuchar",
+          "type": "V.",
+          "examples": [
+            "听汉语",
+            "练习听",
+            "听说"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "说",
+          "pinyin": "shuo1",
+          "meaning": "decir; hablar",
+          "type": "V.",
+          "examples": [
+            "说汉语",
+            "不说英语",
+            "听说"
+          ],
+          "isSupplementary": false,
+          "radical": "讠"
+        },
+        {
+          "char": "女生",
+          "pinyin": "nv3sheng1",
+          "meaning": "estudiante (chica); chica",
+          "type": "S.",
+          "examples": [
+            "六个女生",
+            "女生多",
+            "你们班的女生"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "男生",
+          "pinyin": "nan2sheng1",
+          "meaning": "estudiante (chico); chico",
+          "type": "S.",
+          "examples": [
+            "十二个男生",
+            "男生多",
+            "我们班的男生"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "男",
+          "pinyin": "nan2",
+          "meaning": "masculino; hombre",
+          "type": "Adj.",
+          "examples": [
+            "男老师",
+            "男孩子",
+            "男生"
+          ],
+          "isSupplementary": false,
+          "radical": "田"
+        },
+        {
+          "char": "少",
+          "pinyin": "shao3",
+          "meaning": "poco; pocos",
+          "type": "Adj.",
+          "examples": [
+            "很少",
+            "不少",
+            "男生少"
+          ],
+          "isSupplementary": false,
+          "radical": "小"
+        },
+        {
+          "char": "只",
+          "pinyin": "zhi3",
+          "meaning": "solo; solamente",
+          "type": "Adv.",
+          "examples": [
+            "只有一个人",
+            "只说汉语",
+            "只喜欢妈妈"
+          ],
+          "isSupplementary": false,
+          "radical": "口"
+        },
+        {
+          "char": "多少",
+          "pinyin": "duo1shao",
+          "meaning": "cuánto; cuántos",
+          "type": "Pr.int.",
+          "examples": [
+            "多少人",
+            "多少个汉字",
+            "多少钱"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "有意思",
+          "pinyin": "you3 yi4si",
+          "meaning": "interesante",
+          "type": "Adj.",
+          "examples": [
+            "很有意思",
+            "没有意思",
+            "这个电影有意思"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "意思",
+          "pinyin": "yi4si",
+          "meaning": "significado; sentido",
+          "type": "S.",
+          "examples": [
+            "什么意思",
+            "这个汉字的意思"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "来",
+          "pinyin": "lai2",
+          "meaning": "venir",
+          "type": "V.",
+          "examples": [
+            "来中国",
+            "刚来北京",
+            "明天晚上来"
+          ],
+          "isSupplementary": false,
+          "radical": "木"
+        },
+        {
+          "char": "专业",
+          "pinyin": "zhuan1ye4",
+          "meaning": "especialidad; asignatura",
+          "type": "S.",
+          "examples": [
+            "什么专业",
+            "汉语专业"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "主意",
+          "pinyin": "zhu3yi4",
+          "meaning": "idea; plan",
+          "type": "S.",
+          "examples": [
+            "好主意",
+            "有一个主意"
+          ],
+          "isSupplementary": false,
+          "radical": "—"
+        },
+        {
+          "char": "起床",
+          "pinyin": "qi3chuang2",
+          "meaning": "levantarse (de la cama)",
+          "type": "VO.",
+          "examples": [
+            "几点起床",
+            "早上起床"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "早饭",
+          "pinyin": "zao3fan4",
+          "meaning": "desayuno",
+          "type": "S.",
+          "examples": [
+            "吃早饭",
+            "做早饭"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "午饭",
+          "pinyin": "wu3fan4",
+          "meaning": "almuerzo; comida",
+          "type": "S.",
+          "examples": [
+            "吃午饭",
+            "做午饭"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "运动",
+          "pinyin": "yun4dong4",
+          "meaning": "deportes; hacer ejercicio",
+          "type": "S./V.",
+          "examples": [
+            "喜欢运动",
+            "做运动"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "打球",
+          "pinyin": "da3 qiu2",
+          "meaning": "jugar a la pelota",
+          "type": "VO.",
+          "examples": [
+            "去打球",
+            "喜欢打球"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "跑步",
+          "pinyin": "pao3bu4",
+          "meaning": "correr; trotar",
+          "type": "VO.",
+          "examples": [
+            "去跑步",
+            "喜欢跑步"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "电视",
+          "pinyin": "dian4shi4",
+          "meaning": "televisión; TV",
+          "type": "S.",
+          "examples": [
+            "看电视",
+            "喜欢看电视"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "晚饭",
+          "pinyin": "wan3fan4",
+          "meaning": "cena",
+          "type": "S.",
+          "examples": [
+            "吃晚饭",
+            "做晚饭"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "睡觉",
+          "pinyin": "shui4jiao4",
+          "meaning": "dormir; acostarse",
+          "type": "VO.",
+          "examples": [
+            "几点睡觉",
+            "去睡觉"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "听力",
+          "pinyin": "ting1li4",
+          "meaning": "comprensión auditiva",
+          "type": "S.",
+          "examples": [
+            "汉语听力",
+            "练习听力"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "文学",
+          "pinyin": "wen2xue2",
+          "meaning": "literatura",
+          "type": "S.",
+          "examples": [
+            "文学课",
+            "学习文学"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "历史",
+          "pinyin": "li4shi3",
+          "meaning": "historia",
+          "type": "S.",
+          "examples": [
+            "历史课",
+            "学习历史"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "语言",
+          "pinyin": "yu3yan2",
+          "meaning": "idioma; lenguaje",
+          "type": "S.",
+          "examples": [
+            "学习语言",
+            "说什么语言"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "经济",
+          "pinyin": "jing1ji4",
+          "meaning": "economía",
+          "type": "S.",
+          "examples": [
+            "经济课",
+            "学习经济"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "文化",
+          "pinyin": "wen2hua4",
+          "meaning": "cultura",
+          "type": "S.",
+          "examples": [
+            "文化课",
+            "中国文化",
+            "学习文化"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "容易",
+          "pinyin": "rong2yi4",
+          "meaning": "fácil",
+          "type": "Adj.",
+          "examples": [
+            "很容易",
+            "不容易"
+          ],
+          "isSupplementary": true,
+          "radical": "—"
+        },
+        {
+          "char": "难",
+          "pinyin": "nan2",
+          "meaning": "difícil",
+          "type": "Adj.",
+          "examples": [
+            "很难",
+            "不难",
+            "太难了"
+          ],
+          "isSupplementary": true,
+          "radical": "又"
+        }
+      ]
+    },
+    {
+      "lesson": 5,
+      "titleZh": "祝你生日快乐",
+      "titleEs": "Feliz cumpleaños",
+      "words": [
+        { "char": "星期日", "pinyin": "xing1qi1ri4", "meaning": "domingo", "type": "S.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "星期", "pinyin": "xing1qi1", "meaning": "semana", "type": "S.", "examples": ["星期一", "星期几", "一个星期"], "isSupplementary": false, "radical": "—" },
+        { "char": "事儿", "pinyin": "shi4r", "meaning": "asunto; cosa", "type": "S.", "examples": ["什么事儿", "有事儿吗", "好事儿"], "isSupplementary": false, "radical": "—" },
+        { "char": "生日", "pinyin": "sheng1ri4", "meaning": "cumpleaños", "type": "S.", "examples": ["他的生日", "二十岁生日"], "isSupplementary": false, "radical": "—" },
+        { "char": "日", "pinyin": "ri4", "meaning": "día", "type": "S.", "examples": ["一月一日"], "isSupplementary": false, "radical": "日" },
+        { "char": "聚会", "pinyin": "ju4hui4", "meaning": "reunión; fiesta", "type": "S.", "examples": ["生日聚会", "有一个聚会"], "isSupplementary": false, "radical": "—" },
+        { "char": "大家", "pinyin": "da4jia1", "meaning": "todos", "type": "Pron.", "examples": ["大家好", "我们大家", "大家一起去"], "isSupplementary": false, "radical": "—" },
+        { "char": "唱歌", "pinyin": "chang4 ge1", "meaning": "cantar (una canción)", "type": "VO", "examples": ["喜欢唱歌"], "isSupplementary": false, "radical": "—" },
+        { "char": "唱", "pinyin": "chang4", "meaning": "cantar", "type": "V.", "examples": ["唱中国歌", "唱生日歌"], "isSupplementary": false, "radical": "口" },
+        { "char": "歌", "pinyin": "ge1", "meaning": "canción", "type": "S.", "examples": [], "isSupplementary": false, "radical": "欠" },
+        { "char": "跳舞", "pinyin": "tiao4wu3", "meaning": "bailar", "type": "VO", "examples": ["不喜欢跳舞", "跳个舞"], "isSupplementary": false, "radical": "—" },
+        { "char": "跳", "pinyin": "tiao4", "meaning": "saltar", "type": "V.", "examples": [], "isSupplementary": false, "radical": "足" },
+        { "char": "舞", "pinyin": "wu3", "meaning": "danza", "type": "S.", "examples": [], "isSupplementary": false, "radical": "舛" },
+        { "char": "参加", "pinyin": "can1jia1", "meaning": "participar; asistir", "type": "V.", "examples": ["参加生日聚会", "参加活动"], "isSupplementary": false, "radical": "—" },
+        { "char": "号", "pinyin": "hao4", "meaning": "día del mes; fecha; talla", "type": "S.", "examples": ["15号", "325号", "小号", "大号"], "isSupplementary": false, "radical": "口" },
+        { "char": "月", "pinyin": "yue4", "meaning": "mes", "type": "S.", "examples": ["十二个月", "十二月", "二月四日", "八月二十二号"], "isSupplementary": false, "radical": "月" },
+        { "char": "不好意思", "pinyin": "bu4 hao3yi4si", "meaning": "lo siento; sentirse avergonzado", "type": "EI", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "可惜", "pinyin": "ke3xi1", "meaning": "es una lástima", "type": "Adj.", "examples": ["很可惜"], "isSupplementary": false, "radical": "—" },
+        { "char": "送", "pinyin": "song4", "meaning": "obsequiar; entregar", "type": "V.", "examples": ["送饺子", "送照片"], "isSupplementary": false, "radical": "辶" },
+        { "char": "礼物", "pinyin": "li3wu4", "meaning": "regalo; obsequio", "type": "S.", "examples": ["生日礼物", "送礼物"], "isSupplementary": false, "radical": "—" },
+        { "char": "蛋糕", "pinyin": "dan4gao1", "meaning": "pastel", "type": "S.", "examples": ["一个蛋糕", "吃蛋糕", "送蛋糕", "生日蛋糕"], "isSupplementary": false, "radical": "—" },
+        { "char": "盒", "pinyin": "he2", "meaning": "caja", "type": "S.", "examples": ["一盒点心", "一盒咖啡", "一盒茶"], "isSupplementary": false, "radical": "皿" },
+        { "char": "巧克力", "pinyin": "qiao3ke4li4", "meaning": "chocolate", "type": "S.", "examples": ["送一盒巧克力", "吃巧克力"], "isSupplementary": false, "radical": "—" },
+        { "char": "多大", "pinyin": "duo1 da4", "meaning": "cuántos años", "type": "EI", "examples": ["他今年多大"], "isSupplementary": false, "radical": "—" },
+        { "char": "出生", "pinyin": "chu1sheng1", "meaning": "nacer", "type": "V.", "examples": ["1988年出生"], "isSupplementary": false, "radical": "—" },
+        { "char": "属", "pinyin": "shu3", "meaning": "nacido en el año de (del horóscopo chino)", "type": "V.", "examples": ["属狗", "属什么"], "isSupplementary": false, "radical": "尸" },
+        { "char": "龙", "pinyin": "long2", "meaning": "dragón", "type": "S.", "examples": ["属龙", "龙年"], "isSupplementary": false, "radical": "龙" },
+        { "char": "中文", "pinyin": "zhong1wen2", "meaning": "chino (idioma)", "type": "S.", "examples": ["说中文", "学中文", "中文名字"], "isSupplementary": false, "radical": "—" },
+        { "char": "就", "pinyin": "jiu4", "meaning": "exactamente", "type": "Adv.", "examples": ["就是他", "就是我哥哥", "就在今天"], "isSupplementary": false, "radical": "尢" },
+        { "char": "英国", "pinyin": "ying1guo2", "meaning": "Reino Unido; Inglaterra", "type": "NP", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "林强", "pinyin": "lin2qiang2", "meaning": "Lin Qiang (estudiante británico, hermano mayor de Lin Na)", "type": "NP", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "欢迎", "pinyin": "huan1ying2", "meaning": "dar la bienvenida a", "type": "V.", "examples": ["欢迎你", "欢迎大家"], "isSupplementary": false, "radical": "—" },
+        { "char": "快乐", "pinyin": "kuai4le4", "meaning": "feliz", "type": "Adj.", "examples": ["生日快乐", "很快乐"], "isSupplementary": false, "radical": "—" },
+        { "char": "不客气", "pinyin": "bu2 ke4qi", "meaning": "de nada", "type": "EI", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "客气", "pinyin": "ke4qi", "meaning": "cortés", "type": "Adj.", "examples": ["很客气"], "isSupplementary": false, "radical": "—" },
+        { "char": "祝", "pinyin": "zhu4", "meaning": "desear", "type": "V.", "examples": ["祝你生日快乐"], "isSupplementary": false, "radical": "礻" },
+        { "char": "介绍", "pinyin": "jie4shao4", "meaning": "presentar", "type": "V.", "examples": ["介绍朋友", "介绍老师"], "isSupplementary": false, "radical": "—" },
+        { "char": "一下", "pinyin": "yi1xia4", "meaning": "(tras un verbo) acción corta o informal", "type": "Num.-Clas.", "examples": ["认识一下", "看一下", "问一下"], "isSupplementary": false, "radical": "—" },
+        { "char": "常常", "pinyin": "chang2chang2", "meaning": "a menudo", "type": "Adv.", "examples": ["常常说中文"], "isSupplementary": false, "radical": "—" },
+        { "char": "常", "pinyin": "chang2", "meaning": "a menudo", "type": "Adv.", "examples": [], "isSupplementary": false, "radical": "巾" },
+        { "char": "教", "pinyin": "jiao1", "meaning": "enseñar", "type": "V.", "examples": ["教汉语", "教钢琴", "教我"], "isSupplementary": false, "radical": "攵" },
+        { "char": "写", "pinyin": "xie3", "meaning": "escribir", "type": "V.", "examples": ["写汉字", "写名字"], "isSupplementary": false, "radical": "冖" },
+        { "char": "昨天", "pinyin": "zuo2tian1", "meaning": "ayer", "type": "S.", "examples": ["昨天下午", "昨天晚上八点"], "isSupplementary": false, "radical": "—" },
+        { "char": "寿面", "pinyin": "shou4mian4", "meaning": "(de cumpleaños) tallarines de la longevidad", "type": "S.", "examples": ["吃寿面", "做寿面"], "isSupplementary": false, "radical": "—" },
+        { "char": "一会儿", "pinyin": "yi1hui4r", "meaning": "un momento; dentro de un rato", "type": "Num.-Clas.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "咱们", "pinyin": "zan2men", "meaning": "nosotros (inclusivo)", "type": "Pron.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "干杯", "pinyin": "gan1bei1", "meaning": "hacer un brindis; salud", "type": "VO", "examples": ["咱们干杯"], "isSupplementary": false, "radical": "—" },
+        { "char": "前天", "pinyin": "qian2tian1", "meaning": "anteayer", "type": "S.", "examples": ["前天下午"], "isSupplementary": true, "radical": "—" },
+        { "char": "后天", "pinyin": "hou4tian1", "meaning": "pasado mañana", "type": "S.", "examples": ["后天晚上"], "isSupplementary": true, "radical": "—" },
+        { "char": "上星期一", "pinyin": "shang4 xing1qi1yi1", "meaning": "el lunes pasado", "type": "—", "examples": ["上星期一下午"], "isSupplementary": true, "radical": "—" },
+        { "char": "下星期一", "pinyin": "xia4 xing1qi1yi1", "meaning": "el próximo lunes", "type": "—", "examples": ["下星期一一起活动"], "isSupplementary": true, "radical": "—" },
+        { "char": "上个月", "pinyin": "shang4 ge4 yue4", "meaning": "el mes pasado", "type": "—", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "下个月", "pinyin": "xia4 ge4 yue4", "meaning": "el próximo mes", "type": "—", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "音乐会", "pinyin": "yin1yue4hui4", "meaning": "concierto", "type": "S.", "examples": ["听音乐会"], "isSupplementary": true, "radical": "—" },
+        { "char": "老鼠", "pinyin": "lao3shu3", "meaning": "rata; ratón", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "牛", "pinyin": "niu2", "meaning": "vaca; buey", "type": "S.", "examples": [], "isSupplementary": true, "radical": "牛" },
+        { "char": "老虎", "pinyin": "lao3hu3", "meaning": "tigre", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "蛇", "pinyin": "she2", "meaning": "serpiente", "type": "S.", "examples": [], "isSupplementary": true, "radical": "虫" },
+        { "char": "马", "pinyin": "ma3", "meaning": "caballo", "type": "S.", "examples": [], "isSupplementary": true, "radical": "马" },
+        { "char": "羊", "pinyin": "yang2", "meaning": "oveja; cabra", "type": "S.", "examples": [], "isSupplementary": true, "radical": "羊" },
+        { "char": "猴", "pinyin": "hou2", "meaning": "mono", "type": "S.", "examples": [], "isSupplementary": true, "radical": "犭" },
+        { "char": "鸡", "pinyin": "ji1", "meaning": "gallo", "type": "S.", "examples": [], "isSupplementary": true, "radical": "鸟" }
+      ]
+    },
+    {
+      "lesson": 6,
+      "titleZh": "图书馆在食堂北边",
+      "titleEs": "La biblioteca está al norte del comedor",
+      "words": [
+        { "char": "新", "pinyin": "xin1", "meaning": "nuevo", "type": "Adj.", "examples": ["新老师", "新年"], "isSupplementary": false, "radical": "斤" },
+        { "char": "同学", "pinyin": "tong2xue2", "meaning": "compañero de clase; compañero de escuela", "type": "S.", "examples": ["我的同学", "新同学"], "isSupplementary": false, "radical": "—" },
+        { "char": "食堂", "pinyin": "shi2tang2", "meaning": "comedor", "type": "S.", "examples": ["学校的食堂", "去食堂"], "isSupplementary": false, "radical": "—" },
+        { "char": "哪儿", "pinyin": "na3r", "meaning": "dónde", "type": "Pr.int.", "examples": ["在哪儿", "去哪儿"], "isSupplementary": false, "radical": "—" },
+        { "char": "校门", "pinyin": "xiao4men2", "meaning": "puerta de la escuela; entrada del campus", "type": "S.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "门", "pinyin": "men2", "meaning": "puerta; portón; entrada", "type": "S.", "examples": ["大门"], "isSupplementary": false, "radical": "门" },
+        { "char": "右边", "pinyin": "you4bian1", "meaning": "derecha (lado)", "type": "S.", "examples": ["右边的同学", "在校门右边"], "isSupplementary": false, "radical": "—" },
+        { "char": "右", "pinyin": "you4", "meaning": "derecha", "type": "S.", "examples": [], "isSupplementary": false, "radical": "口" },
+        { "char": "边", "pinyin": "bian1", "meaning": "lado", "type": "Suf.", "examples": [], "isSupplementary": false, "radical": "辶" },
+        { "char": "跟", "pinyin": "gen1", "meaning": "con", "type": "Prep.", "examples": ["跟老师学", "跟我来"], "isSupplementary": false, "radical": "足" },
+        { "char": "这儿", "pinyin": "zhe4r", "meaning": "aquí", "type": "Pron.", "examples": ["来这儿", "在这儿"], "isSupplementary": false, "radical": "—" },
+        { "char": "地图", "pinyin": "di4tu2", "meaning": "mapa", "type": "S.", "examples": ["学校的地图", "北京地图", "看地图"], "isSupplementary": false, "radical": "—" },
+        { "char": "给", "pinyin": "gei3", "meaning": "a; para", "type": "Prep.", "examples": ["给你介绍一下", "给我们唱歌", "给我们上课"], "isSupplementary": false, "radical": "纟" },
+        { "char": "旁边", "pinyin": "pang2bian1", "meaning": "lado; al lado de", "type": "S.", "examples": ["旁边的同学", "在食堂旁边"], "isSupplementary": false, "radical": "—" },
+        { "char": "办公楼", "pinyin": "ban4gong1lou2", "meaning": "edificio de oficinas; de administración", "type": "S.", "examples": ["学校的办公楼", "去办公楼"], "isSupplementary": false, "radical": "—" },
+        { "char": "办公", "pinyin": "ban4gong1", "meaning": "despachar asuntos; trabajar en una oficina", "type": "VO", "examples": ["今天不办公"], "isSupplementary": false, "radical": "—" },
+        { "char": "楼", "pinyin": "lou2", "meaning": "edificio", "type": "S.", "examples": ["二楼", "在五楼", "楼上", "楼下"], "isSupplementary": false, "radical": "木" },
+        { "char": "图书馆", "pinyin": "tu2shu1guan3", "meaning": "biblioteca", "type": "S.", "examples": ["去图书馆", "有图书馆", "图书馆右边"], "isSupplementary": false, "radical": "—" },
+        { "char": "书", "pinyin": "shu1", "meaning": "libro", "type": "S.", "examples": ["看书"], "isSupplementary": false, "radical": "—" },
+        { "char": "北边", "pinyin": "bei3bian1", "meaning": "norte (lado)", "type": "S.", "examples": ["北边的办公楼", "在学校北边"], "isSupplementary": false, "radical": "—" },
+        { "char": "北", "pinyin": "bei3", "meaning": "norte", "type": "S.", "examples": ["北门"], "isSupplementary": false, "radical": "匕" },
+        { "char": "西边", "pinyin": "xi1bian1", "meaning": "oeste (lado)", "type": "S.", "examples": ["西边的食堂", "在图书馆西边"], "isSupplementary": false, "radical": "—" },
+        { "char": "西", "pinyin": "xi1", "meaning": "oeste", "type": "S.", "examples": ["西门"], "isSupplementary": false, "radical": "西" },
+        { "char": "体育馆", "pinyin": "ti3yu4guan3", "meaning": "gimnasio; estadio", "type": "S.", "examples": ["去体育馆", "北京体育馆", "体育馆的北边"], "isSupplementary": false, "radical": "—" },
+        { "char": "体育", "pinyin": "ti3yu4", "meaning": "educación física; entrenamiento físico", "type": "S.", "examples": ["体育课", "学体育"], "isSupplementary": false, "radical": "—" },
+        { "char": "里边", "pinyin": "li3bian1", "meaning": "en; dentro de", "type": "S.", "examples": ["在里边", "图书馆里边"], "isSupplementary": false, "radical": "—" },
+        { "char": "里", "pinyin": "li3", "meaning": "en; dentro de", "type": "S.", "examples": ["图书馆里", "学校里", "班里", "家里", "银行里"], "isSupplementary": false, "radical": "里" },
+        { "char": "银行", "pinyin": "yin2hang2", "meaning": "banco", "type": "S.", "examples": ["去银行", "在银行", "有银行", "中国银行", "银行里"], "isSupplementary": false, "radical": "—" },
+        { "char": "东边", "pinyin": "dong1bian1", "meaning": "este (lado)", "type": "S.", "examples": ["东边的体育馆", "在校门东边"], "isSupplementary": false, "radical": "—" },
+        { "char": "东", "pinyin": "dong1", "meaning": "este", "type": "S.", "examples": ["东门"], "isSupplementary": false, "radical": "一" },
+        { "char": "宿舍", "pinyin": "su4she4", "meaning": "dormitorio", "type": "S.", "examples": ["回宿舍", "去宿舍", "学生宿舍", "女生宿舍", "宿舍里"], "isSupplementary": false, "radical": "—" },
+        { "char": "教学", "pinyin": "jiao4xue2", "meaning": "enseñanza y aprendizaje", "type": "S.", "examples": ["教学楼", "汉语教学"], "isSupplementary": false, "radical": "—" },
+        { "char": "先", "pinyin": "xian1", "meaning": "primero; antes", "type": "Adv.", "examples": ["先去", "先看", "先说", "先做", "先学", "先认识"], "isSupplementary": false, "radical": "儿" },
+        { "char": "别", "pinyin": "bie2", "meaning": "no (imperativo)", "type": "Adv.", "examples": ["别客气", "别看", "别去"], "isSupplementary": false, "radical": "刂" },
+        { "char": "着急", "pinyin": "zhao2ji2", "meaning": "preocupado; ansioso", "type": "Adj.", "examples": ["别着急", "很着急", "不着急"], "isSupplementary": false, "radical": "—" },
+        { "char": "小姐", "pinyin": "xiao3jie3", "meaning": "señora; señorita", "type": "S.", "examples": ["林小姐", "王小姐"], "isSupplementary": false, "radical": "—" },
+        { "char": "地方", "pinyin": "di4fang", "meaning": "lugar; región", "type": "S.", "examples": ["一个地方", "在什么地方", "是什么地方"], "isSupplementary": false, "radical": "—" },
+        { "char": "知道", "pinyin": "zhi1dao4", "meaning": "saber", "type": "V.", "examples": ["不知道", "我知道"], "isSupplementary": false, "radical": "—" },
+        { "char": "超市", "pinyin": "chao1shi4", "meaning": "supermercado", "type": "S.", "examples": ["一个超市", "去超市", "小超市", "超市里"], "isSupplementary": false, "radical": "—" },
+        { "char": "前边", "pinyin": "qian2bian1", "meaning": "frente a; delante de", "type": "S.", "examples": ["前边的同学", "在超市前边"], "isSupplementary": false, "radical": "—" },
+        { "char": "前", "pinyin": "qian2", "meaning": "delante", "type": "S.", "examples": ["图书馆前", "门前"], "isSupplementary": false, "radical": "刂" },
+        { "char": "对面", "pinyin": "dui4mian4", "meaning": "opuesto; enfrente de", "type": "S.", "examples": ["对面的大楼", "在我家对面"], "isSupplementary": false, "radical": "—" },
+        { "char": "饭馆", "pinyin": "fan4guan3", "meaning": "restaurante", "type": "S.", "examples": ["去饭馆", "饭馆里"], "isSupplementary": false, "radical": "—" },
+        { "char": "过", "pinyin": "guo4", "meaning": "cruzar; pasar", "type": "V.", "examples": [], "isSupplementary": false, "radical": "辶" },
+        { "char": "马路", "pinyin": "ma3lu4", "meaning": "carretera; calle", "type": "S.", "examples": ["马路的对面", "过马路"], "isSupplementary": false, "radical": "—" },
+        { "char": "路", "pinyin": "lu4", "meaning": "carretera; camino; calle", "type": "S.", "examples": ["大路", "小路"], "isSupplementary": false, "radical": "足" },
+        { "char": "后边", "pinyin": "hou4bian1", "meaning": "atrás; detrás", "type": "S.", "examples": ["超市后边", "在饭馆后边"], "isSupplementary": false, "radical": "—" },
+        { "char": "后", "pinyin": "hou4", "meaning": "atrás", "type": "S.", "examples": ["后门"], "isSupplementary": false, "radical": "口" },
+        { "char": "条", "pinyin": "tiao2", "meaning": "(clasif. para algo largo y estrecho) franja; pieza", "type": "Clas.", "examples": ["一条马路", "一条龙", "一条狗"], "isSupplementary": false, "radical": "木" },
+        { "char": "胡同", "pinyin": "hu2tong4", "meaning": "hutong; callejón", "type": "S.", "examples": ["北京的胡同", "一条胡同"], "isSupplementary": false, "radical": "—" },
+        { "char": "等", "pinyin": "deng3", "meaning": "esperar", "type": "V.", "examples": ["等人", "等他们", "等一下", "等一会儿"], "isSupplementary": false, "radical": "竹" },
+        { "char": "街道", "pinyin": "jie1dao4", "meaning": "calle", "type": "S.", "examples": ["一条街道", "街道的对面"], "isSupplementary": false, "radical": "—" },
+        { "char": "街", "pinyin": "jie1", "meaning": "calle", "type": "S.", "examples": ["大街", "小街", "街上"], "isSupplementary": false, "radical": "行" },
+        { "char": "老", "pinyin": "lao3", "meaning": "viejo", "type": "Adj.", "examples": ["老人", "老北京", "老上海"], "isSupplementary": false, "radical": "老" },
+        { "char": "卫生间", "pinyin": "wei4sheng1jian1", "meaning": "cuarto de baño", "type": "S.", "examples": ["去卫生间", "卫生间在哪儿"], "isSupplementary": true, "radical": "—" },
+        { "char": "卧室", "pinyin": "wo4shi4", "meaning": "dormitorio", "type": "S.", "examples": ["回卧室", "卧室旁边"], "isSupplementary": true, "radical": "—" },
+        { "char": "客厅", "pinyin": "ke4ting1", "meaning": "salón", "type": "S.", "examples": ["在客厅", "客厅旁边"], "isSupplementary": true, "radical": "—" },
+        { "char": "阳台", "pinyin": "yang2tai2", "meaning": "balcón", "type": "S.", "examples": ["在阳台", "阳台里"], "isSupplementary": true, "radical": "—" },
+        { "char": "厨房", "pinyin": "chu2fang2", "meaning": "cocina", "type": "S.", "examples": ["厨房里", "厨房左边"], "isSupplementary": true, "radical": "—" },
+        { "char": "书房", "pinyin": "shu1fang2", "meaning": "cuarto de estudio", "type": "S.", "examples": ["在书房写字"], "isSupplementary": true, "radical": "—" },
+        { "char": "咖啡厅", "pinyin": "ka1fei1ting1", "meaning": "cafetería; café", "type": "S.", "examples": ["去咖啡厅", "咖啡厅里"], "isSupplementary": true, "radical": "—" },
+        { "char": "酒吧", "pinyin": "jiu3ba1", "meaning": "bar", "type": "S.", "examples": ["酒吧前面"], "isSupplementary": true, "radical": "—" },
+        { "char": "清真餐厅", "pinyin": "qing1zhen1 can1ting1", "meaning": "restaurante musulmán; restaurante halal", "type": "S.", "examples": ["在清真餐厅吃饭"], "isSupplementary": true, "radical": "—" },
+        { "char": "操场", "pinyin": "cao1chang3", "meaning": "campo deportivo", "type": "S.", "examples": ["操场南边", "操场上"], "isSupplementary": true, "radical": "—" },
+        { "char": "那儿", "pinyin": "na4r", "meaning": "allí", "type": "Pron.", "examples": ["去那儿"], "isSupplementary": true, "radical": "—" },
+        { "char": "左边", "pinyin": "zuo3bian1", "meaning": "izquierda (lado)", "type": "S.", "examples": ["左边的办公楼", "在食堂左边"], "isSupplementary": true, "radical": "—" },
+        { "char": "上边", "pinyin": "shang4bian1", "meaning": "arriba; encima de", "type": "S.", "examples": ["钢琴上边"], "isSupplementary": true, "radical": "—" },
+        { "char": "下边", "pinyin": "xia4bian1", "meaning": "abajo; debajo de", "type": "S.", "examples": ["楼下边"], "isSupplementary": true, "radical": "—" },
+        { "char": "外边", "pinyin": "wai4bian1", "meaning": "afuera", "type": "S.", "examples": ["去外边", "银行外边"], "isSupplementary": true, "radical": "—" }
+      ]
+    },
+    {
+      "lesson": 7,
+      "titleZh": "苹果多少钱一斤",
+      "titleEs": "¿Cuánto cuesta medio kilo de manzanas?",
+      "words": [
+        { "char": "老板", "pinyin": "lao3ban3", "meaning": "tendero; propietario; jefe", "type": "S.", "examples": ["王老板", "丁老板"], "isSupplementary": false, "radical": "—" },
+        { "char": "想", "pinyin": "xiang3", "meaning": "pensar; querer; gustaría", "type": "V./V.aux.", "examples": ["想问题", "想一下", "想来", "想参加", "想看电影", "不想去上海"], "isSupplementary": false, "radical": "心" },
+        { "char": "买", "pinyin": "mai3", "meaning": "comprar", "type": "V.", "examples": ["买点心", "买书", "买礼物", "不买", "买什么"], "isSupplementary": false, "radical": "—" },
+        { "char": "(一)点儿", "pinyin": "yi1dian3r", "meaning": "un poco; algo", "type": "Num.-Clas.", "examples": ["吃点儿饺子", "喝点儿什么", "看点儿书"], "isSupplementary": false, "radical": "—" },
+        { "char": "苹果", "pinyin": "ping2guo3", "meaning": "manzana", "type": "S.", "examples": ["买点儿苹果", "好吃的苹果"], "isSupplementary": false, "radical": "—" },
+        { "char": "先生", "pinyin": "xian1sheng", "meaning": "señor; Sr.", "type": "S.", "examples": ["张先生", "宋先生"], "isSupplementary": false, "radical": "—" },
+        { "char": "哪里", "pinyin": "na3li", "meaning": "(expresión de modestia) en absoluto", "type": "Pr.int.", "examples": ["哪里哪里"], "isSupplementary": false, "radical": "—" },
+        { "char": "钱", "pinyin": "qian2", "meaning": "dinero", "type": "S.", "examples": ["多少钱", "有钱的人", "没有钱"], "isSupplementary": false, "radical": "钅" },
+        { "char": "斤", "pinyin": "jin1", "meaning": "jin (500g)", "type": "Clas.", "examples": ["一斤", "十斤苹果", "多少钱一斤"], "isSupplementary": false, "radical": "斤" },
+        { "char": "块（钱）", "pinyin": "kuai4", "meaning": "kuai (clasificador coloquial de dinero)", "type": "Clas.", "examples": ["五块（钱）", "五块（钱）一斤"], "isSupplementary": false, "radical": "土" },
+        { "char": "问题", "pinyin": "wen4ti2", "meaning": "pregunta; problema; asunto", "type": "S.", "examples": ["有问题", "没有问题"], "isSupplementary": false, "radical": "—" },
+        { "char": "怎么", "pinyin": "zen3me", "meaning": "cómo", "type": "Pr.int.", "examples": ["怎么说", "怎么做", "怎么写", "怎么去", "怎么学"], "isSupplementary": false, "radical": "—" },
+        { "char": "草莓", "pinyin": "cao3mei2", "meaning": "fresa", "type": "S.", "examples": ["买点儿草莓", "两斤草莓"], "isSupplementary": false, "radical": "—" },
+        { "char": "卖", "pinyin": "mai4", "meaning": "vender", "type": "V.", "examples": ["卖苹果", "草莓怎么卖"], "isSupplementary": false, "radical": "—" },
+        { "char": "贵", "pinyin": "gui4", "meaning": "caro", "type": "Adj.", "examples": ["真贵", "不贵"], "isSupplementary": false, "radical": "贝" },
+        { "char": "可以", "pinyin": "ke3yi3", "meaning": "poder", "type": "V.aux.", "examples": ["可以参加", "可以去", "可以看一下", "不可以"], "isSupplementary": false, "radical": "—" },
+        { "char": "尝", "pinyin": "chang2", "meaning": "probar", "type": "V.", "examples": ["尝一下", "可以尝一下"], "isSupplementary": false, "radical": "口" },
+        { "char": "便宜", "pinyin": "pian2yi", "meaning": "económico; barato", "type": "Adj.", "examples": ["很便宜", "不便宜", "便宜点儿"], "isSupplementary": false, "radical": "—" },
+        { "char": "给", "pinyin": "gei3", "meaning": "dar", "type": "V.", "examples": ["给老板钱", "给他草莓", "给你咖啡"], "isSupplementary": false, "radical": "纟" },
+        { "char": "找", "pinyin": "zhao3", "meaning": "dar el cambio", "type": "V.", "examples": ["找钱", "找我两块"], "isSupplementary": false, "radical": "扌" },
+        { "char": "再", "pinyin": "zai4", "meaning": "de nuevo", "type": "Adv.", "examples": ["再吃点儿", "再坐一会儿", "再等一会儿", "再唱一个"], "isSupplementary": false, "radical": "一" },
+        { "char": "件", "pinyin": "jian4", "meaning": "pieza/artículo (de ropa)", "type": "Clas.", "examples": ["两件", "这件"], "isSupplementary": false, "radical": "亻" },
+        { "char": "衬衫", "pinyin": "chen4shan1", "meaning": "camisa; blusa", "type": "S.", "examples": ["一件衬衫", "买衬衫", "新衬衫"], "isSupplementary": false, "radical": "—" },
+        { "char": "售货员", "pinyin": "shou4huo4yuan2", "meaning": "vendedor/a", "type": "S.", "examples": ["女售货员", "一个售货员"], "isSupplementary": false, "radical": "—" },
+        { "char": "员", "pinyin": "yuan2", "meaning": "(sufijo) persona vinculada a una actividad", "type": "Suf.", "examples": [], "isSupplementary": false, "radical": "口" },
+        { "char": "百", "pinyin": "bai3", "meaning": "cien", "type": "Num.", "examples": ["一百", "三百九十九", "五百八十七"], "isSupplementary": false, "radical": "白" },
+        { "char": "试", "pinyin": "shi4", "meaning": "probar", "type": "V.", "examples": ["试一下", "可以试一下"], "isSupplementary": false, "radical": "讠" },
+        { "char": "当然", "pinyin": "dang1ran2", "meaning": "por supuesto", "type": "Adv.", "examples": ["当然可以", "当然想去", "当然喜欢", "当然参加"], "isSupplementary": false, "radical": "—" },
+        { "char": "左边", "pinyin": "zuo3bian1", "meaning": "izquierda (lado)", "type": "S.", "examples": ["左边的同学", "在校门左边"], "isSupplementary": false, "radical": "—" },
+        { "char": "左", "pinyin": "zuo3", "meaning": "izquierda", "type": "S.", "examples": [], "isSupplementary": false, "radical": "工" },
+        { "char": "合适", "pinyin": "he2shi4", "meaning": "conveniente; adecuado; quedar bien", "type": "Adj.", "examples": ["很合适", "真合适", "不合适"], "isSupplementary": false, "radical": "—" },
+        { "char": "牛仔裤", "pinyin": "niu2zai3ku4", "meaning": "pantalones vaqueros", "type": "S.", "examples": ["一条牛仔裤", "买牛仔裤"], "isSupplementary": false, "radical": "—" },
+        { "char": "羽绒服", "pinyin": "yu3rong2fu2", "meaning": "abrigo de plumas", "type": "S.", "examples": ["一件羽绒服", "买羽绒服"], "isSupplementary": false, "radical": "—" },
+        { "char": "黑色", "pinyin": "hei1se4", "meaning": "negro", "type": "S.", "examples": ["喜欢黑色", "黑色的衬衫"], "isSupplementary": false, "radical": "—" },
+        { "char": "黑", "pinyin": "hei1", "meaning": "negro", "type": "Adj.", "examples": ["黑牛仔裤", "黑衬衫"], "isSupplementary": false, "radical": "黑" },
+        { "char": "绿色", "pinyin": "lv4se4", "meaning": "verde", "type": "S.", "examples": ["喜欢绿色", "绿色的羽绒服"], "isSupplementary": false, "radical": "—" },
+        { "char": "绿", "pinyin": "lv4", "meaning": "verde", "type": "Adj.", "examples": ["绿衬衫"], "isSupplementary": false, "radical": "纟" },
+        { "char": "不错", "pinyin": "bu2cuo4", "meaning": "bastante bien", "type": "Adj.", "examples": ["很不错", "真不错"], "isSupplementary": false, "radical": "—" },
+        { "char": "错", "pinyin": "cuo4", "meaning": "mal", "type": "Adj.", "examples": [], "isSupplementary": false, "radical": "钅" },
+        { "char": "些", "pinyin": "xie1", "meaning": "algunos; unos", "type": "Clas.", "examples": ["一些学生", "这些苹果"], "isSupplementary": false, "radical": "二" },
+        { "char": "衣服", "pinyin": "yi1fu", "meaning": "ropa", "type": "S.", "examples": ["这些衣服", "一件衣服", "买衣服"], "isSupplementary": false, "radical": "—" },
+        { "char": "千", "pinyin": "qian1", "meaning": "mil", "type": "Num.", "examples": ["一千", "一千二百六十五", "两千二百五十一"], "isSupplementary": false, "radical": "十" },
+        { "char": "零", "pinyin": "ling2", "meaning": "cero", "type": "Num.", "examples": ["一千二百零五块", "三块零五分钱"], "isSupplementary": false, "radical": "雨" },
+        { "char": "打折", "pinyin": "da3zhe2", "meaning": "ofrecer un descuento", "type": "VO", "examples": ["可以打折", "打六折", "不打折"], "isSupplementary": false, "radical": "—" },
+        { "char": "刷卡", "pinyin": "shua1ka3", "meaning": "pagar con tarjeta de crédito/débito", "type": "VO", "examples": ["可以刷卡"], "isSupplementary": false, "radical": "—" },
+        { "char": "卡", "pinyin": "ka3", "meaning": "tarjeta", "type": "S.", "examples": ["银行卡"], "isSupplementary": false, "radical": "卜" },
+        { "char": "没问题", "pinyin": "mei2 wen4ti2", "meaning": "no hay problema", "type": "EI", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "元", "pinyin": "yuan2", "meaning": "yuan (clasificador oficial de la moneda china)", "type": "Clas.", "examples": ["一百二十九元"], "isSupplementary": true, "radical": "儿" },
+        { "char": "角", "pinyin": "jiao3", "meaning": "jiao (clasificador oficial de 10 centavos)", "type": "Clas.", "examples": ["八十元六角"], "isSupplementary": true, "radical": "角" },
+        { "char": "毛", "pinyin": "mao2", "meaning": "mao (clasificador coloquial de 10 centavos)", "type": "Clas.", "examples": ["五毛钱"], "isSupplementary": true, "radical": "毛" },
+        { "char": "分", "pinyin": "fen1", "meaning": "fen (clasificador de un centavo)", "type": "Clas.", "examples": ["三元五角五分"], "isSupplementary": true, "radical": "八" },
+        { "char": "橙子", "pinyin": "cheng2zi", "meaning": "naranja", "type": "S.", "examples": ["一个橙子", "买橙子"], "isSupplementary": true, "radical": "—" },
+        { "char": "葡萄", "pinyin": "pu2tao", "meaning": "uva", "type": "S.", "examples": ["两个葡萄"], "isSupplementary": true, "radical": "—" },
+        { "char": "香蕉", "pinyin": "xiang1jiao1", "meaning": "plátano", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "樱桃", "pinyin": "ying1tao2", "meaning": "cereza", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "水果", "pinyin": "shui3guo3", "meaning": "fruta", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "裙子", "pinyin": "qun2zi", "meaning": "falda", "type": "S.", "examples": ["一条裙子"], "isSupplementary": true, "radical": "—" },
+        { "char": "T恤", "pinyin": "T xu4", "meaning": "camiseta", "type": "S.", "examples": ["一件T恤"], "isSupplementary": true, "radical": "—" },
+        { "char": "白色", "pinyin": "bai2se4", "meaning": "blanco", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "红色", "pinyin": "hong2se4", "meaning": "rojo", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "穿", "pinyin": "chuan1", "meaning": "vestir; ponerse", "type": "V.", "examples": ["穿衣服", "穿衬衫", "穿牛仔裤", "穿裙子"], "isSupplementary": true, "radical": "穴" },
+        { "char": "拍照", "pinyin": "pai1zhao4", "meaning": "tomar una foto", "type": "VO", "examples": ["喜欢拍照", "不可以拍照"], "isSupplementary": true, "radical": "—" },
+        { "char": "吸烟", "pinyin": "xi1 yan1", "meaning": "fumar", "type": "VO", "examples": ["不可以吸烟", "想吸烟"], "isSupplementary": true, "radical": "—" },
+        { "char": "称呼", "pinyin": "cheng1hu1", "meaning": "llamar; tratar a", "type": "V.", "examples": ["怎么称呼"], "isSupplementary": true, "radical": "—" }
+      ]
+    },
+    {
+      "lesson": 8,
+      "titleZh": "我全身都不舒服",
+      "titleEs": "No me siento bien",
+      "words": [
+        { "char": "快", "pinyin": "kuai4", "meaning": "rápidamente; rápido", "type": "Adv./Adj.", "examples": ["快来", "快说", "很快", "快点儿"], "isSupplementary": false, "radical": "忄" },
+        { "char": "起床", "pinyin": "qi3chuang2", "meaning": "levantarse", "type": "VO", "examples": ["快起床", "六点起床"], "isSupplementary": false, "radical": "—" },
+        { "char": "床", "pinyin": "chuang2", "meaning": "cama", "type": "S.", "examples": ["一张床"], "isSupplementary": false, "radical": "广" },
+        { "char": "每", "pinyin": "mei3", "meaning": "cada", "type": "Pron.", "examples": ["每天", "每年", "每个人"], "isSupplementary": false, "radical": "母" },
+        { "char": "运动", "pinyin": "yun4dong4", "meaning": "hacer deporte; hacer ejercicio", "type": "V.", "examples": ["去运动"], "isSupplementary": false, "radical": "—" },
+        { "char": "为什么", "pinyin": "wei4 shen2me", "meaning": "por qué", "type": "Pr.int.", "examples": ["为什么还不起床", "为什么不去"], "isSupplementary": false, "radical": "—" },
+        { "char": "可是", "pinyin": "ke3shi4", "meaning": "pero", "type": "Conj.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "头", "pinyin": "tou2", "meaning": "cabeza", "type": "S.", "examples": [], "isSupplementary": false, "radical": "大" },
+        { "char": "疼", "pinyin": "teng2", "meaning": "doloroso", "type": "Adj.", "examples": ["头疼", "哪儿疼"], "isSupplementary": false, "radical": "疒" },
+        { "char": "对不起", "pinyin": "dui4buqi3", "meaning": "lo siento", "type": "V.", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "舒服", "pinyin": "shu1fu", "meaning": "cómodo", "type": "Adj.", "examples": ["很舒服", "不舒服"], "isSupplementary": false, "radical": "—" },
+        { "char": "没关系", "pinyin": "mei2 guan1xi", "meaning": "no importa; no pasa nada", "type": "EI", "examples": [], "isSupplementary": false, "radical": "—" },
+        { "char": "嗓子", "pinyin": "sang3zi", "meaning": "garganta", "type": "S.", "examples": ["嗓子疼", "嗓子不好"], "isSupplementary": false, "radical": "—" },
+        { "char": "有（一）点儿", "pinyin": "you3 yi1dian3r", "meaning": "algo; un poco", "type": "Adv.", "examples": ["有点儿累", "有点儿疼", "有点儿忙", "有点儿小", "有点儿着急"], "isSupplementary": false, "radical": "—" },
+        { "char": "应该", "pinyin": "ying1gai1", "meaning": "deber; tener que", "type": "V.aux.", "examples": ["应该做", "应该知道", "应该学习", "应该试一下", "不应该去"], "isSupplementary": false, "radical": "—" },
+        { "char": "该", "pinyin": "gai1", "meaning": "tener que", "type": "V.aux.", "examples": ["该做", "该去", "不该去"], "isSupplementary": false, "radical": "讠" },
+        { "char": "医院", "pinyin": "yi1yuan4", "meaning": "hospital", "type": "S.", "examples": ["去医院", "大医院"], "isSupplementary": false, "radical": "—" },
+        { "char": "看病", "pinyin": "kan4bing4", "meaning": "ir al médico", "type": "VO", "examples": ["去看病", "去医院看病"], "isSupplementary": false, "radical": "—" },
+        { "char": "病", "pinyin": "bing4", "meaning": "enfermedad; estar enfermo", "type": "S./V.", "examples": ["有病", "没有病"], "isSupplementary": false, "radical": "疒" },
+        { "char": "身体", "pinyin": "shen1ti3", "meaning": "cuerpo; salud", "type": "S.", "examples": ["身体很好", "身体没问题", "身体不太好"], "isSupplementary": false, "radical": "—" },
+        { "char": "睡觉", "pinyin": "shui4jiao4", "meaning": "dormir; acostarse", "type": "VO", "examples": ["想睡觉", "快去睡觉"], "isSupplementary": false, "radical": "—" },
+        { "char": "睡", "pinyin": "shui4", "meaning": "dormir", "type": "V.", "examples": ["想睡一会儿"], "isSupplementary": false, "radical": "目" },
+        { "char": "能", "pinyin": "neng2", "meaning": "poder; ser capaz de", "type": "V.aux.", "examples": ["能八点起床", "能参加", "恐怕不能来"], "isSupplementary": false, "radical": "月" },
+        { "char": "上课", "pinyin": "shang4ke4", "meaning": "ir a clase", "type": "VO", "examples": ["不能上课", "几点上课"], "isSupplementary": false, "radical": "—" },
+        { "char": "还是", "pinyin": "hai2shi", "meaning": "(en preguntas de elección) o", "type": "Conj.", "examples": ["睡觉还是起床", "现在还是下午去"], "isSupplementary": false, "radical": "—" },
+        { "char": "天气", "pinyin": "tian1qi4", "meaning": "tiempo", "type": "S.", "examples": ["天气很好", "好天气"], "isSupplementary": false, "radical": "—" },
+        { "char": "冷", "pinyin": "leng3", "meaning": "frío", "type": "Adj.", "examples": ["天气很冷", "有点儿冷"], "isSupplementary": false, "radical": "冫" },
+        { "char": "穿", "pinyin": "chuan1", "meaning": "llevar (ropa); ponerse", "type": "V.", "examples": ["穿衣服", "多穿点儿衣服", "穿衬衫", "穿牛仔裤"], "isSupplementary": false, "radical": "穴" },
+        { "char": "挂", "pinyin": "gua4", "meaning": "registrar (en hospital)", "type": "V.", "examples": ["挂什么号", "挂一个号"], "isSupplementary": false, "radical": "扌" },
+        { "char": "科", "pinyin": "ke1", "meaning": "departamento; sección", "type": "S.", "examples": ["什么科", "挂什么科"], "isSupplementary": false, "radical": "禾" },
+        { "char": "内科", "pinyin": "nei4ke1", "meaning": "departamento de medicina interna", "type": "S.", "examples": ["挂内科", "看内科", "内科医生"], "isSupplementary": false, "radical": "—" },
+        { "char": "内", "pinyin": "nei4", "meaning": "interno; dentro de", "type": "S.", "examples": ["办公楼内", "医院内"], "isSupplementary": false, "radical": "冂" },
+        { "char": "层", "pinyin": "ceng2", "meaning": "piso", "type": "Clas.", "examples": ["一层", "二层", "十层"], "isSupplementary": false, "radical": "尸" },
+        { "char": "全身", "pinyin": "quan2shen1", "meaning": "todo el cuerpo", "type": "S.", "examples": ["全身不舒服", "全身疼"], "isSupplementary": false, "radical": "—" },
+        { "char": "全", "pinyin": "quan2", "meaning": "todo; completo, total", "type": "Adj.", "examples": ["全校", "全班", "全家"], "isSupplementary": false, "radical": "人" },
+        { "char": "量", "pinyin": "liang2", "meaning": "medir", "type": "V.", "examples": ["量衣服"], "isSupplementary": false, "radical": "里" },
+        { "char": "体温", "pinyin": "ti3wen1", "meaning": "temperatura corporal", "type": "S.", "examples": ["量体温"], "isSupplementary": false, "radical": "—" },
+        { "char": "大夫", "pinyin": "dai4fu", "meaning": "doctor", "type": "S.", "examples": ["王大夫", "女大夫", "内科大夫"], "isSupplementary": false, "radical": "—" },
+        { "char": "度", "pinyin": "du4", "meaning": "grado", "type": "Clas.", "examples": ["37度", "38度4", "多少度"], "isSupplementary": false, "radical": "广" },
+        { "char": "发炎", "pinyin": "fa1yan2", "meaning": "estar inflamado", "type": "VO", "examples": ["嗓子发炎", "有点儿发炎"], "isSupplementary": false, "radical": "—" },
+        { "char": "验血", "pinyin": "yan4xie3", "meaning": "hacer un análisis de sangre", "type": "VO", "examples": ["验一下血"], "isSupplementary": false, "radical": "—" },
+        { "char": "血", "pinyin": "xie3", "meaning": "sangre", "type": "S.", "examples": [], "isSupplementary": false, "radical": "血" },
+        { "char": "打针", "pinyin": "da3zhen1", "meaning": "poner una inyección", "type": "VO", "examples": ["不想打针", "要不要打针"], "isSupplementary": false, "radical": "—" },
+        { "char": "针", "pinyin": "zhen1", "meaning": "inyección", "type": "S.", "examples": ["打一针", "打几针"], "isSupplementary": false, "radical": "钅" },
+        { "char": "不用", "pinyin": "bu2yong4", "meaning": "no necesita", "type": "Adv.", "examples": ["不用打针", "不用验血"], "isSupplementary": false, "radical": "—" },
+        { "char": "水", "pinyin": "shui3", "meaning": "agua", "type": "S.", "examples": ["喝水", "多喝水"], "isSupplementary": false, "radical": "水" },
+        { "char": "休息", "pinyin": "xiu1xi", "meaning": "descansar; tomar un descanso", "type": "V.", "examples": ["多休息", "休息一下", "休息一会儿", "不用休息"], "isSupplementary": false, "radical": "—" },
+        { "char": "中药", "pinyin": "zhong1yao4", "meaning": "medicina tradicional china", "type": "S.", "examples": ["吃中药", "买中药"], "isSupplementary": false, "radical": "—" },
+        { "char": "药", "pinyin": "yao4", "meaning": "medicina", "type": "S.", "examples": ["吃药", "吃点儿药", "买药"], "isSupplementary": false, "radical": "艹" },
+        { "char": "眼睛", "pinyin": "yan3jing", "meaning": "ojo", "type": "S.", "examples": ["大眼睛", "眼睛小"], "isSupplementary": true, "radical": "—" },
+        { "char": "牙", "pinyin": "ya2", "meaning": "diente", "type": "S.", "examples": ["牙疼"], "isSupplementary": true, "radical": "牙" },
+        { "char": "胃", "pinyin": "wei4", "meaning": "estómago", "type": "S.", "examples": ["胃不舒服"], "isSupplementary": true, "radical": "月" },
+        { "char": "脖子", "pinyin": "bo2zi", "meaning": "cuello", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "胳膊", "pinyin": "ge1bo", "meaning": "brazo", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "腰", "pinyin": "yao1", "meaning": "cintura", "type": "S.", "examples": [], "isSupplementary": true, "radical": "月" },
+        { "char": "腿", "pinyin": "tui3", "meaning": "pierna", "type": "S.", "examples": [], "isSupplementary": true, "radical": "月" },
+        { "char": "发烧", "pinyin": "fa1shao1", "meaning": "tener fiebre", "type": "VO", "examples": ["有点儿发烧", "不发烧"], "isSupplementary": true, "radical": "—" },
+        { "char": "拉肚子", "pinyin": "la1 du4zi", "meaning": "tener diarrea", "type": "VO", "examples": ["不拉肚子"], "isSupplementary": true, "radical": "—" },
+        { "char": "感冒", "pinyin": "gan3mao4", "meaning": "resfriarse", "type": "V.", "examples": ["有点儿感冒"], "isSupplementary": true, "radical": "—" },
+        { "char": "急诊", "pinyin": "ji2zhen3", "meaning": "emergencia", "type": "S.", "examples": ["挂急诊"], "isSupplementary": true, "radical": "—" },
+        { "char": "外科", "pinyin": "wai4ke1", "meaning": "departamento de cirugía", "type": "S.", "examples": [], "isSupplementary": true, "radical": "—" },
+        { "char": "西药", "pinyin": "xi1yao4", "meaning": "medicina occidental", "type": "S.", "examples": ["吃西药"], "isSupplementary": true, "radical": "—" },
+        { "char": "透视", "pinyin": "tou4shi4", "meaning": "tomar una radiografía", "type": "V.", "examples": ["要不要透视"], "isSupplementary": true, "radical": "—" },
+        { "char": "针灸", "pinyin": "zhen1jiu3", "meaning": "acupuntura", "type": "S.", "examples": ["要针灸", "不用针灸"], "isSupplementary": true, "radical": "—" },
+        { "char": "大便", "pinyin": "da4bian4", "meaning": "heces, excrementos", "type": "S.", "examples": ["化验大便"], "isSupplementary": true, "radical": "—" },
+        { "char": "小便", "pinyin": "xiao3bian4", "meaning": "orina", "type": "S.", "examples": ["化验小便"], "isSupplementary": true, "radical": "—" }
+      ]
+    }
+  ]
+}
