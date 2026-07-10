@@ -185,10 +185,14 @@ export default function FriendsScreen({ userName, onBack }) {
 
   const handleShareCode = async () => {
     if (!myCode) return;
-    const text = `${t('friends_share_text', `Añádeme en ${APP_NAME} con mi código de amigo`)}: ${formatCode(myCode)}\n\n${APP_URL}`;
+    // OJO: la URL va SOLO en el campo `url` de navigator.share — si además
+    // fuera dentro de `text`, WhatsApp/Telegram concatenan ambos y el enlace
+    // sale duplicado. En el fallback de portapapeles (sin campo url aparte)
+    // sí se añade al texto.
+    const message = `${t('friends_share_text', `Añádeme en ${APP_NAME} con mi código de amigo`)}: ${formatCode(myCode)}`;
     try {
-      if (navigator.share) await navigator.share({ title: APP_NAME, text, url: APP_URL });
-      else { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
+      if (navigator.share) await navigator.share({ title: APP_NAME, text: message, url: APP_URL });
+      else { await navigator.clipboard.writeText(`${message}\n\n${APP_URL}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }
     } catch { /* cancelado */ }
   };
 

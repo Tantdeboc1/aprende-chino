@@ -124,12 +124,15 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     if (streak.currentStreak > 0) {
       lines.push(`🔥 ${streak.currentStreak} ${t('settings_day', { count: streak.currentStreak })} de racha`);
     }
-    const text = `${lines.join('\n')}\n\n${APP_URL}`;
+    // La URL va SOLO en el campo `url` de navigator.share (si también fuera en
+    // `text`, WhatsApp/Telegram la muestran dos veces). El fallback de
+    // portapapeles no tiene campo url aparte → ahí sí va en el texto.
+    const message = lines.join('\n');
     try {
       if (navigator.share) {
-        await navigator.share({ title: APP_NAME, text, url: APP_URL });
+        await navigator.share({ title: APP_NAME, text: message, url: APP_URL });
       } else {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(`${message}\n\n${APP_URL}`);
         setShareNote('copied');
         setTimeout(() => setShareNote(null), 2000);
       }
