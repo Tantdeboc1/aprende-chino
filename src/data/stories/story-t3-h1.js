@@ -1,14 +1,25 @@
 // src/data/stories/story-t3-h1.js
 // Tema 3 — La familia · Historia 1: Las fotos de 东奥
 // 东奥 enseña al usuario fotos de su familia en el móvil.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT3H1 = {
   id: 't3-h1',
   tema: 3,
   historia: 1,
   titulo: 'Las fotos de 东奥',
+  tituloTr: { es: 'Las fotos de 东奥', en: "Dong Ao's photos", fr: 'Les photos de 东奥', de: '东奥s Fotos', it: 'Le foto di 东奥', pt: 'As fotos de 东奥' },
   subtitulo: '东奥的家人',
   resumen: '东奥 enseña al usuario las fotos de su familia en el móvil. Su hermana mayor sale especialmente bien…',
+  resumenTr: {
+    en: '东奥 shows you photos of his family on his phone. His older sister looks especially good…',
+    fr: '东奥 te montre les photos de sa famille sur son téléphone. Sa grande sœur est particulièrement réussie…',
+    de: '东奥 zeigt dir Familienfotos auf seinem Handy. Seine ältere Schwester sieht besonders gut aus…',
+    it: '东奥 ti mostra le foto della sua famiglia sul telefono. Sua sorella maggiore viene particolarmente bene…',
+    pt: '东奥 mostra fotos da família no celular. A irmã mais velha dele aparece especialmente bem…',
+  },
   escenario: 'casa',
   personajes: ['user', 'dong-ao'],
   vocabularioObjetivo: ['家', '有', '几', '口', '照片', '哥哥', '姐姐', '妹妹', '爸爸', '妈妈', '岁', '漂亮'],
@@ -21,6 +32,13 @@ export const storyT3H1 = {
       chino: '{userName}，你看！我家的照片。',
       pinyin: '{userName}, nǐ kàn! Wǒ jiā de zhàopiàn.',
       traduccion: '{userName}, ¡mira! Fotos de mi familia.',
+      traduccionTr: {
+        en: '{userName}, look! Photos of my family.',
+        fr: '{userName}, regarde ! Des photos de ma famille.',
+        de: '{userName}, schau! Fotos von meiner Familie.',
+        it: '{userName}, guarda! Le foto della mia famiglia.',
+        pt: '{userName}, olha! Fotos da minha família.',
+      },
     },
     {
       id: 's2',
@@ -29,6 +47,13 @@ export const storyT3H1 = {
       chino: '你家有几口人？',
       pinyin: 'Nǐ jiā yǒu jǐ kǒu rén?',
       traduccion: '¿Cuántas personas hay en tu familia?',
+      traduccionTr: {
+        en: 'How many people are there in your family?',
+        fr: 'Combien de personnes y a-t-il dans ta famille ?',
+        de: 'Wie viele Personen hat deine Familie?',
+        it: 'Quante persone ci sono nella tua famiglia?',
+        pt: 'Quantas pessoas há na sua família?',
+      },
     },
     {
       id: 's3',
@@ -37,6 +62,13 @@ export const storyT3H1 = {
       chino: '我家有五口人。',
       pinyin: 'Wǒ jiā yǒu wǔ kǒu rén.',
       traduccion: 'En mi familia somos cinco.',
+      traduccionTr: {
+        en: 'There are five people in my family.',
+        fr: 'Dans ma famille, nous sommes cinq.',
+        de: 'Wir sind fünf in meiner Familie.',
+        it: 'Nella mia famiglia siamo in cinque.',
+        pt: 'Na minha família somos cinco.',
+      },
     },
     {
       id: 's4',
@@ -45,6 +77,13 @@ export const storyT3H1 = {
       chino: '爸爸，妈妈，姐姐，妹妹和我。',
       pinyin: 'Bàba, māma, jiějie, mèimei hé wǒ.',
       traduccion: 'Papá, mamá, mi hermana mayor, mi hermana pequeña y yo.',
+      traduccionTr: {
+        en: 'Dad, Mum, my older sister, my younger sister and me.',
+        fr: 'Papa, maman, ma grande sœur, ma petite sœur et moi.',
+        de: 'Papa, Mama, meine ältere Schwester, meine jüngere Schwester und ich.',
+        it: 'Papà, mamma, la sorella maggiore, la sorella minore e io.',
+        pt: 'Pai, mãe, minha irmã mais velha, minha irmã mais nova e eu.',
+      },
     },
     {
       id: 's5',
@@ -53,6 +92,13 @@ export const storyT3H1 = {
       chino: '你姐姐很漂亮！她几岁？',
       pinyin: 'Nǐ jiějie hěn piàoliang! Tā jǐ suì?',
       traduccion: '¡Tu hermana mayor es muy guapa! ¿Cuántos años tiene?',
+      traduccionTr: {
+        en: 'Your older sister is very pretty! How old is she?',
+        fr: 'Ta grande sœur est très jolie ! Quel âge a-t-elle ?',
+        de: 'Deine ältere Schwester ist sehr hübsch! Wie alt ist sie?',
+        it: 'Tua sorella maggiore è molto bella! Quanti anni ha?',
+        pt: 'Sua irmã mais velha é muito bonita! Quantos anos ela tem?',
+      },
     },
     {
       id: 's6',
@@ -61,6 +107,7 @@ export const storyT3H1 = {
       chino: '什么？！',
       pinyin: 'Shénme?!',
       traduccion: '¡¿Qué?!',
+      traduccionTr: { en: 'What?!', fr: 'Quoi ?!', de: 'Was?!', it: 'Cosa?!', pt: 'O quê?!' },
     },
     {
       id: 's7',
@@ -69,6 +116,13 @@ export const storyT3H1 = {
       chino: '她二十五岁。她有男朋友。',
       pinyin: 'Tā èrshíwǔ suì. Tā yǒu nán péngyou.',
       traduccion: 'Tiene 25 años. Tiene novio.',
+      traduccionTr: {
+        en: 'She’s 25. She has a boyfriend.',
+        fr: 'Elle a 25 ans. Elle a un petit ami.',
+        de: 'Sie ist 25. Sie hat einen Freund.',
+        it: 'Ha 25 anni. Ha il ragazzo.',
+        pt: 'Ela tem 25 anos. Tem namorado.',
+      },
     },
     {
       id: 's8',
@@ -77,6 +131,13 @@ export const storyT3H1 = {
       chino: '哦…对不起。你妹妹呢？',
       pinyin: 'Ò… duìbuqǐ. Nǐ mèimei ne?',
       traduccion: 'Ah… perdón. ¿Y tu hermana pequeña?',
+      traduccionTr: {
+        en: 'Oh… sorry. And your younger sister?',
+        fr: 'Oh… désolé. Et ta petite sœur ?',
+        de: 'Oh… Entschuldigung. Und deine jüngere Schwester?',
+        it: 'Oh… scusa. E tua sorella minore?',
+        pt: 'Ah… desculpa. E a sua irmã mais nova?',
+      },
     },
     {
       id: 's9',
@@ -85,6 +146,13 @@ export const storyT3H1 = {
       chino: '我妹妹十岁。她也很漂亮。',
       pinyin: 'Wǒ mèimei shí suì. Tā yě hěn piàoliang.',
       traduccion: 'Mi hermana pequeña tiene 10 años. También es muy guapa.',
+      traduccionTr: {
+        en: 'My younger sister is 10. She’s very pretty too.',
+        fr: 'Ma petite sœur a 10 ans. Elle est très jolie aussi.',
+        de: 'Meine jüngere Schwester ist 10. Sie ist auch sehr hübsch.',
+        it: 'Mia sorella minore ha 10 anni. È molto bella anche lei.',
+        pt: 'Minha irmã mais nova tem 10 anos. Ela também é muito bonita.',
+      },
     },
   ],
 
@@ -100,6 +168,13 @@ export const storyT3H1 = {
           '¿Tienes una familia grande?',
           '¿Cómo se llama tu familia?',
         ],
+        opcionesTr: {
+          en: ['How many people are there in your family?', 'Where does your family live?', 'Do you have a big family?', 'What is your family’s name?'],
+          fr: ['Combien de personnes y a-t-il dans ta famille ?', 'Où vit ta famille ?', 'As-tu une grande famille ?', 'Comment s’appelle ta famille ?'],
+          de: ['Wie viele Personen hat deine Familie?', 'Wo wohnt deine Familie?', 'Hast du eine große Familie?', 'Wie heißt deine Familie?'],
+          it: ['Quante persone ci sono nella tua famiglia?', 'Dove vive la tua famiglia?', 'Hai una famiglia numerosa?', 'Come si chiama la tua famiglia?'],
+          pt: ['Quantas pessoas há na sua família?', 'Onde sua família mora?', 'Você tem uma família grande?', 'Qual é o nome da sua família?'],
+        },
         correcta: 0,
       },
       {
@@ -111,6 +186,13 @@ export const storyT3H1 = {
           'Mi familia vive en cinco casas.',
           'Tengo cinco fotos.',
         ],
+        opcionesTr: {
+          en: ['There are five people in my family.', 'I have five siblings.', 'My family lives in five houses.', 'I have five photos.'],
+          fr: ['Dans ma famille, nous sommes cinq.', 'J’ai cinq frères et sœurs.', 'Ma famille vit dans cinq maisons.', 'J’ai cinq photos.'],
+          de: ['Wir sind fünf in meiner Familie.', 'Ich habe fünf Geschwister.', 'Meine Familie wohnt in fünf Häusern.', 'Ich habe fünf Fotos.'],
+          it: ['Nella mia famiglia siamo in cinque.', 'Ho cinque fratelli.', 'La mia famiglia vive in cinque case.', 'Ho cinque foto.'],
+          pt: ['Na minha família somos cinco.', 'Tenho cinco irmãos.', 'Minha família mora em cinco casas.', 'Tenho cinco fotos.'],
+        },
         correcta: 0,
       },
       {
@@ -122,6 +204,13 @@ export const storyT3H1 = {
           'Tu hermana mayor es simpática.',
           'Tu hermana mayor es trabajadora.',
         ],
+        opcionesTr: {
+          en: ['Your older sister is very pretty!', 'Your older sister is tall.', 'Your older sister is nice.', 'Your older sister is hard-working.'],
+          fr: ['Ta grande sœur est très jolie !', 'Ta grande sœur est grande.', 'Ta grande sœur est sympa.', 'Ta grande sœur est travailleuse.'],
+          de: ['Deine ältere Schwester ist sehr hübsch!', 'Deine ältere Schwester ist groß.', 'Deine ältere Schwester ist nett.', 'Deine ältere Schwester ist fleißig.'],
+          it: ['Tua sorella maggiore è molto bella!', 'Tua sorella maggiore è alta.', 'Tua sorella maggiore è simpatica.', 'Tua sorella maggiore è laboriosa.'],
+          pt: ['Sua irmã mais velha é muito bonita!', 'Sua irmã mais velha é alta.', 'Sua irmã mais velha é simpática.', 'Sua irmã mais velha é trabalhadora.'],
+        },
         correcta: 0,
       },
       {
@@ -133,6 +222,13 @@ export const storyT3H1 = {
           'Vive en el 25.',
           'Trabaja desde las 25.',
         ],
+        opcionesTr: {
+          en: ['She’s 25.', 'She’s 15.', 'She lives at number 25.', 'She works from 25.'],
+          fr: ['Elle a 25 ans.', 'Elle a 15 ans.', 'Elle habite au 25.', 'Elle travaille à partir de 25.'],
+          de: ['Sie ist 25.', 'Sie ist 15.', 'Sie wohnt in der Nummer 25.', 'Sie arbeitet ab 25.'],
+          it: ['Ha 25 anni.', 'Ha 15 anni.', 'Abita al numero 25.', 'Lavora dalle 25.'],
+          pt: ['Ela tem 25 anos.', 'Ela tem 15 anos.', 'Ela mora no número 25.', 'Ela trabalha a partir das 25.'],
+        },
         correcta: 0,
       },
       {
@@ -144,6 +240,13 @@ export const storyT3H1 = {
           'Soy 10 años más joven.',
           'Tengo diez hermanos.',
         ],
+        opcionesTr: {
+          en: ['My younger sister is 10.', 'My older sister is 10.', 'I’m 10 years younger.', 'I have ten siblings.'],
+          fr: ['Ma petite sœur a 10 ans.', 'Ma grande sœur a 10 ans.', 'J’ai 10 ans de moins.', 'J’ai dix frères et sœurs.'],
+          de: ['Meine jüngere Schwester ist 10.', 'Meine ältere Schwester ist 10.', 'Ich bin 10 Jahre jünger.', 'Ich habe zehn Geschwister.'],
+          it: ['Mia sorella minore ha 10 anni.', 'Mia sorella maggiore ha 10 anni.', 'Ho 10 anni di meno.', 'Ho dieci fratelli.'],
+          pt: ['Minha irmã mais nova tem 10 anos.', 'Minha irmã mais velha tem 10 anos.', 'Sou 10 anos mais novo.', 'Tenho dez irmãos.'],
+        },
         correcta: 0,
       },
     ],
@@ -154,6 +257,7 @@ export const storyT3H1 = {
         frase: '你家 ___ 几口人？',
         pinyin: 'Nǐ jiā ___ jǐ kǒu rén?',
         traduccion: '¿Cuántas personas hay en tu familia?',
+        traduccionTr: { en: 'How many people are there in your family?', fr: 'Combien de personnes y a-t-il dans ta famille ?', de: 'Wie viele Personen hat deine Familie?', it: 'Quante persone ci sono nella tua famiglia?', pt: 'Quantas pessoas há na sua família?' },
         opciones: ['有', '是', '叫', '看'],
         correcta: 0,
       },
@@ -161,6 +265,7 @@ export const storyT3H1 = {
         frase: '我家有五 ___ 人。',
         pinyin: 'Wǒ jiā yǒu wǔ ___ rén.',
         traduccion: 'En mi familia somos cinco.',
+        traduccionTr: { en: 'There are five people in my family.', fr: 'Dans ma famille, nous sommes cinq.', de: 'Wir sind fünf in meiner Familie.', it: 'Nella mia famiglia siamo in cinque.', pt: 'Na minha família somos cinco.' },
         opciones: ['口', '个', '岁', '家'],
         correcta: 0,
       },
@@ -168,6 +273,7 @@ export const storyT3H1 = {
         frase: '你姐姐很 ___ ！',
         pinyin: 'Nǐ jiějie hěn ___ !',
         traduccion: '¡Tu hermana mayor es muy guapa!',
+        traduccionTr: { en: 'Your older sister is very pretty!', fr: 'Ta grande sœur est très jolie !', de: 'Deine ältere Schwester ist sehr hübsch!', it: 'Tua sorella maggiore è molto bella!', pt: 'Sua irmã mais velha é muito bonita!' },
         opciones: ['漂亮', '高兴', '好吃', '喜欢'],
         correcta: 0,
       },
@@ -175,6 +281,7 @@ export const storyT3H1 = {
         frase: '她二十五 ___ 。',
         pinyin: 'Tā èrshíwǔ ___ .',
         traduccion: 'Tiene 25 años.',
+        traduccionTr: { en: 'She’s 25.', fr: 'Elle a 25 ans.', de: 'Sie ist 25.', it: 'Ha 25 anni.', pt: 'Ela tem 25 anos.' },
         opciones: ['岁', '口', '人', '家'],
         correcta: 0,
       },
@@ -184,21 +291,31 @@ export const storyT3H1 = {
     comprension: [
       {
         pregunta: '¿Cuántas personas hay en la familia de 东奥?',
+        preguntaTr: { en: 'How many people are in 东奥’s family?', fr: 'Combien de personnes compte la famille de 东奥 ?', de: 'Wie viele Personen hat 东奥s Familie?', it: 'Quante persone ci sono nella famiglia di 东奥?', pt: 'Quantas pessoas há na família de 东奥?' },
         opciones: ['5', '3', '4', '6'],
         correcta: 0,
       },
       {
         pregunta: '¿Por qué se sorprende 东奥?',
+        preguntaTr: { en: 'Why is 东奥 surprised?', fr: 'Pourquoi 东奥 est-il surpris ?', de: 'Warum ist 东奥 überrascht?', it: 'Perché 东奥 è sorpreso?', pt: 'Por que 东奥 fica surpreso?' },
         opciones: [
           'El usuario llama guapa a su hermana mayor',
           'No le gusta hablar de su familia',
           'Olvidó la edad de su hermana',
           'No tiene fotos en el móvil',
         ],
+        opcionesTr: {
+          en: ['You call his older sister pretty', 'He doesn’t like talking about his family', 'He forgot his sister’s age', 'He has no photos on his phone'],
+          fr: ['L’utilisateur trouve sa grande sœur jolie', 'Il n’aime pas parler de sa famille', 'Il a oublié l’âge de sa sœur', 'Il n’a pas de photos sur son téléphone'],
+          de: ['Du findest seine ältere Schwester hübsch', 'Er spricht nicht gern über seine Familie', 'Er hat das Alter seiner Schwester vergessen', 'Er hat keine Fotos auf dem Handy'],
+          it: ['L’utente chiama bella sua sorella maggiore', 'Non gli piace parlare della sua famiglia', 'Ha dimenticato l’età della sorella', 'Non ha foto sul telefono'],
+          pt: ['Você chama a irmã mais velha dele de bonita', 'Ele não gosta de falar da família', 'Ele esqueceu a idade da irmã', 'Ele não tem fotos no celular'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Cuántos años tiene la hermana pequeña?',
+        preguntaTr: { en: 'How old is the younger sister?', fr: 'Quel âge a la petite sœur ?', de: 'Wie alt ist die jüngere Schwester?', it: 'Quanti anni ha la sorella minore?', pt: 'Quantos anos tem a irmã mais nova?' },
         opciones: ['10', '25', '15', '5'],
         correcta: 0,
       },

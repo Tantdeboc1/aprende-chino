@@ -2,14 +2,25 @@
 // Tema 2 — Nacionalidades y comida · Historia 2: En la cafetería
 // 东奥 y 晓敏 van a comer a la cafetería de la universidad. Hablan de
 // comida — qué les gusta y qué no.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT2H2 = {
   id: 't2-h2',
   tema: 2,
   historia: 2,
   titulo: 'En la cafetería',
+  tituloTr: { es: 'En la cafetería', en: 'At the cafeteria', fr: 'À la cafétéria', de: 'In der Mensa', it: 'Alla mensa', pt: 'No refeitório' },
   subtitulo: '在食堂',
   resumen: '东奥 y 晓敏 van a comer a la cafetería de la universidad. Charlan sobre qué comida les gusta… aunque tienen gustos opuestos.',
+  resumenTr: {
+    en: '东奥 and 晓敏 go to eat at the university canteen. They chat about the food they like… though their tastes are opposite.',
+    fr: '东奥 et 晓敏 vont manger à la cantine universitaire. Ils discutent de ce qu’ils aiment… mais leurs goûts sont opposés.',
+    de: '东奥 und 晓敏 essen in der Uni-Mensa. Sie plaudern über ihr Lieblingsessen… obwohl ihr Geschmack gegensätzlich ist.',
+    it: '东奥 e 晓敏 vanno a mangiare alla mensa universitaria. Chiacchierano sul cibo che gli piace… anche se hanno gusti opposti.',
+    pt: '东奥 e 晓敏 vão comer na cantina da universidade. Conversam sobre a comida de que gostam… embora tenham gostos opostos.',
+  },
   escenario: 'cafeteria',
   personajes: ['dong-ao', 'xiao-min'],
   vocabularioObjetivo: ['吃', '好吃', '喜欢', '中国菜', '米饭', '面条', '茶', '水', '不'],
@@ -22,6 +33,13 @@ export const storyT2H2 = {
       chino: '晓敏，你喜欢吃什么？',
       pinyin: 'Xiǎo Mǐn, nǐ xǐhuan chī shénme?',
       traduccion: 'Xiǎo Mǐn, ¿qué te gusta comer?',
+      traduccionTr: {
+        en: 'Xiǎo Mǐn, what do you like to eat?',
+        fr: 'Xiǎo Mǐn, qu’est-ce que tu aimes manger ?',
+        de: 'Xiǎo Mǐn, was isst du gern?',
+        it: 'Xiǎo Mǐn, cosa ti piace mangiare?',
+        pt: 'Xiǎo Mǐn, o que você gosta de comer?',
+      },
     },
     {
       id: 's2',
@@ -30,6 +48,13 @@ export const storyT2H2 = {
       chino: '我喜欢吃米饭。你呢？',
       pinyin: 'Wǒ xǐhuan chī mǐfàn. Nǐ ne?',
       traduccion: 'Me gusta el arroz. ¿Y tú?',
+      traduccionTr: {
+        en: 'I like rice. And you?',
+        fr: 'J’aime le riz. Et toi ?',
+        de: 'Ich mag Reis. Und du?',
+        it: 'Mi piace il riso. E tu?',
+        pt: 'Gosto de arroz. E você?',
+      },
     },
     {
       id: 's3',
@@ -38,6 +63,13 @@ export const storyT2H2 = {
       chino: '我喜欢吃面条！很好吃！',
       pinyin: 'Wǒ xǐhuan chī miàntiáo! Hěn hǎochī!',
       traduccion: '¡Me gustan los fideos! ¡Están muy ricos!',
+      traduccionTr: {
+        en: 'I like noodles! They’re delicious!',
+        fr: 'J’aime les nouilles ! C’est délicieux !',
+        de: 'Ich mag Nudeln! Sie sind sehr lecker!',
+        it: 'Mi piacciono gli spaghetti! Sono buonissimi!',
+        pt: 'Gosto de macarrão! É delicioso!',
+      },
     },
     {
       id: 's4',
@@ -46,6 +78,13 @@ export const storyT2H2 = {
       chino: '我不太喜欢面条。',
       pinyin: 'Wǒ bù tài xǐhuan miàntiáo.',
       traduccion: 'No me gustan mucho los fideos.',
+      traduccionTr: {
+        en: 'I don’t really like noodles.',
+        fr: 'Je n’aime pas trop les nouilles.',
+        de: 'Ich mag Nudeln nicht so gern.',
+        it: 'Non mi piacciono molto gli spaghetti.',
+        pt: 'Não gosto muito de macarrão.',
+      },
     },
     {
       id: 's5',
@@ -54,6 +93,13 @@ export const storyT2H2 = {
       chino: '什么？！面条很好吃！',
       pinyin: 'Shénme?! Miàntiáo hěn hǎochī!',
       traduccion: '¡¿Qué?! ¡Los fideos están riquísimos!',
+      traduccionTr: {
+        en: 'What?! Noodles are delicious!',
+        fr: 'Quoi ?! Les nouilles sont délicieuses !',
+        de: 'Was?! Nudeln sind sehr lecker!',
+        it: 'Cosa?! Gli spaghetti sono buonissimi!',
+        pt: 'O quê?! Macarrão é delicioso!',
+      },
     },
     {
       id: 's6',
@@ -62,6 +108,13 @@ export const storyT2H2 = {
       chino: '你喝什么？茶还是水？',
       pinyin: 'Nǐ hē shénme? Chá háishì shuǐ?',
       traduccion: '¿Qué bebes? ¿Té o agua?',
+      traduccionTr: {
+        en: 'What are you drinking? Tea or water?',
+        fr: 'Qu’est-ce que tu bois ? Du thé ou de l’eau ?',
+        de: 'Was trinkst du? Tee oder Wasser?',
+        it: 'Cosa bevi? Tè o acqua?',
+        pt: 'O que você vai beber? Chá ou água?',
+      },
     },
     {
       id: 's7',
@@ -70,6 +123,13 @@ export const storyT2H2 = {
       chino: '我喝茶。中国茶很好喝！',
       pinyin: 'Wǒ hē chá. Zhōngguó chá hěn hǎohē!',
       traduccion: 'Bebo té. ¡El té chino está muy bueno!',
+      traduccionTr: {
+        en: 'I’ll have tea. Chinese tea is really good!',
+        fr: 'Je bois du thé. Le thé chinois est très bon !',
+        de: 'Ich trinke Tee. Chinesischer Tee ist sehr gut!',
+        it: 'Bevo tè. Il tè cinese è molto buono!',
+        pt: 'Vou de chá. O chá chinês é muito bom!',
+      },
     },
     {
       id: 's8',
@@ -78,6 +138,13 @@ export const storyT2H2 = {
       chino: '好，我也喝茶。',
       pinyin: 'Hǎo, wǒ yě hē chá.',
       traduccion: 'Vale, yo también bebo té.',
+      traduccionTr: {
+        en: 'OK, I’ll have tea too.',
+        fr: 'D’accord, je bois du thé aussi.',
+        de: 'Gut, ich trinke auch Tee.',
+        it: 'Va bene, bevo tè anch’io.',
+        pt: 'Está bem, eu também vou de chá.',
+      },
     },
   ],
 
@@ -93,6 +160,13 @@ export const storyT2H2 = {
           '¿Cuándo comes?',
           '¿Con quién comes?',
         ],
+        opcionesTr: {
+          en: ['What do you like to eat?', 'Where do you eat?', 'When do you eat?', 'Who do you eat with?'],
+          fr: ['Qu’est-ce que tu aimes manger ?', 'Où manges-tu ?', 'Quand manges-tu ?', 'Avec qui manges-tu ?'],
+          de: ['Was isst du gern?', 'Wo isst du?', 'Wann isst du?', 'Mit wem isst du?'],
+          it: ['Cosa ti piace mangiare?', 'Dove mangi?', 'Quando mangi?', 'Con chi mangi?'],
+          pt: ['O que você gosta de comer?', 'Onde você come?', 'Quando você come?', 'Com quem você come?'],
+        },
         correcta: 0,
       },
       {
@@ -104,6 +178,13 @@ export const storyT2H2 = {
           'Como arroz a veces.',
           'Quiero comer arroz.',
         ],
+        opcionesTr: {
+          en: ['I like to eat rice.', 'I don’t like rice.', 'I eat rice sometimes.', 'I want to eat rice.'],
+          fr: ['J’aime manger du riz.', 'Je n’aime pas le riz.', 'Je mange du riz parfois.', 'Je veux manger du riz.'],
+          de: ['Ich esse gern Reis.', 'Ich mag keinen Reis.', 'Ich esse manchmal Reis.', 'Ich möchte Reis essen.'],
+          it: ['Mi piace mangiare il riso.', 'Non mi piace il riso.', 'Mangio riso a volte.', 'Voglio mangiare riso.'],
+          pt: ['Gosto de comer arroz.', 'Não gosto de arroz.', 'Às vezes como arroz.', 'Quero comer arroz.'],
+        },
         correcta: 0,
       },
       {
@@ -115,6 +196,13 @@ export const storyT2H2 = {
           'No me gustan los fideos.',
           'Quiero más fideos.',
         ],
+        opcionesTr: {
+          en: ['Noodles are delicious!', 'Noodles are cheap.', 'I don’t like noodles.', 'I want more noodles.'],
+          fr: ['Les nouilles sont délicieuses !', 'Les nouilles sont bon marché.', 'Je n’aime pas les nouilles.', 'Je veux plus de nouilles.'],
+          de: ['Nudeln sind sehr lecker!', 'Nudeln sind billig.', 'Ich mag keine Nudeln.', 'Ich möchte mehr Nudeln.'],
+          it: ['Gli spaghetti sono buonissimi!', 'Gli spaghetti sono economici.', 'Non mi piacciono gli spaghetti.', 'Voglio più spaghetti.'],
+          pt: ['O macarrão é delicioso!', 'O macarrão é barato.', 'Não gosto de macarrão.', 'Quero mais macarrão.'],
+        },
         correcta: 0,
       },
       {
@@ -126,6 +214,13 @@ export const storyT2H2 = {
           'Como fideos todos los días.',
           'Los fideos son fáciles.',
         ],
+        opcionesTr: {
+          en: ['I don’t really like noodles.', 'I love noodles.', 'I eat noodles every day.', 'Noodles are easy.'],
+          fr: ['Je n’aime pas trop les nouilles.', 'J’adore les nouilles.', 'Je mange des nouilles tous les jours.', 'Les nouilles, c’est facile.'],
+          de: ['Ich mag Nudeln nicht so gern.', 'Ich liebe Nudeln.', 'Ich esse jeden Tag Nudeln.', 'Nudeln sind einfach.'],
+          it: ['Non mi piacciono molto gli spaghetti.', 'Adoro gli spaghetti.', 'Mangio spaghetti ogni giorno.', 'Gli spaghetti sono facili.'],
+          pt: ['Não gosto muito de macarrão.', 'Adoro macarrão.', 'Como macarrão todos os dias.', 'Macarrão é fácil.'],
+        },
         correcta: 0,
       },
       {
@@ -137,6 +232,13 @@ export const storyT2H2 = {
           'No bebo té chino.',
           'El té chino es caro.',
         ],
+        opcionesTr: {
+          en: ['Chinese tea is really good!', 'I want Chinese tea.', 'I don’t drink Chinese tea.', 'Chinese tea is expensive.'],
+          fr: ['Le thé chinois est très bon !', 'Je veux du thé chinois.', 'Je ne bois pas de thé chinois.', 'Le thé chinois est cher.'],
+          de: ['Chinesischer Tee ist sehr gut!', 'Ich möchte chinesischen Tee.', 'Ich trinke keinen chinesischen Tee.', 'Chinesischer Tee ist teuer.'],
+          it: ['Il tè cinese è molto buono!', 'Voglio del tè cinese.', 'Non bevo tè cinese.', 'Il tè cinese è caro.'],
+          pt: ['O chá chinês é muito bom!', 'Quero chá chinês.', 'Não bebo chá chinês.', 'O chá chinês é caro.'],
+        },
         correcta: 0,
       },
     ],
@@ -147,6 +249,7 @@ export const storyT2H2 = {
         frase: '你喜欢 ___ 什么？',
         pinyin: 'Nǐ xǐhuan ___ shénme?',
         traduccion: '¿Qué te gusta comer?',
+        traduccionTr: { en: 'What do you like to eat?', fr: 'Qu’est-ce que tu aimes manger ?', de: 'Was isst du gern?', it: 'Cosa ti piace mangiare?', pt: 'O que você gosta de comer?' },
         opciones: ['吃', '是', '叫', '认识'],
         correcta: 0,
       },
@@ -154,6 +257,7 @@ export const storyT2H2 = {
         frase: '面条很 ___ ！',
         pinyin: 'Miàntiáo hěn ___ !',
         traduccion: '¡Los fideos están muy ricos!',
+        traduccionTr: { en: 'Noodles are delicious!', fr: 'Les nouilles sont délicieuses !', de: 'Nudeln sind sehr lecker!', it: 'Gli spaghetti sono buonissimi!', pt: 'O macarrão é delicioso!' },
         opciones: ['好吃', '高兴', '喜欢', '朋友'],
         correcta: 0,
       },
@@ -161,6 +265,7 @@ export const storyT2H2 = {
         frase: '我 ___ 太喜欢面条。',
         pinyin: 'Wǒ ___ tài xǐhuan miàntiáo.',
         traduccion: 'No me gustan mucho los fideos.',
+        traduccionTr: { en: 'I don’t really like noodles.', fr: 'Je n’aime pas trop les nouilles.', de: 'Ich mag Nudeln nicht so gern.', it: 'Non mi piacciono molto gli spaghetti.', pt: 'Não gosto muito de macarrão.' },
         opciones: ['不', '也', '是', '很'],
         correcta: 0,
       },
@@ -168,6 +273,7 @@ export const storyT2H2 = {
         frase: '中国 ___ 很好喝！',
         pinyin: 'Zhōngguó ___ hěn hǎohē!',
         traduccion: '¡El té chino está muy bueno!',
+        traduccionTr: { en: 'Chinese tea is really good!', fr: 'Le thé chinois est très bon !', de: 'Chinesischer Tee ist sehr gut!', it: 'Il tè cinese è molto buono!', pt: 'O chá chinês é muito bom!' },
         opciones: ['茶', '水', '米饭', '面条'],
         correcta: 0,
       },
@@ -177,17 +283,41 @@ export const storyT2H2 = {
     comprension: [
       {
         pregunta: '¿Qué le gusta comer a 晓敏?',
+        preguntaTr: { en: 'What does 晓敏 like to eat?', fr: 'Qu’est-ce que 晓敏 aime manger ?', de: 'Was isst 晓敏 gern?', it: 'Cosa piace mangiare a 晓敏?', pt: 'O que 晓敏 gosta de comer?' },
         opciones: ['Arroz', 'Fideos', 'Pan', 'Sopa'],
+        opcionesTr: {
+          en: ['Rice', 'Noodles', 'Bread', 'Soup'],
+          fr: ['Du riz', 'Des nouilles', 'Du pain', 'De la soupe'],
+          de: ['Reis', 'Nudeln', 'Brot', 'Suppe'],
+          it: ['Riso', 'Spaghetti', 'Pane', 'Zuppa'],
+          pt: ['Arroz', 'Macarrão', 'Pão', 'Sopa'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué le gusta comer a 东奥?',
+        preguntaTr: { en: 'What does 东奥 like to eat?', fr: 'Qu’est-ce que 东奥 aime manger ?', de: 'Was isst 东奥 gern?', it: 'Cosa piace mangiare a 东奥?', pt: 'O que 东奥 gosta de comer?' },
         opciones: ['Fideos', 'Arroz', 'Verduras', 'Carne'],
+        opcionesTr: {
+          en: ['Noodles', 'Rice', 'Vegetables', 'Meat'],
+          fr: ['Des nouilles', 'Du riz', 'Des légumes', 'De la viande'],
+          de: ['Nudeln', 'Reis', 'Gemüse', 'Fleisch'],
+          it: ['Spaghetti', 'Riso', 'Verdure', 'Carne'],
+          pt: ['Macarrão', 'Arroz', 'Legumes', 'Carne'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué deciden beber al final?',
+        preguntaTr: { en: 'What do they decide to drink in the end?', fr: 'Que décident-ils de boire à la fin ?', de: 'Was beschließen sie am Ende zu trinken?', it: 'Cosa decidono di bere alla fine?', pt: 'O que eles decidem beber no final?' },
         opciones: ['Té', 'Agua', 'Café', 'Zumo'],
+        opcionesTr: {
+          en: ['Tea', 'Water', 'Coffee', 'Juice'],
+          fr: ['Du thé', 'De l’eau', 'Du café', 'Du jus'],
+          de: ['Tee', 'Wasser', 'Kaffee', 'Saft'],
+          it: ['Tè', 'Acqua', 'Caffè', 'Succo'],
+          pt: ['Chá', 'Água', 'Café', 'Suco'],
+        },
         correcta: 0,
       },
     ],

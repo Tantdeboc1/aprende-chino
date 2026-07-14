@@ -2,14 +2,25 @@
 // Tema 4 — Horarios y planes · Historia 2: El horario de 马可
 // 马可 pregunta a 晓敏 por su horario de clases. Hablan de asignaturas
 // y de cuándo coinciden.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT4H2 = {
   id: 't4-h2',
   tema: 4,
   historia: 2,
   titulo: 'El horario de 马可',
+  tituloTr: { es: 'El horario de 马可', en: "Marco's schedule", fr: 'L’emploi du temps de 马可', de: '马可s Stundenplan', it: 'L’orario di 马可', pt: 'O horário de 马可' },
   subtitulo: '马可的时间表',
   resumen: '马可 está perdido con el horario nuevo. 晓敏 le ayuda a organizarse y descubren que tienen una clase juntos.',
+  resumenTr: {
+    en: '马可 is lost with the new timetable. 晓敏 helps him get organised and they discover they have a class together.',
+    fr: '马可 est perdu avec le nouvel emploi du temps. 晓敏 l’aide à s’organiser et ils découvrent qu’ils ont un cours ensemble.',
+    de: '马可 kommt mit dem neuen Stundenplan nicht klar. 晓敏 hilft ihm und sie entdecken, dass sie einen Kurs zusammen haben.',
+    it: '马可 è perso con il nuovo orario. 晓敏 lo aiuta a organizzarsi e scoprono di avere una lezione insieme.',
+    pt: '马可 está perdido com o novo horário. 晓敏 o ajuda a se organizar e eles descobrem que têm uma aula juntos.',
+  },
   escenario: 'aula',
   personajes: ['ma-ke', 'xiao-min'],
   vocabularioObjetivo: ['明天', '点', '上午', '下午', '时间', '课', '现在', '汉语', '英语'],
@@ -22,6 +33,13 @@ export const storyT4H2 = {
       chino: '晓敏，你明天有课吗？',
       pinyin: 'Xiǎo Mǐn, nǐ míngtiān yǒu kè ma?',
       traduccion: 'Xiǎo Mǐn, ¿mañana tienes clase?',
+      traduccionTr: {
+        en: 'Xiǎo Mǐn, do you have class tomorrow?',
+        fr: 'Xiǎo Mǐn, tu as cours demain ?',
+        de: 'Xiǎo Mǐn, hast du morgen Unterricht?',
+        it: 'Xiǎo Mǐn, domani hai lezione?',
+        pt: 'Xiǎo Mǐn, você tem aula amanhã?',
+      },
     },
     {
       id: 's2',
@@ -30,6 +48,13 @@ export const storyT4H2 = {
       chino: '有。我上午有汉语课。',
       pinyin: 'Yǒu. Wǒ shàngwǔ yǒu Hànyǔ kè.',
       traduccion: 'Sí. Por la mañana tengo clase de chino.',
+      traduccionTr: {
+        en: 'Yes. I have a Chinese class in the morning.',
+        fr: 'Oui. Le matin, j’ai un cours de chinois.',
+        de: 'Ja. Am Vormittag habe ich Chinesischunterricht.',
+        it: 'Sì. La mattina ho lezione di cinese.',
+        pt: 'Tenho. De manhã tenho aula de chinês.',
+      },
     },
     {
       id: 's3',
@@ -38,6 +63,7 @@ export const storyT4H2 = {
       chino: '几点？',
       pinyin: 'Jǐ diǎn?',
       traduccion: '¿A qué hora?',
+      traduccionTr: { en: 'What time?', fr: 'À quelle heure ?', de: 'Um wie viel Uhr?', it: 'A che ora?', pt: 'A que horas?' },
     },
     {
       id: 's4',
@@ -46,6 +72,13 @@ export const storyT4H2 = {
       chino: '九点。下午我有英语课。',
       pinyin: 'Jiǔ diǎn. Xiàwǔ wǒ yǒu Yīngyǔ kè.',
       traduccion: 'A las 9. Por la tarde tengo clase de inglés.',
+      traduccionTr: {
+        en: 'At 9. In the afternoon I have an English class.',
+        fr: 'À 9 heures. L’après-midi, j’ai un cours d’anglais.',
+        de: 'Um 9 Uhr. Am Nachmittag habe ich Englischunterricht.',
+        it: 'Alle 9. Il pomeriggio ho lezione di inglese.',
+        pt: 'Às 9. De tarde tenho aula de inglês.',
+      },
     },
     {
       id: 's5',
@@ -54,6 +87,13 @@ export const storyT4H2 = {
       chino: '我明天也有汉语课！',
       pinyin: 'Wǒ míngtiān yě yǒu Hànyǔ kè!',
       traduccion: '¡Yo también tengo clase de chino mañana!',
+      traduccionTr: {
+        en: 'I have a Chinese class tomorrow too!',
+        fr: 'Moi aussi, j’ai un cours de chinois demain !',
+        de: 'Ich habe morgen auch Chinesischunterricht!',
+        it: 'Anch’io domani ho lezione di cinese!',
+        pt: 'Eu também tenho aula de chinês amanhã!',
+      },
     },
     {
       id: 's6',
@@ -62,6 +102,13 @@ export const storyT4H2 = {
       chino: '几点上课？',
       pinyin: 'Jǐ diǎn shàngkè?',
       traduccion: '¿A qué hora empieza la clase?',
+      traduccionTr: {
+        en: 'What time does the class start?',
+        fr: 'À quelle heure commence le cours ?',
+        de: 'Um wie viel Uhr beginnt der Unterricht?',
+        it: 'A che ora inizia la lezione?',
+        pt: 'A que horas começa a aula?',
+      },
     },
     {
       id: 's7',
@@ -70,6 +117,13 @@ export const storyT4H2 = {
       chino: '上午九点！我们一起去！',
       pinyin: 'Shàngwǔ jiǔ diǎn! Wǒmen yìqǐ qù!',
       traduccion: '¡A las 9 de la mañana! ¡Vamos juntos!',
+      traduccionTr: {
+        en: 'At 9 in the morning! Let’s go together!',
+        fr: 'À 9 heures du matin ! On y va ensemble !',
+        de: 'Um 9 Uhr morgens! Gehen wir zusammen!',
+        it: 'Alle 9 di mattina! Andiamo insieme!',
+        pt: 'Às 9 da manhã! Vamos juntos!',
+      },
     },
     {
       id: 's8',
@@ -78,6 +132,13 @@ export const storyT4H2 = {
       chino: '好！明天九点见！',
       pinyin: 'Hǎo! Míngtiān jiǔ diǎn jiàn!',
       traduccion: '¡Vale! ¡Nos vemos mañana a las 9!',
+      traduccionTr: {
+        en: 'OK! See you tomorrow at 9!',
+        fr: 'D’accord ! On se voit demain à 9 heures !',
+        de: 'Gut! Wir sehen uns morgen um 9!',
+        it: 'Va bene! Ci vediamo domani alle 9!',
+        pt: 'Está bem! Nos vemos amanhã às 9!',
+      },
     },
   ],
 
@@ -92,6 +153,13 @@ export const storyT4H2 = {
           '¿Te gusta la clase?',
           '¿Dónde es la clase?',
         ],
+        opcionesTr: {
+          en: ['Do you have class tomorrow?', 'Do you have class today?', 'Do you like the class?', 'Where is the class?'],
+          fr: ['As-tu cours demain ?', 'As-tu cours aujourd’hui ?', 'Aimes-tu le cours ?', 'Où est le cours ?'],
+          de: ['Hast du morgen Unterricht?', 'Hast du heute Unterricht?', 'Magst du den Unterricht?', 'Wo ist der Unterricht?'],
+          it: ['Domani hai lezione?', 'Oggi hai lezione?', 'Ti piace la lezione?', 'Dov’è la lezione?'],
+          pt: ['Você tem aula amanhã?', 'Você tem aula hoje?', 'Você gosta da aula?', 'Onde é a aula?'],
+        },
         correcta: 0,
       },
       {
@@ -103,6 +171,13 @@ export const storyT4H2 = {
           'No tengo clase de chino.',
           'Estudio chino solo.',
         ],
+        opcionesTr: {
+          en: ['I have a Chinese class in the morning.', 'I have a Chinese class in the afternoon.', 'I don’t have a Chinese class.', 'I study Chinese alone.'],
+          fr: ['Le matin, j’ai un cours de chinois.', 'L’après-midi, j’ai un cours de chinois.', 'Je n’ai pas de cours de chinois.', 'J’étudie le chinois seul.'],
+          de: ['Am Vormittag habe ich Chinesischunterricht.', 'Am Nachmittag habe ich Chinesischunterricht.', 'Ich habe keinen Chinesischunterricht.', 'Ich lerne allein Chinesisch.'],
+          it: ['La mattina ho lezione di cinese.', 'Il pomeriggio ho lezione di cinese.', 'Non ho lezione di cinese.', 'Studio cinese da solo.'],
+          pt: ['De manhã tenho aula de chinês.', 'De tarde tenho aula de chinês.', 'Não tenho aula de chinês.', 'Estudo chinês sozinho.'],
+        },
         correcta: 0,
       },
       {
@@ -114,6 +189,13 @@ export const storyT4H2 = {
           'No me gusta el inglés.',
           'Estudio inglés en casa.',
         ],
+        opcionesTr: {
+          en: ['I have an English class in the afternoon.', 'I have an English class in the morning.', 'I don’t like English.', 'I study English at home.'],
+          fr: ['L’après-midi, j’ai un cours d’anglais.', 'Le matin, j’ai un cours d’anglais.', 'Je n’aime pas l’anglais.', 'J’étudie l’anglais à la maison.'],
+          de: ['Am Nachmittag habe ich Englischunterricht.', 'Am Vormittag habe ich Englischunterricht.', 'Ich mag kein Englisch.', 'Ich lerne zu Hause Englisch.'],
+          it: ['Il pomeriggio ho lezione di inglese.', 'La mattina ho lezione di inglese.', 'Non mi piace l’inglese.', 'Studio inglese a casa.'],
+          pt: ['De tarde tenho aula de inglês.', 'De manhã tenho aula de inglês.', 'Não gosto de inglês.', 'Estudo inglês em casa.'],
+        },
         correcta: 0,
       },
       {
@@ -125,6 +207,13 @@ export const storyT4H2 = {
           '¡Voy solo!',
           '¡No vayas!',
         ],
+        opcionesTr: {
+          en: ['Let’s go together!', 'Come with me!', 'I’m going alone!', 'Don’t go!'],
+          fr: ['On y va ensemble !', 'Viens avec moi !', 'J’y vais seul !', 'N’y va pas !'],
+          de: ['Gehen wir zusammen!', 'Komm mit mir!', 'Ich gehe allein!', 'Geh nicht!'],
+          it: ['Andiamo insieme!', 'Vieni con me!', 'Vado da solo!', 'Non andare!'],
+          pt: ['Vamos juntos!', 'Venha comigo!', 'Vou sozinho!', 'Não vá!'],
+        },
         correcta: 0,
       },
       {
@@ -136,6 +225,13 @@ export const storyT4H2 = {
           '¡Nos vemos pronto!',
           '¡Hasta luego!',
         ],
+        opcionesTr: {
+          en: ['See you tomorrow at 9!', 'See you today at 9!', 'See you soon!', 'See you later!'],
+          fr: ['On se voit demain à 9 heures !', 'On se voit aujourd’hui à 9 heures !', 'À bientôt !', 'À plus tard !'],
+          de: ['Wir sehen uns morgen um 9!', 'Wir sehen uns heute um 9!', 'Bis bald!', 'Bis später!'],
+          it: ['Ci vediamo domani alle 9!', 'Ci vediamo oggi alle 9!', 'A presto!', 'A dopo!'],
+          pt: ['Nos vemos amanhã às 9!', 'Nos vemos hoje às 9!', 'Até breve!', 'Até logo!'],
+        },
         correcta: 0,
       },
     ],
@@ -145,6 +241,7 @@ export const storyT4H2 = {
         frase: '你明天 ___ 课吗？',
         pinyin: 'Nǐ míngtiān ___ kè ma?',
         traduccion: '¿Mañana tienes clase?',
+        traduccionTr: { en: 'Do you have class tomorrow?', fr: 'As-tu cours demain ?', de: 'Hast du morgen Unterricht?', it: 'Domani hai lezione?', pt: 'Você tem aula amanhã?' },
         opciones: ['有', '是', '叫', '去'],
         correcta: 0,
       },
@@ -152,6 +249,7 @@ export const storyT4H2 = {
         frase: '___ 我有汉语课。',
         pinyin: '___ wǒ yǒu Hànyǔ kè.',
         traduccion: 'Por la mañana tengo clase de chino.',
+        traduccionTr: { en: 'I have a Chinese class in the morning.', fr: 'Le matin, j’ai un cours de chinois.', de: 'Am Vormittag habe ich Chinesischunterricht.', it: 'La mattina ho lezione di cinese.', pt: 'De manhã tenho aula de chinês.' },
         opciones: ['上午', '晚上', '明天', '一起'],
         correcta: 0,
       },
@@ -159,6 +257,7 @@ export const storyT4H2 = {
         frase: '我们一起 ___ ！',
         pinyin: 'Wǒmen yìqǐ ___ !',
         traduccion: '¡Vamos juntos!',
+        traduccionTr: { en: 'Let’s go together!', fr: 'On y va ensemble !', de: 'Gehen wir zusammen!', it: 'Andiamo insieme!', pt: 'Vamos juntos!' },
         opciones: ['去', '是', '点', '课'],
         correcta: 0,
       },
@@ -166,6 +265,7 @@ export const storyT4H2 = {
         frase: '明天九 ___ 见！',
         pinyin: 'Míngtiān jiǔ ___ jiàn!',
         traduccion: '¡Nos vemos mañana a las 9!',
+        traduccionTr: { en: 'See you tomorrow at 9!', fr: 'On se voit demain à 9 heures !', de: 'Wir sehen uns morgen um 9!', it: 'Ci vediamo domani alle 9!', pt: 'Nos vemos amanhã às 9!' },
         opciones: ['点', '课', '岁', '人'],
         correcta: 0,
       },
@@ -174,22 +274,46 @@ export const storyT4H2 = {
     comprension: [
       {
         pregunta: '¿A qué hora es la clase de chino de 晓敏?',
+        preguntaTr: { en: 'What time is 晓敏’s Chinese class?', fr: 'À quelle heure est le cours de chinois de 晓敏 ?', de: 'Um wie viel Uhr ist 晓敏s Chinesischunterricht?', it: 'A che ora è la lezione di cinese di 晓敏?', pt: 'A que horas é a aula de chinês de 晓敏?' },
         opciones: ['A las 9', 'A las 10', 'A las 11', 'A las 12'],
+        opcionesTr: {
+          en: ['At 9', 'At 10', 'At 11', 'At 12'],
+          fr: ['À 9 heures', 'À 10 heures', 'À 11 heures', 'À 12 heures'],
+          de: ['Um 9', 'Um 10', 'Um 11', 'Um 12'],
+          it: ['Alle 9', 'Alle 10', 'Alle 11', 'Alle 12'],
+          pt: ['Às 9', 'Às 10', 'Às 11', 'Às 12'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué clase tiene 晓敏 por la tarde?',
+        preguntaTr: { en: 'What class does 晓敏 have in the afternoon?', fr: 'Quel cours 晓敏 a-t-elle l’après-midi ?', de: 'Welchen Unterricht hat 晓敏 am Nachmittag?', it: 'Che lezione ha 晓敏 il pomeriggio?', pt: 'Que aula 晓敏 tem de tarde?' },
         opciones: ['Inglés', 'Chino', 'Matemáticas', 'Historia'],
+        opcionesTr: {
+          en: ['English', 'Chinese', 'Maths', 'History'],
+          fr: ['Anglais', 'Chinois', 'Mathématiques', 'Histoire'],
+          de: ['Englisch', 'Chinesisch', 'Mathe', 'Geschichte'],
+          it: ['Inglese', 'Cinese', 'Matematica', 'Storia'],
+          pt: ['Inglês', 'Chinês', 'Matemática', 'História'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué descubren al final?',
+        preguntaTr: { en: 'What do they discover at the end?', fr: 'Que découvrent-ils à la fin ?', de: 'Was entdecken sie am Ende?', it: 'Cosa scoprono alla fine?', pt: 'O que eles descobrem no final?' },
         opciones: [
           'Tienen la misma clase de chino',
           'Viven en el mismo edificio',
           'Son del mismo país',
           'No tienen clases mañana',
         ],
+        opcionesTr: {
+          en: ['They have the same Chinese class', 'They live in the same building', 'They’re from the same country', 'They have no classes tomorrow'],
+          fr: ['Ils ont le même cours de chinois', 'Ils habitent le même immeuble', 'Ils viennent du même pays', 'Ils n’ont pas cours demain'],
+          de: ['Sie haben denselben Chinesischkurs', 'Sie wohnen im selben Gebäude', 'Sie kommen aus demselben Land', 'Sie haben morgen keinen Unterricht'],
+          it: ['Hanno la stessa lezione di cinese', 'Vivono nello stesso edificio', 'Sono dello stesso paese', 'Non hanno lezioni domani'],
+          pt: ['Têm a mesma aula de chinês', 'Moram no mesmo prédio', 'São do mesmo país', 'Não têm aulas amanhã'],
+        },
         correcta: 0,
       },
     ],

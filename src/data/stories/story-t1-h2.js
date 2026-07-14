@@ -2,14 +2,25 @@
 // Tema 1 — Saludos y presentaciones · Historia 2: Una amiga estudiosa
 // 东奥 le presenta al usuario a su amiga 晓敏. Toque cómico al final
 // cuando 东奥 demuestra que no se acuerda del apellido de su propia amiga.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT1H2 = {
   id: 't1-h2',
   tema: 1,
   historia: 2,
   titulo: 'Una amiga estudiosa',
+  tituloTr: { es: 'Una amiga estudiosa', en: 'A studious friend', fr: 'Une amie studieuse', de: 'Eine fleißige Freundin', it: 'Un’amica studiosa', pt: 'Uma amiga estudiosa' },
   subtitulo: '一个好朋友',
   resumen: '东奥 presenta al usuario a 晓敏, una estudiante china muy aplicada. Pero hay un detalle que 东奥 no recuerda…',
+  resumenTr: {
+    en: '东奥 introduces you to 晓敏, a very hard-working Chinese student. But there’s one detail 东奥 can’t remember…',
+    fr: '东奥 te présente 晓敏, une étudiante chinoise très appliquée. Mais il y a un détail que 东奥 ne se rappelle pas…',
+    de: '东奥 stellt dir 晓敏 vor, eine sehr fleißige chinesische Studentin. Aber ein Detail hat 东奥 vergessen…',
+    it: '东奥 ti presenta 晓敏, una studentessa cinese molto diligente. Ma c’è un dettaglio che 东奥 non ricorda…',
+    pt: '东奥 apresenta você a 晓敏, uma estudante chinesa muito aplicada. Mas há um detalhe que 东奥 não lembra…',
+  },
   escenario: 'campus',
   personajes: ['user', 'dong-ao', 'xiao-min'],
   vocabularioObjetivo: ['你好', '叫', '姓', '名字', '认识', '高兴', '也', '请问', '朋友', '这', '是'],
@@ -22,6 +33,7 @@ export const storyT1H2 = {
       chino: '{userName}，你好！',
       pinyin: '{userName}, nǐ hǎo!',
       traduccion: '¡Hola, {userName}!',
+      traduccionTr: { en: 'Hello, {userName}!', fr: 'Bonjour, {userName} !', de: 'Hallo, {userName}!', it: 'Ciao, {userName}!', pt: 'Olá, {userName}!' },
     },
     {
       id: 's2',
@@ -30,6 +42,7 @@ export const storyT1H2 = {
       chino: '东奥，你好！',
       pinyin: 'Dōng Ào, nǐ hǎo!',
       traduccion: '¡Hola, Dōng Ào!',
+      traduccionTr: { en: 'Hello, Dōng Ào!', fr: 'Bonjour, Dōng Ào !', de: 'Hallo, Dōng Ào!', it: 'Ciao, Dōng Ào!', pt: 'Olá, Dōng Ào!' },
     },
     {
       id: 's3',
@@ -38,6 +51,13 @@ export const storyT1H2 = {
       chino: '这是我的朋友，晓敏。',
       pinyin: 'Zhè shì wǒ de péngyou, Xiǎo Mǐn.',
       traduccion: 'Esta es mi amiga, Xiǎo Mǐn.',
+      traduccionTr: {
+        en: 'This is my friend, Xiǎo Mǐn.',
+        fr: 'Voici mon amie, Xiǎo Mǐn.',
+        de: 'Das ist meine Freundin, Xiǎo Mǐn.',
+        it: 'Questa è la mia amica, Xiǎo Mǐn.',
+        pt: 'Esta é minha amiga, Xiǎo Mǐn.',
+      },
     },
     {
       id: 's4',
@@ -46,6 +66,13 @@ export const storyT1H2 = {
       chino: '你好！我叫晓敏。',
       pinyin: 'Nǐ hǎo! Wǒ jiào Xiǎo Mǐn.',
       traduccion: '¡Hola! Me llamo Xiǎo Mǐn.',
+      traduccionTr: {
+        en: 'Hello! My name is Xiǎo Mǐn.',
+        fr: 'Bonjour ! Je m’appelle Xiǎo Mǐn.',
+        de: 'Hallo! Ich heiße Xiǎo Mǐn.',
+        it: 'Ciao! Mi chiamo Xiǎo Mǐn.',
+        pt: 'Olá! Meu nome é Xiǎo Mǐn.',
+      },
     },
     {
       id: 's5',
@@ -54,6 +81,13 @@ export const storyT1H2 = {
       chino: '你好晓敏！我叫{userName}。',
       pinyin: 'Nǐ hǎo Xiǎo Mǐn! Wǒ jiào {userName}.',
       traduccion: '¡Hola Xiǎo Mǐn! Me llamo {userName}.',
+      traduccionTr: {
+        en: 'Hello Xiǎo Mǐn! My name is {userName}.',
+        fr: 'Bonjour Xiǎo Mǐn ! Je m’appelle {userName}.',
+        de: 'Hallo Xiǎo Mǐn! Ich heiße {userName}.',
+        it: 'Ciao Xiǎo Mǐn! Mi chiamo {userName}.',
+        pt: 'Olá Xiǎo Mǐn! Meu nome é {userName}.',
+      },
     },
     {
       id: 's6',
@@ -62,6 +96,13 @@ export const storyT1H2 = {
       chino: '认识你很高兴！',
       pinyin: 'Rènshi nǐ hěn gāoxìng!',
       traduccion: '¡Encantada de conocerte!',
+      traduccionTr: {
+        en: 'Nice to meet you!',
+        fr: 'Enchantée de te rencontrer !',
+        de: 'Schön, dich kennenzulernen!',
+        it: 'Piacere di conoscerti!',
+        pt: 'Prazer em conhecer você!',
+      },
     },
     {
       id: 's7',
@@ -70,6 +111,13 @@ export const storyT1H2 = {
       chino: '我也很高兴。',
       pinyin: 'Wǒ yě hěn gāoxìng.',
       traduccion: 'Yo también, encantado.',
+      traduccionTr: {
+        en: 'Me too, nice to meet you.',
+        fr: 'Moi aussi, enchanté.',
+        de: 'Ich auch, freut mich.',
+        it: 'Anch’io, piacere.',
+        pt: 'Eu também, prazer.',
+      },
     },
     {
       id: 's8',
@@ -78,6 +126,13 @@ export const storyT1H2 = {
       chino: '晓敏，请问，你姓什么？',
       pinyin: 'Xiǎo Mǐn, qǐngwèn, nǐ xìng shénme?',
       traduccion: 'Xiǎo Mǐn… perdona, ¿cuál es tu apellido?',
+      traduccionTr: {
+        en: 'Xiǎo Mǐn… excuse me, what’s your surname?',
+        fr: 'Xiǎo Mǐn… excuse-moi, quel est ton nom de famille ?',
+        de: 'Xiǎo Mǐn… entschuldige, wie ist dein Nachname?',
+        it: 'Xiǎo Mǐn… scusa, qual è il tuo cognome?',
+        pt: 'Xiǎo Mǐn… desculpa, qual é o seu sobrenome?',
+      },
     },
     {
       id: 's9',
@@ -86,6 +141,13 @@ export const storyT1H2 = {
       chino: '东奥！我姓林！',
       pinyin: 'Dōng Ào! Wǒ xìng Lín!',
       traduccion: '¡Dōng Ào! ¡Mi apellido es Lín!',
+      traduccionTr: {
+        en: 'Dōng Ào! My surname is Lín!',
+        fr: 'Dōng Ào ! Mon nom de famille est Lín !',
+        de: 'Dōng Ào! Mein Nachname ist Lín!',
+        it: 'Dōng Ào! Il mio cognome è Lín!',
+        pt: 'Dōng Ào! Meu sobrenome é Lín!',
+      },
     },
     {
       id: 's10',
@@ -94,6 +156,13 @@ export const storyT1H2 = {
       chino: '对不起，晓敏…',
       pinyin: 'Duìbuqǐ, Xiǎo Mǐn…',
       traduccion: 'Perdón, Xiǎo Mǐn…',
+      traduccionTr: {
+        en: 'Sorry, Xiǎo Mǐn…',
+        fr: 'Pardon, Xiǎo Mǐn…',
+        de: 'Entschuldigung, Xiǎo Mǐn…',
+        it: 'Scusa, Xiǎo Mǐn…',
+        pt: 'Desculpa, Xiǎo Mǐn…',
+      },
     },
   ],
 
@@ -109,6 +178,13 @@ export const storyT1H2 = {
           '¿Es ella tu amiga?',
           'Tu amiga es estudiante.',
         ],
+        opcionesTr: {
+          en: ['This is my friend.', 'I have a friend.', 'Is she your friend?', 'Your friend is a student.'],
+          fr: ['Voici mon amie.', 'J’ai une amie.', 'Est-ce ton amie ?', 'Ton amie est étudiante.'],
+          de: ['Das ist meine Freundin.', 'Ich habe eine Freundin.', 'Ist sie deine Freundin?', 'Deine Freundin ist Studentin.'],
+          it: ['Questa è la mia amica.', 'Ho un’amica.', 'È la tua amica?', 'La tua amica è studentessa.'],
+          pt: ['Esta é minha amiga.', 'Eu tenho uma amiga.', 'Ela é sua amiga?', 'Sua amiga é estudante.'],
+        },
         correcta: 0,
       },
       {
@@ -120,6 +196,13 @@ export const storyT1H2 = {
           'Soy Xiǎo Mǐn de China.',
           'No conozco a Xiǎo Mǐn.',
         ],
+        opcionesTr: {
+          en: ['My name is Xiǎo Mǐn.', 'My surname is Xiǎo Mǐn.', 'I am Xiǎo Mǐn from China.', 'I don’t know Xiǎo Mǐn.'],
+          fr: ['Je m’appelle Xiǎo Mǐn.', 'Mon nom de famille est Xiǎo Mǐn.', 'Je suis Xiǎo Mǐn, de Chine.', 'Je ne connais pas Xiǎo Mǐn.'],
+          de: ['Ich heiße Xiǎo Mǐn.', 'Mein Nachname ist Xiǎo Mǐn.', 'Ich bin Xiǎo Mǐn aus China.', 'Ich kenne Xiǎo Mǐn nicht.'],
+          it: ['Mi chiamo Xiǎo Mǐn.', 'Il mio cognome è Xiǎo Mǐn.', 'Sono Xiǎo Mǐn, dalla Cina.', 'Non conosco Xiǎo Mǐn.'],
+          pt: ['Meu nome é Xiǎo Mǐn.', 'Meu sobrenome é Xiǎo Mǐn.', 'Sou Xiǎo Mǐn, da China.', 'Não conheço Xiǎo Mǐn.'],
+        },
         correcta: 0,
       },
       {
@@ -131,6 +214,13 @@ export const storyT1H2 = {
           'No te conozco bien.',
           '¿Cómo te llamas?',
         ],
+        opcionesTr: {
+          en: ['Nice to meet you!', 'Good morning, everyone.', 'I don’t know you well.', 'What’s your name?'],
+          fr: ['Enchantée de te rencontrer !', 'Bonjour à tous.', 'Je ne te connais pas bien.', 'Comment tu t’appelles ?'],
+          de: ['Schön, dich kennenzulernen!', 'Guten Morgen zusammen.', 'Ich kenne dich nicht gut.', 'Wie heißt du?'],
+          it: ['Piacere di conoscerti!', 'Buongiorno a tutti.', 'Non ti conosco bene.', 'Come ti chiami?'],
+          pt: ['Prazer em conhecer você!', 'Bom dia a todos.', 'Não conheço você bem.', 'Como você se chama?'],
+        },
         correcta: 0,
       },
       {
@@ -142,6 +232,13 @@ export const storyT1H2 = {
           'Perdona, ¿de dónde eres?',
           'Perdona, ¿qué edad tienes?',
         ],
+        opcionesTr: {
+          en: ['Excuse me, what’s your surname?', 'Excuse me, what’s your name?', 'Excuse me, where are you from?', 'Excuse me, how old are you?'],
+          fr: ['Excuse-moi, quel est ton nom de famille ?', 'Excuse-moi, comment tu t’appelles ?', 'Excuse-moi, d’où viens-tu ?', 'Excuse-moi, quel âge as-tu ?'],
+          de: ['Entschuldige, wie ist dein Nachname?', 'Entschuldige, wie heißt du?', 'Entschuldige, woher kommst du?', 'Entschuldige, wie alt bist du?'],
+          it: ['Scusa, qual è il tuo cognome?', 'Scusa, come ti chiami?', 'Scusa, di dove sei?', 'Scusa, quanti anni hai?'],
+          pt: ['Desculpa, qual é o seu sobrenome?', 'Desculpa, como você se chama?', 'Desculpa, de onde você é?', 'Desculpa, quantos anos você tem?'],
+        },
         correcta: 0,
       },
       {
@@ -153,6 +250,13 @@ export const storyT1H2 = {
           'Vivo cerca de Lín.',
           'Conozco a Lín.',
         ],
+        opcionesTr: {
+          en: ['My surname is Lín.', 'My name is Lín.', 'I live near Lín.', 'I know Lín.'],
+          fr: ['Mon nom de famille est Lín.', 'Je m’appelle Lín.', 'J’habite près de Lín.', 'Je connais Lín.'],
+          de: ['Mein Nachname ist Lín.', 'Ich heiße Lín.', 'Ich wohne in der Nähe von Lín.', 'Ich kenne Lín.'],
+          it: ['Il mio cognome è Lín.', 'Mi chiamo Lín.', 'Vivo vicino a Lín.', 'Conosco Lín.'],
+          pt: ['Meu sobrenome é Lín.', 'Meu nome é Lín.', 'Moro perto de Lín.', 'Conheço Lín.'],
+        },
         correcta: 0,
       },
     ],
@@ -163,6 +267,13 @@ export const storyT1H2 = {
         frase: '这 ___ 我的朋友。',
         pinyin: 'Zhè ___ wǒ de péngyou.',
         traduccion: 'Esta es mi amiga.',
+        traduccionTr: {
+          en: 'This is my friend.',
+          fr: 'Voici mon amie.',
+          de: 'Das ist meine Freundin.',
+          it: 'Questa è la mia amica.',
+          pt: 'Esta é minha amiga.',
+        },
         opciones: ['是', '叫', '姓', '也'],
         correcta: 0,
       },
@@ -170,6 +281,13 @@ export const storyT1H2 = {
         frase: '我 ___ 林。',
         pinyin: 'Wǒ ___ Lín.',
         traduccion: 'Mi apellido es Lín.',
+        traduccionTr: {
+          en: 'My surname is Lín.',
+          fr: 'Mon nom de famille est Lín.',
+          de: 'Mein Nachname ist Lín.',
+          it: 'Il mio cognome è Lín.',
+          pt: 'Meu sobrenome é Lín.',
+        },
         opciones: ['姓', '叫', '是', '请'],
         correcta: 0,
       },
@@ -177,6 +295,13 @@ export const storyT1H2 = {
         frase: '___ 你很高兴！',
         pinyin: '___ nǐ hěn gāoxìng!',
         traduccion: '¡Encantada de conocerte!',
+        traduccionTr: {
+          en: 'Nice to meet you!',
+          fr: 'Enchantée de te rencontrer !',
+          de: 'Schön, dich kennenzulernen!',
+          it: 'Piacere di conoscerti!',
+          pt: 'Prazer em conhecer você!',
+        },
         opciones: ['认识', '名字', '朋友', '请问'],
         correcta: 0,
       },
@@ -184,6 +309,13 @@ export const storyT1H2 = {
         frase: '我 ___ 很高兴。',
         pinyin: 'Wǒ ___ hěn gāoxìng.',
         traduccion: 'Yo también estoy encantado.',
+        traduccionTr: {
+          en: 'I’m glad too.',
+          fr: 'Moi aussi, je suis ravi.',
+          de: 'Ich freue mich auch.',
+          it: 'Anch’io sono contento.',
+          pt: 'Eu também estou contente.',
+        },
         opciones: ['也', '是', '姓', '叫'],
         correcta: 0,
       },
@@ -193,22 +325,57 @@ export const storyT1H2 = {
     comprension: [
       {
         pregunta: '¿Quién presenta a 晓敏 al usuario?',
+        preguntaTr: {
+          en: 'Who introduces 晓敏 to you?',
+          fr: 'Qui présente 晓敏 à l’utilisateur ?',
+          de: 'Wer stellt 晓敏 vor?',
+          it: 'Chi presenta 晓敏?',
+          pt: 'Quem apresenta 晓敏?',
+        },
         opciones: ['东奥', '马可', 'El usuario', 'Nadie'],
+        opcionesTr: {
+          en: ['东奥', '马可', 'You', 'Nobody'],
+          fr: ['东奥', '马可', 'L’utilisateur', 'Personne'],
+          de: ['东奥', '马可', 'Du', 'Niemand'],
+          it: ['东奥', '马可', 'Tu', 'Nessuno'],
+          pt: ['东奥', '马可', 'Você', 'Ninguém'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Cuál es el apellido de 晓敏?',
+        preguntaTr: {
+          en: 'What is 晓敏’s surname?',
+          fr: 'Quel est le nom de famille de 晓敏 ?',
+          de: 'Wie ist der Nachname von 晓敏?',
+          it: 'Qual è il cognome di 晓敏?',
+          pt: 'Qual é o sobrenome de 晓敏?',
+        },
         opciones: ['林', '东', '马', '王'],
         correcta: 0,
       },
       {
         pregunta: '¿Por qué se sorprende 晓敏 al final?',
+        preguntaTr: {
+          en: 'Why is 晓敏 surprised at the end?',
+          fr: 'Pourquoi 晓敏 est-elle surprise à la fin ?',
+          de: 'Warum ist 晓敏 am Ende überrascht?',
+          it: 'Perché 晓敏 è sorpresa alla fine?',
+          pt: 'Por que 晓敏 fica surpresa no final?',
+        },
         opciones: [
           '东奥 no recuerda su apellido',
           'El usuario habla muy bien chino',
           '东奥 se va sin despedirse',
           'No le gusta el usuario',
         ],
+        opcionesTr: {
+          en: ['东奥 doesn’t remember her surname', 'You speak Chinese very well', '东奥 leaves without saying goodbye', 'He doesn’t like you'],
+          fr: ['东奥 ne se souvient pas de son nom', 'L’utilisateur parle très bien chinois', '东奥 s’en va sans dire au revoir', 'Il n’aime pas l’utilisateur'],
+          de: ['东奥 erinnert sich nicht an ihren Nachnamen', 'Du sprichst sehr gut Chinesisch', '东奥 geht ohne sich zu verabschieden', 'Er mag dich nicht'],
+          it: ['东奥 non ricorda il suo cognome', 'Parli molto bene il cinese', '东奥 se ne va senza salutare', 'Non gli piaci'],
+          pt: ['东奥 não lembra o sobrenome dela', 'Você fala chinês muito bem', '东奥 vai embora sem se despedir', 'Ele não gosta de você'],
+        },
         correcta: 0,
       },
     ],

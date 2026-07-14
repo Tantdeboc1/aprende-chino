@@ -8,6 +8,15 @@ export function loc(value, lang) {
   return value[lang] || value.en || value.es || Object.values(value)[0] || '';
 }
 
+// Resuelve un campo traducible de las historias: el valor base está en español
+// (`base`) y las traducciones en un objeto paralelo `trObj = { en, fr, de, it, pt }`.
+// Sirve tanto para strings (traducción, pregunta) como para arrays (opciones).
+// Cae al español si no hay traducción para el idioma pedido.
+export function trField(base, trObj, lang) {
+  if (lang === 'es' || !trObj) return base;
+  return trObj[lang] ?? base;
+}
+
 // Normaliza un código de idioma a su base: 'es-ES' → 'es', 'pt-BR' → 'pt'.
 // i18next puede mantener el código regional en i18n.language (con
 // nonExplicitSupportedLngs), pero nuestros mapas de contenido y loaders

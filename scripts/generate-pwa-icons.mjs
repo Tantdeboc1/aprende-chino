@@ -1,9 +1,17 @@
 // scripts/generate-pwa-icons.mjs
-// Genera los iconos PWA (192/512 + maskable 192/512) a partir de un SVG inline:
-// el logo 路 (lù = camino, marca HanyuPath) en butter sobre el jade de la marca.
-// Ejecutar manualmente cuando cambie el diseño: node scripts/generate-pwa-icons.mjs
+// Genera los iconos PWA (192/512 + maskable 192/512) a partir del icono maestro
+// diseñado `design/icono-clean.png` (路 dorado sobre jade con patrón, marca
+// HanyuPath). El maestro vive FUERA de public/ para que no se envíe ni se
+// precachee (pesa ~428 kB). Ejecutar cuando cambie el icono:
+//   node scripts/generate-pwa-icons.mjs
+//
+// - normal (purpose "any"): el maestro tal cual (tiene esquinas redondeadas y
+//   transparencia), solo reescalado.
+// - maskable: Android recorta a círculo/squircle, así que necesita ir A SANGRE
+//   sin transparencia. Rellenamos las esquinas transparentes con el mismo jade
+//   del fondo del icono para que no se vea el recorte.
 import sharp from 'sharp';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -11,36 +19,28 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const outDir = path.join(root, 'public', 'icons');
 mkdirSync(outDir, { recursive: true });
 
-const JADE = '#2f6b4a';
-const BUTTER = '#f0c862';
-
-// rounded: esquinas redondeadas (icono normal). Para maskable el sistema
-// recorta la forma, así que va a sangre completa y el glifo más pequeño
-// (zona segura del 80 %).
-function logoSvg(size, { rounded, glyphRatio }) {
-  const radius = rounded ? Math.round(size * 0.22) : 0;
-  const fontSize = Math.round(size * glyphRatio);
-  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
-  <rect width="${size}" height="${size}" rx="${radius}" fill="${JADE}"/>
-  <text x="50%" y="50%" dy="${Math.round(fontSize * 0.36)}"
-    text-anchor="middle" fill="${BUTTER}" font-size="${fontSize}" font-weight="700"
-    font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, SimHei, sans-serif">路</text>
-</svg>`);
+const MASTER = path.join(root, 'design', 'icono-clean.png');
+if (!existsSync(MASTER)) {
+  console.error('Falta design/icono-clean.png (icono maestro).');
+  process.exit(1);
 }
 
-// 路 es un compuesto izquierda-derecha (足 + 各), más ancho que 学: se usa un
-// glyphRatio algo menor para dejar aire a los lados y no tocar los bordes.
+// Jade del fondo del propio icono (muestreado) — relleno de esquinas en maskable.
+const BG = { r: 72, g: 117, b: 88 };
+
 const jobs = [
-  { file: 'icon-192.png',          size: 192, rounded: true,  glyphRatio: 0.54 },
-  { file: 'icon-512.png',          size: 512, rounded: true,  glyphRatio: 0.54 },
-  { file: 'icon-maskable-192.png', size: 192, rounded: false, glyphRatio: 0.42 },
-  { file: 'icon-maskable-512.png', size: 512, rounded: false, glyphRatio: 0.42 },
+  { file: 'icon-192.png',          size: 192, maskable: false },
+  { file: 'icon-512.png',          size: 512, maskable: false },
+  { file: 'icon-maskable-192.png', size: 192, maskable: true  },
+  { file: 'icon-maskable-512.png', size: 512, maskable: true  },
 ];
 
-for (const { file, size, rounded, glyphRatio } of jobs) {
-  await sharp(logoSvg(size, { rounded, glyphRatio }))
-    .png()
-    .toFile(path.join(outDir, file));
+for (const { file, size, maskable } of jobs) {
+  let img = sharp(MASTER).resize(size, size, { fit: 'cover' });
+  // maskable: aplanamos sobre el jade del icono → rellena las esquinas
+  // transparentes y queda a sangre completa (sin canal alfa).
+  if (maskable) img = img.flatten({ background: BG });
+  await img.png().toFile(path.join(outDir, file));
   console.log(`  ✓ icons/${file}`);
 }
-console.log('Iconos PWA generados.');
+console.log('Iconos PWA generados desde icono-clean.png.');

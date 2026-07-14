@@ -2,14 +2,25 @@
 // Tema 4 — Horarios y planes · Historia 1: ¿Quedamos?
 // El grupo intenta quedar para ver una película. 东奥 se equivoca de
 // hora con un momento cómico.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT4H1 = {
   id: 't4-h1',
   tema: 4,
   historia: 1,
   titulo: '¿Quedamos?',
+  tituloTr: { es: '¿Quedamos?', en: 'Shall we meet?', fr: 'On se voit ?', de: 'Treffen wir uns?', it: 'Ci vediamo?', pt: 'Vamos nos encontrar?' },
   subtitulo: '我们一起去！',
   resumen: 'El grupo intenta quedar para ver una película. Cada uno tiene un horario distinto… y 东奥 propone una hora que no existe.',
+  resumenTr: {
+    en: 'The group tries to arrange to see a film. Everyone has a different schedule… and 东奥 suggests a time that doesn’t exist.',
+    fr: 'Le groupe essaie de se retrouver pour voir un film. Chacun a un emploi du temps différent… et 东奥 propose une heure qui n’existe pas.',
+    de: 'Die Gruppe will sich für einen Film verabreden. Jeder hat einen anderen Stundenplan… und 东奥 schlägt eine Uhrzeit vor, die es nicht gibt.',
+    it: 'Il gruppo cerca di mettersi d’accordo per vedere un film. Ognuno ha un orario diverso… e 东奥 propone un’ora che non esiste.',
+    pt: 'O grupo tenta combinar de ver um filme. Cada um tem um horário diferente… e 东奥 propõe uma hora que não existe.',
+  },
   escenario: 'aula',
   personajes: ['user', 'dong-ao', 'xiao-min', 'ma-ke'],
   vocabularioObjetivo: ['明天', '点', '上午', '下午', '晚上', '电影', '一起', '去', '现在', '课'],
@@ -22,6 +33,13 @@ export const storyT4H1 = {
       chino: '明天我们一起去看电影，好吗？',
       pinyin: 'Míngtiān wǒmen yìqǐ qù kàn diànyǐng, hǎo ma?',
       traduccion: '¿Mañana vamos juntos al cine?',
+      traduccionTr: {
+        en: 'Shall we go to the cinema together tomorrow?',
+        fr: 'On va au cinéma ensemble demain ?',
+        de: 'Gehen wir morgen zusammen ins Kino?',
+        it: 'Domani andiamo insieme al cinema?',
+        pt: 'Amanhã vamos ao cinema juntos?',
+      },
     },
     {
       id: 's2',
@@ -30,6 +48,7 @@ export const storyT4H1 = {
       chino: '好！几点？',
       pinyin: 'Hǎo! Jǐ diǎn?',
       traduccion: '¡Vale! ¿A qué hora?',
+      traduccionTr: { en: 'OK! What time?', fr: 'D’accord ! À quelle heure ?', de: 'Gut! Um wie viel Uhr?', it: 'Va bene! A che ora?', pt: 'Está bem! A que horas?' },
     },
     {
       id: 's3',
@@ -38,6 +57,13 @@ export const storyT4H1 = {
       chino: '上午十点，行吗？',
       pinyin: 'Shàngwǔ shí diǎn, xíng ma?',
       traduccion: 'A las 10 de la mañana, ¿vale?',
+      traduccionTr: {
+        en: 'At 10 in the morning, OK?',
+        fr: 'À 10 heures du matin, ça va ?',
+        de: 'Um 10 Uhr morgens, geht das?',
+        it: 'Alle 10 di mattina, va bene?',
+        pt: 'Às 10 da manhã, pode ser?',
+      },
     },
     {
       id: 's4',
@@ -46,6 +72,13 @@ export const storyT4H1 = {
       chino: '上午我有课。',
       pinyin: 'Shàngwǔ wǒ yǒu kè.',
       traduccion: 'Por la mañana tengo clase.',
+      traduccionTr: {
+        en: 'I have class in the morning.',
+        fr: 'Le matin, j’ai cours.',
+        de: 'Am Vormittag habe ich Unterricht.',
+        it: 'La mattina ho lezione.',
+        pt: 'De manhã eu tenho aula.',
+      },
     },
     {
       id: 's5',
@@ -54,6 +87,13 @@ export const storyT4H1 = {
       chino: '下午怎么样？',
       pinyin: 'Xiàwǔ zěnmeyàng?',
       traduccion: '¿Qué tal por la tarde?',
+      traduccionTr: {
+        en: 'How about the afternoon?',
+        fr: 'Et l’après-midi ?',
+        de: 'Wie wäre es am Nachmittag?',
+        it: 'E nel pomeriggio?',
+        pt: 'Que tal de tarde?',
+      },
     },
     {
       id: 's6',
@@ -62,6 +102,13 @@ export const storyT4H1 = {
       chino: '下午三点，可以。',
       pinyin: 'Xiàwǔ sān diǎn, kěyǐ.',
       traduccion: 'A las 3 de la tarde, vale.',
+      traduccionTr: {
+        en: 'At 3 in the afternoon works.',
+        fr: 'À 15 heures, ça marche.',
+        de: 'Um 3 Uhr nachmittags geht.',
+        it: 'Alle 3 del pomeriggio va bene.',
+        pt: 'Às 3 da tarde dá certo.',
+      },
     },
     {
       id: 's7',
@@ -70,6 +117,13 @@ export const storyT4H1 = {
       chino: '好！晚上二十五点见！',
       pinyin: 'Hǎo! Wǎnshang èrshíwǔ diǎn jiàn!',
       traduccion: '¡Vale! ¡Nos vemos a las 25 de la noche!',
+      traduccionTr: {
+        en: 'OK! See you at 25 o’clock at night!',
+        fr: 'D’accord ! Rendez-vous à 25 heures le soir !',
+        de: 'Gut! Wir sehen uns um 25 Uhr abends!',
+        it: 'Va bene! Ci vediamo alle 25 di sera!',
+        pt: 'Combinado! Nos vemos às 25 horas da noite!',
+      },
     },
     {
       id: 's8',
@@ -78,6 +132,7 @@ export const storyT4H1 = {
       chino: '什么？二十五点？！',
       pinyin: 'Shénme? Èrshíwǔ diǎn?!',
       traduccion: '¡¿Qué?! ¡¿Las 25?!',
+      traduccionTr: { en: 'What? 25 o’clock?!', fr: 'Quoi ? 25 heures ?!', de: 'Was? 25 Uhr?!', it: 'Cosa? Le 25?!', pt: 'O quê? 25 horas?!' },
     },
     {
       id: 's9',
@@ -86,6 +141,13 @@ export const storyT4H1 = {
       chino: '东奥！下午三点！',
       pinyin: 'Dōng Ào! Xiàwǔ sān diǎn!',
       traduccion: '¡Dōng Ào! ¡Las 3 de la tarde!',
+      traduccionTr: {
+        en: '东奥! 3 in the afternoon!',
+        fr: '东奥 ! 15 heures !',
+        de: '东奥! 3 Uhr nachmittags!',
+        it: '东奥! Le 3 del pomeriggio!',
+        pt: '东奥! 3 da tarde!',
+      },
     },
     {
       id: 's10',
@@ -94,6 +156,13 @@ export const storyT4H1 = {
       chino: '哦…对不起！下午三点见！',
       pinyin: 'Ò… duìbuqǐ! Xiàwǔ sān diǎn jiàn!',
       traduccion: 'Ah… ¡perdón! ¡Nos vemos a las 3 de la tarde!',
+      traduccionTr: {
+        en: 'Oh… sorry! See you at 3 in the afternoon!',
+        fr: 'Oh… désolé ! Rendez-vous à 15 heures !',
+        de: 'Oh… Entschuldigung! Wir sehen uns um 3 Uhr nachmittags!',
+        it: 'Oh… scusate! Ci vediamo alle 3 del pomeriggio!',
+        pt: 'Ah… desculpa! Nos vemos às 3 da tarde!',
+      },
     },
   ],
 
@@ -108,6 +177,13 @@ export const storyT4H1 = {
           'Me gusta ver películas.',
           '¿Quieres ver una película?',
         ],
+        opcionesTr: {
+          en: ['We’re going to the cinema together.', 'We watched a film together.', 'I like watching films.', 'Do you want to watch a film?'],
+          fr: ['Nous allons au cinéma ensemble.', 'Nous avons vu un film ensemble.', 'J’aime regarder des films.', 'Veux-tu regarder un film ?'],
+          de: ['Wir gehen zusammen ins Kino.', 'Wir haben zusammen einen Film gesehen.', 'Ich sehe gern Filme.', 'Willst du einen Film sehen?'],
+          it: ['Andiamo insieme al cinema.', 'Abbiamo visto un film insieme.', 'Mi piace guardare i film.', 'Vuoi vedere un film?'],
+          pt: ['Vamos ao cinema juntos.', 'Vimos um filme juntos.', 'Gosto de ver filmes.', 'Você quer ver um filme?'],
+        },
         correcta: 0,
       },
       {
@@ -119,6 +195,13 @@ export const storyT4H1 = {
           '¿Dónde?',
           '¿Cuántos?',
         ],
+        opcionesTr: {
+          en: ['What time?', 'How many days?', 'Where?', 'How many?'],
+          fr: ['À quelle heure ?', 'Combien de jours ?', 'Où ?', 'Combien ?'],
+          de: ['Um wie viel Uhr?', 'Wie viele Tage?', 'Wo?', 'Wie viele?'],
+          it: ['A che ora?', 'Quanti giorni?', 'Dove?', 'Quanti?'],
+          pt: ['A que horas?', 'Quantos dias?', 'Onde?', 'Quantos?'],
+        },
         correcta: 0,
       },
       {
@@ -130,6 +213,13 @@ export const storyT4H1 = {
           'No tengo clase hoy.',
           'Mi clase es por la mañana.',
         ],
+        opcionesTr: {
+          en: ['I have class in the morning.', 'I have class in the afternoon.', 'I don’t have class today.', 'My class is in the morning.'],
+          fr: ['Le matin, j’ai cours.', 'L’après-midi, j’ai cours.', 'Je n’ai pas cours aujourd’hui.', 'Mon cours est le matin.'],
+          de: ['Am Vormittag habe ich Unterricht.', 'Am Nachmittag habe ich Unterricht.', 'Heute habe ich keinen Unterricht.', 'Mein Unterricht ist am Vormittag.'],
+          it: ['La mattina ho lezione.', 'Il pomeriggio ho lezione.', 'Oggi non ho lezione.', 'La mia lezione è la mattina.'],
+          pt: ['De manhã eu tenho aula.', 'De tarde eu tenho aula.', 'Hoje não tenho aula.', 'Minha aula é de manhã.'],
+        },
         correcta: 0,
       },
       {
@@ -141,6 +231,13 @@ export const storyT4H1 = {
           'Las 3 en punto, sí.',
           'A las 13:00.',
         ],
+        opcionesTr: {
+          en: ['At 3 in the afternoon, OK.', 'At 3 in the morning, OK.', '3 o’clock sharp, yes.', 'At 13:00.'],
+          fr: ['À 15 heures, d’accord.', 'À 3 heures du matin, d’accord.', '3 heures pile, oui.', 'À 13h00.'],
+          de: ['Um 3 Uhr nachmittags, OK.', 'Um 3 Uhr morgens, OK.', 'Punkt 3 Uhr, ja.', 'Um 13:00 Uhr.'],
+          it: ['Alle 3 del pomeriggio, va bene.', 'Alle 3 di mattina, va bene.', 'Alle 3 in punto, sì.', 'Alle 13:00.'],
+          pt: ['Às 3 da tarde, pode ser.', 'Às 3 da manhã, pode ser.', '3 em ponto, sim.', 'Às 13:00.'],
+        },
         correcta: 0,
       },
       {
@@ -152,6 +249,13 @@ export const storyT4H1 = {
           'Hoy queremos ir.',
           'Mañana voy solo.',
         ],
+        opcionesTr: {
+          en: ['Tomorrow we’ll go together.', 'Yesterday we went together.', 'Today we want to go.', 'Tomorrow I’ll go alone.'],
+          fr: ['Demain nous y allons ensemble.', 'Hier nous y sommes allés ensemble.', 'Aujourd’hui nous voulons y aller.', 'Demain j’y vais seul.'],
+          de: ['Morgen gehen wir zusammen.', 'Gestern sind wir zusammen gegangen.', 'Heute wollen wir gehen.', 'Morgen gehe ich allein.'],
+          it: ['Domani andiamo insieme.', 'Ieri siamo andati insieme.', 'Oggi vogliamo andare.', 'Domani vado da solo.'],
+          pt: ['Amanhã vamos juntos.', 'Ontem fomos juntos.', 'Hoje queremos ir.', 'Amanhã vou sozinho.'],
+        },
         correcta: 0,
       },
     ],
@@ -161,6 +265,7 @@ export const storyT4H1 = {
         frase: '明天我们 ___ 去看电影。',
         pinyin: 'Míngtiān wǒmen ___ qù kàn diànyǐng.',
         traduccion: 'Mañana vamos juntos al cine.',
+        traduccionTr: { en: 'Tomorrow we’ll go to the cinema together.', fr: 'Demain nous allons au cinéma ensemble.', de: 'Morgen gehen wir zusammen ins Kino.', it: 'Domani andiamo insieme al cinema.', pt: 'Amanhã vamos ao cinema juntos.' },
         opciones: ['一起', '现在', '上午', '几'],
         correcta: 0,
       },
@@ -168,6 +273,7 @@ export const storyT4H1 = {
         frase: '___ 三点，可以。',
         pinyin: '___ sān diǎn, kěyǐ.',
         traduccion: 'A las 3 de la tarde, vale.',
+        traduccionTr: { en: 'At 3 in the afternoon, OK.', fr: 'À 15 heures, d’accord.', de: 'Um 3 Uhr nachmittags, OK.', it: 'Alle 3 del pomeriggio, va bene.', pt: 'Às 3 da tarde, pode ser.' },
         opciones: ['下午', '晚上', '明天', '几点'],
         correcta: 0,
       },
@@ -175,6 +281,7 @@ export const storyT4H1 = {
         frase: '上午我有 ___ 。',
         pinyin: 'Shàngwǔ wǒ yǒu ___ .',
         traduccion: 'Por la mañana tengo clase.',
+        traduccionTr: { en: 'I have class in the morning.', fr: 'Le matin, j’ai cours.', de: 'Am Vormittag habe ich Unterricht.', it: 'La mattina ho lezione.', pt: 'De manhã eu tenho aula.' },
         opciones: ['课', '点', '电影', '朋友'],
         correcta: 0,
       },
@@ -182,6 +289,7 @@ export const storyT4H1 = {
         frase: '几 ___ ？',
         pinyin: 'Jǐ ___ ?',
         traduccion: '¿A qué hora?',
+        traduccionTr: { en: 'What time?', fr: 'À quelle heure ?', de: 'Um wie viel Uhr?', it: 'A che ora?', pt: 'A que horas?' },
         opciones: ['点', '课', '人', '岁'],
         correcta: 0,
       },
@@ -190,27 +298,51 @@ export const storyT4H1 = {
     comprension: [
       {
         pregunta: '¿A qué van todos juntos?',
+        preguntaTr: { en: 'What are they all going to do together?', fr: 'Que vont-ils faire tous ensemble ?', de: 'Was wollen alle zusammen machen?', it: 'Cosa vanno a fare tutti insieme?', pt: 'O que todos vão fazer juntos?' },
         opciones: ['Al cine', 'A clase', 'A comer', 'A casa'],
+        opcionesTr: {
+          en: ['To the cinema', 'To class', 'To eat', 'Home'],
+          fr: ['Au cinéma', 'En cours', 'Manger', 'À la maison'],
+          de: ['Ins Kino', 'Zum Unterricht', 'Essen', 'Nach Hause'],
+          it: ['Al cinema', 'A lezione', 'A mangiare', 'A casa'],
+          pt: ['Ao cinema', 'À aula', 'Comer', 'Para casa'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Por qué 马可 no puede por la mañana?',
+        preguntaTr: { en: 'Why can’t 马可 make it in the morning?', fr: 'Pourquoi 马可 ne peut-il pas le matin ?', de: 'Warum kann 马可 am Vormittag nicht?', it: 'Perché 马可 non può la mattina?', pt: 'Por que 马可 não pode de manhã?' },
         opciones: [
           'Tiene clase',
           'Está enfermo',
           'No le gustan las pelis',
           'No tiene dinero',
         ],
+        opcionesTr: {
+          en: ['He has class', 'He’s ill', 'He doesn’t like films', 'He has no money'],
+          fr: ['Il a cours', 'Il est malade', 'Il n’aime pas les films', 'Il n’a pas d’argent'],
+          de: ['Er hat Unterricht', 'Er ist krank', 'Er mag keine Filme', 'Er hat kein Geld'],
+          it: ['Ha lezione', 'È malato', 'Non gli piacciono i film', 'Non ha soldi'],
+          pt: ['Ele tem aula', 'Ele está doente', 'Ele não gosta de filmes', 'Ele não tem dinheiro'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué error cómico comete 东奥 al final?',
+        preguntaTr: { en: 'What funny mistake does 东奥 make at the end?', fr: 'Quelle erreur amusante 东奥 fait-il à la fin ?', de: 'Welchen lustigen Fehler macht 东奥 am Ende?', it: 'Che errore comico fa 东奥 alla fine?', pt: 'Que erro engraçado 东奥 comete no final?' },
         opciones: [
           'Dice una hora que no existe (las 25)',
           'Olvida el día',
           'Confunde la película',
           'No avisa a nadie',
         ],
+        opcionesTr: {
+          en: ['He says a time that doesn’t exist (25 o’clock)', 'He forgets the day', 'He mixes up the film', 'He doesn’t tell anyone'],
+          fr: ['Il dit une heure qui n’existe pas (25 h)', 'Il oublie le jour', 'Il confond le film', 'Il ne prévient personne'],
+          de: ['Er nennt eine Uhrzeit, die es nicht gibt (25 Uhr)', 'Er vergisst den Tag', 'Er verwechselt den Film', 'Er sagt niemandem Bescheid'],
+          it: ['Dice un’ora che non esiste (le 25)', 'Dimentica il giorno', 'Confonde il film', 'Non avvisa nessuno'],
+          pt: ['Diz uma hora que não existe (25 horas)', 'Esquece o dia', 'Confunde o filme', 'Não avisa ninguém'],
+        },
         correcta: 0,
       },
     ],

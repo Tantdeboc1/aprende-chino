@@ -4,6 +4,7 @@
 
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { loc, baseLang } from '@/utils/loc.js';
 import { J } from '@/styles/tokens';
 import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 import { STORIES, getStoryById } from '@/data/stories/index.js';
@@ -125,16 +126,16 @@ export default function StoriesPage({
               style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
               故
             </div>
-            <span className="font-bold text-base" style={{ color: J.onAccent }}>Historias</span>
+            <span className="font-bold text-base" style={{ color: J.onAccent }}>{t('stories_header', 'Historias')}</span>
           </div>
           <ProfileBadge variant="dark" />
         </div>
         <div className="mt-3">
           <h1 className="text-xl font-bold" style={{ color: J.onAccent }}>
-            Aprende en contexto
+            {t('stories_learn_in_context', 'Aprende en contexto')}
           </h1>
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-            故事 · {completadas} de {total} {completadas === 1 ? 'completada' : 'completadas'}
+            故事 · {t('stories_progress_count', '{{done}} de {{total}} completadas', { done: completadas, total })}
           </p>
         </div>
         {/* Mini progreso global */}
@@ -148,7 +149,7 @@ export default function StoriesPage({
       <div className="px-4 pt-5 space-y-5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-            Mapa de historias
+            {t('stories_map_title', 'Mapa de historias')}
           </p>
 
           <div className="space-y-3 j-rise">
@@ -192,8 +193,11 @@ export default function StoriesPage({
 
 // ─── Tarjeta de historia con estado ─────────────────────────────────────────
 function StoryCard({ story, index, status, accent, data, onClick }) {
+  const { t, i18n } = useTranslation();
   const isLocked = status === 'bloqueada';
   const isDone = status === 'completada';
+  // Título localizado (tituloTr {es,en,...}); cae al titulo legado si falta.
+  const storyTitle = loc(story.tituloTr, baseLang(i18n.language)) || story.titulo;
 
   const pct = data && data.maxPuntuacion > 0
     ? Math.round((data.mejorPuntuacion / data.maxPuntuacion) * 100)
@@ -225,7 +229,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-0.5">
           <span className="font-semibold text-sm truncate" style={{ color: isLocked ? J.mute : J.ink }}>
-            {story.titulo}
+            {storyTitle}
           </span>
           <span className="text-[10px] font-bold flex-shrink-0"
             style={{ color: isLocked ? J.mute : accent.text, letterSpacing: '0.05em' }}>
@@ -252,7 +256,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
         {/* Hint si está bloqueada */}
         {isLocked && (
           <p className="text-[11px] mt-1" style={{ color: J.mute }}>
-            Completa la anterior para desbloquear
+            {t('stories_locked_hint', 'Completa la anterior para desbloquear')}
           </p>
         )}
       </div>

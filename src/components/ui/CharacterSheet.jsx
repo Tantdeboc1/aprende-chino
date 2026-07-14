@@ -14,6 +14,7 @@ const LESSON_BADGE = {
 };
 
 function HanziWriterCanvas({ char }) {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const writerRef    = useRef(null);
   const [status, setStatus]   = useState('loading'); // 'loading' | 'ready' | 'error'
@@ -110,14 +111,14 @@ function HanziWriterCanvas({ char }) {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
             style={{ background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jade}`, cursor: 'pointer' }}
           >
-            <span className="font-cn">播</span> Animar
+            <span className="font-cn">播</span> {t('charsheet_animate', 'Animar')}
           </button>
           <button
             onClick={handleReset}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition"
             style={{ background: J.paperHi, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
           >
-            <span className="font-cn">重</span> Repetir
+            <span className="font-cn">重</span> {t('charsheet_repeat', 'Repetir')}
           </button>
         </div>
       )}
@@ -246,7 +247,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
 
           {/* Significado */}
           <div className="w-full rounded-2xl p-4 text-center" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
-            <p className="text-xs uppercase tracking-widest mb-1" style={{ color: J.mute }}>Significado</p>
+            <p className="text-xs uppercase tracking-widest mb-1" style={{ color: J.mute }}>{t('charsheet_meaning_header', 'Significado')}</p>
             <p className="text-xl font-bold leading-snug" style={{ color: J.ink }}>{char.meaning}</p>
           </div>
 
@@ -260,7 +261,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             )}
             {char.examples?.length > 0 && (
               <div className="rounded-xl px-4 py-3" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
-                <p className="text-xs mb-2" style={{ color: J.mute }}>Ejemplos</p>
+                <p className="text-xs mb-2" style={{ color: J.mute }}>{t('charsheet_examples', 'Ejemplos')}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {char.examples.map((ex, i) => (
                     <span key={i} className="text-sm px-2.5 py-1 rounded-lg" style={{ background: J.paper, color: J.ink }}>{ex}</span>

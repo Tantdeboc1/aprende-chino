@@ -137,7 +137,7 @@ export default function Dictionary({
             {t('dictionary_title')}<span style={{ color: J.red }}>.</span>
           </h2>
           <p className="mb-4 text-sm" style={{ color: J.inkSoft }}>
-            {filteredChars.length} palabra{filteredChars.length !== 1 ? 's' : ''}
+            {t('dictionary_word_count', { count: filteredChars.length })}
             {selectedLesson ? ` · ${t('dictionary_filter_lesson', { num: selectedLesson })}` : ` · ${t('dictionary_filter_all_lessons')}`}
             {showFavorites && ` · ${t('dictionary_filter_favorites_label')}`}
           </p>
@@ -186,7 +186,7 @@ export default function Dictionary({
               }}
             >
               <span className="font-cn" style={{ fontSize: 14 }}>收</span>
-              Favoritos ({favorites.size})
+              {t('dictionary_favorites_button')} ({favorites.size})
             </button>
           </div>
 
@@ -203,9 +203,9 @@ export default function Dictionary({
               }}
             >
               <span className="font-cn" style={{ fontSize: 14 }}>补</span>
-              Vocabulario extra ({totalSupp})
+              {t('dictionary_extra_vocab')} ({totalSupp})
             </button>
-            <span style={{ color: J.mute, fontSize: 12 }}>{totalMain} palabras principales</span>
+            <span style={{ color: J.mute, fontSize: 12 }}>{totalMain} {t('dictionary_main_words')}</span>
           </div>
 
           {/* Buscador */}
@@ -300,7 +300,7 @@ export default function Dictionary({
                       <span className="text-lg" style={{ color: J.ink }}>{char.pinyin}</span>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleSpeak(char); }}
-                        aria-label={`Escuchar ${char.char}`}
+                        aria-label={t('dictionary_listen_char', { char: char.char })}
                         className="font-cn rounded-full"
                         style={{
                           padding: '4px 8px', background: J.jadeBg, color: J.jadeDeep,
@@ -328,7 +328,7 @@ export default function Dictionary({
                   {/* Ejemplos */}
                   {char.examples?.length > 0 && (
                     <div className="pt-1">
-                      <p className="text-xs mb-1" style={{ color: J.mute }}>Ejemplos:</p>
+                      <p className="text-xs mb-1" style={{ color: J.mute }}>{t('dictionary_examples')}:</p>
                       <div className="flex flex-wrap gap-1">
                         {char.examples.map((ex, i) => (
                           <span key={i} className="text-xs px-2 py-0.5 rounded-md" style={{ background: J.paper, color: J.ink }}>{ex}</span>

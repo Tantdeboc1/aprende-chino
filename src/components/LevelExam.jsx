@@ -148,7 +148,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
               {t('level_exam_locked_title', 'Examen Final bloqueado')}
             </h1>
             <p className="text-sm mb-6" style={{ color: J.inkSoft }}>
-              {t('level_exam_locked_desc', `Domina el ${UNLOCK_MASTERY_PCT}% del vocabulario HSK-1 para desbloquear el examen de certificación.`)}
+              {t('level_exam_locked_desc', 'Domina el {{pct}}% del vocabulario HSK-1 para desbloquear el examen de certificación.', { pct: UNLOCK_MASTERY_PCT })}
             </p>
             <div className="h-3 rounded-full overflow-hidden mb-2" style={{ background: J.hair }}>
               <div className="h-full rounded-full transition-all duration-700"
@@ -190,9 +190,9 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
             )}
 
             <ul className="text-sm text-left mx-auto mb-6 space-y-1.5" style={{ color: J.inkSoft, maxWidth: 320 }}>
-              <li>⏱️ {t('level_exam_rule_time', `Tiempo límite: ${Math.round(TOTAL_TIME / 60)} minutos.`)}</li>
-              <li>📝 {t('level_exam_rule_count', `${Math.min(TOTAL_QUESTIONS, pool.length)} preguntas mezclando lectura y significado.`)}</li>
-              <li>🎯 {t('level_exam_rule_pass', `Apruebas con ${PASS_PCT}% o más.`)}</li>
+              <li>⏱️ {t('level_exam_rule_time', 'Tiempo límite: {{minutes}} minutos.', { minutes: Math.round(TOTAL_TIME / 60) })}</li>
+              <li>📝 {t('level_exam_rule_count', '{{num}} preguntas mezclando lectura y significado.', { num: Math.min(TOTAL_QUESTIONS, pool.length) })}</li>
+              <li>🎯 {t('level_exam_rule_pass', 'Apruebas con {{pct}}% o más.', { pct: PASS_PCT })}</li>
             </ul>
 
             <button onClick={startExam}
@@ -226,7 +226,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
             <p className="text-sm mb-6" style={{ color: J.inkSoft }}>
               {passed
                 ? t('level_exam_passed_sub', 'Has certificado el HSK-1')
-                : t('level_exam_failed_sub', `Necesitas ${PASS_PCT}% para aprobar`)}
+                : t('level_exam_failed_sub', 'Necesitas {{pct}}% para aprobar', { pct: PASS_PCT })}
             </p>
 
             <div className="grid grid-cols-3 gap-3 mb-6">

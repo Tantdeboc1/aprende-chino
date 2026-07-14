@@ -3,6 +3,7 @@
 // comprensión), trackea puntuación y avisa al padre al terminar.
 
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ExTranslation from './ExTranslation.jsx';
 import ExFillBlank from './ExFillBlank.jsx';
@@ -10,25 +11,26 @@ import ExComprehension from './ExComprehension.jsx';
 import CharacterDisplay from './CharacterDisplay.jsx';
 
 export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
+  const { t } = useTranslation();
   const blocks = [
     {
       key: 'traduccion',
-      label: 'Traducción',
-      sub: '翻译 · Elige la traducción correcta',
+      label: t('story_ex_translation_label', 'Traducción'),
+      sub: `翻译 · ${t('story_ex_translation_sub', 'Elige la traducción correcta')}`,
       Component: ExTranslation,
       items: ejercicios.traduccion || [],
     },
     {
       key: 'completar',
-      label: 'Completa la frase',
-      sub: '填空 · Elige el carácter correcto',
+      label: t('story_ex_fill_label', 'Completa la frase'),
+      sub: `填空 · ${t('story_ex_fill_sub', 'Elige el carácter correcto')}`,
       Component: ExFillBlank,
       items: ejercicios.completar || [],
     },
     {
       key: 'comprension',
-      label: 'Comprensión',
-      sub: '阅读 · ¿Qué pasó en la historia?',
+      label: t('story_ex_comprehension_label', 'Comprensión'),
+      sub: `阅读 · ${t('story_ex_comprehension_sub', '¿Qué pasó en la historia?')}`,
       Component: ExComprehension,
       items: ejercicios.comprension || [],
     },
@@ -84,7 +86,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
           textAlign: 'center', color: J.onAccent,
         }}>
           <p style={{ fontSize: 11, letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
-            BLOQUE {blockIdx + 1} / {blocks.length}
+            {t('story_ex_block_counter', 'BLOQUE {{n}} / {{total}}', { n: blockIdx + 1, total: blocks.length })}
           </p>
           <h2 style={{ fontSize: 24, fontWeight: 700, margin: '8px 0 4px' }}>
             {currentBlock.label}
@@ -93,7 +95,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
             {currentBlock.sub}
           </p>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 12 }}>
-            {currentBlock.items.length} pregunta{currentBlock.items.length === 1 ? '' : 's'}
+            {t('story_ex_questions_count', { count: currentBlock.items.length })}
           </p>
           <button
             onClick={() => setShowingTransition(false)}
@@ -106,7 +108,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
               boxShadow: '0 6px 18px -8px rgba(200,57,47,0.6)',
             }}
           >
-            Empezar →
+            {t('story_ex_start', 'Empezar')} →
           </button>
         </div>
       </div>

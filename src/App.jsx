@@ -20,6 +20,8 @@ const ChinaMap = lazy(() => import('./components/china/ChinaMap.jsx'));
 const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import { useTranslation } from 'react-i18next';
+import { baseLang } from './utils/loc.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
@@ -120,10 +122,27 @@ export default function App() {
   // El tema (claro/oscuro/sistema) lo aplica initTheme() en main.jsx antes
   // del primer render; aquí ya no forzamos nada para no pisar la preferencia.
 
+  // Idioma activo (para localizar los significados del vocabulario)
+  const { i18n } = useTranslation();
+  const lang = baseLang(i18n.language);
+
   // Datos globales
   const [radicalsData, setRadicalsData] = useState([]);
-  const [allCharacters, setAllCharacters] = useState([]);
+  const [allCharactersRaw, setAllCharacters] = useState([]);
   const [lessonsData, setLessonsData]   = useState([]);
+
+  // Significados localizados: el dato base guarda el español en `meaning` y las
+  // traducciones en `meaningTr {en,fr,de,it,pt}`. Aquí resolvemos el `meaning`
+  // al idioma activo en UN solo punto, de modo que TODOS los consumidores
+  // (diccionario, exámenes, minijuegos, repaso…) reciben ya el texto correcto
+  // sin cambios. Reactivo al cambio de idioma (memo dependiente de `lang`).
+  const allCharacters = useMemo(() => {
+    if (lang === 'es') return allCharactersRaw;
+    return allCharactersRaw.map(c => {
+      const tr = c.meaningTr?.[lang];
+      return tr ? { ...c, meaning: tr } : c;
+    });
+  }, [allCharactersRaw, lang]);
 
   // Splash
   const [splashProgress, setSplashProgress] = useState(0);
@@ -407,6 +426,7 @@ export default function App() {
             const pNum = word.pinyin || '';
             enriched.push({
               char: word.char, radical: word.radical || '—', meaning: word.meaning,
+              meaningTr: word.meaningTr || null,
               type: word.type || '', examples: word.examples || [], tags: [],
               pinyin: fromNumericToMarked(pNum), pinyinNumeric: pNum,
               pinyinPlain: pNum.replace(/[1-4]/g, '').replace(/\s+/g, ''),

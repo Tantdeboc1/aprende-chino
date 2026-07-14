@@ -4,6 +4,8 @@
 // pantalla de resultados se conectarán en Fase 2).
 
 import { useMemo, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { loc, baseLang, trField } from '@/utils/loc.js';
 import { J } from '@/styles/tokens';
 import { getCharacter } from '@/data/characters.js';
 import CharacterDisplay from './CharacterDisplay.jsx';
@@ -15,9 +17,9 @@ import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
 const LS_DIFFICULTY = STORAGE_KEYS.STORY_DIFFICULTY;
 const DIFFICULTIES = [
-  { id: 'facil',   label: 'Fácil',   desc: 'Chino + pinyin siempre visibles' },
-  { id: 'normal',  label: 'Normal',  desc: 'Pinyin se revela al tocar' },
-  { id: 'dificil', label: 'Difícil', desc: 'Solo chino, sin pinyin' },
+  { id: 'facil',   labelKey: 'story_difficulty_easy',   labelDef: 'Fácil',   descKey: 'story_difficulty_easy_desc',   descDef: 'Chino + pinyin siempre visibles' },
+  { id: 'normal',  labelKey: 'story_difficulty_normal', labelDef: 'Normal',  descKey: 'story_difficulty_normal_desc', descDef: 'Pinyin se revela al tocar' },
+  { id: 'dificil', labelKey: 'story_difficulty_hard',   labelDef: 'Difícil', descKey: 'story_difficulty_hard_desc',   descDef: 'Solo chino, sin pinyin' },
 ];
 
 function loadDifficulty() {
@@ -34,6 +36,9 @@ function interpolate(text, userName) {
 }
 
 export default function StoryPlayer({ story, userName, speak, onExit, onFinish, resultMeta }) {
+  const { t, i18n } = useTranslation();
+  // Título localizado (tituloTr {es,en,...}); cae al titulo legado si falta.
+  const storyTitle = loc(story.tituloTr, baseLang(i18n.language)) || story.titulo;
   const [difficulty, setDifficulty] = useState(loadDifficulty);
   const [phase, setPhase] = useState('intro'); // intro | dialogue | exercises | results
   const [idx, setIdx] = useState(0);
@@ -89,7 +94,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     return (
       <div style={shellStyle}>
         <SceneBackground escenario={story.escenario} storyId={story.id} />
-        <TopBar onExit={onExit} title={story.titulo} subtitle={story.subtitulo} />
+        <TopBar onExit={onExit} title={storyTitle} subtitle={story.subtitulo} />
 
         <div style={{
           flex: 1,
@@ -108,21 +113,21 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             color: J.onAccent,
           }}>
             <p style={{ fontSize: 11, letterSpacing: '0.16em', color: J.butter, fontWeight: 700, margin: 0 }}>
-              TEMA {story.tema} · HISTORIA {story.historia}
+              {t('story_topic_chapter', 'TEMA {{tema}} · HISTORIA {{historia}}', { tema: story.tema, historia: story.historia })}
             </p>
             <h2 className="font-cn" style={{ fontSize: 28, fontWeight: 700, margin: '6px 0 2px' }}>
               {story.subtitulo}
             </h2>
-            <p style={{ fontSize: 18, fontWeight: 600, margin: 0 }}>{story.titulo}</p>
+            <p style={{ fontSize: 18, fontWeight: 600, margin: 0 }}>{storyTitle}</p>
 
             <p style={{ marginTop: 14, fontSize: 13.5, color: 'rgba(255,255,255,0.75)', lineHeight: 1.55 }}>
-              {story.resumen}
+              {trField(story.resumen, story.resumenTr, baseLang(i18n.language))}
             </p>
 
             {/* Personajes */}
             <div style={{ marginTop: 16 }}>
               <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
-                Personajes
+                {t('story_characters_label', 'Personajes')}
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {story.personajes.map((id) => {
@@ -147,14 +152,14 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             {/* Selector dificultad */}
             <div style={{ marginTop: 18 }}>
               <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
-                Pinyin
+                {t('story_pinyin_label', 'Pinyin')}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
                 {DIFFICULTIES.map(d => (
                   <button
                     key={d.id}
                     onClick={() => setDifficulty(d.id)}
-                    title={d.desc}
+                    title={t(d.descKey, d.descDef)}
                     style={{
                       background: difficulty === d.id ? J.jade : 'rgba(255,255,255,0.06)',
                       border: `1px solid ${difficulty === d.id ? J.jadeDeep : 'rgba(255,255,255,0.12)'}`,
@@ -166,12 +171,12 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                       cursor: 'pointer',
                     }}
                   >
-                    {d.label}
+                    {t(d.labelKey, d.labelDef)}
                   </button>
                 ))}
               </div>
               <p style={{ marginTop: 6, fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
-                {DIFFICULTIES.find(d => d.id === difficulty)?.desc}
+                {(() => { const d = DIFFICULTIES.find(x => x.id === difficulty); return d ? t(d.descKey, d.descDef) : ''; })()}
               </p>
             </div>
 
@@ -192,7 +197,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                 boxShadow: '0 6px 18px -8px rgba(200,57,47,0.7)',
               }}
             >
-              开始 · Empezar historia →
+              开始 · {t('story_start_button', 'Empezar historia')} →
             </button>
           </div>
         </div>
@@ -209,7 +214,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     return (
       <div style={shellStyle}>
         <SceneBackground escenario={story.escenario} storyId={story.id} />
-        <TopBar onExit={onExit} title={story.titulo} subtitle="Ejercicios" />
+        <TopBar onExit={onExit} title={storyTitle} subtitle={t('stories_exercises', 'Ejercicios')} />
         <ExerciseBlock
           ejercicios={story.ejercicios}
           onComplete={handleExercisesDone}
@@ -224,7 +229,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     return (
       <div style={shellStyle}>
         <SceneBackground escenario={story.escenario} storyId={story.id} />
-        <TopBar onExit={onExit} title={story.titulo} subtitle={story.subtitulo} />
+        <TopBar onExit={onExit} title={storyTitle} subtitle={story.subtitulo} />
         <StoryResults
           story={story}
           score={score.score}
@@ -242,7 +247,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
   return (
     <div style={shellStyle}>
       <SceneBackground escenario={story.escenario} storyId={story.id} />
-      <TopBar onExit={onExit} title={story.titulo} subtitle={story.subtitulo} progress={(idx + 1) / total} />
+      <TopBar onExit={onExit} title={storyTitle} subtitle={story.subtitulo} progress={(idx + 1) / total} />
 
       {/* Mitad superior: personaje (centrado, ocupa todo el ancho disponible) */}
       <div style={{
@@ -270,7 +275,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
           speakerName={`${speaker?.nombre || ''}${speaker?.pinyin ? '  ·  ' + speaker.pinyin : ''}`}
           chino={interpolate(escena.chino, userName)}
           pinyin={interpolate(escena.pinyin, userName)}
-          traduccion={interpolate(escena.traduccion, userName)}
+          traduccion={interpolate(trField(escena.traduccion, escena.traduccionTr, baseLang(i18n.language)), userName)}
           dificultad={difficulty}
           onAdvance={handleAdvance}
           isLast={idx === total - 1}
@@ -294,6 +299,7 @@ const shellStyle = {
 };
 
 function TopBar({ onExit, title, subtitle, progress }) {
+  const { t } = useTranslation();
   // Cápsula semitransparente alrededor del bloque título+subtítulo para que
   // sea legible sobre fondos claros (cielos, paredes). Antes era texto blanco
   // suelto y desaparecía sobre el cielo de t1-h1/t1-h2.
@@ -320,7 +326,7 @@ function TopBar({ onExit, title, subtitle, progress }) {
         cursor: 'pointer',
         boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
       }}>
-        ← Salir
+        ← {t('story_exit', 'Salir')}
       </button>
       <div style={{
         flex: 1,

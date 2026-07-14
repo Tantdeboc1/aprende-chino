@@ -6,6 +6,7 @@
 // - Tap en la caja: completa el typewriter o avanza si ya está completo
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 
 const TYPE_SPEED_MS = 35;
@@ -30,6 +31,7 @@ export default function DialogueBox({
   isLast = false,
   speak,                  // (text, opts) => Promise — TTS de la app
 }) {
+  const { t } = useTranslation();
   const [shown, setShown] = useState('');
   const [done, setDone] = useState(false);
   const [showPinyin, setShowPinyin] = useState(dificultad === 'facil');
@@ -204,7 +206,7 @@ export default function DialogueBox({
           fontStyle: 'italic',
           minHeight: 18,
         }}>
-          {pinyinVisible ? pinyin : (dificultad === 'normal' ? '· toca el chino para ver el pinyin ·' : '')}
+          {pinyinVisible ? pinyin : (dificultad === 'normal' ? t('story_tap_pinyin_hint', '· toca el chino para ver el pinyin ·') : '')}
         </p>
       )}
 
@@ -227,7 +229,7 @@ export default function DialogueBox({
               cursor: 'pointer',
             }}
           >
-            mostrar traducción
+            {t('story_show_translation', 'mostrar traducción')}
           </button>
         )}
       </div>
@@ -240,7 +242,9 @@ export default function DialogueBox({
         color: 'rgba(255,255,255,0.45)',
         letterSpacing: '0.08em',
       }}>
-        {done ? (isLast ? 'TOCA PARA TERMINAR ▸' : 'TOCA PARA CONTINUAR ▸') : 'TOCA PARA SALTAR ▸'}
+        {done
+          ? (isLast ? t('story_tap_finish', 'TOCA PARA TERMINAR ▸') : t('story_tap_continue', 'TOCA PARA CONTINUAR ▸'))
+          : t('story_tap_skip', 'TOCA PARA SALTAR ▸')}
       </div>
 
       <style>{`

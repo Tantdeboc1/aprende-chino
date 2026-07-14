@@ -1,14 +1,25 @@
 // src/data/stories/story-t3-h2.js
 // Tema 3 — La familia · Historia 2: La familia de 晓敏
 // 晓敏 habla de su familia: madre médico, padre profesor.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT3H2 = {
   id: 't3-h2',
   tema: 3,
   historia: 2,
   titulo: 'La familia de 晓敏',
+  tituloTr: { es: 'La familia de 晓敏', en: "Xiaomin's family", fr: 'La famille de 晓敏', de: '晓敏s Familie', it: 'La famiglia di 晓敏', pt: 'A família de 晓敏' },
   subtitulo: '晓敏的家人',
   resumen: '晓敏 habla al usuario sobre su familia. Sus padres tienen trabajos muy importantes — ahora entiendes por qué es tan aplicada.',
+  resumenTr: {
+    en: '晓敏 tells you about her family. Her parents have very important jobs — now you understand why she’s so hard-working.',
+    fr: '晓敏 te parle de sa famille. Ses parents ont des métiers très importants — tu comprends maintenant pourquoi elle est si appliquée.',
+    de: '晓敏 erzählt dir von ihrer Familie. Ihre Eltern haben sehr wichtige Berufe — jetzt verstehst du, warum sie so fleißig ist.',
+    it: '晓敏 ti parla della sua famiglia. I suoi genitori hanno lavori molto importanti — ora capisci perché è così diligente.',
+    pt: '晓敏 fala sobre a família dela. Os pais dela têm trabalhos muito importantes — agora você entende por que ela é tão aplicada.',
+  },
   escenario: 'casa',
   personajes: ['user', 'xiao-min'],
   vocabularioObjetivo: ['家', '有', '人', '工作', '医生', '老师', '哥哥', '爸爸', '妈妈', '岁', '大学'],
@@ -21,6 +32,13 @@ export const storyT3H2 = {
       chino: '我家有四口人。',
       pinyin: 'Wǒ jiā yǒu sì kǒu rén.',
       traduccion: 'En mi familia somos cuatro.',
+      traduccionTr: {
+        en: 'There are four people in my family.',
+        fr: 'Dans ma famille, nous sommes quatre.',
+        de: 'Wir sind vier in meiner Familie.',
+        it: 'Nella mia famiglia siamo in quattro.',
+        pt: 'Na minha família somos quatro.',
+      },
     },
     {
       id: 's2',
@@ -29,6 +47,13 @@ export const storyT3H2 = {
       chino: '你爸爸妈妈做什么工作？',
       pinyin: 'Nǐ bàba māma zuò shénme gōngzuò?',
       traduccion: '¿En qué trabajan tus padres?',
+      traduccionTr: {
+        en: 'What do your parents do for work?',
+        fr: 'Quel travail font tes parents ?',
+        de: 'Was arbeiten deine Eltern?',
+        it: 'Che lavoro fanno i tuoi genitori?',
+        pt: 'Em que seus pais trabalham?',
+      },
     },
     {
       id: 's3',
@@ -37,6 +62,13 @@ export const storyT3H2 = {
       chino: '我妈妈是医生。',
       pinyin: 'Wǒ māma shì yīshēng.',
       traduccion: 'Mi madre es médica.',
+      traduccionTr: {
+        en: 'My mother is a doctor.',
+        fr: 'Ma mère est médecin.',
+        de: 'Meine Mutter ist Ärztin.',
+        it: 'Mia madre è medico.',
+        pt: 'Minha mãe é médica.',
+      },
     },
     {
       id: 's4',
@@ -45,6 +77,13 @@ export const storyT3H2 = {
       chino: '我爸爸是大学老师。',
       pinyin: 'Wǒ bàba shì dàxué lǎoshī.',
       traduccion: 'Mi padre es profesor de universidad.',
+      traduccionTr: {
+        en: 'My father is a university teacher.',
+        fr: 'Mon père est professeur d’université.',
+        de: 'Mein Vater ist Universitätsdozent.',
+        it: 'Mio padre è professore universitario.',
+        pt: 'Meu pai é professor universitário.',
+      },
     },
     {
       id: 's5',
@@ -53,6 +92,13 @@ export const storyT3H2 = {
       chino: '哇！你家人都很聪明！',
       pinyin: 'Wā! Nǐ jiā rén dōu hěn cōngmíng!',
       traduccion: '¡Vaya! ¡Tu familia es muy inteligente!',
+      traduccionTr: {
+        en: 'Wow! Your family is very smart!',
+        fr: 'Waouh ! Ta famille est très intelligente !',
+        de: 'Wow! Deine Familie ist sehr klug!',
+        it: 'Wow! La tua famiglia è molto intelligente!',
+        pt: 'Uau! Sua família é muito inteligente!',
+      },
     },
     {
       id: 's6',
@@ -61,6 +107,13 @@ export const storyT3H2 = {
       chino: '我也有一个哥哥。他二十二岁。',
       pinyin: 'Wǒ yě yǒu yí gè gēge. Tā èrshí\'èr suì.',
       traduccion: 'También tengo un hermano mayor. Tiene 22 años.',
+      traduccionTr: {
+        en: 'I also have an older brother. He’s 22.',
+        fr: 'J’ai aussi un grand frère. Il a 22 ans.',
+        de: 'Ich habe auch einen älteren Bruder. Er ist 22.',
+        it: 'Ho anche un fratello maggiore. Ha 22 anni.',
+        pt: 'Também tenho um irmão mais velho. Ele tem 22 anos.',
+      },
     },
     {
       id: 's7',
@@ -69,6 +122,13 @@ export const storyT3H2 = {
       chino: '他做什么工作？',
       pinyin: 'Tā zuò shénme gōngzuò?',
       traduccion: '¿En qué trabaja?',
+      traduccionTr: {
+        en: 'What does he do for work?',
+        fr: 'Quel travail fait-il ?',
+        de: 'Was arbeitet er?',
+        it: 'Che lavoro fa?',
+        pt: 'Em que ele trabalha?',
+      },
     },
     {
       id: 's8',
@@ -77,6 +137,13 @@ export const storyT3H2 = {
       chino: '他是大学学生，学习汉语和英语。',
       pinyin: 'Tā shì dàxué xuéshēng, xuéxí Hànyǔ hé Yīngyǔ.',
       traduccion: 'Es estudiante universitario, estudia chino e inglés.',
+      traduccionTr: {
+        en: 'He’s a university student, studying Chinese and English.',
+        fr: 'Il est étudiant à l’université, il étudie le chinois et l’anglais.',
+        de: 'Er ist Student und lernt Chinesisch und Englisch.',
+        it: 'È uno studente universitario, studia cinese e inglese.',
+        pt: 'Ele é estudante universitário, estuda chinês e inglês.',
+      },
     },
   ],
 
@@ -91,6 +158,13 @@ export const storyT3H2 = {
           'Tengo cuatro hermanos.',
           'Vivo con cuatro amigos.',
         ],
+        opcionesTr: {
+          en: ['There are four people in my family.', 'There are ten people in my family.', 'I have four siblings.', 'I live with four friends.'],
+          fr: ['Dans ma famille, nous sommes quatre.', 'Dans ma famille, nous sommes dix.', 'J’ai quatre frères et sœurs.', 'Je vis avec quatre amis.'],
+          de: ['Wir sind vier in meiner Familie.', 'Wir sind zehn in meiner Familie.', 'Ich habe vier Geschwister.', 'Ich wohne mit vier Freunden.'],
+          it: ['Nella mia famiglia siamo in quattro.', 'Nella mia famiglia siamo in dieci.', 'Ho quattro fratelli.', 'Vivo con quattro amici.'],
+          pt: ['Na minha família somos quatro.', 'Na minha família somos dez.', 'Tenho quatro irmãos.', 'Moro com quatro amigos.'],
+        },
         correcta: 0,
       },
       {
@@ -102,6 +176,13 @@ export const storyT3H2 = {
           '¿Cómo se llaman tus padres?',
           '¿Cuántos años tienen tus padres?',
         ],
+        opcionesTr: {
+          en: ['What do your parents do for work?', 'Where do your parents live?', 'What are your parents’ names?', 'How old are your parents?'],
+          fr: ['Quel travail font tes parents ?', 'Où vivent tes parents ?', 'Comment s’appellent tes parents ?', 'Quel âge ont tes parents ?'],
+          de: ['Was arbeiten deine Eltern?', 'Wo wohnen deine Eltern?', 'Wie heißen deine Eltern?', 'Wie alt sind deine Eltern?'],
+          it: ['Che lavoro fanno i tuoi genitori?', 'Dove vivono i tuoi genitori?', 'Come si chiamano i tuoi genitori?', 'Quanti anni hanno i tuoi genitori?'],
+          pt: ['Em que seus pais trabalham?', 'Onde seus pais moram?', 'Quais são os nomes dos seus pais?', 'Quantos anos têm seus pais?'],
+        },
         correcta: 0,
       },
       {
@@ -113,6 +194,13 @@ export const storyT3H2 = {
           'Mi madre está enferma.',
           'Mi madre es estudiante.',
         ],
+        opcionesTr: {
+          en: ['My mother is a doctor.', 'My mother is a teacher.', 'My mother is ill.', 'My mother is a student.'],
+          fr: ['Ma mère est médecin.', 'Ma mère est professeure.', 'Ma mère est malade.', 'Ma mère est étudiante.'],
+          de: ['Meine Mutter ist Ärztin.', 'Meine Mutter ist Lehrerin.', 'Meine Mutter ist krank.', 'Meine Mutter ist Studentin.'],
+          it: ['Mia madre è medico.', 'Mia madre è insegnante.', 'Mia madre è malata.', 'Mia madre è studentessa.'],
+          pt: ['Minha mãe é médica.', 'Minha mãe é professora.', 'Minha mãe está doente.', 'Minha mãe é estudante.'],
+        },
         correcta: 0,
       },
       {
@@ -124,6 +212,13 @@ export const storyT3H2 = {
           'Mi padre fue a la universidad.',
           'Mi padre enseña en el colegio.',
         ],
+        opcionesTr: {
+          en: ['My father is a university teacher.', 'My father is a university student.', 'My father went to university.', 'My father teaches at school.'],
+          fr: ['Mon père est professeur d’université.', 'Mon père est étudiant à l’université.', 'Mon père est allé à l’université.', 'Mon père enseigne à l’école.'],
+          de: ['Mein Vater ist Universitätsdozent.', 'Mein Vater ist Student.', 'Mein Vater hat studiert.', 'Mein Vater unterrichtet an der Schule.'],
+          it: ['Mio padre è professore universitario.', 'Mio padre è studente universitario.', 'Mio padre è andato all’università.', 'Mio padre insegna a scuola.'],
+          pt: ['Meu pai é professor universitário.', 'Meu pai é estudante universitário.', 'Meu pai foi à universidade.', 'Meu pai dá aula na escola.'],
+        },
         correcta: 0,
       },
       {
@@ -135,6 +230,13 @@ export const storyT3H2 = {
           'Vive en el 22.',
           'Estudia 22 horas.',
         ],
+        opcionesTr: {
+          en: ['He’s 22.', 'He’s 12.', 'He lives at number 22.', 'He studies 22 hours.'],
+          fr: ['Il a 22 ans.', 'Il a 12 ans.', 'Il habite au 22.', 'Il étudie 22 heures.'],
+          de: ['Er ist 22.', 'Er ist 12.', 'Er wohnt in der Nummer 22.', 'Er lernt 22 Stunden.'],
+          it: ['Ha 22 anni.', 'Ha 12 anni.', 'Abita al numero 22.', 'Studia 22 ore.'],
+          pt: ['Ele tem 22 anos.', 'Ele tem 12 anos.', 'Ele mora no número 22.', 'Ele estuda 22 horas.'],
+        },
         correcta: 0,
       },
     ],
@@ -144,6 +246,7 @@ export const storyT3H2 = {
         frase: '我妈妈是 ___ 。',
         pinyin: 'Wǒ māma shì ___ .',
         traduccion: 'Mi madre es médica.',
+        traduccionTr: { en: 'My mother is a doctor.', fr: 'Ma mère est médecin.', de: 'Meine Mutter ist Ärztin.', it: 'Mia madre è medico.', pt: 'Minha mãe é médica.' },
         opciones: ['医生', '老师', '学生', '朋友'],
         correcta: 0,
       },
@@ -151,6 +254,7 @@ export const storyT3H2 = {
         frase: '我爸爸是大学 ___ 。',
         pinyin: 'Wǒ bàba shì dàxué ___ .',
         traduccion: 'Mi padre es profesor de universidad.',
+        traduccionTr: { en: 'My father is a university teacher.', fr: 'Mon père est professeur d’université.', de: 'Mein Vater ist Universitätsdozent.', it: 'Mio padre è professore universitario.', pt: 'Meu pai é professor universitário.' },
         opciones: ['老师', '学生', '医生', '工作'],
         correcta: 0,
       },
@@ -158,6 +262,7 @@ export const storyT3H2 = {
         frase: '我也 ___ 一个哥哥。',
         pinyin: 'Wǒ yě ___ yí gè gēge.',
         traduccion: 'También tengo un hermano mayor.',
+        traduccionTr: { en: 'I also have an older brother.', fr: 'J’ai aussi un grand frère.', de: 'Ich habe auch einen älteren Bruder.', it: 'Ho anche un fratello maggiore.', pt: 'Também tenho um irmão mais velho.' },
         opciones: ['有', '是', '叫', '看'],
         correcta: 0,
       },
@@ -165,6 +270,7 @@ export const storyT3H2 = {
         frase: '他做什么 ___ ？',
         pinyin: 'Tā zuò shénme ___ ?',
         traduccion: '¿En qué trabaja?',
+        traduccionTr: { en: 'What does he do for work?', fr: 'Quel travail fait-il ?', de: 'Was arbeitet er?', it: 'Che lavoro fa?', pt: 'Em que ele trabalha?' },
         opciones: ['工作', '学习', '人', '家'],
         correcta: 0,
       },
@@ -173,27 +279,51 @@ export const storyT3H2 = {
     comprension: [
       {
         pregunta: '¿En qué trabaja la madre de 晓敏?',
+        preguntaTr: { en: 'What does 晓敏’s mother do?', fr: 'Quel est le métier de la mère de 晓敏 ?', de: 'Was ist 晓敏s Mutter von Beruf?', it: 'Che lavoro fa la madre di 晓敏?', pt: 'Qual é a profissão da mãe de 晓敏?' },
         opciones: ['Médica', 'Profesora', 'Cocinera', 'Estudiante'],
+        opcionesTr: {
+          en: ['Doctor', 'Teacher', 'Cook', 'Student'],
+          fr: ['Médecin', 'Professeure', 'Cuisinière', 'Étudiante'],
+          de: ['Ärztin', 'Lehrerin', 'Köchin', 'Studentin'],
+          it: ['Medico', 'Insegnante', 'Cuoca', 'Studentessa'],
+          pt: ['Médica', 'Professora', 'Cozinheira', 'Estudante'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿En qué trabaja el padre de 晓敏?',
+        preguntaTr: { en: 'What does 晓敏’s father do?', fr: 'Quel est le métier du père de 晓敏 ?', de: 'Was ist 晓敏s Vater von Beruf?', it: 'Che lavoro fa il padre di 晓敏?', pt: 'Qual é a profissão do pai de 晓敏?' },
         opciones: [
           'Profesor de universidad',
           'Médico',
           'Estudiante',
           'Cocinero',
         ],
+        opcionesTr: {
+          en: ['University teacher', 'Doctor', 'Student', 'Cook'],
+          fr: ['Professeur d’université', 'Médecin', 'Étudiant', 'Cuisinier'],
+          de: ['Universitätsdozent', 'Arzt', 'Student', 'Koch'],
+          it: ['Professore universitario', 'Medico', 'Studente', 'Cuoco'],
+          pt: ['Professor universitário', 'Médico', 'Estudante', 'Cozinheiro'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué hace el hermano mayor de 晓敏?',
+        preguntaTr: { en: 'What does 晓敏’s older brother do?', fr: 'Que fait le grand frère de 晓敏 ?', de: 'Was macht 晓敏s älterer Bruder?', it: 'Cosa fa il fratello maggiore di 晓敏?', pt: 'O que o irmão mais velho de 晓敏 faz?' },
         opciones: [
           'Estudia en la universidad',
           'Trabaja como médico',
           'Es profesor',
           'No tiene hermano mayor',
         ],
+        opcionesTr: {
+          en: ['He studies at university', 'He works as a doctor', 'He’s a teacher', 'She has no older brother'],
+          fr: ['Il étudie à l’université', 'Il travaille comme médecin', 'Il est professeur', 'Elle n’a pas de grand frère'],
+          de: ['Er studiert an der Universität', 'Er arbeitet als Arzt', 'Er ist Lehrer', 'Sie hat keinen älteren Bruder'],
+          it: ['Studia all’università', 'Lavora come medico', 'È insegnante', 'Non ha un fratello maggiore'],
+          pt: ['Ele estuda na universidade', 'Ele trabalha como médico', 'Ele é professor', 'Ela não tem irmão mais velho'],
+        },
         correcta: 0,
       },
     ],

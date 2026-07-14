@@ -2,14 +2,25 @@
 // Tema 2 — Nacionalidades y comida · Historia 1: ¿De dónde eres?
 // El usuario conoce a 马可, un estudiante italiano. Hablan de sus
 // nacionalidades y de por qué estudian chino.
+//
+// Español = idioma base; traducciones en `*Tr: { en, fr, de, it, pt }` (ver
+// src/utils/loc.js → trField). `chino`, `pinyin`, `frase` son neutros.
 
 export const storyT2H1 = {
   id: 't2-h1',
   tema: 2,
   historia: 1,
   titulo: '¿De dónde eres?',
+  tituloTr: { es: '¿De dónde eres?', en: 'Where are you from?', fr: 'D’où viens-tu ?', de: 'Woher kommst du?', it: 'Di dove sei?', pt: 'De onde você é?' },
   subtitulo: '你是哪国人？',
   resumen: 'El usuario conoce a 马可, un estudiante italiano. Hablan de sus nacionalidades y descubren que tienen algo en común.',
+  resumenTr: {
+    en: 'You meet 马可, an Italian student. You talk about your nationalities and discover you have something in common.',
+    fr: 'Tu rencontres 马可, un étudiant italien. Vous parlez de vos nationalités et découvrez que vous avez un point commun.',
+    de: 'Du triffst 马可, einen italienischen Studenten. Ihr sprecht über eure Nationalitäten und entdeckt eine Gemeinsamkeit.',
+    it: 'Conosci 马可, uno studente italiano. Parlate delle vostre nazionalità e scoprite di avere qualcosa in comune.',
+    pt: 'Você conhece 马可, um estudante italiano. Vocês falam sobre suas nacionalidades e descobrem que têm algo em comum.',
+  },
   escenario: 'campus',
   personajes: ['user', 'ma-ke'],
   vocabularioObjetivo: ['是', '哪', '国', '人', '朋友', '学习', '汉语', '喜欢', '美国', '中国', '西班牙', '意大利'],
@@ -22,6 +33,7 @@ export const storyT2H1 = {
       chino: '你好！我叫马可。',
       pinyin: 'Nǐ hǎo! Wǒ jiào Mǎ Kě.',
       traduccion: '¡Hola! Me llamo Mǎ Kě.',
+      traduccionTr: { en: 'Hello! My name is Mǎ Kě.', fr: 'Bonjour ! Je m’appelle Mǎ Kě.', de: 'Hallo! Ich heiße Mǎ Kě.', it: 'Ciao! Mi chiamo Mǎ Kě.', pt: 'Olá! Meu nome é Mǎ Kě.' },
     },
     {
       id: 's2',
@@ -30,6 +42,7 @@ export const storyT2H1 = {
       chino: '你好马可！我叫{userName}。',
       pinyin: 'Nǐ hǎo Mǎ Kě! Wǒ jiào {userName}.',
       traduccion: '¡Hola Mǎ Kě! Me llamo {userName}.',
+      traduccionTr: { en: 'Hello Mǎ Kě! My name is {userName}.', fr: 'Bonjour Mǎ Kě ! Je m’appelle {userName}.', de: 'Hallo Mǎ Kě! Ich heiße {userName}.', it: 'Ciao Mǎ Kě! Mi chiamo {userName}.', pt: 'Olá Mǎ Kě! Meu nome é {userName}.' },
     },
     {
       id: 's3',
@@ -38,6 +51,13 @@ export const storyT2H1 = {
       chino: '请问，你是哪国人？',
       pinyin: 'Qǐngwèn, nǐ shì nǎ guó rén?',
       traduccion: 'Perdona, ¿de qué país eres?',
+      traduccionTr: {
+        en: 'Excuse me, what country are you from?',
+        fr: 'Excuse-moi, de quel pays viens-tu ?',
+        de: 'Entschuldige, aus welchem Land kommst du?',
+        it: 'Scusa, di che paese sei?',
+        pt: 'Com licença, de que país você é?',
+      },
     },
     {
       id: 's4',
@@ -46,6 +66,13 @@ export const storyT2H1 = {
       chino: '我是西班牙人。你呢？',
       pinyin: 'Wǒ shì Xībānyá rén. Nǐ ne?',
       traduccion: 'Soy español. ¿Y tú?',
+      traduccionTr: {
+        en: 'I’m Spanish. And you?',
+        fr: 'Je suis espagnol. Et toi ?',
+        de: 'Ich bin Spanier. Und du?',
+        it: 'Sono spagnolo. E tu?',
+        pt: 'Sou espanhol. E você?',
+      },
     },
     {
       id: 's5',
@@ -54,6 +81,7 @@ export const storyT2H1 = {
       chino: '我是意大利人。',
       pinyin: 'Wǒ shì Yìdàlì rén.',
       traduccion: 'Soy italiano.',
+      traduccionTr: { en: 'I’m Italian.', fr: 'Je suis italien.', de: 'Ich bin Italiener.', it: 'Sono italiano.', pt: 'Sou italiano.' },
     },
     {
       id: 's6',
@@ -62,6 +90,13 @@ export const storyT2H1 = {
       chino: '你也学习汉语吗？',
       pinyin: 'Nǐ yě xuéxí Hànyǔ ma?',
       traduccion: '¿Tú también estudias chino?',
+      traduccionTr: {
+        en: 'Do you also study Chinese?',
+        fr: 'Tu étudies aussi le chinois ?',
+        de: 'Lernst du auch Chinesisch?',
+        it: 'Studi cinese anche tu?',
+        pt: 'Você também estuda chinês?',
+      },
     },
     {
       id: 's7',
@@ -70,6 +105,13 @@ export const storyT2H1 = {
       chino: '是的，我很喜欢汉语。',
       pinyin: 'Shì de, wǒ hěn xǐhuan Hànyǔ.',
       traduccion: 'Sí, me gusta mucho el chino.',
+      traduccionTr: {
+        en: 'Yes, I really like Chinese.',
+        fr: 'Oui, j’aime beaucoup le chinois.',
+        de: 'Ja, ich mag Chinesisch sehr.',
+        it: 'Sì, mi piace molto il cinese.',
+        pt: 'Sim, gosto muito de chinês.',
+      },
     },
     {
       id: 's8',
@@ -78,6 +120,13 @@ export const storyT2H1 = {
       chino: '我也是！我们是朋友。',
       pinyin: 'Wǒ yě shì! Wǒmen shì péngyou.',
       traduccion: '¡Yo también! Somos amigos.',
+      traduccionTr: {
+        en: 'Me too! We’re friends.',
+        fr: 'Moi aussi ! Nous sommes amis.',
+        de: 'Ich auch! Wir sind Freunde.',
+        it: 'Anch’io! Siamo amici.',
+        pt: 'Eu também! Somos amigos.',
+      },
     },
     {
       id: 's9',
@@ -86,6 +135,13 @@ export const storyT2H1 = {
       chino: '好！认识你很高兴！',
       pinyin: 'Hǎo! Rènshi nǐ hěn gāoxìng!',
       traduccion: '¡Genial! ¡Encantado de conocerte!',
+      traduccionTr: {
+        en: 'Great! Nice to meet you!',
+        fr: 'Génial ! Enchanté de te rencontrer !',
+        de: 'Super! Schön, dich kennenzulernen!',
+        it: 'Ottimo! Piacere di conoscerti!',
+        pt: 'Ótimo! Prazer em conhecer você!',
+      },
     },
   ],
 
@@ -101,6 +157,13 @@ export const storyT2H1 = {
           '¿Qué estudias?',
           '¿Cuántos años tienes?',
         ],
+        opcionesTr: {
+          en: ['What country are you from?', 'What’s your name?', 'What do you study?', 'How old are you?'],
+          fr: ['De quel pays viens-tu ?', 'Comment tu t’appelles ?', 'Qu’est-ce que tu étudies ?', 'Quel âge as-tu ?'],
+          de: ['Aus welchem Land kommst du?', 'Wie heißt du?', 'Was studierst du?', 'Wie alt bist du?'],
+          it: ['Di che paese sei?', 'Come ti chiami?', 'Cosa studi?', 'Quanti anni hai?'],
+          pt: ['De que país você é?', 'Como você se chama?', 'O que você estuda?', 'Quantos anos você tem?'],
+        },
         correcta: 0,
       },
       {
@@ -112,6 +175,13 @@ export const storyT2H1 = {
           'Estoy en España.',
           'Voy a España.',
         ],
+        opcionesTr: {
+          en: ['I’m Spanish.', 'I’m Italian.', 'I’m in Spain.', 'I’m going to Spain.'],
+          fr: ['Je suis espagnol.', 'Je suis italien.', 'Je suis en Espagne.', 'Je vais en Espagne.'],
+          de: ['Ich bin Spanier.', 'Ich bin Italiener.', 'Ich bin in Spanien.', 'Ich fahre nach Spanien.'],
+          it: ['Sono spagnolo.', 'Sono italiano.', 'Sono in Spagna.', 'Vado in Spagna.'],
+          pt: ['Sou espanhol.', 'Sou italiano.', 'Estou na Espanha.', 'Vou para a Espanha.'],
+        },
         correcta: 0,
       },
       {
@@ -123,6 +193,13 @@ export const storyT2H1 = {
           'Vivo en Italia.',
           'Hablo italiano.',
         ],
+        opcionesTr: {
+          en: ['I’m Italian.', 'I’m Chinese.', 'I live in Italy.', 'I speak Italian.'],
+          fr: ['Je suis italien.', 'Je suis chinois.', 'J’habite en Italie.', 'Je parle italien.'],
+          de: ['Ich bin Italiener.', 'Ich bin Chinese.', 'Ich wohne in Italien.', 'Ich spreche Italienisch.'],
+          it: ['Sono italiano.', 'Sono cinese.', 'Vivo in Italia.', 'Parlo italiano.'],
+          pt: ['Sou italiano.', 'Sou chinês.', 'Moro na Itália.', 'Falo italiano.'],
+        },
         correcta: 0,
       },
       {
@@ -134,6 +211,13 @@ export const storyT2H1 = {
           'El chino es muy difícil.',
           'No entiendo el chino.',
         ],
+        opcionesTr: {
+          en: ['I really like Chinese.', 'I study Chinese every day.', 'Chinese is very difficult.', 'I don’t understand Chinese.'],
+          fr: ['J’aime beaucoup le chinois.', 'J’étudie le chinois tous les jours.', 'Le chinois est très difficile.', 'Je ne comprends pas le chinois.'],
+          de: ['Ich mag Chinesisch sehr.', 'Ich lerne jeden Tag Chinesisch.', 'Chinesisch ist sehr schwierig.', 'Ich verstehe kein Chinesisch.'],
+          it: ['Mi piace molto il cinese.', 'Studio cinese ogni giorno.', 'Il cinese è molto difficile.', 'Non capisco il cinese.'],
+          pt: ['Gosto muito de chinês.', 'Estudo chinês todos os dias.', 'Chinês é muito difícil.', 'Não entendo chinês.'],
+        },
         correcta: 0,
       },
       {
@@ -145,6 +229,13 @@ export const storyT2H1 = {
           '¿Eres mi amigo?',
           'Tengo muchos amigos.',
         ],
+        opcionesTr: {
+          en: ['We’re friends.', 'I’m your friend.', 'Are you my friend?', 'I have many friends.'],
+          fr: ['Nous sommes amis.', 'Je suis ton ami.', 'Es-tu mon ami ?', 'J’ai beaucoup d’amis.'],
+          de: ['Wir sind Freunde.', 'Ich bin dein Freund.', 'Bist du mein Freund?', 'Ich habe viele Freunde.'],
+          it: ['Siamo amici.', 'Sono il tuo amico.', 'Sei il mio amico?', 'Ho molti amici.'],
+          pt: ['Somos amigos.', 'Sou seu amigo.', 'Você é meu amigo?', 'Tenho muitos amigos.'],
+        },
         correcta: 0,
       },
     ],
@@ -155,6 +246,7 @@ export const storyT2H1 = {
         frase: '我 ___ 西班牙人。',
         pinyin: 'Wǒ ___ Xībānyá rén.',
         traduccion: 'Soy español.',
+        traduccionTr: { en: 'I’m Spanish.', fr: 'Je suis espagnol.', de: 'Ich bin Spanier.', it: 'Sono spagnolo.', pt: 'Sou espanhol.' },
         opciones: ['是', '叫', '姓', '也'],
         correcta: 0,
       },
@@ -162,6 +254,7 @@ export const storyT2H1 = {
         frase: '你是 ___ 国人？',
         pinyin: 'Nǐ shì ___ guó rén?',
         traduccion: '¿De qué país eres?',
+        traduccionTr: { en: 'What country are you from?', fr: 'De quel pays viens-tu ?', de: 'Aus welchem Land kommst du?', it: 'Di che paese sei?', pt: 'De que país você é?' },
         opciones: ['哪', '是', '什么', '请'],
         correcta: 0,
       },
@@ -169,6 +262,7 @@ export const storyT2H1 = {
         frase: '我很 ___ 汉语。',
         pinyin: 'Wǒ hěn ___ Hànyǔ.',
         traduccion: 'Me gusta mucho el chino.',
+        traduccionTr: { en: 'I really like Chinese.', fr: 'J’aime beaucoup le chinois.', de: 'Ich mag Chinesisch sehr.', it: 'Mi piace molto il cinese.', pt: 'Gosto muito de chinês.' },
         opciones: ['喜欢', '是', '学习', '认识'],
         correcta: 0,
       },
@@ -176,6 +270,7 @@ export const storyT2H1 = {
         frase: '你也 ___ 汉语吗？',
         pinyin: 'Nǐ yě ___ Hànyǔ ma?',
         traduccion: '¿Tú también estudias chino?',
+        traduccionTr: { en: 'Do you also study Chinese?', fr: 'Tu étudies aussi le chinois ?', de: 'Lernst du auch Chinesisch?', it: 'Studi cinese anche tu?', pt: 'Você também estuda chinês?' },
         opciones: ['学习', '喜欢', '是', '叫'],
         correcta: 0,
       },
@@ -185,22 +280,46 @@ export const storyT2H1 = {
     comprension: [
       {
         pregunta: '¿De dónde es 马可?',
+        preguntaTr: { en: 'Where is 马可 from?', fr: 'D’où vient 马可 ?', de: 'Woher kommt 马可?', it: 'Di dov’è 马可?', pt: 'De onde é 马可?' },
         opciones: ['Italia', 'España', 'Francia', 'China'],
+        opcionesTr: {
+          en: ['Italy', 'Spain', 'France', 'China'],
+          fr: ['Italie', 'Espagne', 'France', 'Chine'],
+          de: ['Italien', 'Spanien', 'Frankreich', 'China'],
+          it: ['Italia', 'Spagna', 'Francia', 'Cina'],
+          pt: ['Itália', 'Espanha', 'França', 'China'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué idioma estudia 马可?',
+        preguntaTr: { en: 'What language does 马可 study?', fr: 'Quelle langue étudie 马可 ?', de: 'Welche Sprache lernt 马可?', it: 'Che lingua studia 马可?', pt: 'Que idioma 马可 estuda?' },
         opciones: ['Chino', 'Español', 'Italiano', 'Inglés'],
+        opcionesTr: {
+          en: ['Chinese', 'Spanish', 'Italian', 'English'],
+          fr: ['Chinois', 'Espagnol', 'Italien', 'Anglais'],
+          de: ['Chinesisch', 'Spanisch', 'Italienisch', 'Englisch'],
+          it: ['Cinese', 'Spagnolo', 'Italiano', 'Inglese'],
+          pt: ['Chinês', 'Espanhol', 'Italiano', 'Inglês'],
+        },
         correcta: 0,
       },
       {
         pregunta: '¿Qué tienen en común el usuario y 马可?',
+        preguntaTr: { en: 'What do you and 马可 have in common?', fr: 'Qu’ont en commun l’utilisateur et 马可 ?', de: 'Was haben du und 马可 gemeinsam?', it: 'Cosa hanno in comune l’utente e 马可?', pt: 'O que você e 马可 têm em comum?' },
         opciones: [
           'Los dos estudian chino y les gusta',
           'Los dos son chinos',
           'Los dos viven en Italia',
           'No tienen nada en común',
         ],
+        opcionesTr: {
+          en: ['They both study Chinese and like it', 'They’re both Chinese', 'They both live in Italy', 'They have nothing in common'],
+          fr: ['Tous deux étudient le chinois et l’aiment', 'Tous deux sont chinois', 'Tous deux vivent en Italie', 'Ils n’ont rien en commun'],
+          de: ['Beide lernen Chinesisch und mögen es', 'Beide sind Chinesen', 'Beide leben in Italien', 'Sie haben nichts gemeinsam'],
+          it: ['Entrambi studiano cinese e a entrambi piace', 'Sono entrambi cinesi', 'Vivono entrambi in Italia', 'Non hanno nulla in comune'],
+          pt: ['Ambos estudam chinês e gostam', 'Ambos são chineses', 'Ambos moram na Itália', 'Não têm nada em comum'],
+        },
         correcta: 0,
       },
     ],
