@@ -134,11 +134,19 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
-            // JSON de datos (info.json, hsk1-data.json…): red primero con
-            // caché de respaldo para offline.
+            // JSON de datos (libro-data, radicals-data, info.json, hsk1-data…):
+            // NetworkFirst — con conexión SIEMPRE trae la versión fresca; el
+            // caché es solo respaldo offline. Antes era StaleWhileRevalidate,
+            // que servía el JSON viejo primero: al actualizar traducciones
+            // (meaningTr) el diccionario/exámenes seguían en español hasta la
+            // 2ª carga. NetworkFirst evita ese desfase para datos versionados.
             urlPattern: ({ url }) => url.pathname.includes('/data/') && url.pathname.endsWith('.json'),
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'data-json' },
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'data-json',
+              networkTimeoutSeconds: 4, // offline: cae al caché rápido
+              cacheableResponse: { statuses: [0, 200] },
+            },
           },
           {
             // Datos de trazos de HanziWriter (auto-alojados en /hanzi-data/).
