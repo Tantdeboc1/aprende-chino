@@ -35,11 +35,20 @@ async function cleanup() {
 
 // fetch + JSON con caché versionada. Si hay hit, no toca la red.
 // `name` se conserva por compatibilidad con las llamadas; la clave real es la URL.
+//
+// La URL de red lleva `?v=<APP_VERSION>`: al subir versión cambia la URL, así
+// que NINGUNA capa intermedia puede servir el dato viejo — ni el HTTP cache ni
+// un service worker antiguo. (Bug real v0.8.0→v0.9.0: el SW viejo, con
+// StaleWhileRevalidate para /data/*.json, interceptaba el fetch del shell
+// nuevo y le devolvía el JSON antiguo, que quedaba guardado — envenenado —
+// dentro del caché versionado nuevo para siempre.)
 export async function fetchJsonCached(name, url) {
+  const versionedUrl = url + (url.includes('?') ? '&' : '?') + 'v=' + APP_VERSION;
+
   if (!hasCacheApi) {
     // Navegador sin Cache API (o contexto no seguro): fetch directo. En prod el
     // service worker ya cachea estos JSON a nivel de red.
-    const res = await fetch(url);
+    const res = await fetch(versionedUrl);
     if (!res.ok) throw new Error(`No se pudo cargar ${url}`);
     return res.json();
   }
@@ -47,15 +56,15 @@ export async function fetchJsonCached(name, url) {
   let cache;
   try {
     cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(url);
+    const cached = await cache.match(versionedUrl);
     if (cached) return cached.json();
   } catch { /* si falla la caché, seguimos con la red */ }
 
-  const res = await fetch(url);
+  const res = await fetch(versionedUrl);
   if (!res.ok) throw new Error(`No se pudo cargar ${url}`);
   // Clonamos porque el body de una Response solo se consume una vez.
   if (cache) {
-    try { await cache.put(url, res.clone()); } catch { /* cuota/opaque: seguir */ }
+    try { await cache.put(versionedUrl, res.clone()); } catch { /* cuota/opaque: seguir */ }
     cleanup(); // no await: limpieza de versiones viejas en segundo plano
   }
   return res.json();
