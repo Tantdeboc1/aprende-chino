@@ -3,8 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 import { APP_NAME } from '@/utils/appInfo.js';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
-const MIN_DISPLAY_MS = 4000;
+// Mínimo adaptativo: la primera visita ve la animación del 路 completa (2 s);
+// los usuarios recurrentes (ya tienen perfil) entran en cuanto cargan los
+// datos (~0,2 s de caché) con un mínimo corto para que no parpadee.
+function minDisplayMs() {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.USERNAME) ? 800 : 2000;
+  } catch {
+    return 2000;
+  }
+}
 
 export default function SplashScreen({ progress, onComplete }) {
   const { t } = useTranslation();
@@ -56,7 +66,7 @@ export default function SplashScreen({ progress, onComplete }) {
   useEffect(() => {
     if (progress < 100) return;
     const elapsed = Date.now() - startTime.current;
-    const waitMore = Math.max(0, MIN_DISPLAY_MS - elapsed);
+    const waitMore = Math.max(0, minDisplayMs() - elapsed);
     const t = setTimeout(() => {
       setExiting(true);
       setTimeout(() => onComplete(), 650);
@@ -100,7 +110,7 @@ export default function SplashScreen({ progress, onComplete }) {
           }} />
         </div>
         <p style={{ color: J.mute, fontSize: 12, textAlign: 'center', fontWeight: 500 }}>
-          {progress < 100 ? 'Cargando...' : 'Todo listo'}
+          {progress < 100 ? t('splash_loading', 'Cargando...') : t('splash_ready', '¡Todo listo!')}
         </p>
       </div>
     </div>

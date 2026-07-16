@@ -33,6 +33,7 @@ import { MINIGAME_IDS } from './components/minigames/registry.js';
 
 // ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
 function AnimatedLoader() {
+  const { t } = useTranslation();
   const hostWrapRef = useRef(null);
 
   useEffect(() => {
@@ -79,7 +80,7 @@ function AnimatedLoader() {
           style={{ width: 92, height: 92, top: -6, left: -6, border: `2px solid ${J.hair}`, borderTopColor: J.jade }} />
       </div>
       <p style={{ color: J.mute, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' }} className="animate-pulse">
-        Cargando...
+        {t('common_loading', 'Cargando…')}
       </p>
     </div>
   );
@@ -123,7 +124,7 @@ export default function App() {
   // del primer render; aquí ya no forzamos nada para no pisar la preferencia.
 
   // Idioma activo (para localizar los significados del vocabulario)
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = baseLang(i18n.language);
 
   // Datos globales
@@ -206,7 +207,13 @@ export default function App() {
     if (mode !== 'google' || !user?.uid) return;
     const remoteName = loadUserName();
     setUserName(remoteName);
-    setProgress(loadProgress());
+    // Conserva la identidad si el contenido no cambió: cada bump de localRev
+    // (p. ej. el eco de nuestro propio push) creaba un objeto nuevo que
+    // invalidaba todos los useMemo dependientes de `progress` (Home entera).
+    setProgress(prev => {
+      const next = loadProgress();
+      return JSON.stringify(prev) === JSON.stringify(next) ? prev : next;
+    });
     // Solo forzamos 'welcome' si aún no se eligió pantalla; respetamos la
     // navegación actual cuando llega un sync remoto a media sesión.
     setScreen(s => (s === 'welcome' && remoteName) ? 'home' : s);
@@ -412,13 +419,11 @@ export default function App() {
           }).join(' ');
         };
 
-        const tick = () => new Promise(r => setTimeout(r, 80));
-
-        setSplashProgress(25); await tick();
+        setSplashProgress(25);
         // Caché versionada: tras la primera visita estos JSON salen de
         // localStorage sin tocar la red (se invalidan al subir APP_VERSION).
         const data = await fetchJsonCached('libro-data', assetUrl('data/libro-data.json'));
-        setSplashProgress(55); await tick();
+        setSplashProgress(55);
 
         const enriched = [];
         for (const lesson of data.lessons) {
@@ -438,10 +443,10 @@ export default function App() {
         }
 
         const lessonsMeta = data.lessons.map(l => ({ lesson: l.lesson, titleZh: l.titleZh, titleEs: l.titleEs }));
-        setSplashProgress(70); await tick();
+        setSplashProgress(70);
 
         const radicalsDataRaw = await fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json'));
-        setSplashProgress(88); await tick();
+        setSplashProgress(88);
         const radicalsEnriched = Object.entries(radicalsDataRaw.radicals).map(([radical, details]) => ({ radical, ...details }));
 
         setAllCharacters(enriched);
@@ -849,7 +854,7 @@ export default function App() {
       return (
         <Layout activeScreen={navScreen} onNavigate={handleBottomNav} hideNav={hideNav}>
           <div className="min-h-screen flex items-center justify-center">
-            <p style={{ color: J.mute }}>Seccion no disponible.</p>
+            <p style={{ color: J.mute }}>{t('fallback_section_unavailable', 'Sección no disponible.')}</p>
           </div>
         </Layout>
       );
@@ -869,7 +874,7 @@ export default function App() {
   return (
     <Layout activeScreen="home" onNavigate={handleBottomNav}>
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[var(--mute)]">Pantalla desconocida: {screen}</p>
+        <p className="text-[var(--mute)]">{t('fallback_unknown_screen', 'Pantalla desconocida:')} {screen}</p>
       </div>
     </Layout>
   );

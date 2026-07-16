@@ -20,8 +20,3 @@ export function hapticSuccess() {
 export function hapticError() {
   vibrate([50, 30, 50]);
 }
-
-/** Vibración muy corta: tap UI (opcional) */
-export function hapticTap() {
-  vibrate(15);
-}

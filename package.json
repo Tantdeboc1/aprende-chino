@@ -22,8 +22,6 @@
     "prebuild": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs"
   },
   "dependencies": {
-    "@dicebear/collection": "^9.4.2",
-    "@dicebear/core": "^9.4.2",
     "@fontsource/noto-sans-sc": "^5.2.9",
     "@fontsource/noto-serif-sc": "^5.2.9",
     "firebase": "^12.14.0",

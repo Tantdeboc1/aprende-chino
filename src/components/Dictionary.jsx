@@ -222,7 +222,7 @@ export default function Dictionary({
                 outline: 'none',
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
-              onBlur={e => e.target.style.borderColor = J.hair}
+              onBlur={e => e.target.style.borderColor = J.border}
             />
           </div>
         </div>
@@ -236,18 +236,25 @@ export default function Dictionary({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredChars.map((char, idx) => {
+          {filteredChars.map((char) => {
             const srsData = progress?.__srs?.[char.char] || null;
             const isFav   = favorites.has(char.char);
 
             return (
               <Card
-                key={idx}
+                // Clave estable por contenido (no por índice): al filtrar,
+                // React reutiliza la tarjeta correcta en vez de re-pintar
+                // todas las posiciones.
+                key={`${char.char}-${char.lesson}`}
                 onClick={() => setSelectedChar(char)}
                 className="hover:shadow-sm transition cursor-pointer relative active:scale-[0.98]"
                 style={{
                   background: J.paperHi, border: `1px solid ${J.hair}`,
                   borderRadius: 18, padding: '1.5rem',
+                  // El navegador salta layout/paint de las tarjetas fuera del
+                  // viewport (el diccionario completo son cientos de tarjetas).
+                  contentVisibility: 'auto',
+                  containIntrinsicSize: 'auto 380px',
                 }}
               >
                 {/* Cabecera: lección + tipo + SRS dot + favorito */}

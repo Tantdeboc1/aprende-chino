@@ -237,9 +237,6 @@ export default defineConfig(({ mode }) => ({
           ) {
             return 'vendor-confetti';
           }
-          if (id.includes('node_modules/@dicebear')) {
-            return 'vendor-dicebear';
-          }
           // Firestore separado del resto de Firebase: userStore lo importa
           // dinámicamente, así que este chunk solo se descarga para
           // usuarios con cuenta Google (los invitados no lo pagan).

@@ -26,9 +26,3 @@ export const STORIES_BY_ID = Object.fromEntries(STORIES.map(s => [s.id, s]));
 export function getStoryById(id) {
   return STORIES_BY_ID[id] || null;
 }
-
-export function getNextStoryId(currentId) {
-  const idx = STORIES.findIndex(s => s.id === currentId);
-  if (idx === -1 || idx >= STORIES.length - 1) return null;
-  return STORIES[idx + 1].id;
-}

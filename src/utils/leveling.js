@@ -257,7 +257,6 @@ const ACHIEVEMENTS = [
 const LEVEL_KEY = STORAGE_KEYS.LEVELING;
 
 const DEFAULT_STATE = {
-  selectedTitle: null,          // id del título equipado (null = usa el de nivel)
   unlockedAchievements: [],     // ids de logros desbloqueados
   // Contadores para condiciones de logros
   counters: {
@@ -326,77 +325,13 @@ export function getLevelInfo(totalXP) {
 }
 
 /**
- * Devuelve el título actualmente equipado (o el de nivel si no hay selección).
+ * Devuelve el título mostrado junto al nombre: el del nivel actual.
+ * (El selector manual de títulos — setEquippedTitle/getAvailableTitles —
+ * nunca llegó a tener UI y se eliminó; state.selectedTitle ya no se lee.)
  */
 export function getEquippedTitle(totalXP) {
-  const state = loadState();
   const levelInfo = getLevelInfo(totalXP);
-
-  if (state.selectedTitle) {
-    // Buscar en logros desbloqueados
-    const achievement = ACHIEVEMENTS.find(a => a.id === state.selectedTitle);
-    if (achievement && state.unlockedAchievements.includes(achievement.id)) {
-      return { title: achievement.title, zh: achievement.zh, icon: achievement.icon, source: 'achievement' };
-    }
-    // Buscar en títulos de nivel (formato: "level_N")
-    const levelMatch = state.selectedTitle.match(/^level_(\d+)$/);
-    if (levelMatch) {
-      const lvl = LEVELS.find(l => l.level === parseInt(levelMatch[1]));
-      if (lvl && totalXP >= lvl.xp) {
-        return { title: lvl.title, zh: lvl.zh, icon: lvl.icon, source: 'level' };
-      }
-    }
-  }
-
-  // Default: título del nivel actual
   return { title: levelInfo.title, zh: levelInfo.zh, icon: levelInfo.icon, source: 'level' };
-}
-
-/**
- * Devuelve todos los títulos disponibles (desbloqueados).
- */
-export function getAvailableTitles(totalXP) {
-  const state = loadState();
-  const titles = [];
-
-  // Títulos de nivel
-  for (const lvl of LEVELS) {
-    if (totalXP >= lvl.xp) {
-      titles.push({
-        id: `level_${lvl.level}`,
-        title: lvl.title,
-        zh: lvl.zh,
-        icon: lvl.icon,
-        source: 'level',
-        level: lvl.level,
-      });
-    }
-  }
-
-  // Títulos de logros
-  for (const ach of ACHIEVEMENTS) {
-    if (state.unlockedAchievements.includes(ach.id)) {
-      titles.push({
-        id: ach.id,
-        title: ach.title,
-        zh: ach.zh,
-        icon: ach.icon,
-        source: 'achievement',
-        desc: ach.desc,
-      });
-    }
-  }
-
-  return titles;
-}
-
-/**
- * Establece el título equipado.
- */
-export function setEquippedTitle(titleId) {
-  const state = loadState();
-  state.selectedTitle = titleId;
-  saveState(state);
 }
 
 /**
@@ -495,17 +430,6 @@ export function checkLevelUp(prevXP, currentXP) {
     return currLevel;
   }
   return null;
-}
-
-/**
- * Devuelve todos los logros con su estado.
- */
-export function getAllAchievements() {
-  const state = loadState();
-  return ACHIEVEMENTS.map(ach => ({
-    ...ach,
-    unlocked: state.unlockedAchievements.includes(ach.id),
-  }));
 }
 
 export { LEVELS, ACHIEVEMENTS };

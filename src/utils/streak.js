@@ -60,6 +60,12 @@ function weekCutoffStr() {
   return dateStr(d);
 }
 
+function yesterdayStr() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return dateStr(d);
+}
+
 export function loadStreak() {
   try {
     const stored = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
@@ -75,6 +81,13 @@ export function loadStreak() {
     if (data.todayXPDate !== today) {
       data.todayXP = 0;
       data.todayXPDate = today;
+    }
+    // Racha rota: si la última actividad no fue ni hoy ni ayer, la racha ya
+    // no sigue viva — se lee como 0 en vez de mostrar el valor antiguo hasta
+    // la siguiente actividad ("racha fantasma" en Home). markDailyActivity
+    // llegaría a la misma conclusión (diffDays > 1 → racha = 1).
+    if (data.lastActiveDate && data.lastActiveDate < yesterdayStr() && data.currentStreak > 0) {
+      data.currentStreak = 0;
     }
     // Migración: si el usuario tenía el viejo daily goal (50) lo subimos
     // al nuevo (120). El usuario puede sobreescribirlo en ajustes.

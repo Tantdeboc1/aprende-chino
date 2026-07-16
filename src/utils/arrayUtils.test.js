@@ -1,6 +1,6 @@
 // src/utils/arrayUtils.test.js
 import { describe, it, expect } from 'vitest';
-import { shuffle, pickN } from './arrayUtils.js';
+import { shuffle, pickN, pickCycle } from './arrayUtils.js';
 
 describe('shuffle', () => {
   it('no muta el array original', () => {
@@ -36,5 +36,34 @@ describe('pickN', () => {
     const unique = new Set(out);
     expect(unique.size).toBe(out.length);
     out.forEach(x => expect([1, 2, 3, 4, 5]).toContain(x));
+  });
+});
+
+describe('pickCycle', () => {
+  it('no repite mientras el pool dé de sí (n <= longitud)', () => {
+    const out = pickCycle([1, 2, 3, 4, 5], 5);
+    expect(out).toHaveLength(5);
+    expect(new Set(out).size).toBe(5);
+  });
+
+  it('recicla equitativamente cuando n > longitud (cada elemento sale igual)', () => {
+    // Pool de 5, se piden 10: cada elemento debe aparecer exactamente 2 veces.
+    const out = pickCycle([1, 2, 3, 4, 5], 10);
+    expect(out).toHaveLength(10);
+    const counts = out.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {});
+    expect(Object.values(counts)).toEqual([2, 2, 2, 2, 2]);
+  });
+
+  it('reparte el resto sin repetir dentro del último ciclo', () => {
+    // Pool de 4, se piden 6: 4 únicos + 2 extra distintos entre sí.
+    const out = pickCycle(['a', 'b', 'c', 'd'], 6);
+    expect(out).toHaveLength(6);
+    expect(new Set(out.slice(0, 4)).size).toBe(4);
+    expect(new Set(out.slice(4)).size).toBe(2);
+  });
+
+  it('devuelve [] con pool vacío o n = 0 (sin bucle infinito)', () => {
+    expect(pickCycle([], 10)).toEqual([]);
+    expect(pickCycle([1, 2], 0)).toEqual([]);
   });
 });

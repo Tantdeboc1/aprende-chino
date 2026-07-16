@@ -32,8 +32,23 @@ class AudioCompressor {
     this.compressor = null;
     this.gainNode = null;
     this.volumeCache = new Map();
+    // AudioBuffers ya descodificados, por URL. Sin esto, cada pulsación del
+    // altavoz re-descargaba (aunque fuera del SW) y re-descodificaba el mismo
+    // clip — latencia notable al repetir, que es el gesto más común.
+    this.bufferCache = new Map();
     this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.audioContextUnlocked = false;
+  }
+
+  // Los clips de pronunciación pesan ~1 s de audio; 60 entradas son unos
+  // pocos MB. Evicción simple FIFO (Map conserva orden de inserción).
+  static MAX_CACHED_BUFFERS = 60;
+
+  cacheBuffer(src, buffer) {
+    if (this.bufferCache.size >= AudioCompressor.MAX_CACHED_BUFFERS) {
+      this.bufferCache.delete(this.bufferCache.keys().next().value);
+    }
+    this.bufferCache.set(src, buffer);
   }
 
   // 🔥 NUEVO: Método para desbloquear audio en iOS
@@ -112,17 +127,23 @@ class AudioCompressor {
     }
 
     try {
-      const response = await fetch(src);
-      const arrayBuffer = await response.arrayBuffer();
-      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+      let audioBuffer = this.bufferCache.get(src);
+      if (!audioBuffer) {
+        const response = await fetch(src);
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+        this.cacheBuffer(src, audioBuffer);
+        this.volumeCache.set(audioKey, this.analyzeVolume(audioBuffer));
+      }
 
-      const volume = this.analyzeVolume(audioBuffer);
-      this.volumeCache.set(audioKey, volume);
-
-
-      let volumeMultiplier = this.calculateVolumeMultiplier(volume);
-
-      this.gainNode.gain.value = volumeMultiplier;
+      let volume = this.volumeCache.get(audioKey);
+      if (volume === undefined) {
+        // Buffer cacheado pero volumen no (claves distintas): analiza una vez
+        // y recuerda, para no repetir el análisis en cada reproducción.
+        volume = this.analyzeVolume(audioBuffer);
+        this.volumeCache.set(audioKey, volume);
+      }
+      this.gainNode.gain.value = this.calculateVolumeMultiplier(volume);
 
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;
@@ -131,8 +152,10 @@ class AudioCompressor {
       source.start(0);
 
       return new Promise((resolve) => {
-        source.onended = () => resolve(true);
-        setTimeout(() => resolve(true), 5000);
+        // Fallback por si onended no llega: duración real del clip + margen
+        // (el flat de 5 s cortaba en falso clips largos y dejaba timers vivos).
+        const safety = setTimeout(() => resolve(true), audioBuffer.duration * 1000 + 500);
+        source.onended = () => { clearTimeout(safety); resolve(true); };
       });
     } catch (error) {
       return this.playNormalAudio(src, audioKey);
@@ -190,18 +213,16 @@ class AudioCompressor {
         audio.volume = 0.8; // 🔥 VOLUMEN MÁS ALTO PARA iOS
       }
 
-      let hasEnded = false;
+      let safetyTimer = null;
 
       audio.onended = () => {
-        hasEnded = true;
+        clearTimeout(safetyTimer);
         resolve(true);
       };
 
       audio.onerror = () => {
+        clearTimeout(safetyTimer);
         reject(new Error(`No se pudo reproducir ${src}`));
-      };
-
-      audio.oncanplaythrough = () => {
       };
 
       // 🔥 ASIGNAR SRC Y REPRODUCIR
@@ -215,19 +236,19 @@ class AudioCompressor {
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
-              // Timeout de seguridad
-              setTimeout(() => {
-                if (!hasEnded) {
-                  resolve(true);
-                }
-              }, 5000);
+              // Timeout de seguridad: usa la duración real si ya se conoce.
+              // Se limpia en onended/onerror para no dejar timers vivos.
+              const ms = Number.isFinite(audio.duration) && audio.duration > 0
+                ? audio.duration * 1000 + 500
+                : 5000;
+              safetyTimer = setTimeout(() => resolve(true), ms);
             })
             .catch(error => {
               reject(error);
             });
         } else {
           // Navegadores antiguos
-          setTimeout(() => resolve(true), 2000);
+          safetyTimer = setTimeout(() => resolve(true), 2000);
         }
       }, 50); // Pequeño delay para iOS
     });
@@ -340,23 +361,4 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
   }
 
   return false;
-}
-
-export async function pickBaseWithAllTones(candidates) {
-  const set = await loadManifest();
-  const bases = candidates && candidates.length ? candidates :
-    ["ma","ba","da","li","qi","guo","zhu","shu","guang","hao","jian","xiao","zhao","shui","zhong"];
-
-  for (const b of bases) {
-    if (set.has(`${b}1`) && set.has(`${b}2`) && set.has(`${b}3`) && set.has(`${b}4`)) {
-      return b;
-    }
-  }
-
-  for (const b of bases) {
-    const count = [1,2,3,4].filter(t => set.has(`${b}${t}`)).length;
-    if (count >= 2) return b;
-  }
-
-  return bases[0];
 }

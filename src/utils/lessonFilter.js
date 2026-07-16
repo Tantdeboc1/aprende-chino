@@ -37,15 +37,6 @@ export function saveLessonFilter(value) {
   }
 }
 
-/** Limpia el filtro (vuelve a "todas las lecciones"). */
-export function clearLessonFilter() {
-  try {
-    sessionStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* noop */
-  }
-}
-
 /**
  * Hook que encapsula el patrón repetido en todos los minijuegos: estado del
  * filtro inicializado desde sessionStorage (con `selectedLesson` como fallback)

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useCountdown } from '@/utils/useCountdown.js';
 import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
@@ -20,8 +21,10 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   const [score, setScore] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60);
-  const timeLeftRef = useRef(60);
+  // Cuenta atrás compartida: interval estable, espejo en ref y fin de partida
+  // al llegar a 0 (por tick o por penalización). Ver useCountdown.js.
+  const { timeLeft, timeLeftRef, reset: resetClock, penalize } =
+    useCountdown(60, { running: isPlaying, onExpire: finish });
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -50,10 +53,10 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
     setScore(0);
     setCorrectCount(0);
     setWrongCount(0);
-    setTimeLeft(60); timeLeftRef.current = 60;
+    resetClock();
     start();
     generateQuestion();
-  }, [generateQuestion, start]);
+  }, [generateQuestion, start, resetClock]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
       setFeedback('correct');
       hapticSuccess();
     } else {
-      setTimeLeft(t => { const next = Math.max(0, t - 2); timeLeftRef.current = next; return next; });
+      penalize(2);
       setWrongCount(w => w + 1);
       setFeedback('incorrect');
       hapticError();
@@ -95,22 +98,6 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
     onSelect: isPlaying && currentQuestion && !feedback
       ? (i) => handleAnswer(currentQuestion.options[i]) : null,
   });
-
-  // Temporizador
-  useEffect(() => {
-    if (!isPlaying) return;
-
-    if (timeLeft <= 0) {
-      finish();
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setTimeLeft(t => { const next = t - 1; timeLeftRef.current = next; return next; });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPlaying, timeLeft, finish]);
 
   // --- Renderizado ---
 

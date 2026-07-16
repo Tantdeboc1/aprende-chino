@@ -4,7 +4,8 @@
 //  - Cronometrado (estilo HSK) y con tipos de pregunta mixtos
 //    (carácter→significado y significado→carácter).
 //  - Aprobar (>= PASS_PCT) marca el nivel como superado.
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
+import { useCountdown } from '@/utils/useCountdown.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
@@ -59,34 +60,25 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
   const [wrong, setWrong] = useState(0);
   const [selected, setSelected] = useState(null);
   const [feedback, setFeedback] = useState(null); // null | 'correct' | 'incorrect'
-  const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
-  const timeRef = useRef(TOTAL_TIME);
   const [outcome, setOutcome] = useState(null); // { pct, passedThisAttempt, result }
+
+  // Cuenta atrás compartida (ver useCountdown.js). onExpire se dispara desde
+  // un efecto, así que este arrow siempre ve el score/wrong del último render
+  // — sin refs espejo ni finish dentro del updater del reloj.
+  const { timeLeft, timeLeftRef, reset: resetClock } = useCountdown(TOTAL_TIME, {
+    running: phase === 'playing',
+    onExpire: () => finish(score, wrong),
+  });
 
   const startExam = useCallback(() => {
     const count = Math.min(TOTAL_QUESTIONS, pool.length);
     setQuestions(buildExam(pool, count));
     setQIndex(0); setScore(0); setWrong(0);
     setSelected(null); setFeedback(null);
-    setTimeLeft(TOTAL_TIME); timeRef.current = TOTAL_TIME;
+    resetClock();
     setOutcome(null);
     setPhase('playing');
-  }, [pool]);
-
-  // Temporizador
-  useEffect(() => {
-    if (phase !== 'playing') return;
-    const id = setInterval(() => {
-      setTimeLeft(prev => {
-        const next = prev - 1;
-        timeRef.current = next;
-        if (next <= 0) { clearInterval(id); finish(score, wrong); }
-        return next;
-      });
-    }, 1000);
-    return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, score, wrong]);
+  }, [pool, resetClock]);
 
   const finish = useCallback((finalCorrect, finalWrong) => {
     const answered = finalCorrect + finalWrong;
@@ -115,7 +107,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
     if (isCorrect) setScore(nextScore); else setWrong(nextWrong);
 
     setTimeout(() => {
-      if (timeRef.current <= 0) return;
+      if (timeLeftRef.current <= 0) return;
       const nextIdx = qIndex + 1;
       if (nextIdx >= questions.length) {
         finish(nextScore, nextWrong);

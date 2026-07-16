@@ -19,3 +19,17 @@ export function shuffle(arr) {
 export function pickN(arr, n) {
   return shuffle(arr).slice(0, n);
 }
+
+/**
+ * Pick `n` random items WITHOUT repeats while the pool lasts; only recycles
+ * (reshuffling) when more items are requested than the pool has. Used by the
+ * quizzes to choose the "protagonist" of each question without duplicates.
+ */
+export function pickCycle(arr, n) {
+  if (!Array.isArray(arr) || arr.length === 0) return [];
+  const out = [];
+  while (out.length < n) {
+    out.push(...shuffle(arr).slice(0, n - out.length));
+  }
+  return out;
+}

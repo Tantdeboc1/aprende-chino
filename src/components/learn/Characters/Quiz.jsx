@@ -1,7 +1,7 @@
 // src/components/learn/Characters/Quiz.jsx
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { shuffle } from "@/utils/arrayUtils.js";
+import { shuffle, pickCycle } from "@/utils/arrayUtils.js";
 import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 function pickN(arr, n) {
@@ -20,8 +20,7 @@ const QUIZ_MODES = [
   { id: 'pinyin_to_char',  icon: 'pīn→汉', label: 'Pinyin → Carácter' },
 ];
 
-function buildQuestion(mode, pool) {
-  const correct   = pool[Math.floor(Math.random() * pool.length)];
+function buildQuestion(mode, pool, correct) {
   const wrongPool = pool.filter(c => c.char !== correct.char);
   const options   = shuffle([...pickN(wrongPool, 3), correct]);
   return { correct, options, mode };
@@ -40,7 +39,8 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
   const initQuiz = (mode = quizMode) => {
     if (!Array.isArray(characters) || characters.length < 4) return;
     const pool = [...characters];
-    const qs   = Array.from({ length: 10 }, () => buildQuestion(mode, pool));
+    // Protagonistas sin repetir mientras el pool dé de sí (ver pickCycle).
+    const qs   = pickCycle(pool, 10).map(c => buildQuestion(mode, pool, c));
     setQuestions(qs);
     setIndex(0);
     setScore(0);
