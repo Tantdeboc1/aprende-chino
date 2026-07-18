@@ -97,6 +97,20 @@ export default function Dictionary({
     if (!showSupplementary) list = list.filter(c => !c.isSupplementary);
     if (showFavorites)      list = list.filter(c => favorites.has(c.char));
 
+    // Sin filtro de lección, un carácter presente en varias lecciones (p. ej.
+    // 水 en L3 y L8) saldría dos veces. Colapsamos por carácter+significado:
+    // los duplicados puros se unifican pero los homógrafos con distinta acepción
+    // (给 "a; para" / "dar") se conservan como entradas separadas.
+    if (selectedLesson === null || selectedLesson === undefined) {
+      const seen = new Set();
+      list = list.filter(c => {
+        const key = `${c.char}|${c.meaning}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
     const qRaw  = (debouncedQuery || '').trim();
     const qNorm = normToneAgnost(qRaw);
     if (!qNorm) return list;
@@ -110,12 +124,22 @@ export default function Dictionary({
     });
   }, [characters, debouncedQuery, selectedLesson, showSupplementary, showFavorites, favorites]);
 
-  const totalMain = characters.filter(c =>
-    (selectedLesson === null || c.lesson === selectedLesson) && !c.isSupplementary
-  ).length;
-  const totalSupp = characters.filter(c =>
-    (selectedLesson === null || c.lesson === selectedLesson) && c.isSupplementary
-  ).length;
+  // Cuenta única por carácter+significado (coherente con el colapso de la lista
+  // en la vista "Todas"; en vista por lección no hay duplicados).
+  const countUnique = (predicate) => {
+    const seen = new Set();
+    return characters.filter(c => {
+      if (!predicate(c)) return false;
+      const key = `${c.char}|${c.meaning}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).length;
+  };
+  const totalMain = countUnique(c =>
+    (selectedLesson === null || c.lesson === selectedLesson) && !c.isSupplementary);
+  const totalSupp = countUnique(c =>
+    (selectedLesson === null || c.lesson === selectedLesson) && c.isSupplementary);
 
   const handleSpeak = (char) => {
     if (typeof speakChinese === 'function') speakChinese({ hanzi: char.char, pinyin: char.pinyin });

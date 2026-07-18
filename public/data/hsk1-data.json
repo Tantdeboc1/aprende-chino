@@ -4,922 +4,2308 @@
     "人": {
       "radical": "人",
       "pinyin": "ren2",
-      "meaning": "persona, gente"
+      "meaning": "persona, gente",
+      "meaningTr": {
+        "en": "person; people",
+        "fr": "personne; gens",
+        "de": "Person; Leute",
+        "it": "persona; gente",
+        "pt": "pessoa; gente"
+      }
     },
     "我": {
       "radical": "戈",
       "pinyin": "wo3",
-      "meaning": "yo"
+      "meaning": "yo",
+      "meaningTr": {
+        "en": "I; me",
+        "fr": "je; moi",
+        "de": "ich; mich",
+        "it": "io; me",
+        "pt": "eu; me"
+      }
     },
     "你": {
       "radical": "亻",
       "pinyin": "ni3",
-      "meaning": "tú"
+      "meaning": "tú",
+      "meaningTr": {
+        "en": "you",
+        "fr": "tu / toi",
+        "de": "du",
+        "it": "tu",
+        "pt": "você"
+      }
     },
     "好": {
       "radical": "女",
       "pinyin": "hao3",
-      "meaning": "bueno, bien"
+      "meaning": "bueno, bien",
+      "meaningTr": {
+        "en": "good; well; OK",
+        "fr": "bon; bien; d’accord",
+        "de": "gut; in Ordnung",
+        "it": "buono; bene; va bene",
+        "pt": "bom; bem; ok"
+      }
     },
     "大": {
       "radical": "大",
       "pinyin": "da4",
-      "meaning": "grande"
+      "meaning": "grande",
+      "meaningTr": {
+        "en": "big",
+        "fr": "grand",
+        "de": "groß",
+        "it": "grande",
+        "pt": "grande"
+      }
     },
     "小": {
       "radical": "小",
       "pinyin": "xiao3",
-      "meaning": "pequeño"
+      "meaning": "pequeño",
+      "meaningTr": {
+        "en": "small",
+        "fr": "petit",
+        "de": "klein",
+        "it": "piccolo",
+        "pt": "pequeno"
+      }
     },
     "中": {
       "radical": "丨",
       "pinyin": "zhong1",
-      "meaning": "centro, medio"
+      "meaning": "centro, medio",
+      "meaningTr": {
+        "en": "center; middle",
+        "fr": "centre; milieu",
+        "de": "Mitte; Zentrum",
+        "it": "centro; mezzo",
+        "pt": "centro; meio"
+      }
     },
     "国": {
       "radical": "囗",
       "pinyin": "guo2",
-      "meaning": "país"
+      "meaning": "país",
+      "meaningTr": {
+        "en": "country",
+        "fr": "pays",
+        "de": "Land",
+        "it": "paese",
+        "pt": "país"
+      }
     },
     "一": {
       "radical": "一",
       "pinyin": "yi1",
-      "meaning": "uno"
+      "meaning": "uno",
+      "meaningTr": {
+        "en": "one",
+        "fr": "un",
+        "de": "eins",
+        "it": "uno",
+        "pt": "um"
+      }
     },
     "二": {
       "radical": "二",
       "pinyin": "er4",
-      "meaning": "dos"
+      "meaning": "dos",
+      "meaningTr": {
+        "en": "two",
+        "fr": "deux",
+        "de": "zwei",
+        "it": "due",
+        "pt": "dois"
+      }
     },
     "三": {
       "radical": "一",
       "pinyin": "san1",
-      "meaning": "tres"
+      "meaning": "tres",
+      "meaningTr": {
+        "en": "three",
+        "fr": "trois",
+        "de": "drei",
+        "it": "tre",
+        "pt": "três"
+      }
     },
     "四": {
       "radical": "囗",
       "pinyin": "si4",
-      "meaning": "cuatro"
+      "meaning": "cuatro",
+      "meaningTr": {
+        "en": "four",
+        "fr": "quatre",
+        "de": "vier",
+        "it": "quattro",
+        "pt": "quatro"
+      }
     },
     "五": {
       "radical": "二",
       "pinyin": "wu3",
-      "meaning": "cinco"
+      "meaning": "cinco",
+      "meaningTr": {
+        "en": "five",
+        "fr": "cinq",
+        "de": "fünf",
+        "it": "cinque",
+        "pt": "cinco"
+      }
     },
     "六": {
       "radical": "八",
       "pinyin": "liu4",
-      "meaning": "seis"
+      "meaning": "seis",
+      "meaningTr": {
+        "en": "six",
+        "fr": "six",
+        "de": "sechs",
+        "it": "sei",
+        "pt": "seis"
+      }
     },
     "七": {
       "radical": "一",
       "pinyin": "qi1",
-      "meaning": "siete"
+      "meaning": "siete",
+      "meaningTr": {
+        "en": "seven",
+        "fr": "sept",
+        "de": "sieben",
+        "it": "sette",
+        "pt": "sete"
+      }
     },
     "八": {
       "radical": "八",
       "pinyin": "ba1",
-      "meaning": "ocho"
+      "meaning": "ocho",
+      "meaningTr": {
+        "en": "eight",
+        "fr": "huit",
+        "de": "acht",
+        "it": "otto",
+        "pt": "oito"
+      }
     },
     "九": {
       "radical": "丿",
       "pinyin": "jiu3",
-      "meaning": "nueve"
+      "meaning": "nueve",
+      "meaningTr": {
+        "en": "nine",
+        "fr": "neuf",
+        "de": "neun",
+        "it": "nove",
+        "pt": "nove"
+      }
     },
     "十": {
       "radical": "十",
       "pinyin": "shi2",
-      "meaning": "diez"
+      "meaning": "diez",
+      "meaningTr": {
+        "en": "ten",
+        "fr": "dix",
+        "de": "zehn",
+        "it": "dieci",
+        "pt": "dez"
+      }
     },
     "天": {
       "radical": "大",
       "pinyin": "tian1",
-      "meaning": "cielo, día"
+      "meaning": "cielo, día",
+      "meaningTr": {
+        "en": "day; sky",
+        "fr": "jour; ciel",
+        "de": "Tag; Himmel",
+        "it": "giorno; cielo",
+        "pt": "dia; céu"
+      }
     },
     "水": {
       "radical": "水",
       "pinyin": "shui3",
-      "meaning": "agua"
+      "meaning": "agua",
+      "meaningTr": {
+        "en": "water",
+        "fr": "eau",
+        "de": "Wasser",
+        "it": "acqua",
+        "pt": "água"
+      }
     },
     "火": {
       "radical": "火",
       "pinyin": "huo3",
-      "meaning": "fuego"
+      "meaning": "fuego",
+      "meaningTr": {
+        "en": "fire",
+        "fr": "feu",
+        "de": "Feuer",
+        "it": "fuoco",
+        "pt": "fogo"
+      }
     },
     "山": {
       "radical": "山",
       "pinyin": "shan1",
-      "meaning": "montaña"
+      "meaning": "montaña",
+      "meaningTr": {
+        "en": "mountain",
+        "fr": "montagne",
+        "de": "Berg",
+        "it": "montagna",
+        "pt": "montanha"
+      }
     },
     "木": {
       "radical": "木",
       "pinyin": "mu4",
-      "meaning": "árbol, madera"
+      "meaning": "árbol, madera",
+      "meaningTr": {
+        "en": "tree; wood",
+        "fr": "arbre; bois",
+        "de": "Baum; Holz",
+        "it": "albero; legno",
+        "pt": "árvore; madeira"
+      }
     },
     "日": {
       "radical": "日",
       "pinyin": "ri4",
-      "meaning": "sol, día"
+      "meaning": "sol, día",
+      "meaningTr": {
+        "en": "day",
+        "fr": "jour",
+        "de": "Tag",
+        "it": "giorno",
+        "pt": "dia"
+      }
     },
     "月": {
       "radical": "月",
       "pinyin": "yue4",
-      "meaning": "luna, mes"
+      "meaning": "luna, mes",
+      "meaningTr": {
+        "en": "month",
+        "fr": "mois",
+        "de": "Monat",
+        "it": "mese",
+        "pt": "mês"
+      }
     },
     "年": {
       "radical": "丿",
       "pinyin": "nian2",
-      "meaning": "año"
+      "meaning": "año",
+      "meaningTr": {
+        "en": "year",
+        "fr": "année",
+        "de": "Jahr",
+        "it": "anno",
+        "pt": "ano"
+      }
     },
     "今": {
       "radical": "亻",
       "pinyin": "jin1",
-      "meaning": "ahora, hoy"
+      "meaning": "ahora, hoy",
+      "meaningTr": {
+        "en": "now; today",
+        "fr": "maintenant; aujourd’hui",
+        "de": "jetzt; heute",
+        "it": "ora; oggi",
+        "pt": "agora; hoje"
+      }
     },
     "明": {
       "radical": "日",
       "pinyin": "ming2",
-      "meaning": "brillante, claro"
+      "meaning": "brillante, claro",
+      "meaningTr": {
+        "en": "bright; clear",
+        "fr": "brillant; clair",
+        "de": "hell; klar",
+        "it": "luminoso; chiaro",
+        "pt": "brilhante; claro"
+      }
     },
     "上": {
       "radical": "一",
       "pinyin": "shang4",
-      "meaning": "arriba, subir"
+      "meaning": "arriba, subir",
+      "meaningTr": {
+        "en": "up; to go up",
+        "fr": "en haut; monter",
+        "de": "oben; hinaufgehen",
+        "it": "sopra; salire",
+        "pt": "em cima; subir"
+      }
     },
     "下": {
       "radical": "一",
       "pinyin": "xia4",
-      "meaning": "abajo, bajar"
+      "meaning": "abajo, bajar",
+      "meaningTr": {
+        "en": "down; next",
+        "fr": "bas; suivant",
+        "de": "unten; nächste(r)",
+        "it": "giù; prossimo",
+        "pt": "baixo; próximo"
+      }
     },
     "前": {
       "radical": "刀",
       "pinyin": "qian2",
-      "meaning": "delante, antes"
+      "meaning": "delante, antes",
+      "meaningTr": {
+        "en": "front",
+        "fr": "devant",
+        "de": "vorne",
+        "it": "davanti",
+        "pt": "frente"
+      }
     },
     "后": {
       "radical": "口",
       "pinyin": "hou4",
-      "meaning": "detrás, después"
+      "meaning": "detrás, después",
+      "meaningTr": {
+        "en": "behind; after",
+        "fr": "derrière; après",
+        "de": "hinten; nach",
+        "it": "dietro; dopo",
+        "pt": "atrás; depois"
+      }
     },
     "左": {
       "radical": "工",
       "pinyin": "zuo3",
-      "meaning": "izquierda"
+      "meaning": "izquierda",
+      "meaningTr": {
+        "en": "left",
+        "fr": "gauche",
+        "de": "links",
+        "it": "sinistra",
+        "pt": "esquerda"
+      }
     },
     "右": {
       "radical": "口",
       "pinyin": "you4",
-      "meaning": "derecha"
+      "meaning": "derecha",
+      "meaningTr": {
+        "en": "right",
+        "fr": "droite",
+        "de": "rechts",
+        "it": "destra",
+        "pt": "direita"
+      }
     },
     "东": {
       "radical": "木",
       "pinyin": "dong1",
-      "meaning": "este"
+      "meaning": "este",
+      "meaningTr": {
+        "en": "east",
+        "fr": "est",
+        "de": "Osten",
+        "it": "est",
+        "pt": "leste"
+      }
     },
     "西": {
       "radical": "襾",
       "pinyin": "xi1",
-      "meaning": "oeste"
+      "meaning": "oeste",
+      "meaningTr": {
+        "en": "west",
+        "fr": "ouest",
+        "de": "Westen",
+        "it": "ovest",
+        "pt": "oeste"
+      }
     },
     "南": {
       "radical": "十",
       "pinyin": "nan2",
-      "meaning": "sur"
+      "meaning": "sur",
+      "meaningTr": {
+        "en": "south",
+        "fr": "sud",
+        "de": "Süden",
+        "it": "sud",
+        "pt": "sul"
+      }
     },
     "北": {
       "radical": "匕",
       "pinyin": "bei3",
-      "meaning": "norte"
+      "meaning": "norte",
+      "meaningTr": {
+        "en": "north",
+        "fr": "nord",
+        "de": "Norden",
+        "it": "nord",
+        "pt": "norte"
+      }
     },
     "来": {
       "radical": "木",
       "pinyin": "lai2",
-      "meaning": "venir"
+      "meaning": "venir",
+      "meaningTr": {
+        "en": "to come",
+        "fr": "venir",
+        "de": "kommen",
+        "it": "venire",
+        "pt": "vir"
+      }
     },
     "去": {
       "radical": "厶",
       "pinyin": "qu4",
-      "meaning": "ir"
+      "meaning": "ir",
+      "meaningTr": {
+        "en": "to go",
+        "fr": "aller",
+        "de": "gehen",
+        "it": "andare",
+        "pt": "ir"
+      }
     },
     "有": {
       "radical": "⺼",
       "pinyin": "you3",
-      "meaning": "tener, haber"
+      "meaning": "tener, haber",
+      "meaningTr": {
+        "en": "to have; there is",
+        "fr": "avoir; il y a",
+        "de": "haben; es gibt",
+        "it": "avere; c’è",
+        "pt": "ter; haver"
+      }
     },
     "是": {
       "radical": "日",
       "pinyin": "shi4",
-      "meaning": "ser, estar"
+      "meaning": "ser, estar",
+      "meaningTr": {
+        "en": "to be; is/am/are",
+        "fr": "être; suis/es/est",
+        "de": "sein; ist/bin/sind",
+        "it": "essere; è/sono/sei",
+        "pt": "ser; é/sou/são"
+      }
     },
     "在": {
       "radical": "土",
       "pinyin": "zai4",
-      "meaning": "estar en, existir"
+      "meaning": "estar en, existir",
+      "meaningTr": {
+        "en": "to be (at a place)",
+        "fr": "être (à un endroit)",
+        "de": "sich befinden; sein",
+        "it": "essere (in un luogo)",
+        "pt": "estar (num lugar)"
+      }
     },
     "他": {
       "radical": "亻",
       "pinyin": "ta1",
-      "meaning": "él"
+      "meaning": "él",
+      "meaningTr": {
+        "en": "he; him",
+        "fr": "il; lui",
+        "de": "er; ihn",
+        "it": "lui; egli",
+        "pt": "ele"
+      }
     },
     "她": {
       "radical": "女",
       "pinyin": "ta1",
-      "meaning": "ella"
+      "meaning": "ella",
+      "meaningTr": {
+        "en": "she; her",
+        "fr": "elle",
+        "de": "sie; ihr",
+        "it": "lei",
+        "pt": "ela"
+      }
     },
     "们": {
       "radical": "亻",
       "pinyin": "men",
-      "meaning": "plural (nosotros, ellos)"
+      "meaning": "plural (nosotros, ellos)",
+      "meaningTr": {
+        "en": "(plural suffix)",
+        "fr": "(suffixe du pluriel)",
+        "de": "(Pluralsuffix)",
+        "it": "(suffisso plurale)",
+        "pt": "(sufixo de plural)"
+      }
     },
     "不": {
       "radical": "一",
       "pinyin": "bu4",
-      "meaning": "no, negación"
+      "meaning": "no, negación",
+      "meaningTr": {
+        "en": "no; not",
+        "fr": "non; ne… pas",
+        "de": "nein; nicht",
+        "it": "no; non",
+        "pt": "não"
+      }
     },
     "的": {
       "radical": "白",
       "pinyin": "de",
-      "meaning": "partícula posesiva (de)"
+      "meaning": "partícula posesiva (de)",
+      "meaningTr": {
+        "en": "(possessive/modifying particle)",
+        "fr": "(particule possessive/modificatrice)",
+        "de": "(Possessiv-/Attributpartikel)",
+        "it": "(particella possessiva/modificatrice)",
+        "pt": "(partícula possessiva/modificadora)"
+      }
     },
     "了": {
       "radical": "乙",
       "pinyin": "le",
-      "meaning": "partícula de cambio"
+      "meaning": "partícula de cambio",
+      "meaningTr": {
+        "en": "(particle of change)",
+        "fr": "(particule de changement)",
+        "de": "(Partikel für Veränderung)",
+        "it": "(particella di cambiamento)",
+        "pt": "(partícula de mudança)"
+      }
     },
     "它": {
       "radical": "宀",
       "pinyin": "ta1",
-      "meaning": "eso (no humano)"
+      "meaning": "eso (no humano)",
+      "meaningTr": {
+        "en": "it (non-human)",
+        "fr": "cela (non humain)",
+        "de": "es (nicht menschlich)",
+        "it": "esso (non umano)",
+        "pt": "ele/ela (não humano)"
+      }
     },
     "很": {
       "radical": "彳",
       "pinyin": "hen3",
-      "meaning": "muy"
+      "meaning": "muy",
+      "meaningTr": {
+        "en": "very",
+        "fr": "très",
+        "de": "sehr",
+        "it": "molto",
+        "pt": "muito"
+      }
     },
     "也": {
       "radical": "乙",
       "pinyin": "ye3",
-      "meaning": "también"
+      "meaning": "también",
+      "meaningTr": {
+        "en": "also; too",
+        "fr": "aussi",
+        "de": "auch",
+        "it": "anche",
+        "pt": "também"
+      }
     },
     "都": {
       "radical": "阝",
       "pinyin": "dou1",
-      "meaning": "todos; ambos"
+      "meaning": "todos; ambos",
+      "meaningTr": {
+        "en": "all; both",
+        "fr": "tous; tout",
+        "de": "alle; beide",
+        "it": "tutti; entrambi",
+        "pt": "todos; ambos"
+      }
     },
     "和": {
       "radical": "禾",
       "pinyin": "he2",
-      "meaning": "y; con"
+      "meaning": "y; con",
+      "meaningTr": {
+        "en": "and; with",
+        "fr": "et; avec",
+        "de": "und; mit",
+        "it": "e; con",
+        "pt": "e; com"
+      }
     },
     "到": {
       "radical": "刀",
       "pinyin": "dao4",
-      "meaning": "llegar; a"
+      "meaning": "llegar; a",
+      "meaningTr": {
+        "en": "to arrive; to reach",
+        "fr": "arriver; atteindre",
+        "de": "ankommen; erreichen",
+        "it": "arrivare; raggiungere",
+        "pt": "chegar; alcançar"
+      }
     },
     "回": {
       "radical": "囗",
       "pinyin": "hui2",
-      "meaning": "volver; regresar"
+      "meaning": "volver; regresar",
+      "meaningTr": {
+        "en": "to return; to go back",
+        "fr": "retourner; rentrer",
+        "de": "zurückkehren",
+        "it": "tornare",
+        "pt": "voltar; regressar"
+      }
     },
     "看": {
       "radical": "目",
       "pinyin": "kan4",
-      "meaning": "ver; mirar; leer"
+      "meaning": "ver; mirar; leer",
+      "meaningTr": {
+        "en": "to look; to watch",
+        "fr": "regarder; voir",
+        "de": "sehen; anschauen",
+        "it": "guardare; vedere",
+        "pt": "olhar; ver"
+      }
     },
     "见": {
       "radical": "见",
       "pinyin": "jian4",
-      "meaning": "ver; encontrarse"
+      "meaning": "ver; encontrarse",
+      "meaningTr": {
+        "en": "to see; to meet",
+        "fr": "voir; se rencontrer",
+        "de": "sehen; treffen",
+        "it": "vedere; incontrarsi",
+        "pt": "ver; encontrar-se"
+      }
     },
     "听": {
       "radical": "口",
       "pinyin": "ting1",
-      "meaning": "oír; escuchar"
+      "meaning": "oír; escuchar",
+      "meaningTr": {
+        "en": "to listen",
+        "fr": "écouter",
+        "de": "hören",
+        "it": "ascoltare",
+        "pt": "ouvir; escutar"
+      }
     },
     "说": {
       "radical": "讠",
       "pinyin": "shuo1",
-      "meaning": "hablar; decir"
+      "meaning": "hablar; decir",
+      "meaningTr": {
+        "en": "to say; to speak",
+        "fr": "dire; parler",
+        "de": "sagen; sprechen",
+        "it": "dire; parlare",
+        "pt": "dizer; falar"
+      }
     },
     "读": {
       "radical": "讠",
       "pinyin": "du2",
-      "meaning": "leer; estudiar"
+      "meaning": "leer; estudiar",
+      "meaningTr": {
+        "en": "to read; to study",
+        "fr": "lire; étudier",
+        "de": "lesen; studieren",
+        "it": "leggere; studiare",
+        "pt": "ler; estudar"
+      }
     },
     "写": {
       "radical": "宀",
       "pinyin": "xie3",
-      "meaning": "escribir"
+      "meaning": "escribir",
+      "meaningTr": {
+        "en": "to write",
+        "fr": "écrire",
+        "de": "schreiben",
+        "it": "scrivere",
+        "pt": "escrever"
+      }
     },
     "做": {
       "radical": "亻",
       "pinyin": "zuo4",
-      "meaning": "hacer"
+      "meaning": "hacer",
+      "meaningTr": {
+        "en": "to do; to make",
+        "fr": "faire",
+        "de": "machen; tun",
+        "it": "fare",
+        "pt": "fazer"
+      }
     },
     "吃": {
       "radical": "口",
       "pinyin": "chi1",
-      "meaning": "comer"
+      "meaning": "comer",
+      "meaningTr": {
+        "en": "to eat",
+        "fr": "manger",
+        "de": "essen",
+        "it": "mangiare",
+        "pt": "comer"
+      }
     },
     "喝": {
       "radical": "口",
       "pinyin": "he1",
-      "meaning": "beber"
+      "meaning": "beber",
+      "meaningTr": {
+        "en": "to drink",
+        "fr": "boire",
+        "de": "trinken",
+        "it": "bere",
+        "pt": "beber"
+      }
     },
     "想": {
       "radical": "心",
       "pinyin": "xiang3",
-      "meaning": "pensar; querer; echar de menos"
+      "meaning": "pensar; querer; echar de menos",
+      "meaningTr": {
+        "en": "to think; to want; would like",
+        "fr": "penser; vouloir",
+        "de": "denken; wollen; möchten",
+        "it": "pensare; volere",
+        "pt": "pensar; querer"
+      }
     },
     "要": {
       "radical": "襾",
       "pinyin": "yao4",
-      "meaning": "querer; necesitar"
+      "meaning": "querer; necesitar",
+      "meaningTr": {
+        "en": "to want; would like",
+        "fr": "vouloir; voudrais",
+        "de": "wollen; möchten",
+        "it": "volere; vorrei",
+        "pt": "querer; gostaria"
+      }
     },
     "会": {
       "radical": "人",
       "pinyin": "hui4",
-      "meaning": "saber (habilidad); poder"
+      "meaning": "saber (habilidad); poder",
+      "meaningTr": {
+        "en": "can (skill); to be able to",
+        "fr": "savoir (compétence); pouvoir",
+        "de": "können (Fähigkeit)",
+        "it": "sapere (abilità); potere",
+        "pt": "saber (habilidade); poder"
+      }
     },
     "能": {
       "radical": "⺼",
       "pinyin": "neng2",
-      "meaning": "poder; ser capaz"
+      "meaning": "poder; ser capaz",
+      "meaningTr": {
+        "en": "can; to be able to",
+        "fr": "pouvoir; être capable de",
+        "de": "können; imstande sein",
+        "it": "potere; essere in grado di",
+        "pt": "poder; ser capaz de"
+      }
     },
     "可以": {
       "pinyin": "keyi3",
-      "meaning": "poder; permitido"
+      "meaning": "poder; permitido",
+      "meaningTr": {
+        "en": "can; may",
+        "fr": "pouvoir",
+        "de": "können; dürfen",
+        "it": "potere",
+        "pt": "poder"
+      }
     },
     "给": {
       "radical": "纟",
       "pinyin": "gei3",
-      "meaning": "dar; para"
+      "meaning": "dar; para",
+      "meaningTr": {
+        "en": "to; for",
+        "fr": "à; pour",
+        "de": "an; für",
+        "it": "a; per",
+        "pt": "a; para"
+      }
     },
     "用": {
       "radical": "用",
       "pinyin": "yong4",
-      "meaning": "usar"
+      "meaning": "usar",
+      "meaningTr": {
+        "en": "to use",
+        "fr": "utiliser",
+        "de": "benutzen",
+        "it": "usare",
+        "pt": "usar"
+      }
     },
     "找": {
       "radical": "扌",
       "pinyin": "zhao3",
-      "meaning": "buscar"
+      "meaning": "buscar",
+      "meaningTr": {
+        "en": "to look for",
+        "fr": "chercher",
+        "de": "suchen",
+        "it": "cercare",
+        "pt": "procurar"
+      }
     },
     "住": {
       "radical": "亻",
       "pinyin": "zhu4",
-      "meaning": "vivir; residir"
+      "meaning": "vivir; residir",
+      "meaningTr": {
+        "en": "to live; to reside",
+        "fr": "habiter; résider",
+        "de": "wohnen",
+        "it": "abitare; risiedere",
+        "pt": "morar; residir"
+      }
     },
     "坐": {
       "radical": "土",
       "pinyin": "zuo4",
-      "meaning": "sentarse; viajar en (transporte)"
+      "meaning": "sentarse; viajar en (transporte)",
+      "meaningTr": {
+        "en": "to sit",
+        "fr": "s’asseoir",
+        "de": "sitzen; sich setzen",
+        "it": "sedersi",
+        "pt": "sentar-se"
+      }
     },
     "走": {
       "radical": "走",
       "pinyin": "zou3",
-      "meaning": "andar; irse"
+      "meaning": "andar; irse",
+      "meaningTr": {
+        "en": "to walk; to leave",
+        "fr": "marcher; partir",
+        "de": "gehen; weggehen",
+        "it": "camminare; andarsene",
+        "pt": "andar; ir embora"
+      }
     },
     "开": {
       "radical": "开",
       "pinyin": "kai1",
-      "meaning": "abrir; conducir"
+      "meaning": "abrir; conducir",
+      "meaningTr": {
+        "en": "to open; to drive",
+        "fr": "ouvrir; conduire",
+        "de": "öffnen; fahren",
+        "it": "aprire; guidare",
+        "pt": "abrir; dirigir"
+      }
     },
     "关": {
       "radical": "八",
       "pinyin": "guan1",
-      "meaning": "cerrar; apagar"
+      "meaning": "cerrar; apagar",
+      "meaningTr": {
+        "en": "to close; to turn off",
+        "fr": "fermer; éteindre",
+        "de": "schließen; ausschalten",
+        "it": "chiudere; spegnere",
+        "pt": "fechar; desligar"
+      }
     },
     "买": {
       "radical": "乙",
       "pinyin": "mai3",
-      "meaning": "comprar"
+      "meaning": "comprar",
+      "meaningTr": {
+        "en": "to buy",
+        "fr": "acheter",
+        "de": "kaufen",
+        "it": "comprare",
+        "pt": "comprar"
+      }
     },
     "卖": {
       "radical": "士",
       "pinyin": "mai4",
-      "meaning": "vender"
+      "meaning": "vender",
+      "meaningTr": {
+        "en": "to sell",
+        "fr": "vendre",
+        "de": "verkaufen",
+        "it": "vendere",
+        "pt": "vender"
+      }
     },
     "对": {
       "radical": "寸",
       "pinyin": "dui4",
-      "meaning": "correcto; hacia"
+      "meaning": "correcto; hacia",
+      "meaningTr": {
+        "en": "correct; towards",
+        "fr": "correct; vers",
+        "de": "richtig; gegenüber",
+        "it": "corretto; verso",
+        "pt": "correto; para"
+      }
     },
     "错": {
       "radical": "钅",
       "pinyin": "cuo4",
-      "meaning": "equivocado; error"
+      "meaning": "equivocado; error",
+      "meaningTr": {
+        "en": "wrong; mistake",
+        "fr": "faux; erreur",
+        "de": "falsch; Fehler",
+        "it": "sbagliato; errore",
+        "pt": "errado; erro"
+      }
     },
     "让": {
       "radical": "讠",
       "pinyin": "rang4",
-      "meaning": "dejar; permitir"
+      "meaning": "dejar; permitir",
+      "meaningTr": {
+        "en": "to let; to allow",
+        "fr": "laisser; permettre",
+        "de": "lassen; erlauben",
+        "it": "lasciare; permettere",
+        "pt": "deixar; permitir"
+      }
     },
     "叫": {
       "radical": "口",
       "pinyin": "jiao4",
-      "meaning": "llamarse; llamar"
+      "meaning": "llamarse; llamar",
+      "meaningTr": {
+        "en": "to be called; to call",
+        "fr": "s’appeler; appeler",
+        "de": "heißen; rufen",
+        "it": "chiamarsi; chiamare",
+        "pt": "chamar-se; chamar"
+      }
     },
     "姓": {
       "radical": "女",
       "pinyin": "xing4",
-      "meaning": "apellidarse"
+      "meaning": "apellidarse",
+      "meaningTr": {
+        "en": "surname; to be surnamed",
+        "fr": "nom de famille; se nommer",
+        "de": "Nachname; heißen",
+        "it": "cognome; chiamarsi di cognome",
+        "pt": "sobrenome; ter por sobrenome"
+      }
     },
     "名": {
       "radical": "口",
       "pinyin": "ming2",
-      "meaning": "nombre; fama"
+      "meaning": "nombre; fama",
+      "meaningTr": {
+        "en": "name; fame",
+        "fr": "nom; renommée",
+        "de": "Name; Ruhm",
+        "it": "nome; fama",
+        "pt": "nome; fama"
+      }
     },
     "字": {
       "radical": "子",
       "pinyin": "zi4",
-      "meaning": "carácter; letra"
+      "meaning": "carácter; letra",
+      "meaningTr": {
+        "en": "character; letter",
+        "fr": "caractère; lettre",
+        "de": "Schriftzeichen; Buchstabe",
+        "it": "carattere; lettera",
+        "pt": "caractere; letra"
+      }
     },
     "请": {
       "radical": "讠",
       "pinyin": "qing3",
-      "meaning": "por favor; invitar"
+      "meaning": "por favor; invitar",
+      "meaningTr": {
+        "en": "please; to invite",
+        "fr": "s’il vous plaît; inviter",
+        "de": "bitte; einladen",
+        "it": "per favore; invitare",
+        "pt": "por favor; convidar"
+      }
     },
     "谢": {
       "radical": "讠",
       "pinyin": "xie4",
-      "meaning": "agradecer"
+      "meaning": "agradecer",
+      "meaningTr": {
+        "en": "to thank",
+        "fr": "remercier",
+        "de": "danken",
+        "it": "ringraziare",
+        "pt": "agradecer"
+      }
     },
     "对不起": {
       "pinyin": "duibuqi3",
-      "meaning": "lo siento"
+      "meaning": "lo siento",
+      "meaningTr": {
+        "en": "sorry",
+        "fr": "désolé; excusez-moi",
+        "de": "Entschuldigung; tut mir leid",
+        "it": "scusa; mi dispiace",
+        "pt": "desculpe"
+      }
     },
     "没关系": {
       "pinyin": "meiguanxi1",
-      "meaning": "no pasa nada"
+      "meaning": "no pasa nada",
+      "meaningTr": {
+        "en": "it doesn’t matter; no worries",
+        "fr": "ce n’est pas grave",
+        "de": "macht nichts",
+        "it": "non importa; nessun problema",
+        "pt": "não tem problema; tudo bem"
+      }
     },
     "不好": {
       "pinyin": "bu4 hao3",
-      "meaning": "mal; no bien"
+      "meaning": "mal; no bien",
+      "meaningTr": {
+        "en": "bad; not good",
+        "fr": "mauvais; pas bien",
+        "de": "schlecht; nicht gut",
+        "it": "male; non buono",
+        "pt": "mau; não bom"
+      }
     },
     "多": {
       "radical": "夕",
       "pinyin": "duo1",
-      "meaning": "mucho; muchos"
+      "meaning": "mucho; muchos",
+      "meaningTr": {
+        "en": "many; more",
+        "fr": "beaucoup; plus",
+        "de": "viel; mehr",
+        "it": "molto; più",
+        "pt": "muito; mais"
+      }
     },
     "少": {
       "radical": "小",
       "pinyin": "shao3",
-      "meaning": "poco; pocos"
+      "meaning": "poco; pocos",
+      "meaningTr": {
+        "en": "few; little",
+        "fr": "peu",
+        "de": "wenig",
+        "it": "poco",
+        "pt": "pouco"
+      }
     },
     "高": {
       "radical": "高",
       "pinyin": "gao1",
-      "meaning": "alto"
+      "meaning": "alto",
+      "meaningTr": {
+        "en": "tall; high",
+        "fr": "grand; haut",
+        "de": "groß; hoch",
+        "it": "alto",
+        "pt": "alto"
+      }
     },
     "低": {
       "radical": "人",
       "pinyin": "di1",
-      "meaning": "bajo (altura/sonido)"
+      "meaning": "bajo (altura/sonido)",
+      "meaningTr": {
+        "en": "low (height/sound)",
+        "fr": "bas (hauteur/son)",
+        "de": "niedrig; tief",
+        "it": "basso (altezza/suono)",
+        "pt": "baixo (altura/som)"
+      }
     },
     "长": {
       "radical": "长",
       "pinyin": "chang2",
-      "meaning": "largo"
+      "meaning": "largo",
+      "meaningTr": {
+        "en": "long",
+        "fr": "long",
+        "de": "lang",
+        "it": "lungo",
+        "pt": "longo"
+      }
     },
     "短": {
       "radical": "矢",
       "pinyin": "duan3",
-      "meaning": "corto"
+      "meaning": "corto",
+      "meaningTr": {
+        "en": "short",
+        "fr": "court",
+        "de": "kurz",
+        "it": "corto",
+        "pt": "curto"
+      }
     },
     "远": {
       "radical": "辶",
       "pinyin": "yuan3",
-      "meaning": "lejos"
+      "meaning": "lejos",
+      "meaningTr": {
+        "en": "far",
+        "fr": "loin",
+        "de": "weit",
+        "it": "lontano",
+        "pt": "longe"
+      }
     },
     "近": {
       "radical": "辶",
       "pinyin": "jin4",
-      "meaning": "cerca"
+      "meaning": "cerca",
+      "meaningTr": {
+        "en": "near",
+        "fr": "proche",
+        "de": "nah",
+        "it": "vicino",
+        "pt": "perto"
+      }
     },
     "冷": {
       "radical": "冫",
       "pinyin": "leng3",
-      "meaning": "frío"
+      "meaning": "frío",
+      "meaningTr": {
+        "en": "cold",
+        "fr": "froid",
+        "de": "kalt",
+        "it": "freddo",
+        "pt": "frio"
+      }
     },
     "热": {
       "radical": "火",
       "pinyin": "re4",
-      "meaning": "caliente"
+      "meaning": "caliente",
+      "meaningTr": {
+        "en": "hot",
+        "fr": "chaud",
+        "de": "heiß",
+        "it": "caldo",
+        "pt": "quente"
+      }
     },
     "新": {
       "radical": "斤",
       "pinyin": "xin1",
-      "meaning": "nuevo"
+      "meaning": "nuevo",
+      "meaningTr": {
+        "en": "new",
+        "fr": "nouveau",
+        "de": "neu",
+        "it": "nuovo",
+        "pt": "novo"
+      }
     },
     "旧": {
       "radical": "日",
       "pinyin": "jiu4",
-      "meaning": "viejo (objeto)"
+      "meaning": "viejo (objeto)",
+      "meaningTr": {
+        "en": "old (things)",
+        "fr": "vieux (objets)",
+        "de": "alt (Sachen)",
+        "it": "vecchio (oggetti)",
+        "pt": "velho (objetos)"
+      }
     },
     "忙": {
       "radical": "心",
       "pinyin": "mang2",
-      "meaning": "ocupado"
+      "meaning": "ocupado",
+      "meaningTr": {
+        "en": "busy",
+        "fr": "occupé",
+        "de": "beschäftigt",
+        "it": "occupato",
+        "pt": "ocupado"
+      }
     },
     "累": {
       "radical": "糸",
       "pinyin": "lei4",
-      "meaning": "cansado"
+      "meaning": "cansado",
+      "meaningTr": {
+        "en": "tired",
+        "fr": "fatigué",
+        "de": "müde",
+        "it": "stanco",
+        "pt": "cansado"
+      }
     },
     "贵": {
       "radical": "贝",
       "pinyin": "gui4",
-      "meaning": "caro"
+      "meaning": "caro",
+      "meaningTr": {
+        "en": "expensive",
+        "fr": "cher",
+        "de": "teuer",
+        "it": "caro",
+        "pt": "caro"
+      }
     },
     "便宜": {
       "pinyin": "pianyi2",
-      "meaning": "barato"
+      "meaning": "barato",
+      "meaningTr": {
+        "en": "cheap; inexpensive",
+        "fr": "bon marché",
+        "de": "billig",
+        "it": "economico; a buon mercato",
+        "pt": "barato"
+      }
     },
     "漂亮": {
       "pinyin": "piaoliang4",
-      "meaning": "bonito; guapa"
+      "meaning": "bonito; guapa",
+      "meaningTr": {
+        "en": "beautiful; pretty",
+        "fr": "beau; joli",
+        "de": "schön; hübsch",
+        "it": "bello; carino",
+        "pt": "bonito; lindo"
+      }
     },
     "好吃": {
       "pinyin": "haochi1",
-      "meaning": "rico (comida)"
+      "meaning": "rico (comida)",
+      "meaningTr": {
+        "en": "delicious; tasty",
+        "fr": "délicieux",
+        "de": "lecker; köstlich",
+        "it": "delizioso; buono",
+        "pt": "delicioso; saboroso"
+      }
     },
     "好喝": {
       "pinyin": "haohe1",
-      "meaning": "rico (bebida)"
+      "meaning": "rico (bebida)",
+      "meaningTr": {
+        "en": "tasty (drinks)",
+        "fr": "bon (boisson)",
+        "de": "lecker (Getränke)",
+        "it": "buono (da bere)",
+        "pt": "gostoso (bebida)"
+      }
     },
     "中国": {
       "pinyin": "zhongguo2",
-      "meaning": "China"
+      "meaning": "China",
+      "meaningTr": {
+        "en": "China",
+        "fr": "Chine",
+        "de": "China",
+        "it": "Cina",
+        "pt": "China"
+      }
     },
     "中国人": {
       "pinyin": "zhongguo2 ren2",
-      "meaning": "chino/a (persona)"
+      "meaning": "chino/a (persona)",
+      "meaningTr": {
+        "en": "Chinese (person)",
+        "fr": "Chinois(e)",
+        "de": "Chinese/Chinesin",
+        "it": "cinese (persona)",
+        "pt": "chinês/chinesa (pessoa)"
+      }
     },
     "汉语": {
       "pinyin": "hanyu3",
-      "meaning": "chino mandarín"
+      "meaning": "chino mandarín",
+      "meaningTr": {
+        "en": "Chinese language; Mandarin",
+        "fr": "chinois (langue); mandarin",
+        "de": "Chinesisch; Mandarin",
+        "it": "cinese (lingua); mandarino",
+        "pt": "chinês; mandarim"
+      }
     },
     "中文": {
       "pinyin": "zhongwen2",
-      "meaning": "chino (lengua escrita)"
+      "meaning": "chino (lengua escrita)",
+      "meaningTr": {
+        "en": "Chinese (language)",
+        "fr": "chinois (langue)",
+        "de": "Chinesisch (Sprache)",
+        "it": "cinese (lingua)",
+        "pt": "chinês (língua)"
+      }
     },
     "北京": {
       "pinyin": "beijing1",
-      "meaning": "Pekín"
+      "meaning": "Pekín",
+      "meaningTr": {
+        "en": "Beijing",
+        "fr": "Pékin",
+        "de": "Peking",
+        "it": "Pechino",
+        "pt": "Pequim"
+      }
     },
     "上海": {
       "pinyin": "shanghai3",
-      "meaning": "Shanghái"
+      "meaning": "Shanghái",
+      "meaningTr": {
+        "en": "Shanghai",
+        "fr": "Shanghai",
+        "de": "Shanghai",
+        "it": "Shanghai",
+        "pt": "Xangai"
+      }
     },
     "学校": {
       "pinyin": "xuexiao4",
-      "meaning": "colegio; escuela"
+      "meaning": "colegio; escuela",
+      "meaningTr": {
+        "en": "school",
+        "fr": "école",
+        "de": "Schule",
+        "it": "scuola",
+        "pt": "escola"
+      }
     },
     "老师": {
       "pinyin": "laoshi1",
-      "meaning": "profesor/a"
+      "meaning": "profesor/a",
+      "meaningTr": {
+        "en": "teacher",
+        "fr": "professeur; enseignant",
+        "de": "Lehrer",
+        "it": "insegnante; professore",
+        "pt": "professor"
+      }
     },
     "学生": {
       "pinyin": "xuesheng2",
-      "meaning": "estudiante"
+      "meaning": "estudiante",
+      "meaningTr": {
+        "en": "student",
+        "fr": "étudiant; élève",
+        "de": "Student; Schüler",
+        "it": "studente",
+        "pt": "estudante"
+      }
     },
     "同学": {
       "pinyin": "tongxue2",
-      "meaning": "compañero de clase"
+      "meaning": "compañero de clase",
+      "meaningTr": {
+        "en": "classmate",
+        "fr": "camarade de classe",
+        "de": "Mitschüler; Kommilitone",
+        "it": "compagno di classe",
+        "pt": "colega de turma"
+      }
     },
     "朋友": {
       "pinyin": "pengyou2",
-      "meaning": "amigo/a"
+      "meaning": "amigo/a",
+      "meaningTr": {
+        "en": "friend",
+        "fr": "ami",
+        "de": "Freund",
+        "it": "amico",
+        "pt": "amigo"
+      }
     },
     "家": {
       "radical": "宀",
       "pinyin": "jia1",
-      "meaning": "casa; familia"
+      "meaning": "casa; familia",
+      "meaningTr": {
+        "en": "family; home",
+        "fr": "famille; maison",
+        "de": "Familie; Zuhause",
+        "it": "famiglia; casa",
+        "pt": "família; casa"
+      }
     },
     "爸爸": {
       "pinyin": "baba4",
-      "meaning": "papá"
+      "meaning": "papá",
+      "meaningTr": {
+        "en": "dad; father",
+        "fr": "papa; père",
+        "de": "Papa; Vater",
+        "it": "papà; padre",
+        "pt": "pai; papai"
+      }
     },
     "妈妈": {
       "pinyin": "mama1",
-      "meaning": "mamá"
+      "meaning": "mamá",
+      "meaningTr": {
+        "en": "mum; mother",
+        "fr": "maman; mère",
+        "de": "Mama; Mutter",
+        "it": "mamma; madre",
+        "pt": "mãe; mamãe"
+      }
     },
     "儿子": {
       "pinyin": "erzi2",
-      "meaning": "hijo"
+      "meaning": "hijo",
+      "meaningTr": {
+        "en": "son",
+        "fr": "fils",
+        "de": "Sohn",
+        "it": "figlio",
+        "pt": "filho"
+      }
     },
     "女儿": {
       "pinyin": "nv’er2",
-      "meaning": "hija"
+      "meaning": "hija",
+      "meaningTr": {
+        "en": "daughter",
+        "fr": "fille",
+        "de": "Tochter",
+        "it": "figlia",
+        "pt": "filha"
+      }
     },
     "先生": {
       "pinyin": "xiansheng1",
-      "meaning": "señor; marido"
+      "meaning": "señor; marido",
+      "meaningTr": {
+        "en": "Mr.; sir; husband",
+        "fr": "monsieur; mari",
+        "de": "Herr; Ehemann",
+        "it": "signore; marito",
+        "pt": "senhor; marido"
+      }
     },
     "小姐": {
       "pinyin": "xiaojie3",
-      "meaning": "señorita"
+      "meaning": "señorita",
+      "meaningTr": {
+        "en": "miss; young lady",
+        "fr": "mademoiselle",
+        "de": "Fräulein; junge Dame",
+        "it": "signorina",
+        "pt": "senhorita"
+      }
     },
     "女士": {
       "pinyin": "nvshi4",
-      "meaning": "señora"
+      "meaning": "señora",
+      "meaningTr": {
+        "en": "madam; lady",
+        "fr": "madame",
+        "de": "Dame; Frau",
+        "it": "signora",
+        "pt": "senhora"
+      }
     },
     "名字": {
       "pinyin": "mingzi2",
-      "meaning": "nombre"
+      "meaning": "nombre",
+      "meaningTr": {
+        "en": "name",
+        "fr": "nom; prénom",
+        "de": "Name",
+        "it": "nome",
+        "pt": "nome"
+      }
     },
     "昨天": {
       "pinyin": "zuotian1",
-      "meaning": "ayer"
+      "meaning": "ayer",
+      "meaningTr": {
+        "en": "yesterday",
+        "fr": "hier",
+        "de": "gestern",
+        "it": "ieri",
+        "pt": "ontem"
+      }
     },
     "今天": {
       "pinyin": "jintian1",
-      "meaning": "hoy"
+      "meaning": "hoy",
+      "meaningTr": {
+        "en": "today",
+        "fr": "aujourd’hui",
+        "de": "heute",
+        "it": "oggi",
+        "pt": "hoje"
+      }
     },
     "明天": {
       "pinyin": "mingtian1",
-      "meaning": "mañana"
+      "meaning": "mañana",
+      "meaningTr": {
+        "en": "tomorrow",
+        "fr": "demain",
+        "de": "morgen",
+        "it": "domani",
+        "pt": "amanhã"
+      }
     },
     "现在": {
       "pinyin": "xianzai4",
-      "meaning": "ahora"
+      "meaning": "ahora",
+      "meaningTr": {
+        "en": "now; currently",
+        "fr": "maintenant",
+        "de": "jetzt; derzeit",
+        "it": "adesso; attualmente",
+        "pt": "agora; atualmente"
+      }
     },
     "点": {
       "radical": "黑",
       "pinyin": "dian3",
-      "meaning": "en punto; hora"
+      "meaning": "en punto; hora",
+      "meaningTr": {
+        "en": "o’clock; hour",
+        "fr": "heure (pile)",
+        "de": "Uhr (Uhrzeit)",
+        "it": "in punto; ora",
+        "pt": "hora (em ponto)"
+      }
     },
     "分钟": {
       "pinyin": "fenzhong1",
-      "meaning": "minuto"
+      "meaning": "minuto",
+      "meaningTr": {
+        "en": "minute",
+        "fr": "minute",
+        "de": "Minute",
+        "it": "minuto",
+        "pt": "minuto"
+      }
     },
     "时候": {
       "pinyin": "shihou2",
-      "meaning": "tiempo; momento"
+      "meaning": "tiempo; momento",
+      "meaningTr": {
+        "en": "time; moment",
+        "fr": "moment",
+        "de": "Zeit; Moment",
+        "it": "tempo; momento",
+        "pt": "tempo; momento"
+      }
     },
     "号": {
       "radical": "口",
       "pinyin": "hao4",
-      "meaning": "día (del mes); número"
+      "meaning": "día (del mes); número",
+      "meaningTr": {
+        "en": "day of the month; date; size",
+        "fr": "jour du mois; date; taille",
+        "de": "Tag des Monats; Datum; Größe",
+        "it": "giorno del mese; data; taglia",
+        "pt": "dia do mês; data; tamanho"
+      }
     },
     "星期": {
       "pinyin": "xingqi1",
-      "meaning": "semana"
+      "meaning": "semana",
+      "meaningTr": {
+        "en": "week",
+        "fr": "semaine",
+        "de": "Woche",
+        "it": "settimana",
+        "pt": "semana"
+      }
     },
     "早上": {
       "pinyin": "zaoshang3",
-      "meaning": "por la mañana"
+      "meaning": "por la mañana",
+      "meaningTr": {
+        "en": "(early) morning",
+        "fr": "matin (tôt)",
+        "de": "(früher) Morgen",
+        "it": "mattina (presto)",
+        "pt": "manhã (cedo)"
+      }
     },
     "中午": {
       "pinyin": "zhongwu3",
-      "meaning": "mediodía"
+      "meaning": "mediodía",
+      "meaningTr": {
+        "en": "noon",
+        "fr": "midi",
+        "de": "Mittag",
+        "it": "mezzogiorno",
+        "pt": "meio-dia"
+      }
     },
     "晚上": {
       "pinyin": "wanshang3",
-      "meaning": "por la noche"
+      "meaning": "por la noche",
+      "meaningTr": {
+        "en": "evening; at night",
+        "fr": "soir; le soir",
+        "de": "Abend; abends",
+        "it": "sera; di sera",
+        "pt": "noite; à noite"
+      }
     },
     "这": {
       "radical": "辶",
       "pinyin": "zhe4",
-      "meaning": "este/esta/esto"
+      "meaning": "este/esta/esto",
+      "meaningTr": {
+        "en": "this",
+        "fr": "ceci; ce",
+        "de": "dies; diese(r)",
+        "it": "questo",
+        "pt": "este; isto"
+      }
     },
     "那": {
       "radical": "阝",
       "pinyin": "na4",
-      "meaning": "ese/esa/eso; aquel/aquella"
+      "meaning": "ese/esa/eso; aquel/aquella",
+      "meaningTr": {
+        "en": "that",
+        "fr": "cela; ce… là",
+        "de": "jene(r); das",
+        "it": "quello",
+        "pt": "aquele; aquilo"
+      }
     },
     "哪": {
       "radical": "口",
       "pinyin": "na3",
-      "meaning": "cuál; qué (interrogativo)"
+      "meaning": "cuál; qué (interrogativo)",
+      "meaningTr": {
+        "en": "which",
+        "fr": "lequel; quel",
+        "de": "welche(r)",
+        "it": "quale",
+        "pt": "qual"
+      }
     },
     "谁": {
       "radical": "讠",
       "pinyin": "shei2",
-      "meaning": "quién"
+      "meaning": "quién",
+      "meaningTr": {
+        "en": "who",
+        "fr": "qui",
+        "de": "wer",
+        "it": "chi",
+        "pt": "quem"
+      }
     },
     "什么": {
       "pinyin": "shenme2",
-      "meaning": "qué"
+      "meaning": "qué",
+      "meaningTr": {
+        "en": "what",
+        "fr": "quoi; quel",
+        "de": "was",
+        "it": "che; cosa",
+        "pt": "o quê; que"
+      }
     },
     "多少": {
       "pinyin": "duoshao1",
-      "meaning": "cuánto(s)"
+      "meaning": "cuánto(s)",
+      "meaningTr": {
+        "en": "how much; how many",
+        "fr": "combien",
+        "de": "wie viel; wie viele",
+        "it": "quanto; quanti",
+        "pt": "quanto; quantos"
+      }
     },
     "几": {
       "radical": "几",
       "pinyin": "ji3",
-      "meaning": "cuántos (pocos)"
+      "meaning": "cuántos (pocos)",
+      "meaningTr": {
+        "en": "how many (fewer than 10)",
+        "fr": "combien (moins de 10)",
+        "de": "wie viele (unter 10)",
+        "it": "quanti (meno di 10)",
+        "pt": "quantos (menos de 10)"
+      }
     },
     "怎么": {
       "pinyin": "zenme3",
-      "meaning": "cómo"
+      "meaning": "cómo",
+      "meaningTr": {
+        "en": "how",
+        "fr": "comment",
+        "de": "wie",
+        "it": "come",
+        "pt": "como"
+      }
     },
     "怎么样": {
       "pinyin": "zenmeyang4",
-      "meaning": "qué tal"
+      "meaning": "qué tal",
+      "meaningTr": {
+        "en": "how are you?; how about it?",
+        "fr": "comment ça va?; qu’en penses-tu?",
+        "de": "wie geht’s?; wie wär’s?",
+        "it": "come stai?; che ne dici?",
+        "pt": "como está?; que tal?"
+      }
     },
     "吗": {
       "radical": "口",
       "pinyin": "ma",
-      "meaning": "partícula interrogativa"
+      "meaning": "partícula interrogativa",
+      "meaningTr": {
+        "en": "(yes/no question particle)",
+        "fr": "(particule interrogative oui/non)",
+        "de": "(Fragepartikel ja/nein)",
+        "it": "(particella interrogativa sì/no)",
+        "pt": "(partícula interrogativa sim/não)"
+      }
     },
     "呢": {
       "radical": "口",
       "pinyin": "ne",
-      "meaning": "partícula enfática/interrogativa"
+      "meaning": "partícula enfática/interrogativa",
+      "meaningTr": {
+        "en": "(particle for elliptical questions)",
+        "fr": "(particule pour questions elliptiques)",
+        "de": "(Partikel für elliptische Fragen)",
+        "it": "(particella per domande ellittiche)",
+        "pt": "(partícula para perguntas elípticas)"
+      }
     },
     "吧": {
       "radical": "口",
       "pinyin": "ba",
-      "meaning": "partícula modal (sugerencia)"
+      "meaning": "partícula modal (sugerencia)",
+      "meaningTr": {
+        "en": "(particle of suggestion)",
+        "fr": "(particule de suggestion)",
+        "de": "(Vorschlagspartikel)",
+        "it": "(particella di suggerimento)",
+        "pt": "(partícula de sugestão)"
+      }
     },
     "喜欢": {
       "pinyin": "xihuan3",
-      "meaning": "gustar"
+      "meaning": "gustar",
+      "meaningTr": {
+        "en": "to like",
+        "fr": "aimer; apprécier",
+        "de": "mögen; gern haben",
+        "it": "piacere; amare",
+        "pt": "gostar"
+      }
     },
     "爱": {
       "radical": "心",
       "pinyin": "ai4",
-      "meaning": "amar; amor"
+      "meaning": "amar; amor",
+      "meaningTr": {
+        "en": "to love; love",
+        "fr": "aimer; amour",
+        "de": "lieben; Liebe",
+        "it": "amare; amore",
+        "pt": "amar; amor"
+      }
     },
     "觉得": {
       "pinyin": "juede2",
-      "meaning": "parecer; pensar"
+      "meaning": "parecer; pensar",
+      "meaningTr": {
+        "en": "to think; to feel",
+        "fr": "trouver; penser",
+        "de": "finden; meinen",
+        "it": "pensare; sembrare",
+        "pt": "achar; pensar"
+      }
     },
     "认识": {
       "pinyin": "renshi4",
-      "meaning": "conocer (a alguien)"
+      "meaning": "conocer (a alguien)",
+      "meaningTr": {
+        "en": "to know; to be acquainted with",
+        "fr": "connaître",
+        "de": "kennen",
+        "it": "conoscere",
+        "pt": "conhecer"
+      }
     },
     "知道": {
       "pinyin": "zhidao4",
-      "meaning": "saber (hecho)"
+      "meaning": "saber (hecho)",
+      "meaningTr": {
+        "en": "to know",
+        "fr": "savoir",
+        "de": "wissen",
+        "it": "sapere",
+        "pt": "saber"
+      }
     },
     "问题": {
       "pinyin": "wenti2",
-      "meaning": "pregunta; problema"
+      "meaning": "pregunta; problema",
+      "meaningTr": {
+        "en": "question; problem",
+        "fr": "question; problème",
+        "de": "Frage; Problem",
+        "it": "domanda; problema",
+        "pt": "pergunta; problema"
+      }
     },
     "没": {
       "radical": "氵",
       "pinyin": "mei2",
-      "meaning": "no; no tener"
+      "meaning": "no; no tener",
+      "meaningTr": {
+        "en": "not (negation of 有)",
+        "fr": "ne… pas (négation de 有)",
+        "de": "nicht (Verneinung von 有)",
+        "it": "non (negazione di 有)",
+        "pt": "não (negação de 有)"
+      }
     },
     "非常": {
       "pinyin": "feichang2",
-      "meaning": "muy; extremadamente"
+      "meaning": "muy; extremadamente",
+      "meaningTr": {
+        "en": "very; extremely",
+        "fr": "très; extrêmement",
+        "de": "sehr; äußerst",
+        "it": "molto; estremamente",
+        "pt": "muito; extremamente"
+      }
     },
     "真": {
       "radical": "目",
       "pinyin": "zhen1",
-      "meaning": "real; realmente"
+      "meaning": "real; realmente",
+      "meaningTr": {
+        "en": "really; truly",
+        "fr": "vraiment",
+        "de": "wirklich",
+        "it": "davvero",
+        "pt": "realmente; de verdade"
+      }
     },
     "一点儿": {
       "pinyin": "yidianr3",
-      "meaning": "un poco"
+      "meaning": "un poco",
+      "meaningTr": {
+        "en": "a little",
+        "fr": "un peu",
+        "de": "ein bisschen",
+        "it": "un po’",
+        "pt": "um pouco"
+      }
     },
     "东西": {
       "pinyin": "dongxi1",
-      "meaning": "cosa; objeto"
+      "meaning": "cosa; objeto",
+      "meaningTr": {
+        "en": "thing; object",
+        "fr": "chose; objet",
+        "de": "Sache; Ding",
+        "it": "cosa; oggetto",
+        "pt": "coisa; objeto"
+      }
     },
     "钱": {
       "radical": "钅",
       "pinyin": "qian2",
-      "meaning": "dinero"
+      "meaning": "dinero",
+      "meaningTr": {
+        "en": "money",
+        "fr": "argent",
+        "de": "Geld",
+        "it": "soldi; denaro",
+        "pt": "dinheiro"
+      }
     },
     "杯子": {
       "pinyin": "beizi1",
-      "meaning": "vaso; taza"
+      "meaning": "vaso; taza",
+      "meaningTr": {
+        "en": "glass; cup",
+        "fr": "verre; tasse",
+        "de": "Glas; Tasse",
+        "it": "bicchiere; tazza",
+        "pt": "copo; xícara"
+      }
     },
     "茶": {
       "radical": "艹",
       "pinyin": "cha2",
-      "meaning": "té"
+      "meaning": "té",
+      "meaningTr": {
+        "en": "tea",
+        "fr": "thé",
+        "de": "Tee",
+        "it": "tè",
+        "pt": "chá"
+      }
     },
     "米饭": {
       "pinyin": "mifan4",
-      "meaning": "arroz cocido; comida"
+      "meaning": "arroz cocido; comida",
+      "meaningTr": {
+        "en": "(cooked) rice",
+        "fr": "riz (cuit)",
+        "de": "(gekochter) Reis",
+        "it": "riso (cotto)",
+        "pt": "arroz (cozido)"
+      }
     },
     "面条": {
       "pinyin": "miantiao2",
-      "meaning": "fideos"
+      "meaning": "fideos",
+      "meaningTr": {
+        "en": "noodles",
+        "fr": "nouilles",
+        "de": "Nudeln",
+        "it": "noodles; tagliolini",
+        "pt": "macarrão"
+      }
     },
     "苹果": {
       "pinyin": "pingguo3",
-      "meaning": "manzana"
+      "meaning": "manzana",
+      "meaningTr": {
+        "en": "apple",
+        "fr": "pomme",
+        "de": "Apfel",
+        "it": "mela",
+        "pt": "maçã"
+      }
     },
     "水果": {
       "pinyin": "shuiguo3",
-      "meaning": "fruta"
+      "meaning": "fruta",
+      "meaningTr": {
+        "en": "fruit",
+        "fr": "fruit",
+        "de": "Obst",
+        "it": "frutta",
+        "pt": "fruta"
+      }
     },
     "菜": {
       "radical": "艹",
       "pinyin": "cai4",
-      "meaning": "plato; verdura"
+      "meaning": "plato; verdura",
+      "meaningTr": {
+        "en": "dish; vegetable",
+        "fr": "plat; légume",
+        "de": "Gericht; Gemüse",
+        "it": "piatto; verdura",
+        "pt": "prato; verdura"
+      }
     },
     "饭馆": {
       "pinyin": "fanguan3",
-      "meaning": "restaurante"
+      "meaning": "restaurante",
+      "meaningTr": {
+        "en": "restaurant",
+        "fr": "restaurant",
+        "de": "Restaurant",
+        "it": "ristorante",
+        "pt": "restaurante"
+      }
     },
     "医生": {
       "pinyin": "yisheng1",
-      "meaning": "médico"
+      "meaning": "médico",
+      "meaningTr": {
+        "en": "doctor",
+        "fr": "médecin",
+        "de": "Arzt",
+        "it": "medico",
+        "pt": "médico"
+      }
     },
     "医院": {
       "pinyin": "yiyuan4",
-      "meaning": "hospital"
+      "meaning": "hospital",
+      "meaningTr": {
+        "en": "hospital",
+        "fr": "hôpital",
+        "de": "Krankenhaus",
+        "it": "ospedale",
+        "pt": "hospital"
+      }
     },
     "商店": {
       "pinyin": "shangdian4",
-      "meaning": "tienda"
+      "meaning": "tienda",
+      "meaningTr": {
+        "en": "shop; store",
+        "fr": "magasin",
+        "de": "Geschäft; Laden",
+        "it": "negozio",
+        "pt": "loja"
+      }
     },
     "飞机": {
       "pinyin": "feiji1",
-      "meaning": "avión"
+      "meaning": "avión",
+      "meaningTr": {
+        "en": "airplane",
+        "fr": "avion",
+        "de": "Flugzeug",
+        "it": "aereo",
+        "pt": "avião"
+      }
     },
     "出租车": {
       "pinyin": "chuzuche1",
-      "meaning": "taxi"
+      "meaning": "taxi",
+      "meaningTr": {
+        "en": "taxi",
+        "fr": "taxi",
+        "de": "Taxi",
+        "it": "taxi",
+        "pt": "táxi"
+      }
     },
     "车": {
       "radical": "车",
       "pinyin": "che1",
-      "meaning": "coche; vehículo"
+      "meaning": "coche; vehículo",
+      "meaningTr": {
+        "en": "car; vehicle",
+        "fr": "voiture; véhicule",
+        "de": "Auto; Fahrzeug",
+        "it": "macchina; veicolo",
+        "pt": "carro; veículo"
+      }
     },
     "火车站": {
       "pinyin": "huochezhan4",
-      "meaning": "estación de tren"
+      "meaning": "estación de tren",
+      "meaningTr": {
+        "en": "train station",
+        "fr": "gare",
+        "de": "Bahnhof",
+        "it": "stazione ferroviaria",
+        "pt": "estação de trem"
+      }
     },
     "前面": {
       "pinyin": "qianmian4",
-      "meaning": "delante"
+      "meaning": "delante",
+      "meaningTr": {
+        "en": "in front",
+        "fr": "devant",
+        "de": "vorne",
+        "it": "davanti",
+        "pt": "na frente"
+      }
     },
     "后面": {
       "pinyin": "houmian4",
-      "meaning": "detrás"
+      "meaning": "detrás",
+      "meaningTr": {
+        "en": "behind",
+        "fr": "derrière",
+        "de": "hinten",
+        "it": "dietro",
+        "pt": "atrás"
+      }
     },
     "里面": {
       "pinyin": "limian4",
-      "meaning": "dentro"
+      "meaning": "dentro",
+      "meaningTr": {
+        "en": "inside",
+        "fr": "dedans",
+        "de": "innen",
+        "it": "dentro",
+        "pt": "dentro"
+      }
     },
     "外面": {
       "pinyin": "waimian4",
-      "meaning": "fuera"
+      "meaning": "fuera",
+      "meaningTr": {
+        "en": "outside",
+        "fr": "dehors",
+        "de": "draußen",
+        "it": "fuori",
+        "pt": "fora"
+      }
     },
     "左边": {
       "pinyin": "zuobian3",
-      "meaning": "izquierda"
+      "meaning": "izquierda",
+      "meaningTr": {
+        "en": "left (side)",
+        "fr": "(côté) gauche",
+        "de": "linke Seite",
+        "it": "(lato) sinistro",
+        "pt": "(lado) esquerdo"
+      }
     },
     "右边": {
       "pinyin": "youbian4",
-      "meaning": "derecha"
+      "meaning": "derecha",
+      "meaningTr": {
+        "en": "right (side)",
+        "fr": "(côté) droit",
+        "de": "rechte Seite",
+        "it": "(lato) destro",
+        "pt": "(lado) direito"
+      }
     },
     "中间": {
       "pinyin": "zhongjian1",
-      "meaning": "medio; entre"
+      "meaning": "medio; entre",
+      "meaningTr": {
+        "en": "middle; between",
+        "fr": "milieu; entre",
+        "de": "Mitte; zwischen",
+        "it": "mezzo; tra",
+        "pt": "meio; entre"
+      }
     },
     "桌子": {
       "pinyin": "zhuozi1",
-      "meaning": "mesa"
+      "meaning": "mesa",
+      "meaningTr": {
+        "en": "table",
+        "fr": "table",
+        "de": "Tisch",
+        "it": "tavolo",
+        "pt": "mesa"
+      }
     },
     "椅子": {
       "pinyin": "yizi3",
-      "meaning": "silla"
+      "meaning": "silla",
+      "meaningTr": {
+        "en": "chair",
+        "fr": "chaise",
+        "de": "Stuhl",
+        "it": "sedia",
+        "pt": "cadeira"
+      }
     },
     "书": {
       "radical": "乙",
       "pinyin": "shu1",
-      "meaning": "libro"
+      "meaning": "libro",
+      "meaningTr": {
+        "en": "book",
+        "fr": "livre",
+        "de": "Buch",
+        "it": "libro",
+        "pt": "livro"
+      }
     },
     "本": {
       "radical": "木",
       "pinyin": "ben3",
-      "meaning": "clasificador de libros"
+      "meaning": "clasificador de libros",
+      "meaningTr": {
+        "en": "(measure word for books)",
+        "fr": "(classificateur des livres)",
+        "de": "(Zähleinheitswort für Bücher)",
+        "it": "(classificatore per libri)",
+        "pt": "(classificador de livros)"
+      }
     },
     "个": {
       "radical": "人",
       "pinyin": "ge4",
-      "meaning": "clasificador general"
+      "meaning": "clasificador general",
+      "meaningTr": {
+        "en": "(general measure word)",
+        "fr": "(classificateur général)",
+        "de": "(allgemeines Zählwort)",
+        "it": "(classificatore generico)",
+        "pt": "(classificador geral)"
+      }
     },
     "块": {
       "radical": "土",
       "pinyin": "kuai4",
-      "meaning": "trozo; unidad de dinero (yuan)"
+      "meaning": "trozo; unidad de dinero (yuan)",
+      "meaningTr": {
+        "en": "piece; yuan (money unit)",
+        "fr": "morceau; yuan (monnaie)",
+        "de": "Stück; Yuan (Geldeinheit)",
+        "it": "pezzo; yuan (moneta)",
+        "pt": "pedaço; yuan (unidade monetária)"
+      }
     },
     "件": {
       "radical": "人",
       "pinyin": "jian4",
-      "meaning": "pieza; clasificador de ropa/asuntos"
+      "meaning": "pieza; clasificador de ropa/asuntos",
+      "meaningTr": {
+        "en": "(measure word for clothes/items)",
+        "fr": "(classificateur pour vêtements/articles)",
+        "de": "(Zählwort für Kleidung/Dinge)",
+        "it": "(classificatore per capi/articoli)",
+        "pt": "(classificador para roupas/itens)"
+      }
     },
     "张": {
       "radical": "弓",
       "pinyin": "zhang1",
-      "meaning": "clasificador para papeles/mesas"
+      "meaning": "clasificador para papeles/mesas",
+      "meaningTr": {
+        "en": "(measure word for flat objects)",
+        "fr": "(classificateur pour objets plats)",
+        "de": "(Zählwort für flache Gegenstände)",
+        "it": "(classificatore per oggetti piatti)",
+        "pt": "(classificador para objetos planos)"
+      }
     },
     "只": {
       "radical": "口",
       "pinyin": "zhi1",
-      "meaning": "clasificador de animales"
+      "meaning": "clasificador de animales",
+      "meaningTr": {
+        "en": "(measure word for animals)",
+        "fr": "(classificateur des animaux)",
+        "de": "(Zähleinheitswort für Tiere)",
+        "it": "(classificatore per animali)",
+        "pt": "(classificador de animais)"
+      }
     },
     "宀": {
       "radical": "宀",
@@ -927,7 +2313,14 @@
       "meaning": "techo, casa",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "roof; house",
+        "fr": "toit; maison",
+        "de": "Dach; Haus",
+        "it": "tetto; casa",
+        "pt": "telhado; casa"
+      }
     },
     "讠": {
       "radical": "讠",
@@ -935,7 +2328,14 @@
       "meaning": "discurso",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "speech",
+        "fr": "parole",
+        "de": "Sprechen; Rede",
+        "it": "parola; discorso",
+        "pt": "fala; discurso"
+      }
     },
     "辶": {
       "radical": "辶",
@@ -943,7 +2343,14 @@
       "meaning": "caminar",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to walk",
+        "fr": "marcher",
+        "de": "gehen",
+        "it": "camminare",
+        "pt": "caminhar"
+      }
     },
     "扌": {
       "radical": "扌",
@@ -951,7 +2358,14 @@
       "meaning": "mano",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "hand",
+        "fr": "main",
+        "de": "Hand",
+        "it": "mano",
+        "pt": "mão"
+      }
     },
     "纟": {
       "radical": "纟",
@@ -959,7 +2373,14 @@
       "meaning": "seda",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "silk",
+        "fr": "soie",
+        "de": "Seide",
+        "it": "seta",
+        "pt": "seda"
+      }
     },
     "钅": {
       "radical": "钅",
@@ -967,7 +2388,14 @@
       "meaning": "metal",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "metal",
+        "fr": "métal",
+        "de": "Metall",
+        "it": "metallo",
+        "pt": "metal"
+      }
     },
     "彳": {
       "radical": "彳",
@@ -975,7 +2403,14 @@
       "meaning": "paso",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "step",
+        "fr": "pas",
+        "de": "Schritt",
+        "it": "passo",
+        "pt": "passo"
+      }
     },
     "禾": {
       "radical": "禾",
@@ -983,7 +2418,14 @@
       "meaning": "grano",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "grain",
+        "fr": "céréale",
+        "de": "Getreide",
+        "it": "cereale",
+        "pt": "grão"
+      }
     },
     "目": {
       "radical": "目",
@@ -991,7 +2433,14 @@
       "meaning": "ojo",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "eye",
+        "fr": "œil",
+        "de": "Auge",
+        "it": "occhio",
+        "pt": "olho"
+      }
     },
     "贝": {
       "radical": "贝",
@@ -999,7 +2448,14 @@
       "meaning": "concha",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "shell",
+        "fr": "coquillage",
+        "de": "Muschel",
+        "it": "conchiglia",
+        "pt": "concha"
+      }
     },
     "斤": {
       "radical": "斤",
@@ -1007,7 +2463,14 @@
       "meaning": "hacha",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "axe; jin (unit of weight)",
+        "fr": "hache; jin (unité de poids)",
+        "de": "Axt; Jin (Gewichtseinheit)",
+        "it": "ascia; jin (unità di peso)",
+        "pt": "machado; jin (unidade de peso)"
+      }
     },
     "矢": {
       "radical": "矢",
@@ -1015,7 +2478,14 @@
       "meaning": "flecha",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "arrow",
+        "fr": "flèche",
+        "de": "Pfeil",
+        "it": "freccia",
+        "pt": "flecha"
+      }
     },
     "黑": {
       "radical": "黑",
@@ -1023,7 +2493,14 @@
       "meaning": "negro",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "black",
+        "fr": "noir",
+        "de": "schwarz",
+        "it": "nero",
+        "pt": "preto"
+      }
     },
     "糸": {
       "radical": "糸",
@@ -1031,7 +2508,14 @@
       "meaning": "seda fina",
       "tags": [
         "radical"
-      ]
+      ],
+      "meaningTr": {
+        "en": "fine silk",
+        "fr": "soie fine",
+        "de": "feine Seide",
+        "it": "seta fine",
+        "pt": "seda fina"
+      }
     }
   },
   "vowels": [
@@ -1081,161 +2565,434 @@
   "consonants": [
     {
       "pinyin": "b",
-      "sound": "como \"b\" en \"bar\""
+      "sound": "como \"b\" en \"bar\"",
+      "soundTr": {
+        "en": "like \"b\" in \"ball\" (unaspirated)",
+        "fr": "comme « b » de « bon » (non aspiré)",
+        "de": "wie „b“ in „Ball“ (unbehaucht)",
+        "it": "come la \"b\" di \"bene\" (non aspirata)",
+        "pt": "como o \"b\" de \"bola\" (não aspirado)"
+      }
     },
     {
       "pinyin": "p",
-      "sound": "como \"p\" aspirada"
+      "sound": "como \"p\" aspirada",
+      "soundTr": {
+        "en": "like \"p\" in \"pay\" (aspirated)",
+        "fr": "« p » aspiré (avec un souffle)",
+        "de": "wie „p“ in „Post“ (behaucht)",
+        "it": "\"p\" aspirata (con soffio d’aria)",
+        "pt": "\"p\" aspirado (com sopro de ar)"
+      }
     },
     {
       "pinyin": "m",
-      "sound": "como \"m\" en \"mamá\""
+      "sound": "como \"m\" en \"mamá\"",
+      "soundTr": {
+        "en": "like \"m\" in \"mother\"",
+        "fr": "comme « m » de « mère »",
+        "de": "wie „m“ in „Mutter“",
+        "it": "come la \"m\" di \"mamma\"",
+        "pt": "como o \"m\" de \"mãe\""
+      }
     },
     {
       "pinyin": "f",
-      "sound": "como \"f\" en \"foto\""
+      "sound": "como \"f\" en \"foto\"",
+      "soundTr": {
+        "en": "like \"f\" in \"food\"",
+        "fr": "comme « f » de « feu »",
+        "de": "wie „f“ in „Fisch“",
+        "it": "come la \"f\" di \"fuoco\"",
+        "pt": "como o \"f\" de \"fogo\""
+      }
     },
     {
       "pinyin": "d",
-      "sound": "como \"d\" en \"día\""
+      "sound": "como \"d\" en \"día\"",
+      "soundTr": {
+        "en": "like \"d\" in \"day\"",
+        "fr": "comme « d » de « deux »",
+        "de": "wie „d“ in „du“",
+        "it": "come la \"d\" di \"dare\"",
+        "pt": "como o \"d\" de \"dia\""
+      }
     },
     {
       "pinyin": "t",
-      "sound": "como \"t\" aspirada"
+      "sound": "como \"t\" aspirada",
+      "soundTr": {
+        "en": "like \"t\" in \"tea\" (aspirated)",
+        "fr": "« t » aspiré (avec un souffle)",
+        "de": "wie „t“ in „Tag“ (behaucht)",
+        "it": "\"t\" aspirata (con soffio d’aria)",
+        "pt": "\"t\" aspirado (com sopro de ar)"
+      }
     },
     {
       "pinyin": "n",
-      "sound": "como \"n\" en \"noche\""
+      "sound": "como \"n\" en \"noche\"",
+      "soundTr": {
+        "en": "like \"n\" in \"night\"",
+        "fr": "comme « n » de « nuit »",
+        "de": "wie „n“ in „Nacht“",
+        "it": "come la \"n\" di \"notte\"",
+        "pt": "como o \"n\" de \"noite\""
+      }
     },
     {
       "pinyin": "l",
-      "sound": "como \"l\" en \"luz\""
+      "sound": "como \"l\" en \"luz\"",
+      "soundTr": {
+        "en": "like \"l\" in \"light\"",
+        "fr": "comme « l » de « lune »",
+        "de": "wie „l“ in „Licht“",
+        "it": "come la \"l\" di \"luna\"",
+        "pt": "como o \"l\" de \"lua\""
+      }
     },
     {
       "pinyin": "g",
-      "sound": "como \"g\" en \"gato\""
+      "sound": "como \"g\" en \"gato\"",
+      "soundTr": {
+        "en": "like \"g\" in \"go\"",
+        "fr": "comme « g » de « gare »",
+        "de": "wie „g“ in „gut“",
+        "it": "come la \"g\" di \"gatto\"",
+        "pt": "como o \"g\" de \"gato\""
+      }
     },
     {
       "pinyin": "k",
-      "sound": "como \"k\" aspirada"
+      "sound": "como \"k\" aspirada",
+      "soundTr": {
+        "en": "like \"k\" in \"kite\" (aspirated)",
+        "fr": "« k » aspiré (avec un souffle)",
+        "de": "wie „k“ in „kalt“ (behaucht)",
+        "it": "\"c\" dura aspirata",
+        "pt": "\"c\" duro aspirado"
+      }
     },
     {
       "pinyin": "h",
-      "sound": "como \"j\" en \"jamón\""
+      "sound": "como \"j\" en \"jamón\"",
+      "soundTr": {
+        "en": "like \"h\" in \"hot\", slightly raspy",
+        "fr": "« h » fortement expiré, un peu râpeux",
+        "de": "wie „ch“ in „Bach“, aber leichter",
+        "it": "una \"h\" soffiata, un po’ aspra",
+        "pt": "como o \"rr\" de \"carro\" (leve)"
+      }
     },
     {
       "pinyin": "j",
-      "sound": "como \"y\" en \"yo\""
+      "sound": "como \"y\" en \"yo\"",
+      "soundTr": {
+        "en": "like \"j\" in \"jeep\" (tongue near the teeth)",
+        "fr": "comme « dj » doux (langue près des dents)",
+        "de": "wie „dj“, Zunge an den Zähnen",
+        "it": "come la \"g\" di \"giorno\" (dolce)",
+        "pt": "como \"dj\" suave (língua junto aos dentes)"
+      }
     },
     {
       "pinyin": "q",
-      "sound": "como \"ch\" suave"
+      "sound": "como \"ch\" suave",
+      "soundTr": {
+        "en": "like \"ch\" in \"cheap\" (aspirated, soft)",
+        "fr": "comme « tch » doux et aspiré",
+        "de": "wie „tj“/„tch“, weich und behaucht",
+        "it": "come la \"c\" di \"cena\", aspirata",
+        "pt": "como \"tch\" suave e aspirado"
+      }
     },
     {
       "pinyin": "x",
-      "sound": "como \"sh\" suave"
+      "sound": "como \"sh\" suave",
+      "soundTr": {
+        "en": "between \"s\" and \"sh\", soft",
+        "fr": "entre « s » et « ch », doux",
+        "de": "zwischen „s“ und „sch“, weich",
+        "it": "tra \"s\" e \"sc\" di \"scena\", dolce",
+        "pt": "entre \"s\" e \"x\" de \"xícara\", suave"
+      }
     },
     {
       "pinyin": "zh",
-      "sound": "como \"ch\" en \"chino\""
+      "sound": "como \"ch\" en \"chino\"",
+      "soundTr": {
+        "en": "like \"j\" in \"judge\" (tongue curled back)",
+        "fr": "comme « dj » avec la langue recourbée",
+        "de": "wie „dsch“ in „Dschungel“, Zunge zurückgebogen",
+        "it": "come la \"g\" di \"giorno\" con lingua arretrata",
+        "pt": "como \"dj\" com a língua recurvada"
+      }
     },
     {
       "pinyin": "ch",
-      "sound": "como \"ch\" aspirada"
+      "sound": "como \"ch\" aspirada",
+      "soundTr": {
+        "en": "like \"ch\" in \"church\" (aspirated, tongue curled back)",
+        "fr": "comme « tch » aspiré, langue recourbée",
+        "de": "wie „tsch“ in „Tschüss“, behaucht",
+        "it": "come la \"c\" di \"cena\" aspirata, lingua arretrata",
+        "pt": "como \"tch\" aspirado, língua recurvada"
+      }
     },
     {
       "pinyin": "sh",
-      "sound": "como \"sh\" en inglés"
+      "sound": "como \"sh\" en inglés",
+      "soundTr": {
+        "en": "like \"sh\" in \"shirt\" (tongue curled back)",
+        "fr": "comme « ch » de « chat », langue recourbée",
+        "de": "wie „sch“ in „Schule“, Zunge zurückgebogen",
+        "it": "come \"sc\" di \"scena\", lingua arretrata",
+        "pt": "como o \"x\" de \"xícara\", língua recurvada"
+      }
     },
     {
       "pinyin": "r",
-      "sound": "entre \"r\" y \"zh\""
+      "sound": "entre \"r\" y \"zh\"",
+      "soundTr": {
+        "en": "like \"r\" in \"run\" with tongue curled back",
+        "fr": "proche du « r » anglais, langue recourbée",
+        "de": "wie englisches „r“, Zunge zurückgebogen",
+        "it": "come la \"r\" inglese, lingua arretrata",
+        "pt": "como o \"r\" inglês, língua recurvada"
+      }
     },
     {
       "pinyin": "z",
-      "sound": "como \"ds\" en inglés"
+      "sound": "como \"ds\" en inglés",
+      "soundTr": {
+        "en": "like \"ds\" in \"kids\"",
+        "fr": "comme « dz »",
+        "de": "wie „ds“ in „abends“",
+        "it": "come la \"z\" di \"zaino\" (\"ds\")",
+        "pt": "como \"ds\""
+      }
     },
     {
       "pinyin": "c",
-      "sound": "como \"ts\" aspirada"
+      "sound": "como \"ts\" aspirada",
+      "soundTr": {
+        "en": "like \"ts\" in \"cats\" (aspirated)",
+        "fr": "comme « ts » aspiré",
+        "de": "wie „z“ in „Zeit“ (behaucht)",
+        "it": "come la \"z\" di \"pizza\" (\"ts\" aspirata)",
+        "pt": "como \"ts\" aspirado"
+      }
     },
     {
       "pinyin": "s",
-      "sound": "como \"s\" en \"sol\""
+      "sound": "como \"s\" en \"sol\"",
+      "soundTr": {
+        "en": "like \"s\" in \"sun\"",
+        "fr": "comme « s » de « soleil »",
+        "de": "wie „ss“ in „Wasser“",
+        "it": "come la \"s\" di \"sole\"",
+        "pt": "como o \"s\" de \"sol\""
+      }
     },
     {
       "pinyin": "y",
-      "sound": "semivocal cercana a 'i' inicial; ej. yī (衣)"
+      "sound": "semivocal cercana a 'i' inicial; ej. yī (衣)",
+      "soundTr": {
+        "en": "semivowel close to initial \"i\"; e.g. yī (衣)",
+        "fr": "semi-voyelle proche du « i » initial ; ex. yī (衣)",
+        "de": "Halbvokal, ähnlich einem „i“ am Anfang; z. B. yī (衣)",
+        "it": "semivocale vicina alla \"i\" iniziale; es. yī (衣)",
+        "pt": "semivogal próxima do \"i\" inicial; ex. yī (衣)"
+      }
     },
     {
       "pinyin": "w",
-      "sound": "semivocal cercana a 'u' inicial; ej. wū (屋)"
+      "sound": "semivocal cercana a 'u' inicial; ej. wū (屋)",
+      "soundTr": {
+        "en": "semivowel close to initial \"u\"; e.g. wū (屋)",
+        "fr": "semi-voyelle proche du « ou » initial ; ex. wū (屋)",
+        "de": "Halbvokal, ähnlich einem „u“ am Anfang; z. B. wū (屋)",
+        "it": "semivocale vicina alla \"u\" iniziale; es. wū (屋)",
+        "pt": "semivogal próxima do \"u\" inicial; ex. wū (屋)"
+      }
     }
   ],
   "specialSyllables": [
     {
       "pinyin": "zhi",
-      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+      "sound": "sílaba de lectura global; 'i' no es vocal plena",
+      "soundTr": {
+        "en": "whole-syllable reading; the 'i' is not a full vowel",
+        "fr": "syllabe à lecture globale ; le « i » n’est pas une vraie voyelle",
+        "de": "ganzheitlich gelesene Silbe; das „i“ ist kein voller Vokal",
+        "it": "sillaba a lettura globale; la 'i' non è una vocale piena",
+        "pt": "sílaba de leitura global; o 'i' não é vogal plena"
+      }
     },
     {
       "pinyin": "chi",
-      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+      "sound": "sílaba de lectura global; 'i' no es vocal plena",
+      "soundTr": {
+        "en": "whole-syllable reading; the 'i' is not a full vowel",
+        "fr": "syllabe à lecture globale ; le « i » n’est pas une vraie voyelle",
+        "de": "ganzheitlich gelesene Silbe; das „i“ ist kein voller Vokal",
+        "it": "sillaba a lettura globale; la 'i' non è una vocale piena",
+        "pt": "sílaba de leitura global; o 'i' não é vogal plena"
+      }
     },
     {
       "pinyin": "shi",
-      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+      "sound": "sílaba de lectura global; 'i' no es vocal plena",
+      "soundTr": {
+        "en": "whole-syllable reading; the 'i' is not a full vowel",
+        "fr": "syllabe à lecture globale ; le « i » n’est pas une vraie voyelle",
+        "de": "ganzheitlich gelesene Silbe; das „i“ ist kein voller Vokal",
+        "it": "sillaba a lettura globale; la 'i' non è una vocale piena",
+        "pt": "sílaba de leitura global; o 'i' não é vogal plena"
+      }
     },
     {
       "pinyin": "ri",
-      "sound": "sílaba de lectura global; 'i' no es vocal plena"
+      "sound": "sílaba de lectura global; 'i' no es vocal plena",
+      "soundTr": {
+        "en": "whole-syllable reading; the 'i' is not a full vowel",
+        "fr": "syllabe à lecture globale ; le « i » n’est pas une vraie voyelle",
+        "de": "ganzheitlich gelesene Silbe; das „i“ ist kein voller Vokal",
+        "it": "sillaba a lettura globale; la 'i' non è una vocale piena",
+        "pt": "sílaba de leitura global; o 'i' não é vogal plena"
+      }
     },
     {
       "pinyin": "zi",
-      "sound": "sílaba de lectura global; 'i' débil"
+      "sound": "sílaba de lectura global; 'i' débil",
+      "soundTr": {
+        "en": "whole-syllable reading; weak 'i'",
+        "fr": "syllabe à lecture globale ; « i » faible",
+        "de": "ganzheitlich gelesene Silbe; schwaches „i“",
+        "it": "sillaba a lettura globale; 'i' debole",
+        "pt": "sílaba de leitura global; 'i' fraco"
+      }
     },
     {
       "pinyin": "ci",
-      "sound": "sílaba de lectura global; 'i' débil"
+      "sound": "sílaba de lectura global; 'i' débil",
+      "soundTr": {
+        "en": "whole-syllable reading; weak 'i'",
+        "fr": "syllabe à lecture globale ; « i » faible",
+        "de": "ganzheitlich gelesene Silbe; schwaches „i“",
+        "it": "sillaba a lettura globale; 'i' debole",
+        "pt": "sílaba de leitura global; 'i' fraco"
+      }
     },
     {
       "pinyin": "si",
-      "sound": "sílaba de lectura global; 'i' débil"
+      "sound": "sílaba de lectura global; 'i' débil",
+      "soundTr": {
+        "en": "whole-syllable reading; weak 'i'",
+        "fr": "syllabe à lecture globale ; « i » faible",
+        "de": "ganzheitlich gelesene Silbe; schwaches „i“",
+        "it": "sillaba a lettura globale; 'i' debole",
+        "pt": "sílaba de leitura global; 'i' fraco"
+      }
     },
     {
       "pinyin": "yi",
-      "sound": "inicial 'y' + 'i' (yī)"
+      "sound": "inicial 'y' + 'i' (yī)",
+      "soundTr": {
+        "en": "initial 'y' + 'i' (yī)",
+        "fr": "initiale « y » + « i » (yī)",
+        "de": "Anlaut „y“ + „i“ (yī)",
+        "it": "iniziale 'y' + 'i' (yī)",
+        "pt": "inicial 'y' + 'i' (yī)"
+      }
     },
     {
       "pinyin": "wu",
-      "sound": "inicial 'w' + 'u' (wū)"
+      "sound": "inicial 'w' + 'u' (wū)",
+      "soundTr": {
+        "en": "initial 'w' + 'u' (wū)",
+        "fr": "initiale « w » + « u » (wū)",
+        "de": "Anlaut „w“ + „u“ (wū)",
+        "it": "iniziale 'w' + 'u' (wū)",
+        "pt": "inicial 'w' + 'u' (wū)"
+      }
     },
     {
       "pinyin": "yu",
-      "sound": "inicial 'y' + 'ü' (yu)"
+      "sound": "inicial 'y' + 'ü' (yu)",
+      "soundTr": {
+        "en": "initial 'y' + 'ü' (yu)",
+        "fr": "initiale « y » + « ü » (yu)",
+        "de": "Anlaut „y“ + „ü“ (yu)",
+        "it": "iniziale 'y' + 'ü' (yu)",
+        "pt": "inicial 'y' + 'ü' (yu)"
+      }
     },
     {
       "pinyin": "ye",
-      "sound": "variante con 'y' + 'e' (ye)"
+      "sound": "variante con 'y' + 'e' (ye)",
+      "soundTr": {
+        "en": "variant with 'y' + 'e' (ye)",
+        "fr": "variante avec « y » + « e » (ye)",
+        "de": "Variante mit „y“ + „e“ (ye)",
+        "it": "variante con 'y' + 'e' (ye)",
+        "pt": "variante com 'y' + 'e' (ye)"
+      }
     },
     {
       "pinyin": "yue",
-      "sound": "variante con 'y' + 'üe' (yue)"
+      "sound": "variante con 'y' + 'üe' (yue)",
+      "soundTr": {
+        "en": "variant with 'y' + 'üe' (yue)",
+        "fr": "variante avec « y » + « üe » (yue)",
+        "de": "Variante mit „y“ + „üe“ (yue)",
+        "it": "variante con 'y' + 'üe' (yue)",
+        "pt": "variante com 'y' + 'üe' (yue)"
+      }
     },
     {
       "pinyin": "yuan",
-      "sound": "variante con 'y' + 'üan' (yuan)"
+      "sound": "variante con 'y' + 'üan' (yuan)",
+      "soundTr": {
+        "en": "variant with 'y' + 'üan' (yuan)",
+        "fr": "variante avec « y » + « üan » (yuan)",
+        "de": "Variante mit „y“ + „üan“ (yuan)",
+        "it": "variante con 'y' + 'üan' (yuan)",
+        "pt": "variante com 'y' + 'üan' (yuan)"
+      }
     },
     {
       "pinyin": "yin",
-      "sound": "variante con 'y' + 'in' (yin)"
+      "sound": "variante con 'y' + 'in' (yin)",
+      "soundTr": {
+        "en": "variant with 'y' + 'in' (yin)",
+        "fr": "variante avec « y » + « in » (yin)",
+        "de": "Variante mit „y“ + „in“ (yin)",
+        "it": "variante con 'y' + 'in' (yin)",
+        "pt": "variante com 'y' + 'in' (yin)"
+      }
     },
     {
       "pinyin": "yun",
-      "sound": "variante con 'y' + 'ün' (yun)"
+      "sound": "variante con 'y' + 'ün' (yun)",
+      "soundTr": {
+        "en": "variant with 'y' + 'ün' (yun)",
+        "fr": "variante avec « y » + « ün » (yun)",
+        "de": "Variante mit „y“ + „ün“ (yun)",
+        "it": "variante con 'y' + 'ün' (yun)",
+        "pt": "variante com 'y' + 'ün' (yun)"
+      }
     },
     {
       "pinyin": "ying",
-      "sound": "variante con 'y' + 'ing' (ying)"
+      "sound": "variante con 'y' + 'ing' (ying)",
+      "soundTr": {
+        "en": "variant with 'y' + 'ing' (ying)",
+        "fr": "variante avec « y » + « ing » (ying)",
+        "de": "Variante mit „y“ + „ing“ (ying)",
+        "it": "variante con 'y' + 'ing' (ying)",
+        "pt": "variante com 'y' + 'ing' (ying)"
+      }
     }
   ]
 }

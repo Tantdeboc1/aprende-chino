@@ -22,6 +22,7 @@ import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { useTranslation } from 'react-i18next';
 import { baseLang } from './utils/loc.js';
+import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
@@ -128,22 +129,42 @@ export default function App() {
   const lang = baseLang(i18n.language);
 
   // Datos globales
-  const [radicalsData, setRadicalsData] = useState([]);
+  const [radicalsDataRaw, setRadicalsData] = useState([]);
   const [allCharactersRaw, setAllCharacters] = useState([]);
-  const [lessonsData, setLessonsData]   = useState([]);
+  const [lessonsDataRaw, setLessonsData]   = useState([]);
 
-  // Significados localizados: el dato base guarda el español en `meaning` y las
-  // traducciones en `meaningTr {en,fr,de,it,pt}`. Aquí resolvemos el `meaning`
-  // al idioma activo en UN solo punto, de modo que TODOS los consumidores
-  // (diccionario, exámenes, minijuegos, repaso…) reciben ya el texto correcto
-  // sin cambios. Reactivo al cambio de idioma (memo dependiente de `lang`).
+  // Significados y abreviaturas gramaticales localizados: el dato base guarda
+  // el español en `meaning` (+ `meaningTr {en,fr,de,it,pt}`) y la abreviatura
+  // en `type`. Aquí resolvemos ambos al idioma activo en UN solo punto, de modo
+  // que TODOS los consumidores (diccionario, exámenes, minijuegos, repaso…)
+  // reciben ya el texto correcto sin cambios. `wordTypeLabel` además normaliza
+  // el `type` (p. ej. "VO"→"VO.") también en español. Reactivo a `lang`.
   const allCharacters = useMemo(() => {
-    if (lang === 'es') return allCharactersRaw;
     return allCharactersRaw.map(c => {
-      const tr = c.meaningTr?.[lang];
-      return tr ? { ...c, meaning: tr } : c;
+      const meaning = (lang !== 'es' && c.meaningTr?.[lang]) ? c.meaningTr[lang] : c.meaning;
+      return { ...c, meaning, type: wordTypeLabel(c.type, lang) };
     });
   }, [allCharactersRaw, lang]);
+
+  // Radicales localizados (mismo patrón): significado, explicación y frecuencia.
+  const radicalsData = useMemo(() => {
+    if (lang === 'es') return radicalsDataRaw;
+    return radicalsDataRaw.map(r => ({
+      ...r,
+      meaning: r.meaningTr?.[lang] || r.meaning,
+      explanation: r.explanationTr?.[lang] || r.explanation,
+      frequency: r.frequencyTr?.[lang] || r.frequency,
+    }));
+  }, [radicalsDataRaw, lang]);
+
+  // Lecciones con el título localizado (los consumidores siguen leyendo titleEs).
+  const lessonsData = useMemo(() => {
+    if (lang === 'es') return lessonsDataRaw;
+    return lessonsDataRaw.map(l => {
+      const tr = l.titleTr?.[lang];
+      return tr ? { ...l, titleEs: tr } : l;
+    });
+  }, [lessonsDataRaw, lang]);
 
   // Splash
   const [splashProgress, setSplashProgress] = useState(0);
@@ -442,7 +463,7 @@ export default function App() {
           }
         }
 
-        const lessonsMeta = data.lessons.map(l => ({ lesson: l.lesson, titleZh: l.titleZh, titleEs: l.titleEs }));
+        const lessonsMeta = data.lessons.map(l => ({ lesson: l.lesson, titleZh: l.titleZh, titleEs: l.titleEs, titleTr: l.titleTr || null }));
         setSplashProgress(70);
 
         const radicalsDataRaw = await fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json'));
@@ -679,9 +700,9 @@ export default function App() {
   // ── INTRO DETAIL ─────────────────────────────────────────────────────────────
   if (screen === 'intro-detail') {
     const introItems = [
-      { key: 'radicals', cn: '部', title: 'Radicales', desc: 'Las piezas base de los caracteres chinos', bg: J.sandBg, fg: J.sandDeep, action: () => handleStartIntroExercise('radicals') },
-      { key: 'tones',    cn: '声', title: 'Tonos',     desc: 'Los 4 tonos del mandarín',                bg: J.redBg,  fg: J.redDeep,  action: () => handleStartIntroExercise('tones')    },
-      { key: 'writing',  cn: '写', title: 'Escritura', desc: 'Practica de trazos',                      bg: J.jadeBg, fg: J.jadeDeep, action: () => handleStartIntroExercise('writing')  },
+      { key: 'radicals', cn: '部', title: t('intro_radicals_title'), desc: t('intro_radicals_desc'), bg: J.sandBg, fg: J.sandDeep, action: () => handleStartIntroExercise('radicals') },
+      { key: 'tones',    cn: '声', title: t('intro_tones_title'),    desc: t('intro_tones_desc'),    bg: J.redBg,  fg: J.redDeep,  action: () => handleStartIntroExercise('tones')    },
+      { key: 'writing',  cn: '写', title: t('intro_writing_title'),  desc: t('intro_writing_desc'),  bg: J.jadeBg, fg: J.jadeDeep, action: () => handleStartIntroExercise('writing')  },
     ];
     return (
       <Layout activeScreen="home" onNavigate={handleBottomNav}>
@@ -690,12 +711,12 @@ export default function App() {
             <button onClick={() => setScreen('home')}
               style={{ background: J.paperHi, border: 0, borderRadius: 14, padding: '6px 12px',
                        fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer', marginBottom: 12 }}>
-              ← Inicio
+              ← {t('intro_back_home')}
             </button>
             <h1 style={{ margin: 0, fontWeight: 700, fontSize: 28, letterSpacing: '-0.025em', color: J.ink }}>
-              Fundamentos<span style={{ color: J.red }}>.</span>
+              {t('home_section_basics')}<span style={{ color: J.red }}>.</span>
             </h1>
-            <p style={{ color: J.inkSoft, fontSize: 13.5, marginTop: 4 }}>入门 · Radicales, tonos y pinyin</p>
+            <p style={{ color: J.inkSoft, fontSize: 13.5, marginTop: 4 }}>入门 · {t('lesson_intro_subtitle')}</p>
           </div>
           <div style={{ padding: '12px 20px 24px' }} className="space-y-2.5">
             {introItems.map(item => (

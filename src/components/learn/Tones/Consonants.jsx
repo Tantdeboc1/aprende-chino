@@ -1,10 +1,12 @@
 import { assetUrl } from '../../../utils/assets';
+import { baseLang } from '../../../utils/loc.js';
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function Consonants({ goBack, speakChinese }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = baseLang(i18n.language);
   const [rawConsonants, setRawConsonants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +35,8 @@ export default function Consonants({ goBack, speakChinese }) {
   const consonants = useMemo(() => {
     const list = (rawConsonants || []).map((it) => {
       if (typeof it === "string") return { pinyin: it, sound: "" };
-      return { pinyin: it?.pinyin, sound: it?.sound ?? "" };
+      // Descripción fonética en el idioma activo (soundTr), con fallback al español.
+      return { pinyin: it?.pinyin, sound: it?.soundTr?.[lang] ?? it?.sound ?? "" };
     }).filter(it => !!it.pinyin);
 
     // añade y / w si faltan
@@ -42,7 +45,7 @@ export default function Consonants({ goBack, speakChinese }) {
     if (!have.has("w")) list.push({ pinyin: "w", sound: "" });
 
     return list.sort((a, b) => a.pinyin.localeCompare(b.pinyin));
-  }, [rawConsonants]);
+  }, [rawConsonants, lang]);
 
   // CORRECCIÓN: Enviar consonante + vocal + tono para que exista en manifest
   const playConsonant = (consonantPinyin) => {

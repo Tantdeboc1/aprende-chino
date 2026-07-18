@@ -65,19 +65,19 @@ export default function RadicalsIndex({ goBack, setRadicalSection, radicals }) {
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-[var(--paper-hi)] rounded-lg p-4 text-center border border-[rgba(28,24,19,0.10)]">
               <div className="text-2xl font-bold text-[var(--ink)]">{radicals.length}</div>
-              <div className="text-[var(--mute)] text-sm">Radicales</div>
+              <div className="text-[var(--mute)] text-sm">{t('radicals_stat_radicals')}</div>
             </div>
             <div className="bg-[var(--paper-hi)] rounded-lg p-4 text-center border border-[rgba(28,24,19,0.10)]">
               <div className="text-2xl font-bold text-[var(--ink)]">
                 {radicals.reduce((acc, curr) => acc + (curr.examples?.length || 0), 0)}
               </div>
-              <div className="text-[var(--mute)] text-sm">Ejemplos</div>
+              <div className="text-[var(--mute)] text-sm">{t('radicals_stat_examples')}</div>
             </div>
             <div className="bg-[var(--paper-hi)] rounded-lg p-4 text-center border border-[rgba(28,24,19,0.10)]">
               <div className="text-2xl font-bold text-[var(--ink)]">
                 {new Set(radicals.map(r => r.strokeCount)).size}
               </div>
-              <div className="text-[var(--mute)] text-sm">Traços</div>
+              <div className="text-[var(--mute)] text-sm">{t('radicals_stat_strokes')}</div>
             </div>
           </div>
         </div>

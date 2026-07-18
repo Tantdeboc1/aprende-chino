@@ -470,8 +470,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                   }}
                 >
                   <span style={{ fontSize: 14 }}>{p.icon}</span>
-                  {t(`settings_goal_${p.id}`,
-                    p.id === 'relaxed' ? 'Relajado' : p.id === 'normal' ? 'Normal' : 'Intenso')}
+                  {t(`settings_goal_${p.id}`)}
                   <span style={{ opacity: 0.7, fontWeight: 600 }}>{p.xp} XP</span>
                 </button>
               );

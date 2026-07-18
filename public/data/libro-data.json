@@ -646,7 +646,14 @@
             "pt": "ela"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "How have you been lately?",
+        "fr": "Comment vas-tu ces derniers temps ?",
+        "de": "Wie geht es dir in letzter Zeit?",
+        "it": "Come stai ultimamente?",
+        "pt": "Como você tem estado ultimamente?"
+      }
     },
     {
       "lesson": 2,
@@ -1589,7 +1596,14 @@
             "pt": "pizza"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "What country are you from?",
+        "fr": "De quel pays viens-tu ?",
+        "de": "Aus welchem Land kommst du?",
+        "it": "Di che paese sei?",
+        "pt": "De que país você é?"
+      }
     },
     {
       "lesson": 3,
@@ -2731,7 +2745,14 @@
             "pt": "bonito (homem)"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "How many people are in your family?",
+        "fr": "Combien de personnes y a-t-il dans ta famille ?",
+        "de": "Wie viele Personen hat deine Familie?",
+        "it": "Quante persone ci sono nella tua famiglia?",
+        "pt": "Quantas pessoas há na sua família?"
+      }
     },
     {
       "lesson": 4,
@@ -3872,7 +3893,14 @@
             "pt": "difícil"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "What time do you have class tomorrow?",
+        "fr": "À quelle heure as-tu cours demain ?",
+        "de": "Um wie viel Uhr hast du morgen Unterricht?",
+        "it": "A che ora hai lezione domani?",
+        "pt": "A que horas você tem aula amanhã?"
+      }
     },
     {
       "lesson": 5,
@@ -4994,7 +5022,14 @@
             "pt": "galo; galinha"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "Happy birthday",
+        "fr": "Joyeux anniversaire",
+        "de": "Alles Gute zum Geburtstag",
+        "it": "Buon compleanno",
+        "pt": "Feliz aniversário"
+      }
     },
     {
       "lesson": 6,
@@ -6316,7 +6351,14 @@
             "pt": "fora"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "The library is north of the dining hall",
+        "fr": "La bibliothèque est au nord de la cantine",
+        "de": "Die Bibliothek liegt nördlich der Mensa",
+        "it": "La biblioteca è a nord della mensa",
+        "pt": "A biblioteca fica ao norte do refeitório"
+      }
     },
     {
       "lesson": 7,
@@ -7529,7 +7571,14 @@
             "pt": "chamar; tratar por"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "How much is half a kilo of apples?",
+        "fr": "Combien coûte un demi-kilo de pommes ?",
+        "de": "Was kostet ein halbes Kilo Äpfel?",
+        "it": "Quanto costa mezzo chilo di mele?",
+        "pt": "Quanto custa meio quilo de maçãs?"
+      }
     },
     {
       "lesson": 8,
@@ -8767,7 +8816,14 @@
             "pt": "urina"
           }
         }
-      ]
+      ],
+      "titleTr": {
+        "en": "I don’t feel well",
+        "fr": "Je ne me sens pas bien",
+        "de": "Ich fühle mich nicht wohl",
+        "it": "Non mi sento bene",
+        "pt": "Não me sinto bem"
+      }
     }
   ]
 }

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
 import { buildMeaningQuestions } from '@/utils/quizEngine.js';
+import { dedupeByChar } from '@/utils/srs.js';
 import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
@@ -24,7 +25,9 @@ export default function GlobalExam({ goBack, allCharacters }) {
   const [selected, setSelected]     = useState(null);
   const [feedback, setFeedback]     = useState(null); // null | 'correct' | 'incorrect'
 
-  const pool = allCharacters.filter(c => !c.isSupplementary);
+  // Sin suplementarias y sin repetir un carácter presente en varias lecciones
+  // (evita dos preguntas del mismo hanzi en la misma ronda).
+  const pool = dedupeByChar(allCharacters.filter(c => !c.isSupplementary));
 
   const startGame = useCallback(() => {
     // El motor de quiz genera las preguntas carácter→significado (antes esta

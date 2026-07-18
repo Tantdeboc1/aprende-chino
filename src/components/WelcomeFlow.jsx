@@ -193,12 +193,8 @@ export default function WelcomeFlow({ onComplete }) {
             <div className="flex flex-col gap-3">
               {DAILY_GOAL_PRESETS.map(p => {
                 const on = goalXp === p.xp;
-                const label = t(`settings_goal_${p.id}`,
-                  p.id === 'relaxed' ? 'Relajado' : p.id === 'normal' ? 'Normal' : 'Intenso');
-                const desc = t(`welcome_goal_${p.id}_desc`,
-                  p.id === 'relaxed' ? 'Unos minutos al día'
-                  : p.id === 'normal' ? 'Una historia o varios ejercicios'
-                  : 'Para avanzar rápido');
+                const label = t(`settings_goal_${p.id}`);
+                const desc = t(`welcome_goal_${p.id}_desc`);
                 return (
                   <button
                     key={p.id}

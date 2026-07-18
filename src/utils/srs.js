@@ -139,14 +139,29 @@ export function initSRSCard(progress, char) {
  * Devuelve todos los caracteres que tienen repasos pendientes (nextReview <= ahora).
  * Solo incluye palabras que el usuario ya ha visto al menos una vez.
  */
+/**
+ * Elimina caracteres repetidos de una lista, conservando el primero. Un mismo
+ * carácter puede aparecer en varias lecciones del vocabulario (p. ej. 水 en L3
+ * y L8) y, como el SRS y los exámenes se indexan por carácter, sin esto se
+ * repasaría/preguntaría dos veces la misma palabra.
+ */
+export function dedupeByChar(chars) {
+  const seen = new Set();
+  return chars.filter(c => {
+    if (seen.has(c.char)) return false;
+    seen.add(c.char);
+    return true;
+  });
+}
+
 export function getDueCards(progress, allCharacters) {
   const now  = Date.now();
   const srs  = progress?.__srs || {};
-  return allCharacters.filter(c => {
+  return dedupeByChar(allCharacters.filter(c => {
     const d = srs[c.char];
     if (!d) return false;
     return d.nextReview !== null && d.nextReview <= now;
-  });
+  }));
 }
 
 /**
@@ -164,11 +179,12 @@ export function getDueCount(progress, allCharacters) {
 export function getWeakCards(progress, allCharacters, limit = 20) {
   const srs = progress?.__srs || {};
 
-  // Solo caracteres que ya están en el SRS (han sido vistos al menos una vez)
-  const enrolled = allCharacters.filter(c => {
+  // Solo caracteres que ya están en el SRS (han sido vistos al menos una vez),
+  // sin repetir un carácter presente en varias lecciones.
+  const enrolled = dedupeByChar(allCharacters.filter(c => {
     const d = srs[c.char];
     return d && d.nextReview !== null;
-  });
+  }));
 
   if (enrolled.length === 0) return [];
 

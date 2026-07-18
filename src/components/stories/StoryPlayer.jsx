@@ -30,13 +30,17 @@ function saveDifficulty(d) {
 }
 
 // Sustituye {userName} dentro de cualquier campo de texto de la escena.
-function interpolate(text, userName) {
+// `name` ya viene resuelto por el llamador (con fallback localizado).
+function interpolate(text, name) {
   if (!text) return text;
-  return text.replace(/\{userName\}/g, userName || 'Tú');
+  return text.replace(/\{userName\}/g, name);
 }
 
 export default function StoryPlayer({ story, userName, speak, onExit, onFinish, resultMeta }) {
   const { t, i18n } = useTranslation();
+  // Nombre a mostrar en las historias; si el usuario no tiene nombre, cae al
+  // genérico localizado ("Tú"/"You"/…).
+  const displayName = userName || t('story_default_name');
   // Título localizado (tituloTr {es,en,...}); cae al titulo legado si falta.
   const storyTitle = loc(story.tituloTr, baseLang(i18n.language)) || story.titulo;
   const [difficulty, setDifficulty] = useState(loadDifficulty);
@@ -273,9 +277,9 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
         <DialogueBox
           key={escena.id}
           speakerName={`${speaker?.nombre || ''}${speaker?.pinyin ? '  ·  ' + speaker.pinyin : ''}`}
-          chino={interpolate(escena.chino, userName)}
-          pinyin={interpolate(escena.pinyin, userName)}
-          traduccion={interpolate(trField(escena.traduccion, escena.traduccionTr, baseLang(i18n.language)), userName)}
+          chino={interpolate(escena.chino, displayName)}
+          pinyin={interpolate(escena.pinyin, displayName)}
+          traduccion={interpolate(trField(escena.traduccion, escena.traduccionTr, baseLang(i18n.language)), displayName)}
           dificultad={difficulty}
           onAdvance={handleAdvance}
           isLast={idx === total - 1}

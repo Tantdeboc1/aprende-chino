@@ -222,7 +222,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
           <div className="w-full flex items-center justify-between px-2">
             <div>
               <p className="text-2xl font-semibold" style={{ color: J.jade }}>{char.pinyin}</p>
-              <p className="text-xs mt-0.5" style={{ color: J.mute }}>{char.type || 'Sustantivo'}</p>
+              <p className="text-xs mt-0.5" style={{ color: J.mute }}>{char.type || t('charsheet_type_noun')}</p>
             </div>
             <div className="flex gap-2">
               <button

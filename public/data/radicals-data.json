@@ -12,7 +12,28 @@
         "七",
         "三",
         "上"
-      ]
+      ],
+      "meaningTr": {
+        "en": "one, horizontal line",
+        "fr": "un, ligne horizontale",
+        "de": "Eins, waagerechte Linie",
+        "it": "uno, linea orizzontale",
+        "pt": "um, linha horizontal"
+      },
+      "explanationTr": {
+        "en": "The most basic horizontal stroke. It represents the number one or a straight line.",
+        "fr": "Le trait horizontal le plus basique. Il représente le chiffre un ou une ligne droite.",
+        "de": "Der grundlegendste waagerechte Strich. Er steht für die Zahl Eins oder eine gerade Linie.",
+        "it": "Il tratto orizzontale più basilare. Rappresenta il numero uno o una linea retta.",
+        "pt": "O traço horizontal mais básico. Representa o número um ou uma linha reta."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "丨": {
       "meaning": "línea vertical",
@@ -25,7 +46,28 @@
         "中",
         "十",
         "丰"
-      ]
+      ],
+      "meaningTr": {
+        "en": "vertical line",
+        "fr": "ligne verticale",
+        "de": "senkrechte Linie",
+        "it": "linea verticale",
+        "pt": "linha vertical"
+      },
+      "explanationTr": {
+        "en": "A vertical stroke. It represents something connecting top and bottom.",
+        "fr": "Trait vertical. Il représente quelque chose qui relie le haut et le bas.",
+        "de": "Senkrechter Strich. Er stellt etwas dar, das oben und unten verbindet.",
+        "it": "Tratto verticale. Rappresenta qualcosa che collega l’alto e il basso.",
+        "pt": "Traço vertical. Representa algo que liga a parte de cima à de baixo."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "丶": {
       "meaning": "punto, gota",
@@ -38,7 +80,28 @@
         "丸",
         "主",
         "永"
-      ]
+      ],
+      "meaningTr": {
+        "en": "dot, drop",
+        "fr": "point, goutte",
+        "de": "Punkt, Tropfen",
+        "it": "punto, goccia",
+        "pt": "ponto, gota"
+      },
+      "explanationTr": {
+        "en": "A dot or a drop. Used as an accent or a mark.",
+        "fr": "Un point ou une goutte. Utilisé comme accent ou marque.",
+        "de": "Ein Punkt oder Tropfen. Wird als Akzent oder Markierung verwendet.",
+        "it": "Un punto o una goccia. Usato come accento o segno.",
+        "pt": "Um ponto ou gota. Usado como acento ou marca."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "丿": {
       "meaning": "trazo inclinado",
@@ -51,7 +114,28 @@
         "九",
         "乎",
         "年"
-      ]
+      ],
+      "meaningTr": {
+        "en": "slanted stroke",
+        "fr": "trait incliné",
+        "de": "schräger Strich",
+        "it": "tratto inclinato",
+        "pt": "traço inclinado"
+      },
+      "explanationTr": {
+        "en": "A stroke falling to the left. It represents movement.",
+        "fr": "Trait qui descend vers la gauche. Il représente le mouvement.",
+        "de": "Ein nach links fallender Strich. Er stellt Bewegung dar.",
+        "it": "Tratto che scende verso sinistra. Rappresenta il movimento.",
+        "pt": "Traço que cai para a esquerda. Representa movimento."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "乙": {
       "meaning": "segundo, gancho",
@@ -67,7 +151,28 @@
         "乙",
         "飞",
         "乞"
-      ]
+      ],
+      "meaningTr": {
+        "en": "second, hook",
+        "fr": "deuxième, crochet",
+        "de": "Zweiter, Haken",
+        "it": "secondo, uncino",
+        "pt": "segundo, gancho"
+      },
+      "explanationTr": {
+        "en": "The second of the Ten Heavenly Stems. Hook-shaped.",
+        "fr": "Le deuxième des Dix Troncs Célestes. En forme de crochet.",
+        "de": "Der zweite der Zehn Himmelsstämme. Hakenförmig.",
+        "it": "Il secondo dei Dieci Tronchi Celesti. A forma di uncino.",
+        "pt": "O segundo dos Dez Troncos Celestiais. Em forma de gancho."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "二": {
       "meaning": "dos",
@@ -81,7 +186,28 @@
         "五",
         "云",
         "些"
-      ]
+      ],
+      "meaningTr": {
+        "en": "two",
+        "fr": "deux",
+        "de": "zwei",
+        "it": "due",
+        "pt": "dois"
+      },
+      "explanationTr": {
+        "en": "Two horizontal lines. It represents the number two.",
+        "fr": "Deux lignes horizontales. Représente le chiffre deux.",
+        "de": "Zwei waagerechte Linien. Steht für die Zahl Zwei.",
+        "it": "Due linee orizzontali. Rappresenta il numero due.",
+        "pt": "Duas linhas horizontais. Representa o número dois."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "亠": {
       "meaning": "cubierta, tapa",
@@ -94,7 +220,28 @@
         "京",
         "亭",
         "亮"
-      ]
+      ],
+      "meaningTr": {
+        "en": "lid, cover",
+        "fr": "couvercle, chapeau",
+        "de": "Deckel, Abdeckung",
+        "it": "coperchio, copertura",
+        "pt": "tampa, cobertura"
+      },
+      "explanationTr": {
+        "en": "A lid or cover. It appears at the top of characters.",
+        "fr": "Un couvercle. Il apparaît en haut des caractères.",
+        "de": "Ein Deckel. Er erscheint oben in Schriftzeichen.",
+        "it": "Un coperchio. Appare nella parte superiore dei caratteri.",
+        "pt": "Uma tampa ou cobertura. Aparece na parte superior dos caracteres."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "人": {
       "meaning": "persona, gente",
@@ -112,7 +259,28 @@
         "们",
         "什",
         "今"
-      ]
+      ],
+      "meaningTr": {
+        "en": "person, people",
+        "fr": "personne, gens",
+        "de": "Person, Mensch",
+        "it": "persona, gente",
+        "pt": "pessoa, gente"
+      },
+      "explanationTr": {
+        "en": "A standing person seen from the side. One of the most common radicals.",
+        "fr": "Une personne debout vue de côté. L’un des radicaux les plus courants.",
+        "de": "Eine stehende Person von der Seite. Eines der häufigsten Radikale.",
+        "it": "Una persona in piedi vista di lato. Uno dei radicali più comuni.",
+        "pt": "Uma pessoa de pé vista de lado. Um dos radicais mais comuns."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "儿": {
       "meaning": "niño, piernas",
@@ -126,7 +294,28 @@
         "兄",
         "先",
         "元"
-      ]
+      ],
+      "meaningTr": {
+        "en": "child, legs",
+        "fr": "enfant, jambes",
+        "de": "Kind, Beine",
+        "it": "bambino, gambe",
+        "pt": "criança, pernas"
+      },
+      "explanationTr": {
+        "en": "It represents a child’s legs or a walking person.",
+        "fr": "Représente les jambes d’un enfant ou une personne qui marche.",
+        "de": "Stellt die Beine eines Kindes oder eine gehende Person dar.",
+        "it": "Rappresenta le gambe di un bambino o una persona che cammina.",
+        "pt": "Representa as pernas de uma criança ou uma pessoa andando."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "入": {
       "meaning": "entrar",
@@ -139,7 +328,28 @@
         "入",
         "内",
         "全"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to enter",
+        "fr": "entrer",
+        "de": "eintreten",
+        "it": "entrare",
+        "pt": "entrar"
+      },
+      "explanationTr": {
+        "en": "It represents entering a place.",
+        "fr": "Représente l’action d’entrer dans un lieu.",
+        "de": "Stellt das Betreten eines Ortes dar.",
+        "it": "Rappresenta l’entrare in un luogo.",
+        "pt": "Representa entrar em um lugar."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "八": {
       "meaning": "ocho, dividir",
@@ -153,7 +363,28 @@
         "六",
         "公",
         "分"
-      ]
+      ],
+      "meaningTr": {
+        "en": "eight, to divide",
+        "fr": "huit, diviser",
+        "de": "acht, teilen",
+        "it": "otto, dividere",
+        "pt": "oito, dividir"
+      },
+      "explanationTr": {
+        "en": "Originally it meant to divide. Now it means eight.",
+        "fr": "À l’origine, il représentait la division. Aujourd’hui il signifie huit.",
+        "de": "Ursprünglich stand es für Teilen. Heute bedeutet es Acht.",
+        "it": "In origine rappresentava dividere. Ora significa otto.",
+        "pt": "Originalmente representava dividir. Hoje significa oito."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "冂": {
       "meaning": "frontera, borde",
@@ -166,7 +397,28 @@
         "内",
         "用",
         "周"
-      ]
+      ],
+      "meaningTr": {
+        "en": "border, edge",
+        "fr": "frontière, bord",
+        "de": "Grenze, Rand",
+        "it": "confine, bordo",
+        "pt": "fronteira, borda"
+      },
+      "explanationTr": {
+        "en": "It represents borders or territorial boundaries.",
+        "fr": "Représente des frontières ou des limites territoriales.",
+        "de": "Stellt Grenzen oder Gebietsgrenzen dar.",
+        "it": "Rappresenta confini o limiti territoriali.",
+        "pt": "Representa fronteiras ou limites territoriais."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "冫": {
       "meaning": "hielo, frío",
@@ -180,7 +432,28 @@
         "冷",
         "凉",
         "冬"
-      ]
+      ],
+      "meaningTr": {
+        "en": "ice, cold",
+        "fr": "glace, froid",
+        "de": "Eis, Kälte",
+        "it": "ghiaccio, freddo",
+        "pt": "gelo, frio"
+      },
+      "explanationTr": {
+        "en": "Two drops of water representing ice or cold.",
+        "fr": "Deux gouttes d’eau représentant la glace ou le froid.",
+        "de": "Zwei Wassertropfen, die Eis oder Kälte darstellen.",
+        "it": "Due gocce d’acqua che rappresentano ghiaccio o freddo.",
+        "pt": "Duas gotas d’água representando gelo ou frio."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "几": {
       "meaning": "mesa pequeña, casi",
@@ -193,7 +466,28 @@
         "几",
         "机",
         "风"
-      ]
+      ],
+      "meaningTr": {
+        "en": "small table, almost",
+        "fr": "petite table, presque",
+        "de": "kleiner Tisch, fast",
+        "it": "tavolino, quasi",
+        "pt": "mesinha, quase"
+      },
+      "explanationTr": {
+        "en": "It represents a small table or stool.",
+        "fr": "Représente une petite table ou un tabouret.",
+        "de": "Stellt einen kleinen Tisch oder Hocker dar.",
+        "it": "Rappresenta un tavolino o uno sgabello.",
+        "pt": "Representa uma mesinha ou um banquinho."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "凵": {
       "meaning": "recipiente, contenedor",
@@ -206,7 +500,28 @@
         "凶",
         "出",
         "画"
-      ]
+      ],
+      "meaningTr": {
+        "en": "open container",
+        "fr": "récipient ouvert",
+        "de": "offener Behälter",
+        "it": "recipiente aperto",
+        "pt": "recipiente aberto"
+      },
+      "explanationTr": {
+        "en": "It represents an open container.",
+        "fr": "Représente un récipient ou contenant ouvert.",
+        "de": "Stellt einen offenen Behälter dar.",
+        "it": "Rappresenta un recipiente o contenitore aperto.",
+        "pt": "Representa um recipiente ou contêiner aberto."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "刀": {
       "meaning": "cuchillo, cortar",
@@ -223,7 +538,28 @@
         "到",
         "别",
         "前"
-      ]
+      ],
+      "meaningTr": {
+        "en": "knife, to cut",
+        "fr": "couteau, couper",
+        "de": "Messer, schneiden",
+        "it": "coltello, tagliare",
+        "pt": "faca, cortar"
+      },
+      "explanationTr": {
+        "en": "It represents a knife. Used in characters related to cutting.",
+        "fr": "Représente un couteau. Utilisé dans les caractères liés à la coupe.",
+        "de": "Stellt ein Messer dar. In Zeichen rund ums Schneiden verwendet.",
+        "it": "Rappresenta un coltello. Usato nei caratteri legati al tagliare.",
+        "pt": "Representa uma faca. Usado em caracteres ligados a cortar."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "力": {
       "meaning": "fuerza, poder",
@@ -237,7 +573,28 @@
         "加",
         "动",
         "助"
-      ]
+      ],
+      "meaningTr": {
+        "en": "strength, power",
+        "fr": "force, pouvoir",
+        "de": "Kraft, Macht",
+        "it": "forza, potere",
+        "pt": "força, poder"
+      },
+      "explanationTr": {
+        "en": "It represents a muscle or physical strength.",
+        "fr": "Représente un muscle ou la force physique.",
+        "de": "Stellt einen Muskel oder Körperkraft dar.",
+        "it": "Rappresenta un muscolo o la forza fisica.",
+        "pt": "Representa um músculo ou a força física."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "勹": {
       "meaning": "envolver, contener",
@@ -250,7 +607,28 @@
         "包",
         "勾",
         "勿"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to wrap, to contain",
+        "fr": "envelopper, contenir",
+        "de": "einwickeln, umhüllen",
+        "it": "avvolgere, contenere",
+        "pt": "embrulhar, conter"
+      },
+      "explanationTr": {
+        "en": "It represents wrapping or containing something.",
+        "fr": "Représente le fait d’envelopper ou de contenir quelque chose.",
+        "de": "Stellt das Einwickeln oder Umschließen von etwas dar.",
+        "it": "Rappresenta l’avvolgere o il contenere qualcosa.",
+        "pt": "Representa embrulhar ou conter algo."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "匕": {
       "meaning": "cuchara, cuchillo",
@@ -263,7 +641,28 @@
         "北",
         "化",
         "匙"
-      ]
+      ],
+      "meaningTr": {
+        "en": "spoon, dagger",
+        "fr": "cuillère, poignard",
+        "de": "Löffel, Dolch",
+        "it": "cucchiaio, pugnale",
+        "pt": "colher, punhal"
+      },
+      "explanationTr": {
+        "en": "It represents an ancient spoon or dagger.",
+        "fr": "Représente une cuillère ou un poignard antique.",
+        "de": "Stellt einen alten Löffel oder Dolch dar.",
+        "it": "Rappresenta un cucchiaio o un pugnale antico.",
+        "pt": "Representa uma colher ou um punhal antigo."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "匚": {
       "meaning": "caja, contenedor",
@@ -276,7 +675,28 @@
         "区",
         "医",
         "匹"
-      ]
+      ],
+      "meaningTr": {
+        "en": "box, container",
+        "fr": "boîte, contenant",
+        "de": "Kasten, Behälter",
+        "it": "scatola, contenitore",
+        "pt": "caixa, recipiente"
+      },
+      "explanationTr": {
+        "en": "It represents a box or square container.",
+        "fr": "Représente une boîte ou un contenant carré.",
+        "de": "Stellt einen Kasten oder quadratischen Behälter dar.",
+        "it": "Rappresenta una scatola o un contenitore quadrato.",
+        "pt": "Representa uma caixa ou um recipiente quadrado."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "十": {
       "meaning": "diez, completo",
@@ -290,7 +710,28 @@
         "南",
         "古",
         "华"
-      ]
+      ],
+      "meaningTr": {
+        "en": "ten, complete",
+        "fr": "dix, complet",
+        "de": "zehn, vollständig",
+        "it": "dieci, completo",
+        "pt": "dez, completo"
+      },
+      "explanationTr": {
+        "en": "A cross representing the number ten or completeness.",
+        "fr": "Une croix représentant le chiffre dix ou la complétude.",
+        "de": "Ein Kreuz, das die Zahl Zehn oder Vollständigkeit darstellt.",
+        "it": "Una croce che rappresenta il numero dieci o la completezza.",
+        "pt": "Uma cruz que representa o número dez ou a completude."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "卜": {
       "meaning": "adivinación",
@@ -303,7 +744,28 @@
         "卜",
         "占",
         "卦"
-      ]
+      ],
+      "meaningTr": {
+        "en": "divination",
+        "fr": "divination",
+        "de": "Wahrsagung",
+        "it": "divinazione",
+        "pt": "adivinhação"
+      },
+      "explanationTr": {
+        "en": "It represents cracks in bones used for divination.",
+        "fr": "Représente les fissures des os utilisés pour la divination.",
+        "de": "Stellt Risse in Orakelknochen dar.",
+        "it": "Rappresenta le crepe nelle ossa usate per la divinazione.",
+        "pt": "Representa rachaduras em ossos usados para adivinhação."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "卩": {
       "meaning": "sello, rodilla",
@@ -316,7 +778,28 @@
         "印",
         "却",
         "即"
-      ]
+      ],
+      "meaningTr": {
+        "en": "seal, knee",
+        "fr": "sceau, genou",
+        "de": "Siegel, Knie",
+        "it": "sigillo, ginocchio",
+        "pt": "selo, joelho"
+      },
+      "explanationTr": {
+        "en": "It represents an official seal or a bent knee.",
+        "fr": "Représente un sceau officiel ou un genou plié.",
+        "de": "Stellt ein Amtssiegel oder ein gebeugtes Knie dar.",
+        "it": "Rappresenta un sigillo ufficiale o un ginocchio piegato.",
+        "pt": "Representa um selo oficial ou um joelho dobrado."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "厂": {
       "meaning": "acantilado, fábrica",
@@ -330,7 +813,28 @@
         "历",
         "压",
         "原"
-      ]
+      ],
+      "meaningTr": {
+        "en": "cliff, factory",
+        "fr": "falaise, usine",
+        "de": "Klippe, Fabrik",
+        "it": "rupe, fabbrica",
+        "pt": "penhasco, fábrica"
+      },
+      "explanationTr": {
+        "en": "It represents a cliff or precipice.",
+        "fr": "Représente une falaise ou un précipice.",
+        "de": "Stellt eine Klippe oder einen Abgrund dar.",
+        "it": "Rappresenta una rupe o un precipizio.",
+        "pt": "Representa um penhasco ou precipício."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "厶": {
       "meaning": "privado, personal",
@@ -343,7 +847,28 @@
         "私",
         "去",
         "参"
-      ]
+      ],
+      "meaningTr": {
+        "en": "private, personal",
+        "fr": "privé, personnel",
+        "de": "privat, persönlich",
+        "it": "privato, personale",
+        "pt": "privado, pessoal"
+      },
+      "explanationTr": {
+        "en": "It represents something private or personal.",
+        "fr": "Représente quelque chose de privé ou personnel.",
+        "de": "Stellt etwas Privates oder Persönliches dar.",
+        "it": "Rappresenta qualcosa di privato o personale.",
+        "pt": "Representa algo privado ou pessoal."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "又": {
       "meaning": "mano derecha, otra vez",
@@ -357,7 +882,28 @@
         "友",
         "反",
         "取"
-      ]
+      ],
+      "meaningTr": {
+        "en": "right hand, again",
+        "fr": "main droite, encore",
+        "de": "rechte Hand, wieder",
+        "it": "mano destra, di nuovo",
+        "pt": "mão direita, de novo"
+      },
+      "explanationTr": {
+        "en": "It represents a right hand. It also means “again”.",
+        "fr": "Représente une main droite. Signifie aussi « encore ».",
+        "de": "Stellt eine rechte Hand dar. Bedeutet auch „wieder“.",
+        "it": "Rappresenta una mano destra. Significa anche “di nuovo”.",
+        "pt": "Representa uma mão direita. Também significa “de novo”."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "口": {
       "meaning": "boca, entrada",
@@ -377,7 +923,28 @@
         "右",
         "后",
         "名"
-      ]
+      ],
+      "meaningTr": {
+        "en": "mouth, opening",
+        "fr": "bouche, ouverture",
+        "de": "Mund, Öffnung",
+        "it": "bocca, apertura",
+        "pt": "boca, abertura"
+      },
+      "explanationTr": {
+        "en": "It represents an open mouth. One of the most common radicals.",
+        "fr": "Représente une bouche ouverte. L’un des radicaux les plus courants.",
+        "de": "Stellt einen offenen Mund dar. Eines der häufigsten Radikale.",
+        "it": "Rappresenta una bocca aperta. Uno dei radicali più comuni.",
+        "pt": "Representa uma boca aberta. Um dos radicais mais comuns."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "囗": {
       "meaning": "recinto, cercado",
@@ -391,7 +958,28 @@
         "四",
         "回",
         "园"
-      ]
+      ],
+      "meaningTr": {
+        "en": "enclosure",
+        "fr": "enceinte",
+        "de": "Umzäunung",
+        "it": "recinto",
+        "pt": "cercado"
+      },
+      "explanationTr": {
+        "en": "It represents a walled or fenced enclosure.",
+        "fr": "Représente une enceinte fortifiée ou clôturée.",
+        "de": "Stellt ein ummauertes oder eingezäuntes Gelände dar.",
+        "it": "Rappresenta un recinto murato o recintato.",
+        "pt": "Representa um recinto murado ou cercado."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "土": {
       "meaning": "tierra, suelo",
@@ -406,7 +994,28 @@
         "在",
         "场",
         "坐"
-      ]
+      ],
+      "meaningTr": {
+        "en": "earth, soil",
+        "fr": "terre, sol",
+        "de": "Erde, Boden",
+        "it": "terra, suolo",
+        "pt": "terra, solo"
+      },
+      "explanationTr": {
+        "en": "It represents a mound of earth.",
+        "fr": "Représente un monticule de terre.",
+        "de": "Stellt einen Erdhügel dar.",
+        "it": "Rappresenta un cumulo di terra.",
+        "pt": "Representa um monte de terra."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "士": {
       "meaning": "estudioso, caballero",
@@ -420,7 +1029,28 @@
         "声",
         "壮",
         "吉"
-      ]
+      ],
+      "meaningTr": {
+        "en": "scholar, gentleman",
+        "fr": "lettré, gentilhomme",
+        "de": "Gelehrter, Edelmann",
+        "it": "studioso, gentiluomo",
+        "pt": "erudito, cavalheiro"
+      },
+      "explanationTr": {
+        "en": "It represents a scholar or educated gentleman.",
+        "fr": "Représente un lettré ou un gentilhomme instruit.",
+        "de": "Stellt einen Gelehrten oder gebildeten Herrn dar.",
+        "it": "Rappresenta uno studioso o un gentiluomo istruito.",
+        "pt": "Representa um erudito ou um cavalheiro instruído."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "夂": {
       "meaning": "llegar, seguir",
@@ -433,7 +1063,28 @@
         "各",
         "条",
         "备"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to arrive, to follow",
+        "fr": "arriver, suivre",
+        "de": "ankommen, folgen",
+        "it": "arrivare, seguire",
+        "pt": "chegar, seguir"
+      },
+      "explanationTr": {
+        "en": "It represents arriving or following from behind.",
+        "fr": "Représente le fait d’arriver ou de suivre par derrière.",
+        "de": "Stellt Ankommen oder Folgen von hinten dar.",
+        "it": "Rappresenta l’arrivare o il seguire da dietro.",
+        "pt": "Representa chegar ou seguir por trás."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "夕": {
       "meaning": "atardecer, noche",
@@ -447,7 +1098,28 @@
         "多",
         "外",
         "夜"
-      ]
+      ],
+      "meaningTr": {
+        "en": "evening, dusk",
+        "fr": "soir, crépuscule",
+        "de": "Abend, Dämmerung",
+        "it": "sera, crepuscolo",
+        "pt": "entardecer, noite"
+      },
+      "explanationTr": {
+        "en": "It represents the crescent moon at dusk.",
+        "fr": "Représente le croissant de lune au crépuscule.",
+        "de": "Stellt die Mondsichel in der Abenddämmerung dar.",
+        "it": "Rappresenta la luna crescente al crepuscolo.",
+        "pt": "Representa a lua crescente ao entardecer."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "大": {
       "meaning": "grande, adulto",
@@ -461,7 +1133,28 @@
         "天",
         "太",
         "头"
-      ]
+      ],
+      "meaningTr": {
+        "en": "big, adult",
+        "fr": "grand, adulte",
+        "de": "groß, Erwachsener",
+        "it": "grande, adulto",
+        "pt": "grande, adulto"
+      },
+      "explanationTr": {
+        "en": "It represents a person with outstretched arms, meaning big.",
+        "fr": "Représente une personne aux bras écartés, signifiant grand.",
+        "de": "Stellt eine Person mit ausgebreiteten Armen dar und bedeutet groß.",
+        "it": "Rappresenta una persona con le braccia aperte, che significa grande.",
+        "pt": "Representa uma pessoa de braços abertos, significando grande."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "女": {
       "meaning": "mujer, femenino",
@@ -477,7 +1170,28 @@
         "妈",
         "姓",
         "要"
-      ]
+      ],
+      "meaningTr": {
+        "en": "woman, female",
+        "fr": "femme, féminin",
+        "de": "Frau, weiblich",
+        "it": "donna, femminile",
+        "pt": "mulher, feminino"
+      },
+      "explanationTr": {
+        "en": "It represents a kneeling woman.",
+        "fr": "Représente une femme agenouillée.",
+        "de": "Stellt eine kniende Frau dar.",
+        "it": "Rappresenta una donna inginocchiata.",
+        "pt": "Representa uma mulher ajoelhada."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "子": {
       "meaning": "niño, semilla",
@@ -492,7 +1206,28 @@
         "学",
         "孩",
         "好"
-      ]
+      ],
+      "meaningTr": {
+        "en": "child, seed",
+        "fr": "enfant, graine",
+        "de": "Kind, Same",
+        "it": "bambino, seme",
+        "pt": "criança, semente"
+      },
+      "explanationTr": {
+        "en": "It represents a child or baby.",
+        "fr": "Représente un enfant ou un bébé.",
+        "de": "Stellt ein Kind oder Baby dar.",
+        "it": "Rappresenta un bambino o un neonato.",
+        "pt": "Representa uma criança ou um bebê."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "宀": {
       "meaning": "techo, casa",
@@ -510,7 +1245,28 @@
         "它",
         "写",
         "家"
-      ]
+      ],
+      "meaningTr": {
+        "en": "roof, house",
+        "fr": "toit, maison",
+        "de": "Dach, Haus",
+        "it": "tetto, casa",
+        "pt": "telhado, casa"
+      },
+      "explanationTr": {
+        "en": "It represents a roof or house.",
+        "fr": "Représente un toit ou une maison.",
+        "de": "Stellt ein Dach oder Haus dar.",
+        "it": "Rappresenta un tetto o una casa.",
+        "pt": "Representa um telhado ou uma casa."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "寸": {
       "meaning": "pulgada, medida",
@@ -524,7 +1280,28 @@
         "对",
         "封",
         "导"
-      ]
+      ],
+      "meaningTr": {
+        "en": "inch, measure",
+        "fr": "pouce, mesure",
+        "de": "Zoll, Maß",
+        "it": "pollice, misura",
+        "pt": "polegada, medida"
+      },
+      "explanationTr": {
+        "en": "It represents a hand showing the pulse point, used as a measure.",
+        "fr": "Représente une main montrant le point du pouls, utilisé comme mesure.",
+        "de": "Stellt eine Hand am Pulspunkt dar, als Maßeinheit verwendet.",
+        "it": "Rappresenta una mano che indica il punto del polso, usato come misura.",
+        "pt": "Representa uma mão mostrando o ponto do pulso, usado como medida."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "小": {
       "meaning": "pequeño",
@@ -538,7 +1315,28 @@
         "少",
         "尔",
         "尘"
-      ]
+      ],
+      "meaningTr": {
+        "en": "small",
+        "fr": "petit",
+        "de": "klein",
+        "it": "piccolo",
+        "pt": "pequeno"
+      },
+      "explanationTr": {
+        "en": "It represents small particles or something tiny.",
+        "fr": "Représente de petites particules ou quelque chose de minuscule.",
+        "de": "Stellt kleine Teilchen oder etwas Winziges dar.",
+        "it": "Rappresenta piccole particelle o qualcosa di minuscolo.",
+        "pt": "Representa partículas pequenas ou algo diminuto."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "尢": {
       "meaning": "cojo, débil",
@@ -551,7 +1349,28 @@
         "尤",
         "就",
         "尴"
-      ]
+      ],
+      "meaningTr": {
+        "en": "lame, weak",
+        "fr": "boiteux, faible",
+        "de": "lahm, schwach",
+        "it": "zoppo, debole",
+        "pt": "manco, fraco"
+      },
+      "explanationTr": {
+        "en": "It represents a lame or weak person.",
+        "fr": "Représente une personne boiteuse ou faible.",
+        "de": "Stellt eine lahme oder schwache Person dar.",
+        "it": "Rappresenta una persona zoppa o debole.",
+        "pt": "Representa uma pessoa manca ou fraca."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "尸": {
       "meaning": "cuerpo, cadáver",
@@ -565,7 +1384,28 @@
         "尺",
         "居",
         "层"
-      ]
+      ],
+      "meaningTr": {
+        "en": "body, corpse",
+        "fr": "corps, cadavre",
+        "de": "Körper, Leichnam",
+        "it": "corpo, cadavere",
+        "pt": "corpo, cadáver"
+      },
+      "explanationTr": {
+        "en": "It represents a reclining body or corpse.",
+        "fr": "Représente un corps allongé ou un cadavre.",
+        "de": "Stellt einen liegenden Körper oder Leichnam dar.",
+        "it": "Rappresenta un corpo disteso o un cadavere.",
+        "pt": "Representa um corpo reclinado ou um cadáver."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "屮": {
       "meaning": "hierba brotando",
@@ -578,7 +1418,28 @@
         "草",
         "卉",
         "茻"
-      ]
+      ],
+      "meaningTr": {
+        "en": "sprouting grass",
+        "fr": "herbe qui pousse",
+        "de": "sprießendes Gras",
+        "it": "erba che germoglia",
+        "pt": "erva brotando"
+      },
+      "explanationTr": {
+        "en": "It represents grass sprouting from the earth.",
+        "fr": "Représente de l’herbe qui sort de terre.",
+        "de": "Stellt aus der Erde sprießendes Gras dar.",
+        "it": "Rappresenta erba che germoglia dalla terra.",
+        "pt": "Representa erva brotando da terra."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "山": {
       "meaning": "montaña",
@@ -592,7 +1453,28 @@
         "岁",
         "岸",
         "峰"
-      ]
+      ],
+      "meaningTr": {
+        "en": "mountain",
+        "fr": "montagne",
+        "de": "Berg",
+        "it": "montagna",
+        "pt": "montanha"
+      },
+      "explanationTr": {
+        "en": "It represents mountain peaks.",
+        "fr": "Représente des sommets de montagne.",
+        "de": "Stellt Berggipfel dar.",
+        "it": "Rappresenta cime di montagna.",
+        "pt": "Representa picos de montanha."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "川": {
       "meaning": "río, corriente",
@@ -605,7 +1487,28 @@
         "川",
         "州",
         "顺"
-      ]
+      ],
+      "meaningTr": {
+        "en": "river, stream",
+        "fr": "rivière, courant",
+        "de": "Fluss, Strom",
+        "it": "fiume, corrente",
+        "pt": "rio, corrente"
+      },
+      "explanationTr": {
+        "en": "It represents the flow of a river.",
+        "fr": "Représente le courant d’une rivière.",
+        "de": "Stellt das Fließen eines Flusses dar.",
+        "it": "Rappresenta lo scorrere di un fiume.",
+        "pt": "Representa o fluxo de um rio."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "工": {
       "meaning": "trabajo, herramienta",
@@ -619,7 +1522,28 @@
         "左",
         "功",
         "式"
-      ]
+      ],
+      "meaningTr": {
+        "en": "work, tool",
+        "fr": "travail, outil",
+        "de": "Arbeit, Werkzeug",
+        "it": "lavoro, attrezzo",
+        "pt": "trabalho, ferramenta"
+      },
+      "explanationTr": {
+        "en": "It represents a carpenter’s tool or work.",
+        "fr": "Représente un outil de charpentier ou le travail.",
+        "de": "Stellt ein Zimmermannswerkzeug oder Arbeit dar.",
+        "it": "Rappresenta un attrezzo da falegname o il lavoro.",
+        "pt": "Representa uma ferramenta de carpinteiro ou o trabalho."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "己": {
       "meaning": "uno mismo",
@@ -633,7 +1557,28 @@
         "记",
         "起",
         "改"
-      ]
+      ],
+      "meaningTr": {
+        "en": "oneself",
+        "fr": "soi-même",
+        "de": "selbst",
+        "it": "se stesso",
+        "pt": "si mesmo"
+      },
+      "explanationTr": {
+        "en": "It represents oneself or personal identity.",
+        "fr": "Représente soi-même ou l’identité personnelle.",
+        "de": "Stellt das Selbst oder die persönliche Identität dar.",
+        "it": "Rappresenta se stessi o l’identità personale.",
+        "pt": "Representa a si mesmo ou a identidade pessoal."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "巾": {
       "meaning": "paño, tela",
@@ -647,7 +1592,28 @@
         "市",
         "布",
         "帅"
-      ]
+      ],
+      "meaningTr": {
+        "en": "cloth, towel",
+        "fr": "tissu, étoffe",
+        "de": "Tuch, Stoff",
+        "it": "panno, stoffa",
+        "pt": "pano, tecido"
+      },
+      "explanationTr": {
+        "en": "It represents a hanging piece of cloth.",
+        "fr": "Représente un morceau de tissu suspendu.",
+        "de": "Stellt ein hängendes Stück Stoff dar.",
+        "it": "Rappresenta un pezzo di stoffa appeso.",
+        "pt": "Representa um pedaço de pano pendurado."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "干": {
       "meaning": "escudo, secar",
@@ -661,7 +1627,28 @@
         "平",
         "年",
         "并"
-      ]
+      ],
+      "meaningTr": {
+        "en": "shield, dry",
+        "fr": "bouclier, sécher",
+        "de": "Schild, trocknen",
+        "it": "scudo, seccare",
+        "pt": "escudo, secar"
+      },
+      "explanationTr": {
+        "en": "It represents an ancient shield.",
+        "fr": "Représente un bouclier antique.",
+        "de": "Stellt einen alten Schild dar.",
+        "it": "Rappresenta uno scudo antico.",
+        "pt": "Representa um escudo antigo."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "幺": {
       "meaning": "pequeño, fino",
@@ -675,7 +1662,28 @@
         "幼",
         "幻",
         "幽"
-      ]
+      ],
+      "meaningTr": {
+        "en": "tiny, thin",
+        "fr": "minuscule, fin",
+        "de": "winzig, fein",
+        "it": "minuscolo, sottile",
+        "pt": "minúsculo, fino"
+      },
+      "explanationTr": {
+        "en": "It represents a fine thread or something very small.",
+        "fr": "Représente un fil fin ou quelque chose de très petit.",
+        "de": "Stellt einen feinen Faden oder etwas sehr Kleines dar.",
+        "it": "Rappresenta un filo sottile o qualcosa di molto piccolo.",
+        "pt": "Representa um fio fino ou algo muito pequeno."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "广": {
       "meaning": "estructura con techo",
@@ -689,7 +1697,28 @@
         "店",
         "床",
         "座"
-      ]
+      ],
+      "meaningTr": {
+        "en": "roofed structure",
+        "fr": "structure couverte",
+        "de": "überdachter Bau",
+        "it": "struttura con tetto",
+        "pt": "estrutura com telhado"
+      },
+      "explanationTr": {
+        "en": "It represents a building with a roof but no side walls.",
+        "fr": "Représente un bâtiment avec un toit mais sans murs latéraux.",
+        "de": "Stellt ein Gebäude mit Dach, aber ohne Seitenwände dar.",
+        "it": "Rappresenta un edificio con tetto ma senza pareti laterali.",
+        "pt": "Representa um edifício com telhado mas sem paredes laterais."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "廴": {
       "meaning": "caminar largo",
@@ -702,7 +1731,28 @@
         "延",
         "建",
         "廷"
-      ]
+      ],
+      "meaningTr": {
+        "en": "long stride",
+        "fr": "longue marche",
+        "de": "langer Gang",
+        "it": "lunga camminata",
+        "pt": "caminhada longa"
+      },
+      "explanationTr": {
+        "en": "It represents walking a long distance.",
+        "fr": "Représente une longue marche.",
+        "de": "Stellt das Gehen einer langen Strecke dar.",
+        "it": "Rappresenta il camminare per una lunga distanza.",
+        "pt": "Representa caminhar uma longa distância."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "廾": {
       "meaning": "dos manos",
@@ -715,7 +1765,28 @@
         "开",
         "异",
         "弃"
-      ]
+      ],
+      "meaningTr": {
+        "en": "two hands",
+        "fr": "deux mains",
+        "de": "zwei Hände",
+        "it": "due mani",
+        "pt": "duas mãos"
+      },
+      "explanationTr": {
+        "en": "It represents two joined hands holding something.",
+        "fr": "Représente deux mains jointes tenant quelque chose.",
+        "de": "Stellt zwei zusammengelegte Hände dar, die etwas halten.",
+        "it": "Rappresenta due mani unite che reggono qualcosa.",
+        "pt": "Representa duas mãos unidas segurando algo."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "弋": {
       "meaning": "arponear, atacar",
@@ -729,7 +1800,28 @@
         "式",
         "代",
         "试"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to shoot, dart",
+        "fr": "harponner, dard",
+        "de": "Pfeil mit Schnur",
+        "it": "dardo, colpire",
+        "pt": "arpoar, dardo"
+      },
+      "explanationTr": {
+        "en": "It represents a harpoon or corded spear.",
+        "fr": "Représente un harpon ou une lance à corde.",
+        "de": "Stellt eine Harpune oder Schnurlanze dar.",
+        "it": "Rappresenta un arpione o una lancia con corda.",
+        "pt": "Representa um arpão ou uma lança com corda."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "弓": {
       "meaning": "arco",
@@ -743,7 +1835,28 @@
         "引",
         "张",
         "强"
-      ]
+      ],
+      "meaningTr": {
+        "en": "bow",
+        "fr": "arc",
+        "de": "Bogen",
+        "it": "arco",
+        "pt": "arco"
+      },
+      "explanationTr": {
+        "en": "It represents a bow for shooting arrows.",
+        "fr": "Représente un arc pour tirer des flèches.",
+        "de": "Stellt einen Bogen zum Pfeilschießen dar.",
+        "it": "Rappresenta un arco per scoccare frecce.",
+        "pt": "Representa um arco para atirar flechas."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "彐": {
       "meaning": "cabeza de cerdo",
@@ -759,7 +1872,28 @@
         "归",
         "当",
         "寻"
-      ]
+      ],
+      "meaningTr": {
+        "en": "pig’s head",
+        "fr": "tête de porc",
+        "de": "Schweinekopf",
+        "it": "testa di maiale",
+        "pt": "cabeça de porco"
+      },
+      "explanationTr": {
+        "en": "It represents a pig’s head.",
+        "fr": "Représente la tête d’un porc.",
+        "de": "Stellt einen Schweinekopf dar.",
+        "it": "Rappresenta la testa di un maiale.",
+        "pt": "Representa a cabeça de um porco."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "彡": {
       "meaning": "pelo, decoración",
@@ -773,7 +1907,28 @@
         "彩",
         "影",
         "须"
-      ]
+      ],
+      "meaningTr": {
+        "en": "hair, decoration",
+        "fr": "poils, décoration",
+        "de": "Haar, Verzierung",
+        "it": "peli, decorazione",
+        "pt": "cabelo, decoração"
+      },
+      "explanationTr": {
+        "en": "It represents hair or decorative stripes.",
+        "fr": "Représente des poils ou des rayures décoratives.",
+        "de": "Stellt Haare oder Zierstreifen dar.",
+        "it": "Rappresenta capelli o strisce decorative.",
+        "pt": "Representa cabelos ou listras decorativas."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "心": {
       "meaning": "corazón, mente",
@@ -792,7 +1947,28 @@
         "爱",
         "您",
         "意"
-      ]
+      ],
+      "meaningTr": {
+        "en": "heart, mind",
+        "fr": "cœur, esprit",
+        "de": "Herz, Geist",
+        "it": "cuore, mente",
+        "pt": "coração, mente"
+      },
+      "explanationTr": {
+        "en": "It represents the heart. Central to emotions and thoughts.",
+        "fr": "Représente le cœur. Fondamental pour les émotions et les pensées.",
+        "de": "Stellt das Herz dar. Grundlegend für Gefühle und Gedanken.",
+        "it": "Rappresenta il cuore. Fondamentale per emozioni e pensieri.",
+        "pt": "Representa o coração. Fundamental para emoções e pensamentos."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "戈": {
       "meaning": "alabarda, lanza",
@@ -805,7 +1981,28 @@
         "我",
         "或",
         "战"
-      ]
+      ],
+      "meaningTr": {
+        "en": "halberd, spear",
+        "fr": "hallebarde, lance",
+        "de": "Hellebarde, Lanze",
+        "it": "alabarda, lancia",
+        "pt": "alabarda, lança"
+      },
+      "explanationTr": {
+        "en": "It represents an ancient halberd or spear. Associated with weapons and war.",
+        "fr": "Représente une hallebarde ou une lance antique. Associé aux armes et à la guerre.",
+        "de": "Stellt eine alte Hellebarde oder Lanze dar. Mit Waffen und Krieg verbunden.",
+        "it": "Rappresenta un’alabarda o una lancia antica. Associato ad armi e guerra.",
+        "pt": "Representa uma alabarda ou lança antiga. Associado a armas e guerra."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "水": {
       "meaning": "agua",
@@ -822,7 +2019,28 @@
         "河",
         "汁",
         "汤"
-      ]
+      ],
+      "meaningTr": {
+        "en": "water",
+        "fr": "eau",
+        "de": "Wasser",
+        "it": "acqua",
+        "pt": "água"
+      },
+      "explanationTr": {
+        "en": "It represents flowing water. Essential in characters related to liquids.",
+        "fr": "Représente l’eau qui coule. Essentiel dans les caractères liés aux liquides.",
+        "de": "Stellt fließendes Wasser dar. Wichtig in Zeichen rund um Flüssigkeiten.",
+        "it": "Rappresenta l’acqua che scorre. Essenziale nei caratteri legati ai liquidi.",
+        "pt": "Representa a água corrente. Essencial em caracteres ligados a líquidos."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "火": {
       "meaning": "fuego",
@@ -838,7 +2056,28 @@
         "灯",
         "热",
         "炒"
-      ]
+      ],
+      "meaningTr": {
+        "en": "fire",
+        "fr": "feu",
+        "de": "Feuer",
+        "it": "fuoco",
+        "pt": "fogo"
+      },
+      "explanationTr": {
+        "en": "It represents a flame. Associated with heat, light and cooking.",
+        "fr": "Représente une flamme. Associé à la chaleur, la lumière et la cuisine.",
+        "de": "Stellt eine Flamme dar. Mit Hitze, Licht und Kochen verbunden.",
+        "it": "Rappresenta una fiamma. Associato a calore, luce e cucina.",
+        "pt": "Representa uma chama. Associado a calor, luz e cozinha."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "木": {
       "meaning": "árbol, madera",
@@ -853,7 +2092,28 @@
         "森",
         "树",
         "校"
-      ]
+      ],
+      "meaningTr": {
+        "en": "tree, wood",
+        "fr": "arbre, bois",
+        "de": "Baum, Holz",
+        "it": "albero, legno",
+        "pt": "árvore, madeira"
+      },
+      "explanationTr": {
+        "en": "It represents a tree. Related to plants, wood and wooden objects.",
+        "fr": "Représente un arbre. Lié aux plantes, au bois et aux objets en bois.",
+        "de": "Stellt einen Baum dar. Mit Pflanzen, Holz und Holzgegenständen verbunden.",
+        "it": "Rappresenta un albero. Legato a piante, legno e oggetti di legno.",
+        "pt": "Representa uma árvore. Ligado a plantas, madeira e objetos de madeira."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "日": {
       "meaning": "sol, día",
@@ -868,7 +2128,28 @@
         "是",
         "时",
         "晴"
-      ]
+      ],
+      "meaningTr": {
+        "en": "sun, day",
+        "fr": "soleil, jour",
+        "de": "Sonne, Tag",
+        "it": "sole, giorno",
+        "pt": "sol, dia"
+      },
+      "explanationTr": {
+        "en": "It represents the sun. Related to time, light and brightness.",
+        "fr": "Représente le soleil. Lié au temps, à la lumière et à la clarté.",
+        "de": "Stellt die Sonne dar. Mit Zeit, Licht und Helligkeit verbunden.",
+        "it": "Rappresenta il sole. Legato al tempo, alla luce e alla chiarezza.",
+        "pt": "Representa o sol. Ligado ao tempo, à luz e à claridade."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "月": {
       "meaning": "luna, mes",
@@ -885,7 +2166,28 @@
         "明",
         "期",
         "服"
-      ]
+      ],
+      "meaningTr": {
+        "en": "moon, month",
+        "fr": "lune, mois",
+        "de": "Mond, Monat",
+        "it": "luna, mese",
+        "pt": "lua, mês"
+      },
+      "explanationTr": {
+        "en": "It represents the moon. It can also represent flesh or body parts.",
+        "fr": "Représente la lune. Peut aussi représenter la chair ou des parties du corps.",
+        "de": "Stellt den Mond dar. Kann auch Fleisch oder Körperteile darstellen.",
+        "it": "Rappresenta la luna. Può anche rappresentare la carne o parti del corpo.",
+        "pt": "Representa a lua. Também pode representar carne ou partes do corpo."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "襾": {
       "meaning": "cubrir, oeste",
@@ -900,7 +2202,28 @@
         "西",
         "要",
         "覆"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to cover, west",
+        "fr": "couvrir, ouest",
+        "de": "bedecken, Westen",
+        "it": "coprire, ovest",
+        "pt": "cobrir, oeste"
+      },
+      "explanationTr": {
+        "en": "It represents something that covers. Traditional form of the radical for “west”.",
+        "fr": "Représente quelque chose qui couvre. Forme traditionnelle du radical de « ouest ».",
+        "de": "Stellt etwas Bedeckendes dar. Traditionelle Form des Radikals für „Westen“.",
+        "it": "Rappresenta qualcosa che copre. Forma tradizionale del radicale di “ovest”.",
+        "pt": "Representa algo que cobre. Forma tradicional do radical de “oeste”."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "白": {
       "meaning": "blanco, claro",
@@ -914,7 +2237,28 @@
         "的",
         "百",
         "皂"
-      ]
+      ],
+      "meaningTr": {
+        "en": "white, clear",
+        "fr": "blanc, clair",
+        "de": "weiß, hell",
+        "it": "bianco, chiaro",
+        "pt": "branco, claro"
+      },
+      "explanationTr": {
+        "en": "It represents the color white or brightness. It can also mean “in vain”.",
+        "fr": "Représente le blanc ou la clarté. Peut aussi signifier « en vain ».",
+        "de": "Stellt die Farbe Weiß oder Helligkeit dar. Kann auch „vergeblich“ bedeuten.",
+        "it": "Rappresenta il colore bianco o la chiarezza. Può anche significare “invano”.",
+        "pt": "Representa a cor branca ou a claridade. Também pode significar “em vão”."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "艹": {
       "meaning": "hierba, planta",
@@ -929,7 +2273,28 @@
         "菜",
         "花",
         "药"
-      ]
+      ],
+      "meaningTr": {
+        "en": "grass, plant",
+        "fr": "herbe, plante",
+        "de": "Gras, Pflanze",
+        "it": "erba, pianta",
+        "pt": "erva, planta"
+      },
+      "explanationTr": {
+        "en": "It represents grass or plants. It appears at the top of characters.",
+        "fr": "Représente l’herbe ou les plantes. Apparaît en haut des caractères.",
+        "de": "Stellt Gras oder Pflanzen dar. Erscheint oben in Schriftzeichen.",
+        "it": "Rappresenta erba o piante. Appare nella parte superiore dei caratteri.",
+        "pt": "Representa erva ou plantas. Aparece na parte superior dos caracteres."
+      },
+      "frequencyTr": {
+        "en": "very high",
+        "fr": "très élevée",
+        "de": "sehr hoch",
+        "it": "molto alta",
+        "pt": "muito alta"
+      }
     },
     "车": {
       "meaning": "carro, vehículo",
@@ -943,7 +2308,28 @@
         "军",
         "轮",
         "软"
-      ]
+      ],
+      "meaningTr": {
+        "en": "cart, vehicle",
+        "fr": "char, véhicule",
+        "de": "Wagen, Fahrzeug",
+        "it": "carro, veicolo",
+        "pt": "carro, veículo"
+      },
+      "explanationTr": {
+        "en": "It represents a cart seen from above. Related to vehicles and transport.",
+        "fr": "Représente un char vu de dessus. Lié aux véhicules et au transport.",
+        "de": "Stellt einen Wagen von oben dar. Mit Fahrzeugen und Transport verbunden.",
+        "it": "Rappresenta un carro visto dall’alto. Legato a veicoli e trasporti.",
+        "pt": "Representa um carro visto de cima. Ligado a veículos e transporte."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "讠": {
       "meaning": "discurso",
@@ -959,7 +2345,28 @@
         "谢",
         "让",
         "谁"
-      ]
+      ],
+      "meaningTr": {
+        "en": "speech",
+        "fr": "parole",
+        "de": "Sprechen, Rede",
+        "it": "parola, discorso",
+        "pt": "fala, discurso"
+      },
+      "explanationTr": {
+        "en": "Radical related to speech and language.",
+        "fr": "Radical lié à la parole et au langage.",
+        "de": "Radikal für Sprechen und Sprache.",
+        "it": "Radicale legato alla parola e al linguaggio.",
+        "pt": "Radical ligado à fala e à linguagem."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "辶": {
       "meaning": "caminar",
@@ -973,7 +2380,28 @@
         "还",
         "远",
         "近"
-      ]
+      ],
+      "meaningTr": {
+        "en": "to walk",
+        "fr": "marcher",
+        "de": "gehen",
+        "it": "camminare",
+        "pt": "caminhar"
+      },
+      "explanationTr": {
+        "en": "Radical indicating movement or motion.",
+        "fr": "Radical indiquant le mouvement ou le déplacement.",
+        "de": "Radikal für Bewegung oder Fortbewegung.",
+        "it": "Radicale che indica movimento o spostamento.",
+        "pt": "Radical que indica movimento ou deslocamento."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "扌": {
       "meaning": "mano",
@@ -984,7 +2412,28 @@
       "frequency": "alta",
       "examples": [
         "找"
-      ]
+      ],
+      "meaningTr": {
+        "en": "hand",
+        "fr": "main",
+        "de": "Hand",
+        "it": "mano",
+        "pt": "mão"
+      },
+      "explanationTr": {
+        "en": "Radical representing the hand and manual actions.",
+        "fr": "Radical représentant la main et les actions manuelles.",
+        "de": "Radikal für die Hand und Handbewegungen.",
+        "it": "Radicale che rappresenta la mano e le azioni manuali.",
+        "pt": "Radical que representa a mão e ações manuais."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "纟": {
       "meaning": "seda",
@@ -995,7 +2444,28 @@
       "frequency": "media",
       "examples": [
         "给"
-      ]
+      ],
+      "meaningTr": {
+        "en": "silk",
+        "fr": "soie",
+        "de": "Seide",
+        "it": "seta",
+        "pt": "seda"
+      },
+      "explanationTr": {
+        "en": "Radical related to silk or threads.",
+        "fr": "Radical lié à la soie ou aux fils.",
+        "de": "Radikal für Seide oder Fäden.",
+        "it": "Radicale legato alla seta o ai fili.",
+        "pt": "Radical ligado à seda ou a fios."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "钅": {
       "meaning": "metal",
@@ -1007,7 +2477,28 @@
       "examples": [
         "错",
         "钱"
-      ]
+      ],
+      "meaningTr": {
+        "en": "metal",
+        "fr": "métal",
+        "de": "Metall",
+        "it": "metallo",
+        "pt": "metal"
+      },
+      "explanationTr": {
+        "en": "Radical indicating a relation to metals.",
+        "fr": "Radical indiquant un lien avec les métaux.",
+        "de": "Radikal für einen Bezug zu Metallen.",
+        "it": "Radicale che indica una relazione con i metalli.",
+        "pt": "Radical que indica relação com metais."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "彳": {
       "meaning": "paso",
@@ -1018,7 +2509,28 @@
       "frequency": "media",
       "examples": [
         "很"
-      ]
+      ],
+      "meaningTr": {
+        "en": "step",
+        "fr": "pas",
+        "de": "Schritt",
+        "it": "passo",
+        "pt": "passo"
+      },
+      "explanationTr": {
+        "en": "Radical representing a step or walking.",
+        "fr": "Radical représentant un pas ou la marche.",
+        "de": "Radikal für einen Schritt oder das Gehen.",
+        "it": "Radicale che rappresenta un passo o il camminare.",
+        "pt": "Radical que representa um passo ou o andar."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "禾": {
       "meaning": "grano",
@@ -1029,7 +2541,28 @@
       "frequency": "media",
       "examples": [
         "和"
-      ]
+      ],
+      "meaningTr": {
+        "en": "grain",
+        "fr": "céréale",
+        "de": "Getreide",
+        "it": "cereale",
+        "pt": "grão"
+      },
+      "explanationTr": {
+        "en": "Radical representing cereals or grain.",
+        "fr": "Radical représentant les céréales ou le grain.",
+        "de": "Radikal für Getreide oder Korn.",
+        "it": "Radicale che rappresenta cereali o grano.",
+        "pt": "Radical que representa cereais ou grão."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "目": {
       "meaning": "ojo",
@@ -1041,7 +2574,28 @@
       "examples": [
         "看",
         "真"
-      ]
+      ],
+      "meaningTr": {
+        "en": "eye",
+        "fr": "œil",
+        "de": "Auge",
+        "it": "occhio",
+        "pt": "olho"
+      },
+      "explanationTr": {
+        "en": "Radical representing the eye or vision.",
+        "fr": "Radical représentant l’œil ou la vision.",
+        "de": "Radikal für das Auge oder das Sehen.",
+        "it": "Radicale che rappresenta l’occhio o la vista.",
+        "pt": "Radical que representa o olho ou a visão."
+      },
+      "frequencyTr": {
+        "en": "high",
+        "fr": "élevée",
+        "de": "hoch",
+        "it": "alta",
+        "pt": "alta"
+      }
     },
     "贝": {
       "meaning": "concha",
@@ -1052,7 +2606,28 @@
       "frequency": "media",
       "examples": [
         "贵"
-      ]
+      ],
+      "meaningTr": {
+        "en": "shell",
+        "fr": "coquillage",
+        "de": "Muschel",
+        "it": "conchiglia",
+        "pt": "concha"
+      },
+      "explanationTr": {
+        "en": "Radical related to shells, money or valuables.",
+        "fr": "Radical lié aux coquillages, à l’argent ou aux objets de valeur.",
+        "de": "Radikal für Muscheln, Geld oder Wertsachen.",
+        "it": "Radicale legato a conchiglie, denaro o oggetti di valore.",
+        "pt": "Radical ligado a conchas, dinheiro ou objetos de valor."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "斤": {
       "meaning": "hacha",
@@ -1063,7 +2638,28 @@
       "frequency": "media",
       "examples": [
         "新"
-      ]
+      ],
+      "meaningTr": {
+        "en": "axe",
+        "fr": "hache",
+        "de": "Axt",
+        "it": "ascia",
+        "pt": "machado"
+      },
+      "explanationTr": {
+        "en": "Radical representing an axe or a unit of weight.",
+        "fr": "Radical représentant une hache ou une unité de poids.",
+        "de": "Radikal für eine Axt oder eine Gewichtseinheit.",
+        "it": "Radicale che rappresenta un’ascia o un’unità di peso.",
+        "pt": "Radical que representa um machado ou uma unidade de peso."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     },
     "矢": {
       "meaning": "flecha",
@@ -1074,7 +2670,28 @@
       "frequency": "baja",
       "examples": [
         "短"
-      ]
+      ],
+      "meaningTr": {
+        "en": "arrow",
+        "fr": "flèche",
+        "de": "Pfeil",
+        "it": "freccia",
+        "pt": "flecha"
+      },
+      "explanationTr": {
+        "en": "Radical representing an arrow.",
+        "fr": "Radical représentant une flèche.",
+        "de": "Radikal für einen Pfeil.",
+        "it": "Radicale che rappresenta una freccia.",
+        "pt": "Radical que representa uma flecha."
+      },
+      "frequencyTr": {
+        "en": "low",
+        "fr": "faible",
+        "de": "niedrig",
+        "it": "bassa",
+        "pt": "baixa"
+      }
     },
     "黑": {
       "meaning": "negro",
@@ -1085,7 +2702,28 @@
       "frequency": "media",
       "examples": [
         "点"
-      ]
+      ],
+      "meaningTr": {
+        "en": "black",
+        "fr": "noir",
+        "de": "schwarz",
+        "it": "nero",
+        "pt": "preto"
+      },
+      "explanationTr": {
+        "en": "Radical representing the color black.",
+        "fr": "Radical représentant la couleur noire.",
+        "de": "Radikal für die Farbe Schwarz.",
+        "it": "Radicale che rappresenta il colore nero.",
+        "pt": "Radical que representa a cor preta."
+      },
+      "frequencyTr": {
+        "en": "medium",
+        "fr": "moyenne",
+        "de": "mittel",
+        "it": "media",
+        "pt": "média"
+      }
     }
   }
 }

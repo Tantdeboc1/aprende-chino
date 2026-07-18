@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card.jsx";
 import { useTranslation } from "react-i18next";
 import { MAX_ATTEMPTS } from '@/utils/daily-logic.js';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
+import { baseLang } from '@/utils/loc.js';
 
 // === Self-contained Daily.jsx (MODO OSCURO) ===
 const STORAGE_KEY = STORAGE_KEYS.DAILY_PROGRESS;
@@ -40,8 +41,17 @@ function normalize(s) {
 
 function isCorrect(guess, charData) {
   const g = normalize(guess);
-  const pinyinOk = charData?.pinyin && normalize(charData.pinyin) === g;
-  const meaningOk = charData?.meaning && normalize(charData.meaning) === g;
+  if (!g) return false;
+  // Pinyin: acepta con o sin número de tono ("ren2" y "ren").
+  const pin = normalize(charData?.pinyin || '');
+  const pinyinOk = pin && (pin === g || pin.replace(/[1-5]/g, '') === g.replace(/[1-5]/g, ''));
+  // Significado (ya localizado): acepta el texto completo o cualquiera de sus
+  // acepciones separadas por coma/punto y coma ("persona, gente" → "gente").
+  const meaning = charData?.meaning || '';
+  const meaningOk = !!meaning && (
+    normalize(meaning) === g ||
+    meaning.split(/[;,]/).map(normalize).includes(g)
+  );
   return pinyinOk || meaningOk;
 }
 
@@ -108,11 +118,21 @@ function getHint(attempt, charData, t) {
 
 // ---------- component ----------
 function Daily({ goBack }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = baseLang(i18n.language);
   // loading
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dictionary, setDictionary] = useState([]);
+  const [rawDictionary, setDictionary] = useState([]);
+
+  // Diccionario con el significado resuelto al idioma activo (meaningTr).
+  const dictionary = useMemo(() => {
+    if (lang === 'es') return rawDictionary;
+    return rawDictionary.map(c => {
+      const tr = c.meaningTr?.[lang];
+      return tr ? { ...c, meaning: tr } : c;
+    });
+  }, [rawDictionary, lang]);
 
   // game
   const [dailyChar, setDailyChar] = useState(null);

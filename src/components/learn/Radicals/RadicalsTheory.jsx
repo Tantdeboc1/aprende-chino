@@ -133,7 +133,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                   <div className="text-4xl font-bold text-[var(--jade)]">好</div>
                 </div>
                 <p className="text-sm text-center">
-                  <span className="text-[var(--mute)]">女 (mujer)</span> + <span className="text-[var(--mute)]">子 (hijo)</span> = <span className="text-[var(--jade)]">好 (bueno)</span>
+                  <span className="text-[var(--mute)]">女 ({t('radicals_example_woman')})</span> + <span className="text-[var(--mute)]">子 ({t('radicals_example_son')})</span> = <span className="text-[var(--jade)]">好 ({t('radicals_example_good')})</span>
                 </p>
                 <p className="text-xs text-[var(--mute)] text-center mt-2">
                   {t('radicals_example_explanation')}
@@ -151,7 +151,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                 <span className="w-3 h-3 bg-[var(--jade)] rounded-full mr-3"></span>
                 {t('radicals_stroke_group', { count: groupName.replace('Trazo ', '') })}
                 <span className="ml-2 text-sm text-[var(--mute)] bg-[var(--paper-hi2)] px-2 py-1 rounded">
-                  {groupRadicals.length} {groupRadicals.length !== 1 ? 'radicales' : 'radical'}
+                  {t('radicals_count', { count: groupRadicals.length })}
                 </span>
               </h3>
 

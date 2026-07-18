@@ -15,9 +15,9 @@ function pickN(arr, n) {
 
 // ─── Modos disponibles ────────────────────────────────────────────────────────
 const QUIZ_MODES = [
-  { id: 'char_to_meaning', icon: '汉→A', label: 'Carácter → Significado' },
-  { id: 'meaning_to_char', icon: 'A→汉', label: 'Significado → Carácter' },
-  { id: 'pinyin_to_char',  icon: 'pīn→汉', label: 'Pinyin → Carácter' },
+  { id: 'char_to_meaning', icon: '汉→A', labelKey: 'quiz_mode_char_to_meaning' },
+  { id: 'meaning_to_char', icon: 'A→汉', labelKey: 'quiz_mode_meaning_to_char' },
+  { id: 'pinyin_to_char',  icon: 'pīn→汉', labelKey: 'quiz_mode_pinyin_to_char' },
 ];
 
 function buildQuestion(mode, pool, correct) {
@@ -108,7 +108,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
                   }`}
                 >
                   <div className="text-base font-bold mb-1 font-mono">{m.icon}</div>
-                  <div className="text-xs leading-tight">{m.label}</div>
+                  <div className="text-xs leading-tight">{t(m.labelKey)}</div>
                 </button>
               ))}
             </div>

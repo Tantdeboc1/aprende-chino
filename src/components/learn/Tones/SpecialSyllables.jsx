@@ -1,4 +1,5 @@
 import { assetUrl } from '../../../utils/assets';
+import { baseLang } from '../../../utils/loc.js';
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,8 @@ import { useTranslation } from "react-i18next";
  */
 
 export default function SpecialSyllables({ goBack, speakChinese }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = baseLang(i18n.language);
   const [raw, setRaw] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,10 +40,11 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
   const items = useMemo(() => {
     const list = (raw || []).map((it) => {
       if (typeof it === "string") return { pinyin: it, sound: "" };
-      return { pinyin: it?.pinyin, sound: it?.sound ?? "" };
+      // Descripción en el idioma activo (soundTr), con fallback al español.
+      return { pinyin: it?.pinyin, sound: it?.soundTr?.[lang] ?? it?.sound ?? "" };
     }).filter(it => !!it.pinyin);
     return list.sort((a, b) => a.pinyin.localeCompare(b.pinyin));
-  }, [raw]);
+  }, [raw, lang]);
 
   // CORRECCIÓN: Reproducir pinyin + tono directamente
   const play = (pin) => {

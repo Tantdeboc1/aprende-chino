@@ -4,6 +4,7 @@ import {
   getSRSData, updateSRS, toggleWordDifficult, isWordDifficult,
   initSRSCard, getDueCards, getDueCount, getWeakCards, getWordHealth,
   isLeech, getLeechCards, getNextReviewInfo, getSRSStats, LEECH_THRESHOLD,
+  dedupeByChar,
 } from './srs.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -83,6 +84,24 @@ describe('initSRSCard', () => {
     const seen = updateSRS({}, '好', 4);
     const p = initSRSCard(seen, '好');
     expect(p).toBe(seen); // misma referencia → no cambió
+  });
+});
+
+describe('dedupeByChar', () => {
+  it('conserva el primero de cada carácter repetido', () => {
+    const list = [
+      { char: '水', lesson: 3 },
+      { char: '好', lesson: 1 },
+      { char: '水', lesson: 8 },
+    ];
+    const out = dedupeByChar(list);
+    expect(out.map(c => `${c.char}${c.lesson}`)).toEqual(['水3', '好1']);
+  });
+
+  it('no repasa dos veces un carácter presente en dos lecciones', () => {
+    const progress = { __srs: { 水: { nextReview: Date.now() - DAY_MS } } };
+    const chars = [{ char: '水', lesson: 3 }, { char: '水', lesson: 8 }];
+    expect(getDueCards(progress, chars).map(c => c.char)).toEqual(['水']);
   });
 });
 

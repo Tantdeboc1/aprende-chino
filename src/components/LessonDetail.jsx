@@ -113,13 +113,13 @@ export default function LessonDetail({
         <button onClick={goBack} className="flex items-center gap-1.5 text-sm mb-3" style={{
           color: 'rgba(255,255,255,0.7)', background: 'none', border: 0, cursor: 'pointer', fontWeight: 600,
         }}>
-          <span>←</span> Inicio
+          <span>←</span> {t('lesson_back_home')}
         </button>
 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: J.butter, marginBottom: 2 }}>
-              Lección {lessonNum}
+              {t('exam_lesson_label', { num: lessonNum })}
             </p>
             <h1 className="text-xl font-bold leading-snug" style={{ color: J.onAccent }}>
               {lessonData?.titleEs || ''}

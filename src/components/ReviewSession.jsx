@@ -50,18 +50,18 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
               {t('srs_mode_empty_desc', 'Completa algunas lecciones o quizzes primero')}
             </p>
             <div className="rounded-xl p-4 text-left space-y-2" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: J.mute }}>¿Cómo empezar?</p>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: J.mute }}>{t('srs_how_to_start')}</p>
               <div className="flex items-start gap-3">
                 <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>一</span>
-                <p className="text-sm" style={{ color: J.inkSoft }}>Ve a <span className="font-semibold" style={{ color: J.ink }}>Inicio</span> y abre una lección</p>
+                <p className="text-sm" style={{ color: J.inkSoft }}>{t('srs_start_step_1')}</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>二</span>
-                <p className="text-sm" style={{ color: J.inkSoft }}>Completa el <span className="font-semibold" style={{ color: J.ink }}>Quiz</span> de la lección</p>
+                <p className="text-sm" style={{ color: J.inkSoft }}>{t('srs_start_step_2')}</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="font-cn text-lg" style={{ color: J.jade, fontWeight: 700 }}>三</span>
-                <p className="text-sm" style={{ color: J.inkSoft }}>¡Vuelve aquí para repasar con el algoritmo SRS!</p>
+                <p className="text-sm" style={{ color: J.inkSoft }}>{t('srs_start_step_3')}</p>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
                       ? t('srs_mode_due_count', '{{count}} tarjetas vencidas hoy', { count: dueCount })
                       : t('srs_mode_due_empty', 'Sin repasos pendientes ahora')}
                   </p>
-                  <p className="text-xs mt-1" style={{ color: J.mute }}>Orden aleatorio · Algoritmo SM-2</p>
+                  <p className="text-xs mt-1" style={{ color: J.mute }}>{t('srs_due_algorithm_hint')}</p>
                 </div>
                 {dueCount > 0 && (
                   <span className="font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0"

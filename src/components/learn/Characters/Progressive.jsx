@@ -34,7 +34,7 @@ export default function Progressive({
           <button onClick={goBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]">
             ← {t('lessons_back_button')}
           </button>
-          <span className="text-[var(--ink-soft)] font-semibold">Página {current + 1} de {Math.max(1, lessons.length)}</span>
+          <span className="text-[var(--ink-soft)] font-semibold">{t('lessons_page_of', { current: current + 1, total: Math.max(1, lessons.length) })}</span>
         </div>
 
         <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-4 sm:p-8 border border-[rgba(28,24,19,0.10)]">

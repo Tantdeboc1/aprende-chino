@@ -183,7 +183,7 @@ export default function StoriesPage({
             color: J.mute,
             textAlign: 'center',
           }}>
-            Más historias en camino — al completar una, se desbloquea la siguiente.
+            {t('stories_more_coming')}
           </div>
         )}
       </div>
