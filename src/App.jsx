@@ -635,6 +635,7 @@ export default function App() {
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
           onStartLevelExam={() => { setPrevScreen('home'); setScreen('level-exam'); }}
           onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}
+          onOpenDaily={() => { setPrevScreen('home'); setDailySection(null); setScreen('daily'); }}
         />
       </Layout>
     );
@@ -866,7 +867,7 @@ export default function App() {
 
   // ── EXERCISE / NAVIGATION ───────────────────────────────────────────────────
   if (screen === 'exercise' || screen === 'dictionary' || screen === 'minigames' ||
-      MINIGAME_IDS.has(screen)) {
+      screen === 'daily' || MINIGAME_IDS.has(screen)) {
     // Pasamos la screen tal cual (BottomNav resuelve qué tab resalta,
     // incluidos los ids de minijuegos). 'exercise' oculta la nav igualmente.
     const navScreen = screen === 'exercise' ? 'home' : screen;

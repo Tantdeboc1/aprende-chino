@@ -312,17 +312,21 @@ export function useNavigation(
     }
 
     // === DESAFÍOS DIARIOS ===
+    // Al salir de un juego se vuelve al hub (DailyIndex): la pantalla sigue en
+    // 'daily' y solo se limpia la sección. Coincide con la etiqueta "Volver a
+    // Desafíos" del botón de cada juego.
+    const backToDailyHub = () => setDailySection(null);
     if (screen === 'daily' && dailySection === 'characters') {
       Component = CharactersDaily;
       props = {
-        goBack: goBack
+        goBack: backToDailyHub
       };
     }
 
     if (screen === 'daily' && dailySection === 'radicals') {
       Component = RadicalsDaily;
       props = {
-        goBack: goBack,
+        goBack: backToDailyHub,
         radicals
       };
     }
@@ -330,7 +334,7 @@ export function useNavigation(
     if (screen === 'daily' && dailySection === 'tones') {
       Component = TonesDaily;
       props = {
-        goBack: goBack,
+        goBack: backToDailyHub,
         speakChinese: speak
       };
     }

@@ -1,14 +1,18 @@
 // src/i18n.js
-// EN y ES se cargan al inicio (ES es fallback, EN es el más común).
-// FR, DE, IT y PT se cargan dinámicamente solo cuando el usuario cambia a ese idioma.
+// Solo EN se embebe al inicio: es el fallback universal y sirve de base
+// mientras llega el chunk del idioma real. ES/FR/DE/IT/PT se cargan bajo
+// demanda (chunk aparte). El SplashScreen —que espera a que carguen los datos
+// (libro-data ~232K)— tapa de sobra la carga de un locale (~17K), así que un
+// usuario no-inglés no ve "flash" en inglés: el chunk llega antes del primer
+// render útil. Ahorra ~17K gzip de arranque a todo usuario no-español.
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en.js';
-import es from './locales/es.js';
 
 // Cargadores dinámicos — Vite genera un chunk separado por cada uno
 const lazyLoaders = {
+  es: () => import('./locales/es.js'),
   fr: () => import('./locales/fr.js'),
   de: () => import('./locales/de.js'),
   it: () => import('./locales/it.js'),
@@ -33,7 +37,6 @@ i18n
     debug: false,
     resources: {
       en: { translation: en },
-      es: { translation: es },
     },
     interpolation: { escapeValue: false },
     detection: {

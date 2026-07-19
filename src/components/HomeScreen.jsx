@@ -19,7 +19,7 @@ import { loc, baseLang } from '@/utils/loc.js';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
-function DailyCharacter({ allCharacters }) {
+function DailyCharacter({ allCharacters, onOpen }) {
   const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const [status, setStatus] = useState('loading');
@@ -80,9 +80,13 @@ function DailyCharacter({ allCharacters }) {
 
   if (!daily) return null;
 
+  const Wrapper = onOpen ? 'button' : 'div';
+
   return (
-    <div className="rounded-2xl p-4 flex items-center gap-4"
-      style={{ background: J.jade, border: `1px solid ${J.jadeDeep}` }}>
+    <Wrapper
+      onClick={onOpen || undefined}
+      className="w-full text-left rounded-2xl p-4 flex items-center gap-4"
+      style={{ background: J.jade, border: `1px solid ${J.jadeDeep}`, cursor: onOpen ? 'pointer' : 'default' }}>
       <div className="relative flex-shrink-0">
         <div
           ref={containerRef}
@@ -112,8 +116,13 @@ function DailyCharacter({ allCharacters }) {
             {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.7)' }}>{daily.radical}</span>
           </p>
         )}
+        {onOpen && (
+          <p className="text-xs mt-2 font-semibold" style={{ color: J.butter }}>
+            {t('daily_challenges_title')} →
+          </p>
+        )}
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
@@ -262,7 +271,7 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam, onOpenChinaMap }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam, onOpenChinaMap, onOpenDaily }) {
   const { t, i18n } = useTranslation();
   const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
   const examUnlocked = useMemo(() => isLevelExamUnlocked(progress, allCharacters), [progress, allCharacters]);
@@ -395,8 +404,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
       {/* Contenido */}
       <div className="px-4 pt-5 space-y-6 j-rise">
 
-        {/* Carácter del día */}
-        <DailyCharacter allCharacters={allCharacters} />
+        {/* Carácter del día — abre el hub de retos diarios */}
+        <DailyCharacter allCharacters={allCharacters} onOpen={onOpenDaily} />
 
         {/* Panel de racha + XP */}
         <StreakPanel streak={streak} />
