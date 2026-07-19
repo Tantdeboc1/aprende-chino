@@ -97,7 +97,7 @@ export default function WelcomeFlow({ onComplete }) {
               className="placeholder-[var(--mute-strong)]"
               style={{
                 width: '100%', padding: '14px 18px', border: `2px solid ${J.border}`, borderRadius: 14,
-                fontSize: 16, background: J.paper, color: J.ink, outline: 'none',
+                fontSize: 16, background: J.paper, color: J.ink,
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlur={e => e.target.style.borderColor = J.hair}

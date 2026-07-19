@@ -359,7 +359,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 width: '100%', padding: '10px 14px', background: J.paper,
                 border: `1px solid ${J.border}`, borderRadius: 12,
-                fontSize: 14, color: J.ink, outline: 'none',
+                fontSize: 14, color: J.ink,
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlurCapture={e => e.target.style.borderColor = J.hair}

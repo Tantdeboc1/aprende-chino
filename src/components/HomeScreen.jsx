@@ -110,10 +110,10 @@ function DailyCharacter({ allCharacters, onOpen }) {
         <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: J.butter }}>{t('daily_character_of_day')}</p>
         <p className="text-2xl font-bold font-cn leading-tight" style={{ color: J.onAccent }}>{daily.char}</p>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>{daily.pinyin}</p>
-        <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.6)' }}>{daily.meanings?.[baseLang(i18n.language)] || daily.meaning}</p>
+        <p className="text-xs mt-1 leading-snug" style={{ color: 'rgba(255,255,255,0.85)' }}>{daily.meanings?.[baseLang(i18n.language)] || daily.meaning}</p>
         {daily.radical && daily.radical !== '—' && (
-          <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.7)' }}>{daily.radical}</span>
+          <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.78)' }}>
+            {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.88)' }}>{daily.radical}</span>
           </p>
         )}
         {onOpen && (
@@ -352,7 +352,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               {t('home_greeting', { name: userName || t('home_default_username') })}
             </h1>
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('home_subtitle')}</p>
+              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.88)' }}>{t('home_subtitle')}</p>
               <span className="text-xs font-bold px-2 py-0.5 rounded-full"
                 style={{ background: 'rgba(0,0,0,0.2)', color: J.butter }}>
                 {equipped.icon} {loc(equipped.title, baseLang(i18n.language))} · {equipped.zh}
@@ -363,14 +363,14 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         {/* Barra XP al siguiente nivel */}
         {!levelInfo.isMaxLevel && (
           <div className="mt-3 flex items-center gap-2">
-            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>Lv.{levelInfo.level}</span>
+            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.8)' }}>Lv.{levelInfo.level}</span>
             <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.25)' }}>
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{ width: `${levelInfo.progress}%`, background: J.butter }}
               />
             </div>
-            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>Lv.{levelInfo.level + 1}</span>
+            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.8)' }}>Lv.{levelInfo.level + 1}</span>
           </div>
         )}
         {levelInfo.isMaxLevel && (
@@ -383,20 +383,20 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         <div className="flex gap-2 mt-3">
           <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
             <p className="font-bold text-lg" style={{ color: J.onAccent }}>{totalMastered}</p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_mastered')}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.85)' }}>{t('home_mastered')}</p>
           </div>
           <div className="flex-1 rounded-lg px-2 py-2 text-center" style={{ background: 'rgba(0,0,0,0.15)' }}>
             <p className="font-bold text-lg" style={{ color: J.onAccent }}>
               {totalWords > 0 ? Math.round((totalMastered / totalWords) * 100) : 0}%
             </p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_completed')}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.85)' }}>{t('home_completed')}</p>
           </div>
           <div className="flex-1 rounded-lg px-2 py-2 text-center"
             style={{ background: streak.currentStreak > 0 ? 'rgba(240,200,98,0.2)' : 'rgba(0,0,0,0.15)' }}>
             <p className="font-bold text-lg" style={{ color: streak.currentStreak > 0 ? J.butter : J.paperHi }}>
               {streak.currentStreak > 0 ? `★${streak.currentStreak}` : '—'}
             </p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t('home_streak')}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.85)' }}>{t('home_streak')}</p>
           </div>
         </div>
       </div>

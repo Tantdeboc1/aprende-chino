@@ -181,7 +181,7 @@ function ChinaSvg({ selectedId, onSelect }) {
               aria-pressed={selected}
               tabIndex={0}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(id); } }}
-              style={{ cursor: 'pointer', outline: 'none', transition: 'fill .15s' }}
+              style={{ cursor: 'pointer', transition: 'fill .15s' }}
               fill={fillFor(id, selectedId, hoveredId)}
               stroke={selected ? resolveColor(J.jadeDeep) : resolveColor(J.hair)}
               strokeWidth={selected ? 1.6 : 0.8}
@@ -396,7 +396,7 @@ export default function ChinaMap({ goBack, speakChinese }) {
           </div>
         </div>
 
-        <p className="text-[11px] mb-4 mt-2 px-1" style={{ color: J.mute2 }}>
+        <p className="text-[11px] mb-4 mt-2 px-1" style={{ color: J.mute }}>
           {t('china_map_disclaimer', '{{n}} provincias · toca cualquiera para explorar', { n: total })}
         </p>
 

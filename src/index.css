@@ -14,8 +14,8 @@
   /* Texto / tinta */
   --ink: #1c1813;
   --ink-soft: #5b5446;
-  --mute: #928a76;
-  --mute2: #bdb39a;
+  --mute: #716b5b;               /* texto secundario — AA 4.5:1 sobre --paper */
+  --mute2: #bdb39a;              /* SOLO decorativo (marcas de agua, puntos, fondos hover) */
   --mute-strong: #6e6757;        /* texto secundario legible (AA) */
   /* Líneas / bordes */
   --hair: rgba(28,24,19,0.10);
@@ -26,7 +26,7 @@
   --jade-deep: #1f4a33;
   --jade-bg: #cfe1d3;
   --jade-mid: #5a8f72;
-  --red: #c8392f;
+  --red: #c4382e;                /* AA 4.5:1 sobre --paper (texto de error) */
   --red-deep: #8b1f1a;
   --red-bg: #f0d6cf;
   --sand: #b88a3e;
@@ -38,6 +38,8 @@
      Separado de --paper-hi para que la superficie pueda oscurecerse sin
      arrastrar el texto que va encima de los acentos. */
   --on-accent: #fbf5e6;
+  /* Anillo de foco de teclado (WCAG 2.4.11 / 1.4.11 — ≥3:1 sobre el papel) */
+  --focus: #1f4a33;
   /* Sombras en capas (cálidas) — pulido cohesivo */
   --shadow-sm: 0 1px 2px rgba(28,24,19,0.06), 0 1px 3px rgba(28,24,19,0.09);
   --shadow-md: 0 2px 6px -2px rgba(28,24,19,0.10), 0 6px 16px -6px rgba(28,24,19,0.18);
@@ -56,6 +58,7 @@
   --mute: #9c927d;
   --mute2: #6f6857;
   --mute-strong: #b3a98f;
+  --focus: #f0c862;              /* oro: alto contraste sobre superficies oscuras */
   --hair: rgba(255,255,255,0.09);
   --hair-s: rgba(255,255,255,0.16);
   --ui-border: rgba(255,255,255,0.26);
@@ -208,4 +211,20 @@ button:active:not(:disabled) { transform: scale(0.97); }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Accesibilidad — foco de teclado visible (WCAG 2.4.7). Muchos controles usan
+   estilos inline con border:0, así que forzamos un anillo consistente para
+   quien navega con teclado/conmutador. `:focus-visible` no aparece al hacer
+   clic con ratón/dedo, solo en navegación por teclado, así que no molesta al
+   uso táctil. El offset deja el anillo sobre el papel (≥3:1). */
+:where(a, button, input, select, textarea, summary, [role="button"], [role="link"], [role="tab"], [tabindex]):focus-visible {
+  /* El outline sigue el border-radius propio del elemento automáticamente;
+     no fijamos radius aquí para no deformar botones redondos/píldora. */
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+/* Quita el outline por defecto cuando NO es navegación por teclado. */
+:where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus:not(:focus-visible) {
+  outline: none;
 }

@@ -243,7 +243,6 @@ export default function Dictionary({
               className="w-full pl-10 pr-4 py-3 rounded-lg text-lg placeholder-[var(--mute-strong)]"
               style={{
                 border: `2px solid ${J.border}`, background: J.paperHi, color: J.ink,
-                outline: 'none',
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlur={e => e.target.style.borderColor = J.border}

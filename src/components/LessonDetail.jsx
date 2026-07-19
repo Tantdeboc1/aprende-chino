@@ -111,7 +111,7 @@ export default function LessonDetail({
         padding: '40px 16px 16px',
       }}>
         <button onClick={goBack} className="flex items-center gap-1.5 text-sm mb-3" style={{
-          color: 'rgba(255,255,255,0.7)', background: 'none', border: 0, cursor: 'pointer', fontWeight: 600,
+          color: 'rgba(255,255,255,0.88)', background: 'none', border: 0, cursor: 'pointer', fontWeight: 600,
         }}>
           <span>←</span> {t('lesson_back_home')}
         </button>
@@ -134,7 +134,7 @@ export default function LessonDetail({
 
         {/* Barra de progreso */}
         <div className="mt-3 space-y-1">
-          <div className="flex justify-between text-xs mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div className="flex justify-between text-xs mb-1" style={{ color: 'rgba(255,255,255,0.85)' }}>
             <span>{stats.mastered} {t('lesson_mastered_label')} · {stats.seen - stats.mastered} {t('lesson_seen_label')} · {stats.unseen} {t('lesson_unseen_label')}</span>
             <span>{stats.total} {t('lesson_words_label')}</span>
           </div>
