@@ -69,7 +69,7 @@ export default function AchievementToast({ achievement, onClose, stackIndex = 0 
           background: 'rgba(255,255,255,0.12)',
           border: `1.5px solid ${J.butter}`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 32, flexShrink: 0,
+          fontSize: '2rem', flexShrink: 0,
           animation: 'ach-pop 700ms cubic-bezier(0.34,1.56,0.64,1) 100ms both',
         }}>
           {achievement.icon || '🏆'}
@@ -78,27 +78,27 @@ export default function AchievementToast({ achievement, onClose, stackIndex = 0 
         {/* Textos */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{
-            margin: 0, fontSize: 10, fontWeight: 800,
+            margin: 0, fontSize: '0.625rem', fontWeight: 800,
             letterSpacing: '0.18em', color: J.butter,
             textTransform: 'uppercase',
           }}>
             {t('achievement_unlocked')}
           </p>
           <p style={{
-            margin: '3px 0 0', fontSize: 15, fontWeight: 800,
+            margin: '3px 0 0', fontSize: '0.9375rem', fontWeight: 800,
             color: J.onAccent, lineHeight: 1.2,
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {title}
             {achievement.zh && (
-              <span className="font-cn" style={{ marginLeft: 6, fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+              <span className="font-cn" style={{ marginLeft: 6, fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
                 {achievement.zh}
               </span>
             )}
           </p>
           {desc && (
             <p style={{
-              margin: '2px 0 0', fontSize: 11.5,
+              margin: '2px 0 0', fontSize: '0.71875rem',
               color: 'rgba(255,255,255,0.78)', lineHeight: 1.3,
               whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
             }}>

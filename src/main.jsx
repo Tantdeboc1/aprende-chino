@@ -12,11 +12,14 @@ import './i18n';
 import { registerSW } from 'virtual:pwa-register';
 import { initErrorTracking } from './utils/errorTracking.js';
 import { initTheme } from './utils/theme.js';
+import { initFontScale } from './utils/fontScale.js';
 import { setNeedRefresh } from './utils/pwaUpdate.js';
 
 // Aplica el tema guardado ANTES del primer render para evitar parpadeo
 // (no se puede usar script inline en index.html por la CSP).
 initTheme();
+// Aplica el tamaño de texto guardado (accesibilidad) antes del primer render.
+initFontScale();
 
 // Service worker PWA — solo existe en builds de producción (en dev el
 // plugin está desactivado y registerSW es un no-op). En modo 'prompt'

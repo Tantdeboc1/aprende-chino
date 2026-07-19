@@ -116,21 +116,21 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             width: '100%',
             color: J.onAccent,
           }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.16em', color: J.butter, fontWeight: 700, margin: 0 }}>
+            <p style={{ fontSize: '0.6875rem', letterSpacing: '0.16em', color: J.butter, fontWeight: 700, margin: 0 }}>
               {t('story_topic_chapter', 'TEMA {{tema}} · HISTORIA {{historia}}', { tema: story.tema, historia: story.historia })}
             </p>
-            <h2 className="font-cn" style={{ fontSize: 28, fontWeight: 700, margin: '6px 0 2px' }}>
+            <h2 className="font-cn" style={{ fontSize: '1.75rem', fontWeight: 700, margin: '6px 0 2px' }}>
               {story.subtitulo}
             </h2>
-            <p style={{ fontSize: 18, fontWeight: 600, margin: 0 }}>{storyTitle}</p>
+            <p style={{ fontSize: '1.125rem', fontWeight: 600, margin: 0 }}>{storyTitle}</p>
 
-            <p style={{ marginTop: 14, fontSize: 13.5, color: 'rgba(255,255,255,0.75)', lineHeight: 1.55 }}>
+            <p style={{ marginTop: 14, fontSize: '0.84375rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.55 }}>
               {trField(story.resumen, story.resumenTr, baseLang(i18n.language))}
             </p>
 
             {/* Personajes */}
             <div style={{ marginTop: 16 }}>
-              <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
+              <p style={{ fontSize: '0.6875rem', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
                 {t('story_characters_label', 'Personajes')}
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -142,7 +142,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                       border: `1px solid rgba(255,255,255,0.12)`,
                       borderRadius: 999,
                       padding: '4px 10px',
-                      fontSize: 12,
+                      fontSize: '0.75rem',
                       color: J.onAccent,
                     }}>
                       <span className="font-cn">{c?.nombre}</span>
@@ -155,7 +155,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
 
             {/* Selector dificultad */}
             <div style={{ marginTop: 18 }}>
-              <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
+              <p style={{ fontSize: '0.6875rem', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', margin: '0 0 8px', textTransform: 'uppercase' }}>
                 {t('story_pinyin_label', 'Pinyin')}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
@@ -170,7 +170,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                       color: J.onAccent,
                       borderRadius: 12,
                       padding: '8px 6px',
-                      fontSize: 12,
+                      fontSize: '0.75rem',
                       fontWeight: 700,
                       cursor: 'pointer',
                     }}
@@ -179,7 +179,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                   </button>
                 ))}
               </div>
-              <p style={{ marginTop: 6, fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
+              <p style={{ marginTop: 6, fontSize: '0.6875rem', color: 'rgba(255,255,255,0.45)' }}>
                 {(() => { const d = DIFFICULTIES.find(x => x.id === difficulty); return d ? t(d.descKey, d.descDef) : ''; })()}
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
                 border: 0,
                 borderRadius: 14,
                 padding: '14px 18px',
-                fontSize: 15,
+                fontSize: '0.9375rem',
                 fontWeight: 700,
                 cursor: 'pointer',
                 boxShadow: '0 6px 18px -8px rgba(200,57,47,0.7)',
@@ -325,7 +325,7 @@ function TopBar({ onExit, title, subtitle, progress }) {
         color: J.onAccent,
         borderRadius: 999,
         padding: '7px 14px',
-        fontSize: 12.5,
+        fontSize: '0.78125rem',
         fontWeight: 700,
         cursor: 'pointer',
         boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
@@ -343,12 +343,12 @@ function TopBar({ onExit, title, subtitle, progress }) {
         border: '1px solid rgba(255,255,255,0.10)',
       }}>
         <p style={{
-          margin: 0, fontSize: 13, fontWeight: 700, color: J.onAccent, lineHeight: 1.2,
+          margin: 0, fontSize: '0.8125rem', fontWeight: 700, color: J.onAccent, lineHeight: 1.2,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>{title}</p>
         {subtitle && (
           <p className="font-cn" style={{
-            margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.7)',
+            margin: 0, fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>{subtitle}</p>
         )}

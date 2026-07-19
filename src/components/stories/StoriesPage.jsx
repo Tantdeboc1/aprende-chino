@@ -123,7 +123,7 @@ export default function StoriesPage({
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
+              style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: '0.875rem' }}>
               故
             </div>
             <span className="font-bold text-base" style={{ color: J.onAccent }}>{t('stories_header', 'Historias')}</span>
@@ -179,7 +179,7 @@ export default function StoriesPage({
             border: `1px dashed ${J.hairS}`,
             borderRadius: 14,
             padding: '12px 14px',
-            fontSize: 12,
+            fontSize: '0.75rem',
             color: J.mute,
             textAlign: 'center',
           }}>
@@ -231,7 +231,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
           <span className="font-semibold text-sm truncate" style={{ color: isLocked ? J.mute : J.ink }}>
             {storyTitle}
           </span>
-          <span className="text-[10px] font-bold flex-shrink-0"
+          <span className="text-[0.625rem] font-bold flex-shrink-0"
             style={{ color: isLocked ? J.mute : accent.text, letterSpacing: '0.05em' }}>
             T{story.tema}·H{story.historia}
           </span>
@@ -247,7 +247,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
               <div className="h-full rounded-full"
                 style={{ width: `${pct}%`, background: J.jade }} />
             </div>
-            <span className="text-[11px] font-bold flex-shrink-0" style={{ color: J.jade }}>
+            <span className="text-[0.6875rem] font-bold flex-shrink-0" style={{ color: J.jade }}>
               {data.mejorPuntuacion}/{data.maxPuntuacion}
             </span>
           </div>
@@ -255,7 +255,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
 
         {/* Hint si está bloqueada */}
         {isLocked && (
-          <p className="text-[11px] mt-1" style={{ color: J.mute }}>
+          <p className="text-[0.6875rem] mt-1" style={{ color: J.mute }}>
             {t('stories_locked_hint', 'Completa la anterior para desbloquear')}
           </p>
         )}

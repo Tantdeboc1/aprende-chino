@@ -107,7 +107,7 @@ function MilestonesRow() {
             }}
           >
             <span className="text-lg">{m.icon}</span>
-            <span className="text-[10px] font-bold" style={{ color: m.unlocked ? J.sandDeep : J.mute2 }}>
+            <span className="text-[0.625rem] font-bold" style={{ color: m.unlocked ? J.sandDeep : J.mute2 }}>
               {m.days}{t('streak_days_suffix')}
             </span>
           </div>

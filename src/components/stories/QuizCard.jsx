@@ -67,11 +67,11 @@ export default function QuizCard({
       color: J.onAccent,
     }}>
       <div style={{ marginBottom: 16 }}>
-        <div className="font-cn" style={{ fontSize: 24, fontWeight: 700, lineHeight: 1.35 }}>
+        <div className="font-cn" style={{ fontSize: '1.5rem', fontWeight: 700, lineHeight: 1.35 }}>
           {prompt}
         </div>
         {subprompt && (
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', marginTop: 4, fontStyle: 'italic' }}>
+          <div style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)', marginTop: 4, fontStyle: 'italic' }}>
             {subprompt}
           </div>
         )}

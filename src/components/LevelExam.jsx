@@ -123,7 +123,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
     <button onClick={goBack} aria-label={t('exam_back_button', 'Volver')}
       className="flex items-center gap-1.5 text-sm mb-4 transition-colors"
       style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}>
-      <span style={{ fontSize: 16 }}>←</span>{t('exam_back_to_hub', 'Volver')}
+      <span style={{ fontSize: '1rem' }}>←</span>{t('exam_back_to_hub', 'Volver')}
     </button>
   );
 
@@ -135,7 +135,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
           <BackBtn />
           <div className="rounded-2xl p-8 text-center" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
             <div className="font-cn mx-auto mb-4 flex items-center justify-center"
-              style={{ width: 72, height: 72, borderRadius: 18, fontSize: 40, background: J.sandBg, color: J.sand }}>关</div>
+              style={{ width: 72, height: 72, borderRadius: 18, fontSize: '2.5rem', background: J.sandBg, color: J.sand }}>关</div>
             <h1 className="text-2xl font-bold mb-2" style={{ color: J.ink }}>
               {t('level_exam_locked_title', 'Examen Final bloqueado')}
             </h1>
@@ -163,7 +163,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
           <BackBtn />
           <div className="rounded-2xl p-8 text-center" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
             <div className="font-cn mx-auto mb-4 flex items-center justify-center"
-              style={{ width: 72, height: 72, borderRadius: 18, fontSize: 40, background: J.redBg, color: J.red }}>试</div>
+              style={{ width: 72, height: 72, borderRadius: 18, fontSize: '2.5rem', background: J.redBg, color: J.red }}>试</div>
             <h1 className="text-2xl font-bold mb-1" style={{ color: J.ink }}>
               {t('level_exam_title', 'Examen Final · HSK 1')}
             </h1>
@@ -208,7 +208,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
           <div className="rounded-2xl p-8 max-w-sm w-full text-center"
             style={{ background: J.paperHi, border: `1px solid ${J.hair}`, boxShadow: `0 8px 24px -8px ${J.hairS}` }}>
             <div className="font-cn mx-auto mb-4 flex items-center justify-center"
-              style={{ width: 72, height: 72, borderRadius: 18, fontSize: 40, fontWeight: 700,
+              style={{ width: 72, height: 72, borderRadius: 18, fontSize: '2.5rem', fontWeight: 700,
                 background: passed ? J.jadeBg : J.redBg, color: passed ? J.jade : J.red }}>
               {passed ? '证' : '试'}
             </div>

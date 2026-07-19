@@ -15,7 +15,7 @@ const GAME_STYLES = {
 
 function Badge({ text, color }) {
   return (
-    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+    <span className="text-[0.6875rem] font-semibold px-2 py-0.5 rounded-full"
       style={{ background: color.bg, color: color.fg, border: `1px solid ${color.border}` }}>
       {text}
     </span>
@@ -224,7 +224,7 @@ export default function MiniGames({ goBack, navigateTo }) {
                             <h4 className="text-base font-bold leading-tight" style={{ color: J.ink }}>{game.title}</h4>
                             {best !== null && (
                               <span
-                                className="text-[11px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+                                className="text-[0.6875rem] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
                                 style={{ background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jadeMid}` }}
                               >
                                 {t('minigames_best_score', 'Mejor')} {best}%

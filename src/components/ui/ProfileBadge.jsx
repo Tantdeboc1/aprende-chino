@@ -77,7 +77,7 @@ export default function ProfileBadge({
           position: 'absolute',
           bottom: 0, left: '50%', transform: 'translateX(-50%)',
           background: levelBg, color: levelFg,
-          fontSize: 10, fontWeight: 800,
+          fontSize: '0.625rem', fontWeight: 800,
           padding: '2px 7px', borderRadius: 99,
           letterSpacing: '0.04em',
           border: variant === 'dark' ? `1.5px solid ${J.jadeDeep}` : `1.5px solid ${J.paperHi}`,

@@ -177,7 +177,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
           <div className="flex items-center gap-2">
             {char.lesson && (
               <span style={{
-                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                 background: badge.bg, color: badge.fg, border: `1px solid ${badge.border}`,
               }}>
                 L{char.lesson}
@@ -185,19 +185,19 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             )}
             {char.isSupplementary && (
               <span style={{
-                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                 background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
               }}>extra</span>
             )}
             {masteredAt && (
               <span style={{
-                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                 background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jade}`,
               }}>Dominado</span>
             )}
             {isPending && (
               <span className="animate-pulse" style={{
-                fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                 background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
               }}>Pendiente</span>
             )}
@@ -206,7 +206,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
             onClick={requestClose}
             aria-label={t('reading_close')}
             className="p-1"
-            style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer', fontSize: 20, fontWeight: 700 }}
+            style={{ color: J.mute, background: 'none', border: 0, cursor: 'pointer', fontSize: '1.25rem', fontWeight: 700 }}
           >
             ×
           </button>
@@ -228,7 +228,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
               <button
                 onClick={() => onSpeak?.(char)}
                 className="font-cn p-2.5 rounded-full transition-colors"
-                style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontSize: 16, fontWeight: 700 }}
+                style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontSize: '1rem', fontWeight: 700 }}
               >
                 声
               </button>
@@ -237,7 +237,7 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
                 className="font-cn p-2.5 rounded-full transition-colors"
                 style={{
                   background: isFav ? J.sandBg : J.paperHi, border: 0, cursor: 'pointer',
-                  color: isFav ? J.red : J.mute2, fontSize: 16, fontWeight: 700,
+                  color: isFav ? J.red : J.mute2, fontSize: '1rem', fontWeight: 700,
                 }}
               >
                 收

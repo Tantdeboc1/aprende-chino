@@ -118,13 +118,13 @@ export default function LevelUpModal({ levelUp, onClose }) {
       >
         {/* Etiqueta arriba */}
         <p style={{
-          margin: 0, fontSize: 11, fontWeight: 800,
+          margin: 0, fontSize: '0.6875rem', fontWeight: 800,
           letterSpacing: '0.22em', color: J.red,
           textTransform: 'uppercase',
         }}>
           {t('levelup_title')}
         </p>
-        <p className="font-cn" style={{ margin: '2px 0 18px', fontSize: 13, color: J.mute, letterSpacing: '0.1em' }}>
+        <p className="font-cn" style={{ margin: '2px 0 18px', fontSize: '0.8125rem', color: J.mute, letterSpacing: '0.1em' }}>
           升级了
         </p>
 
@@ -170,12 +170,12 @@ export default function LevelUpModal({ levelUp, onClose }) {
 
         {/* Nivel grande */}
         <div style={{ marginBottom: 8 }}>
-          <p style={{ margin: 0, fontSize: 11, color: J.mute, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+          <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
             {t('levelup_level')}
           </p>
           <p style={{
             margin: '2px 0 0',
-            fontSize: 64, fontWeight: 900,
+            fontSize: '4rem', fontWeight: 900,
             color: J.jade, letterSpacing: '-0.04em', lineHeight: 0.9,
             animation: 'lu-drop 600ms cubic-bezier(0.22,1,0.36,1) 200ms both',
           }}>
@@ -190,16 +190,16 @@ export default function LevelUpModal({ levelUp, onClose }) {
           marginTop: 14,
           animation: 'lu-fade 500ms ease-out 400ms both',
         }}>
-          <div style={{ fontSize: 11, letterSpacing: '0.16em', color: J.butter, fontWeight: 700, textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '0.6875rem', letterSpacing: '0.16em', color: J.butter, fontWeight: 700, textTransform: 'uppercase' }}>
             {t('levelup_new_title')}
           </div>
           <div style={{ marginTop: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-            <span style={{ fontSize: 24 }}>{levelUp.icon}</span>
-            <span style={{ fontSize: 17, fontWeight: 800, color: J.onAccent }}>
+            <span style={{ fontSize: '1.5rem' }}>{levelUp.icon}</span>
+            <span style={{ fontSize: '1.0625rem', fontWeight: 800, color: J.onAccent }}>
               {titleLoc}
             </span>
           </div>
-          <div className="font-cn" style={{ marginTop: 2, fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
+          <div className="font-cn" style={{ marginTop: 2, fontSize: '0.875rem', color: 'rgba(255,255,255,0.75)' }}>
             {levelUp.zh}
           </div>
         </div>
@@ -211,7 +211,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
             background: J.paperHi, border: `1px solid ${J.butter}`,
             animation: 'lu-fade 500ms ease-out 550ms both',
           }}>
-            <div style={{ fontSize: 11, letterSpacing: '0.14em', color: J.sandDeep, fontWeight: 800, textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '0.6875rem', letterSpacing: '0.14em', color: J.sandDeep, fontWeight: 800, textTransform: 'uppercase' }}>
               {t('levelup_avatar_unlocked', '¡Avatar desbloqueado!')}
             </div>
             <div style={{ marginTop: 8, display: 'flex', justifyContent: 'center', gap: 10 }}>
@@ -233,7 +233,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
         )}
         {nextUnlock && (
           <p style={{
-            marginTop: 12, marginBottom: 0, fontSize: 12.5, color: J.mute, fontWeight: 600,
+            marginTop: 12, marginBottom: 0, fontSize: '0.78125rem', color: J.mute, fontWeight: 600,
             animation: 'lu-fade 500ms ease-out 550ms both',
           }}>
             🔒 {t('levelup_next_avatar', 'Próximo avatar al nivel {{level}}', { level: nextUnlock.level })}
@@ -248,7 +248,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
             background: J.red, color: J.onAccent,
             border: 0, borderRadius: 14,
             padding: '14px 18px',
-            fontSize: 15, fontWeight: 800, letterSpacing: '0.02em',
+            fontSize: '0.9375rem', fontWeight: 800, letterSpacing: '0.02em',
             cursor: 'pointer',
             boxShadow: '0 8px 20px -6px rgba(200,57,47,0.6)',
           }}

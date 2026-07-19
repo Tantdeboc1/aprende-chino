@@ -84,15 +84,15 @@ export default function SplashScreen({ progress, onComplete }) {
       <div className="flex items-center gap-3 mb-10">
         <div
           className="font-cn flex items-center justify-center"
-          style={{ width: 44, height: 44, borderRadius: 14, background: J.jade, color: J.butter, fontSize: 24, fontWeight: 700 }}
+          style={{ width: 44, height: 44, borderRadius: 14, background: J.jade, color: J.butter, fontSize: '1.5rem', fontWeight: 700 }}
         >
           路
         </div>
         <div>
-          <h1 style={{ fontWeight: 700, fontSize: 24, letterSpacing: '-0.02em', color: J.ink, margin: 0 }}>
+          <h1 style={{ fontWeight: 700, fontSize: '1.5rem', letterSpacing: '-0.02em', color: J.ink, margin: 0 }}>
             {APP_NAME}
           </h1>
-          <p style={{ color: J.mute, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0 }}>
+          <p style={{ color: J.mute, fontSize: '0.6875rem', letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0 }}>
             {t('app_tagline', 'Learn Chinese')}
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function SplashScreen({ progress, onComplete }) {
             transition: 'width 0.4s ease-out',
           }} />
         </div>
-        <p style={{ color: J.mute, fontSize: 12, textAlign: 'center', fontWeight: 500 }}>
+        <p style={{ color: J.mute, fontSize: '0.75rem', textAlign: 'center', fontWeight: 500 }}>
           {progress < 100 ? t('splash_loading', 'Cargando...') : t('splash_ready', '¡Todo listo!')}
         </p>
       </div>

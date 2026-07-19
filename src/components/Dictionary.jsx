@@ -150,8 +150,8 @@ export default function Dictionary({
       <Container size="lg">
         <div className="mb-6">
           <div className="flex items-start justify-between mb-4">
-            <button onClick={goBack} className="flex items-center" style={{ color: J.inkSoft, fontWeight: 600, fontSize: 14, background: 'none', border: 0, cursor: 'pointer' }}>
-              <span style={{ marginRight: 8, fontSize: 16 }}>←</span>
+            <button onClick={goBack} className="flex items-center" style={{ color: J.inkSoft, fontWeight: 600, fontSize: '0.875rem', background: 'none', border: 0, cursor: 'pointer' }}>
+              <span style={{ marginRight: 8, fontSize: '1rem' }}>←</span>
               {t('dictionary_back_to_menu')}
             </button>
             <ProfileBadge variant="light" />
@@ -171,7 +171,7 @@ export default function Dictionary({
             <button
               onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(null); setShowFavorites(false); }}
               style={{
-                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                padding: '6px 12px', borderRadius: 99, fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer',
                 border: `1px solid ${selectedLesson === null && !showFavorites ? J.ink : J.hair}`,
                 background: selectedLesson === null && !showFavorites ? J.ink : J.paperHi,
                 color: selectedLesson === null && !showFavorites ? J.paperHi : J.inkSoft,
@@ -187,7 +187,7 @@ export default function Dictionary({
                   key={l.lesson}
                   onClick={() => { typeof setSelectedLesson === 'function' && setSelectedLesson(isActive ? null : l.lesson); setShowFavorites(false); }}
                   style={{
-                    padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                    padding: '6px 12px', borderRadius: 99, fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer',
                     border: `1px solid ${isActive ? colors.border : J.hair}`,
                     background: isActive ? colors.bg : J.paperHi,
                     color: isActive ? colors.fg : J.inkSoft,
@@ -203,13 +203,13 @@ export default function Dictionary({
               onClick={() => { setShowFavorites(f => !f); typeof setSelectedLesson === 'function' && setSelectedLesson(null); }}
               className="flex items-center gap-1.5"
               style={{
-                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                padding: '6px 12px', borderRadius: 99, fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer',
                 border: `1px solid ${showFavorites ? J.sand : J.hair}`,
                 background: showFavorites ? J.sandBg : J.paperHi,
                 color: showFavorites ? J.sandDeep : J.inkSoft,
               }}
             >
-              <span className="font-cn" style={{ fontSize: 14 }}>收</span>
+              <span className="font-cn" style={{ fontSize: '0.875rem' }}>收</span>
               {t('dictionary_favorites_button')} ({favorites.size})
             </button>
           </div>
@@ -220,21 +220,21 @@ export default function Dictionary({
               onClick={() => typeof setShowSupplementary === 'function' && setShowSupplementary(!showSupplementary)}
               className="flex items-center gap-2"
               style={{
-                padding: '6px 12px', borderRadius: 99, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                padding: '6px 12px', borderRadius: 99, fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer',
                 border: `1px solid ${showSupplementary ? J.jade : J.hair}`,
                 background: showSupplementary ? J.jadeBg : J.paperHi,
                 color: showSupplementary ? J.jadeDeep : J.inkSoft,
               }}
             >
-              <span className="font-cn" style={{ fontSize: 14 }}>补</span>
+              <span className="font-cn" style={{ fontSize: '0.875rem' }}>补</span>
               {t('dictionary_extra_vocab')} ({totalSupp})
             </button>
-            <span style={{ color: J.mute, fontSize: 12 }}>{totalMain} {t('dictionary_main_words')}</span>
+            <span style={{ color: J.mute, fontSize: '0.75rem' }}>{totalMain} {t('dictionary_main_words')}</span>
           </div>
 
           {/* Buscador */}
           <div className="relative">
-            <span className="font-cn absolute left-3 top-1/2 -translate-y-1/2" style={{ color: J.jade, fontSize: 20, fontWeight: 700 }}>找</span>
+            <span className="font-cn absolute left-3 top-1/2 -translate-y-1/2" style={{ color: J.jade, fontSize: '1.25rem', fontWeight: 700 }}>找</span>
             <input
               type="text"
               placeholder={t('dictionary_search_placeholder')}
@@ -287,7 +287,7 @@ export default function Dictionary({
                       const c = LESSON_COLORS[char.lesson] || LESSON_COLORS[1];
                       return (
                         <span style={{
-                          fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                          fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                           background: c.bg, color: c.fg, border: `1px solid ${c.border}`,
                         }}>
                           L{char.lesson}
@@ -296,7 +296,7 @@ export default function Dictionary({
                     })()}
                     {char.isSupplementary && (
                       <span style={{
-                        fontSize: 11, padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                        fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
                         background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
                       }}>extra</span>
                     )}
@@ -309,7 +309,7 @@ export default function Dictionary({
                       onClick={(e) => { e.stopPropagation(); toggleFavorite(char.char); }}
                       className="font-cn"
                       style={{
-                        background: 'none', border: 0, cursor: 'pointer', fontSize: 16, fontWeight: 700,
+                        background: 'none', border: 0, cursor: 'pointer', fontSize: '1rem', fontWeight: 700,
                         color: isFav ? J.red : J.mute2,
                       }}
                       title={isFav ? t('dictionary_remove_favorite') : t('dictionary_add_favorite')}
@@ -334,7 +334,7 @@ export default function Dictionary({
                         className="font-cn rounded-full"
                         style={{
                           padding: '4px 8px', background: J.jadeBg, color: J.jadeDeep,
-                          border: 0, cursor: 'pointer', fontSize: 13, fontWeight: 700,
+                          border: 0, cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700,
                         }}
                       >
                         声

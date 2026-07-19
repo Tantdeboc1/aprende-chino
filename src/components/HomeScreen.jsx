@@ -248,7 +248,7 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
                   style={{ width: `${pct}%`, background: lesson.color.bar }}
                 />
               </div>
-              <span className="ml-2 text-[11px] font-bold flex-shrink-0"
+              <span className="ml-2 text-[0.6875rem] font-bold flex-shrink-0"
                 style={{ color: masteredPct === 100 ? J.jade : lesson.color.text }}>
                 {masteredPct === 100 ? '★' : `${pct}%`}
               </span>
@@ -313,7 +313,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
       }}>
         <div className="flex items-center gap-2">
           <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: 14 }}>
+            style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: '0.875rem' }}>
             路
           </div>
           {/* La marca no se traduce; el tagline sí (app_tagline) */}
@@ -513,7 +513,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           >
             <div className="font-cn flex items-center justify-center flex-shrink-0"
               style={{
-                width: 48, height: 48, borderRadius: 14, fontSize: 26, fontWeight: 700,
+                width: 48, height: 48, borderRadius: 14, fontSize: '1.625rem', fontWeight: 700,
                 background: examResult?.passed ? J.jadeBg : examUnlocked ? J.redBg : J.sandBg,
                 color: examResult?.passed ? J.jade : examUnlocked ? J.red : J.sand,
               }}>
@@ -536,7 +536,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
                 </div>
               )}
             </div>
-            <span style={{ color: J.mute, fontSize: 18 }}>→</span>
+            <span style={{ color: J.mute, fontSize: '1.125rem' }}>→</span>
           </button>
         </div>
 
@@ -552,7 +552,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               style={{ background: J.paperHi, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
             >
               <div className="font-cn flex items-center justify-center flex-shrink-0"
-                style={{ width: 48, height: 48, borderRadius: 14, fontSize: 26, fontWeight: 700, background: J.jadeBg, color: J.jade }}>
+                style={{ width: 48, height: 48, borderRadius: 14, fontSize: '1.625rem', fontWeight: 700, background: J.jadeBg, color: J.jade }}>
                 图
               </div>
               <div className="flex-1 min-w-0">
@@ -563,7 +563,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
                   {t('china_home_hint', 'Gastronomía, dialectos y turismo por provincia')}
                 </p>
               </div>
-              <span style={{ color: J.mute, fontSize: 18 }}>→</span>
+              <span style={{ color: J.mute, fontSize: '1.125rem' }}>→</span>
             </button>
           </div>
         )}

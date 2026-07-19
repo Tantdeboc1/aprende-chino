@@ -44,7 +44,7 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
           <div
             className="font-cn mx-auto mb-4 flex items-center justify-center"
             style={{
-              width: 64, height: 64, borderRadius: 16, fontSize: 36, fontWeight: 700,
+              width: 64, height: 64, borderRadius: 16, fontSize: '2.25rem', fontWeight: 700,
               background: good ? J.jadeBg : J.sandBg,
               color: good ? J.jade : J.sand,
             }}

@@ -40,7 +40,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
           <div className="text-center py-8 px-4">
             {/* CJK icon */}
             <div className="font-cn mx-auto mb-6 flex items-center justify-center"
-              style={{ width: 80, height: 80, borderRadius: 20, background: J.jadeBg, color: J.jade, fontSize: 42, fontWeight: 700 }}>
+              style={{ width: 80, height: 80, borderRadius: 20, background: J.jadeBg, color: J.jade, fontSize: '2.625rem', fontWeight: 700 }}>
               复
             </div>
             <h2 className="text-xl font-bold mb-2" style={{ color: J.ink }}>
@@ -272,7 +272,7 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
         <div className="text-center mb-8">
           <div className="font-cn mx-auto mb-3 flex items-center justify-center"
             style={{
-              width: 64, height: 64, borderRadius: 16, fontWeight: 700, fontSize: 36,
+              width: 64, height: 64, borderRadius: 16, fontWeight: 700, fontSize: '2.25rem',
               background: correctPct >= 80 ? J.jadeBg : correctPct >= 50 ? J.sandBg : J.redBg,
               color: correctPct >= 80 ? J.jade : correctPct >= 50 ? J.sand : J.red,
             }}>

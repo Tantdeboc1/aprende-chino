@@ -12,13 +12,13 @@ export default function JMark() {
           borderRadius: 10,
           background: J.jade,
           color: J.butter,
-          fontSize: 18,
+          fontSize: '1.125rem',
           fontWeight: 700,
         }}
       >
         路
       </div>
-      <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-0.01em', color: J.ink }}>
+      <span style={{ fontWeight: 600, fontSize: '0.9375rem', letterSpacing: '-0.01em', color: J.ink }}>
         {APP_NAME}
       </span>
     </div>

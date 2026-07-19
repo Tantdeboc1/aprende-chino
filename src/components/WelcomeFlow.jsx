@@ -62,12 +62,12 @@ export default function WelcomeFlow({ onComplete }) {
         <div className="text-center mb-6">
           <div className="font-cn flex justify-center"
             style={{ width: 56, height: 56, borderRadius: 16, background: J.jade, color: J.butter,
-                     fontSize: 32, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                     fontSize: '2rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
             路
           </div>
           {/* Marca fija + tagline traducido */}
-          <p style={{ color: J.ink, fontSize: 16, fontWeight: 700, marginTop: 10, marginBottom: 0 }}>{APP_NAME}</p>
-          <p style={{ color: J.inkSoft, fontSize: 13, marginTop: 2 }}>{t('app_tagline', 'Learn Chinese')}</p>
+          <p style={{ color: J.ink, fontSize: '1rem', fontWeight: 700, marginTop: 10, marginBottom: 0 }}>{APP_NAME}</p>
+          <p style={{ color: J.inkSoft, fontSize: '0.8125rem', marginTop: 2 }}>{t('app_tagline', 'Learn Chinese')}</p>
         </div>
 
         {/* Indicador de paso */}
@@ -84,7 +84,7 @@ export default function WelcomeFlow({ onComplete }) {
         {/* ── Paso 0: Nombre ── */}
         {step === 0 && (
           <div className="space-y-4">
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: J.ink, textAlign: 'center', margin: 0 }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: J.ink, textAlign: 'center', margin: 0 }}>
               {t('welcome_name_placeholder')}
             </h2>
             <input
@@ -97,7 +97,7 @@ export default function WelcomeFlow({ onComplete }) {
               className="placeholder-[var(--mute-strong)]"
               style={{
                 width: '100%', padding: '14px 18px', border: `2px solid ${J.border}`, borderRadius: 14,
-                fontSize: 16, background: J.paper, color: J.ink,
+                fontSize: '1rem', background: J.paper, color: J.ink,
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlur={e => e.target.style.borderColor = J.hair}
@@ -108,7 +108,7 @@ export default function WelcomeFlow({ onComplete }) {
         {/* ── Paso 1: Género ── */}
         {step === 1 && (
           <div>
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 18px' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 18px' }}>
               {t('welcome_step_gender_title')}
             </h2>
             <div className="flex flex-col gap-3">
@@ -127,8 +127,8 @@ export default function WelcomeFlow({ onComplete }) {
                       transition: 'all 180ms ease',
                     }}
                   >
-                    <span className="font-cn" style={{ fontSize: 22, fontWeight: 700 }}>{g.cn}</span>
-                    <span style={{ fontSize: 15, fontWeight: 700 }}>{t(g.i18nKey)}</span>
+                    <span className="font-cn" style={{ fontSize: '1.375rem', fontWeight: 700 }}>{g.cn}</span>
+                    <span style={{ fontSize: '0.9375rem', fontWeight: 700 }}>{t(g.i18nKey)}</span>
                   </button>
                 );
               })}
@@ -139,7 +139,7 @@ export default function WelcomeFlow({ onComplete }) {
         {/* ── Paso 2: Avatar ── */}
         {step === 2 && (
           <div>
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 18px' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 18px' }}>
               {t('avatar_picker_title')}
             </h2>
             <div style={{
@@ -169,7 +169,7 @@ export default function WelcomeFlow({ onComplete }) {
                       <span style={{
                         position: 'absolute', top: 3, right: 3,
                         background: J.butter, color: J.jadeDeep,
-                        fontSize: 10, fontWeight: 800, width: 18, height: 18, borderRadius: '50%',
+                        fontSize: '0.625rem', fontWeight: 800, width: 18, height: 18, borderRadius: '50%',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
                       }}>✓</span>
@@ -184,10 +184,10 @@ export default function WelcomeFlow({ onComplete }) {
         {/* ── Paso 3: Meta diaria ── */}
         {step === 3 && (
           <div>
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 6px' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: J.ink, textAlign: 'center', margin: '0 0 6px' }}>
               {t('welcome_step_goal_title', '¿Cuánto quieres practicar al día?')}
             </h2>
-            <p style={{ fontSize: 12.5, color: J.inkSoft, textAlign: 'center', margin: '0 0 18px' }}>
+            <p style={{ fontSize: '0.78125rem', color: J.inkSoft, textAlign: 'center', margin: '0 0 18px' }}>
               {t('welcome_step_goal_hint', 'Puedes cambiarlo cuando quieras en Ajustes')}
             </p>
             <div className="flex flex-col gap-3">
@@ -208,12 +208,12 @@ export default function WelcomeFlow({ onComplete }) {
                       transition: 'all 180ms ease',
                     }}
                   >
-                    <span style={{ fontSize: 22 }}>{p.icon}</span>
+                    <span style={{ fontSize: '1.375rem' }}>{p.icon}</span>
                     <span style={{ flex: 1 }}>
-                      <span style={{ display: 'block', fontSize: 15, fontWeight: 700 }}>
+                      <span style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 700 }}>
                         {label} · {p.xp} XP
                       </span>
-                      <span style={{ display: 'block', fontSize: 12, opacity: 0.8 }}>{desc}</span>
+                      <span style={{ display: 'block', fontSize: '0.75rem', opacity: 0.8 }}>{desc}</span>
                     </span>
                   </button>
                 );
@@ -229,7 +229,7 @@ export default function WelcomeFlow({ onComplete }) {
               onClick={goBack}
               style={{
                 padding: '14px 20px', borderRadius: 99, border: `1px solid ${J.hair}`,
-                background: J.paper, color: J.ink, fontWeight: 700, fontSize: 15, cursor: 'pointer',
+                background: J.paper, color: J.ink, fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer',
               }}
             >
               {t('welcome_back_button')}
@@ -241,7 +241,7 @@ export default function WelcomeFlow({ onComplete }) {
             style={{
               flex: 1, padding: '14px 22px', borderRadius: 99, border: 0,
               background: canNext ? J.jade : J.mute2,
-              color: J.onAccent, fontWeight: 700, fontSize: 15,
+              color: J.onAccent, fontWeight: 700, fontSize: '0.9375rem',
               cursor: canNext ? 'pointer' : 'default',
               boxShadow: canNext ? '0 4px 12px -4px rgba(31,74,51,0.4)' : 'none',
             }}

@@ -104,7 +104,7 @@ function StorySelector({ onSelect }) {
                     {t('reading_questions_count', '{{count}} preguntas', { count: story.preguntas.length })}
                   </p>
                   {p?.completada && (
-                    <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-full"
+                    <span className="text-[0.6875rem] font-bold px-1.5 py-0.5 rounded-full"
                       style={{ background: J.jadeBg, color: J.jadeDeep }}>
                       ✓ {p.mejorPuntuacion}/{p.maxPuntuacion}
                     </span>
@@ -178,7 +178,7 @@ function ExerciseChooser({ story, onChoose, onBack, t, lang }) {
               <span className="flex-1 font-bold text-sm" style={{ color: J.ink }}>{tp.label}</span>
               {tp.ready
                 ? <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
-                : <span className="text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ background: J.sandBg, color: J.sandDeep }}>{t('reading_coming_soon', 'Pronto')}</span>}
+                : <span className="text-[0.6875rem] font-bold px-2 py-0.5 rounded-full" style={{ background: J.sandBg, color: J.sandDeep }}>{t('reading_coming_soon', 'Pronto')}</span>}
             </button>
           ))}
         </div>
@@ -779,7 +779,7 @@ function StoryReader({ story, dict, maxLen, onBack, onContinue, speak }) {
             className="font-cn text-2xl leading-loose text-center"
             style={{ color: J.ink, fontFamily: J.cnSerif }}
           />
-          <p className="text-[11px] text-center mt-2" style={{ color: J.mute }}>
+          <p className="text-[0.6875rem] text-center mt-2" style={{ color: J.mute }}>
             {t('reading_tap_hint', 'Toca una palabra para ver su significado')}
           </p>
           {speak && (

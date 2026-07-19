@@ -57,10 +57,10 @@ function SkillBar({ label, cn, correct, total }) {
   return (
     <div style={{ marginBottom: 12 }}>
       <div className="flex items-baseline justify-between" style={{ marginBottom: 5 }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: J.ink }}>
+        <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: J.ink }}>
           <span className="font-cn" style={{ color: J.red, marginRight: 6 }}>{cn}</span>{label}
         </span>
-        <span style={{ fontSize: 12, fontWeight: 800, color: ok ? J.jade : J.sand }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 800, color: ok ? J.jade : J.sand }}>
           {correct}/{total} · {pct}%
         </span>
       </div>
@@ -148,7 +148,7 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
       <div style={{ minHeight: '100vh', background: J.paper, padding: '14px 20px 90px' }}>
         <button onClick={goBack}
           style={{ background: J.paperHi, border: 0, borderRadius: 14, padding: '6px 12px',
-                   fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
+                   fontSize: '0.8125rem', color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
           ← {t('minigames_back_to_minigames', 'Volver a Destrezas')}
         </button>
 
@@ -156,12 +156,12 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
           <div className="font-cn" style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 76, height: 76, borderRadius: 20, background: J.jade, color: J.butter,
-            fontSize: 40, fontWeight: 700, boxShadow: J.shadowMd,
+            fontSize: '2.5rem', fontWeight: 700, boxShadow: J.shadowMd,
           }}>证</div>
-          <h1 style={{ margin: '14px 0 2px', fontSize: 26, fontWeight: 800, color: J.ink, letterSpacing: '-0.02em' }}>
+          <h1 style={{ margin: '14px 0 2px', fontSize: '1.625rem', fontWeight: 800, color: J.ink, letterSpacing: '-0.02em' }}>
             {t('cefr_title', 'Examen MCER')} · {CEFR_LEVEL}<span style={{ color: J.red }}>.</span>
           </h1>
-          <p style={{ fontSize: 13.5, color: J.inkSoft }}>
+          <p style={{ fontSize: '0.84375rem', color: J.inkSoft }}>
             {t('cefr_subtitle', 'Certifica tu nivel A1 por destrezas')}
           </p>
         </div>
@@ -176,21 +176,21 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
               style={{ padding: '10px 0', borderTop: i === 0 ? 0 : `1px solid ${J.hair}` }}>
               <span className="font-cn" style={{
                 width: 38, height: 38, borderRadius: 11, background: J.jadeBg, color: J.jadeDeep,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 700,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem', fontWeight: 700,
               }}>{s.cn}</span>
               <div style={{ flex: 1 }}>
-                <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: J.ink }}>{skillLabel(s.id)}</p>
-                <p style={{ margin: 0, fontSize: 12, color: J.mute }}>{PER_SKILL} {t('cefr_questions', 'preguntas')}</p>
+                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: 700, color: J.ink }}>{skillLabel(s.id)}</p>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: J.mute }}>{PER_SKILL} {t('cefr_questions', 'preguntas')}</p>
               </div>
             </div>
           ))}
-          <p style={{ margin: '10px 2px 0', fontSize: 12, color: J.mute, lineHeight: 1.5 }}>
+          <p style={{ margin: '10px 2px 0', fontSize: '0.75rem', color: J.mute, lineHeight: 1.5 }}>
             {t('cefr_pass_hint', 'Apto con un {{pct}}% global y sin suspender ninguna destreza.', { pct: CEFR_PASS_PCT })}
           </p>
         </div>
 
         {prevResult && (
-          <p style={{ marginTop: 12, textAlign: 'center', fontSize: 12.5, color: J.inkSoft }}>
+          <p style={{ marginTop: 12, textAlign: 'center', fontSize: '0.78125rem', color: J.inkSoft }}>
             {prevResult.passed
               ? `✅ ${t('cefr_already_passed', 'Ya tienes el A1')} · ${t('cefr_best', 'mejor')} ${prevResult.bestPct}%`
               : `${t('cefr_best', 'mejor')}: ${prevResult.bestPct}%`}
@@ -199,7 +199,7 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
 
         <button onClick={start}
           style={{ width: '100%', marginTop: 18, padding: '15px', borderRadius: 16, border: 0,
-                   background: J.red, color: J.onAccent, fontSize: 15, fontWeight: 800, cursor: 'pointer',
+                   background: J.red, color: J.onAccent, fontSize: '0.9375rem', fontWeight: 800, cursor: 'pointer',
                    boxShadow: J.shadowMd }}>
           {t('cefr_start', 'Empezar examen')}
         </button>
@@ -222,20 +222,20 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
             <div className="font-cn" style={{
               width: 72, height: 72, borderRadius: 18, margin: '0 auto 12px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 38, fontWeight: 700,
+              fontSize: '2.375rem', fontWeight: 700,
               background: apto ? J.jade : J.sandBg, color: apto ? J.butter : J.sandDeep,
             }}>{apto ? '证' : '练'}</div>
 
-            <h2 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: J.ink }}>
+            <h2 style={{ margin: 0, fontSize: '1.375rem', fontWeight: 800, color: J.ink }}>
               {apto ? `${t('cefr_passed', 'Apto')} · ${CEFR_LEVEL}` : t('cefr_failed', 'Sigue practicando')}
             </h2>
-            <p style={{ margin: '2px 0 16px', fontSize: 13, color: J.inkSoft }}>
+            <p style={{ margin: '2px 0 16px', fontSize: '0.8125rem', color: J.inkSoft }}>
               {apto
                 ? t('cefr_passed_sub', '¡Has certificado el nivel A1!')
                 : t('cefr_failed_sub', 'Casi. Repasa y vuelve a intentarlo.')}
             </p>
 
-            <div style={{ fontSize: 52, fontWeight: 800, color: apto ? J.jade : J.sand, lineHeight: 1, marginBottom: 18 }}>
+            <div style={{ fontSize: '3.25rem', fontWeight: 800, color: apto ? J.jade : J.sand, lineHeight: 1, marginBottom: 18 }}>
               {pct}%
             </div>
 
@@ -249,12 +249,12 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
             <div className="flex gap-3">
               <button onClick={start}
                 style={{ flex: 1, padding: '13px', borderRadius: 14, border: 0, background: J.red,
-                         color: J.onAccent, fontSize: 14, fontWeight: 800, cursor: 'pointer' }}>
+                         color: J.onAccent, fontSize: '0.875rem', fontWeight: 800, cursor: 'pointer' }}>
                 {t('cefr_retry', 'Repetir')}
               </button>
               <button onClick={goBack}
                 style={{ flex: 1, padding: '13px', borderRadius: 14, background: J.paperHi,
-                         color: J.inkSoft, border: `1px solid ${J.hair}`, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+                         color: J.inkSoft, border: `1px solid ${J.hair}`, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer' }}>
                 {t('exam_back_button', 'Salir')}
               </button>
             </div>
@@ -273,18 +273,18 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
       {/* Barra superior: progreso + destreza actual */}
       <div className="flex items-center gap-3" style={{ marginBottom: 16 }}>
         <button onClick={goBack} aria-label={t('exam_back_button', 'Salir')}
-          style={{ background: 'transparent', border: 0, color: J.mute, fontSize: 20, cursor: 'pointer', lineHeight: 1 }}>✕</button>
+          style={{ background: 'transparent', border: 0, color: J.mute, fontSize: '1.25rem', cursor: 'pointer', lineHeight: 1 }}>✕</button>
         <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: J.hair }}>
           <div className="h-full rounded-full transition-all duration-300"
             style={{ width: `${progress}%`, background: J.jade }} />
         </div>
         <span className="font-cn" style={{
-          fontSize: 13, fontWeight: 800, color: J.jadeDeep, background: J.jadeBg,
+          fontSize: '0.8125rem', fontWeight: 800, color: J.jadeDeep, background: J.jadeBg,
           borderRadius: 8, padding: '2px 8px',
         }}>{SKILL_META[current.skill].cn}</span>
       </div>
 
-      <p style={{ textAlign: 'center', fontSize: 12, color: J.mute, fontWeight: 600, letterSpacing: '0.04em', marginBottom: 14 }}>
+      <p style={{ textAlign: 'center', fontSize: '0.75rem', color: J.mute, fontWeight: 600, letterSpacing: '0.04em', marginBottom: 14 }}>
         {skillLabel(current.skill)} · {qIndex + 1}/{questions.length}
       </p>
 
@@ -296,24 +296,24 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
         {current.skill === 'listening' && (
           <button onClick={() => speak?.(current.char)}
             style={{ width: 88, height: 88, borderRadius: '50%', border: 0, cursor: 'pointer',
-                     background: J.jade, color: J.onAccent, fontSize: 38,
+                     background: J.jade, color: J.onAccent, fontSize: '2.375rem',
                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: J.shadowMd }}>
             🔊
           </button>
         )}
         {current.skill === 'reading' && (
           <>
-            <div className="font-cn" style={{ fontSize: 60, fontWeight: 700, color: J.ink, lineHeight: 1 }}>{current.char}</div>
-            <div style={{ fontSize: 16, color: J.inkSoft, marginTop: 8 }}>{current.pinyin}</div>
+            <div className="font-cn" style={{ fontSize: '3.75rem', fontWeight: 700, color: J.ink, lineHeight: 1 }}>{current.char}</div>
+            <div style={{ fontSize: '1rem', color: J.inkSoft, marginTop: 8 }}>{current.pinyin}</div>
           </>
         )}
         {current.skill === 'writing' && (
           <>
-            <div className="font-cn" style={{ fontSize: 30, fontWeight: 700, color: J.ink, lineHeight: 1.3 }}>
+            <div className="font-cn" style={{ fontSize: '1.875rem', fontWeight: 700, color: J.ink, lineHeight: 1.3 }}>
               {current.sentence.replace('___', '￭')}
             </div>
             {current.translation && (
-              <div style={{ fontSize: 13.5, color: J.mute, marginTop: 10 }}>{current.translation}</div>
+              <div style={{ fontSize: '0.84375rem', color: J.mute, marginTop: 10 }}>{current.translation}</div>
             )}
           </>
         )}

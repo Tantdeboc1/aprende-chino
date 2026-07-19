@@ -95,7 +95,11 @@ export default function BottomNav({ activeScreen, onNavigate }) {
         borderTop: `1px solid ${J.hair}`,
       }}
     >
-      <div className="max-w-lg mx-auto flex justify-around items-end pt-1 pb-3 px-0.5">
+      {/* Tamaños FIJOS en px (no rem): la barra es chrome de navegación y con 7
+          pestañas no cabría si escalara con el ajuste de tamaño de texto. El
+          contenido de lectura sí escala; aquí priorizamos que la nav siga
+          usable a cualquier escala. */}
+      <div className="max-w-lg mx-auto flex justify-around items-end" style={{ paddingTop: 4, paddingBottom: 12, paddingLeft: 2, paddingRight: 2 }}>
         {items.map((item) => {
           const { key, label, Icon } = item;
           const active  = isActive(key);
@@ -104,12 +108,12 @@ export default function BottomNav({ activeScreen, onNavigate }) {
             <button
               key={key}
               onClick={() => onNavigate(key)}
-              className="flex flex-col items-center gap-0.5 px-1.5 py-1 min-w-[46px] transition-all duration-200 active:scale-95"
-              style={{ background: 'none', border: 0, cursor: 'pointer' }}
+              className="flex flex-col items-center transition-all duration-200 active:scale-95"
+              style={{ background: 'none', border: 0, cursor: 'pointer', gap: 2, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4, minWidth: 46 }}
             >
               <span
-                className="flex items-center justify-center w-11 h-7 rounded-full transition-all duration-200"
-                style={{ background: active ? accent.bg : 'transparent', position: 'relative' }}
+                className="flex items-center justify-center rounded-full transition-all duration-200"
+                style={{ background: active ? accent.bg : 'transparent', position: 'relative', width: 44, height: 28 }}
               >
                 <span style={{ color: active ? accent.color : J.mute2, transition: 'color 200ms' }}>
                   <Icon />
@@ -121,7 +125,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
                       position: 'absolute', top: -3, right: 2,
                       minWidth: 15, height: 15, padding: '0 3px',
                       borderRadius: 99, background: J.red, color: '#fff',
-                      fontSize: 9.5, fontWeight: 800, lineHeight: 1,
+                      fontSize: '0.59375rem', fontWeight: 800, lineHeight: 1,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       boxShadow: `0 0 0 2px ${J.paperHi}`,
                     }}
@@ -131,16 +135,17 @@ export default function BottomNav({ activeScreen, onNavigate }) {
                 )}
               </span>
               <span
-                className="text-[10px] font-semibold leading-none transition-colors duration-200"
-                style={{ color: active ? accent.color : J.mute2 }}
+                className="font-semibold leading-none transition-colors duration-200"
+                style={{ color: active ? accent.color : J.mute2, fontSize: 10 }}
               >
                 {label}
               </span>
               {/* Siempre montado: escala 0→1 con rebote al activarse (si fuera
                   render condicional aparecería de golpe, sin transición). */}
               <span
-                className="w-1 h-1 rounded-full mt-0.5"
+                className="rounded-full"
                 style={{
+                  width: 4, height: 4, marginTop: 2,
                   background: accent.color,
                   transform: active ? 'scale(1)' : 'scale(0)',
                   transition: 'transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1)',

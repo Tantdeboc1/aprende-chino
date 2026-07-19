@@ -8,7 +8,7 @@ export default function JTopBar({ left, right, sub }) {
       {sub && (
         <div
           className="flex-1 text-center"
-          style={{ fontSize: 12, fontWeight: 700, color: '#5b5446', letterSpacing: '0.04em' }}
+          style={{ fontSize: '0.75rem', fontWeight: 700, color: '#5b5446', letterSpacing: '0.04em' }}
         >
           {sub}
         </div>

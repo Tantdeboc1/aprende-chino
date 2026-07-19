@@ -136,7 +136,7 @@ function ChinaSvg({ selectedId, onSelect }) {
   const ctrlStyle = {
     width: 32, height: 32, borderRadius: 9, background: J.paperHi,
     border: `1px solid ${J.hair}`, color: J.ink, cursor: 'pointer',
-    fontSize: 18, fontWeight: 700, lineHeight: 1, display: 'flex',
+    fontSize: '1.125rem', fontWeight: 700, lineHeight: 1, display: 'flex',
     alignItems: 'center', justifyContent: 'center', boxShadow: J.shadowSm,
   };
 
@@ -233,7 +233,7 @@ function ChinaSvg({ selectedId, onSelect }) {
         <button type="button" onClick={() => zoomBtn(0.7)} aria-label={t('china_zoom_in', 'Acercar')} style={ctrlStyle}>+</button>
         <button type="button" onClick={() => zoomBtn(1 / 0.7)} aria-label={t('china_zoom_out', 'Alejar')} style={ctrlStyle}>−</button>
         {zoomed && (
-          <button type="button" onClick={reset} aria-label={t('china_zoom_reset', 'Restablecer zoom')} style={{ ...ctrlStyle, fontSize: 14 }}>⤢</button>
+          <button type="button" onClick={reset} aria-label={t('china_zoom_reset', 'Restablecer zoom')} style={{ ...ctrlStyle, fontSize: '0.875rem' }}>⤢</button>
         )}
       </div>
     </div>
@@ -244,7 +244,7 @@ function InfoRow({ icon, label, children }) {
   return (
     <div className="mb-4">
       <div className="flex items-center gap-1.5 mb-1">
-        <span aria-hidden style={{ fontSize: 15 }}>{icon}</span>
+        <span aria-hidden style={{ fontSize: '0.9375rem' }}>{icon}</span>
         <span className="text-xs font-bold uppercase tracking-wider" style={{ color: J.mute }}>{label}</span>
       </div>
       <div className="text-sm leading-relaxed" style={{ color: J.inkSoft }}>{children}</div>
@@ -281,7 +281,7 @@ function DetailPanel({ province, onClose, onSpeak }) {
       <div className="p-4 flex items-start gap-3" style={{ background: J.jadeBg, borderBottom: `1px solid ${J.hair}` }}>
         <div
           className="font-cn flex items-center justify-center flex-shrink-0"
-          style={{ width: 52, height: 52, borderRadius: 14, background: J.jade, color: J.onAccent, fontSize: 24, fontWeight: 700 }}
+          style={{ width: 52, height: 52, borderRadius: 14, background: J.jade, color: J.onAccent, fontSize: '1.5rem', fontWeight: 700 }}
         >
           {province.cn}
         </div>
@@ -294,7 +294,7 @@ function DetailPanel({ province, onClose, onSpeak }) {
             onClick={() => onSpeak(province.cn)}
             aria-label={t('china_listen', 'Escuchar el nombre')}
             className="flex-shrink-0 flex items-center justify-center"
-            style={{ width: 30, height: 30, borderRadius: 9, background: J.jade, color: J.onAccent, cursor: 'pointer', fontSize: 15 }}
+            style={{ width: 30, height: 30, borderRadius: 9, background: J.jade, color: J.onAccent, cursor: 'pointer', fontSize: '0.9375rem' }}
           >
             🔊
           </button>
@@ -396,7 +396,7 @@ export default function ChinaMap({ goBack, speakChinese }) {
           </div>
         </div>
 
-        <p className="text-[11px] mb-4 mt-2 px-1" style={{ color: J.mute }}>
+        <p className="text-[0.6875rem] mb-4 mt-2 px-1" style={{ color: J.mute }}>
           {t('china_map_disclaimer', '{{n}} provincias · toca cualquiera para explorar', { n: total })}
         </p>
 

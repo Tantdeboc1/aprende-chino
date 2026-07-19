@@ -32,7 +32,7 @@ export default function GameIntro({ gameId, cn, title, subtitle, steps, onStart,
         <div className="text-center mb-8">
           <div
             className="font-cn mx-auto mb-4 flex items-center justify-center"
-            style={{ width: 64, height: 64, borderRadius: 16, background: J.sandBg, color: J.sand, fontSize: 36, fontWeight: 700 }}
+            style={{ width: 64, height: 64, borderRadius: 16, background: J.sandBg, color: J.sand, fontSize: '2.25rem', fontWeight: 700 }}
           >
             {cn}
           </div>
@@ -56,7 +56,7 @@ export default function GameIntro({ gameId, cn, title, subtitle, steps, onStart,
 
         <label
           className="flex items-center gap-2.5 mb-4 cursor-pointer select-none"
-          style={{ color: J.inkSoft, fontSize: 13, fontWeight: 600 }}
+          style={{ color: J.inkSoft, fontSize: '0.8125rem', fontWeight: 600 }}
         >
           <input
             type="checkbox"

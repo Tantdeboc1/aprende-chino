@@ -69,7 +69,7 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam, t, language }) {
 
         {history.length === 0 ? (
           <div className="text-center py-16">
-            <div className="font-cn mx-auto mb-4" style={{ fontSize: 48, color: J.mute2, opacity: 0.5 }}>试</div>
+            <div className="font-cn mx-auto mb-4" style={{ fontSize: '3rem', color: J.mute2, opacity: 0.5 }}>试</div>
             <p style={{ color: J.mute }}>{t('exam_no_history')}</p>
           </div>
         ) : (
@@ -123,7 +123,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
         {/* Puntuación */}
         <div className="text-center py-10">
           <div className="font-cn mx-auto mb-4 flex items-center justify-center"
-            style={{ width: 64, height: 64, borderRadius: 16, background: g.bg, color: g.color, fontSize: 36, fontWeight: 700 }}>
+            style={{ width: 64, height: 64, borderRadius: 16, background: g.bg, color: g.color, fontSize: '2.25rem', fontWeight: 700 }}>
             {pct >= 90 ? '优' : pct >= 70 ? '良' : '练'}
           </div>
           <p className="text-6xl font-bold mb-2" style={{ color: g.color }}>{pct}%</p>
@@ -291,7 +291,7 @@ export default function ExamMode({
   if (total === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center" style={{ background: J.paper }}>
-        <div className="font-cn mb-4" style={{ fontSize: 48, color: J.mute2 }}>书</div>
+        <div className="font-cn mb-4" style={{ fontSize: '3rem', color: J.mute2 }}>书</div>
         <p className="text-lg mb-2" style={{ color: J.inkSoft }}>{t('exam_not_enough_words')}</p>
         <p className="text-sm mb-8" style={{ color: J.mute }}>{t('exam_need_more_words')}</p>
         <button onClick={goBack} className="px-8 py-3 rounded-xl font-semibold transition-colors"

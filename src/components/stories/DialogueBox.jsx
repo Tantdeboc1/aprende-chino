@@ -134,7 +134,7 @@ export default function DialogueBox({
           display: 'inline-block',
           background: J.jade,
           color: J.onAccent,
-          fontSize: 12,
+          fontSize: '0.75rem',
           fontWeight: 700,
           letterSpacing: '0.04em',
           padding: '3px 10px',
@@ -183,7 +183,7 @@ export default function DialogueBox({
         onClick={handleChineseClick}
         className="font-cn"
         style={{
-          fontSize: 26,
+          fontSize: '1.625rem',
           lineHeight: 1.35,
           fontWeight: 600,
           color: J.onAccent,
@@ -201,7 +201,7 @@ export default function DialogueBox({
       {pinyinAllowed && (
         <p style={{
           margin: '6px 0 0',
-          fontSize: 14,
+          fontSize: '0.875rem',
           color: pinyinVisible ? 'rgba(240,200,98,0.95)' : 'rgba(255,255,255,0.35)',
           fontStyle: 'italic',
           minHeight: 18,
@@ -213,7 +213,7 @@ export default function DialogueBox({
       {/* Traducción */}
       <div style={{ marginTop: 8 }}>
         {showEs ? (
-          <p style={{ margin: 0, fontSize: 13.5, color: 'rgba(255,255,255,0.75)' }}>
+          <p style={{ margin: 0, fontSize: '0.84375rem', color: 'rgba(255,255,255,0.75)' }}>
             {traduccion}
           </p>
         ) : (
@@ -225,7 +225,7 @@ export default function DialogueBox({
               color: 'rgba(255,255,255,0.5)',
               borderRadius: 8,
               padding: '4px 10px',
-              fontSize: 11,
+              fontSize: '0.6875rem',
               cursor: 'pointer',
             }}
           >
@@ -238,7 +238,7 @@ export default function DialogueBox({
       <div style={{
         marginTop: 12,
         textAlign: 'right',
-        fontSize: 11,
+        fontSize: '0.6875rem',
         color: 'rgba(255,255,255,0.45)',
         letterSpacing: '0.08em',
       }}>

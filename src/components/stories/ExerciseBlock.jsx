@@ -85,16 +85,16 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
           border: `1px solid ${J.hairS}`, padding: '28px 24px',
           textAlign: 'center', color: J.onAccent,
         }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
+          <p style={{ fontSize: '0.6875rem', letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
             {t('story_ex_block_counter', 'BLOQUE {{n}} / {{total}}', { n: blockIdx + 1, total: blocks.length })}
           </p>
-          <h2 style={{ fontSize: 24, fontWeight: 700, margin: '8px 0 4px' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '8px 0 4px' }}>
             {currentBlock.label}
           </h2>
-          <p className="font-cn" style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', margin: 0 }}>
+          <p className="font-cn" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
             {currentBlock.sub}
           </p>
-          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 12 }}>
+          <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginTop: 12 }}>
             {t('story_ex_questions_count', { count: currentBlock.items.length })}
           </p>
           <button
@@ -103,7 +103,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
               marginTop: 22, width: '100%',
               background: J.red, color: J.onAccent,
               border: 0, borderRadius: 14,
-              padding: '13px 18px', fontSize: 15, fontWeight: 700,
+              padding: '13px 18px', fontSize: '0.9375rem', fontWeight: 700,
               cursor: 'pointer',
               boxShadow: '0 6px 18px -8px rgba(200,57,47,0.6)',
             }}
@@ -121,7 +121,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
       <ProgressBar current={answeredSoFar} total={totalQuestions} />
       <div style={{
         textAlign: 'center', color: 'rgba(255,255,255,0.55)',
-        fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase',
+        fontSize: '0.6875rem', letterSpacing: '0.16em', textTransform: 'uppercase',
         marginBottom: 10, fontWeight: 700,
       }}>
         {currentBlock.label} · {qIdx + 1} / {currentBlock.items.length}

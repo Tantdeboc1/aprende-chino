@@ -23,9 +23,9 @@ const EXERCISE_DEFS = [
 ];
 
 function StatusIcon({ status }) {
-  if (status === 'mastered') return <span style={{ color: J.red, fontSize: 16 }}>★</span>;
-  if (status === 'seen')     return <span style={{ color: J.sand, fontSize: 16 }}>◑</span>;
-  return <span style={{ color: J.mute2, fontSize: 16 }}>○</span>;
+  if (status === 'mastered') return <span style={{ color: J.red, fontSize: '1rem' }}>★</span>;
+  if (status === 'seen')     return <span style={{ color: J.sand, fontSize: '1rem' }}>◑</span>;
+  return <span style={{ color: J.mute2, fontSize: '1rem' }}>○</span>;
 }
 
 export default function LessonDetail({
@@ -118,7 +118,7 @@ export default function LessonDetail({
 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: J.butter, marginBottom: 2 }}>
+            <p style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: J.butter, marginBottom: 2 }}>
               {t('exam_lesson_label', { num: lessonNum })}
             </p>
             <h1 className="text-xl font-bold leading-snug" style={{ color: J.onAccent }}>
@@ -171,7 +171,7 @@ export default function LessonDetail({
               onClick={() => handleTabChange(tabItem.id)}
               className="whitespace-nowrap"
               style={{
-                padding: '8px 16px', borderRadius: 99, fontSize: 13, fontWeight: 700,
+                padding: '8px 16px', borderRadius: 99, fontSize: '0.8125rem', fontWeight: 700,
                 cursor: 'pointer', border: 0,
                 background: on ? J.ink : J.paperHi,
                 color: on ? J.paperHi : J.inkSoft,
@@ -192,7 +192,7 @@ export default function LessonDetail({
               <button
                 onClick={() => setShowSupp(!showSupp)}
                 style={{
-                  marginBottom: 12, padding: '6px 12px', borderRadius: 99, fontSize: 12, fontWeight: 700,
+                  marginBottom: 12, padding: '6px 12px', borderRadius: 99, fontSize: '0.75rem', fontWeight: 700,
                   cursor: 'pointer',
                   border: `1px solid ${showSupp ? J.jade : J.hair}`,
                   background: showSupp ? J.jadeBg : J.paperHi,
@@ -238,7 +238,7 @@ export default function LessonDetail({
                           <span className="text-sm" style={{ color: J.jade, fontWeight: 700 }}>{word.pinyin}</span>
                           {word.type && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.sandBg, color: J.sandDeep,
                             }}>
                               {word.type}
@@ -246,14 +246,14 @@ export default function LessonDetail({
                           )}
                           {word.isSupplementary && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.jadeBg, color: J.jadeDeep,
                             }}>extra</span>
                           )}
                           {/* Badge SRS: cuándo toca repasar (o "dominada" si interval ≥ 21d). */}
                           {review.kind === 'mastered' && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.jadeBg, color: J.jadeDeep,
                             }} title={t('srs_badge_mastered_title', 'Dominada — repaso en >3 semanas')}>
                               ✓ {t('srs_badge_mastered', 'dominada')}
@@ -261,7 +261,7 @@ export default function LessonDetail({
                           )}
                           {review.kind === 'due' && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.redBg, color: J.redDeep,
                             }} title={t('srs_badge_due_title', 'Toca repasarla hoy')}>
                               🕐 {t('srs_badge_due', 'hoy')}
@@ -269,7 +269,7 @@ export default function LessonDetail({
                           )}
                           {review.kind === 'soon' && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.sandBg2 || J.sandBg, color: J.sandDeep,
                             }} title={t('srs_badge_soon_title', 'Próxima revisión en {{n}} días', { n: review.days })}>
                               🕐 {review.days === 1
@@ -280,7 +280,7 @@ export default function LessonDetail({
                           {/* Leech: te ha costado mucho. */}
                           {leech && (
                             <span style={{
-                              fontSize: 11, padding: '2px 6px', borderRadius: 6, fontWeight: 600,
+                              fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
                               background: J.redBg, color: J.redDeep,
                             }} title={t('srs_badge_leech_title', 'La has fallado varias veces seguidas — dale repaso')}>
                               🐛 {t('srs_badge_leech', 'rebelde')}

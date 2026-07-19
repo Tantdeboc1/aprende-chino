@@ -38,7 +38,7 @@ function BackButton({ label, onClick }) {
   return (
     <button onClick={onClick}
       style={{ background: J.paperHi, border: 0, borderRadius: 14, padding: '6px 12px',
-               fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
+               fontSize: '0.8125rem', color: J.inkSoft, fontWeight: 600, cursor: 'pointer' }}>
       ← {label}
     </button>
   );
@@ -116,7 +116,7 @@ export default function FriendsScreen({ userName, onBack }) {
           {onBack && <BackButton label={t('friends_back', 'Perfil')} onClick={onBack} />}
           <JSection label={t('friends_title', 'Amigos')} cn="朋友" />
           <JCard>
-            <p style={{ fontSize: 14, color: J.inkSoft, lineHeight: 1.5 }}>
+            <p style={{ fontSize: '0.875rem', color: J.inkSoft, lineHeight: 1.5 }}>
               {t('friends_guest_cta', 'Inicia sesión con Google para añadir amigos, ver invitaciones y comparar vuestro progreso.')}
             </p>
           </JCard>
@@ -206,10 +206,10 @@ export default function FriendsScreen({ userName, onBack }) {
       <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
         {onBack && <BackButton label={t('friends_back', 'Perfil')} onClick={onBack} />}
 
-        <h1 style={{ margin: '10px 0 0', fontWeight: 700, fontSize: 26, letterSpacing: '-0.025em', color: J.ink }}>
+        <h1 style={{ margin: '10px 0 0', fontWeight: 700, fontSize: '1.625rem', letterSpacing: '-0.025em', color: J.ink }}>
           {t('friends_title', 'Amigos')}<span style={{ color: J.red }}>.</span>
         </h1>
-        <p style={{ color: J.inkSoft, fontSize: 13.5, marginTop: 4 }}>
+        <p style={{ color: J.inkSoft, fontSize: '0.84375rem', marginTop: 4 }}>
           朋友 · {t('friends_subtitle', 'Aprended juntos y comparad vuestro progreso')}
         </p>
 
@@ -221,7 +221,7 @@ export default function FriendsScreen({ userName, onBack }) {
         }}>
           <JLabel color={J.butter}>{t('friends_my_code', 'Tu código de amigo')}</JLabel>
           <div style={{
-            fontSize: 34, fontWeight: 800, letterSpacing: '0.08em', color: J.butter,
+            fontSize: '2.125rem', fontWeight: 800, letterSpacing: '0.08em', color: J.butter,
             marginTop: 6, fontFamily: J.mono,
           }}>
             {myCode ? formatCode(myCode) : '······'}
@@ -229,13 +229,13 @@ export default function FriendsScreen({ userName, onBack }) {
           <div className="flex gap-2" style={{ marginTop: 14 }}>
             <button onClick={handleCopy} disabled={!myCode}
               style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: 0,
-                       background: 'rgba(255,255,255,0.16)', color: J.onAccent, fontSize: 13,
+                       background: 'rgba(255,255,255,0.16)', color: J.onAccent, fontSize: '0.8125rem',
                        fontWeight: 700, cursor: myCode ? 'pointer' : 'default' }}>
               {copied ? t('friends_copied', '¡Copiado!') : t('friends_copy', 'Copiar')}
             </button>
             <button onClick={handleShareCode} disabled={!myCode}
               style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: 0,
-                       background: J.butter, color: J.jadeDeep, fontSize: 13,
+                       background: J.butter, color: J.jadeDeep, fontSize: '0.8125rem',
                        fontWeight: 800, cursor: myCode ? 'pointer' : 'default' }}>
               {t('friends_share', 'Compartir')}
             </button>
@@ -255,19 +255,19 @@ export default function FriendsScreen({ userName, onBack }) {
             style={{
               flex: 1, padding: '12px 14px', borderRadius: 12,
               border: `1px solid ${J.border}`, background: J.paperHi,
-              fontSize: 16, fontWeight: 700, letterSpacing: '0.06em',
+              fontSize: '1rem', fontWeight: 700, letterSpacing: '0.06em',
               color: J.ink, fontFamily: J.mono, textTransform: 'uppercase',
             }}
           />
           <button type="submit" disabled={busy}
             style={{ padding: '12px 18px', borderRadius: 12, border: 0, background: J.red,
-                     color: J.onAccent, fontSize: 14, fontWeight: 700,
+                     color: J.onAccent, fontSize: '0.875rem', fontWeight: 700,
                      cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.7 : 1 }}>
             {t('friends_add_button', 'Enviar')}
           </button>
         </form>
         {note && (
-          <p style={{ marginTop: 8, fontSize: 13, fontWeight: 600,
+          <p style={{ marginTop: 8, fontSize: '0.8125rem', fontWeight: 600,
                       color: note.type === 'ok' ? J.jade : J.red }}>
             {note.text}
           </p>
@@ -279,23 +279,23 @@ export default function FriendsScreen({ userName, onBack }) {
             <div className="flex items-center gap-3">
               <Avatar src={avatarSrcOf(pendingTarget.profile)} size={44} />
               <div className="flex-1 min-w-0">
-                <p style={{ fontSize: 14, fontWeight: 700, color: J.ink,
+                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: J.ink,
                             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {pendingTarget.profile?.displayName || t('settings_default_user')}
                 </p>
-                <p style={{ fontSize: 12, color: J.mute }}>
+                <p style={{ fontSize: '0.75rem', color: J.mute }}>
                   {t('friends_confirm_send', '¿Enviar invitación?')}
                 </p>
               </div>
               <button onClick={handleConfirmSend} disabled={busy}
                 style={{ padding: '8px 14px', borderRadius: 10, border: 0, background: J.jade,
-                         color: J.onAccent, fontSize: 13, fontWeight: 700,
+                         color: J.onAccent, fontSize: '0.8125rem', fontWeight: 700,
                          cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.7 : 1 }}>
                 {t('friends_confirm_yes', 'Enviar')}
               </button>
               <button onClick={() => setPendingTarget(null)} aria-label={t('friends_cancel', 'Cancelar')}
                 style={{ padding: '8px 10px', borderRadius: 10, border: `1px solid ${J.hairS}`,
-                         background: 'transparent', color: J.mute, fontSize: 16, fontWeight: 700,
+                         background: 'transparent', color: J.mute, fontSize: '1rem', fontWeight: 700,
                          cursor: 'pointer', lineHeight: 1 }}>
                 ✕
               </button>
@@ -307,26 +307,26 @@ export default function FriendsScreen({ userName, onBack }) {
         {incoming.length > 0 && (
           <>
             <JSection label={t('friends_incoming', 'Invitaciones recibidas')} cn="邀请"
-              right={<span style={{ fontSize: 12, fontWeight: 700, color: J.red }}>{incoming.length}</span>} />
+              right={<span style={{ fontSize: '0.75rem', fontWeight: 700, color: J.red }}>{incoming.length}</span>} />
             <div className="space-y-2">
               {incoming.map((req) => (
                 <JCard key={req.id} padding="10px 12px">
                   <div className="flex items-center gap-3">
                     <Avatar src={avatarSrcOf({ photoURL: req.fromPhotoURL, avatarId: req.fromAvatarId })} size={42} ring={J.red} />
                     <div className="flex-1 min-w-0">
-                      <p style={{ fontSize: 14, fontWeight: 700, color: J.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <p style={{ fontSize: '0.875rem', fontWeight: 700, color: J.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {req.fromName || t('settings_default_user')}
                       </p>
-                      <p style={{ fontSize: 12, color: J.mute }}>{t('friends_wants_to_add', 'Quiere ser tu amigo')}</p>
+                      <p style={{ fontSize: '0.75rem', color: J.mute }}>{t('friends_wants_to_add', 'Quiere ser tu amigo')}</p>
                     </div>
                     <button onClick={() => acceptRequest(req)} aria-label={t('friends_accept', 'Aceptar')}
                       style={{ padding: '8px 14px', borderRadius: 10, border: 0, background: J.jade,
-                               color: J.onAccent, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>
+                               color: J.onAccent, fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer' }}>
                       {t('friends_accept', 'Aceptar')}
                     </button>
                     <button onClick={() => declineRequest(req)} aria-label={t('friends_decline', 'Rechazar')}
                       style={{ padding: '8px 10px', borderRadius: 10, border: `1px solid ${J.hairS}`,
-                               background: 'transparent', color: J.mute, fontSize: 16, fontWeight: 700,
+                               background: 'transparent', color: J.mute, fontSize: '1rem', fontWeight: 700,
                                cursor: 'pointer', lineHeight: 1 }}>
                       ✕
                     </button>
@@ -349,18 +349,18 @@ export default function FriendsScreen({ userName, onBack }) {
                     <div className="flex-1 min-w-0">
                       {/* toName no existe en invitaciones anteriores a este campo */}
                       {req.toName && (
-                        <p style={{ fontSize: 14, fontWeight: 700, color: J.ink,
+                        <p style={{ fontSize: '0.875rem', fontWeight: 700, color: J.ink,
                                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {req.toName}
                         </p>
                       )}
-                      <p style={{ fontSize: 12, color: J.mute, fontWeight: 600 }}>
+                      <p style={{ fontSize: '0.75rem', color: J.mute, fontWeight: 600 }}>
                         {t('friends_pending', 'Pendiente de aceptar')}
                       </p>
                     </div>
                     <button onClick={() => cancelRequest(req)}
                       style={{ padding: '6px 12px', borderRadius: 10, border: `1px solid ${J.hairS}`,
-                               background: 'transparent', color: J.mute, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+                               background: 'transparent', color: J.mute, fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>
                       {t('friends_cancel', 'Cancelar')}
                     </button>
                   </div>
@@ -372,7 +372,7 @@ export default function FriendsScreen({ userName, onBack }) {
 
         {/* ─── Ranking de amigos ───────────────────────────────────────────── */}
         <JSection label={t('friends_ranking', 'Clasificación')} cn="排行榜"
-          right={<span style={{ fontSize: 12, fontWeight: 700, color: J.mute }}>{friends.length} {t('friends_count', 'amigos')}</span>} />
+          right={<span style={{ fontSize: '0.75rem', fontWeight: 700, color: J.mute }}>{friends.length} {t('friends_count', 'amigos')}</span>} />
 
         {/* Toggle de métrica: XP de los últimos 7 días vs total histórico */}
         <div className="flex gap-2" style={{ marginBottom: 10 }}>
@@ -391,7 +391,7 @@ export default function FriendsScreen({ userName, onBack }) {
                   color: on ? J.paperHi : J.inkSoft,
                   border: `1px solid ${on ? J.ink : J.hair}`,
                   borderRadius: 99, padding: '6px 14px',
-                  fontSize: 12.5, fontWeight: 700, cursor: 'pointer',
+                  fontSize: '0.78125rem', fontWeight: 700, cursor: 'pointer',
                 }}
               >
                 {opt.label}
@@ -401,10 +401,10 @@ export default function FriendsScreen({ userName, onBack }) {
         </div>
 
         {loading ? (
-          <JCard><p style={{ fontSize: 13, color: J.mute, textAlign: 'center' }}>{t('friends_loading', 'Cargando…')}</p></JCard>
+          <JCard><p style={{ fontSize: '0.8125rem', color: J.mute, textAlign: 'center' }}>{t('friends_loading', 'Cargando…')}</p></JCard>
         ) : friends.length === 0 ? (
           <JCard>
-            <p style={{ fontSize: 14, color: J.inkSoft, lineHeight: 1.5 }}>
+            <p style={{ fontSize: '0.875rem', color: J.inkSoft, lineHeight: 1.5 }}>
               {t('friends_empty', 'Aún no tienes amigos. Comparte tu código para empezar.')}
             </p>
           </JCard>
@@ -417,21 +417,21 @@ export default function FriendsScreen({ userName, onBack }) {
                   borderTop: i === 0 ? 0 : `1px solid ${J.hair}`,
                   background: row.isMe ? J.jadeBg : 'transparent',
                 }}>
-                <span style={{ width: 22, textAlign: 'center', fontSize: 14, fontWeight: 800,
+                <span style={{ width: 22, textAlign: 'center', fontSize: '0.875rem', fontWeight: 800,
                                color: i === 0 ? J.sand : J.mute }}>
                   {i + 1}
                 </span>
                 <Avatar src={row.src} size={40} ring={row.isMe ? J.jade : J.hairS} />
                 <div className="flex-1 min-w-0">
-                  <p style={{ fontSize: 14, fontWeight: 700, color: J.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <p style={{ fontSize: '0.875rem', fontWeight: 700, color: J.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {row.name}{row.isMe && <span style={{ color: J.jade, fontWeight: 600 }}> · {t('friends_you', 'tú')}</span>}
                   </p>
-                  <p style={{ fontSize: 12, color: J.mute }}>
+                  <p style={{ fontSize: '0.75rem', color: J.mute }}>
                     {t('friends_level', 'Nivel')} {row.level}
                     {row.currentStreak > 0 && <> · 🔥 {row.currentStreak}</>}
                   </p>
                 </div>
-                <span style={{ fontSize: 13, fontWeight: 800, color: J.jade }}>
+                <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: J.jade }}>
                   {(rankMode === 'weekly' ? row.weeklyXP : row.totalXP).toLocaleString()} XP
                 </span>
                 {!row.isMe && (

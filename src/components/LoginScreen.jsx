@@ -42,16 +42,16 @@ export default function LoginScreen() {
             className="font-cn"
             style={{
               width: 64, height: 64, borderRadius: 18, background: J.jade, color: J.butter,
-              fontSize: 36, fontWeight: 700,
+              fontSize: '2.25rem', fontWeight: 700,
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
             路
           </div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: J.ink, margin: '16px 0 6px' }}>
+          <h1 style={{ fontSize: '1.375rem', fontWeight: 700, color: J.ink, margin: '16px 0 6px' }}>
             {t('login_title', '¡Bienvenido!')}
           </h1>
-          <p style={{ color: J.inkSoft, fontSize: 13, margin: 0 }}>
+          <p style={{ color: J.inkSoft, fontSize: '0.8125rem', margin: 0 }}>
             {t('login_subtitle', 'Elige cómo quieres empezar')}
           </p>
         </div>
@@ -65,7 +65,7 @@ export default function LoginScreen() {
             background: J.paper, color: J.ink,
             border: `2px solid ${J.border}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-            fontWeight: 700, fontSize: 15, cursor: busy ? 'default' : 'pointer',
+            fontWeight: 700, fontSize: '0.9375rem', cursor: busy ? 'default' : 'pointer',
             opacity: busy ? 0.6 : 1, transition: 'all 180ms ease',
           }}
         >
@@ -76,7 +76,7 @@ export default function LoginScreen() {
         {/* Separador */}
         <div className="flex items-center gap-3" style={{ margin: '20px 0' }}>
           <div style={{ flex: 1, height: 1, background: J.hair }} />
-          <span style={{ color: J.muteStrong, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <span style={{ color: J.muteStrong, fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             {t('login_or', 'o')}
           </span>
           <div style={{ flex: 1, height: 1, background: J.hair }} />
@@ -89,14 +89,14 @@ export default function LoginScreen() {
           style={{
             width: '100%', padding: '14px 18px', borderRadius: 14, border: 0,
             background: J.jade, color: J.onAccent,
-            fontWeight: 700, fontSize: 15, cursor: 'pointer',
+            fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer',
             boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
           }}
         >
           {t('login_as_guest', 'Continuar como invitado')}
         </button>
 
-        <p style={{ color: J.muteStrong, fontSize: 11, textAlign: 'center', marginTop: 18, lineHeight: 1.5 }}>
+        <p style={{ color: J.muteStrong, fontSize: '0.6875rem', textAlign: 'center', marginTop: 18, lineHeight: 1.5 }}>
           {t(
             'login_guest_warning',
             'Como invitado tu progreso se guarda solo en este dispositivo.',
@@ -106,7 +106,7 @@ export default function LoginScreen() {
         {error && (
           <div style={{
             marginTop: 14, padding: 10, borderRadius: 10,
-            background: J.redBg, color: J.redDeep, fontSize: 12, textAlign: 'center',
+            background: J.redBg, color: J.redDeep, fontSize: '0.75rem', textAlign: 'center',
           }}>
             {error}
           </div>

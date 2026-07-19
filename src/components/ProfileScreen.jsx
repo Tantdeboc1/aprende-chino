@@ -27,13 +27,13 @@ function ProfileRow({ l, v, tag, accent, first }) {
         borderTop: first ? 0 : `1px solid ${J.hair}`,
       }}
     >
-      <span style={{ fontSize: 14, color: J.ink, fontWeight: 500 }}>{l}</span>
+      <span style={{ fontSize: '0.875rem', color: J.ink, fontWeight: 500 }}>{l}</span>
       <div className="flex items-baseline gap-2">
         {tag && (
-          <span style={{ fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.02em' }}>{tag}</span>
+          <span style={{ fontSize: '0.6875rem', color: J.mute, fontWeight: 600, letterSpacing: '0.02em' }}>{tag}</span>
         )}
         <span style={{
-          fontSize: 14, fontWeight: 800, letterSpacing: '-0.01em',
+          fontSize: '0.875rem', fontWeight: 800, letterSpacing: '-0.01em',
           color: accent === 'red' ? J.red : accent === 'jade' ? J.jade : J.ink,
         }}>{v}</span>
       </div>
@@ -178,15 +178,15 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             />
           </span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 26, lineHeight: 1.1, letterSpacing: '-0.025em', color: J.ink }}>
+            <h1 style={{ margin: 0, fontWeight: 700, fontSize: '1.625rem', lineHeight: 1.1, letterSpacing: '-0.025em', color: J.ink }}>
               {userName || t('settings_default_user')}<span style={{ color: J.red }}>.</span>
             </h1>
-            <div style={{ marginTop: 6, fontSize: 13.5, color: J.inkSoft, fontWeight: 500 }}>
+            <div style={{ marginTop: 6, fontSize: '0.84375rem', color: J.inkSoft, fontWeight: 500 }}>
               <span style={{ marginRight: 6 }}>{equipped.icon}</span>
               {loc(equipped.title, baseLang(i18n.language))} · <span className="font-cn">{equipped.zh}</span>
             </div>
             {mode === 'google' && user?.email && (
-              <p style={{ margin: '4px 0 0', fontSize: 12, color: J.mute, fontWeight: 500, wordBreak: 'break-all' }}>
+              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: J.mute, fontWeight: 500, wordBreak: 'break-all' }}>
                 {user.email}
               </p>
             )}
@@ -208,19 +208,19 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
               <div>
                 <JLabel color={J.butter}>{t('settings_level_current')}</JLabel>
                 <div className="flex items-baseline gap-2" style={{ marginTop: 4 }}>
-                  <span style={{ fontSize: 56, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
+                  <span style={{ fontSize: '3.5rem', fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
                     {levelInfo.level}
                   </span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
                     Lv.
                   </span>
                 </div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                <span style={{ fontSize: '0.65625rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                   {t('settings_xp_total')}
                 </span>
-                <div style={{ fontSize: 22, fontWeight: 800, color: J.onAccent, marginTop: 4, letterSpacing: '-0.02em' }}>
+                <div style={{ fontSize: '1.375rem', fontWeight: 800, color: J.onAccent, marginTop: 4, letterSpacing: '-0.02em' }}>
                   {(streak.totalXP || 0).toLocaleString()}
                 </div>
               </div>
@@ -229,23 +229,23 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             {!levelInfo.isMaxLevel ? (
               <div style={{ marginTop: 14 }}>
                 <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                     Lv.{levelInfo.level}
                   </span>
                   <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.30)' }}>
                     <div className="h-full rounded-full transition-all duration-500"
                       style={{ width: `${levelInfo.progress}%`, background: J.butter }} />
                   </div>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                     Lv.{levelInfo.level + 1}
                   </span>
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center' }}>
                   {t('settings_xp_to_next', { xp: levelInfo.xpForNext - levelInfo.xpInLevel })}
                 </div>
               </div>
             ) : (
-              <div style={{ marginTop: 14, fontSize: 13, color: J.butter, fontWeight: 800, textAlign: 'center' }}>
+              <div style={{ marginTop: 14, fontSize: '0.8125rem', color: J.butter, fontWeight: 800, textAlign: 'center' }}>
                 ★ {t('settings_max_level')}
               </div>
             )}
@@ -265,17 +265,17 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
                 <div>
                   <JLabel color={J.butter}>{t('settings_streak_current')} · 连续</JLabel>
                   <div className="flex items-baseline gap-2" style={{ marginTop: 8 }}>
-                    <span style={{ fontSize: 64, fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
+                    <span style={{ fontSize: '4rem', fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
                       {streak.currentStreak}
                     </span>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{t('settings_day', { count: streak.currentStreak })}</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{t('settings_day', { count: streak.currentStreak })}</span>
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.65625rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
                     {t('settings_streak_record')}
                   </span>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: J.onAccent, marginTop: 6, letterSpacing: '-0.02em' }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: J.onAccent, marginTop: 6, letterSpacing: '-0.02em' }}>
                     {streak.longestStreak || streak.currentStreak}
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
                   }} />
                 ))}
               </div>
-              <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(255,255,255,0.65)', fontWeight: 600, letterSpacing: '0.04em' }}>
+              <div style={{ marginTop: 10, fontSize: '0.6875rem', color: 'rgba(255,255,255,0.65)', fontWeight: 600, letterSpacing: '0.04em' }}>
                 {t('settings_streak_last_30')}
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
         {/* ─── Insignias ──────────────────────────────────────────────── */}
         <div className="flex items-baseline justify-between" style={{ marginTop: 20, marginBottom: 6 }}>
           <JSection label={t('profile_badges', 'Insignias')} cn="徽章" />
-          <span style={{ fontSize: 12, fontWeight: 700, color: J.mute }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: J.mute }}>
             {earnedCount} / {badges.length}
           </span>
         </div>
@@ -332,11 +332,11 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
                   textAlign: 'center',
                 }}
               >
-                <span style={{ fontSize: 26, filter: b.earned ? 'none' : 'grayscale(1)' }}>
+                <span style={{ fontSize: '1.625rem', filter: b.earned ? 'none' : 'grayscale(1)' }}>
                   {b.icon}
                 </span>
                 <span style={{
-                  fontSize: 10.5, fontWeight: 700, lineHeight: 1.2,
+                  fontSize: '0.65625rem', fontWeight: 700, lineHeight: 1.2,
                   color: b.earned ? J.jadeDeep : J.muteStrong,
                 }}>
                   {b.title}
@@ -353,7 +353,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             width: '100%', marginTop: 18,
             padding: '14px 18px', borderRadius: 14, border: 0,
             background: J.red, color: J.onAccent,
-            fontSize: 14, fontWeight: 700, cursor: 'pointer',
+            fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
             boxShadow: '0 4px 12px -4px rgba(200,57,47,0.45)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           }}

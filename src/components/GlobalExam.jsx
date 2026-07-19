@@ -109,7 +109,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
 
           <div className="text-center mb-8">
             <div className="font-cn mx-auto mb-4 flex items-center justify-center"
-              style={{ width: 64, height: 64, borderRadius: 16, background: J.sandBg, color: J.sand, fontSize: 36, fontWeight: 700 }}>
+              style={{ width: 64, height: 64, borderRadius: 16, background: J.sandBg, color: J.sand, fontSize: '2.25rem', fontWeight: 700 }}>
               试
             </div>
             <h1 className="text-3xl font-bold mb-2" style={{ color: J.ink }}>{t('global_exam_title')}</h1>
@@ -158,7 +158,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
             style={{ background: J.paperHi, border: `1px solid ${J.hair}`, boxShadow: `0 8px 24px -8px ${J.hairS}` }}>
             <div className="font-cn mx-auto mb-4 flex items-center justify-center"
               style={{
-                width: 64, height: 64, borderRadius: 16, fontSize: 36, fontWeight: 700,
+                width: 64, height: 64, borderRadius: 16, fontSize: '2.25rem', fontWeight: 700,
                 background: passed ? J.jadeBg : J.sandBg,
                 color: passed ? J.jade : J.sand,
               }}>

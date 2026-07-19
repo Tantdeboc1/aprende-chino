@@ -80,7 +80,7 @@ function AnimatedLoader() {
         <div className="absolute rounded-full animate-spin"
           style={{ width: 92, height: 92, top: -6, left: -6, border: `2px solid ${J.hair}`, borderTopColor: J.jade }} />
       </div>
-      <p style={{ color: J.mute, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' }} className="animate-pulse">
+      <p style={{ color: J.mute, fontSize: '0.6875rem', letterSpacing: '0.14em', textTransform: 'uppercase' }} className="animate-pulse">
         {t('common_loading', 'Cargando…')}
       </p>
     </div>
@@ -711,13 +711,13 @@ export default function App() {
           <div style={{ padding: '14px 20px 8px' }}>
             <button onClick={() => setScreen('home')}
               style={{ background: J.paperHi, border: 0, borderRadius: 14, padding: '6px 12px',
-                       fontSize: 13, color: J.inkSoft, fontWeight: 600, cursor: 'pointer', marginBottom: 12 }}>
+                       fontSize: '0.8125rem', color: J.inkSoft, fontWeight: 600, cursor: 'pointer', marginBottom: 12 }}>
               ← {t('intro_back_home')}
             </button>
-            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 28, letterSpacing: '-0.025em', color: J.ink }}>
+            <h1 style={{ margin: 0, fontWeight: 700, fontSize: '1.75rem', letterSpacing: '-0.025em', color: J.ink }}>
               {t('home_section_basics')}<span style={{ color: J.red }}>.</span>
             </h1>
-            <p style={{ color: J.inkSoft, fontSize: 13.5, marginTop: 4 }}>入门 · {t('lesson_intro_subtitle')}</p>
+            <p style={{ color: J.inkSoft, fontSize: '0.84375rem', marginTop: 4 }}>入门 · {t('lesson_intro_subtitle')}</p>
           </div>
           <div style={{ padding: '12px 20px 24px' }} className="space-y-2.5">
             {introItems.map(item => (
@@ -728,14 +728,14 @@ export default function App() {
                 style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderRadius: 18, padding: '14px 16px', cursor: 'pointer' }}
               >
                 <div className="font-cn flex items-center justify-center flex-shrink-0"
-                  style={{ width: 44, height: 44, borderRadius: 12, background: item.bg, color: item.fg, fontSize: 22, fontWeight: 700 }}>
+                  style={{ width: 44, height: 44, borderRadius: 12, background: item.bg, color: item.fg, fontSize: '1.375rem', fontWeight: 700 }}>
                   {item.cn}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p style={{ fontWeight: 700, fontSize: 14, color: J.ink }}>{item.title}</p>
-                  <p style={{ color: J.inkSoft, fontSize: 12, marginTop: 2 }}>{item.desc}</p>
+                  <p style={{ fontWeight: 700, fontSize: '0.875rem', color: J.ink }}>{item.title}</p>
+                  <p style={{ color: J.inkSoft, fontSize: '0.75rem', marginTop: 2 }}>{item.desc}</p>
                 </div>
-                <span style={{ fontSize: 14, color: J.mute, fontWeight: 700 }}>→</span>
+                <span style={{ fontSize: '0.875rem', color: J.mute, fontWeight: 700 }}>→</span>
               </button>
             ))}
           </div>

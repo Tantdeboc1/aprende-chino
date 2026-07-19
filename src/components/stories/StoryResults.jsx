@@ -35,13 +35,13 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
         borderRadius: 24, padding: '28px 24px',
         color: J.onAccent, textAlign: 'center',
       }}>
-        <p style={{ fontSize: 11, letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
+        <p style={{ fontSize: '0.6875rem', letterSpacing: '0.18em', color: J.butter, fontWeight: 700, margin: 0 }}>
           {t('story_results_completed', 'HISTORIA COMPLETADA')}
         </p>
-        <h2 className="font-cn" style={{ fontSize: 22, fontWeight: 700, margin: '6px 0 0' }}>
+        <h2 className="font-cn" style={{ fontSize: '1.375rem', fontWeight: 700, margin: '6px 0 0' }}>
           {story.subtitulo}
         </h2>
-        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', margin: '2px 0 18px' }}>
+        <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)', margin: '2px 0 18px' }}>
           {storyTitle}
         </p>
 
@@ -50,23 +50,23 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
           background: 'rgba(255,255,255,0.05)',
           borderRadius: 18, padding: '18px 14px',
         }}>
-          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.14em', margin: 0, textTransform: 'uppercase' }}>
+          <p style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.14em', margin: 0, textTransform: 'uppercase' }}>
             {t('story_results_score_label', 'Puntuación')}
           </p>
-          <p className={scoreAnim.done ? 'j-pop' : ''} style={{ fontSize: 42, fontWeight: 800, margin: '4px 0 0', color: v.color, lineHeight: 1 }}>
-            {scoreAnim.value}<span style={{ fontSize: 22, color: 'rgba(255,255,255,0.5)' }}> / {total}</span>
+          <p className={scoreAnim.done ? 'j-pop' : ''} style={{ fontSize: '2.625rem', fontWeight: 800, margin: '4px 0 0', color: v.color, lineHeight: 1 }}>
+            {scoreAnim.value}<span style={{ fontSize: '1.375rem', color: 'rgba(255,255,255,0.5)' }}> / {total}</span>
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: '4px 0 0' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)', margin: '4px 0 0' }}>
             {t('story_results_accuracy', '{{pct}}% de aciertos', { pct })}
           </p>
         </div>
 
         {/* Valoración */}
         <div style={{ marginTop: 18 }}>
-          <p className="font-cn" style={{ fontSize: 18, fontWeight: 700, color: v.color, margin: 0 }}>
+          <p className="font-cn" style={{ fontSize: '1.125rem', fontWeight: 700, color: v.color, margin: 0 }}>
             {v.cn} · {v.titulo}
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: '4px 0 0' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.7)', margin: '4px 0 0' }}>
             {v.descr}
           </p>
         </div>
@@ -80,16 +80,16 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
             borderRadius: 14,
             padding: '10px 14px',
           }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.14em', color: 'rgba(240,200,98,0.85)', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
+            <p style={{ fontSize: '0.6875rem', letterSpacing: '0.14em', color: 'rgba(240,200,98,0.85)', fontWeight: 700, margin: 0, textTransform: 'uppercase' }}>
               {isFirstTime ? t('story_results_reward', 'Recompensa') : t('story_results_improvement', 'Mejora')}
             </p>
-            <p className={xpAnim.done ? 'j-pop' : ''} style={{ fontSize: 20, fontWeight: 800, color: J.butter, margin: '2px 0 0' }}>
+            <p className={xpAnim.done ? 'j-pop' : ''} style={{ fontSize: '1.25rem', fontWeight: 800, color: J.butter, margin: '2px 0 0' }}>
               +{xpAnim.value} XP
             </p>
           </div>
         )}
         {xpGanado === 0 && !isFirstTime && (
-          <p style={{ marginTop: 14, fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>
+          <p style={{ marginTop: 14, fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)' }}>
             {t('story_results_more_xp_hint', 'Para ganar más XP, supera tu mejor puntuación.')}
           </p>
         )}
@@ -101,7 +101,7 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
             style={{
               background: J.jade, color: J.onAccent, border: 0,
               borderRadius: 14, padding: '13px 18px',
-              fontSize: 14, fontWeight: 700, cursor: 'pointer',
+              fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
             }}
           >
             {t('stories_back_to_map', 'Volver al mapa')}
@@ -112,7 +112,7 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
               background: 'rgba(255,255,255,0.08)', color: J.onAccent,
               border: `1px solid rgba(255,255,255,0.18)`,
               borderRadius: 14, padding: '11px 18px',
-              fontSize: 13, fontWeight: 600, cursor: 'pointer',
+              fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer',
             }}
           >
             {t('story_results_retry', 'Repetir historia')}

@@ -22,7 +22,7 @@ function PatternCard({ pattern }) {
         style={{ cursor: 'pointer' }}
       >
         <div className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-cn"
-          style={{ background: J.jadeBg, color: J.jadeDeep, fontWeight: 700, fontSize: 13 }}>
+          style={{ background: J.jadeBg, color: J.jadeDeep, fontWeight: 700, fontSize: '0.8125rem' }}>
           结
         </div>
         <div className="flex-1 min-w-0">

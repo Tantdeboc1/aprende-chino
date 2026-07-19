@@ -69,6 +69,11 @@
 
 html {
   color-scheme: light;
+  /* Ajuste de tamaño de texto (accesibilidad). `100%` respeta la preferencia
+     de fuente del navegador/SO; --font-scale (fontScale.js) aplica el ajuste
+     in-app encima. Todo lo que usa rem (Tailwind + fontSize inline convertidos)
+     escala en proporción. */
+  font-size: calc(100% * var(--font-scale, 1));
 }
 html.dark { color-scheme: dark; }
 

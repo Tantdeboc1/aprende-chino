@@ -14,6 +14,7 @@ import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
 import { getThemePref, setThemePref } from '@/utils/theme.js';
+import { getFontScalePref, setFontScalePref } from '@/utils/fontScale.js';
 import { downloadBackup, restoreBackup } from '@/utils/backup.js';
 import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
 import { assetUrl } from '@/utils/assets';
@@ -36,8 +37,8 @@ function PrefToggle({ label, hint, value, onChange, first = false }) {
       style={{ padding: '14px 18px', borderTop: first ? 'none' : `1px solid ${J.hair}` }}
     >
       <div style={{ minWidth: 0 }}>
-        <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{label}</p>
-        {hint && <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{hint}</p>}
+        <p style={{ margin: 0, fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>{label}</p>
+        {hint && <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>{hint}</p>}
       </div>
       <button
         onClick={onChange}
@@ -107,13 +108,13 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
         }} />
 
         <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: J.ink }}>{t('avatar_picker_title')}</h3>
+          <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 800, color: J.ink }}>{t('avatar_picker_title')}</h3>
           <button
             onClick={onClose}
             aria-label={t('aria_close', 'Cerrar')}
             style={{
               background: 'transparent', border: 0, cursor: 'pointer',
-              color: J.mute, fontSize: 24, lineHeight: 1, padding: 4,
+              color: J.mute, fontSize: '1.5rem', lineHeight: 1, padding: 4,
             }}
           >×</button>
         </div>
@@ -132,11 +133,11 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
                   background: on ? J.ink : J.paper,
                   color: on ? J.paperHi : J.inkSoft,
                   border: 0, borderRadius: 99,
-                  padding: '7px 14px', fontSize: 12.5, fontWeight: 700,
+                  padding: '7px 14px', fontSize: '0.78125rem', fontWeight: 700,
                   cursor: 'pointer',
                 }}
               >
-                <span className="font-cn" style={{ marginRight: 6, fontSize: 13 }}>{tabOpt.cn}</span>
+                <span className="font-cn" style={{ marginRight: 6, fontSize: '0.8125rem' }}>{tabOpt.cn}</span>
                 {tabOpt.label}
               </button>
             );
@@ -189,11 +190,11 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
                     position: 'absolute', inset: 0,
                     display: 'flex', flexDirection: 'column',
                     alignItems: 'center', justifyContent: 'center', gap: 2,
-                    color: '#fff', fontSize: 16,
+                    color: '#fff', fontSize: '1rem',
                     textShadow: '0 1px 4px rgba(0,0,0,0.6)',
                   }}>
                     🔒
-                    <span style={{ fontSize: 10.5, fontWeight: 800 }}>
+                    <span style={{ fontSize: '0.65625rem', fontWeight: 800 }}>
                       {t('avatar_locked_badge', 'Nv. {{level}}', { level: av.minLevel })}
                     </span>
                   </span>
@@ -202,7 +203,7 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
                   <span style={{
                     position: 'absolute', top: 4, right: 4,
                     background: J.butter, color: J.jadeDeep,
-                    fontSize: 11, fontWeight: 800,
+                    fontSize: '0.6875rem', fontWeight: 800,
                     width: 20, height: 20, borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
@@ -229,10 +230,16 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const [dailyGoal, setDailyGoalState] = useState(() => getStreak().dailyGoal || 120);
   const [showIntros, setShowIntros] = useState(() => introsEnabled());
   const [theme, setTheme] = useState(() => getThemePref());
+  const [fontScale, setFontScaleState] = useState(() => getFontScalePref());
 
   const handleThemeChange = (pref) => {
     setThemePref(pref); // aplica la clase .dark al instante
     setTheme(pref);
+  };
+
+  const handleFontScaleChange = (pref) => {
+    setFontScalePref(pref); // reescala la raíz al instante
+    setFontScaleState(pref);
   };
 
   const handleIntrosToggle = () => {
@@ -325,7 +332,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 background: J.paperHi, border: `1px solid ${J.hair}`,
                 borderRadius: 99, padding: '6px 12px',
-                fontSize: 13, color: J.ink, fontWeight: 700, cursor: 'pointer',
+                fontSize: '0.8125rem', color: J.ink, fontWeight: 700, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 4,
               }}
             >
@@ -336,7 +343,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           )
         }
         right={
-          <span style={{ fontSize: 13, color: J.inkSoft, fontWeight: 700 }}>
+          <span style={{ fontSize: '0.8125rem', color: J.inkSoft, fontWeight: 700 }}>
             {t('nav_settings')}
           </span>
         }
@@ -349,7 +356,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         <JCard padding="0">
           {/* Nick */}
           <div style={{ padding: '14px 18px' }}>
-            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 6, letterSpacing: '0.04em' }}>{t('settings_label_nick')}</p>
+            <p style={{ fontSize: '0.6875rem', color: J.mute, fontWeight: 600, marginBottom: 6, letterSpacing: '0.04em' }}>{t('settings_label_nick')}</p>
             <input
               type="text"
               value={nameInput}
@@ -359,7 +366,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 width: '100%', padding: '10px 14px', background: J.paper,
                 border: `1px solid ${J.border}`, borderRadius: 12,
-                fontSize: 14, color: J.ink,
+                fontSize: '0.875rem', color: J.ink,
               }}
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlurCapture={e => e.target.style.borderColor = J.hair}
@@ -368,7 +375,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
           {/* Género */}
           <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
-            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_gender')}</p>
+            <p style={{ fontSize: '0.6875rem', color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_gender')}</p>
             <div className="flex flex-wrap gap-2">
               {GENDERS.map(g => {
                 const on = profile.gender === g.id;
@@ -381,10 +388,10 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                       padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
                       background: on ? J.ink : J.paper,
                       color: on ? J.paperHi : J.inkSoft,
-                      fontSize: 12.5, fontWeight: 700,
+                      fontSize: '0.78125rem', fontWeight: 700,
                     }}
                   >
-                    <span className="font-cn" style={{ fontSize: 14 }}>{g.cn}</span>
+                    <span className="font-cn" style={{ fontSize: '0.875rem' }}>{g.cn}</span>
                     {t(g.i18nKey)}
                   </button>
                 );
@@ -394,7 +401,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
           {/* Avatar */}
           <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
-            <p style={{ fontSize: 11, color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_avatar')}</p>
+            <p style={{ fontSize: '0.6875rem', color: J.mute, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>{t('settings_label_avatar')}</p>
             <button
               onClick={() => setShowPicker(true)}
               className="flex items-center gap-3 w-full"
@@ -411,10 +418,10 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10, display: 'block' }}
               />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ margin: 0, fontSize: 13.5, color: J.ink, fontWeight: 700 }}>
+                <p style={{ margin: 0, fontSize: '0.84375rem', color: J.ink, fontWeight: 700 }}>
                   {effectiveAvatar.isGoogle ? t('settings_avatar_google_label', 'Foto de Google') : t('avatar_' + currentAvatar.id, currentAvatar.label)}
                 </p>
-                <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_avatar_change_hint')}</p>
+                <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>{t('settings_avatar_change_hint')}</p>
               </div>
               <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
             </button>
@@ -424,10 +431,10 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           {mode === 'google' && user?.photoURL && (
             <div className="flex items-center justify-between" style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
               <div style={{ minWidth: 0 }}>
-                <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>
                   {t('settings_use_google_photo', 'Usar foto de Google')}
                 </p>
-                <p style={{ margin: 0, fontSize: 11, color: J.mute }}>
+                <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>
                   {t('settings_use_google_photo_hint', 'Si la desactivas se mostrará el avatar elegido')}
                 </p>
               </div>
@@ -466,17 +473,17 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                     padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
                     background: on ? J.ink : J.paper,
                     color: on ? J.paperHi : J.inkSoft,
-                    fontSize: 12.5, fontWeight: 700,
+                    fontSize: '0.78125rem', fontWeight: 700,
                   }}
                 >
-                  <span style={{ fontSize: 14 }}>{p.icon}</span>
+                  <span style={{ fontSize: '0.875rem' }}>{p.icon}</span>
                   {t(`settings_goal_${p.id}`)}
                   <span style={{ opacity: 0.7, fontWeight: 600 }}>{p.xp} XP</span>
                 </button>
               );
             })}
           </div>
-          <p style={{ margin: '10px 0 0', fontSize: 11, color: J.mute }}>
+          <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute }}>
             {t('settings_daily_goal_hint', 'XP que necesitas cada día para mantener tu objetivo. Una historia perfecta da 120 XP.')}
           </p>
         </JCard>
@@ -486,10 +493,10 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         <JCard padding="0">
           <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
             <div style={{ minWidth: 0 }}>
-              <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>
+              <p style={{ margin: 0, fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>
                 {t('settings_game_intros_label', 'Explicaciones de los juegos')}
               </p>
-              <p style={{ margin: 0, fontSize: 11, color: J.mute }}>
+              <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>
                 {t('settings_game_intros_hint', 'Mostrar las instrucciones antes de cada minijuego. Al activarlo se restauran también las ocultadas con "No volver a mostrar".')}
               </p>
             </div>
@@ -527,10 +534,10 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                     padding: '7px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
                     background: on ? J.ink : J.paper,
                     color: on ? J.paperHi : J.inkSoft,
-                    fontSize: 12.5, fontWeight: 700,
+                    fontSize: '0.78125rem', fontWeight: 700,
                   }}
                 >
-                  <span className="font-cn" style={{ fontSize: 14 }}>{lang.cn}</span>
+                  <span className="font-cn" style={{ fontSize: '0.875rem' }}>{lang.cn}</span>
                   {lang.name}
                 </button>
               );
@@ -557,17 +564,49 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                     padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
                     background: on ? J.ink : J.paper,
                     color: on ? J.paperHi : J.inkSoft,
-                    fontSize: 12.5, fontWeight: 700,
+                    fontSize: '0.78125rem', fontWeight: 700,
                   }}
                 >
-                  <span style={{ fontSize: 14 }}>{opt.icon}</span>
+                  <span style={{ fontSize: '0.875rem' }}>{opt.icon}</span>
                   {opt.label}
                 </button>
               );
             })}
           </div>
-          <p style={{ margin: '10px 0 0', fontSize: 11, color: J.mute }}>
+          <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute }}>
             {t('settings_appearance_hint', '«Sistema» sigue el modo claro/oscuro de tu dispositivo.')}
+          </p>
+        </JCard>
+
+        {/* ─── Tamaño de texto (accesibilidad) ─────────────────────────── */}
+        <JSection label={t('settings_text_size', 'Tamaño de texto')} cn="字号" />
+        <JCard padding="14px 18px">
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: 'normal', label: t('text_size_normal', 'Normal'),      preview: '0.875rem' },
+              { id: 'large',  label: t('text_size_large', 'Grande'),       preview: '1.0625rem' },
+              { id: 'xlarge', label: t('text_size_xlarge', 'Muy grande'),  preview: '1.25rem' },
+            ].map(opt => {
+              const on = fontScale === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => handleFontScaleChange(opt.id)}
+                  aria-pressed={on}
+                  style={{
+                    padding: '8px 14px', borderRadius: 99, border: 0, cursor: 'pointer',
+                    background: on ? J.ink : J.paper,
+                    color: on ? J.paperHi : J.inkSoft,
+                    fontSize: opt.preview, fontWeight: 700, lineHeight: 1,
+                  }}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+          <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute }}>
+            {t('settings_text_size_hint', 'Agranda todo el texto de la app para leerlo mejor.')}
           </p>
         </JCard>
 
@@ -578,8 +617,8 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
             <JCard padding="0">
               <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ margin: 0, fontSize: 14, color: J.ink, fontWeight: 600 }}>{t('settings_music_label')}</p>
-                  <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_music_credit')}</p>
+                  <p style={{ margin: 0, fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>{t('settings_music_label')}</p>
+                  <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>{t('settings_music_credit')}</p>
                 </div>
                 <button
                   onClick={() => music.toggle()}
@@ -601,8 +640,8 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
               <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
                 <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
-                  <p style={{ margin: 0, fontSize: 11, color: J.mute, fontWeight: 600, letterSpacing: '0.04em' }}>{t('settings_volume')}</p>
-                  <span style={{ fontSize: 12, color: J.inkSoft, fontWeight: 700 }}>{Math.round(music.volume * 100)}%</span>
+                  <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute, fontWeight: 600, letterSpacing: '0.04em' }}>{t('settings_volume')}</p>
+                  <span style={{ fontSize: '0.75rem', color: J.inkSoft, fontWeight: 700 }}>{Math.round(music.volume * 100)}%</span>
                 </div>
                 <input
                   type="range"
@@ -633,7 +672,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
             onChange={() => patchSound({ haptics: !soundPrefs.haptics })}
           />
           <div style={{ padding: '14px 18px', borderTop: `1px solid ${J.hair}` }}>
-            <p style={{ margin: '0 0 8px', fontSize: 14, color: J.ink, fontWeight: 600 }}>
+            <p style={{ margin: '0 0 8px', fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>
               {t('settings_voice_rate_label', 'Velocidad de la voz')}
             </p>
             <div className="flex gap-2">
@@ -650,7 +689,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                       padding: '7px 16px', borderRadius: 99, border: 0, cursor: 'pointer',
                       background: on ? J.ink : J.paper,
                       color: on ? J.paperHi : J.inkSoft,
-                      fontSize: 12.5, fontWeight: 700,
+                      fontSize: '0.78125rem', fontWeight: 700,
                     }}
                   >
                     {opt.label}
@@ -658,7 +697,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 );
               })}
             </div>
-            <p style={{ margin: '8px 0 0', fontSize: 11, color: J.mute }}>
+            <p style={{ margin: '8px 0 0', fontSize: '0.6875rem', color: J.mute }}>
               {t('settings_voice_rate_hint', 'Afecta a la pronunciación leída por voz (TTS).')}
             </p>
           </div>
@@ -671,7 +710,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
             <>
               {user?.email && (
                 <p style={{
-                  margin: '0 0 10px', fontSize: 12.5, color: J.mute,
+                  margin: '0 0 10px', fontSize: '0.78125rem', color: J.mute,
                   fontWeight: 600, textAlign: 'center', wordBreak: 'break-all',
                 }}>
                   {user.email}
@@ -682,7 +721,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 style={{
                   width: '100%', padding: '12px 16px', borderRadius: 14,
                   border: `1px solid ${J.sandBg}`, background: 'transparent',
-                  color: J.sandDeep, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                  color: J.sandDeep, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
                 }}
               >
                 {t('settings_sign_out', 'Cerrar sesión')}
@@ -696,14 +735,14 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                   style={{
                     width: '100%', marginTop: 10, padding: '10px 16px', borderRadius: 14,
                     border: 0, background: 'transparent',
-                    color: J.mute, fontSize: 12.5, fontWeight: 700, cursor: 'pointer',
+                    color: J.mute, fontSize: '0.78125rem', fontWeight: 700, cursor: 'pointer',
                   }}
                 >
                   {t('settings_delete_account', 'Eliminar cuenta y datos')}
                 </button>
               ) : (
                 <div className="space-y-3" style={{ marginTop: 12 }}>
-                  <p style={{ fontSize: 13, color: J.redDeep, textAlign: 'center', fontWeight: 600, lineHeight: 1.45 }}>
+                  <p style={{ fontSize: '0.8125rem', color: J.redDeep, textAlign: 'center', fontWeight: 600, lineHeight: 1.45 }}>
                     {t('settings_delete_account_confirm',
                       'Se borrará tu progreso de la nube, tus amistades y tu cuenta. Esto no se puede deshacer. ¿Seguro?')}
                   </p>
@@ -713,7 +752,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                       disabled={deleting}
                       style={{
                         flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
-                        background: J.paperHi, color: J.ink, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                        background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
                       }}
                     >
                       {t('settings_cancel')}
@@ -723,7 +762,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                       disabled={deleting}
                       style={{
                         flex: 1, padding: '12px', borderRadius: 99, border: 0,
-                        background: J.red, color: J.onAccent, fontSize: 14, fontWeight: 700,
+                        background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700,
                         cursor: deleting ? 'default' : 'pointer', opacity: deleting ? 0.6 : 1,
                         boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
                       }}
@@ -740,7 +779,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           {mode === 'guest' && (
             <>
               <p style={{
-                margin: '0 0 12px', fontSize: 12.5, color: J.inkSoft,
+                margin: '0 0 12px', fontSize: '0.78125rem', color: J.inkSoft,
                 fontWeight: 500, textAlign: 'center', lineHeight: 1.45,
               }}>
                 {t(
@@ -759,7 +798,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 style={{
                   width: '100%', padding: '12px 16px', borderRadius: 14, border: 0,
                   background: J.jade, color: J.onAccent,
-                  fontSize: 14, fontWeight: 700, cursor: migrating ? 'default' : 'pointer',
+                  fontSize: '0.875rem', fontWeight: 700, cursor: migrating ? 'default' : 'pointer',
                   opacity: migrating ? 0.6 : 1,
                   boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
                 }}
@@ -784,7 +823,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 flex: 1, padding: '12px 10px', borderRadius: 14,
                 border: `1px solid ${J.hair}`, background: J.paperHi,
-                color: J.ink, fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
+                color: J.ink, fontSize: '0.84375rem', fontWeight: 700, cursor: 'pointer',
               }}
             >
               ⬇ {t('settings_export', 'Exportar progreso')}
@@ -794,7 +833,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 flex: 1, padding: '12px 10px', borderRadius: 14,
                 border: `1px solid ${J.hair}`, background: J.paperHi,
-                color: J.ink, fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
+                color: J.ink, fontSize: '0.84375rem', fontWeight: 700, cursor: 'pointer',
               }}
             >
               ⬆ {t('settings_import', 'Importar progreso')}
@@ -809,7 +848,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           </div>
           {importMsg && (
             <p role="status" style={{
-              fontSize: 12.5, textAlign: 'center', marginBottom: 12,
+              fontSize: '0.78125rem', textAlign: 'center', marginBottom: 12,
               color: importMsg.ok ? J.jadeDeep : J.redDeep, fontWeight: 600,
             }}>
               {importMsg.text}
@@ -821,20 +860,20 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               style={{
                 width: '100%', padding: '12px 16px', borderRadius: 14,
                 border: `1px solid ${J.sandBg}`, background: 'transparent',
-                color: J.sandDeep, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                color: J.sandDeep, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
               }}
             >
               {t('settings_reset')}
             </button>
           ) : (
             <div className="space-y-3">
-              <p style={{ fontSize: 14, color: J.ink, textAlign: 'center' }}>{t('settings_reset_confirm')}</p>
+              <p style={{ fontSize: '0.875rem', color: J.ink, textAlign: 'center' }}>{t('settings_reset_confirm')}</p>
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowResetConfirm(false)}
                   style={{
                     flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
-                    background: J.paperHi, color: J.ink, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                    background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
                   }}
                 >
                   {t('settings_cancel')}
@@ -843,7 +882,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                   onClick={handleReset}
                   style={{
                     flex: 1, padding: '12px', borderRadius: 99, border: 0,
-                    background: J.red, color: J.onAccent, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                    background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
                     boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
                   }}
                 >
@@ -856,7 +895,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
         {/* ─── Acerca de (footer compacto) ────────────────────────────── */}
         <p style={{
-          marginTop: 18, textAlign: 'center', fontSize: 11.5,
+          marginTop: 18, textAlign: 'center', fontSize: '0.71875rem',
           color: J.mute, fontWeight: 500, letterSpacing: '0.02em',
         }}>
           {APP_NAME} · {APP_VERSION} · {t('settings_words_included')}: {totalWords}
