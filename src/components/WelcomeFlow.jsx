@@ -162,7 +162,7 @@ export default function WelcomeFlow({ onComplete }) {
                       transition: 'transform 150ms ease, background 200ms ease',
                     }}
                   >
-                    <img src={av.src} alt={av.label} draggable={false}
+                    <img src={av.src} alt={t('avatar_' + av.id, av.label)} draggable={false}
                       loading="lazy" decoding="async"
                       style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10, display: 'block' }} />
                     {selected && (

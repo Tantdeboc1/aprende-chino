@@ -331,7 +331,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           >
             <img
               src={effectiveAvatar.src}
-              alt={avatar.label || 'Avatar'}
+              alt={t('avatar_' + avatar.id, avatar.label || 'Avatar')}
               referrerPolicy="no-referrer"
               draggable={false}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}

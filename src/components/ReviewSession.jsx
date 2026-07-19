@@ -145,6 +145,7 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
 
 // ─── Tarjeta de flashcard ────────────────────────────────────────────────────
 function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
+  const { t } = useTranslation();
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4 py-6">
       {!isFlipped ? (
@@ -158,7 +159,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           }}
         >
           <span className="text-8xl font-bold font-cn leading-none" style={{ color: J.ink }}>{word.char}</span>
-          <span className="text-sm mt-2" style={{ color: J.mute }}>Toca para ver</span>
+          <span className="text-sm mt-2" style={{ color: J.mute }}>{t('srs_tap_to_reveal')}</span>
         </button>
       ) : (
         /* REVERSO — pinyin + significado + ejemplos */

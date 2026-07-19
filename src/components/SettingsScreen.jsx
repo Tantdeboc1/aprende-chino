@@ -170,7 +170,7 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
                   aspectRatio: '1 / 1',
                   overflow: 'hidden',
                 }}
-                title={locked ? t('avatar_locked_level', 'Se desbloquea al nivel {{level}}', { level: av.minLevel }) : av.label}
+                title={locked ? t('avatar_locked_level', 'Se desbloquea al nivel {{level}}', { level: av.minLevel }) : t('avatar_' + av.id, av.label)}
               >
                 <img
                   src={av.src}
@@ -406,13 +406,13 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
             >
               <img
                 src={effectiveAvatar.src}
-                alt={currentAvatar.label}
+                alt={t('avatar_' + currentAvatar.id, currentAvatar.label)}
                 referrerPolicy="no-referrer"
                 style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10, display: 'block' }}
               />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ margin: 0, fontSize: 13.5, color: J.ink, fontWeight: 700 }}>
-                  {effectiveAvatar.isGoogle ? t('settings_avatar_google_label', 'Foto de Google') : currentAvatar.label}
+                  {effectiveAvatar.isGoogle ? t('settings_avatar_google_label', 'Foto de Google') : t('avatar_' + currentAvatar.id, currentAvatar.label)}
                 </p>
                 <p style={{ margin: 0, fontSize: 11, color: J.mute }}>{t('settings_avatar_change_hint')}</p>
               </div>

@@ -150,7 +150,8 @@ function Daily({ goBack }) {
         setLoading(true);
         setError(null);
         const res = await fetch(`${BASE}data/hsk1-data.json`, { cache: 'no-cache' });
-        if (!res.ok) throw new Error('No se pudo cargar /data/hsk1-data.json');
+        // Mensaje técnico neutro: la UI ya muestra el prefijo localizado.
+        if (!res.ok) throw new Error(`hsk1-data.json — HTTP ${res.status}`);
         const data = await res.json();
 
         const arr = Object.entries(data.characters).map(([char, details]) => ({
@@ -160,7 +161,7 @@ function Daily({ goBack }) {
 
         if (mounted) setDictionary(arr);
       } catch (e) {
-        if (mounted) setError(e.message || 'Error al cargar el diccionario');
+        if (mounted) setError(e.message || 'fetch error');
       } finally {
         if (mounted) setLoading(false);
       }

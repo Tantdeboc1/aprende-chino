@@ -161,7 +161,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
           }}>
             <img
               src={avatar.src}
-              alt={avatar.label || 'Avatar'}
+              alt={t('avatar_' + avatar.id, avatar.label || 'Avatar')}
               draggable={false}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />

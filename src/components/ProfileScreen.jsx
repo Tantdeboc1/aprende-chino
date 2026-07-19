@@ -114,11 +114,11 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
   // portapapeles. Mensaje incluye nick, nivel, racha y URL de la app.
   const handleShare = async () => {
     const lines = [
-      `${userName || t('settings_default_user')} está aprendiendo chino 🇨🇳`,
-      `Nivel ${levelInfo.level} · ${(streak.totalXP || 0).toLocaleString()} XP`,
+      t('profile_share_learning', { name: userName || t('settings_default_user') }),
+      t('profile_share_level', { level: levelInfo.level, xp: (streak.totalXP || 0).toLocaleString() }),
     ];
     if (streak.currentStreak > 0) {
-      lines.push(`🔥 ${streak.currentStreak} ${t('settings_day', { count: streak.currentStreak })} de racha`);
+      lines.push(t('profile_share_streak', { count: streak.currentStreak }));
     }
     // La URL va SOLO en el campo `url` de navigator.share (si también fuera en
     // `text`, WhatsApp/Telegram la muestran dos veces). El fallback de
@@ -171,7 +171,7 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           }}>
             <img
               src={effectiveAvatar.src}
-              alt={currentAvatar.label}
+              alt={t('avatar_' + currentAvatar.id, currentAvatar.label)}
               draggable={false}
               referrerPolicy="no-referrer"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}

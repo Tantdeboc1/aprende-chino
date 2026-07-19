@@ -11,6 +11,7 @@ import {
 } from '@/lib/userStore.js';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 import { bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
+import i18n from '@/i18n.js';
 
 const LS_MODE = STORAGE_KEYS.AUTH_MODE; // 'google' | 'guest'
 
@@ -81,11 +82,7 @@ export function AuthProvider({ children }) {
           if (isMigrating && remoteHasProgress(remote)) {
             // El usuario invitado ya tenía cuenta Google con datos.
             // Le preguntamos qué versión conservar.
-            const keepCloud = window.confirm(
-              'Ya tienes progreso guardado en la nube con esta cuenta.\n\n' +
-              'Aceptar = mantener el de la nube (descarta lo de este dispositivo).\n' +
-              'Cancelar = sobrescribir la nube con lo de este dispositivo.',
-            );
+            const keepCloud = window.confirm(i18n.t('auth_sync_conflict'));
             if (keepCloud) {
               hydrateLocalFromRemote(remote);
             } else {

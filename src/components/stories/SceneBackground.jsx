@@ -404,7 +404,8 @@ const SCENES = {
         <rect width="280" height="170" fill="#1a4a32" stroke="#3a2418" strokeWidth="8" />
         {/* trazos de tiza */}
         <text x="140" y="60" textAnchor="middle" fontSize="44" fontFamily="serif" fill="rgba(255,255,255,0.92)" fontWeight="700">汉语课</text>
-        <text x="140" y="100" textAnchor="middle" fontSize="14" fill="rgba(255,255,255,0.6)" fontStyle="italic">Hànyǔ kè · Clase de chino</text>
+        {/* Subtítulo neutro al idioma: pinyin del 汉语课 de arriba (sin traducción) */}
+        <text x="140" y="100" textAnchor="middle" fontSize="14" fill="rgba(255,255,255,0.6)" fontStyle="italic">Hànyǔ kè</text>
         {/* línea horizontal */}
         <line x1="20" y1="120" x2="260" y2="120" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeDasharray="6 4" />
         <text x="140" y="146" textAnchor="middle" fontSize="22" fontFamily="serif" fill="rgba(255,255,255,0.85)">9:00 — 11:00</text>
