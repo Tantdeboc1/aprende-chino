@@ -250,8 +250,8 @@ export default function Dictionary({
           </div>
         </div>
 
-        {/* Leyenda SRS */}
-        <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: J.mute }}>
+        {/* Leyenda SRS — flex-wrap para que no desborde con texto grande (a11y) */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 text-xs" style={{ color: J.mute }}>
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.jade }} /> {t('dictionary_mastered_label')}</span>
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.sand }} /> {t('dictionary_pending_label')}</span>
           <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block" style={{ background: J.jadeMid }} /> {t('dictionary_learning_label')}</span>

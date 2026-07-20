@@ -100,7 +100,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
           pestañas no cabría si escalara con el ajuste de tamaño de texto. El
           contenido de lectura sí escala; aquí priorizamos que la nav siga
           usable a cualquier escala. */}
-      <div className="max-w-lg mx-auto flex justify-around items-end" style={{ paddingTop: 4, paddingBottom: 12, paddingLeft: 2, paddingRight: 2 }}>
+      <div className="w-full max-w-lg mx-auto flex justify-around items-end" style={{ paddingTop: 4, paddingBottom: 12, paddingLeft: 2, paddingRight: 2 }}>
         {items.map((item) => {
           const { key, label, Icon } = item;
           const active  = isActive(key);
