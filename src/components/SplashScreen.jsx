@@ -49,6 +49,10 @@ export default function SplashScreen({ progress, onComplete }) {
           strokeAnimationSpeed: 1.8, delayBetweenStrokes: 80,
           showOutline: true, showCharacter: false,
           outlineColor: resolveColor(J.mute2),
+          // Sin este handler, un fallo al cargar los datos de trazos (404,
+          // corte de red…) se propaga como unhandled rejection y satura Sentry.
+          // Es un adorno del splash: si falla, lo dejamos vacío en silencio.
+          onLoadCharDataError: () => {},
         });
         writerInst.current = writer;
         setTimeout(() => { if (mounted) writer.animateCharacter(); }, 400);

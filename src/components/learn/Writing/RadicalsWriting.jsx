@@ -64,6 +64,13 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           radicalColor: '#8b5cf6',
           strokeAnimationSpeed: 2,
           delayBetweenStrokes: 400,
+          // Sin este handler, un fallo al cargar los datos de trazos (radical
+          // sin JSON, corte de red…) se propaga como unhandled rejection y
+          // llega a Sentry. El try/catch de abajo NO lo atrapa: la carga es
+          // asíncrona y ocurre después de que create() retorne.
+          onLoadCharDataError: (err) => {
+            console.warn('[RadicalsWriting] no se pudieron cargar los trazos de', currentRadical.char, err);
+          },
         };
 
         // Crear instancia

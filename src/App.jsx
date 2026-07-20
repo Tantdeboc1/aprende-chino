@@ -57,6 +57,10 @@ function AnimatedLoader() {
           strokeColor: resolveColor(J.jade), radicalColor: resolveColor(J.red),
           drawingWidth: 3, showCharacter: false, showOutline: true,
           outlineColor: resolveColor(J.mute2),
+          // Sin este handler, un fallo al cargar los datos de trazos (404,
+          // corte de red…) se propaga como unhandled rejection y satura Sentry.
+          // Es un adorno del loader: si falla, lo dejamos vacío en silencio.
+          onLoadCharDataError: () => {},
         });
         const loop = () => {
           if (cancelled) return;

@@ -59,6 +59,13 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           delayBetweenStrokes: 600,
           radicalColor: '#3b82f6',
           showOutline: true,
+          // Sin este handler, un fallo al cargar los datos de trazos (carácter
+          // sin JSON, corte de red…) se propaga como unhandled rejection y
+          // llega a Sentry. El try/catch de abajo NO lo atrapa: la carga es
+          // asíncrona y ocurre después de que create() retorne.
+          onLoadCharDataError: (err) => {
+            console.warn('[HanziWriting] no se pudieron cargar los trazos de', charKey, err);
+          },
         };
 
         // Configurar según la pestaña
