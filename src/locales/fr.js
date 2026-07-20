@@ -826,6 +826,7 @@ export default {
           charsheet_default_type: "Nom",
           charsheet_meaning_header: "Signification",
           charsheet_examples: "Exemples",
+          charsheet_example_play: "Écouter {{ex}}",
           srs_step_1: "Va dans <1>Accueil</1> et ouvre une leçon",
           srs_step_2: "Complète le <1>Quiz</1> de la leçon",
           srs_step_3: "Reviens ici, les mots seront prêts à réviser",

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 import { useExitAnimation } from '@/hooks/useExitAnimation.js';
+import { speakChineseEnhanced } from '@/utils/tts-enhanced.js';
 
 const LESSON_BADGE = {
   1: { bg: J.redBg, fg: J.redDeep, border: J.red },
@@ -263,8 +264,21 @@ export default function CharacterSheet({ char, onClose, onSpeak, onToggleFavorit
               <div className="rounded-xl px-4 py-3" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
                 <p className="text-xs mb-2" style={{ color: J.mute }}>{t('charsheet_examples', 'Ejemplos')}</p>
                 <div className="flex flex-wrap gap-1.5">
+                  {/* Cada ejemplo es pulsable para OÍRLO (voz nativa zh-CN, que
+                      pronuncia bien los polífonos). No mostramos pinyin para no
+                      arriesgar lecturas incorrectas derivadas automáticamente. */}
                   {char.examples.map((ex, i) => (
-                    <span key={i} className="text-sm px-2.5 py-1 rounded-lg" style={{ background: J.paper, color: J.ink }}>{ex}</span>
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => { try { speakChineseEnhanced(ex); } catch { /* fallback silencioso */ } }}
+                      aria-label={t('charsheet_example_play', 'Escuchar {{ex}}', { ex })}
+                      className="text-sm px-2.5 py-1 rounded-lg inline-flex items-center gap-1 transition-colors"
+                      style={{ background: J.paper, color: J.ink, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
+                    >
+                      {ex}
+                      <span aria-hidden="true" style={{ fontSize: '0.75rem', opacity: 0.55 }}>🔊</span>
+                    </button>
                   ))}
                 </div>
               </div>

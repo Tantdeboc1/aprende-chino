@@ -1010,6 +1010,7 @@ export default {
           charsheet_default_type: "Noun",
           charsheet_meaning_header: "Meaning",
           charsheet_examples: "Examples",
+          charsheet_example_play: "Listen to {{ex}}",
           srs_step_1: "Go to <1>Home</1> and open a lesson",
           srs_step_2: "Complete the lesson's <1>Quiz</1>",
           srs_step_3: "Come back here, the words will be ready for review",

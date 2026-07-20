@@ -478,6 +478,7 @@ export default {
           charsheet_default_type: "Substantiv",
           charsheet_meaning_header: "Bedeutung",
           charsheet_examples: "Beispiele",
+          charsheet_example_play: "{{ex}} anhören",
           srs_step_1: "Gehe zu <1>Startseite</1> und öffne eine Lektion",
           srs_step_2: "Schließe das <1>Quiz</1> der Lektion ab",
           srs_step_3: "Komm hierher zurück, die Wörter sind dann bereit zur Wiederholung",

@@ -1012,6 +1012,7 @@ export default {
           charsheet_default_type: "Sustantivo",
           charsheet_meaning_header: "Significado",
           charsheet_examples: "Ejemplos",
+          charsheet_example_play: "Escuchar {{ex}}",
           srs_step_1: "Ve a <1>Inicio</1> y abre una lección",
           srs_step_2: "Completa el <1>Quiz</1> de la lección",
           srs_step_3: "Vuelve aquí, las palabras aparecerán listas para repasar",
