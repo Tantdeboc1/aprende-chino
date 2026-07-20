@@ -443,6 +443,7 @@ export default {
           text_size_large: "Grand",
           text_size_xlarge: "Très grand",
           settings_text_size_hint: "Agrandit tout le texte de l’app pour mieux lire.",
+          nav_primary_label: "Navigation principale",
           theme_light: "Clair",
           theme_dark: "Sombre",
           theme_system: "Système",

@@ -90,7 +90,10 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
 
   return (
     <>
-      <div
+      {/* Landmark <main>: da a los lectores de pantalla un destino "contenido
+          principal" en cada pantalla (la nav inferior es su propio <nav>). */}
+      <main
+        id="main-content"
         className="min-h-screen"
         style={{
           opacity: visible ? 1 : 0,
@@ -106,7 +109,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
         onTouchEnd={handleTouchEnd}
       >
         {children}
-      </div>
+      </main>
       {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} />}
     </>
   );

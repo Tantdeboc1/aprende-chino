@@ -432,6 +432,7 @@ export default {
           text_size_large: "Grande",
           text_size_xlarge: "Muito grande",
           settings_text_size_hint: "Aumenta todo o texto do app para ler melhor.",
+          nav_primary_label: "Navegação principal",
           theme_light: "Claro",
           theme_dark: "Escuro",
           theme_system: "Sistema",

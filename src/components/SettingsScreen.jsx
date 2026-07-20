@@ -175,7 +175,7 @@ function AvatarPicker({ currentId, gender, onSelect, onClose }) {
               >
                 <img
                   src={av.src}
-                  alt={av.label}
+                  alt={t('avatar_' + av.id, av.label)}
                   draggable={false}
                   style={{
                     width: '100%', height: '100%',

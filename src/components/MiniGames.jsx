@@ -182,9 +182,9 @@ export default function MiniGames({ goBack, navigateTo }) {
         </div>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl sm:text-4xl font-bold font-cn mb-1" style={{ color: J.ink }}>
+          <h1 className="text-3xl sm:text-4xl font-bold font-cn mb-1" style={{ color: J.ink }}>
             技能
-          </h2>
+          </h1>
           <p className="text-lg" style={{ color: J.inkSoft }}>{t('minigames_practice_by_skill', 'Practica por destrezas')}</p>
           <p className="text-sm mt-1" style={{ color: J.mute }}>{t('minigames_subtitle')}</p>
         </div>

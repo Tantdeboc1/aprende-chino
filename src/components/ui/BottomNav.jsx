@@ -89,6 +89,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
 
   return (
     <nav
+      aria-label={t('nav_primary_label', 'Navegación principal')}
       className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm"
       style={{
         background: `color-mix(in srgb, ${J.paperHi} 95%, transparent)`,
@@ -108,6 +109,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
             <button
               key={key}
               onClick={() => onNavigate(key)}
+              aria-current={active ? 'page' : undefined}
               className="flex flex-col items-center transition-all duration-200 active:scale-95"
               style={{ background: 'none', border: 0, cursor: 'pointer', gap: 2, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4, minWidth: 46 }}
             >

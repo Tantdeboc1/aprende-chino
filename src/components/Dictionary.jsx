@@ -157,9 +157,9 @@ export default function Dictionary({
             <ProfileBadge variant="light" />
           </div>
 
-          <h2 className="text-3xl font-bold mb-1" style={{ color: J.ink }}>
+          <h1 className="text-3xl font-bold mb-1" style={{ color: J.ink }}>
             {t('dictionary_title')}<span style={{ color: J.red }}>.</span>
-          </h2>
+          </h1>
           <p className="mb-4 text-sm" style={{ color: J.inkSoft }}>
             {t('dictionary_word_count', { count: filteredChars.length })}
             {selectedLesson ? ` · ${t('dictionary_filter_lesson', { num: selectedLesson })}` : ` · ${t('dictionary_filter_all_lessons')}`}

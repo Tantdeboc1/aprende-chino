@@ -219,7 +219,7 @@ export default function LevelUpModal({ levelUp, onClose }) {
                 <img
                   key={av.id}
                   src={av.src}
-                  alt={av.label}
+                  alt={t('avatar_' + av.id, av.label)}
                   draggable={false}
                   style={{
                     width: 52, height: 52, borderRadius: '50%',
