@@ -118,6 +118,8 @@ export default {
           text_size_large: "Groß",
           text_size_xlarge: "Sehr groß",
           settings_text_size_hint: "Vergrößert den gesamten App-Text für bessere Lesbarkeit.",
+          settings_high_contrast: "Hoher Kontrast",
+          settings_high_contrast_hint: "Kräftigere Farben und klare Ränder.",
           nav_primary_label: "Hauptnavigation",
           theme_light: "Hell",
           theme_dark: "Dunkel",

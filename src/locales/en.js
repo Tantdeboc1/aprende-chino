@@ -527,6 +527,8 @@ export default {
           text_size_large: "Large",
           text_size_xlarge: "Extra large",
           settings_text_size_hint: "Enlarges all app text for easier reading.",
+          settings_high_contrast: "High contrast",
+          settings_high_contrast_hint: "Stronger colors and defined borders.",
           nav_primary_label: "Primary navigation",
           theme_light: "Light",
           theme_dark: "Dark",

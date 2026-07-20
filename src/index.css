@@ -67,6 +67,52 @@
   --shadow-lg: 0 8px 20px -6px rgba(0,0,0,0.50), 0 16px 36px -10px rgba(0,0,0,0.65);
 }
 
+/* ─── Alto contraste (accesibilidad, WCAG 1.4.6 AAA) ────────────────────────
+   Toggle independiente (highContrast.js → clase .high-contrast en <html>) que
+   se combina con claro U oscuro. Lleva texto a negro/blanco puro, refuerza
+   bordes y oscurece/aclara los acentos hasta ≥7:1. Solo redefine tokens, así
+   que toda la app se adapta sin tocar componentes. */
+.high-contrast {
+  --paper: #ffffff;
+  --paper-hi: #ffffff;
+  --paper-hi2: #f2f2f2;
+  --ink: #000000;
+  --ink-soft: #1c1813;
+  --mute: #3a352c;
+  --mute-strong: #1c1813;
+  --mute2: #767060;             /* deja de ser tan claro por si aparece como texto */
+  --hair: rgba(0,0,0,0.35);
+  --hair-s: rgba(0,0,0,0.5);
+  --ui-border: #000000;
+  --jade: #1a4230;
+  --jade-deep: #123020;
+  --red: #8b1f1a;
+  --red-deep: #6b120e;
+  --sand: #6b4c1e;
+  --sand-deep: #4d360f;
+  --focus: #000000;
+}
+.high-contrast.dark {
+  --paper: #000000;
+  --paper-hi: #000000;
+  --paper-hi2: #121212;
+  --ink: #ffffff;
+  --ink-soft: #e8e0cf;
+  --mute: #cbc2ad;
+  --mute-strong: #e8e0cf;
+  --mute2: #9c927d;
+  --hair: rgba(255,255,255,0.4);
+  --hair-s: rgba(255,255,255,0.6);
+  --ui-border: #ffffff;
+  --jade: #7dc49f;
+  --jade-deep: #a6d9be;
+  --red: #f2938a;
+  --red-deep: #f7b3ac;
+  --sand: #dcb45a;
+  --sand-deep: #e8c88a;
+  --focus: #ffffff;
+}
+
 html {
   color-scheme: light;
   /* Ajuste de tamaño de texto (accesibilidad). `100%` respeta la preferencia

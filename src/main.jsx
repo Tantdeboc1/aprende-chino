@@ -13,6 +13,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { initErrorTracking } from './utils/errorTracking.js';
 import { initTheme } from './utils/theme.js';
 import { initFontScale } from './utils/fontScale.js';
+import { initHighContrast } from './utils/highContrast.js';
 import { setNeedRefresh } from './utils/pwaUpdate.js';
 
 // Aplica el tema guardado ANTES del primer render para evitar parpadeo
@@ -20,6 +21,8 @@ import { setNeedRefresh } from './utils/pwaUpdate.js';
 initTheme();
 // Aplica el tamaño de texto guardado (accesibilidad) antes del primer render.
 initFontScale();
+// Aplica el modo de alto contraste guardado (accesibilidad) antes del render.
+initHighContrast();
 
 // Service worker PWA — solo existe en builds de producción (en dev el
 // plugin está desactivado y registerSW es un no-op). En modo 'prompt'

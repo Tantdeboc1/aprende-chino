@@ -15,6 +15,7 @@ import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
 import { getThemePref, setThemePref } from '@/utils/theme.js';
 import { getFontScalePref, setFontScalePref } from '@/utils/fontScale.js';
+import { getHighContrast, setHighContrast } from '@/utils/highContrast.js';
 import { downloadBackup, restoreBackup } from '@/utils/backup.js';
 import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
 import { assetUrl } from '@/utils/assets';
@@ -240,6 +241,13 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const handleFontScaleChange = (pref) => {
     setFontScalePref(pref); // reescala la raíz al instante
     setFontScaleState(pref);
+  };
+
+  const [highContrast, setHighContrastState] = useState(() => getHighContrast());
+  const handleHighContrastToggle = () => {
+    const next = !highContrast;
+    setHighContrast(next); // aplica/quita la clase .high-contrast al instante
+    setHighContrastState(next);
   };
 
   const handleIntrosToggle = () => {
@@ -608,6 +616,17 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute }}>
             {t('settings_text_size_hint', 'Agranda todo el texto de la app para leerlo mejor.')}
           </p>
+        </JCard>
+
+        {/* ─── Alto contraste (accesibilidad) ──────────────────────────── */}
+        <JCard padding="0">
+          <PrefToggle
+            first
+            label={t('settings_high_contrast', 'Alto contraste')}
+            hint={t('settings_high_contrast_hint', 'Colores más marcados y bordes definidos.')}
+            value={highContrast}
+            onChange={handleHighContrastToggle}
+          />
         </JCard>
 
         {/* ─── Música ──────────────────────────────────────────────────── */}
