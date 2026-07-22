@@ -28,3 +28,8 @@ public/hanzi-data/
 test-results/
 playwright-report/
 playwright/.cache/
+
+# Binarios firmados de Android. Se generan en el proyecto TWA
+# (../hanyupath-twa) y se suben a Play Console; no se versionan aquí.
+*.aab
+*.apk
