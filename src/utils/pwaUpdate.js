@@ -24,3 +24,13 @@ export function onNeedRefresh(listener) {
   if (pendingUpdate) listener(pendingUpdate);
   return () => listeners.delete(listener);
 }
+
+/**
+ * La función de activación pendiente, o null si no hay versión en espera.
+ * La usa lazyWithRetry: cuando un chunk no carga porque el despliegue cambió
+ * bajo los pies del usuario, activar el SW nuevo arregla la sesión de raíz
+ * (trae el index.html nuevo, con los hashes que sí existen).
+ */
+export function getPendingUpdate() {
+  return pendingUpdate;
+}

@@ -11,25 +11,26 @@
 // MiniGames.jsx (`games` array). Eso es TODO. No hay que tocar App.jsx
 // ni navigation.js: ambos derivan su comportamiento de este registro.
 
-import { lazy, memo } from 'react';
+import { memo } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 
 // Cada juego va envuelto en memo(): sus props ya llegan estables desde
 // navigation.js (goBack, onTrackResult, speak… memoizados), así el juego NO se
 // re-renderiza cuando App re-renderiza por un cambio de `progress` a mitad de
 // partida. lazy() se conserva para el code-splitting por juego.
-const SOVGame              = memo(lazy(() => import('./SOVGame.jsx')));
-const TimeRace             = memo(lazy(() => import('./TimeRace.jsx')));
-const PinyinConnection     = memo(lazy(() => import('./PinyinConnection.jsx')));
-const TranslationGame      = memo(lazy(() => import('./TranslationGame.jsx')));
-const CompleteSentence     = memo(lazy(() => import('./CompleteSentence.jsx')));
-const DialogueOrder        = memo(lazy(() => import('./DialogueOrder.jsx')));
-const FindIntruder         = memo(lazy(() => import('./FindIntruder.jsx')));
-const PronunciationPractice = memo(lazy(() => import('./PronunciationPractice.jsx')));
-const DictationGame         = memo(lazy(() => import('./DictationGame.jsx')));
-const ToneEar               = memo(lazy(() => import('./ToneEar.jsx')));
-const EchoSpeaking          = memo(lazy(() => import('./EchoSpeaking.jsx')));
-const ReadingComprehension  = memo(lazy(() => import('./ReadingComprehension.jsx')));
-const CefrExam              = memo(lazy(() => import('./CefrExam.jsx')));
+const SOVGame              = memo(lazyWithRetry(() => import('./SOVGame.jsx')));
+const TimeRace             = memo(lazyWithRetry(() => import('./TimeRace.jsx')));
+const PinyinConnection     = memo(lazyWithRetry(() => import('./PinyinConnection.jsx')));
+const TranslationGame      = memo(lazyWithRetry(() => import('./TranslationGame.jsx')));
+const CompleteSentence     = memo(lazyWithRetry(() => import('./CompleteSentence.jsx')));
+const DialogueOrder        = memo(lazyWithRetry(() => import('./DialogueOrder.jsx')));
+const FindIntruder         = memo(lazyWithRetry(() => import('./FindIntruder.jsx')));
+const PronunciationPractice = memo(lazyWithRetry(() => import('./PronunciationPractice.jsx')));
+const DictationGame         = memo(lazyWithRetry(() => import('./DictationGame.jsx')));
+const ToneEar               = memo(lazyWithRetry(() => import('./ToneEar.jsx')));
+const EchoSpeaking          = memo(lazyWithRetry(() => import('./EchoSpeaking.jsx')));
+const ReadingComprehension  = memo(lazyWithRetry(() => import('./ReadingComprehension.jsx')));
+const CefrExam              = memo(lazyWithRetry(() => import('./CefrExam.jsx')));
 
 /** Mini-juegos disponibles, en el orden lógico. */
 export const MINIGAMES = [

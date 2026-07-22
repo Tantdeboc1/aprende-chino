@@ -1,5 +1,6 @@
 // src/components/LessonDetail.jsx
-import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
+import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 import { useMedia } from 'react-use';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +11,9 @@ import { toggleWordDifficult, isWordDifficult, isLeech, getNextReviewInfo } from
 // Cargas perezosas: estos componentes/módulos arrastran bastante peso (datos
 // multi-idioma, librería de partículas) y solo se necesitan al abrir su tab
 // o al alcanzar el 100% de la lección. Salen del chunk principal de LessonDetail.
-const GrammarTab   = lazy(() => import('./GrammarTab.jsx'));
-const CulturalTab  = lazy(() => import('./CulturalTab.jsx'));
-const Confetti     = lazy(() => import('react-confetti'));
+const GrammarTab   = lazyWithRetry(() => import('./GrammarTab.jsx'));
+const CulturalTab  = lazyWithRetry(() => import('./CulturalTab.jsx'));
+const Confetti     = lazyWithRetry(() => import('react-confetti'));
 
 /* CJK exercise icons — reemplazan emojis */
 const EXERCISE_DEFS = [

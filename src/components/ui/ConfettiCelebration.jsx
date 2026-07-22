@@ -1,11 +1,12 @@
 // src/components/ui/ConfettiCelebration.jsx
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { lazyWithRetry } from "@/utils/lazyWithRetry.js";
 import { useMedia } from "react-use";
 import { useWindowSize } from "@/hooks/useWindowSize.js";
 
 // react-confetti es relativamente pesado (~30 kB). Lo cargamos dinámicamente
 // — el chunk del consumidor (GlobalExam, mini-juegos…) ya no lo arrastra.
-const Confetti = lazy(() => import("react-confetti"));
+const Confetti = lazyWithRetry(() => import("react-confetti"));
 
 export default function ConfettiCelebration() {
   const { width, height } = useWindowSize();

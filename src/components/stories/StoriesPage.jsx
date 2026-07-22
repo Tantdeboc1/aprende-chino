@@ -2,7 +2,8 @@
 // Listado de historias con estado bloqueada/disponible/completada.
 // Guarda el resultado al terminar una historia.
 
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 import { useTranslation } from 'react-i18next';
 import { loc, baseLang } from '@/utils/loc.js';
 import { J } from '@/styles/tokens';
@@ -18,7 +19,7 @@ import { markWordSeen } from '@/utils/progress.js';
 // StoryPlayer arrastra mucho código (escenarios, diálogos, ejercicios). Solo
 // se necesita al reproducir una historia concreta — el listado no lo usa.
 // Lazy lo saca del chunk de StoriesPage (que pasa de 85 kB a ~15 kB).
-const StoryPlayer = lazy(() => import('./StoryPlayer.jsx'));
+const StoryPlayer = lazyWithRetry(() => import('./StoryPlayer.jsx'));
 
 // Al terminar una historia, marca los caracteres del vocabularioObjetivo
 // como "vistos" en la lección a la que pertenecen — así el progreso de

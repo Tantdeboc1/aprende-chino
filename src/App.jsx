@@ -1,23 +1,24 @@
 import { assetUrl } from './utils/assets';
 import { hanziCharDataLoader } from './utils/hanziCharData.js';
-import { useState, useEffect, useMemo, useCallback, Suspense, lazy, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, Suspense, useRef } from "react";
+import { lazyWithRetry } from './utils/lazyWithRetry.js';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
-const ExamMode = lazy(() => import('./components/ExamMode.jsx'));
-const GlobalExam = lazy(() => import('./components/GlobalExam.jsx'));
-const LevelExam = lazy(() => import('./components/LevelExam.jsx'));
+const ExamMode = lazyWithRetry(() => import('./components/ExamMode.jsx'));
+const GlobalExam = lazyWithRetry(() => import('./components/GlobalExam.jsx'));
+const LevelExam = lazyWithRetry(() => import('./components/LevelExam.jsx'));
 import HomeScreen from './components/HomeScreen.jsx';
 // WelcomeFlow solo se ve la primera vez (sin perfil) — lazy ahorra ~10 kB
 // del bundle inicial a usuarios recurrentes, que son la inmensa mayoría.
-const WelcomeFlow = lazy(() => import('./components/WelcomeFlow.jsx'));
-const LessonDetail = lazy(() => import('./components/LessonDetail.jsx'));
-const SettingsScreen = lazy(() => import('./components/SettingsScreen.jsx'));
-const ProfileScreen = lazy(() => import('./components/ProfileScreen.jsx'));
-const FriendsScreen = lazy(() => import('./components/FriendsScreen.jsx'));
-const ReviewSession = lazy(() => import('./components/ReviewSession.jsx'));
+const WelcomeFlow = lazyWithRetry(() => import('./components/WelcomeFlow.jsx'));
+const LessonDetail = lazyWithRetry(() => import('./components/LessonDetail.jsx'));
+const SettingsScreen = lazyWithRetry(() => import('./components/SettingsScreen.jsx'));
+const ProfileScreen = lazyWithRetry(() => import('./components/ProfileScreen.jsx'));
+const FriendsScreen = lazyWithRetry(() => import('./components/FriendsScreen.jsx'));
+const ReviewSession = lazyWithRetry(() => import('./components/ReviewSession.jsx'));
 import SplashScreen from './components/SplashScreen.jsx';
-const StoriesPage = lazy(() => import('./components/stories/StoriesPage.jsx'));
-const ChinaMap = lazy(() => import('./components/china/ChinaMap.jsx'));
-const LoginScreen = lazy(() => import('./components/LoginScreen.jsx'));
+const StoriesPage = lazyWithRetry(() => import('./components/stories/StoriesPage.jsx'));
+const ChinaMap = lazyWithRetry(() => import('./components/china/ChinaMap.jsx'));
+const LoginScreen = lazyWithRetry(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { useTranslation } from 'react-i18next';

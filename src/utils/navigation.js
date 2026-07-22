@@ -1,33 +1,34 @@
 // src/utils/navigation.js
-import { useMemo, useCallback, useRef, lazy } from 'react';
+import { useMemo, useCallback, useRef } from 'react';
+import { lazyWithRetry } from './lazyWithRetry.js';
 import { markWordResult, markWordSeen } from './progress.js';
 import { updateChallengeProgress } from './dailyChallenges.js';
 import { initSRSCard, updateSRS } from './srs.js';
 import { addXP } from './streak.js';
 
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
-const Dictionary       = lazy(() => import('@/components/Dictionary.jsx'));
-const MiniGames        = lazy(() => import('@/components/MiniGames.jsx'));
-const LearnMenu        = lazy(() => import('@/components/learn/LearnMenu.jsx'));
-const DailyIndex       = lazy(() => import('@/components/daily/DailyIndex.jsx'));
-const WritingMenu      = lazy(() => import('@/components/learn/Writing/index.jsx'));
-const HanziWriting     = lazy(() => import('@/components/learn/Writing/HanziWriting.jsx'));
-const RadicalsWriting  = lazy(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
-const RadicalsIndex    = lazy(() => import('@/components/learn/Radicals/index.jsx'));
-const RadicalsTheory   = lazy(() => import('@/components/learn/Radicals/RadicalsTheory.jsx'));
-const RadicalsQuiz     = lazy(() => import('@/components/learn/Radicals/RadicalsQuiz.jsx'));
-const RadicalsQuiz2    = lazy(() => import('@/components/learn/Radicals/RadicalsQuiz2.jsx'));
-const CharactersIndex  = lazy(() => import('@/components/learn/Characters/index.jsx'));
-const Progressive      = lazy(() => import('@/components/learn/Characters/Progressive.jsx'));
-const Quiz             = lazy(() => import('@/components/learn/Characters/Quiz.jsx'));
-const Matching         = lazy(() => import('@/components/learn/Characters/Matching.jsx'));
-const TonesIndex       = lazy(() => import('@/components/learn/Tones/index.jsx'));
-const QuizTone         = lazy(() => import('@/components/learn/Tones/QuizTone.jsx'));
-const QuizPronunciation= lazy(() => import('@/components/learn/Tones/QuizPronunciation.jsx'));
-const SpecialSyllables = lazy(() => import('@/components/learn/Tones/SpecialSyllables.jsx'));
-const CharactersDaily  = lazy(() => import('@/components/daily/CharactersDaily.jsx'));
-const RadicalsDaily    = lazy(() => import('@/components/daily/RadicalsDaily.jsx'));
-const TonesDaily       = lazy(() => import('@/components/daily/TonesDaily.jsx'));
+const Dictionary       = lazyWithRetry(() => import('@/components/Dictionary.jsx'));
+const MiniGames        = lazyWithRetry(() => import('@/components/MiniGames.jsx'));
+const LearnMenu        = lazyWithRetry(() => import('@/components/learn/LearnMenu.jsx'));
+const DailyIndex       = lazyWithRetry(() => import('@/components/daily/DailyIndex.jsx'));
+const WritingMenu      = lazyWithRetry(() => import('@/components/learn/Writing/index.jsx'));
+const HanziWriting     = lazyWithRetry(() => import('@/components/learn/Writing/HanziWriting.jsx'));
+const RadicalsWriting  = lazyWithRetry(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
+const RadicalsIndex    = lazyWithRetry(() => import('@/components/learn/Radicals/index.jsx'));
+const RadicalsTheory   = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsTheory.jsx'));
+const RadicalsQuiz     = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsQuiz.jsx'));
+const RadicalsQuiz2    = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsQuiz2.jsx'));
+const CharactersIndex  = lazyWithRetry(() => import('@/components/learn/Characters/index.jsx'));
+const Progressive      = lazyWithRetry(() => import('@/components/learn/Characters/Progressive.jsx'));
+const Quiz             = lazyWithRetry(() => import('@/components/learn/Characters/Quiz.jsx'));
+const Matching         = lazyWithRetry(() => import('@/components/learn/Characters/Matching.jsx'));
+const TonesIndex       = lazyWithRetry(() => import('@/components/learn/Tones/index.jsx'));
+const QuizTone         = lazyWithRetry(() => import('@/components/learn/Tones/QuizTone.jsx'));
+const QuizPronunciation= lazyWithRetry(() => import('@/components/learn/Tones/QuizPronunciation.jsx'));
+const SpecialSyllables = lazyWithRetry(() => import('@/components/learn/Tones/SpecialSyllables.jsx'));
+const CharactersDaily  = lazyWithRetry(() => import('@/components/daily/CharactersDaily.jsx'));
+const RadicalsDaily    = lazyWithRetry(() => import('@/components/daily/RadicalsDaily.jsx'));
+const TonesDaily       = lazyWithRetry(() => import('@/components/daily/TonesDaily.jsx'));
 // Los mini-juegos viven en un registro centralizado — añadir uno nuevo se
 // hace solo allí y aquí no hay que tocar nada.
 import { findMinigame } from '@/components/minigames/registry.js';
