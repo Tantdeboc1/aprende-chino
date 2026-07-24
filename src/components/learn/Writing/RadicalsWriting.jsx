@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
-import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { hanziCharDataLoader, runWriterOp } from '@/utils/hanziCharData.js';
 
 export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const { t } = useTranslation();
@@ -85,10 +85,10 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         // Configurar estado inicial según pestaña
         if (activeTab === 'view') {
           // En modo vista: mostrar carácter completo
-          writer.showCharacter();
+          runWriterOp(() => writer.showCharacter());
         } else {
           // En modo práctica: mostrar contorno
-          writer.showOutline();
+          runWriterOp(() => writer.showOutline());
         }
 
 
@@ -113,23 +113,23 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
 
     try {
       // 1. Ocultar carácter completo
-      writerInstanceRef.current.hideCharacter();
+      runWriterOp(() => writerInstanceRef.current.hideCharacter());
 
       // 2. Pequeño delay para que se oculte
       await new Promise(resolve => setTimeout(resolve, 200));
 
       // 3. Mostrar contorno
-      writerInstanceRef.current.showOutline();
+      runWriterOp(() => writerInstanceRef.current.showOutline());
 
       // 4. Delay antes de animar
       await new Promise(resolve => setTimeout(resolve, 300));
 
       // 5. Ejecutar animación
-      writerInstanceRef.current.animateCharacter({
+      runWriterOp(() => writerInstanceRef.current.animateCharacter({
         onComplete: () => {
           setIsPlaying(false);
         }
-      });
+      }));
     } catch (error) {
       setIsPlaying(false);
     }
@@ -143,20 +143,20 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
 
     try {
       // 1. Resetear a estado inicial
-      writerInstanceRef.current.hideCharacter();
-      writerInstanceRef.current.showOutline();
+      runWriterOp(() => writerInstanceRef.current.hideCharacter());
+      runWriterOp(() => writerInstanceRef.current.showOutline());
 
       // 2. Pequeño delay para estabilizar
       await new Promise(resolve => setTimeout(resolve, 300));
 
       // 3. Iniciar quiz
-      writerInstanceRef.current.quiz({
+      runWriterOp(() => writerInstanceRef.current.quiz({
         onComplete: () => {
           setIsPlaying(false);
           // Mostrar carácter completo al finalizar
           setTimeout(() => {
             if (writerInstanceRef.current) {
-              writerInstanceRef.current.showCharacter();
+              runWriterOp(() => writerInstanceRef.current.showCharacter());
             }
           }, 500);
         },
@@ -164,7 +164,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         },
         onStrokeStatusChange: () => {
         }
-      });
+      }));
     } catch (error) {
       setIsPlaying(false);
     }
@@ -173,8 +173,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const resetPractice = () => {
     if (writerInstanceRef.current && activeTab === 'practice') {
       writerInstanceRef.current.cancelQuiz();
-      writerInstanceRef.current.hideCharacter();
-      writerInstanceRef.current.showOutline();
+      runWriterOp(() => writerInstanceRef.current.hideCharacter());
+      runWriterOp(() => writerInstanceRef.current.showOutline());
       setIsPlaying(false);
     }
   };

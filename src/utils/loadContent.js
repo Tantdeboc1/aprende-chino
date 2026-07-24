@@ -6,6 +6,7 @@
 // multi-idioma. El cliente solo descarga el chunk del idioma activo.
 //
 // Vite produce un chunk separado por cada `import('./grammar/xx.js')`.
+import { withChunkRetry } from './lazyWithRetry.js';
 
 // Mapa de loaders. Definir las claves explícitamente permite a Vite generar
 // un chunk por idioma con nombre estable.
@@ -65,7 +66,7 @@ function pickLoader(loaders, lang) {
  */
 export async function loadGrammarData(lang) {
   if (grammarCache.has(lang)) return grammarCache.get(lang);
-  const mod = await pickLoader(grammarLoaders, lang)();
+  const mod = await withChunkRetry(pickLoader(grammarLoaders, lang))();
   grammarCache.set(lang, mod.default);
   return mod.default;
 }
@@ -77,7 +78,7 @@ export async function loadGrammarData(lang) {
  */
 export async function loadCulturalData(lang) {
   if (culturalCache.has(lang)) return culturalCache.get(lang);
-  const mod = await pickLoader(culturalLoaders, lang)();
+  const mod = await withChunkRetry(pickLoader(culturalLoaders, lang))();
   culturalCache.set(lang, mod.default);
   return mod.default;
 }
@@ -89,7 +90,7 @@ export async function loadCulturalData(lang) {
  */
 export async function loadReadingStories(lang) {
   if (readingCache.has(lang)) return readingCache.get(lang);
-  const mod = await pickLoader(readingLoaders, lang)();
+  const mod = await withChunkRetry(pickLoader(readingLoaders, lang))();
   readingCache.set(lang, mod.default);
   return mod.default;
 }
@@ -101,7 +102,7 @@ export async function loadReadingStories(lang) {
  */
 export async function loadTranslationPhrases(lang) {
   if (phrasesCache.has(lang)) return phrasesCache.get(lang);
-  const mod = await pickLoader(phrasesLoaders, lang)();
+  const mod = await withChunkRetry(pickLoader(phrasesLoaders, lang))();
   phrasesCache.set(lang, mod.default);
   return mod.default;
 }

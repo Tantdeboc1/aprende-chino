@@ -9,6 +9,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en.js';
+import { withChunkRetry } from './utils/lazyWithRetry.js';
 
 // Cargadores dinámicos — Vite genera un chunk separado por cada uno
 const lazyLoaders = {
@@ -80,11 +81,18 @@ i18n.on('languageChanged', async (lng) => {
   if (loader && !i18n.hasResourceBundle(base, 'translation') && !loadingLangs.has(base)) {
     loadingLangs.add(base);
     try {
-      const mod = await loader();
+      // withChunkRetry: reintenta y, si es un chunk perdido tras un despliegue,
+      // recarga con el index.html nuevo (mismo criterio que loadContent.js).
+      const mod = await withChunkRetry(loader)();
       i18n.addResourceBundle(base, 'translation', mod.default, true, true);
       // Re-renderizar con las nuevas traducciones (forzamos el código base
       // para que i18n.language quede consistente con el bundle cargado).
       i18n.changeLanguage(base);
+    } catch (e) {
+      // Corte de red al cambiar de idioma: la UI se queda en el idioma previo
+      // (fallback inglés). Lo tragamos para no soltar un unhandled rejection a
+      // Sentry — sin el catch, este handler async lo propagaría.
+      console.warn('[i18n] no se pudo cargar el idioma', base, e);
     } finally {
       loadingLangs.delete(base);
     }

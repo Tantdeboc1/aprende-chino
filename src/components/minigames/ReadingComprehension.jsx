@@ -34,7 +34,11 @@ function StorySelector({ onSelect }) {
   const [stories, setStories] = useState(null);
   useEffect(() => {
     let alive = true;
-    loadReadingStories(lang).then(data => { if (alive) setStories(data); });
+    loadReadingStories(lang)
+      .then(data => { if (alive) setStories(data); })
+      // Corte de red al descargar el chunk del idioma: se deja en null. Lo
+      // tragamos para no saturar Sentry con un rejection sin manejar.
+      .catch(err => console.warn('[ReadingComprehension] no se pudo cargar', lang, err));
     return () => { alive = false; };
   }, [lang]);
 

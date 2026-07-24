@@ -103,7 +103,9 @@ export default function GrammarTab({ lessonNum }) {
     loadGrammarData(lang).then(all => {
       if (!alive) return;
       setGrammarData(all[lessonNum] || null);
-    });
+    // Corte de red al descargar el chunk del idioma: se queda en "Cargando…".
+    // Lo tragamos para que no escape como rejection sin manejar a Sentry.
+    }).catch(err => console.warn('[GrammarTab] no se pudo cargar', lang, err));
     return () => { alive = false; };
   }, [lang, lessonNum]);
 

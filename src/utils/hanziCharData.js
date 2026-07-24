@@ -23,3 +23,21 @@ export function hanziCharDataLoader(char, onComplete, onError) {
     .then(onComplete)
     .catch(onError);
 }
+
+// Ejecuta una operación de HanziWriter que necesita los datos del carácter
+// (animateCharacter, quiz, showCharacter, showOutline, hideCharacter…) tragándose
+// el fallo "Failed to load character data. Call setCharacter and try again." que
+// lanza cuando los trazos no llegaron a cargar. `onLoadCharDataError` solo evita
+// que escape el fallo de la CARGA inicial; estas llamadas posteriores fallan por
+// su cuenta de DOS formas y ambas saturaban Sentry si no se atrapan aquí:
+//   - throw SÍNCRONO, si la carga ya había fallado antes de llamar (_withData),
+//   - promesa RECHAZADA, si falla mientras la operación está en curso.
+// Devuelve la promesa (ya con .catch) o undefined si lanzó en síncrono.
+export function runWriterOp(op) {
+  try {
+    const p = op();
+    return p && typeof p.then === 'function' ? p.catch(() => {}) : p;
+  } catch {
+    return undefined;
+  }
+}

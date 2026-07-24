@@ -13,7 +13,11 @@ export function useTranslationPhrases() {
 
   useEffect(() => {
     let alive = true;
-    loadTranslationPhrases(lang).then(data => { if (alive) setPhrases(data); });
+    loadTranslationPhrases(lang)
+      .then(data => { if (alive) setPhrases(data); })
+      // Corte de red al descargar el chunk del idioma: se deja en null (los
+      // juegos muestran su intro). Lo tragamos para no saturar Sentry.
+      .catch(err => console.warn('[useTranslationPhrases] no se pudo cargar', lang, err));
     return () => { alive = false; };
   }, [lang]);
 

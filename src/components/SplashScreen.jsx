@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
-import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { hanziCharDataLoader, runWriterOp } from '@/utils/hanziCharData.js';
 import { APP_NAME } from '@/utils/appInfo.js';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
@@ -55,7 +55,7 @@ export default function SplashScreen({ progress, onComplete }) {
           onLoadCharDataError: () => {},
         });
         writerInst.current = writer;
-        setTimeout(() => { if (mounted) writer.animateCharacter(); }, 400);
+        setTimeout(() => { if (mounted) runWriterOp(() => writer.animateCharacter()); }, 400);
       } catch (_) {}
     })();
 

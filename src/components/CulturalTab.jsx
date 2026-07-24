@@ -28,7 +28,9 @@ export default function CulturalTab({ lessonNum }) {
     loadCulturalData(lang).then(all => {
       if (!alive) return;
       setNotes(all[lessonNum] || []);
-    });
+    // Corte de red al descargar el chunk del idioma: se queda en "Cargando…".
+    // Lo tragamos para que no escape como rejection sin manejar a Sentry.
+    }).catch(err => console.warn('[CulturalTab] no se pudo cargar', lang, err));
     return () => { alive = false; };
   }, [lang, lessonNum]);
 

@@ -2,6 +2,7 @@
 // Carga dinámica de los textos de provincias por idioma. Solo se descarga el
 // chunk del idioma activo (~5 kB gzip) en lugar de los 6 idiomas juntos.
 // Los datos neutros (id, cn, pinyin, población) van aparte en base.js (estático).
+import { withChunkRetry } from '@/utils/lazyWithRetry.js';
 
 const loaders = {
   es: () => import('./es.js'),
@@ -23,7 +24,7 @@ export async function loadProvinces(lang) {
   const base = String(lang || '').split('-')[0];
   if (cache.has(base)) return cache.get(base);
   const pick = loaders[base] || loaders.en || loaders.es;
-  const mod = await pick();
+  const mod = await withChunkRetry(pick)();
   cache.set(base, mod.default);
   return mod.default;
 }

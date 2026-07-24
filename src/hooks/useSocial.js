@@ -58,15 +58,21 @@ export function useSocial() {
     if (!uid) return;
     let alive = true;
     (async () => {
-      const m = await getStore();
-      let prof = await m.fetchPublicProfile(uid);
-      if (!prof?.friendCode) {
-        try {
-          await m.syncPublicProfile({ uid, photoURL: user?.photoURL || null });
-          prof = await m.fetchPublicProfile(uid);
-        } catch (e) { console.warn('No se pudo crear el perfil público:', e); }
+      try {
+        const m = await getStore();
+        let prof = await m.fetchPublicProfile(uid);
+        if (!prof?.friendCode) {
+          try {
+            await m.syncPublicProfile({ uid, photoURL: user?.photoURL || null });
+            prof = await m.fetchPublicProfile(uid);
+          } catch (e) { console.warn('No se pudo crear el perfil público:', e); }
+        }
+        if (alive) setMe(prof);
+      } catch (e) {
+        // Error de red/Firestore al leer el perfil: lo tragamos para no soltar
+        // un unhandled rejection a Sentry (la UI se queda sin código de amigo).
+        console.warn('No se pudo leer el perfil público:', e);
       }
-      if (alive) setMe(prof);
     })();
     return () => { alive = false; };
   }, [uid, user?.photoURL, getStore]);
@@ -85,11 +91,17 @@ export function useSocial() {
     if (!uid || otherUids.length === 0) { setFriendProfiles({}); return; }
     let alive = true;
     (async () => {
-      const m = await getStore();
-      const entries = await Promise.all(
-        otherUids.map(async (o) => [o, await m.fetchPublicProfile(o)]),
-      );
-      if (alive) setFriendProfiles(Object.fromEntries(entries.filter(([, p]) => p)));
+      try {
+        const m = await getStore();
+        const entries = await Promise.all(
+          otherUids.map(async (o) => [o, await m.fetchPublicProfile(o)]),
+        );
+        if (alive) setFriendProfiles(Object.fromEntries(entries.filter(([, p]) => p)));
+      } catch (e) {
+        // Error de red/Firestore al leer perfiles de amigos: lo tragamos para no
+        // soltar un unhandled rejection a Sentry (el ranking se queda sin datos).
+        console.warn('No se pudieron leer los perfiles de amigos:', e);
+      }
     })();
     return () => { alive = false; };
     // otherUidsKey resume el contenido para no refetch en cada snapshot idéntico.

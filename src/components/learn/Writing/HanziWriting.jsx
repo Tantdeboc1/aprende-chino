@@ -5,7 +5,7 @@ import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { markWritingPractice, getWritingCount } from '@/utils/progress.js';
 import { addXP } from '@/utils/streak.js';
-import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
+import { hanziCharDataLoader, runWriterOp } from '@/utils/hanziCharData.js';
 
 export default function HanziWriting({ goBack, characters, speakChinese, progress, onProgressChange }) {
   const { t } = useTranslation();
@@ -117,15 +117,14 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
   const animateCharacter = () => {
     if (writerInstanceRef.current && activeTab === 'view') {
       setIsPlaying(true);
-      writerInstanceRef.current.animateCharacter({
-      });
+      runWriterOp(() => writerInstanceRef.current.animateCharacter({}));
     }
   };
 
   const startPractice = () => {
     if (writerInstanceRef.current && activeTab === 'practice') {
       setIsPlaying(true);
-      writerInstanceRef.current.quiz({
+      runWriterOp(() => writerInstanceRef.current.quiz({
         onComplete: () => {
           setIsPlaying(false);
           // Registrar práctica completada
@@ -137,12 +136,12 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           // acierto de quiz: +5 XP.
           addXP(5);
           setTimeout(() => {
-            if (writerInstanceRef.current) writerInstanceRef.current.showOutline();
+            if (writerInstanceRef.current) runWriterOp(() => writerInstanceRef.current.showOutline());
           }, 1000);
         },
         onMistake: () => {
         }
-      });
+      }));
     }
   };
 

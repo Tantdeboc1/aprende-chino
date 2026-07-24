@@ -362,7 +362,12 @@ export default function ChinaMap({ goBack, speakChinese }) {
   // Carga (en demanda) los textos del idioma activo.
   useEffect(() => {
     let alive = true;
-    loadProvinces(lang).then((data) => { if (alive) setTexts(data); });
+    loadProvinces(lang)
+      .then((data) => { if (alive) setTexts(data); })
+      // Corte de red al descargar el chunk del idioma: los textos se quedan en
+      // null (el mapa sigue usable con los datos neutros). Lo tragamos para no
+      // soltar un unhandled rejection a Sentry.
+      .catch((err) => console.warn('[ChinaMap] no se pudieron cargar los textos', lang, err));
     return () => { alive = false; };
   }, [lang]);
 
