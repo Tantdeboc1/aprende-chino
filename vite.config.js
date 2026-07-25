@@ -265,5 +265,15 @@ export default defineConfig(({ mode }) => ({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  // Solo afecta a `npm run dev`. firebase/app-check se importa dinámicamente y
+  // muy tarde (solo en el camino de login con Google), así que Vite lo descubre
+  // a mitad de sesión, re-optimiza y deja el módulo en una pasada distinta a la
+  // de firebase/app → initializeAppCheck peta con "Component app-check has not
+  // been registered yet". Como firebase.js se traga ese error a propósito
+  // (para no tumbar la app si App Check falla), el síntoma en dev sería que App
+  // Check simplemente no va, sin decir nada. Prebundlearlo lo evita.
+  optimizeDeps: {
+    include: ['firebase/app-check'],
+  },
 }))

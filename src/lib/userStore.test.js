@@ -44,8 +44,12 @@ vi.mock('firebase/firestore', () => ({
 }));
 
 // firebase.js inicializa la app real (API keys, initializeApp) — aquí basta
-// un objeto vacío porque el Firestore falso lo ignora.
-vi.mock('./firebase.js', () => ({ firebaseApp: {} }));
+// un objeto vacío porque el Firestore falso lo ignora. `appCheckReady` sí hace
+// falta: loadFirestore lo espera antes de la primera petición.
+vi.mock('./firebase.js', () => ({
+  firebaseApp: {},
+  appCheckReady: Promise.resolve(null),
+}));
 
 // Simula que OTRO dispositivo (u otro cliente) escribió el doc.
 function emitSnapshot(path, data, { pendingWrites = false } = {}) {

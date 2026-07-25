@@ -47,6 +47,8 @@ vi.mock('firebase/auth', () => ({
 // userStore → un solo mock cubre ambos imports.
 vi.mock('@/lib/firebase.js', () => ({
   firebaseApp: {}, auth: {}, googleProvider: {},
+  // loadFirestore (userStore/socialStore) lo espera antes de la 1ª petición.
+  appCheckReady: Promise.resolve(null),
 }));
 
 // El perfil social (código de amigo) no es objeto de estos tests.

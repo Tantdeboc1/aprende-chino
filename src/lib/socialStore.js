@@ -25,10 +25,11 @@ function loadFirestore() {
     _fsPromise = Promise.all([
       import('firebase/firestore'),
       import('./firebase.js'),
-    ]).then(([fs, { firebaseApp }]) => ({
-      fs,
-      db: fs.getFirestore(firebaseApp),
-    }));
+    ]).then(async ([fs, fb]) => {
+      // Ver userStore.loadFirestore: App Check antes de la primera petición.
+      await fb.appCheckReady;
+      return { fs, db: fs.getFirestore(fb.firebaseApp) };
+    });
   }
   return _fsPromise;
 }
@@ -168,10 +169,13 @@ export async function resolveFriendCode(code) {
 }
 
 // ─── Invitaciones ───────────────────────────────────────────────────────────
-// Envía una invitación de `fromUid` a `toUid`. `fromPublic` es el perfil
-// público del emisor (para pintar la tarjeta sin un read extra en el
-// receptor) y `toPublic` el del destinatario (para que el emisor vea a quién
-// invitó en "enviadas", también sin read extra).
+// Envía una invitación de `fromUid` a `toUid`. `toPublic` es el perfil público
+// del destinatario, para que el emisor vea a quién invitó en "enviadas" sin un
+// read extra (es su propia copia: no hay nada que suplantar).
+//
+// Los campos from* también se guardan, pero el RECEPTOR ya no se fía de ellos:
+// los escribe el emisor y podría poner el nombre y la foto de otra persona.
+// useSocial resuelve la identidad de quien invita desde publicProfiles/{from}.
 export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }) {
   if (!fromUid || !toUid) throw new Error('uid faltante');
   if (fromUid === toUid) { const e = new Error('self'); e.code = 'self'; throw e; }

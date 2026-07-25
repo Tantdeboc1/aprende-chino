@@ -14,10 +14,13 @@ function loadFirestore() {
     _fsPromise = Promise.all([
       import('firebase/firestore'),
       import('./firebase.js'),
-    ]).then(([fs, { firebaseApp }]) => ({
-      fs,
-      db: fs.getFirestore(firebaseApp),
-    }));
+    ]).then(async ([fs, fb]) => {
+      // App Check debe estar inicializado ANTES de la primera petición, o esa
+      // saldría sin token (y con enforcement activo, rechazada). Si no hay
+      // site key configurada, esto resuelve a null de inmediato.
+      await fb.appCheckReady;
+      return { fs, db: fs.getFirestore(fb.firebaseApp) };
+    });
   }
   return _fsPromise;
 }
