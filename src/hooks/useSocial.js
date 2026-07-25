@@ -18,6 +18,7 @@ export function useSocial() {
   const [outgoing, setOutgoing] = useState([]);  // invitaciones enviadas
   const [friendships, setFriendships] = useState([]);
   const [friendProfiles, setFriendProfiles] = useState({}); // uid → perfil público
+  const [senderProfiles, setSenderProfiles] = useState({}); // uid → perfil de quien me invita
   const [loading, setLoading] = useState(true);
 
   const storeRef = useRef(null);
@@ -113,12 +114,56 @@ export function useSocial() {
     [otherUids, friendProfiles],
   );
 
+  // Perfiles públicos de quien me invita. El nombre y la foto que viajan DENTRO
+  // de la invitación los escribe el emisor, así que puede poner los de otra
+  // persona y hacerse pasar por ella. La fuente fiable es publicProfiles/{from}:
+  // solo su dueño puede escribirlo y las reglas le validan el esquema.
+  const incomingUids = useMemo(
+    () => [...new Set(incoming.map((r) => r.from).filter(Boolean))],
+    [incoming],
+  );
+  const incomingUidsKey = incomingUids.slice().sort().join(',');
+
+  useEffect(() => {
+    if (!uid || incomingUids.length === 0) { setSenderProfiles({}); return; }
+    let alive = true;
+    (async () => {
+      try {
+        const m = await getStore();
+        const entries = await Promise.all(
+          incomingUids.map(async (o) => [o, await m.fetchPublicProfile(o)]),
+        );
+        if (alive) setSenderProfiles(Object.fromEntries(entries.filter(([, p]) => p)));
+      } catch (e) {
+        // Sin perfil resuelto la invitación se pinta como usuario genérico
+        // (ver incomingShown). Tragamos el error para no soltar un unhandled
+        // rejection a Sentry.
+        console.warn('No se pudieron leer los perfiles de los emisores:', e);
+      }
+    })();
+    return () => { alive = false; };
+    // incomingUidsKey resume el contenido para no refetch en cada snapshot igual.
+  }, [uid, incomingUidsKey, getStore]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Oculta invitaciones con gente que ya es amiga (puede quedar alguna suelta
   // tras invitaciones cruzadas): ni se aceptan ni se reenvían, solo confunden.
   const friendUidSet = useMemo(() => new Set(otherUids), [otherUids]);
   const incomingShown = useMemo(
-    () => incoming.filter((r) => !friendUidSet.has(r.from)),
-    [incoming, friendUidSet],
+    () => incoming
+      .filter((r) => !friendUidSet.has(r.from))
+      // Identidad SIEMPRE desde el perfil público, nunca desde el payload. Si
+      // aún no ha cargado (o el emisor no tiene perfil), se pinta el usuario
+      // genérico: preferimos un nombre vacío a uno suplantado.
+      .map((r) => {
+        const p = senderProfiles[r.from];
+        return {
+          ...r,
+          fromName:     p?.displayName || '',
+          fromAvatarId: p?.avatarId    || null,
+          fromPhotoURL: p?.photoURL    || null,
+        };
+      }),
+    [incoming, friendUidSet, senderProfiles],
   );
   const outgoingShown = useMemo(
     () => outgoing.filter((r) => !friendUidSet.has(r.to)),

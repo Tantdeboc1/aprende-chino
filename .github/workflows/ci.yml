@@ -33,6 +33,14 @@ jobs:
           echo "npm ci falló tras 3 intentos" >&2
           exit 1
 
+      # Vulnerabilidades conocidas en lo que SÍ viaja al usuario.
+      # --omit=dev deja fuera las de tiempo de build (sharp, ejs vía
+      # vite-plugin-pwa): no se sirven a nadie y bloquearían todos los PRs sin
+      # mejorar la seguridad de la app. --audit-level=high evita que un aviso
+      # menor en una transitiva pare el trabajo.
+      - name: Audit de dependencias de producción
+        run: npm audit --omit=dev --audit-level=high
+
       - name: Lint
         run: npm run lint
 

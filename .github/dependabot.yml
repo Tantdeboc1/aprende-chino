@@ -1,0 +1,26 @@
+# Vigilancia automática de dependencias.
+#
+# Hasta ahora las vulnerabilidades solo salían al ejecutar `npm audit` a mano,
+# o sea, cuando alguien se acordaba. Dependabot abre PRs por su cuenta; el paso
+# `npm audit` de ci.yml es la otra mitad (bloquea si algo entra en producción).
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Minors y patches agrupados en un solo PR para no ahogar el repo. Los
+    # majors llegan sueltos: suelen traer cambios que romper y merecen
+    # revisarse uno a uno (vite-plugin-pwa y firebase son los sospechosos).
+    groups:
+      dependencias:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Las propias actions son cadena de suministro: una action comprometida corre
+  # con acceso al token del workflow y a los secretos (SENTRY_AUTH_TOKEN).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
