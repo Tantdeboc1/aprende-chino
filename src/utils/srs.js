@@ -17,7 +17,18 @@ const MIN_EASE     = 1.3;
 // 3 es el estándar de Anki — suficiente para detectar palabras problemáticas
 // sin ser tan paranoico como para marcar fallos puntuales.
 export const LEECH_THRESHOLD = 3;
-const DAY_MS = 24 * 60 * 60 * 1000;
+const DAY_MS  = 24 * 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
+
+// Paso de aprendizaje: al fallar, la tarjeta NO se va a mañana — vuelve dentro
+// de un rato (y dentro de la misma sesión, ver ReviewSession). Recuperar por
+// primera vez una palabra que no recordabas 24 h después no consolida nada.
+export const LEARNING_STEP_MS = 10 * 60 * 1000;
+
+// Tope de tarjetas por sesión. Sin él, volver tras dos semanas de pausa
+// significa encontrarse 150+ tarjetas de golpe — el motivo nº1 de abandono.
+// El resto no se pierde: queda vencido para la siguiente tanda.
+export const SESSION_LIMIT = 20;
 
 /**
  * Devuelve los datos SRS de un carácter, con valores por defecto si no existe.
@@ -55,18 +66,26 @@ export function updateSRS(progress, char, quality) {
     else if (repetitions === 1) interval = 6;
     else                        interval = Math.round(interval * easeFactor);
 
-    // Ajuste del factor de facilidad
-    easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
-    easeFactor = Math.max(MIN_EASE, easeFactor);
     repetitions++;
     consecutiveFails = 0;
   }
 
+  // Ajuste del factor de facilidad. Se aplica SIEMPRE, también al fallar
+  // (q=0 → −0.8), como en SM-2. Si solo se ajustara al acertar, una palabra que
+  // fallas una y otra vez conservaría EF 2.5 y, con dos aciertos, volvería a
+  // saltar a 6 y 15 días como si fuera fácil; además `getWordHealth` nunca la
+  // marcaría 'critical' (su umbral es EF < 1.5).
+  easeFactor = Math.max(MIN_EASE, easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
+
   // Si la palabra está marcada como difícil, limitar el intervalo a 3 días
   if (srs.difficult) interval = Math.min(interval, 3);
 
-  // nextReview = ahora + interval días
-  const nextReview = now + interval * DAY_MS;
+  // Al fallar, la tarjeta vuelve en minutos (paso de aprendizaje); al acertar,
+  // en `interval` días. `interval` queda en 1 día para la próxima vez que se
+  // acierte, así que el paso de aprendizaje no altera la progresión SM-2.
+  const nextReview = quality < 3
+    ? now + LEARNING_STEP_MS
+    : now + interval * DAY_MS;
 
   // Marca leech si el usuario falla N veces seguidas (umbral configurable).
   // No suspendemos la carta — solo la flagueamos para que la UI la destaque.
@@ -136,10 +155,6 @@ export function initSRSCard(progress, char) {
 }
 
 /**
- * Devuelve todos los caracteres que tienen repasos pendientes (nextReview <= ahora).
- * Solo incluye palabras que el usuario ya ha visto al menos una vez.
- */
-/**
  * Elimina caracteres repetidos de una lista, conservando el primero. Un mismo
  * carácter puede aparecer en varias lecciones del vocabulario (p. ej. 水 en L3
  * y L8) y, como el SRS y los exámenes se indexan por carácter, sin esto se
@@ -154,14 +169,24 @@ export function dedupeByChar(chars) {
   });
 }
 
-export function getDueCards(progress, allCharacters) {
+/**
+ * Devuelve los caracteres con repaso pendiente (nextReview <= ahora), de más
+ * atrasado a menos. Solo incluye palabras vistas al menos una vez.
+ * `limit` corta la lista para una sesión; sin él devuelve la cola completa
+ * (que es lo que necesita el contador de la pantalla de inicio).
+ */
+export function getDueCards(progress, allCharacters, { limit } = {}) {
   const now  = Date.now();
   const srs  = progress?.__srs || {};
-  return dedupeByChar(allCharacters.filter(c => {
+  const due  = dedupeByChar(allCharacters.filter(c => {
     const d = srs[c.char];
     if (!d) return false;
     return d.nextReview !== null && d.nextReview <= now;
   }));
+  // Más atrasadas primero: si hay tope de sesión, lo que se queda fuera debe ser
+  // lo que menos tiempo lleva esperando.
+  due.sort((a, b) => srs[a.char].nextReview - srs[b.char].nextReview);
+  return limit > 0 ? due.slice(0, limit) : due;
 }
 
 /**
@@ -272,9 +297,11 @@ export function getNextReviewInfo(progress, char) {
   if (d.interval >= 21) return { kind: 'mastered' };
   const now = Date.now();
   const diffMs = d.nextReview - now;
-  const days = Math.ceil(diffMs / DAY_MS);
-  if (days <= 0) return { kind: 'due', days: 0 };
-  return { kind: 'soon', days };
+  if (diffMs <= 0) return { kind: 'due', days: 0 };
+  // Una tarjeta fallada vuelve en minutos (LEARNING_STEP_MS). Redondear eso a
+  // días la mostraría como "mañana" cuando en realidad vuelve dentro de un rato.
+  if (diffMs < HOUR_MS) return { kind: 'due', days: 0 };
+  return { kind: 'soon', days: Math.ceil(diffMs / DAY_MS) };
 }
 
 /**

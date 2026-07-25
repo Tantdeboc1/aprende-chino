@@ -1139,6 +1139,8 @@ export default {
           exam_total_time: "Total time",
           exam_max_streak: "Max streak",
           srs_listen_again: "Listen again",
+  srs_batch_note: "You'll review {{shown}} now · the rest in the next batch",
+  srs_next_batch: "Keep reviewing",
           menu_lesson_label: "Lesson {{num}}",
           menu_mode_label: "Mode",
           menu_completed_badge: "✓ Completed",

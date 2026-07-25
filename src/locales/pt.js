@@ -938,6 +938,8 @@ export default {
           exam_total_time: "Tempo total",
           exam_max_streak: "Maior sequência",
           srs_listen_again: "Ouvir novamente",
+  srs_batch_note: "Você vai revisar {{shown}} agora · o resto na próxima rodada",
+  srs_next_batch: "Continuar revisando",
           menu_lesson_label: "Lição {{num}}",
           menu_mode_label: "Modo",
           menu_completed_badge: "✓ Concluído",

@@ -2,13 +2,24 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { updateSRS, getDueCards, getWeakCards } from '@/utils/srs.js';
+import { updateSRS, getDueCards, getDueCount, getWeakCards, SESSION_LIMIT } from '@/utils/srs.js';
 import { markDailyActivity, addXP } from '@/utils/streak.js';
 import { shuffle } from '@/utils/arrayUtils.js';
+import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
+
+// Tarjetas de separación antes de reintentar una fallada dentro de la sesión.
+// Suficiente para que no sea memoria inmediata, poco para que siga fresca.
+const RELEARN_GAP = 3;
+
+// Orden de los botones de evaluación → quality SM-2. También es el orden de las
+// teclas 1-4.
+const RATING_QUALITIES = [0, 3, 4, 5];
 
 // ─── Selección de modo ────────────────────────────────────────────────────────
 function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
+  // Cuántas se repasarán realmente en esta tanda (el resto sigue vencido).
+  const batchSize = Math.min(dueCount, SESSION_LIMIT);
   const bothEmpty = dueCount === 0 && weakCount === 0;
 
   return (
@@ -91,6 +102,11 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
                       ? t('srs_mode_due_count', '{{count}} tarjetas vencidas hoy', { count: dueCount })
                       : t('srs_mode_due_empty', 'Sin repasos pendientes ahora')}
                   </p>
+                  {dueCount > SESSION_LIMIT && (
+                    <p className="text-xs mt-1" style={{ color: J.sandDeep, fontWeight: 600 }}>
+                      {t('srs_batch_note', 'Repasarás {{shown}} ahora · el resto queda para la siguiente tanda', { shown: batchSize })}
+                    </p>
+                  )}
                   <p className="text-xs mt-1" style={{ color: J.mute }}>{t('srs_due_algorithm_hint')}</p>
                 </div>
                 {dueCount > 0 && (
@@ -175,7 +191,8 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
               onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
               className="font-cn w-11 h-11 rounded-full flex items-center justify-center text-xl transition-colors"
               style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontWeight: 700 }}
-              title="Escuchar de nuevo"
+              title={t('srs_listen_again', 'Escuchar de nuevo')}
+              aria-label={t('srs_listen_again', 'Escuchar de nuevo')}
             >
               声
             </button>
@@ -193,7 +210,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           {/* Ejemplos */}
           {word.examples?.length > 0 && (
             <div className="px-5 py-3">
-              <p className="text-xs mb-2" style={{ color: J.mute }}>Ejemplos</p>
+              <p className="text-xs mb-2" style={{ color: J.mute }}>{t('srs_examples', 'Ejemplos')}</p>
               <div className="space-y-1.5">
                 {word.examples.slice(0, 2).map((ex, i) => (
                   <p key={i} className="text-sm rounded-lg px-3 py-1.5" style={{ background: J.paper, color: J.ink }}>{ex}</p>
@@ -206,7 +223,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
           {mode === 'weak' && word._easeFactor && (
             <div className="px-5 pb-3">
               <span className="text-xs" style={{ color: J.sand }}>
-                EF: {word._easeFactor.toFixed(2)} · Debilidad del SRS
+                {t('srs_ef_label', 'EF: {{ef}} · Debilidad del SRS', { ef: word._easeFactor.toFixed(2) })}
               </span>
             </div>
           )}
@@ -219,49 +236,37 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
 // ─── Botones de evaluación ───────────────────────────────────────────────────
 function RatingButtons({ onRate }) {
   const { t } = useTranslation();
+  // Mismo orden que RATING_QUALITIES → la tecla N pulsa el botón N.
+  const ratings = [
+    { label: t('srs_again', 'Otra vez'), hint: t('srs_again_hint', 'No lo recuerdo'), bg: J.redBg,  border: J.red,      color: J.redDeep },
+    { label: t('srs_hard',  'Difícil'),  hint: t('srs_hard_hint',  'Con esfuerzo'),   bg: J.sandBg, border: J.sand,     color: J.sandDeep },
+    { label: t('srs_good',  'Bien'),     hint: t('srs_good_hint',  'Lo sabía'),       bg: J.jadeBg, border: J.jade,     color: J.jadeDeep },
+    { label: t('srs_easy',  'Fácil'),    hint: t('srs_easy_hint',  'Inmediato'),      bg: J.jadeBg, border: J.jadeDeep, color: J.jadeDeep },
+  ];
+
   return (
     <div className="px-4 pb-6 pt-2">
       <p className="text-center text-xs mb-3" style={{ color: J.mute }}>{t('srs_rate_prompt', '¿Cómo de bien lo recordabas?')}</p>
       <div className="flex gap-2">
-        <button
-          onClick={() => onRate(0)}
-          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
-          style={{ background: J.redBg, border: `1px solid ${J.red}`, color: J.redDeep, cursor: 'pointer' }}
-        >
-          {t('srs_again', 'Otra vez')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_again_hint', 'No lo recuerdo')}</span>
-        </button>
-        <button
-          onClick={() => onRate(3)}
-          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
-          style={{ background: J.sandBg, border: `1px solid ${J.sand}`, color: J.sandDeep, cursor: 'pointer' }}
-        >
-          {t('srs_hard', 'Difícil')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_hard_hint', 'Con esfuerzo')}</span>
-        </button>
-        <button
-          onClick={() => onRate(4)}
-          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
-          style={{ background: J.jadeBg, border: `1px solid ${J.jade}`, color: J.jadeDeep, cursor: 'pointer' }}
-        >
-          {t('srs_good', 'Bien')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_good_hint', 'Lo sabía')}</span>
-        </button>
-        <button
-          onClick={() => onRate(5)}
-          className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
-          style={{ background: J.jadeBg, border: `1px solid ${J.jadeDeep}`, color: J.jadeDeep, cursor: 'pointer' }}
-        >
-          {t('srs_easy', 'Fácil')}
-          <span className="block text-xs font-normal opacity-70 mt-0.5">{t('srs_easy_hint', 'Inmediato')}</span>
-        </button>
+        {ratings.map((r, i) => (
+          <button
+            key={r.label}
+            onClick={() => onRate(RATING_QUALITIES[i])}
+            aria-keyshortcuts={String(i + 1)}
+            className="flex-1 py-3 rounded-xl font-bold text-sm active:scale-95 transition-all"
+            style={{ background: r.bg, border: `1px solid ${r.border}`, color: r.color, cursor: 'pointer' }}
+          >
+            {r.label}
+            <span className="block text-xs font-normal opacity-70 mt-0.5">{r.hint}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
 }
 
 // ─── Pantalla de resultados ──────────────────────────────────────────────────
-function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
+function ResultScreen({ stats, mode, onFinish, onReviewAgain, onNextBatch, failedCount, remainingDue, t }) {
   const { again, hard, good, easy, total } = stats;
   const correctPct = total > 0 ? Math.round(((good + easy) / total) * 100) : 0;
 
@@ -313,13 +318,23 @@ function ResultScreen({ stats, mode, onFinish, onReviewAgain, t }) {
 
         {/* Botones */}
         <div className="space-y-2">
-          {again > 0 && (
+          {/* Quedan vencidas fuera del tope de sesión → seguir sin volver al menú. */}
+          {remainingDue > 0 && (
+            <button
+              onClick={onNextBatch}
+              className="w-full py-3 rounded-xl font-bold text-sm active:scale-[0.98] transition-all"
+              style={{ background: J.jade, color: J.onAccent, border: 0, cursor: 'pointer' }}
+            >
+              {t('srs_next_batch', 'Seguir repasando')} ({remainingDue})
+            </button>
+          )}
+          {failedCount > 0 && (
             <button
               onClick={onReviewAgain}
               className="w-full py-3 rounded-xl font-bold text-sm active:scale-[0.98] transition-all"
               style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
             >
-              {t('srs_review_again', 'Repasar las que fallé')} ({again})
+              {t('srs_review_again', 'Repasar las que fallé')} ({failedCount})
             </button>
           )}
           <button
@@ -345,9 +360,9 @@ export default function ReviewSession({
 }) {
   const { t } = useTranslation();
 
-  // Precalcular las dos colas al montar (no cambian durante la sesión)
-  const dueQueue  = useMemo(() => shuffle(getDueCards(progress, allCharacters)), []); // eslint-disable-line
-  const weakQueue = useMemo(() => getWeakCards(progress, allCharacters, 20), []); // eslint-disable-line
+  // Totales para el menú, congelados al montar (no deben bailar mientras eliges).
+  const dueTotal  = useMemo(() => getDueCount(progress, allCharacters), []); // eslint-disable-line
+  const weakTotal = useMemo(() => getWeakCards(progress, allCharacters, SESSION_LIMIT).length, []); // eslint-disable-line
 
   // ── Estado de la sesión ──────────────────────────────────────────────────
   const [phase,   setPhase]   = useState('select'); // 'select' | 'playing'
@@ -357,14 +372,20 @@ export default function ReviewSession({
   const [flipped, setFlipped] = useState(false);
   const [done,    setDone]    = useState(false);
   const [stats,   setStats]   = useState({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
+  // Palabras falladas al menos una vez en la sesión (sin repetir), para el
+  // repaso extra del final. Distinto de stats.again, que cuenta pulsaciones.
   const [failedQueue, setFailedQueue] = useState([]);
 
   const current = queue[index] || null;
   const total   = queue.length;
 
-  // ── Iniciar sesión con el modo elegido ────────────────────────────────────
-  const handleSelectMode = useCallback((selectedMode) => {
-    const q = selectedMode === 'due' ? dueQueue : weakQueue;
+  // ── Iniciar una tanda ─────────────────────────────────────────────────────
+  // La cola se calcula aquí (no al montar) para que "Seguir repasando" recoja
+  // el progreso ya guardado de la tanda anterior.
+  const startBatch = useCallback((selectedMode) => {
+    const q = selectedMode === 'due'
+      ? shuffle(getDueCards(progress, allCharacters, { limit: SESSION_LIMIT }))
+      : getWeakCards(progress, allCharacters, SESSION_LIMIT);
     setMode(selectedMode);
     setQueue(q);
     setIndex(0);
@@ -373,7 +394,7 @@ export default function ReviewSession({
     setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
     setFailedQueue([]);
     setPhase('playing');
-  }, [dueQueue, weakQueue]);
+  }, [progress, allCharacters]);
 
   // ── Voltear tarjeta + audio automático ────────────────────────────────────
   const handleFlip = useCallback(() => {
@@ -398,10 +419,21 @@ export default function ReviewSession({
       return { ...prev, [label]: prev[label] + 1, total: prev.total + 1 };
     });
 
-    if (quality < 3) setFailedQueue(prev => [...prev, current]);
+    // Fallo → la tarjeta vuelve unas posiciones más adelante, en esta misma
+    // sesión, hasta que la recuerdes. Sin esto salía de la cola sin haberla
+    // acertado nunca y no reaparecía hasta el día siguiente.
+    const failed = quality < 3;
+    if (failed) {
+      setQueue(prev => {
+        const next = [...prev];
+        next.splice(Math.min(index + 1 + RELEARN_GAP, next.length), 0, current);
+        return next;
+      });
+      setFailedQueue(prev => prev.some(w => w.char === current.char) ? prev : [...prev, current]);
+    }
 
     const nextIndex = index + 1;
-    if (nextIndex >= queue.length) {
+    if (nextIndex >= queue.length + (failed ? 1 : 0)) {
       setDone(true);
     } else {
       setIndex(nextIndex);
@@ -418,13 +450,23 @@ export default function ReviewSession({
     setStats({ again: 0, hard: 0, good: 0, easy: 0, total: 0 });
   };
 
+  // ── Teclado (coherente con los quizzes: 1-4 puntúan, Espacio/Enter voltea) ──
+  const inCard  = phase === 'playing' && !done;
+  const rateKey = useCallback((i) => handleRate(RATING_QUALITIES[i]), [handleRate]);
+  useKeyAnswers({
+    count:    RATING_QUALITIES.length,
+    onSelect: inCard && flipped  ? rateKey    : null,
+    onSpace:  inCard && !flipped ? handleFlip : null,
+    onNext:   inCard && !flipped ? handleFlip : null,
+  });
+
   // ── Renderizado por fase ──────────────────────────────────────────────────
   if (phase === 'select') {
     return (
       <ModeSelector
-        dueCount={dueQueue.length}
-        weakCount={weakQueue.length}
-        onSelect={handleSelectMode}
+        dueCount={dueTotal}
+        weakCount={weakTotal}
+        onSelect={startBatch}
         goBack={goBack}
         t={t}
       />
@@ -438,6 +480,11 @@ export default function ReviewSession({
         mode={mode}
         onFinish={goBack}
         onReviewAgain={handleReviewFailed}
+        onNextBatch={() => startBatch('due')}
+        failedCount={failedQueue.length}
+        // Vencidas que quedaron fuera del tope (con el progreso ya guardado:
+        // las acertadas ya no cuentan, las falladas vuelven en unos minutos).
+        remainingDue={mode === 'due' ? getDueCount(progress, allCharacters) : 0}
         t={t}
       />
     );

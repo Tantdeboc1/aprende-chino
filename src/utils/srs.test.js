@@ -4,7 +4,7 @@ import {
   getSRSData, updateSRS, toggleWordDifficult, isWordDifficult,
   initSRSCard, getDueCards, getDueCount, getWeakCards, getWordHealth,
   isLeech, getLeechCards, getNextReviewInfo, getSRSStats, LEECH_THRESHOLD,
-  dedupeByChar,
+  dedupeByChar, LEARNING_STEP_MS, SESSION_LIMIT,
 } from './srs.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -54,6 +54,46 @@ describe('updateSRS', () => {
     // avanzar varias veces: sin el tope el intervalo pasaría de 3
     for (let i = 0; i < 4; i++) p = updateSRS(p, '好', 5);
     expect(p.__srs['好'].interval).toBeLessThanOrEqual(3);
+  });
+
+  it('fallar baja el easeFactor (SM-2: q=0 → −0.8)', () => {
+    const p = updateSRS({}, '好', 0);
+    expect(p.__srs['好'].easeFactor).toBeCloseTo(1.7, 5); // 2.5 − 0.8
+  });
+
+  it('el easeFactor nunca baja de 1.3 por muchos fallos que acumule', () => {
+    let p = {};
+    for (let i = 0; i < 10; i++) p = updateSRS(p, '好', 0);
+    expect(p.__srs['好'].easeFactor).toBe(1.3);
+  });
+
+  it('una palabra que fallas siempre no vuelve a saltar a intervalos largos', () => {
+    // Regresión: antes el EF quedaba intacto al fallar, así que tras dos
+    // aciertos la palabra saltaba a 6 y luego a 15 días como si fuera fácil.
+    let fallada = {};
+    for (let i = 0; i < 4; i++) fallada = updateSRS(fallada, '难', 0);
+    // Las dos llegan con los mismos 3 aciertos seguidos
+    for (let i = 0; i < 3; i++) fallada = updateSRS(fallada, '难', 4);
+    let facil = {};
+    for (let i = 0; i < 3; i++) facil = updateSRS(facil, '易', 4);
+
+    expect(fallada.__srs['难'].interval).toBeLessThan(facil.__srs['易'].interval);
+    expect(getWordHealth(fallada, '难').level).toBe('critical'); // EF < 1.5
+  });
+
+  it('fallar reprograma la tarjeta en minutos, no al día siguiente', () => {
+    const before = Date.now();
+    const p = updateSRS({}, '好', 0);
+    const delay = p.__srs['好'].nextReview - before;
+    expect(delay).toBeGreaterThan(0);
+    expect(delay).toBeLessThanOrEqual(LEARNING_STEP_MS + 50);
+    expect(p.__srs['好'].interval).toBe(1); // el intervalo SM-2 sigue en 1 día
+  });
+
+  it('acertar sigue programando en días', () => {
+    const before = Date.now();
+    const p = updateSRS(updateSRS({}, '好', 4), '好', 4); // interval 6
+    expect(p.__srs['好'].nextReview - before).toBeGreaterThanOrEqual(6 * DAY_MS - 50);
   });
 });
 
@@ -118,6 +158,31 @@ describe('getDueCards / getDueCount', () => {
     expect(due.map(c => c.char)).toEqual(['好']);
     expect(getDueCount(progress, chars)).toBe(1);
   });
+
+  it('ordena de más atrasada a menos', () => {
+    const progress = { __srs: {
+      好: { nextReview: Date.now() - DAY_MS },
+      你: { nextReview: Date.now() - 10 * DAY_MS }, // la que más espera
+      我: { nextReview: Date.now() - 3 * DAY_MS },
+    } };
+    expect(getDueCards(progress, chars).map(c => c.char)).toEqual(['你', '我', '好']);
+  });
+
+  it('limit corta la tanda quedándose con las más atrasadas', () => {
+    const progress = { __srs: {
+      好: { nextReview: Date.now() - DAY_MS },
+      你: { nextReview: Date.now() - 10 * DAY_MS },
+      我: { nextReview: Date.now() - 3 * DAY_MS },
+    } };
+    expect(getDueCards(progress, chars, { limit: 2 }).map(c => c.char)).toEqual(['你', '我']);
+    // El contador de la pantalla de inicio sigue viendo la cola completa
+    expect(getDueCount(progress, chars)).toBe(3);
+  });
+
+  it('SESSION_LIMIT es un tope razonable para una sesión', () => {
+    expect(SESSION_LIMIT).toBeGreaterThan(0);
+    expect(SESSION_LIMIT).toBeLessThanOrEqual(50);
+  });
 });
 
 describe('getWeakCards', () => {
@@ -168,6 +233,10 @@ describe('getNextReviewInfo', () => {
   });
   it('due cuando ya toca', () => {
     const p = { __srs: { 好: { nextReview: Date.now() - 1000, interval: 2 } } };
+    expect(getNextReviewInfo(p, '好')).toEqual({ kind: 'due', days: 0 });
+  });
+  it('una tarjeta en paso de aprendizaje se muestra como pendiente, no como "mañana"', () => {
+    const p = updateSRS({}, '好', 0); // vuelve en LEARNING_STEP_MS
     expect(getNextReviewInfo(p, '好')).toEqual({ kind: 'due', days: 0 });
   });
   it('soon con los días restantes', () => {

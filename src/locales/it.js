@@ -938,6 +938,8 @@ export default {
           exam_total_time: "Tempo totale",
           exam_max_streak: "Serie massima",
           srs_listen_again: "Riascolta",
+  srs_batch_note: "Ripasserai {{shown}} schede ora · il resto nel prossimo gruppo",
+  srs_next_batch: "Continua a ripassare",
           menu_lesson_label: "Lezione {{num}}",
           menu_mode_label: "Modalità",
           menu_completed_badge: "✓ Completato",

@@ -605,6 +605,8 @@ export default {
           exam_total_time: "Gesamtzeit",
           exam_max_streak: "Maximale Serie",
           srs_listen_again: "Nochmal hören",
+  srs_batch_note: "Du übst jetzt {{shown}} Karten · der Rest folgt in der nächsten Runde",
+  srs_next_batch: "Weiter üben",
           menu_lesson_label: "Lektion {{num}}",
           menu_mode_label: "Modus",
           menu_completed_badge: "✓ Abgeschlossen",

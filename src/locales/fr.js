@@ -953,6 +953,8 @@ export default {
           exam_total_time: "Temps total",
           exam_max_streak: "Série maximale",
           srs_listen_again: "Réécouter",
+  srs_batch_note: "Tu vas réviser {{shown}} cartes maintenant · le reste au prochain tour",
+  srs_next_batch: "Continuer à réviser",
           menu_lesson_label: "Leçon {{num}}",
           menu_mode_label: "Mode",
           menu_completed_badge: "✓ Terminé",

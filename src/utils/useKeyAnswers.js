@@ -2,6 +2,7 @@
 // Accesibilidad de quizzes: responde con el teclado.
 //   - Teclas 1..N eligen la opción correspondiente (cuando onSelect está activo).
 //   - Enter pasa a la siguiente pregunta (cuando onNext está activo).
+//   - Espacio dispara onSpace si se pasa (flashcards: voltear la tarjeta).
 //
 // El llamador activa/desactiva cada callback pasándolo o pasando null según la
 // fase (p. ej. onSelect solo mientras no hay resultado; onNext solo con
@@ -9,9 +10,9 @@
 // tiene el foco (el click nativo por Enter se genera en keydown).
 import { useEffect } from 'react';
 
-export function useKeyAnswers({ count = 0, onSelect, onNext }) {
+export function useKeyAnswers({ count = 0, onSelect, onNext, onSpace }) {
   useEffect(() => {
-    if (!onSelect && !onNext) return;
+    if (!onSelect && !onNext && !onSpace) return;
     const onKey = (e) => {
       if (e.altKey || e.ctrlKey || e.metaKey) return;
       const tag = e.target?.tagName;
@@ -23,9 +24,14 @@ export function useKeyAnswers({ count = 0, onSelect, onNext }) {
       } else if (onNext && e.key === 'Enter') {
         e.preventDefault();
         onNext();
+      } else if (onSpace && (e.key === ' ' || e.key === 'Spacebar')) {
+        // preventDefault evita el scroll de la página y, si hay un botón
+        // enfocado, el click nativo que Espacio genera al soltar.
+        e.preventDefault();
+        onSpace();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [count, onSelect, onNext]);
+  }, [count, onSelect, onNext, onSpace]);
 }
