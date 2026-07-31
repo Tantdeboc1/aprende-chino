@@ -2,7 +2,7 @@
 // Pantalla de Amigos: tu código de amigo, añadir por código, invitaciones
 // (recibidas/enviadas) y lista de amigos con ranking por XP. Solo para
 // usuarios Google; en modo invitado muestra una invitación a iniciar sesión.
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { JTopBar, JMark, JSection, JCard, JLabel } from '@/components/jade';
@@ -44,12 +44,12 @@ function BackButton({ label, onClick }) {
   );
 }
 
-export default function FriendsScreen({ userName, onBack }) {
+export default function FriendsScreen({ userName, onBack, initialCode, onCodeConsumed }) {
   const { t } = useTranslation();
   const { mode, user } = useAuth();
   const {
     enabled, loading, myCode, friends, incoming, outgoing,
-    lookupCode, sendRequestTo, acceptRequest, declineRequest, cancelRequest, removeFriend,
+    lookupCode, sendRequestTo, acceptFrom, acceptRequest, declineRequest, cancelRequest, removeFriend,
   } = useSocial();
 
   const [codeInput, setCodeInput] = useState('');
@@ -58,6 +58,10 @@ export default function FriendsScreen({ userName, onBack }) {
   const [copied, setCopied] = useState(false);
   // Destinatario resuelto pendiente de confirmar: { uid, profile } | null
   const [pendingTarget, setPendingTarget] = useState(null);
+  // Amigo cuya eliminación se está confirmando en línea (sin window.confirm).
+  const [confirmRemove, setConfirmRemove] = useState(null);
+  // El código de un enlace se consume una sola vez por montaje.
+  const consumedRef = useRef(false);
   // Métrica del ranking: XP de los últimos 7 días o total histórico.
   const [rankMode, setRankMode] = useState('weekly'); // 'weekly' | 'total'
 
@@ -108,6 +112,41 @@ export default function FriendsScreen({ userName, onBack }) {
     return rows.sort((a, b) => metric(b) - metric(a));
   }, [meRow, friends, rankMode]);
 
+  const flash = (type, text) => {
+    setNote({ type, text });
+    setTimeout(() => setNote(null), 2600);
+  };
+
+  const errFlash = (err) => {
+    const map = {
+      'not-found': t('friends_err_notfound', 'No existe ningún usuario con ese código.'),
+      'self': t('friends_err_self', 'Ese es tu propio código 🙂'),
+      'already-friends': t('friends_err_already', 'Ya sois amigos.'),
+    };
+    flash('err', map[err?.code] || t('friends_err_generic', 'No se pudo enviar la invitación.'));
+  };
+
+  // Código llegado por enlace compartido: se resuelve solo y deja la tarjeta
+  // de confirmación lista. Nunca envía por su cuenta — quien reenvíe el enlace
+  // no puede provocar invitaciones a espaldas de nadie.
+  // Va ANTES del return de invitado: los hooks no pueden ir tras un return.
+  useEffect(() => {
+    if (!enabled || !initialCode || consumedRef.current) return;
+    consumedRef.current = true;
+    onCodeConsumed?.();
+    const code = normalizeCode(initialCode);
+    if (code.length < 6) return;
+    setCodeInput(formatCode(code));
+    setBusy(true);
+    lookupCode(code)
+      .then(setPendingTarget)
+      .catch(errFlash)
+      .finally(() => setBusy(false));
+    // errFlash/lookupCode se recrean en cada render; el guard de consumedRef
+    // ya garantiza que esto corre una sola vez.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, initialCode]);
+
   if (!enabled) {
     return (
       <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
@@ -125,20 +164,6 @@ export default function FriendsScreen({ userName, onBack }) {
     );
   }
 
-  const flash = (type, text) => {
-    setNote({ type, text });
-    setTimeout(() => setNote(null), 2600);
-  };
-
-  const errFlash = (err) => {
-    const map = {
-      'not-found': t('friends_err_notfound', 'No existe ningún usuario con ese código.'),
-      'self': t('friends_err_self', 'Ese es tu propio código 🙂'),
-      'already-friends': t('friends_err_already', 'Ya sois amigos.'),
-    };
-    flash('err', map[err?.code] || t('friends_err_generic', 'No se pudo enviar la invitación.'));
-  };
-
   // Fase 1: resolver el código y mostrar a quién se va a invitar.
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -155,15 +180,25 @@ export default function FriendsScreen({ userName, onBack }) {
     }
   };
 
-  // Fase 2: el usuario confirma el destinatario.
+  // Fase 2: el usuario confirma el destinatario. Si esa persona ya te había
+  // invitado, aceptamos la suya en vez de crear una invitación cruzada.
   const handleConfirmSend = async () => {
     if (!pendingTarget) return;
     setBusy(true);
     try {
-      await sendRequestTo(pendingTarget);
+      if (pendingTarget.theyInvitedYou) {
+        await acceptFrom(pendingTarget.uid);
+        flash('ok', t('friends_now_friends', '¡Ya sois amigos!'));
+      } else {
+        // sendRequestTo distingue si creó la invitación o ya estaba pendiente:
+        // antes se cantaba "enviada" en ambos casos.
+        const result = await sendRequestTo(pendingTarget);
+        flash('ok', result === 'already-pending'
+          ? t('friends_already_sent', 'Ya le habías enviado una invitación. Sigue pendiente.')
+          : t('friends_sent', '¡Invitación enviada!'));
+      }
       setCodeInput('');
       setPendingTarget(null);
-      flash('ok', t('friends_sent', '¡Invitación enviada!'));
     } catch (err) {
       setPendingTarget(null);
       errFlash(err);
@@ -183,19 +218,25 @@ export default function FriendsScreen({ userName, onBack }) {
 
   const handleShareCode = async () => {
     if (!myCode) return;
+    // El enlace lleva el código dentro: al abrirlo, la app va a Amigos y deja
+    // la invitación lista para confirmar. Antes solo se mandaba el código y
+    // había que teclearlo a mano, que era la mayor fricción del sistema.
+    const inviteUrl = `${APP_URL}#/friends/add/${formatCode(myCode)}`;
     // OJO: la URL va SOLO en el campo `url` de navigator.share — si además
     // fuera dentro de `text`, WhatsApp/Telegram concatenan ambos y el enlace
     // sale duplicado. En el fallback de portapapeles (sin campo url aparte)
     // sí se añade al texto.
-    const message = `${t('friends_share_text', `Añádeme en ${APP_NAME} con mi código de amigo`)}: ${formatCode(myCode)}`;
+    const message = t('friends_share_text', { app: APP_NAME, code: formatCode(myCode) });
     try {
-      if (navigator.share) await navigator.share({ title: APP_NAME, text: message, url: APP_URL });
-      else { await navigator.clipboard.writeText(`${message}\n\n${APP_URL}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }
+      if (navigator.share) await navigator.share({ title: APP_NAME, text: message, url: inviteUrl });
+      else { await navigator.clipboard.writeText(`${message}\n\n${inviteUrl}`); setCopied(true); setTimeout(() => setCopied(false), 2000); }
     } catch { /* cancelado */ }
   };
 
+  // Confirmación en línea, no window.confirm: el diálogo nativo desentona en
+  // una PWA y se salta el escalado de texto de la app.
   const handleRemove = async (row) => {
-    if (!window.confirm(t('friends_remove_confirm', '¿Eliminar a {{name}} de tus amigos?', { name: row.name }))) return;
+    setConfirmRemove(null);
     try { await removeFriend(row.uid); }
     catch { flash('err', t('friends_err_generic', 'No se pudo completar la acción.')); }
   };
@@ -283,15 +324,19 @@ export default function FriendsScreen({ userName, onBack }) {
                             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {pendingTarget.profile?.displayName || t('settings_default_user')}
                 </p>
-                <p style={{ fontSize: '0.75rem', color: J.mute }}>
-                  {t('friends_confirm_send', '¿Enviar invitación?')}
+                <p style={{ fontSize: '0.75rem', color: pendingTarget.theyInvitedYou ? J.jade : J.mute }}>
+                  {pendingTarget.theyInvitedYou
+                    ? t('friends_they_invited_you', 'Ya te invitó — acepta y listo')
+                    : t('friends_confirm_send', '¿Enviar invitación?')}
                 </p>
               </div>
               <button onClick={handleConfirmSend} disabled={busy}
                 style={{ padding: '8px 14px', borderRadius: 10, border: 0, background: J.jade,
                          color: J.onAccent, fontSize: '0.8125rem', fontWeight: 700,
                          cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.7 : 1 }}>
-                {t('friends_confirm_yes', 'Enviar')}
+                {pendingTarget.theyInvitedYou
+                  ? t('friends_accept', 'Aceptar')
+                  : t('friends_confirm_yes', 'Enviar')}
               </button>
               <button onClick={() => setPendingTarget(null)} aria-label={t('friends_cancel', 'Cancelar')}
                 style={{ padding: '8px 10px', borderRadius: 10, border: `1px solid ${J.hairS}`,
@@ -317,7 +362,19 @@ export default function FriendsScreen({ userName, onBack }) {
                       <p style={{ fontSize: '0.875rem', fontWeight: 700, color: J.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {req.fromName || t('settings_default_user')}
                       </p>
-                      <p style={{ fontSize: '0.75rem', color: J.mute }}>{t('friends_wants_to_add', 'Quiere ser tu amigo')}</p>
+                      {/* Nivel y racha vienen del perfil público del emisor,
+                          que ya se descarga para verificar su identidad. Sin
+                          esto la invitación se aceptaba completamente a ciegas. */}
+                      <p style={{ fontSize: '0.75rem', color: J.mute }}>
+                        {req.fromLevel != null
+                          ? <>{t('friends_level', 'Nivel')} {req.fromLevel}{req.fromStreak > 0 && <> · 🔥 {req.fromStreak}</>}</>
+                          : t('friends_wants_to_add', 'Quiere ser tu amigo')}
+                      </p>
+                      {req.mutual && (
+                        <p style={{ fontSize: '0.6875rem', color: J.jade, fontWeight: 700, marginTop: 2 }}>
+                          {t('friends_mutual', 'Tú también le invitaste')}
+                        </p>
+                      )}
                     </div>
                     <button onClick={() => acceptRequest(req)} aria-label={t('friends_accept', 'Aceptar')}
                       style={{ padding: '8px 14px', borderRadius: 10, border: 0, background: J.jade,
@@ -354,8 +411,10 @@ export default function FriendsScreen({ userName, onBack }) {
                           {req.toName}
                         </p>
                       )}
-                      <p style={{ fontSize: '0.75rem', color: J.mute, fontWeight: 600 }}>
-                        {t('friends_pending', 'Pendiente de aceptar')}
+                      <p style={{ fontSize: '0.75rem', color: req.mutual ? J.jade : J.mute, fontWeight: 600 }}>
+                        {req.mutual
+                          ? t('friends_mutual_hint', 'También te invitó — acéptale arriba')
+                          : t('friends_pending', 'Pendiente de aceptar')}
                       </p>
                     </div>
                     <button onClick={() => cancelRequest(req)}
@@ -434,14 +493,29 @@ export default function FriendsScreen({ userName, onBack }) {
                 <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: J.jade }}>
                   {(rankMode === 'weekly' ? row.weeklyXP : row.totalXP).toLocaleString()} XP
                 </span>
-                {!row.isMe && (
-                  <button onClick={() => handleRemove(row)} aria-label={t('friends_remove', 'Eliminar amigo')}
+                {!row.isMe && confirmRemove !== row.uid && (
+                  <button onClick={() => setConfirmRemove(row.uid)} aria-label={t('friends_remove', 'Eliminar amigo')}
                     style={{ background: 'transparent', border: 0, color: J.mute2, cursor: 'pointer', padding: 4, lineHeight: 1 }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="3 6 5 6 21 6" />
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                     </svg>
                   </button>
+                )}
+                {!row.isMe && confirmRemove === row.uid && (
+                  <span className="flex gap-1.5 flex-shrink-0">
+                    <button onClick={() => handleRemove(row)}
+                      style={{ padding: '6px 10px', borderRadius: 9, border: 0, background: J.red,
+                               color: J.onAccent, fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>
+                      {t('friends_remove_yes', 'Quitar')}
+                    </button>
+                    <button onClick={() => setConfirmRemove(null)} aria-label={t('friends_cancel', 'Cancelar')}
+                      style={{ padding: '6px 9px', borderRadius: 9, border: `1px solid ${J.hairS}`,
+                               background: 'transparent', color: J.mute, fontSize: '0.875rem',
+                               fontWeight: 700, cursor: 'pointer', lineHeight: 1 }}>
+                      ✕
+                    </button>
+                  </span>
                 )}
               </div>
             ))}

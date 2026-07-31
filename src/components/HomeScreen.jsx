@@ -1,25 +1,25 @@
 // src/components/HomeScreen.jsx
-import { useEffect, useRef, useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { hanziCharDataLoader } from '@/utils/hanziCharData.js';
 import { APP_NAME } from '@/utils/appInfo.js';
 import { getLessonStats } from '@/utils/progress.js';
-import { getDueCount, getSRSStats, getLeechCards } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
 import { getLevelInfo, getEquippedTitle } from '@/utils/leveling.js';
-import { getLevelMastery, isLevelExamUnlocked, loadLevelExamResult, UNLOCK_MASTERY_PCT } from '@/utils/levelExam.js';
 import StreakPanel from '@/components/ui/StreakPanel.jsx';
 import DailyChallenges from '@/components/ui/DailyChallenges.jsx';
+import { isTourPending } from '@/utils/tour.js';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 import { loc, baseLang } from '@/utils/loc.js';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
-function DailyCharacter({ allCharacters, onOpen }) {
+function DailyCharacter({ allCharacters }) {
   const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const [status, setStatus] = useState('loading');
@@ -80,13 +80,10 @@ function DailyCharacter({ allCharacters, onOpen }) {
 
   if (!daily) return null;
 
-  const Wrapper = onOpen ? 'button' : 'div';
-
   return (
-    <Wrapper
-      onClick={onOpen || undefined}
+    <div
       className="w-full text-left rounded-2xl p-4 flex items-center gap-4"
-      style={{ background: J.jade, border: `1px solid ${J.jadeDeep}`, cursor: onOpen ? 'pointer' : 'default' }}>
+      style={{ background: J.jade, border: `1px solid ${J.jadeDeep}` }}>
       <div className="relative flex-shrink-0">
         <div
           ref={containerRef}
@@ -116,13 +113,8 @@ function DailyCharacter({ allCharacters, onOpen }) {
             {t('home_radical_label')} <span style={{ color: 'rgba(255,255,255,0.88)' }}>{daily.radical}</span>
           </p>
         )}
-        {onOpen && (
-          <p className="text-xs mt-2 font-semibold" style={{ color: J.butter }}>
-            {t('daily_challenges_title')} →
-          </p>
-        )}
       </div>
-    </Wrapper>
+    </div>
   );
 }
 
@@ -271,12 +263,67 @@ function LessonCard({ lesson, progress, allCharacters, onClick, t }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onStartReview, onOpenProfile, onStartLevelExam, onOpenChinaMap, onOpenDaily }) {
+// ── Sección plegable del Home ────────────────────────────────────────────────
+// El Home llegó a mostrar cinco secciones abiertas a la vez (unas 15 zonas
+// pulsables). Plegarlas deja a la vista solo lo que cada uno usa. La
+// preferencia se guarda por sección: es de interfaz, como el tema, así que no
+// se sincroniza con la nube.
+const SECTIONS_KEY = STORAGE_KEYS.HOME_SECTIONS;
+
+// Abierta de inicio solo "Lecciones": es el camino de aprendizaje y esconderlo
+// dejaría el Home sin su contenido principal.
+const SECTION_DEFAULTS = { basics: false, lessons: true, culture: false };
+
+function loadSections() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SECTIONS_KEY) || '{}');
+    return { ...SECTION_DEFAULTS, ...stored };
+  } catch {
+    return { ...SECTION_DEFAULTS };
+  }
+}
+
+function CollapsibleSection({ id, label, count, open, onToggle, children }) {
+  return (
+    <div>
+      {/* La fila entera es el botón, con 44 px de alto: antes medía 22 y el
+          triángulo 11 px pegado al borde, así que con el dedo se fallaba casi
+          siempre y parecía que no respondía. El triángulo lleva además su
+          propia caja de 32 px para que el lado derecho sea cómodo de tocar. */}
+      <button
+        onClick={() => onToggle(id)}
+        aria-expanded={open}
+        data-tour={`section-${id}`}
+        className="w-full flex items-center gap-2 mb-2"
+        style={{ background: 'none', border: 0, cursor: 'pointer', padding: 0, minHeight: 44 }}
+      >
+        <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: J.mute }}>
+          {label}
+        </span>
+        {count != null && (
+          <span className="text-xs font-bold px-1.5 rounded-full" style={{ background: J.hair, color: J.mute }}>
+            {count}
+          </span>
+        )}
+        <span className="flex-1" style={{ height: 1, background: J.hair }} />
+        <span
+          aria-hidden="true"
+          style={{
+            width: 32, height: 32, flexShrink: 0,
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            color: J.mute, fontWeight: 700, fontSize: '0.75rem',
+            transform: open ? 'rotate(180deg)' : 'none',
+            transition: 'transform 200ms ease',
+          }}
+        >▾</span>
+      </button>
+      {open && children}
+    </div>
+  );
+}
+
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onOpenProfile, onOpenChinaMap }) {
   const { t, i18n } = useTranslation();
-  const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
-  const examUnlocked = useMemo(() => isLevelExamUnlocked(progress, allCharacters), [progress, allCharacters]);
-  // Se relee cuando cambia progress (aprobar el examen actualiza ambos).
-  const examResult   = useLocalSnapshot(loadLevelExamResult, [progress]);
   const totalMastered = useMemo(() => {
     let total = 0;
     for (let i = 1; i <= 4; i++) {
@@ -287,9 +334,6 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   }, [progress, allCharacters]);
 
   const totalWords  = useMemo(() => allCharacters.filter(c => !c.isSupplementary).length, [allCharacters]);
-  const dueCount    = useMemo(() => getDueCount(progress, allCharacters), [progress, allCharacters]);
-  const srsStats    = useMemo(() => getSRSStats(progress, allCharacters),  [progress, allCharacters]);
-  const leechCount  = useMemo(() => getLeechCards(progress, allCharacters).length, [progress, allCharacters]);
   const streak      = useLocalSnapshot(getStreak);
   const levelInfo   = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped    = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);
@@ -302,6 +346,17 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   );
   // Prioriza la foto de Google (igual que ProfileBadge y Ajustes).
   const effectiveAvatar = resolveAvatarSrc(profile, mode, user?.photoURL, avatar.src);
+
+  // Mientras el tutorial esté sin hacer, el Home aparta la gamificación.
+  const tourPending = useLocalSnapshot(isTourPending);
+  const [sections, setSections] = useState(loadSections);
+  const toggleSection = useCallback((id) => {
+    setSections(prev => {
+      const next = { ...prev, [id]: !prev[id] };
+      try { localStorage.setItem(SECTIONS_KEY, JSON.stringify(next)); } catch { /* cuota llena: se pierde la preferencia, no el Home */ }
+      return next;
+    });
+  }, []);
 
   return (
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
@@ -404,85 +459,56 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
       {/* Contenido */}
       <div className="px-4 pt-5 space-y-6 j-rise">
 
-        {/* Carácter del día — abre el hub de retos diarios */}
-        <DailyCharacter allCharacters={allCharacters} onOpen={onOpenDaily} />
+        {/* Carácter del día — solo informativo. Antes abría el hub de retos
+            diarios, pero el Home ya tenía demasiadas puertas: el hub se entra
+            ahora desde Destrezas. Sin onOpen el componente se pinta como div. */}
+        <DailyCharacter allCharacters={allCharacters} />
 
-        {/* Panel de racha + XP */}
-        <StreakPanel streak={streak} />
+        {/* Racha y retos diarios: se reservan hasta que el usuario termina (o
+            salta) el tutorial. Quien acaba de registrarse tiene bastante con
+            aprender a moverse; la gamificación llega después, intacta. */}
+        {!tourPending && (
+          <>
+            {/* Panel de racha + XP */}
+            <StreakPanel streak={streak} />
 
-        {/* Retos diarios */}
-        <DailyChallenges />
-
-        {/* Tarjeta SRS — solo si hay repasos pendientes o palabras aprendidas */}
-        {srsStats.learned > 0 && (
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-              {t('home_section_review', 'Repaso')}
-            </p>
-            <button
-              onClick={onStartReview}
-              className="w-full rounded-xl p-4 flex items-center gap-3 transition-all text-left"
-              style={{
-                background: dueCount > 0 ? J.redBg : J.paperHi,
-                border: `1px solid ${dueCount > 0 ? J.red : J.hair}`,
-                cursor: 'pointer',
-              }}
-            >
-              <div className="font-cn w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-xl"
-                style={{
-                  background: dueCount > 0 ? J.red : J.paperHi,
-                  color: dueCount > 0 ? J.paperHi : J.mute,
-                  fontWeight: 700, border: dueCount > 0 ? 'none' : `1px solid ${J.hair}`,
-                }}>
-                复
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-semibold text-sm" style={{ color: J.ink }}>{t('home_srs_title', 'Repasar ahora')}</span>
-                  {dueCount > 0 && (
-                    <span className="text-xs font-bold px-1.5 py-0.5 rounded-full"
-                      style={{ background: J.red, color: J.onAccent }}>{dueCount}</span>
-                  )}
-                </div>
-                <p className="text-xs" style={{ color: J.mute }}>
-                  {dueCount > 0
-                    ? t('home_srs_due', '{{count}} tarjetas pendientes de repaso', { count: dueCount })
-                    : t('home_srs_ok', '¡Al día! {{learned}} palabras aprendidas', { learned: srsStats.learned })
-                  }
-                </p>
-                {/* Leeches: palabras que has fallado varias veces seguidas.
-                    Aparecen en el mismo repaso, no requieren acción aparte,
-                    pero las mostramos para que el usuario sepa lo que tiene en danger zone. */}
-                {leechCount > 0 && (
-                  <p className="text-xs mt-1 font-medium" style={{ color: J.redDeep }}>
-                    🐛 {t('home_srs_leeches', '{{count}} palabras rebeldes te esperan', { count: leechCount })}
-                  </p>
-                )}
-              </div>
-              <span style={{ color: J.mute, fontWeight: 700 }}>→</span>
-            </button>
-          </div>
+            {/* Retos diarios */}
+            <DailyChallenges />
+          </>
         )}
 
+        {/* El Repaso tenía aquí su propia tarjeta. Ahora el aviso es el punto
+            rojo de la pestaña Repaso (BottomNav), visible desde cualquier
+            pantalla en vez de solo al abrir el Home. */}
+
         {/* Introducción */}
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-            {t('home_section_basics')}
-          </p>
-          <LessonCard
-            lesson={LESSONS[0]}
-            progress={progress}
-            allCharacters={allCharacters}
-            onClick={onSelectIntro}
-            t={t}
-          />
-        </div>
+        <CollapsibleSection
+          id="basics"
+          label={t('home_section_basics')}
+          open={sections.basics}
+          onToggle={toggleSection}
+        >
+          {/* El envoltorio existe solo para que el tutorial pueda iluminar
+              esta tarjeta: es su último paso y el destino del recorrido. */}
+          <div data-tour="lesson-intro">
+            <LessonCard
+              lesson={LESSONS[0]}
+              progress={progress}
+              allCharacters={allCharacters}
+              onClick={onSelectIntro}
+              t={t}
+            />
+          </div>
+        </CollapsibleSection>
 
         {/* Lecciones */}
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-            {t('home_section_lessons')}
-          </p>
+        <CollapsibleSection
+          id="lessons"
+          label={t('home_section_lessons')}
+          count={LESSONS.length - 1}
+          open={sections.lessons}
+          onToggle={toggleSection}
+        >
           <div className="space-y-3">
             {LESSONS.slice(1).map(lesson => (
               <LessonCard
@@ -495,57 +521,20 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               />
             ))}
           </div>
-        </div>
+        </CollapsibleSection>
 
-        {/* Examen Final del nivel (certificación) */}
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-            {t('home_section_certification', 'Certificación')}
-          </p>
-          <button
-            onClick={onStartLevelExam}
-            className="w-full rounded-2xl p-4 flex items-center gap-4 text-left transition-transform active:scale-[0.99]"
-            style={{
-              background: J.paperHi,
-              border: `1px solid ${examResult?.passed ? J.jade : examUnlocked ? J.red : J.hair}`,
-              cursor: 'pointer',
-            }}
-          >
-            <div className="font-cn flex items-center justify-center flex-shrink-0"
-              style={{
-                width: 48, height: 48, borderRadius: 14, fontSize: '1.625rem', fontWeight: 700,
-                background: examResult?.passed ? J.jadeBg : examUnlocked ? J.redBg : J.sandBg,
-                color: examResult?.passed ? J.jade : examUnlocked ? J.red : J.sand,
-              }}>
-              {examResult?.passed ? '证' : examUnlocked ? '试' : '关'}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-bold text-sm" style={{ color: J.ink }}>
-                {t('level_exam_title', 'Examen Final · HSK 1')}
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: J.inkSoft }}>
-                {examResult?.passed
-                  ? `${t('level_exam_already_passed', 'Nivel superado')} · ${t('level_exam_best', 'mejor')} ${examResult.bestPct}%`
-                  : examUnlocked
-                    ? t('level_exam_ready_hint', '¡Desbloqueado! Certifícate ahora')
-                    : `${t('level_exam_locked_hint', 'Domina el vocabulario para desbloquear')} · ${examMastery.pct}/${UNLOCK_MASTERY_PCT}%`}
-              </p>
-              {!examUnlocked && (
-                <div className="h-1.5 rounded-full overflow-hidden mt-2" style={{ background: J.hair }}>
-                  <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.round((examMastery.pct / UNLOCK_MASTERY_PCT) * 100))}%`, background: J.sand }} />
-                </div>
-              )}
-            </div>
-            <span style={{ color: J.mute, fontSize: '1.125rem' }}>→</span>
-          </button>
-        </div>
+        {/* La certificación HSK 1 vivía aquí; ahora está en Destrezas → Examen,
+            junto al examen MCER y al global. El Home se queda con el camino de
+            aprendizaje; los exámenes viven todos en el mismo sitio. */}
 
         {/* Explora China (mapa de provincias) */}
         {onOpenChinaMap && (
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: J.mute }}>
-              {t('home_section_explore', 'Cultura')}
-            </p>
+          <CollapsibleSection
+            id="culture"
+            label={t('home_section_explore', 'Cultura')}
+            open={sections.culture}
+            onToggle={toggleSection}
+          >
             <button
               onClick={onOpenChinaMap}
               className="w-full rounded-2xl p-4 flex items-center gap-4 text-left transition-transform active:scale-[0.99]"
@@ -565,7 +554,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
               </div>
               <span style={{ color: J.mute, fontSize: '1.125rem' }}>→</span>
             </button>
-          </div>
+          </CollapsibleSection>
         )}
 
       </div>

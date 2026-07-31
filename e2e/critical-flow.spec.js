@@ -1,7 +1,7 @@
 // e2e/critical-flow.spec.js
 // El flujo crítico completo de un usuario nuevo:
-//   invitado → onboarding (nombre, género, avatar, meta) → home →
-//   Lección 1 → tab Practicar → Quiz rápido → responder una pregunta.
+//   invitado → onboarding (nombre, género, avatar, meta) → tutorial (saltado)
+//   → home → Lección 1 → tab Ejercicios → Quiz rápido → responder una pregunta.
 // Si esto pasa, la app es usable de punta a punta; complementa a smoke.spec.js
 // (que solo cubre el arranque). Textos en es-ES (locale fijado en la config).
 import { test, expect } from '@playwright/test';
@@ -30,16 +30,26 @@ test('usuario nuevo completa onboarding y responde una pregunta del quiz', async
   // Paso 4: meta diaria (viene preseleccionada) → Comenzar
   await page.getByRole('button', { name: /comenzar/i }).click();
 
+  // ── Tutorial guiado ───────────────────────────────────────────────────────
+  // Se arma solo al terminar el registro (GuidedTour) y su máscara bloquea
+  // toda la pantalla salvo el elemento resaltado. Lo saltamos: este test
+  // verifica el camino de lecciones, no el recorrido del tutorial (ver
+  // tour.js/GuidedTour.jsx para ese flujo).
+  await page.getByRole('button', { name: /saltar tutorial/i }).click();
+
   // ── Home: saludo con el nombre y tarjeta de la Lección 1 ─────────────────
   await expect(page.getByText('Tester E2E').first()).toBeVisible();
   const lesson1 = page.getByRole('button', { name: /lección 1/i }).first();
   await expect(lesson1).toBeVisible();
   await lesson1.click();
 
-  // ── Detalle de lección: vocabulario cargado y tab Practicar ──────────────
+  // ── Detalle de lección: vocabulario cargado y tab Ejercicios ─────────────
   // (el tab es "Vocabulario (N)"; el "★ Vocabulario extra" es otra sección)
+  // La pestaña se llama "Ejercicios" — antes era "Practicar", pero chocaba
+  // con la pestaña "Practicar" de la barra inferior (dos botones con el
+  // mismo nombre accesible en pantalla a la vez).
   await expect(page.getByRole('button', { name: /^vocabulario \(/i })).toBeVisible();
-  await page.getByRole('button', { name: /^practicar$/i }).click();
+  await page.getByRole('button', { name: /^ejercicios$/i }).click();
 
   // ── Quiz rápido ──────────────────────────────────────────────────────────
   await page.getByRole('button', { name: /quiz rápido/i }).click();

@@ -32,6 +32,8 @@ export const STORAGE_KEYS = {
   THEME:            'aprende-chino-theme',   // 'light' | 'dark' | 'system'
   FONT_SCALE:       'aprende-chino-font-scale', // 'normal' | 'large' | 'xlarge' (accesibilidad)
   HIGH_CONTRAST:    'aprende-chino-high-contrast', // '1' | '0' (accesibilidad)
+  HOME_SECTIONS:    'aprende-chino-home-sections', // qué secciones del Home están abiertas
+  TOUR:             'aprende-chino-tour-v1',       // tutorial guiado del primer arranque
 
   // Prefijo para la caché de datos versionada (se concatena con el nombre)
   DATACACHE_PREFIX: 'aprende-chino-datacache:',

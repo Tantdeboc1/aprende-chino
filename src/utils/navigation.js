@@ -10,7 +10,6 @@ import { addXP } from './streak.js';
 const Dictionary       = lazyWithRetry(() => import('@/components/Dictionary.jsx'));
 const MiniGames        = lazyWithRetry(() => import('@/components/MiniGames.jsx'));
 const LearnMenu        = lazyWithRetry(() => import('@/components/learn/LearnMenu.jsx'));
-const DailyIndex       = lazyWithRetry(() => import('@/components/daily/DailyIndex.jsx'));
 const WritingMenu      = lazyWithRetry(() => import('@/components/learn/Writing/index.jsx'));
 const HanziWriting     = lazyWithRetry(() => import('@/components/learn/Writing/HanziWriting.jsx'));
 const RadicalsWriting  = lazyWithRetry(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
@@ -52,7 +51,6 @@ export function useNavigation(
     setToneSection,
     setRadicalSection,
     setWritingSection,
-    setDailySection,
     setScreen,
     searchTerm,
     setSearchTerm,
@@ -136,7 +134,10 @@ export function useNavigation(
       Component = MiniGames;
       props = {
         goBack: hubOr(goBack || (() => setScreen('home'))),
-        navigateTo
+        navigateTo,
+        // Para la tarjeta de certificación HSK 1 (candado + avance).
+        progress,
+        allCharacters,
       };
     }
 
@@ -164,14 +165,6 @@ export function useNavigation(
         goBack: hubOr(goBack),
         setLearnSection,
         setToneSection
-      };
-    }
-
-    if (screen === 'daily' && dailySection === null) {
-      Component = DailyIndex;
-      props = {
-        goBack: hubOr(goBack),
-        setDailySection
       };
     }
 
@@ -312,22 +305,26 @@ export function useNavigation(
       };
     }
 
-    // === DESAFÍOS DIARIOS ===
-    // Al salir de un juego se vuelve al hub (DailyIndex): la pantalla sigue en
-    // 'daily' y solo se limpia la sección. Coincide con la etiqueta "Volver a
-    // Desafíos" del botón de cada juego.
-    const backToDailyHub = () => setDailySection(null);
-    if (screen === 'daily' && dailySection === 'characters') {
+    // === RETOS DE PRÁCTICA (antes "Desafíos Diarios") ===
+    // Había un hub intermedio (DailyIndex) con estos tres juegos. Se eliminó:
+    // ahora cada uno tiene su tarjeta en Destrezas y se sale directamente a
+    // ella, sin pantalla de por medio. De los tres solo el de caracteres es
+    // realmente diario (elige carácter por fecha, 5 intentos); los otros dos
+    // son contrarrelojes normales, y llamarlos "diarios" confundía con los
+    // objetivos del Home.
+    // Sin sección, '#/daily' (enlaces antiguos) cae en el reto de caracteres,
+    // que es el único que de verdad cambia cada día.
+    if (screen === 'daily' && (dailySection === 'characters' || dailySection === null)) {
       Component = CharactersDaily;
       props = {
-        goBack: backToDailyHub
+        goBack
       };
     }
 
     if (screen === 'daily' && dailySection === 'radicals') {
       Component = RadicalsDaily;
       props = {
-        goBack: backToDailyHub,
+        goBack,
         radicals
       };
     }
@@ -335,7 +332,7 @@ export function useNavigation(
     if (screen === 'daily' && dailySection === 'tones') {
       Component = TonesDaily;
       props = {
-        goBack: backToDailyHub,
+        goBack,
         speakChinese: speak
       };
     }
@@ -347,7 +344,7 @@ export function useNavigation(
     characterSection, toneSection, dailySection,
     characters, allCharacters, radicals, speak, navigateTo,
     setLearnSection, setCharacterSection, setToneSection, setRadicalSection,
-    setWritingSection, setDailySection, setScreen,
+    setWritingSection, setScreen,
     searchTerm, setSearchTerm,
     selectedLesson, setSelectedLesson, showSupplementary, setShowSupplementary,
     lessonsData, goBack, hubMode, goBackToHub,

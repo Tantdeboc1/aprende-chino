@@ -187,9 +187,11 @@ export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }
 
   // Idempotente: si ya hay una invitación pendiente para esa persona no la
   // reescribimos (las reglas solo permiten create, no update → daría error).
+  // Se devuelve 'already-pending' en vez de nada: antes la pantalla cantaba
+  // "¡Invitación enviada!" aunque no se hubiera escrito nada.
   const reqRef = fs.doc(db, 'friendRequests', requestId(fromUid, toUid));
   const existing = await fs.getDoc(reqRef);
-  if (existing.exists()) return;
+  if (existing.exists()) return 'already-pending';
 
   await fs.setDoc(
     reqRef,
@@ -205,6 +207,7 @@ export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }
       createdAt: fs.serverTimestamp(),
     },
   );
+  return 'created';
 }
 
 // El receptor acepta: crea la amistad y borra la invitación en un batch.

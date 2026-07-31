@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { loc } from '@/utils/loc.js';
 
 const AUTO_CLOSE_MS = 4500;
 
@@ -32,9 +33,10 @@ export default function AchievementToast({ achievement, onClose, stackIndex = 0 
   };
 
   if (!achievement) return null;
-  const lang = i18n.language;
-  const title = achievement.title?.[lang] || achievement.title?.es || '';
-  const desc  = achievement.desc?.[lang]  || achievement.desc?.es  || '';
+  // loc() normaliza el código regional ('pt-BR' → 'pt'); indexar con el crudo
+  // hacía caer al español aunque el logro estuviera traducido.
+  const title = loc(achievement.title, i18n.language);
+  const desc  = loc(achievement.desc,  i18n.language);
 
   return createPortal(
     <div

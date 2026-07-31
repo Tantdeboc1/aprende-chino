@@ -162,7 +162,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
               className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              {t('daily_back_to_challenges')}
+              {t('minigames_back_to_minigames')}
             </button>
             <h1 className="text-3xl font-bold text-[var(--ink)] text-center">{t('daily_radicals_challenge_title')}</h1>
             <p className="text-[var(--mute)] text-center">{t('radicals_quiz_identification_title')}</p>
@@ -216,7 +216,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
               className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
             >
               <ArrowLeft className="mr-2" />
-              {t('daily_back_to_challenges')}
+              {t('minigames_back_to_minigames')}
             </button>
           </div>
 
@@ -287,7 +287,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
             className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)] transition mb-4"
           >
             <ArrowLeft className="mr-2" />
-            {t('daily_back_to_challenges')}
+            {t('minigames_back_to_minigames')}
           </button>
 
           <div className="flex justify-between items-center mb-2">

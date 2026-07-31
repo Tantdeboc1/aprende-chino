@@ -2,7 +2,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { updateSRS, getDueCards, getDueCount, getWeakCards, SESSION_LIMIT } from '@/utils/srs.js';
+import { updateSRS, getDueCards, getDueCount, getWeakCards, getLeechCards, SESSION_LIMIT } from '@/utils/srs.js';
 import { markDailyActivity, addXP } from '@/utils/streak.js';
 import { shuffle } from '@/utils/arrayUtils.js';
 import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
@@ -17,7 +17,7 @@ const RELEARN_GAP = 3;
 const RATING_QUALITIES = [0, 3, 4, 5];
 
 // ─── Selección de modo ────────────────────────────────────────────────────────
-function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
+function ModeSelector({ dueCount, weakCount, leechCount = 0, onSelect, goBack, t }) {
   // Cuántas se repasarán realmente en esta tanda (el resto sigue vencido).
   const batchSize = Math.min(dueCount, SESSION_LIMIT);
   const bothEmpty = dueCount === 0 && weakCount === 0;
@@ -108,6 +108,13 @@ function ModeSelector({ dueCount, weakCount, onSelect, goBack, t }) {
                     </p>
                   )}
                   <p className="text-xs mt-1" style={{ color: J.mute }}>{t('srs_due_algorithm_hint')}</p>
+                  {/* Leeches: caen dentro de esta misma tanda, no hay que
+                      hacer nada aparte — se avisa para que no sorprendan. */}
+                  {leechCount > 0 && (
+                    <p className="text-xs mt-1.5 font-medium" style={{ color: J.redDeep }}>
+                      🐛 {t('srs_leeches_note', '{{count}} palabras rebeldes entran en este repaso', { count: leechCount })}
+                    </p>
+                  )}
                 </div>
                 {dueCount > 0 && (
                   <span className="font-bold text-lg px-3 py-1 rounded-xl flex-shrink-0"
@@ -363,6 +370,10 @@ export default function ReviewSession({
   // Totales para el menú, congelados al montar (no deben bailar mientras eliges).
   const dueTotal  = useMemo(() => getDueCount(progress, allCharacters), []); // eslint-disable-line
   const weakTotal = useMemo(() => getWeakCards(progress, allCharacters, SESSION_LIMIT).length, []); // eslint-disable-line
+  // Palabras rebeldes (leeches). El aviso vivía en la tarjeta de Repaso del
+  // Home; al quitarla se quedó sin sitio, y este es el suyo: caen dentro de
+  // esta misma tanda, no son un modo aparte.
+  const leechTotal = useMemo(() => getLeechCards(progress, allCharacters).length, []); // eslint-disable-line
 
   // ── Estado de la sesión ──────────────────────────────────────────────────
   const [phase,   setPhase]   = useState('select'); // 'select' | 'playing'
@@ -466,6 +477,7 @@ export default function ReviewSession({
       <ModeSelector
         dueCount={dueTotal}
         weakCount={weakTotal}
+        leechCount={leechTotal}
         onSelect={startBatch}
         goBack={goBack}
         t={t}

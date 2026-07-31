@@ -10,6 +10,8 @@ import { loadUserProfile, updateUserProfile, GENDERS, resolveAvatarSrc } from '@
 import { getStreak, setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { introsEnabled, setIntrosEnabled } from '@/utils/gameIntroPrefs.js';
+import { restartTour } from '@/utils/tour.js';
+import { bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
@@ -248,6 +250,15 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
     const next = !highContrast;
     setHighContrast(next); // aplica/quita la clase .high-contrast al instante
     setHighContrastState(next);
+  };
+
+  // Rearma el tutorial y vuelve al Home: el recorrido empieza allí, que es
+  // donde viven sus dos últimos pasos. No sirve `onBack`, que solo existe si
+  // se llegó a Ajustes desde el Perfil.
+  const handleRestartTour = () => {
+    restartTour();
+    bumpLocalDataRev();
+    window.dispatchEvent(new Event('open-home'));
   };
 
   const handleIntrosToggle = () => {
@@ -494,6 +505,32 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute }}>
             {t('settings_daily_goal_hint', 'XP que necesitas cada día para mantener tu objetivo. Una historia perfecta da 120 XP.')}
           </p>
+        </JCard>
+
+        {/* ─── Tutorial ────────────────────────────────────────────────── */}
+        <JSection label={t('settings_section_tour', 'Tutorial')} cn="教程" />
+        <JCard padding="0">
+          <div className="flex items-center justify-between" style={{ padding: '14px 18px' }}>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ margin: 0, fontSize: '0.875rem', color: J.ink, fontWeight: 600 }}>
+                {t('settings_tour_label', 'Recorrido guiado')}
+              </p>
+              <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>
+                {t('settings_tour_hint', 'Vuelve a ver la explicación de las secciones de la app.')}
+              </p>
+            </div>
+            <button
+              onClick={handleRestartTour}
+              style={{
+                flexShrink: 0, marginLeft: 12, minHeight: 44, padding: '0 16px',
+                borderRadius: 12, border: `1px solid ${J.hair}`,
+                background: J.paperHi, color: J.ink,
+                fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer',
+              }}
+            >
+              {t('settings_tour_button', 'Ver otra vez')}
+            </button>
+          </div>
         </JCard>
 
         {/* ─── Minijuegos ──────────────────────────────────────────────── */}

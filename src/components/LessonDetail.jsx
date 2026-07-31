@@ -52,6 +52,7 @@ export default function LessonDetail({
   };
   const { t } = useTranslation();
   const [showSupp, setShowSupp] = useState(false);
+  const [showLegend, setShowLegend] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
   const mainWords = useMemo(() => characters.filter(c => c.lesson === lessonNum && !c.isSupplementary), [characters, lessonNum]);
@@ -189,11 +190,62 @@ export default function LessonDetail({
         {/* Tab Vocabulario */}
         {tab === 'vocab' && (
           <div>
+            {/* Leyenda de símbolos. Los círculos (○ ◑ ★) no se explicaban en
+                ninguna parte y las etiquetas SRS solo tenían un title=, que
+                con el dedo no se puede leer. */}
+            <button
+              onClick={() => setShowLegend(!showLegend)}
+              aria-expanded={showLegend}
+              style={{
+                marginBottom: 12, padding: '0 14px', minHeight: 44, borderRadius: 99,
+                fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer',
+                border: `1px solid ${showLegend ? J.sand : J.hair}`,
+                background: showLegend ? J.sandBg : J.paperHi,
+                color: showLegend ? J.sandDeep : J.mute,
+              }}
+            >
+              {t('lesson_legend_toggle', '¿Qué significan los símbolos?')}
+            </button>
+
+            {showLegend && (
+              <div className="rounded-xl p-3 mb-3 space-y-2"
+                style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+                {[
+                  { s: <span style={{ color: J.mute2 }}>○</span>,  k: 'lesson_legend_unseen',   d: 'Aún no la has visto' },
+                  { s: <span style={{ color: J.sand }}>◑</span>,   k: 'lesson_legend_seen',     d: 'Ya la has visto, aún no dominada' },
+                  { s: <span style={{ color: J.red }}>★</span>,    k: 'lesson_legend_mastered', d: 'Dominada: la aciertas de forma constante' },
+                ].map(row => (
+                  <div key={row.k} className="flex items-center gap-3">
+                    <span className="w-6 text-center flex-shrink-0" style={{ fontSize: '1rem' }}>{row.s}</span>
+                    <p className="text-xs" style={{ color: J.inkSoft }}>{t(row.k, row.d)}</p>
+                  </div>
+                ))}
+                <div style={{ borderTop: `1px solid ${J.hair}`, paddingTop: 8 }}>
+                  {[
+                    { b: `✓ ${t('srs_badge_mastered', 'dominada')}`, k: 'srs_badge_mastered_title', d: 'Dominada — repaso en >3 semanas' },
+                    { b: `🕐 ${t('srs_badge_due', 'hoy')}`,          k: 'srs_badge_due_title',      d: 'Toca repasarla hoy' },
+                    { b: `🕐 ${t('srs_badge_tomorrow', 'mañana')}`,  k: 'lesson_legend_soon',       d: 'Su próximo repaso ya está programado' },
+                    { b: `🐛 ${t('srs_badge_leech', 'rebelde')}`,    k: 'srs_badge_leech_title',    d: 'La has fallado varias veces seguidas — dale repaso' },
+                  ].map(row => (
+                    <div key={row.k} className="flex items-center gap-3 mt-2">
+                      <span className="flex-shrink-0" style={{
+                        fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6,
+                        fontWeight: 600, background: J.paper, color: J.inkSoft,
+                        border: `1px solid ${J.hair}`, whiteSpace: 'nowrap',
+                      }}>{row.b}</span>
+                      <p className="text-xs" style={{ color: J.inkSoft }}>{t(row.k, row.d)}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {suppWords.length > 0 && (
               <button
                 onClick={() => setShowSupp(!showSupp)}
                 style={{
-                  marginBottom: 12, padding: '6px 12px', borderRadius: 99, fontSize: '0.75rem', fontWeight: 700,
+                  marginBottom: 12, padding: '0 14px', minHeight: 44, borderRadius: 99,
+                  fontSize: '0.75rem', fontWeight: 700,
                   cursor: 'pointer',
                   border: `1px solid ${showSupp ? J.jade : J.hair}`,
                   background: showSupp ? J.jadeBg : J.paperHi,

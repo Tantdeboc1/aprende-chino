@@ -148,12 +148,25 @@ export function useSocial() {
   // Oculta invitaciones con gente que ya es amiga (puede quedar alguna suelta
   // tras invitaciones cruzadas): ni se aceptan ni se reenvían, solo confunden.
   const friendUidSet = useMemo(() => new Set(otherUids), [otherUids]);
+  // A quién le he escrito yo: sirve para detectar invitaciones cruzadas.
+  const outgoingUidSet = useMemo(
+    () => new Set(outgoing.map((r) => r.to).filter(Boolean)),
+    [outgoing],
+  );
+  // Quién me ha escrito a mí: para no crear una segunda invitación cuando
+  // basta con aceptar la suya.
+  const incomingUidSet = useMemo(
+    () => new Set(incoming.map((r) => r.from).filter(Boolean)),
+    [incoming],
+  );
   const incomingShown = useMemo(
     () => incoming
       .filter((r) => !friendUidSet.has(r.from))
       // Identidad SIEMPRE desde el perfil público, nunca desde el payload. Si
       // aún no ha cargado (o el emisor no tiene perfil), se pinta el usuario
       // genérico: preferimos un nombre vacío a uno suplantado.
+      // De paso se exponen nivel y racha (ya los tenemos descargados): sin
+      // ellos la tarjeta solo decía "quiere ser tu amigo" y se aceptaba a ciegas.
       .map((r) => {
         const p = senderProfiles[r.from];
         return {
@@ -161,13 +174,19 @@ export function useSocial() {
           fromName:     p?.displayName || '',
           fromAvatarId: p?.avatarId    || null,
           fromPhotoURL: p?.photoURL    || null,
+          fromLevel:    p?.level ?? null,
+          fromStreak:   p?.currentStreak ?? 0,
+          // Los dos os habéis invitado: aceptar zanja las dos invitaciones.
+          mutual:       outgoingUidSet.has(r.from),
         };
       }),
-    [incoming, friendUidSet, senderProfiles],
+    [incoming, friendUidSet, senderProfiles, outgoingUidSet],
   );
   const outgoingShown = useMemo(
-    () => outgoing.filter((r) => !friendUidSet.has(r.to)),
-    [outgoing, friendUidSet],
+    () => outgoing
+      .filter((r) => !friendUidSet.has(r.to))
+      .map((r) => ({ ...r, mutual: incomingUidSet.has(r.to) })),
+    [outgoing, friendUidSet, incomingUidSet],
   );
 
   // ─── Acciones ──────────────────────────────────────────────────────────────
@@ -180,18 +199,27 @@ export function useSocial() {
     if (toUid === uid) { const e = new Error('self'); e.code = 'self'; throw e; }
     if (friendUidSet.has(toUid)) { const e = new Error('already-friends'); e.code = 'already-friends'; throw e; }
     const profile = await m.fetchPublicProfile(toUid);
-    return { uid: toUid, profile };
-  }, [uid, friendUidSet, getStore]);
+    // Si esa persona ya te invitó, no tiene sentido crear una segunda
+    // invitación cruzada: la pantalla ofrecerá aceptar la suya.
+    return { uid: toUid, profile, theyInvitedYou: incomingUidSet.has(toUid) };
+  }, [uid, friendUidSet, incomingUidSet, getStore]);
 
   // Fase 2: envía la invitación al destino ya resuelto/confirmado.
+  // Devuelve 'created' o 'already-pending' para que la UI no mienta.
   const sendRequestTo = useCallback(async (target) => {
     const m = await getStore();
     const mine = me || await m.fetchPublicProfile(uid);
-    await m.sendFriendRequest({
+    return m.sendFriendRequest({
       fromUid: uid, toUid: target.uid,
       fromPublic: mine, toPublic: target.profile,
     });
   }, [uid, me, getStore]);
+
+  // Aceptar directamente a alguien que ya te invitó (resuelto por código).
+  const acceptFrom = useCallback(async (otherUid) => {
+    const m = await getStore();
+    await m.acceptFriendRequest({ fromUid: otherUid, toUid: uid });
+  }, [uid, getStore]);
 
   const acceptRequest = useCallback(async (req) => {
     const m = await getStore();
@@ -223,6 +251,7 @@ export function useSocial() {
     outgoing: outgoingShown,
     lookupCode,
     sendRequestTo,
+    acceptFrom,
     acceptRequest,
     declineRequest,
     cancelRequest,

@@ -2,10 +2,15 @@
 // Resuelve un campo localizable: puede ser un string neutro (p. ej. hanzi,
 // o texto ya resuelto por scripts/split-i18n-data.mjs) o un objeto
 // { es, en, it, fr, de, pt }. Cae a inglés y luego a español si falta el idioma.
+// Normaliza el idioma aquí dentro: casi todas las llamadas pasan
+// `i18n.language`, que puede venir regional ('pt-BR'), y sin normalizar
+// value['pt-BR'] es undefined → el usuario veía inglés o español aunque su
+// idioma estuviera traducido. Normalizar en el único punto de resolución
+// evita tener que acordarse de envolver cada llamada con baseLang().
 export function loc(value, lang) {
   if (value == null) return '';
   if (typeof value === 'string') return value;
-  return value[lang] || value.en || value.es || Object.values(value)[0] || '';
+  return value[baseLang(lang)] || value.en || value.es || Object.values(value)[0] || '';
 }
 
 // Resuelve un campo traducible de las historias: el valor base está en español
@@ -13,8 +18,9 @@ export function loc(value, lang) {
 // Sirve tanto para strings (traducción, pregunta) como para arrays (opciones).
 // Cae al español si no hay traducción para el idioma pedido.
 export function trField(base, trObj, lang) {
-  if (lang === 'es' || !trObj) return base;
-  return trObj[lang] ?? base;
+  const l = baseLang(lang);
+  if (l === 'es' || !trObj) return base;
+  return trObj[l] ?? base;
 }
 
 // Normaliza un código de idioma a su base: 'es-ES' → 'es', 'pt-BR' → 'pt'.

@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
 import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
 import { getBestScore } from "@/utils/minigameScores.js";
+import { getLevelMastery, isLevelExamUnlocked, loadLevelExamResult, UNLOCK_MASTERY_PCT } from "@/utils/levelExam.js";
+import { useLocalSnapshot } from "@/hooks/useLocalSnapshot.js";
 
 const GAME_STYLES = {
   red:    { bg: J.redBg,   fg: J.redDeep,  border: J.red },
@@ -26,6 +28,17 @@ function Badge({ text, color }) {
 // El orden sigue el clásico chino 听-说-读-写. Cada juego declara en qué
 // `categorias` aparece (puede estar en varias). Las claves de categoría son
 // internas; los títulos visibles salen de i18n.
+// Los tres juegos que vivían tras el hub "Desafíos Diarios". El hub se
+// eliminó: tenían su propia pantalla intermedia para nada, y el nombre
+// chocaba con los objetivos diarios del Home. Solo el de caracteres es
+// realmente diario (elige uno por fecha, 5 intentos); los otros dos son
+// contrarrelojes que se pueden repetir cuando se quiera.
+const DAILY_GAMES = [
+  { id: 'daily-characters', cn: '日', daily: true,  titleKey: 'daily_character_challenge_title', descKey: 'daily_character_challenge_description' },
+  { id: 'daily-tones',      cn: '声', daily: false, titleKey: 'daily_tones_challenge_title',     descKey: 'daily_tones_challenge_description' },
+  { id: 'daily-radicals',   cn: '部', daily: false, titleKey: 'daily_radicals_challenge_title',  descKey: 'daily_radicals_challenge_description' },
+];
+
 const SECTIONS = [
   { cat: 'oral_comp', cn: '听', titleKey: 'minigames_section_listening', titleDefault: 'Comprensión oral' },
   { cat: 'oral_exp',  cn: '说', titleKey: 'minigames_section_speaking',  titleDefault: 'Expresión oral' },
@@ -35,8 +48,16 @@ const SECTIONS = [
   { cat: 'examen',    cn: '试', titleKey: 'minigames_section_exam',      titleDefault: 'Examen' },
 ];
 
-export default function MiniGames({ goBack, navigateTo }) {
+export default function MiniGames({ goBack, navigateTo, progress, allCharacters = [] }) {
   const { t } = useTranslation();
+
+  // Certificación HSK 1: vivía en el Home, pero su sitio natural es la sección
+  // Examen, junto al MCER y al examen global. Se desbloquea al dominar
+  // UNLOCK_MASTERY_PCT del vocabulario, así que la tarjeta muestra el candado
+  // y el avance (el resto de juegos no tienen estado bloqueado).
+  const examMastery  = getLevelMastery(progress, allCharacters);
+  const examUnlocked = isLevelExamUnlocked(progress, allCharacters);
+  const examResult   = useLocalSnapshot(loadLevelExamResult, [progress]);
 
   const games = [
     {
@@ -82,7 +103,11 @@ export default function MiniGames({ goBack, navigateTo }) {
       cn: '考',
       color: 'yellow',
       badges: [t('badge_90s'), t('badge_hard'), t('badge_hsk1')],
-      categorias: ['examen'],
+      // Vivía en 'examen' y se llamaba "Examen HSK1", justo al lado de la
+      // certificación: dos cosas con el mismo nombre y sentidos distintos.
+      // Es una prueba cronometrada de 90 s sin aprobado ni desbloqueo, así
+      // que su sitio es Base lingüística, con el resto de contrarrelojes.
+      categorias: ['base'],
     },
     {
       id: 'translation-game',
@@ -190,6 +215,35 @@ export default function MiniGames({ goBack, navigateTo }) {
         </div>
 
         <div className="max-w-4xl mx-auto space-y-8 j-rise">
+          {/* Historias: dejó de tener pestaña propia al pasar la barra de 7 a
+              5, y vive aquí porque también es práctica. Va la primera por ser
+              la actividad más guiada de todas. */}
+          <section>
+            <div className="flex items-center gap-2.5 mb-3 px-1">
+              <span className="font-cn text-2xl leading-none" style={{ color: J.red }}>故</span>
+              <h3 className="text-lg font-bold" style={{ color: J.ink }}>{t('nav_stories')}</h3>
+            </div>
+            <button
+              onClick={() => navigateTo('stories')}
+              className="w-full rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
+              style={{ background: J.paperHi, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
+            >
+              <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
+                style={{ background: J.redBg, color: J.redDeep, fontWeight: 700 }}>
+                事
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-base font-bold leading-tight mb-1" style={{ color: J.ink }}>
+                  {t('minigames_stories_card_title', 'Historias interactivas')}
+                </h4>
+                <p className="text-xs leading-snug" style={{ color: J.inkSoft }}>
+                  {t('minigames_stories_card_description', 'Vive diálogos reales en chino y responde por el camino')}
+                </p>
+              </div>
+              <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
+            </button>
+          </section>
+
           {SECTIONS.map((section) => {
             const sectionGames = games.filter((g) => g.categorias.includes(section.cat));
             if (sectionGames.length === 0) return null;
@@ -202,6 +256,81 @@ export default function MiniGames({ goBack, navigateTo }) {
                   </h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {/* Los tres juegos que vivían tras el hub "Desafíos Diarios"
+                      (ver DAILY_GAMES arriba). Antes se entraba desde el
+                      carácter del día del Home, que ahora es solo informativo. */}
+                  {section.cat === 'base' && DAILY_GAMES.map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => navigateTo(g.id)}
+                      className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
+                      style={{ background: J.paperHi, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
+                    >
+                      <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
+                        style={{ background: J.sandBg, color: J.sandDeep, fontWeight: 700 }}>
+                        {g.cn}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <h4 className="text-base font-bold leading-tight" style={{ color: J.ink }}>
+                            {t(g.titleKey)}
+                          </h4>
+                          {/* Solo el de caracteres cambia de verdad cada día. */}
+                          {g.daily && (
+                            <span className="text-[0.6875rem] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+                              style={{ background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}` }}>
+                              {t('badge_daily', 'Diario')}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs leading-snug" style={{ color: J.inkSoft }}>
+                          {t(g.descKey)}
+                        </p>
+                      </div>
+                      <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
+                    </button>
+                  ))}
+                  {/* Certificación de nivel: primera del bloque Examen. */}
+                  {section.cat === 'examen' && (
+                    <button
+                      onClick={() => navigateTo('level-exam')}
+                      className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
+                      style={{
+                        background: J.paperHi, cursor: 'pointer',
+                        border: `1px solid ${examResult?.passed ? J.jade : examUnlocked ? J.red : J.hair}`,
+                      }}
+                    >
+                      <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
+                        style={{
+                          fontWeight: 700,
+                          background: examResult?.passed ? J.jadeBg : examUnlocked ? J.redBg : J.sandBg,
+                          color: examResult?.passed ? J.jade : examUnlocked ? J.red : J.sand,
+                        }}>
+                        {examResult?.passed ? '证' : examUnlocked ? '试' : '关'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-base font-bold leading-tight mb-1" style={{ color: J.ink }}>
+                          {t('level_exam_title', 'Examen Final · HSK 1')}
+                        </h4>
+                        <p className="text-xs leading-snug" style={{ color: J.inkSoft }}>
+                          {examResult?.passed
+                            ? `${t('level_exam_already_passed', 'Nivel superado')} · ${t('level_exam_best', 'mejor')} ${examResult.bestPct}%`
+                            : examUnlocked
+                              ? t('level_exam_ready_hint', '¡Desbloqueado! Certifícate ahora')
+                              : `${t('level_exam_locked_hint', 'Domina el vocabulario para desbloquear')} · ${examMastery.pct}/${UNLOCK_MASTERY_PCT}%`}
+                        </p>
+                        {!examUnlocked && (
+                          <div className="h-1.5 rounded-full overflow-hidden mt-2" style={{ background: J.hair }}>
+                            <div className="h-full rounded-full" style={{
+                              width: `${Math.min(100, Math.round((examMastery.pct / UNLOCK_MASTERY_PCT) * 100))}%`,
+                              background: J.sand,
+                            }} />
+                          </div>
+                        )}
+                      </div>
+                      <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
+                    </button>
+                  )}
                   {sectionGames.map((game) => {
                     const c = GAME_STYLES[game.color];
                     const best = getBestScore(game.id);

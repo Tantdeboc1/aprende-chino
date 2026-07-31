@@ -27,6 +27,8 @@ import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress } from './utils/progress.js';
+import { getDueCount } from './utils/srs.js';
+import { armTour } from './utils/tour.js';
 import { STORAGE_KEYS } from './utils/storageKeys.js';
 import { fetchJsonCached } from './utils/dataCache.js';
 import { initAudioForIOS } from './utils/audio';
@@ -106,7 +108,9 @@ function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else loc
 const HASH_SCREENS = new Set([
   'home', 'review', 'stories', 'dictionary', 'minigames', 'friends',
   'profile', 'settings', 'intro-detail', 'exam', 'global-exam',
-  'level-exam', 'exercise', 'chinaMap',
+  // 'daily' (hub de retos) faltaba: al no entrar en el historial, el botón
+  // atrás del sistema cerraba la app en vez de volver al Home.
+  'level-exam', 'exercise', 'chinaMap', 'daily',
 ]);
 
 function screenToHash(screen, selectedLesson) {
@@ -121,6 +125,11 @@ function parseHash(hash) {
   const path = m[1];
   const lesson = path.match(/^lesson\/(\d{1,2})$/);
   if (lesson) return { screen: 'lesson-detail', lesson: Number(lesson[1]) };
+  // Invitación de amistad compartida: #/friends/add/ABC-DEF. Abre Amigos con
+  // el código ya resuelto, para no obligar a teclearlo a mano. No envía nada
+  // por su cuenta: la pantalla sigue pidiendo confirmación.
+  const friendAdd = path.match(/^friends\/add\/([A-Za-z0-9-]{6,7})$/);
+  if (friendAdd) return { screen: 'friends', friendCode: friendAdd[1] };
   if (HASH_SCREENS.has(path) || MINIGAME_IDS.has(path)) return { screen: path };
   return null;
 }
@@ -225,6 +234,10 @@ export default function App() {
   // Pantalla activa
   // 'welcome' | 'home' | 'lesson-detail' | 'intro-detail' | 'exam' | 'exercise' | 'dictionary' | 'minigames' | 'settings'
   const [screen, setScreen] = useState(() => initialNav?.screen || (loadUserName() ? 'home' : 'welcome'));
+
+  // Código de amigo llegado por enlace compartido. Se consume una sola vez:
+  // FriendsScreen avisa al usarlo para que un "atrás" no lo vuelva a disparar.
+  const [pendingFriendCode, setPendingFriendCode] = useState(() => initialNav?.friendCode || null);
 
   // Cuando entramos por Google o llega un cambio remoto desde otro
   // dispositivo, AuthContext hidrata localStorage. Reflejamos los cambios
@@ -332,6 +345,7 @@ export default function App() {
       setLearnSection(null); setCharacterSection(null); setToneSection(null);
       setRadicalSection(null); setWritingSection(null); setDailySection(null);
       if (parsed.lesson != null) setSelectedLesson(parsed.lesson);
+      if (parsed.friendCode) setPendingFriendCode(parsed.friendCode);
       setScreen(parsed.screen);
     };
     window.addEventListener('popstate', onPop);
@@ -343,6 +357,8 @@ export default function App() {
 
   // ProfileBadge → 'open-profile' (avatar de la top bar → stats)
   // Engranaje dentro de ProfileScreen → 'open-settings' (configuración).
+  // "Ver otra vez" el tutorial → 'open-home': el recorrido tiene que empezar
+  // en el Home, que es donde viven sus dos últimos pasos.
   useEffect(() => {
     const toProfile = () => {
       setPrevScreen(prev => prev || 'home');
@@ -352,11 +368,17 @@ export default function App() {
       setPrevScreen(prev => prev || 'home');
       setScreen('settings');
     };
+    const toHome = () => {
+      setPrevScreen('home');
+      setScreen('home');
+    };
     window.addEventListener('open-profile', toProfile);
     window.addEventListener('open-settings', toSettings);
+    window.addEventListener('open-home', toHome);
     return () => {
       window.removeEventListener('open-profile', toProfile);
       window.removeEventListener('open-settings', toSettings);
+      window.removeEventListener('open-home', toHome);
     };
   }, []);
 
@@ -510,6 +532,14 @@ export default function App() {
     setScreen('intro-detail');
   };
 
+  // Repasos vencidos → punto rojo en la pestaña Repaso. La tarjeta que había
+  // en el Home desapareció; el aviso vive ahora en la barra, visible desde
+  // cualquier pantalla en vez de solo al abrir el Home.
+  const dueCount = useMemo(
+    () => getDueCount(progress, allCharacters),
+    [progress, allCharacters]
+  );
+
   // Navegar desde bottom nav
   const handleBottomNav = useCallback((key) => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
@@ -517,6 +547,9 @@ export default function App() {
     setPrevScreen(screenRef.current);
     if (key === 'home')            setScreen('home');
     else if (key === 'review')     setScreen('review');
+    // 'practice' es la pestaña; aterriza en Destrezas, que ahora también
+    // enlaza Historias. 'stories' sigue existiendo como destino directo.
+    else if (key === 'practice')   setScreen('minigames');
     else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
     else if (key === 'minigames')  setScreen('minigames');
@@ -535,7 +568,6 @@ export default function App() {
     else if (exerciseKey === 'quiz')      { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('quiz'); }
     else if (exerciseKey === 'matching')  { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('matching'); }
     else if (exerciseKey === 'writing')   { setScreen('exercise'); setLearnSection('writing'); setWritingSection('hanzi'); }
-    else if (exerciseKey === 'daily')     { setScreen('exercise'); setDailySection('characters'); }
     else if (exerciseKey === 'minigames') { setScreen('minigames'); }
   };
 
@@ -547,8 +579,6 @@ export default function App() {
     if (exerciseKey === 'radicals')            { setScreen('exercise'); setLearnSection('radicals'); }
     else if (exerciseKey === 'tones')          { setScreen('exercise'); setLearnSection('tones'); }
     else if (exerciseKey === 'writing')        { setScreen('exercise'); setLearnSection('writing'); setWritingSection('radicals'); }
-    else if (exerciseKey === 'daily-radicals') { setScreen('exercise'); setDailySection('radicals'); }
-    else if (exerciseKey === 'daily-tones')    { setScreen('exercise'); setDailySection('tones'); }
   };
 
   // navigation.js maneja ejercicios (reutilizamos la lógica existente)
@@ -577,6 +607,15 @@ export default function App() {
       return;
     }
     if (key === 'global-exam') { setPrevScreen(screenRef.current); setScreen('global-exam'); }
+    // Certificación HSK 1: ahora se entra desde Destrezas → Examen.
+    else if (key === 'level-exam') { setPrevScreen(screenRef.current); setScreen('level-exam'); }
+    // Retos de práctica: ya no hay hub, cada juego se abre desde su tarjeta
+    // en Destrezas ('daily-characters', 'daily-tones', 'daily-radicals').
+    else if (key.startsWith('daily-')) {
+      setPrevScreen(screenRef.current);
+      setDailySection(key.slice('daily-'.length));
+      setScreen('daily');
+    }
     else if (key === 'minigames') setScreen('minigames');
     else if (key === 'dictionary') setScreen('dictionary');
     else handleBottomNav(key);
@@ -620,6 +659,10 @@ export default function App() {
       <WelcomeFlow
         onComplete={(name) => {
           handleSetUserName(name);
+          // Único punto donde se arma el tutorial: quien ya tiene nombre no
+          // vuelve a pasar por aquí, así que a los usuarios existentes nunca
+          // se les muestra.
+          armTour();
           setScreen('home');
         }}
       />
@@ -629,18 +672,15 @@ export default function App() {
   // ── HOME ─────────────────────────────────────────────────────────────────────
   if (screen === 'home') {
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <HomeScreen
           userName={userName}
           progress={progress}
           allCharacters={allCharacters}
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
-          onStartReview={() => { setPrevScreen('home'); setScreen('review'); }}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
-          onStartLevelExam={() => { setPrevScreen('home'); setScreen('level-exam'); }}
           onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}
-          onOpenDaily={() => { setPrevScreen('home'); setDailySection(null); setScreen('daily'); }}
         />
       </Layout>
     );
@@ -649,7 +689,7 @@ export default function App() {
   // ── EXPLORA CHINA (mapa de provincias) ───────────────────────────────────────
   if (screen === 'chinaMap') {
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <ChinaMap goBack={() => setScreen(prevScreen || 'home')} speakChinese={speak} />
@@ -662,7 +702,7 @@ export default function App() {
   // ── REVIEW (SRS) ─────────────────────────────────────────────────────────────
   if (screen === 'review') {
     return (
-      <Layout activeScreen="review" onNavigate={handleBottomNav}>
+      <Layout activeScreen="review" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <ReviewSession
@@ -682,7 +722,7 @@ export default function App() {
   if (screen === 'lesson-detail') {
     const activeLessonData = lessonsData.find(l => l.lesson === selectedLesson);
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <LessonDetail
@@ -711,7 +751,7 @@ export default function App() {
       { key: 'writing',  cn: '写', title: t('intro_writing_title'),  desc: t('intro_writing_desc'),  bg: J.jadeBg, fg: J.jadeDeep, action: () => handleStartIntroExercise('writing')  },
     ];
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
           <div style={{ padding: '14px 20px 8px' }}>
             <button onClick={() => setScreen('home')}
@@ -802,7 +842,7 @@ export default function App() {
   // ── STORIES ──────────────────────────────────────────────────────────────────
   if (screen === 'stories') {
     return (
-      <Layout activeScreen="stories" onNavigate={handleBottomNav} hideNav={inStoryMode}>
+      <Layout activeScreen="stories" onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={inStoryMode}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <StoriesPage
@@ -822,7 +862,7 @@ export default function App() {
   // ── PROFILE (stats y gamificación) ──────────────────────────────────────────
   if (screen === 'profile') {
     return (
-      <Layout activeScreen="profile" onNavigate={handleBottomNav}>
+      <Layout activeScreen="profile" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <ProfileScreen
@@ -830,6 +870,7 @@ export default function App() {
               progress={progress}
               allCharacters={allCharacters}
               onOpenSettings={() => { setPrevScreen('profile'); setScreen('settings'); }}
+              onOpenFriends={() => { setPrevScreen('profile'); setScreen('friends'); }}
             />
           </Suspense>
         </ErrorBoundary>
@@ -840,10 +881,15 @@ export default function App() {
   // ── FRIENDS (amistades) ──────────────────────────────────────────────────────
   if (screen === 'friends') {
     return (
-      <Layout activeScreen="friends" onNavigate={handleBottomNav}>
+      <Layout activeScreen="friends" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
-            <FriendsScreen userName={userName} />
+            <FriendsScreen
+              userName={userName}
+              onBack={() => setScreen(prevScreen === 'profile' ? 'profile' : 'home')}
+              initialCode={pendingFriendCode}
+              onCodeConsumed={() => setPendingFriendCode(null)}
+            />
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -853,7 +899,7 @@ export default function App() {
   // ── SETTINGS ─────────────────────────────────────────────────────────────────
   if (screen === 'settings') {
     return (
-      <Layout activeScreen="settings" onNavigate={handleBottomNav}>
+      <Layout activeScreen="settings" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <SettingsScreen
@@ -879,7 +925,7 @@ export default function App() {
     const hideNav = screen === 'exercise';
     if (!CurrentComponent) {
       return (
-        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} hideNav={hideNav}>
+        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav}>
           <div className="min-h-screen flex items-center justify-center">
             <p style={{ color: J.mute }}>{t('fallback_section_unavailable', 'Sección no disponible.')}</p>
           </div>
@@ -887,7 +933,7 @@ export default function App() {
       );
     }
     return (
-      <Layout activeScreen={navScreen} onNavigate={handleBottomNav} hideNav={hideNav}>
+      <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <CurrentComponent {...componentProps} />
@@ -899,7 +945,7 @@ export default function App() {
 
   // ── FALLBACK ─────────────────────────────────────────────────────────────────
   return (
-    <Layout activeScreen="home" onNavigate={handleBottomNav}>
+    <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-[var(--mute)]">{t('fallback_unknown_screen', 'Pantalla desconocida:')} {screen}</p>
       </div>

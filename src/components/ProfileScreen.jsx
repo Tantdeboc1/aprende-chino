@@ -14,6 +14,7 @@ import { getAvatarById, DEFAULT_AVATAR_ID } from '@/data/avatars.js';
 import { loadUserProfile, resolveAvatarSrc } from '@/utils/userProfile.js';
 import { computeBadges } from '@/utils/badges.js';
 import { loc, baseLang } from '@/utils/loc.js';
+import { useIncomingRequestCount } from '@/hooks/useIncomingRequestCount.js';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 import { APP_NAME, APP_URL } from '@/utils/appInfo.js';
@@ -51,12 +52,15 @@ function GearIcon({ size = 22 }) {
   );
 }
 
-export default function ProfileScreen({ userName, progress, allCharacters, onOpenSettings }) {
+export default function ProfileScreen({ userName, progress, allCharacters, onOpenSettings, onOpenFriends }) {
   const { t, i18n } = useTranslation();
+  const lang = i18n.language; // loc() ya normaliza los códigos regionales
   const { mode, user } = useAuth();
   // useLocalSnapshot relee perfil y racha si llega un sync remoto.
   const profile = useLocalSnapshot(loadUserProfile);
   const [shareNote, setShareNote] = useState(null); // feedback fugaz para el botón compartir
+  // Invitaciones pendientes: el badge que antes vivía en la pestaña Amigos.
+  const incomingCount = useIncomingRequestCount();
 
   const srsStats = getSRSStats(progress, allCharacters);
   const streak = useLocalSnapshot(getStreak);
@@ -109,6 +113,9 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     [progress, allCharacters],
   );
   const earnedCount = badges.filter(b => b.earned).length;
+  // Insignia abierta: su requisito se muestra bajo la rejilla (ver más abajo).
+  const [openBadge, setOpenBadge] = useState(null);
+  const openBadgeDef = badges.find(b => b.id === openBadge) || null;
 
   // Compartir: Web Share API si está disponible (móviles), si no copia al
   // portapapeles. Mensaje incluye nick, nivel, racha y URL de la app.
@@ -192,6 +199,45 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             )}
           </div>
         </div>
+
+        {/* ─── Amigos ────────────────────────────────────────────────────
+            Amigos dejó de tener pestaña propia al pasar la barra de 7 a 5;
+            se entra desde aquí, que es donde vive el resto de lo social. */}
+        <button
+          onClick={onOpenFriends}
+          style={{
+            width: '100%', marginBottom: 18,
+            padding: '14px 16px', borderRadius: 14,
+            border: `1px solid ${incomingCount > 0 ? J.red : J.hair}`,
+            background: incomingCount > 0 ? J.redBg : J.paperHi,
+            cursor: 'pointer', textAlign: 'left',
+            display: 'flex', alignItems: 'center', gap: 12,
+          }}
+        >
+          <span className="font-cn" style={{
+            width: 40, height: 40, borderRadius: 12, flexShrink: 0,
+            background: J.jadeBg, color: J.jadeDeep, fontWeight: 700,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem',
+          }}>友</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', color: J.ink }}>
+              {t('nav_friends', 'Amigos')}
+            </span>
+            <span style={{ display: 'block', fontSize: '0.75rem', color: J.mute, marginTop: 2 }}>
+              {incomingCount > 0
+                ? t('profile_friends_pending', '{{count}} invitaciones te esperan', { count: incomingCount })
+                : t('profile_friends_hint', 'Compara tu progreso y compite en el ranking')}
+            </span>
+          </span>
+          {incomingCount > 0 && (
+            <span style={{
+              minWidth: 20, height: 20, padding: '0 6px', borderRadius: 99,
+              background: J.red, color: '#fff', fontSize: '0.6875rem', fontWeight: 800,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            }}>{incomingCount > 9 ? '9+' : incomingCount}</span>
+          )}
+          <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0 }}>→</span>
+        </button>
 
         {/* ─── Nivel y XP ────────────────────────────────────────────────── */}
         <JSection label={t('settings_section_level')} cn="等级" />
@@ -318,31 +364,52 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             gridTemplateColumns: 'repeat(auto-fill, minmax(74px, 1fr))',
             gap: 10,
           }}>
-            {badges.map(b => (
-              <div
-                key={b.id}
-                title={`${b.title} — ${b.desc}`}
-                style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
-                  padding: '10px 6px', borderRadius: 12,
-                  background: b.earned ? J.jadeBg : J.paper,
-                  border: `1px solid ${b.earned ? J.jadeMid : J.hair}`,
-                  opacity: b.earned ? 1 : 0.55,
-                  transition: 'all 200ms ease',
-                  textAlign: 'center',
-                }}
-              >
-                <span style={{ fontSize: '1.625rem', filter: b.earned ? 'none' : 'grayscale(1)' }}>
-                  {b.icon}
-                </span>
-                <span style={{
-                  fontSize: '0.65625rem', fontWeight: 700, lineHeight: 1.2,
-                  color: b.earned ? J.jadeDeep : J.muteStrong,
-                }}>
-                  {b.title}
-                </span>
-              </div>
-            ))}
+            {badges.map(b => {
+              const bTitle = loc(b.title, lang);
+              const open = openBadge === b.id;
+              return (
+                <button
+                  key={b.id}
+                  onClick={() => setOpenBadge(open ? null : b.id)}
+                  aria-expanded={open}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
+                    padding: '10px 6px', borderRadius: 12,
+                    background: b.earned ? J.jadeBg : J.paper,
+                    border: `1px solid ${open ? J.sand : (b.earned ? J.jadeMid : J.hair)}`,
+                    opacity: b.earned ? 1 : 0.55,
+                    transition: 'all 200ms ease',
+                    textAlign: 'center', cursor: 'pointer',
+                  }}
+                >
+                  <span style={{ fontSize: '1.625rem', filter: b.earned ? 'none' : 'grayscale(1)' }}>
+                    {b.icon}
+                  </span>
+                  <span style={{
+                    fontSize: '0.65625rem', fontWeight: 700, lineHeight: 1.2,
+                    color: b.earned ? J.jadeDeep : J.muteStrong,
+                  }}>
+                    {bTitle}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Qué hay que hacer para ganarla. Antes solo estaba en un title=,
+              invisible con el dedo: en móvil no había forma de saberlo. */}
+          <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${J.hair}` }}>
+            {openBadgeDef ? (
+              <p style={{ fontSize: '0.8125rem', color: J.inkSoft, lineHeight: 1.5 }}>
+                <strong style={{ color: J.ink }}>{loc(openBadgeDef.title, lang)}</strong>
+                {' — '}{loc(openBadgeDef.desc, lang)}
+                {openBadgeDef.earned && <span style={{ color: J.jade, fontWeight: 700 }}> ✓</span>}
+              </p>
+            ) : (
+              <p style={{ fontSize: '0.75rem', color: J.mute }}>
+                {t('profile_badges_hint', 'Toca una insignia para ver cómo se consigue')}
+              </p>
+            )}
           </div>
         </JCard>
 

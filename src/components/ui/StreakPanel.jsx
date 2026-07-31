@@ -5,45 +5,49 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { getMilestones, getDailyGoalProgress } from '@/utils/streak.js';
 
-// ── Mini-calendario GitHub-style (últimas 12 semanas) ─────────────────────────
-function ActivityCalendar({ activityDates }) {
-  const { t } = useTranslation();
-  const weeks = useMemo(() => {
+// ── Actividad de los últimos 7 días ───────────────────────────────────────────
+// Antes era una rejilla estilo GitHub de 12 semanas: 84 casillas de 10 px que
+// no se leían en un móvil y no decían gran cosa. Una sola semana, con la
+// inicial de cada día, se entiende de un vistazo.
+function ActivityWeek({ activityDates }) {
+  const { t, i18n } = useTranslation();
+  const days = useMemo(() => {
     const today = new Date();
     const set = new Set(activityDates || []);
-    const grid = [];
-
-    for (let w = 11; w >= 0; w--) {
-      const week = [];
-      for (let d = 0; d < 7; d++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - (w * 7 + (6 - d)));
-        const str = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        const isToday = date.toDateString() === today.toDateString();
-        week.push({ date: str, active: set.has(str), isToday });
-      }
-      grid.push(week);
-    }
-    return grid;
-  }, [activityDates]);
+    // La inicial del día sale de Intl, así que sigue el idioma activo sin
+    // necesidad de siete claves de traducción por idioma.
+    const fmt = new Intl.DateTimeFormat(i18n.language || 'es', { weekday: 'narrow' });
+    return Array.from({ length: 7 }).map((_, i) => {
+      const date = new Date(today);
+      date.setDate(today.getDate() - (6 - i));
+      const str = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      return {
+        date: str,
+        label: fmt.format(date),
+        active: set.has(str),
+        isToday: i === 6,
+      };
+    });
+  }, [activityDates, i18n.language]);
 
   return (
     <div className="mt-3">
       <p className="text-xs mb-2" style={{ color: J.mute }}>{t('streak_activity_label')}</p>
-      <div className="flex gap-[3px] justify-center">
-        {weeks.map((week, wi) => (
-          <div key={wi} className="flex flex-col gap-[3px]">
-            {week.map((day) => (
-              <div
-                key={day.date}
-                title={day.date}
-                className="w-[10px] h-[10px] rounded-[2px] transition-colors"
-                style={{
-                  background: day.active ? J.jade : J.hair,
-                  boxShadow: day.isToday ? `0 0 0 1px ${day.active ? J.jade : J.mute2}` : 'none',
-                }}
-              />
-            ))}
+      <div className="flex gap-1.5 justify-between">
+        {days.map((day) => (
+          <div key={day.date} className="flex flex-col items-center gap-1 flex-1">
+            <span className="text-[0.625rem] font-semibold uppercase"
+              style={{ color: day.isToday ? J.inkSoft : J.mute2 }}>
+              {day.label}
+            </span>
+            <div
+              className="w-full rounded-lg transition-colors"
+              style={{
+                height: 28,
+                background: day.active ? J.jade : J.hair,
+                boxShadow: day.isToday ? `0 0 0 2px ${day.active ? J.jadeDeep : J.mute2}` : 'none',
+              }}
+            />
           </div>
         ))}
       </div>
@@ -168,7 +172,7 @@ export default function StreakPanel({ streak }) {
       {/* Contenido expandible */}
       {expanded && (
         <div className="animate-slide-in-up">
-          <ActivityCalendar activityDates={streak.activityDates} />
+          <ActivityWeek activityDates={streak.activityDates} />
           <MilestonesRow />
         </div>
       )}

@@ -245,7 +245,7 @@ function Daily({ goBack }) {
         <div className="mb-6">
           <button onClick={handleBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]">
             <ArrowLeft className="mr-2" />
-            {t('daily_back_to_challenges')}
+            {t('minigames_back_to_minigames')}
           </button>
         </div>
 

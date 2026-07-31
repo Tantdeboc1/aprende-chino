@@ -2,10 +2,16 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { J } from '@/styles/tokens';
 import BottomNav from './BottomNav.jsx';
+import GuidedTour from './GuidedTour.jsx';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
+import { isTourPending } from '@/utils/tour.js';
+import { useLocalSnapshot, bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 
-// Tabs del BottomNav en orden izquierda→derecha
-const NAV_TABS = ['home', 'review', 'stories', 'dictionary', 'minigames', 'friends', 'profile'];
+// Tabs del BottomNav en orden izquierda→derecha. 'practice' es la pestaña que
+// agrupa Destrezas e Historias; 'profile' incluye Amigos.
+const NAV_TABS = ['home', 'review', 'practice', 'dictionary', 'profile'];
+const PRACTICE_IDX = NAV_TABS.indexOf('practice');
+const PROFILE_IDX  = NAV_TABS.indexOf('profile');
 
 // Mapeo: pantalla activa → índice en NAV_TABS (para swipe)
 function getTabIndex(screen) {
@@ -13,8 +19,10 @@ function getTabIndex(screen) {
   if (direct !== -1) return direct;
   // Pantallas que "pertenecen" a un tab pero no están en el array
   if (['lesson-detail', 'intro-detail', 'exam', 'exercise'].includes(screen)) return 0; // home
-  // Cualquier minijuego del registro (+ examen global) pertenece al tab juegos.
-  if (MINIGAME_IDS.has(screen) || screen === 'global-exam') return 4; // minigames
+  // Destrezas, historias y cualquier minijuego (+ examen global) → Practicar.
+  if (screen === 'minigames' || screen === 'stories' || screen === 'daily') return PRACTICE_IDX;
+  if (MINIGAME_IDS.has(screen) || screen === 'global-exam') return PRACTICE_IDX;
+  if (screen === 'friends') return PROFILE_IDX;
   return -1; // swipe deshabilitado en esta pantalla
 }
 
@@ -33,7 +41,10 @@ function getEnterOffset(fromScreen, toScreen) {
   return 'translateY(14px)';
 }
 
-export default function Layout({ children, activeScreen, onNavigate, hideNav }) {
+export default function Layout({ children, activeScreen, onNavigate, hideNav, reviewDue = 0 }) {
+  // bumpLocalDataRev al cerrarlo hace que el Home vuelva a leer el estado y
+  // destape racha y retos sin necesidad de recargar.
+  const tourPending = useLocalSnapshot(isTourPending);
   const [visible, setVisible] = useState(false);
   const prevScreen = useRef(activeScreen);
   // Offset inicial de la transición en curso (solo transform+opacity → GPU).
@@ -110,7 +121,13 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav }) 
       >
         {children}
       </main>
-      {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} />}
+      {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} reviewDue={reviewDue} />}
+
+      {/* El tutorial se monta aquí y no en App a propósito: Layout envuelve
+          todas las pantallas reales (no el splash, el login ni el registro) y
+          React lo mantiene montado al cambiar de pantalla, así que el tour no
+          pierde el paso cuando el usuario toca una pestaña y navega. */}
+      {tourPending && <GuidedTour onClose={bumpLocalDataRev} />}
     </>
   );
 }

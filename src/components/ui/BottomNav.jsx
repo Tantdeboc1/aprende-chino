@@ -35,14 +35,6 @@ const ReviewIcon = () => (
   </svg>
 );
 
-const StoriesIcon = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-    <path d="M9 7h6M9 11h4"/>
-  </svg>
-);
-
 const ProfileIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -50,40 +42,40 @@ const ProfileIcon = () => (
   </svg>
 );
 
-const FriendsIcon = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-    <circle cx="9" cy="7" r="4"/>
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-  </svg>
-);
-
-export default function BottomNav({ activeScreen, onNavigate }) {
+export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0 }) {
   const { t } = useTranslation();
-  // Invitaciones de amistad recibidas → badge en "Amigos" (0 para invitados).
+  // Invitaciones de amistad recibidas → badge en "Perfil", que es desde donde
+  // se llega a Amigos (0 para invitados).
   const incomingCount = useIncomingRequestCount();
 
+  // Cinco pestañas (antes siete: la barra iba apretadísima en móvil).
+  // 'practice' agrupa Historias y Destrezas —ambas son práctica— y Amigos pasa
+  // dentro de Perfil, que es donde vive el resto de lo social. Ninguna pantalla
+  // desaparece: 'stories' y 'friends' siguen siendo rutas propias, solo cambia
+  // por dónde se llega. Los tamaños siguen fijos en px a propósito (ver abajo).
   const items = [
     { key: 'home',       label: t('nav_home'),       Icon: HomeIcon },
     { key: 'review',     label: t('nav_review'),     Icon: ReviewIcon },
-    { key: 'stories',    label: t('nav_stories'),    Icon: StoriesIcon },
+    { key: 'practice',   label: t('nav_practice', 'Practicar'), Icon: GamesIcon },
     { key: 'dictionary', label: t('nav_dictionary'), Icon: DictIcon },
-    { key: 'minigames',  label: t('nav_games'),      Icon: GamesIcon },
-    { key: 'friends',    label: t('nav_friends', 'Amigos'), Icon: FriendsIcon },
     { key: 'profile',    label: t('nav_profile', 'Perfil'), Icon: ProfileIcon },
   ];
 
   const isActive = (key) => {
     if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
-    if (key === 'minigames') return activeScreen === 'minigames' || activeScreen === 'global-exam' || MINIGAME_IDS.has(activeScreen);
+    if (key === 'practice') {
+      return activeScreen === 'minigames' || activeScreen === 'stories'
+        || activeScreen === 'daily' || activeScreen === 'global-exam'
+        || MINIGAME_IDS.has(activeScreen);
+    }
+    if (key === 'profile') return activeScreen === 'profile' || activeScreen === 'friends';
     return activeScreen === key;
   };
 
   // Cultural color logic: review gets sand accent, rest get jade (red reserved for achievement)
   const activeAccent = (key) => {
     if (key === 'review') return { color: J.sand, bg: J.sandBg };
-    if (key === 'stories') return { color: J.red, bg: J.redBg };
+    if (key === 'practice') return { color: J.red, bg: J.redBg };
     return { color: J.jade, bg: J.jadeBg };
   };
 
@@ -110,6 +102,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
               key={key}
               onClick={() => onNavigate(key)}
               aria-current={active ? 'page' : undefined}
+              data-tour={`nav-${key}`}
               className="flex flex-col items-center transition-all duration-200 active:scale-95"
               style={{ background: 'none', border: 0, cursor: 'pointer', gap: 2, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4, minWidth: 46 }}
             >
@@ -120,7 +113,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
                 <span style={{ color: active ? accent.color : J.mute2, transition: 'color 200ms' }}>
                   <Icon />
                 </span>
-                {key === 'friends' && incomingCount > 0 && (
+                {key === 'profile' && incomingCount > 0 && (
                   <span
                     aria-label={t('friends_incoming', 'Invitaciones recibidas')}
                     style={{
@@ -134,6 +127,20 @@ export default function BottomNav({ activeScreen, onNavigate }) {
                   >
                     {incomingCount > 9 ? '9+' : incomingCount}
                   </span>
+                )}
+                {/* Repasos vencidos: punto sin número. La cifra exacta no
+                    aporta nada aquí y un número grande ("47") desanima; el
+                    recuento real está dentro de la pantalla de Repaso. */}
+                {key === 'review' && reviewDue > 0 && (
+                  <span
+                    aria-label={t('nav_review_due', 'Tienes repasos pendientes')}
+                    style={{
+                      position: 'absolute', top: 0, right: 6,
+                      width: 9, height: 9, borderRadius: 99,
+                      background: J.red,
+                      boxShadow: `0 0 0 2px ${J.paperHi}`,
+                    }}
+                  />
                 )}
               </span>
               <span
