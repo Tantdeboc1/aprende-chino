@@ -8,6 +8,7 @@
 
 let pendingUpdate = null;
 const listeners = new Set();
+let registrationRef = null;
 
 /** Llamado por main.jsx cuando hay una versión nueva esperando. */
 export function setNeedRefresh(updateFn) {
@@ -33,4 +34,41 @@ export function onNeedRefresh(listener) {
  */
 export function getPendingUpdate() {
   return pendingUpdate;
+}
+
+/** Llamado por main.jsx con el registration del SW, para poder forzar checks manuales. */
+export function setRegistration(registration) {
+  registrationRef = registration;
+}
+
+/**
+ * Fuerza una comprobación de actualización bajo demanda (botón "Buscar
+ * actualización" en Ajustes). No es más fiable que el check automático — GH
+ * Pages puede seguir sirviendo el sw.js viejo desde su CDN — pero da control
+ * percibido: el usuario no tiene que esperar al siguiente ciclo de 5 min.
+ * Devuelve: true (hay versión nueva), false (ya tiene la última) o null (SW
+ * no disponible, p.ej. en dev).
+ */
+export function checkForUpdate() {
+  if (!registrationRef) return Promise.resolve(null);
+  return registrationRef.update().catch(() => { /* offline u otro fallo de red */ }).then(() => {
+    if (pendingUpdate) return true;
+    return new Promise((resolve) => {
+      let done = false;
+      let unsub;
+      const timer = setTimeout(() => {
+        if (done) return;
+        done = true;
+        unsub();
+        resolve(false);
+      }, 4000);
+      unsub = onNeedRefresh(() => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        unsub();
+        resolve(true);
+      });
+    });
+  });
 }

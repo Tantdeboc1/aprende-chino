@@ -23,19 +23,25 @@ export default function UpdateToast() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl px-4 py-3"
+      className="fixed left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl px-5 py-4 animate-slide-up"
       style={{
         // Encima de la bottom nav (que ocupa ~70px) y por debajo de modales (z-60).
         bottom: 84, zIndex: 55, maxWidth: 'calc(100vw - 32px)',
         background: J.ink, color: J.paperHi, boxShadow: J.shadowLg,
+        border: `1px solid ${J.jade}`,
       }}
     >
-      <span className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+      <span
+        aria-hidden="true"
+        className="flex-shrink-0 rounded-full"
+        style={{ width: 10, height: 10, background: J.jade }}
+      />
+      <span className="text-base font-medium whitespace-nowrap overflow-hidden text-ellipsis">
         {t('update_available', 'Hay una versión nueva')}
       </span>
       <button
         onClick={() => updateRef.current?.()}
-        className="text-sm font-bold px-3 py-1.5 rounded-xl flex-shrink-0"
+        className="text-base font-bold px-4 py-2 rounded-xl flex-shrink-0"
         style={{ background: J.jade, color: J.onAccent, border: 0, cursor: 'pointer' }}
       >
         {t('update_reload', 'Actualizar')}
@@ -43,7 +49,7 @@ export default function UpdateToast() {
       <button
         onClick={() => setVisible(false)}
         aria-label={t('common_close', 'Cerrar')}
-        className="text-sm font-bold flex-shrink-0"
+        className="text-base font-bold flex-shrink-0"
         style={{ background: 'none', color: J.mute2, border: 0, cursor: 'pointer', padding: 2 }}
       >
         ✕

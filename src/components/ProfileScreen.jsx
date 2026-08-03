@@ -80,6 +80,21 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     });
   }, [streak.activityDates]);
 
+  // XP de los últimos 7 días (mismo dato que ya alimenta el ranking semanal
+  // de amigos, streak.xpByDay) — solo falta pintarlo. Intl.DateTimeFormat da
+  // la inicial del día en el idioma activo sin añadir claves i18n nuevas.
+  const weeklyXp = useMemo(() => {
+    const byDay = streak.xpByDay || {};
+    const fmt = new Intl.DateTimeFormat(lang, { weekday: 'narrow' });
+    return Array.from({ length: 7 }).map((_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (6 - i));
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      return { key, xp: byDay[key] || 0, isToday: i === 6, label: fmt.format(d) };
+    });
+  }, [streak.xpByDay, lang]);
+  const weeklyXpMax = Math.max(streak.dailyGoal || 120, ...weeklyXp.map(d => d.xp), 1);
+
   const totalStudyMin = useMemo(() => {
     const sessions = progress?.__sessions || [];
     const ms = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
@@ -341,6 +356,37 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             </div>
           </div>
         )}
+
+        {/* ─── XP semanal ──────────────────────────────────────────────── */}
+        <JSection label={t('profile_weekly_xp', 'XP esta semana')} cn="周XP" />
+        <JCard padding="16px 18px 12px">
+          <div className="flex items-end justify-between" style={{ height: 100, gap: 6 }}>
+            {weeklyXp.map((d) => {
+              const barH = Math.max(4, Math.round((d.xp / weeklyXpMax) * 76));
+              const hitGoal = d.xp >= (streak.dailyGoal || 120);
+              return (
+                <div key={d.key} className="flex flex-col items-center" style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: '0.625rem', fontWeight: 700, color: hitGoal ? J.jadeDeep : J.mute, marginBottom: 4, height: 14 }}>
+                    {d.xp > 0 ? d.xp : ''}
+                  </span>
+                  <div style={{
+                    width: '100%', maxWidth: 26, height: barH, borderRadius: 6,
+                    background: hitGoal ? J.jade : (d.xp > 0 ? J.jadeMid : J.hairS),
+                    outline: d.isToday ? `2px solid ${J.jadeDeep}` : 'none',
+                    outlineOffset: 1,
+                    transition: 'height 400ms ease',
+                  }} />
+                  <span style={{ marginTop: 6, fontSize: '0.6875rem', fontWeight: d.isToday ? 800 : 600, color: d.isToday ? J.ink : J.mute }}>
+                    {d.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <p style={{ margin: '10px 0 0', fontSize: '0.6875rem', color: J.mute, textAlign: 'center' }}>
+            {t('profile_weekly_xp_hint', 'XP ganado cada día — en verde, los días que llegaste a tu meta.')}
+          </p>
+        </JCard>
 
         {/* ─── Progreso general ─────────────────────────────────────────── */}
         <JSection label={t('settings_progress')} cn="进步" />

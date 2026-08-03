@@ -19,6 +19,7 @@ import { getThemePref, setThemePref } from '@/utils/theme.js';
 import { getFontScalePref, setFontScalePref } from '@/utils/fontScale.js';
 import { getHighContrast, setHighContrast } from '@/utils/highContrast.js';
 import { downloadBackup, restoreBackup } from '@/utils/backup.js';
+import { checkForUpdate } from '@/utils/pwaUpdate.js';
 import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
 import { assetUrl } from '@/utils/assets';
 import { APP_NAME } from '@/utils/appInfo.js';
@@ -260,6 +261,26 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
     bumpLocalDataRev();
     window.dispatchEvent(new Event('open-home'));
   };
+
+  // Botón "Buscar actualización": control percibido más que una garantía —
+  // sigue usando el mismo check que corre solo cada 5 min (ver main.jsx), así
+  // que si la CDN de GitHub Pages aún sirve el sw.js viejo no encontrará nada
+  // nuevo aunque exista. 'idle' | 'checking' | 'found' | 'none' | 'unsupported'.
+  const [updateCheck, setUpdateCheck] = useState('idle');
+  const handleCheckUpdate = async () => {
+    if (updateCheck === 'checking') return;
+    setUpdateCheck('checking');
+    const result = await checkForUpdate();
+    setUpdateCheck(result === null ? 'unsupported' : result ? 'found' : 'none');
+    setTimeout(() => setUpdateCheck('idle'), 4000);
+  };
+  const updateCheckHint = {
+    idle: t('settings_update_hint', 'Comprueba si hay una versión nueva de la app.'),
+    checking: t('settings_update_checking', 'Buscando…'),
+    found: t('settings_update_found', '¡Hay una versión nueva! Actívala con el aviso de abajo.'),
+    none: t('settings_update_none', 'Ya tienes la última versión.'),
+    unsupported: t('settings_update_unsupported', 'No disponible ahora mismo.'),
+  }[updateCheck];
 
   const handleIntrosToggle = () => {
     const next = !showIntros;
@@ -947,6 +968,67 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               </div>
             </div>
           )}
+        </JCard>
+
+        {/* ─── Actualizaciones ─────────────────────────────────────────── */}
+        <JSection label={t('settings_section_updates', 'Actualizaciones')} cn="更新" />
+        <JCard padding="14px 18px">
+          <p style={{
+            margin: '0 0 12px', fontSize: '0.78125rem', color: J.inkSoft,
+            fontWeight: 500, textAlign: 'center', lineHeight: 1.45,
+          }}>
+            {updateCheckHint}
+          </p>
+          <button
+            onClick={handleCheckUpdate}
+            disabled={updateCheck === 'checking'}
+            style={{
+              width: '100%', padding: '14px 18px', borderRadius: 14, border: 0,
+              background: J.jade, color: J.onAccent,
+              fontSize: '0.875rem', fontWeight: 700,
+              cursor: updateCheck === 'checking' ? 'default' : 'pointer',
+              opacity: updateCheck === 'checking' ? 0.6 : 1,
+              boxShadow: '0 4px 12px -4px rgba(31,74,51,0.4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 16h5v5" />
+            </svg>
+            {updateCheck === 'checking'
+              ? t('settings_update_checking', 'Buscando…')
+              : t('settings_update_button', 'Buscar actualización')}
+          </button>
+        </JCard>
+
+        {/* ─── Ayuda y comentarios (mailto, sin backend) ─────────────────── */}
+        <JSection label={t('settings_section_feedback', 'Ayuda y comentarios')} cn="反馈" />
+        <JCard padding="14px 18px">
+          <p style={{
+            margin: '0 0 12px', fontSize: '0.78125rem', color: J.inkSoft,
+            fontWeight: 500, textAlign: 'center', lineHeight: 1.45,
+          }}>
+            {t('settings_feedback_hint', 'Cuéntanos qué falla o qué te gustaría ver.')}
+          </p>
+          <a
+            href={`mailto:reciozgame@gmail.com?subject=${encodeURIComponent(`HanyuPath ${APP_VERSION} — feedback`)}`}
+            style={{
+              width: '100%', padding: '14px 18px', borderRadius: 14, border: 0,
+              background: J.ink, color: J.paperHi,
+              fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none', cursor: 'pointer',
+              boxShadow: '0 4px 12px -4px rgba(28,24,19,0.35)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            {t('settings_feedback_button', 'Enviar tu comentario')}
+          </a>
         </JCard>
 
         {/* ─── Acerca de (footer compacto) ────────────────────────────── */}

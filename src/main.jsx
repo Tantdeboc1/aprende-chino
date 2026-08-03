@@ -14,7 +14,7 @@ import { initErrorTracking } from './utils/errorTracking.js';
 import { initTheme } from './utils/theme.js';
 import { initFontScale } from './utils/fontScale.js';
 import { initHighContrast } from './utils/highContrast.js';
-import { setNeedRefresh } from './utils/pwaUpdate.js';
+import { setNeedRefresh, setRegistration } from './utils/pwaUpdate.js';
 
 // Aplica el tema guardado ANTES del primer render para evitar parpadeo
 // (no se puede usar script inline en index.html por la CSP).
@@ -32,6 +32,22 @@ initHighContrast();
 // en el próximo arranque.
 const updateSW = registerSW({
   immediate: true,
+  onRegisteredSW(_swUrl, registration) {
+    if (!registration) return;
+    // Expuesto para el botón "Buscar actualización" de Ajustes.
+    setRegistration(registration);
+    // registerSW solo comprueba versión nueva UNA vez, al registrar. GitHub
+    // Pages sirve sw.js detrás de una CDN con caché de unos minutos, así que
+    // justo después de un despliegue el primer check puede no ver la
+    // versión nueva todavía. Repetimos el check al volver a la pestaña y
+    // cada 5 min mientras la app sigue abierta, en vez de obligar a cerrar
+    // y reabrir para enterarse.
+    const CHECK_INTERVAL_MS = 5 * 60 * 1000;
+    setInterval(() => registration.update(), CHECK_INTERVAL_MS);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') registration.update();
+    });
+  },
   onNeedRefresh() {
     // updateSW(true) activa el SW en espera y recarga con los assets nuevos.
     setNeedRefresh(() => updateSW(true));

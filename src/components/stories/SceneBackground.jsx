@@ -11,22 +11,7 @@
 // La imagen se renderiza con object-fit:cover para llenar siempre la pantalla,
 // y se le aplica una viñeta sutil encima para que el personaje destaque.
 
-// Vite carga todos los fondos disponibles. Si la carpeta está vacía, simplemente
-// no aparecerán en el mapa y caeremos al SVG.
-const STORY_BACKGROUNDS = import.meta.glob(
-  '/src/assets/fondos/story/*.{webp,png}',
-  { eager: true, query: '?url', import: 'default' }
-);
-
-function backgroundByStoryId(storyId) {
-  if (!storyId) return null;
-  for (const ext of ['webp', 'png']) {
-    const target = `/${storyId}.${ext}`;
-    const entry = Object.entries(STORY_BACKGROUNDS).find(([path]) => path.endsWith(target));
-    if (entry) return entry[1];
-  }
-  return null;
-}
+import { backgroundByStoryId } from './storyBackgroundUrls.js';
 
 // Fondos SVG por escena. Estilo plano, paleta cálida coherente con la app.
 // Se usan como fallback cuando no hay imagen propia para la historia.

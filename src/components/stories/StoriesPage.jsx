@@ -15,6 +15,7 @@ import {
   getAllStatuses,
 } from '@/utils/storyProgress.js';
 import { markWordSeen } from '@/utils/progress.js';
+import { backgroundByStoryId } from './storyBackgroundUrls.js';
 
 // StoryPlayer arrastra mucho código (escenarios, diálogos, ejercicios). Solo
 // se necesita al reproducir una historia concreta — el listado no lo usa.
@@ -70,6 +71,24 @@ export default function StoriesPage({
   useEffect(() => {
     if (!activeStory) setStoryProgress(loadStoryProgress());
   }, [activeStory]);
+
+  // Precarga en segundo plano los fondos de las historias no bloqueadas:
+  // sin esto, la imagen empezaba a bajar justo al abrir el player (+ lazy
+  // chunk), y se veía un flash de negro antes de que cargara. El listado es
+  // tiempo muerto perfecto para adelantar la descarga (el SW ya cachea
+  // .webp/.png CacheFirst, así que solo paga la descarga una vez).
+  useEffect(() => {
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 300));
+    const cancelIdle = window.cancelIdleCallback || clearTimeout;
+    const id = idle(() => {
+      for (const s of STORIES) {
+        if (statuses[s.id] === 'bloqueada') continue;
+        const url = backgroundByStoryId(s.id);
+        if (url) new Image().src = url;
+      }
+    });
+    return () => cancelIdle(id);
+  }, [storyProgress]);
 
   const handleStoryFinish = ({ score, total }) => {
     if (!activeStoryId) return;
