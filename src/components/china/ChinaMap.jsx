@@ -6,7 +6,7 @@
 // src/data/chinaGeo.js). Los datos neutros van en provinces/base.js (estático);
 // los textos de cada provincia se cargan por idioma en demanda (provinces/loader).
 // ─────────────────────────────────────────────────────────────────────────────
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J, resolveColor } from '@/styles/tokens';
 import { PROVINCE_BASE } from '@/data/provinces/base.js';
@@ -16,20 +16,66 @@ import { CHINA_PATHS, CHINA_VIEWBOX, CHINA_LABELS } from '@/data/chinaGeo.js';
 // Índice id → datos neutros (cn, pinyin, población).
 const BY_ID = Object.fromEntries(PROVINCE_BASE.map((p) => [p.id, p]));
 
-// Relleno de cada provincia (seleccionada / hover / normal). Se resuelven las
-// variables CSS a color real porque SVG fill no hereda bien `var(--x)` al animar.
-function fillFor(id, selectedId, hoveredId) {
-  if (id === selectedId) return resolveColor(J.jade);
-  if (id === hoveredId) return resolveColor(J.jadeMid);
-  return resolveColor(J.jadeBg);
-}
-
 // Lienzo base del mapa, leído del viewBox generado ("0 0 W H").
 const [, , MAP_W, MAP_H] = CHINA_VIEWBOX.split(' ').map(Number);
 const MAX_ZOOM = 3;           // ampliación máxima (viewBox mínimo = W/3)
 const MIN_VB_W = MAP_W / MAX_ZOOM;
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+// ─── Provincia individual (path + etiqueta) ──────────────────────────────────
+// memo(): sin esto, cada hover y cada frame de pan/pinch re-renderizaba las 34
+// provincias del mapa (React reconcilia toda la lista, aunque solo cambie el
+// fill de una). Con memo, solo se reconcilian las provincias cuyas props
+// (selected/hovered/fontSize/visibilidad) realmente cambiaron.
+const ProvincePath = memo(function ProvincePath({ id, d, selected, hovered, label, onPathClick, onSelect, onHoverEnter, onHoverLeave }) {
+  const fill = selected ? resolveColor(J.jade) : hovered ? resolveColor(J.jadeMid) : resolveColor(J.jadeBg);
+  return (
+    <path
+      d={d}
+      onClick={() => onPathClick(id)}
+      onMouseEnter={() => onHoverEnter(id)}
+      onMouseLeave={() => onHoverLeave(id)}
+      role="button"
+      aria-label={label || id}
+      aria-pressed={selected}
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(id); } }}
+      style={{ cursor: 'pointer', transition: 'fill .15s' }}
+      fill={fill}
+      stroke={selected ? resolveColor(J.jadeDeep) : resolveColor(J.hair)}
+      strokeWidth={selected ? 1.6 : 0.8}
+      strokeLinejoin="round"
+      vectorEffect="non-scaling-stroke"
+    >
+      {label && <title>{label}</title>}
+    </path>
+  );
+});
+
+const ProvinceLabel = memo(function ProvinceLabel({ lx, ly, cn, selected, fontSize }) {
+  return (
+    <text
+      x={lx}
+      y={ly}
+      textAnchor="middle"
+      dominantBaseline="central"
+      style={{
+        pointerEvents: 'none',
+        fontFamily: J.cnSans,
+        fontSize,
+        fontWeight: 700,
+        fill: selected ? resolveColor(J.onAccent) : resolveColor(J.jadeDeep),
+        paintOrder: 'stroke',
+        stroke: selected ? 'none' : resolveColor(J.paperHi),
+        strokeWidth: selected ? 0 : fontSize * 0.16,
+        strokeLinejoin: 'round',
+      }}
+    >
+      {cn}
+    </text>
+  );
+});
 
 function ChinaSvg({ selectedId, onSelect }) {
   const { t } = useTranslation();
@@ -42,6 +88,13 @@ function ChinaSvg({ selectedId, onSelect }) {
   const moved = useRef(false);
   const zoomed = vb.w < MAP_W - 0.5;
   const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+  // Referencias estables para que ProvincePath (memo) pueda saltarse el
+  // re-render cuando ninguna de SUS props cambió, sin que un closure nuevo
+  // en cada render de ChinaSvg lo invalide igualmente.
+  const handlePathClick = useCallback((id) => { if (!moved.current) onSelect(id); }, [onSelect]);
+  const handleHoverEnter = useCallback((id) => setHoveredId(id), []);
+  const handleHoverLeave = useCallback((id) => setHoveredId((h) => (h === id ? null : h)), []);
 
   // Encaja un viewBox dentro de los límites del mapa (sin salirse del lienzo).
   const fit = (x, y, w, h) => ({
@@ -168,28 +221,19 @@ function ChinaSvg({ selectedId, onSelect }) {
       >
         {ids.map((id) => {
           const p = BY_ID[id];
-          const selected = id === selectedId;
           return (
-            <path
+            <ProvincePath
               key={id}
+              id={id}
               d={CHINA_PATHS[id]}
-              onClick={() => { if (!moved.current) onSelect(id); }}
-              onMouseEnter={() => setHoveredId(id)}
-              onMouseLeave={() => setHoveredId((h) => (h === id ? null : h))}
-              role="button"
-              aria-label={p ? `${p.cn} · ${p.pinyin}` : id}
-              aria-pressed={selected}
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(id); } }}
-              style={{ cursor: 'pointer', transition: 'fill .15s' }}
-              fill={fillFor(id, selectedId, hoveredId)}
-              stroke={selected ? resolveColor(J.jadeDeep) : resolveColor(J.hair)}
-              strokeWidth={selected ? 1.6 : 0.8}
-              strokeLinejoin="round"
-              vectorEffect="non-scaling-stroke"
-            >
-              {p && <title>{`${p.cn} · ${p.pinyin}`}</title>}
-            </path>
+              selected={id === selectedId}
+              hovered={id === hoveredId}
+              label={p ? `${p.cn} · ${p.pinyin}` : null}
+              onPathClick={handlePathClick}
+              onSelect={onSelect}
+              onHoverEnter={handleHoverEnter}
+              onHoverLeave={handleHoverLeave}
+            />
           );
         })}
 
@@ -204,26 +248,14 @@ function ChinaSvg({ selectedId, onSelect }) {
           // suficiente en la vista actual.
           if (!selected && lw < vb.w * 0.05) return null;
           return (
-            <text
+            <ProvinceLabel
               key={`l-${id}`}
-              x={lx}
-              y={ly}
-              textAnchor="middle"
-              dominantBaseline="central"
-              style={{
-                pointerEvents: 'none',
-                fontFamily: J.cnSans,
-                fontSize: labelFs,
-                fontWeight: 700,
-                fill: selected ? resolveColor(J.onAccent) : resolveColor(J.jadeDeep),
-                paintOrder: 'stroke',
-                stroke: selected ? 'none' : resolveColor(J.paperHi),
-                strokeWidth: selected ? 0 : labelFs * 0.16,
-                strokeLinejoin: 'round',
-              }}
-            >
-              {p.cn}
-            </text>
+              lx={lx}
+              ly={ly}
+              cn={p.cn}
+              selected={selected}
+              fontSize={labelFs}
+            />
           );
         })}
       </svg>

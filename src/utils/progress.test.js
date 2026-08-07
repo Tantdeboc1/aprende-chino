@@ -3,13 +3,17 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   markWritingPractice,
   getWritingCount,
-  getWordStatus,
   toggleWordMastered,
   markWordResult,
   getLessonStats,
 } from './progress.js';
 
 beforeEach(() => localStorage.clear());
+
+// La palabra de una lección: { seen, correct, incorrect, mastered }.
+function wordEntry(progress, lessonNum, char) {
+  return progress?.[`lesson_${lessonNum}`]?.[char];
+}
 
 describe('markWritingPractice / getWritingCount', () => {
   it('cuenta desde 0 para un carácter no practicado', () => {
@@ -32,16 +36,12 @@ describe('markWritingPractice / getWritingCount', () => {
   });
 });
 
-describe('getWordStatus', () => {
-  it('devuelve "unseen" para una palabra desconocida', () => {
-    expect(getWordStatus({}, 1, '好')).toBe('unseen');
-  });
-
+describe('toggleWordMastered', () => {
   it('refleja el estado visto y dominado', () => {
     const seen = toggleWordMastered({}, 1, '好', false);
-    expect(getWordStatus(seen, 1, '好')).toBe('seen');
+    expect(wordEntry(seen, 1, '好').mastered).toBe(false);
     const mastered = toggleWordMastered({}, 1, '好', true);
-    expect(getWordStatus(mastered, 1, '好')).toBe('mastered');
+    expect(wordEntry(mastered, 1, '好').mastered).toBe(true);
   });
 });
 
@@ -50,9 +50,9 @@ describe('markWordResult', () => {
     let p = {};
     p = markWordResult(p, 1, '好', true);
     p = markWordResult(p, 1, '好', true);
-    expect(getWordStatus(p, 1, '好')).toBe('seen'); // aún no
+    expect(wordEntry(p, 1, '好').mastered).toBe(false); // aún no
     p = markWordResult(p, 1, '好', true);
-    expect(getWordStatus(p, 1, '好')).toBe('mastered');
+    expect(wordEntry(p, 1, '好').mastered).toBe(true);
   });
 
   it('no domina si el ratio de aciertos es bajo', () => {
@@ -61,7 +61,7 @@ describe('markWordResult', () => {
     p = markWordResult(p, 1, '好', false);
     p = markWordResult(p, 1, '好', false);
     p = markWordResult(p, 1, '好', true);
-    expect(getWordStatus(p, 1, '好')).toBe('seen');
+    expect(wordEntry(p, 1, '好').mastered).toBe(false);
   });
 });
 

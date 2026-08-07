@@ -73,8 +73,7 @@ export function updateSRS(progress, char, quality) {
   // Ajuste del factor de facilidad. Se aplica SIEMPRE, también al fallar
   // (q=0 → −0.8), como en SM-2. Si solo se ajustara al acertar, una palabra que
   // fallas una y otra vez conservaría EF 2.5 y, con dos aciertos, volvería a
-  // saltar a 6 y 15 días como si fuera fácil; además `getWordHealth` nunca la
-  // marcaría 'critical' (su umbral es EF < 1.5).
+  // saltar a 6 y 15 días como si fuera fácil.
   easeFactor = Math.max(MIN_EASE, easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
 
   // Si la palabra está marcada como difícil, limitar el intervalo a 3 días
@@ -237,32 +236,6 @@ export function getWeakCards(progress, allCharacters, limit = 20) {
   // Más débiles primero
   scored.sort((a, b) => b._weaknessScore - a._weaknessScore);
   return scored.slice(0, limit);
-}
-
-/**
- * Devuelve el nivel de "salud" de una palabra en el SRS.
- * Retorna un objeto { emoji, color, level, label }
- *   level: 'new' | 'critical' | 'learning' | 'known' | 'mastered'
- */
-export function getWordHealth(progress, char) {
-  const srs = progress?.__srs?.[char];
-  if (!srs || srs.nextReview === null) {
-    return { emoji: '新', color: 'text-[#928a76]', level: 'new', labelKey: 'health_new' };
-  }
-  // critical: interval 1, easeFactor bajo, o pendiente de repaso con muchos fallos
-  if (srs.interval <= 1 || srs.easeFactor < 1.5) {
-    return { emoji: '危', color: 'text-[#c8392f]', level: 'critical', labelKey: 'health_critical' };
-  }
-  // learning: interval < 7 días
-  if (srs.interval < 7) {
-    return { emoji: '习', color: 'text-[#b88a3e]', level: 'learning', labelKey: 'health_learning' };
-  }
-  // mastered: interval >= 21 días (3+ semanas)
-  if (srs.interval >= 21) {
-    return { emoji: '精', color: 'text-[#2f6b4a]', level: 'mastered', labelKey: 'health_mastered' };
-  }
-  // known: interval 7-20 días
-  return { emoji: '知', color: 'text-[#5a8f72]', level: 'known', labelKey: 'health_known' };
 }
 
 /**

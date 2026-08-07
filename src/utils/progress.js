@@ -22,16 +22,6 @@ export function saveProgress(data) {
   }
 }
 
-// Devuelve el estado de una palabra: 'unseen' | 'seen' | 'mastered'
-export function getWordStatus(progress, lessonNum, char) {
-  const lessonKey = `lesson_${lessonNum}`;
-  const word = progress?.[lessonKey]?.[char];
-  if (!word) return 'unseen';
-  if (word.mastered) return 'mastered';
-  if (word.seen) return 'seen';
-  return 'unseen';
-}
-
 // Marca una palabra como vista (sin nota de acierto/fallo)
 // También inicializa la tarjeta SRS
 export function markWordSeen(progress, lessonNum, char) {

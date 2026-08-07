@@ -1,5 +1,5 @@
 // src/context/MusicContext.jsx
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 import { assetUrl } from '@/utils/assets.js';
 
@@ -76,21 +76,25 @@ export function MusicProvider({ children }) {
     return () => window.removeEventListener('pointerdown', tryPlay);
   }, [enabled]);
 
-  const toggle = (val) => {
+  const toggle = useCallback((val) => {
     const next = val !== undefined ? val : !enabled;
     setEnabled(next);
     saveSettings({ enabled: next, volume });
-  };
+  }, [enabled, volume]);
 
-  const setVolume = (val) => {
+  const setVolume = useCallback((val) => {
     const v = Math.min(1, Math.max(0, val));
     setVolumeState(v);
     if (audioRef.current) audioRef.current.volume = v;
     saveSettings({ enabled, volume: v });
-  };
+  }, [enabled]);
+
+  // value memoizado: sin esto, cualquier consumidor de useMusic() re-renderiza
+  // en cada render de MusicProvider (el objeto era literal nuevo cada vez).
+  const value = useMemo(() => ({ enabled, volume, toggle, setVolume }), [enabled, volume, toggle, setVolume]);
 
   return (
-    <MusicContext.Provider value={{ enabled, volume, toggle, setVolume }}>
+    <MusicContext.Provider value={value}>
       {children}
     </MusicContext.Provider>
   );

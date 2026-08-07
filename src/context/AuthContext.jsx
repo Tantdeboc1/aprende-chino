@@ -4,7 +4,7 @@
 //   - 'google'   → usuario logueado con Google, datos sincronizan con Firestore
 //   - 'guest'    → usuario eligió "continuar como invitado", todo en localStorage
 //   - null       → no ha pasado por LoginScreen aún
-import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import {
   fetchRemoteUser, pushRemoteUser, subscribeRemoteUser,
   hydrateLocalFromRemote, snapshotLocal, clearLocalUserData,
@@ -263,12 +263,18 @@ export function AuthProvider({ children }) {
     }
   }, [mode, user]);
 
+  // value memoizado: todas las funciones ya son estables (useCallback), así
+  // que solo hace falta un objeto nuevo cuando user/mode/error cambian de
+  // verdad — si no, cada consumidor de useAuth() (repartidos por media app)
+  // re-renderizaba en cualquier render de AuthProvider.
+  const value = useMemo(() => ({
+    user, mode, error,
+    signInWithGoogle, migrateGuestToGoogle, continueAsGuest,
+    signOut, pushSnapshot, deleteAccount,
+  }), [user, mode, error, signInWithGoogle, migrateGuestToGoogle, continueAsGuest, signOut, pushSnapshot, deleteAccount]);
+
   return (
-    <AuthContext.Provider value={{
-      user, mode, error,
-      signInWithGoogle, migrateGuestToGoogle, continueAsGuest,
-      signOut, pushSnapshot, deleteAccount,
-    }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

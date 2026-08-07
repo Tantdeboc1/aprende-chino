@@ -62,7 +62,10 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
   // Invitaciones pendientes: el badge que antes vivía en la pestaña Amigos.
   const incomingCount = useIncomingRequestCount();
 
-  const srsStats = getSRSStats(progress, allCharacters);
+  // Memoizado como el resto de estadísticas derivadas de esta pantalla: sin
+  // esto, cualquier estado ajeno (compartir, abrir una insignia) recalculaba
+  // el escaneo del SRS sobre todos los caracteres.
+  const srsStats = useMemo(() => getSRSStats(progress, allCharacters), [progress, allCharacters]);
   const streak = useLocalSnapshot(getStreak);
   const levelInfo = useMemo(() => getLevelInfo(streak.totalXP || 0), [streak.totalXP]);
   const equipped = useMemo(() => getEquippedTitle(streak.totalXP || 0), [streak.totalXP]);

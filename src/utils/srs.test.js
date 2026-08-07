@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   getSRSData, updateSRS, toggleWordDifficult, isWordDifficult,
-  initSRSCard, getDueCards, getDueCount, getWeakCards, getWordHealth,
+  initSRSCard, getDueCards, getDueCount, getWeakCards,
   isLeech, getLeechCards, getNextReviewInfo, getSRSStats, LEECH_THRESHOLD,
   dedupeByChar, LEARNING_STEP_MS, SESSION_LIMIT,
 } from './srs.js';
@@ -78,7 +78,7 @@ describe('updateSRS', () => {
     for (let i = 0; i < 3; i++) facil = updateSRS(facil, '易', 4);
 
     expect(fallada.__srs['难'].interval).toBeLessThan(facil.__srs['易'].interval);
-    expect(getWordHealth(fallada, '难').level).toBe('critical'); // EF < 1.5
+    expect(fallada.__srs['难'].easeFactor).toBeLessThan(1.5);
   });
 
   it('fallar reprograma la tarjeta en minutos, no al día siguiente', () => {
@@ -198,20 +198,6 @@ describe('getWeakCards', () => {
 
   it('devuelve [] si no hay palabras inscritas', () => {
     expect(getWeakCards({}, [{ char: '好', lesson: 1 }])).toEqual([]);
-  });
-});
-
-describe('getWordHealth', () => {
-  it('new cuando nunca se ha visto', () => {
-    expect(getWordHealth({}, '好').level).toBe('new');
-  });
-  it('critical con intervalo 1', () => {
-    const p = { __srs: { 好: { nextReview: Date.now(), interval: 1, easeFactor: 2.5 } } };
-    expect(getWordHealth(p, '好').level).toBe('critical');
-  });
-  it('mastered con intervalo ≥ 21', () => {
-    const p = { __srs: { 好: { nextReview: Date.now(), interval: 30, easeFactor: 2.5 } } };
-    expect(getWordHealth(p, '好').level).toBe('mastered');
   });
 });
 
