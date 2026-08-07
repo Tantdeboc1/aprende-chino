@@ -4,7 +4,7 @@
 //  - Cronometrado (estilo HSK) y con tipos de pregunta mixtos
 //    (carácter→significado y significado→carácter).
 //  - Aprobar (>= PASS_PCT) marca el nivel como superado.
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useCountdown } from '@/utils/useCountdown.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
@@ -14,7 +14,7 @@ import { addXP } from '@/utils/streak.js';
 import { trackAchievement } from '@/utils/leveling.js';
 import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import {
-  getLevelMastery, isLevelExamUnlocked, saveLevelExamResult, loadLevelExamResult,
+  getLevelMastery, saveLevelExamResult, loadLevelExamResult,
   UNLOCK_MASTERY_PCT, PASS_PCT,
 } from '@/utils/levelExam.js';
 
@@ -48,9 +48,12 @@ function buildExam(pool, count) {
 
 export default function LevelExam({ goBack, allCharacters = [], progress }) {
   const { t } = useTranslation();
-  const pool = allCharacters.filter(c => c.char && c.meaning && !c.isSupplementary);
-  const mastery = getLevelMastery(progress, allCharacters);
-  const unlocked = isLevelExamUnlocked(progress, allCharacters);
+  const pool = useMemo(
+    () => allCharacters.filter(c => c.char && c.meaning && !c.isSupplementary),
+    [allCharacters],
+  );
+  const mastery = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
+  const unlocked = mastery.pct >= UNLOCK_MASTERY_PCT;
   const prevResult = loadLevelExamResult();
 
   const [phase, setPhase] = useState('ready'); // 'ready' | 'playing' | 'finished'

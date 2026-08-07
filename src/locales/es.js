@@ -1178,6 +1178,8 @@ export default {
           streak_inactive: "Sin racha activa",
           streak_best_label: "Mejor: {{count}}d",
           streak_total_xp: "{{xp}} XP total",
+          streak_risk_warning_one: "Te quedan {{hours}}h para no perder tu racha de {{count}} día",
+          streak_risk_warning_other: "Te quedan {{hours}}h para no perder tu racha de {{count}} días",
           streak_daily_goal: "Objetivo diario",
           streak_goal_completed: "¡Objetivo cumplido!",
           streak_activity_label: "Esta semana",

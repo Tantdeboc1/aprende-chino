@@ -1,6 +1,6 @@
 // src/components/GlobalExam.jsx
 // Modo examen cronometrado global — mezcla todas las lecciones HSK1
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import ConfettiCelebration from '@/components/ui/ConfettiCelebration.jsx';
@@ -26,8 +26,14 @@ export default function GlobalExam({ goBack, allCharacters }) {
   const [feedback, setFeedback]     = useState(null); // null | 'correct' | 'incorrect'
 
   // Sin suplementarias y sin repetir un carácter presente en varias lecciones
-  // (evita dos preguntas del mismo hanzi en la misma ronda).
-  const pool = dedupeByChar(allCharacters.filter(c => !c.isSupplementary));
+  // (evita dos preguntas del mismo hanzi en la misma ronda). Memoizado: el
+  // reloj (timeLeft) re-renderiza este componente cada segundo mientras se
+  // juega, y sin esto se repetiría el filtro+dedupe sobre todo el vocabulario
+  // en cada tick de los 90s del examen.
+  const pool = useMemo(
+    () => dedupeByChar(allCharacters.filter(c => !c.isSupplementary)),
+    [allCharacters],
+  );
 
   const startGame = useCallback(() => {
     // El motor de quiz genera las preguntas carácter→significado (antes esta

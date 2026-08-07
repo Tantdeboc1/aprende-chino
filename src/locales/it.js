@@ -972,6 +972,8 @@ export default {
           streak_inactive: "Nessuna serie attiva",
           streak_best_label: "Migliore: {{count}}g",
           streak_total_xp: "{{xp}} XP totali",
+          streak_risk_warning_one: "Ti restano {{hours}}h per non perdere la tua serie di {{count}} giorno",
+          streak_risk_warning_other: "Ti restano {{hours}}h per non perdere la tua serie di {{count}} giorni",
           streak_daily_goal: "Obiettivo giornaliero",
           streak_goal_completed: "Obiettivo raggiunto!",
           streak_activity_label: "Questa settimana",

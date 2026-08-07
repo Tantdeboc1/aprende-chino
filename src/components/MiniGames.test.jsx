@@ -10,7 +10,7 @@ vi.mock('@/utils/levelExam.js', () => ({
   UNLOCK_MASTERY_PCT: 80,
 }));
 vi.mock('@/utils/minigameScores.js', () => ({
-  getBestScore: (id) => (id === 'sov-game' ? 85 : null),
+  loadMinigameScores: () => ({ 'sov-game': { best: 85 } }),
 }));
 vi.mock('@/components/ui/ProfileBadge.jsx', () => ({ default: () => null }));
 

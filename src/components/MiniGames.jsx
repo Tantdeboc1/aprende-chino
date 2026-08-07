@@ -1,10 +1,11 @@
 // src/components/MiniGames.jsx
+import { useMemo } from "react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
 import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
-import { getBestScore } from "@/utils/minigameScores.js";
-import { getLevelMastery, isLevelExamUnlocked, loadLevelExamResult, UNLOCK_MASTERY_PCT } from "@/utils/levelExam.js";
+import { loadMinigameScores } from "@/utils/minigameScores.js";
+import { getLevelMastery, loadLevelExamResult, UNLOCK_MASTERY_PCT } from "@/utils/levelExam.js";
 import { useLocalSnapshot } from "@/hooks/useLocalSnapshot.js";
 
 const GAME_STYLES = {
@@ -55,11 +56,14 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
   // Examen, junto al MCER y al examen global. Se desbloquea al dominar
   // UNLOCK_MASTERY_PCT del vocabulario, así que la tarjeta muestra el candado
   // y el avance (el resto de juegos no tienen estado bloqueado).
-  const examMastery  = getLevelMastery(progress, allCharacters);
-  const examUnlocked = isLevelExamUnlocked(progress, allCharacters);
+  const examMastery  = useMemo(() => getLevelMastery(progress, allCharacters), [progress, allCharacters]);
+  const examUnlocked = examMastery.pct >= UNLOCK_MASTERY_PCT;
   const examResult   = useLocalSnapshot(loadLevelExamResult, [progress]);
+  // Una sola lectura de localStorage por render en vez de una por juego
+  // (getBestScore por id volvía a parsear el mismo JSON cada vez).
+  const scores = useMemo(() => loadMinigameScores(), []);
 
-  const games = [
+  const games = useMemo(() => [
     {
       id: 'sov-game',
       title: t('minigames_sov_title'),
@@ -190,7 +194,7 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
       badges: [t('badge_medium'), t('badge_reading', 'Lectura'), '📖'],
       categorias: ['lectura'],
     },
-  ];
+  ], [t]);
 
   return (
     <div className="min-h-screen p-4 pb-24" style={{ background: J.paper }}>
@@ -333,7 +337,8 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
                   )}
                   {sectionGames.map((game) => {
                     const c = GAME_STYLES[game.color];
-                    const best = getBestScore(game.id);
+                    const bestEntry = scores[game.id];
+                    const best = typeof bestEntry?.best === 'number' ? bestEntry.best : null;
                     return (
                       <button
                         key={`${section.cat}-${game.id}`}

@@ -390,6 +390,14 @@ export default function ReviewSession({
   const current = queue[index] || null;
   const total   = queue.length;
 
+  // Vencidas que quedaron fuera del tope, para el resumen final. Memoizado:
+  // ResultScreen puede re-renderizar (p.ej. al pulsar "Repasar falladas") sin
+  // que esto cambie, y sin memo se repetiría el filtro+orden de todo el SRS.
+  const remainingDue = useMemo(
+    () => (done && mode === 'due' ? getDueCount(progress, allCharacters) : 0),
+    [done, mode, progress, allCharacters],
+  );
+
   // ── Iniciar una tanda ─────────────────────────────────────────────────────
   // La cola se calcula aquí (no al montar) para que "Seguir repasando" recoja
   // el progreso ya guardado de la tanda anterior.
@@ -496,7 +504,7 @@ export default function ReviewSession({
         failedCount={failedQueue.length}
         // Vencidas que quedaron fuera del tope (con el progreso ya guardado:
         // las acertadas ya no cuentan, las falladas vuelven en unos minutos).
-        remainingDue={mode === 'due' ? getDueCount(progress, allCharacters) : 0}
+        remainingDue={remainingDue}
         t={t}
       />
     );

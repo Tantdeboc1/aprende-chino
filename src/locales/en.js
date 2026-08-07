@@ -1174,6 +1174,8 @@ export default {
           streak_inactive: "No active streak",
           streak_best_label: "Best: {{count}}d",
           streak_total_xp: "{{xp}} XP total",
+          streak_risk_warning_one: "{{hours}}h left to keep your {{count}} day streak",
+          streak_risk_warning_other: "{{hours}}h left to keep your {{count}} day streak",
           streak_daily_goal: "Daily goal",
           streak_goal_completed: "Goal completed!",
           streak_activity_label: "This week",

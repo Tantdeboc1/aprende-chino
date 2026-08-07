@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { getMilestones, getDailyGoalProgress } from '@/utils/streak.js';
+import { getMilestones, getDailyGoalProgress, getStreakRiskInfo } from '@/utils/streak.js';
 
 // ── Actividad de los últimos 7 días ───────────────────────────────────────────
 // Antes era una rejilla estilo GitHub de 12 semanas: 84 casillas de 10 px que
@@ -125,6 +125,7 @@ function MilestonesRow() {
 export default function StreakPanel({ streak }) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
+  const risk = getStreakRiskInfo(streak);
 
   return (
     <div className="rounded-2xl p-4" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
@@ -165,6 +166,18 @@ export default function StreakPanel({ streak }) {
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </button>
+
+      {/* Aviso de racha en riesgo: activa, pero sin actividad hoy todavía.
+          Solo se ve al abrir la app — sin backend ni notificaciones push. */}
+      {risk.atRisk && (
+        <div className="mt-3 rounded-xl px-3 py-2 flex items-center gap-2"
+          style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+          <span aria-hidden="true">⏰</span>
+          <p className="text-xs font-semibold" style={{ color: J.redDeep }}>
+            {t('streak_risk_warning', { count: streak.currentStreak, hours: risk.hoursLeft })}
+          </p>
+        </div>
+      )}
 
       {/* Barra de objetivo diario siempre visible */}
       <DailyGoalBar />

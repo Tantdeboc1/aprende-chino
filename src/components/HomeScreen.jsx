@@ -324,11 +324,14 @@ function CollapsibleSection({ id, label, count, open, onToggle, children }) {
 
 export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onOpenProfile, onOpenChinaMap }) {
   const { t, i18n } = useTranslation();
+  // Una sola pasada sobre allCharacters en vez de 4 llamadas a getLessonStats
+  // (cada una filtra la lista completa 3 veces para devolver total/seen/mastered,
+  // de los que aquí solo se necesita "mastered").
   const totalMastered = useMemo(() => {
     let total = 0;
-    for (let i = 1; i <= 4; i++) {
-      const stats = getLessonStats(progress, i, allCharacters);
-      total += stats.mastered;
+    for (const c of allCharacters) {
+      if (c.isSupplementary || c.lesson < 1 || c.lesson > 4) continue;
+      if (progress?.[`lesson_${c.lesson}`]?.[c.char]?.mastered) total++;
     }
     return total;
   }, [progress, allCharacters]);

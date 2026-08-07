@@ -266,6 +266,21 @@ export function getMilestones() {
 }
 
 /**
+ * ¿Está la racha en riesgo de romperse? (racha activa, pero sin actividad
+ * hoy todavía). Alimenta el aviso del Home — sin backend ni notificaciones
+ * push, solo se calcula al abrir la app.
+ */
+export function getStreakRiskInfo(streak) {
+  if (!streak || streak.currentStreak <= 0 || streak.lastActiveDate === todayStr()) {
+    return { atRisk: false, hoursLeft: 0 };
+  }
+  const now = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const hoursLeft = Math.max(1, Math.ceil((midnight - now) / (1000 * 60 * 60)));
+  return { atRisk: true, hoursLeft };
+}
+
+/**
  * Calcula el progreso del objetivo diario (0-100).
  */
 export function getDailyGoalProgress() {
