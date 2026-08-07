@@ -195,7 +195,7 @@ function FlashCard({ word, isFlipped, onFlip, speakChinese, mode }) {
               <p className="text-lg font-medium mt-1" style={{ color: J.jade }}>{word.pinyin}</p>
             </div>
             <button
-              onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin })}
+              onClick={() => speakChinese?.({ hanzi: word.char, pinyin: word.pinyin, pinyinNumeric: word.pinyinNumeric })}
               className="font-cn w-11 h-11 rounded-full flex items-center justify-center text-xl transition-colors"
               style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontWeight: 700 }}
               title={t('srs_listen_again', 'Escuchar de nuevo')}
@@ -411,7 +411,7 @@ export default function ReviewSession({
   const handleFlip = useCallback(() => {
     if (!current) return;
     setFlipped(true);
-    speakChinese?.({ hanzi: current.char, pinyin: current.pinyin });
+    speakChinese?.({ hanzi: current.char, pinyin: current.pinyin, pinyinNumeric: current.pinyinNumeric });
   }, [current, speakChinese]);
 
   // ── Evaluar tarjeta ───────────────────────────────────────────────────────
@@ -506,7 +506,7 @@ export default function ReviewSession({
   const isWeak = mode === 'weak';
 
   return (
-    <div className="min-h-screen flex flex-col pb-6" style={{ background: J.paper }}>
+    <div className="min-h-screen flex flex-col pb-24" style={{ background: J.paper }}>
       {/* Header */}
       <div style={{
         background: isWeak ? J.sandBg : J.paperHi,

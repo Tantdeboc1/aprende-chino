@@ -355,7 +355,7 @@ export default function LessonDetail({
                         !
                       </button>
                       <button
-                        onClick={e => { e.stopPropagation(); speakChinese && speakChinese({ hanzi: word.char, pinyin: word.pinyin }); }}
+                        onClick={e => { e.stopPropagation(); speakChinese && speakChinese({ hanzi: word.char, pinyin: word.pinyin, pinyinNumeric: word.pinyinNumeric }); }}
                         className="font-cn w-8 h-8 flex items-center justify-center rounded-full text-sm flex-shrink-0"
                         style={{ background: J.jadeBg, color: J.jadeDeep, border: 0, cursor: 'pointer', fontWeight: 700 }}
                       >

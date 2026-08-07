@@ -47,7 +47,7 @@ function StorySelector({ onSelect }) {
     : (stories || []);
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       {/* Cabecera */}
       <div className="px-4 pt-10 pb-4" style={{ background: J.paperHi, borderBottom: `1px solid ${J.hair}` }}>
         <h1 className="text-xl font-bold mb-0.5" style={{ color: J.ink }}>阅读理解</h1>
@@ -150,7 +150,7 @@ function ExerciseChooser({ story, onChoose, onBack, t, lang }) {
     { id: 'hueco', cn: '填', label: t('reading_ex_cloze', 'Rellenar huecos'), ready: (story.cloze?.length || 0) > 0 },
   ];
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <ExerciseHeader
         title={story.titulo}
         subtitle={`${loc(story.tituloTr, lang)} · ${t('reading_topic', 'Tema')} ${story.tema}`}
@@ -234,7 +234,7 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
     if (preguntaIdx + 1 >= total) {
       updateChallengeProgress('complete_quizzes', 1);
       updateChallengeProgress('play_different_games', 'ReadingComprehension');
-      onFinish(correctas + (resultado === 'correct' ? 1 : 0), total);
+      onFinish(correctas, total);
       return;
     }
     setPreguntaIdx(i => i + 1);
@@ -250,7 +250,7 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
   });
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <div className="px-4 pt-10 pb-4" style={{ background: J.paperHi, borderBottom: `1px solid ${J.hair}`, borderLeft: `4px solid ${J.red}` }}>
         <div className="flex items-center justify-between mb-3">
           <button
@@ -391,7 +391,7 @@ function OrderEventsExercise({ story, onBack, onFinish, t }) {
   };
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <ExerciseHeader title={story.titulo} subtitle={t('reading_order_instructions', 'Toca las frases en el orden correcto')} onBack={onBack} t={t} accent={J.jade} />
 
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-4">
@@ -513,7 +513,7 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
     if (idx + 1 >= total) {
       updateChallengeProgress('complete_quizzes', 1);
       updateChallengeProgress('play_different_games', 'ReadingComprehension');
-      onFinish(correctas + (resultado === 'correct' ? 1 : 0), total);
+      onFinish(correctas, total);
       return;
     }
     setIdx(i => i + 1);
@@ -547,7 +547,7 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
   };
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <div className="px-4 pt-10 pb-4" style={{ background: J.paperHi, borderBottom: `1px solid ${J.hair}`, borderLeft: `4px solid ${J.red}` }}>
         <div className="flex items-center justify-between mb-3">
           <button onClick={onBack} className="flex items-center gap-1.5 text-sm" style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}>
@@ -647,7 +647,7 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
     if (idx + 1 >= total) {
       updateChallengeProgress('complete_quizzes', 1);
       updateChallengeProgress('play_different_games', 'ReadingComprehension');
-      onFinish(correctas + (resultado === 'correct' ? 1 : 0), total);
+      onFinish(correctas, total);
       return;
     }
     setIdx(i => i + 1);
@@ -668,7 +668,7 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
     : item.texto;
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <div className="px-4 pt-10 pb-4" style={{ background: J.paperHi, borderBottom: `1px solid ${J.hair}`, borderLeft: `4px solid ${J.red}` }}>
         <div className="flex items-center justify-between mb-3">
           <button onClick={onBack} className="flex items-center gap-1.5 text-sm" style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}>
@@ -764,7 +764,7 @@ function StoryReader({ story, dict, maxLen, onBack, onContinue, speak }) {
   };
 
   return (
-    <div className="min-h-screen pb-8" style={{ background: J.paper }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
       <ExerciseHeader
         title={story.titulo}
         subtitle={`${loc(story.tituloTr, lang)} · ${t('reading_topic', 'Tema')} ${story.tema}`}

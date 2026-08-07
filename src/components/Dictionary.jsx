@@ -1,5 +1,5 @@
 // src/components/Dictionary.jsx
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, memo } from "react";
 import Card from "@/components/ui/Card.jsx";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from 'react-i18next';
@@ -44,6 +44,115 @@ function SRSDot({ srsData, t }) {
   return <span title={t('dictionary_learning_label')} className={base} style={{ background: J.jadeMid }} />;
 }
 
+// ─── Tarjeta de una palabra ──────────────────────────────────────────────────
+// memo(): con hasta ~450 tarjetas en pantalla en la vista "Todas", escribir en
+// el buscador no debe forzar a React a reconciliar cada una — solo las que
+// realmente entran o salen del resultado filtrado.
+const DictionaryCard = memo(function DictionaryCard({ char, srsData, isFav, onSelect, onToggleFavorite, onSpeak, t }) {
+  return (
+    <Card
+      onClick={() => onSelect(char)}
+      className="hover:shadow-sm transition cursor-pointer relative active:scale-[0.98]"
+      style={{
+        background: J.paperHi, border: `1px solid ${J.hair}`,
+        borderRadius: 18, padding: '1.5rem',
+        // El navegador salta layout/paint de las tarjetas fuera del
+        // viewport (el diccionario completo son cientos de tarjetas).
+        contentVisibility: 'auto',
+        containIntrinsicSize: 'auto 380px',
+      }}
+    >
+      {/* Cabecera: lección + tipo + SRS dot + favorito */}
+      <div className="flex justify-between items-start mb-3">
+        <div className="flex items-center gap-2">
+          {char.lesson && (() => {
+            const c = LESSON_COLORS[char.lesson] || LESSON_COLORS[1];
+            return (
+              <span style={{
+                fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+                background: c.bg, color: c.fg, border: `1px solid ${c.border}`,
+              }}>
+                L{char.lesson}
+              </span>
+            );
+          })()}
+          {char.isSupplementary && (
+            <span style={{
+              fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
+              background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
+            }}>extra</span>
+          )}
+          <SRSDot t={t} srsData={srsData} />
+        </div>
+        <div className="flex items-center gap-2">
+          {char.type && <span className="text-xs italic" style={{ color: J.mute }}>{char.type}</span>}
+          {/* Botón favorito — CJK 收 en vez de Star */}
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleFavorite(char.char); }}
+            className="font-cn"
+            style={{
+              background: 'none', border: 0, cursor: 'pointer', fontSize: '1rem', fontWeight: 700,
+              color: isFav ? J.red : J.mute2,
+            }}
+            title={isFav ? t('dictionary_remove_favorite') : t('dictionary_add_favorite')}
+          >
+            收
+          </button>
+        </div>
+      </div>
+
+      {/* Carácter principal */}
+      <div className="text-6xl text-center mb-3 font-cn" style={{ color: J.ink }}>{char.char}</div>
+
+      <div className="space-y-2.5 j-rise">
+        {/* Pinyin + audio */}
+        <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+          <span className="text-sm font-semibold" style={{ color: J.mute }}>{t('dictionary_pinyin')}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-lg" style={{ color: J.ink }}>{char.pinyin}</span>
+            <button
+              onClick={(e) => { e.stopPropagation(); onSpeak(char); }}
+              aria-label={t('dictionary_listen_char', { char: char.char })}
+              className="font-cn rounded-full"
+              style={{
+                padding: '4px 8px', background: J.jadeBg, color: J.jadeDeep,
+                border: 0, cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700,
+              }}
+            >
+              声
+            </button>
+          </div>
+        </div>
+
+        {/* Significado */}
+        <div className="pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+          <p className="font-semibold text-center text-base leading-snug" style={{ color: J.ink }}>{char.meaning}</p>
+        </div>
+
+        {/* Radical */}
+        {char.radical && char.radical !== '—' && (
+          <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
+            <span className="text-xs" style={{ color: J.mute }}>{t('dictionary_radical')}</span>
+            <span className="text-2xl font-cn" style={{ color: J.ink }}>{char.radical}</span>
+          </div>
+        )}
+
+        {/* Ejemplos */}
+        {char.examples?.length > 0 && (
+          <div className="pt-1">
+            <p className="text-xs mb-1" style={{ color: J.mute }}>{t('dictionary_examples')}:</p>
+            <div className="flex flex-wrap gap-1">
+              {char.examples.map((ex, i) => (
+                <span key={i} className="text-xs px-2 py-0.5 rounded-md" style={{ background: J.paper, color: J.ink }}>{ex}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+});
+
 export default function Dictionary({
   goBack,
   characters = [],
@@ -64,14 +173,14 @@ export default function Dictionary({
   const [showFavorites, setShowFavorites] = useState(false);
   const [selectedChar, setSelectedChar] = useState(null);
 
-  const toggleFavorite = (char) => {
+  const toggleFavorite = useCallback((char) => {
     setFavorites(prev => {
       const next = new Set(prev);
       if (next.has(char)) next.delete(char); else next.add(char);
       localStorage.setItem(FAV_KEY, JSON.stringify([...next]));
       return next;
     });
-  };
+  }, []);
 
   // ── Búsqueda con debounce ─────────────────────────────────────────────────
   const [rawQuery, setRawQuery]         = useState(searchTerm || "");
@@ -125,25 +234,29 @@ export default function Dictionary({
   }, [characters, debouncedQuery, selectedLesson, showSupplementary, showFavorites, favorites]);
 
   // Cuenta única por carácter+significado (coherente con el colapso de la lista
-  // en la vista "Todas"; en vista por lección no hay duplicados).
-  const countUnique = (predicate) => {
-    const seen = new Set();
-    return characters.filter(c => {
-      if (!predicate(c)) return false;
-      const key = `${c.char}|${c.meaning}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    }).length;
-  };
-  const totalMain = countUnique(c =>
-    (selectedLesson === null || c.lesson === selectedLesson) && !c.isSupplementary);
-  const totalSupp = countUnique(c =>
-    (selectedLesson === null || c.lesson === selectedLesson) && c.isSupplementary);
+  // en la vista "Todas"; en vista por lección no hay duplicados). Memoizado:
+  // sin esto, cada tecla del buscador recorría characters (hasta ~458) dos
+  // veces solo para repintar estos contadores, que no dependen de la búsqueda.
+  const { totalMain, totalSupp } = useMemo(() => {
+    const countUnique = (predicate) => {
+      const seen = new Set();
+      return characters.filter(c => {
+        if (!predicate(c)) return false;
+        const key = `${c.char}|${c.meaning}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }).length;
+    };
+    return {
+      totalMain: countUnique(c => (selectedLesson === null || c.lesson === selectedLesson) && !c.isSupplementary),
+      totalSupp: countUnique(c => (selectedLesson === null || c.lesson === selectedLesson) && c.isSupplementary),
+    };
+  }, [characters, selectedLesson]);
 
-  const handleSpeak = (char) => {
-    if (typeof speakChinese === 'function') speakChinese({ hanzi: char.char, pinyin: char.pinyin });
-  };
+  const handleSpeak = useCallback((char) => {
+    if (typeof speakChinese === 'function') speakChinese({ hanzi: char.char, pinyin: char.pinyin, pinyinNumeric: char.pinyinNumeric });
+  }, [speakChinese]);
 
   return (
     <div className="min-h-screen p-4" style={{ background: J.paper }}>
@@ -259,117 +372,21 @@ export default function Dictionary({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredChars.map((char) => {
-            const srsData = progress?.__srs?.[char.char] || null;
-            const isFav   = favorites.has(char.char);
-
-            return (
-              <Card
-                // Clave estable por contenido (no por índice): al filtrar,
-                // React reutiliza la tarjeta correcta en vez de re-pintar
-                // todas las posiciones.
-                key={`${char.char}-${char.lesson}`}
-                onClick={() => setSelectedChar(char)}
-                className="hover:shadow-sm transition cursor-pointer relative active:scale-[0.98]"
-                style={{
-                  background: J.paperHi, border: `1px solid ${J.hair}`,
-                  borderRadius: 18, padding: '1.5rem',
-                  // El navegador salta layout/paint de las tarjetas fuera del
-                  // viewport (el diccionario completo son cientos de tarjetas).
-                  contentVisibility: 'auto',
-                  containIntrinsicSize: 'auto 380px',
-                }}
-              >
-                {/* Cabecera: lección + tipo + SRS dot + favorito */}
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex items-center gap-2">
-                    {char.lesson && (() => {
-                      const c = LESSON_COLORS[char.lesson] || LESSON_COLORS[1];
-                      return (
-                        <span style={{
-                          fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
-                          background: c.bg, color: c.fg, border: `1px solid ${c.border}`,
-                        }}>
-                          L{char.lesson}
-                        </span>
-                      );
-                    })()}
-                    {char.isSupplementary && (
-                      <span style={{
-                        fontSize: '0.6875rem', padding: '2px 8px', borderRadius: 99, fontWeight: 700,
-                        background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}`,
-                      }}>extra</span>
-                    )}
-                    <SRSDot t={t} srsData={srsData} />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {char.type && <span className="text-xs italic" style={{ color: J.mute }}>{char.type}</span>}
-                    {/* Botón favorito — CJK 收 en vez de Star */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); toggleFavorite(char.char); }}
-                      className="font-cn"
-                      style={{
-                        background: 'none', border: 0, cursor: 'pointer', fontSize: '1rem', fontWeight: 700,
-                        color: isFav ? J.red : J.mute2,
-                      }}
-                      title={isFav ? t('dictionary_remove_favorite') : t('dictionary_add_favorite')}
-                    >
-                      收
-                    </button>
-                  </div>
-                </div>
-
-                {/* Carácter principal */}
-                <div className="text-6xl text-center mb-3 font-cn" style={{ color: J.ink }}>{char.char}</div>
-
-                <div className="space-y-2.5 j-rise">
-                  {/* Pinyin + audio */}
-                  <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
-                    <span className="text-sm font-semibold" style={{ color: J.mute }}>{t('dictionary_pinyin')}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg" style={{ color: J.ink }}>{char.pinyin}</span>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleSpeak(char); }}
-                        aria-label={t('dictionary_listen_char', { char: char.char })}
-                        className="font-cn rounded-full"
-                        style={{
-                          padding: '4px 8px', background: J.jadeBg, color: J.jadeDeep,
-                          border: 0, cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700,
-                        }}
-                      >
-                        声
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Significado */}
-                  <div className="pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
-                    <p className="font-semibold text-center text-base leading-snug" style={{ color: J.ink }}>{char.meaning}</p>
-                  </div>
-
-                  {/* Radical */}
-                  {char.radical && char.radical !== '—' && (
-                    <div className="flex justify-between items-center pb-2" style={{ borderBottom: `1px solid ${J.hair}` }}>
-                      <span className="text-xs" style={{ color: J.mute }}>{t('dictionary_radical')}</span>
-                      <span className="text-2xl font-cn" style={{ color: J.ink }}>{char.radical}</span>
-                    </div>
-                  )}
-
-                  {/* Ejemplos */}
-                  {char.examples?.length > 0 && (
-                    <div className="pt-1">
-                      <p className="text-xs mb-1" style={{ color: J.mute }}>{t('dictionary_examples')}:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {char.examples.map((ex, i) => (
-                          <span key={i} className="text-xs px-2 py-0.5 rounded-md" style={{ background: J.paper, color: J.ink }}>{ex}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Card>
-            );
-          })}
+          {filteredChars.map((char) => (
+            <DictionaryCard
+              // Clave estable por contenido (no por índice): al filtrar,
+              // React reutiliza la tarjeta correcta en vez de re-pintar
+              // todas las posiciones.
+              key={`${char.char}-${char.lesson}`}
+              char={char}
+              srsData={progress?.__srs?.[char.char] || null}
+              isFav={favorites.has(char.char)}
+              onSelect={setSelectedChar}
+              onToggleFavorite={toggleFavorite}
+              onSpeak={handleSpeak}
+              t={t}
+            />
+          ))}
         </div>
 
         {filteredChars.length === 0 && (

@@ -3,12 +3,13 @@ import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
-import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
 import { useCountdown } from '@/utils/useCountdown.js';
 import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
+import { useAnswerFeedback } from '@/utils/useAnswerFeedback.js';
+import { useDelayedRun } from '@/utils/useDelayedRun.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -18,16 +19,17 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera pregunta además de cambiar de fase).
   const { isIntro, isPlaying, isFinished, start, finish } = useGamePhase('pinyin-connection', { autoSkip: false });
-  const [score, setScore] = useState(0);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [wrongCount, setWrongCount] = useState(0);
+  const [score, setScore] = useState(0); // puntos (+10 por acierto), distinto de correctCount
+  const {
+    feedback, selected: selectedAnswer, correctCount, wrongCount,
+    answer, resetCounts, nextQuestion,
+  } = useAnswerFeedback();
+  const scheduleRetry = useDelayedRun();
   // Cuenta atrás compartida: interval estable, espejo en ref y fin de partida
   // al llegar a 0 (por tick o por penalización). Ver useCountdown.js.
   const { timeLeft, timeLeftRef, reset: resetClock, penalize } =
     useCountdown(60, { running: isPlaying, onExpire: finish });
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [feedback, setFeedback] = useState(null);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   // Generar una nueva pregunta
   const generateQuestion = useCallback(() => {
@@ -44,19 +46,17 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
       charObj: correctChar,
       options: shuffleArray(options),
     });
-    setFeedback(null);
-    setSelectedAnswer(null);
-  }, [characters]);
+    nextQuestion();
+  }, [characters, nextQuestion]);
 
   // Iniciar el juego
   const startGame = useCallback(() => {
     setScore(0);
-    setCorrectCount(0);
-    setWrongCount(0);
+    resetCounts();
     resetClock();
     start();
     generateQuestion();
-  }, [generateQuestion, start, resetClock]);
+  }, [generateQuestion, start, resetClock, resetCounts]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -68,24 +68,14 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   const handleAnswer = (selectedPinyin) => {
     if (feedback) return;
 
-    setSelectedAnswer(selectedPinyin);
-
     const isCorrect = selectedPinyin === currentQuestion.correctPinyin;
-    if (isCorrect) {
-      setScore(s => s + 10);
-      setCorrectCount(c => c + 1);
-      setFeedback('correct');
-      hapticSuccess();
-    } else {
-      penalize(2);
-      setWrongCount(w => w + 1);
-      setFeedback('incorrect');
-      hapticError();
-    }
+    answer(selectedPinyin, isCorrect);
+    if (isCorrect) setScore(s => s + 10);
+    else penalize(2);
     onTrackResult?.(currentQuestion.charObj, isCorrect);
 
     const capturedTime = timeLeftRef.current;
-    setTimeout(() => {
+    scheduleRetry(() => {
       if (capturedTime > 0) {
         generateQuestion();
       }
@@ -136,7 +126,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   }
 
   return (
-    <div className="min-h-screen p-4" style={{ background: J.paper }}>
+    <div className="min-h-screen p-4 pb-24" style={{ background: J.paper }}>
       <Container>
         <div className="mb-6">
           <button onClick={goBack} className="flex items-center transition-colors"

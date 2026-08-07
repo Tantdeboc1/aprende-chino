@@ -347,10 +347,16 @@ export async function playAudioSmart(category, keyOrObj, fallbackText) {
     }
   }
 
-  if (fallbackText || key) {
+  // `fallbackText: null` es la señal explícita de "solo comprueba si existe
+  // el audio, no hables por tu cuenta" que usan tts.js y tts-enhanced.js para
+  // probar varias variantes/sílabas en bucle sin disparar TTS de por medio.
+  // Caer aquí con `|| key` (en vez de solo `fallbackText`) ignoraba esa señal
+  // y de paso ponía `isInTTSCAll` a true 500 ms, bloqueando la SIGUIENTE
+  // llamada del bucle aunque su audio sí existiera en el manifest.
+  if (fallbackText) {
     isInTTSCAll = true;
     try {
-      const textToSpeak = fallbackText || key;
+      const textToSpeak = fallbackText;
       speakChinese(textToSpeak);
       await new Promise(resolve => setTimeout(resolve, 100));
     } finally {

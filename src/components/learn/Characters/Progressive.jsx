@@ -65,7 +65,7 @@ export default function Progressive({
                 {typeof speakChinese === 'function' && (
                   <div className="mt-4 text-center">
                     <button
-                      onClick={() => speakChinese({ hanzi: char.char, pinyin: char.pinyin })}
+                      onClick={() => speakChinese({ hanzi: char.char, pinyin: char.pinyin, pinyinNumeric: char.pinyinNumeric })}
                       className="px-4 py-2 rounded bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold"
                     >
                       {t('dictionary_listen_button')}

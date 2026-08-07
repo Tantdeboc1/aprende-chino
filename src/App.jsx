@@ -282,6 +282,13 @@ export default function App() {
   const prevScreenRef = useRef(prevScreen);
   useEffect(() => { screenRef.current = screen; }, [screen]);
   useEffect(() => { prevScreenRef.current = prevScreen; }, [prevScreen]);
+  // Pantalla desde la que se entró al hub de Destrezas (home, lesson-detail…).
+  // prevScreen es un único slot: al entrar a un minijuego se pisa con
+  // 'minigames' (para que el minijuego vuelva al hub), así que al volver del
+  // minijuego AL hub hace falta esta copia aparte para restaurar el origen
+  // real y que el propio botón "Volver" del hub no acabe apuntando al
+  // minijuego que se acaba de abandonar.
+  const hubOriginRef = useRef('home');
 
   // Lección seleccionada (para lesson-detail y ejercicios)
   const [selectedLesson, setSelectedLesson] = useState(initialNav?.lesson ?? 1);
@@ -549,10 +556,10 @@ export default function App() {
     else if (key === 'review')     setScreen('review');
     // 'practice' es la pestaña; aterriza en Destrezas, que ahora también
     // enlaza Historias. 'stories' sigue existiendo como destino directo.
-    else if (key === 'practice')   setScreen('minigames');
+    else if (key === 'practice')   { hubOriginRef.current = screenRef.current; setScreen('minigames'); }
     else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
-    else if (key === 'minigames')  setScreen('minigames');
+    else if (key === 'minigames')  { hubOriginRef.current = screenRef.current; setScreen('minigames'); }
     else if (key === 'friends')    setScreen('friends');
     else if (key === 'profile')    setScreen('profile');
     else if (key === 'settings')   setScreen('settings');
@@ -568,7 +575,7 @@ export default function App() {
     else if (exerciseKey === 'quiz')      { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('quiz'); }
     else if (exerciseKey === 'matching')  { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('matching'); }
     else if (exerciseKey === 'writing')   { setScreen('exercise'); setLearnSection('writing'); setWritingSection('hanzi'); }
-    else if (exerciseKey === 'minigames') { setScreen('minigames'); }
+    else if (exerciseKey === 'minigames') { hubOriginRef.current = 'lesson-detail'; setScreen('minigames'); }
   };
 
   // Iniciar ejercicio desde intro
@@ -616,8 +623,12 @@ export default function App() {
       setDailySection(key.slice('daily-'.length));
       setScreen('daily');
     }
-    else if (key === 'minigames') setScreen('minigames');
-    else if (key === 'dictionary') setScreen('dictionary');
+    // Vuelta al hub de Destrezas desde dentro de un minijuego: restaurar el
+    // origen real (home/lesson-detail…), no screenRef.current — en este punto
+    // screenRef.current sigue siendo el minijuego que se está abandonando, y
+    // usarlo dejaría el botón "Volver" del hub apuntando de vuelta a él.
+    else if (key === 'minigames') { setPrevScreen(hubOriginRef.current); setScreen('minigames'); }
+    else if (key === 'dictionary') { setPrevScreen(screenRef.current); setScreen('dictionary'); }
     else handleBottomNav(key);
   }, [handleBottomNav]);
 

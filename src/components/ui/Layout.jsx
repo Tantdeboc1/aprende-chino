@@ -80,6 +80,14 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, re
     touchStart.current = null;
     touchStartY.current = null;
 
+    // Sin barra de navegación visible (ejercicios, escritura, minijuegos,
+    // modo historia…) tampoco debe navegar por gesto: hanzi-writer llama a
+    // preventDefault() en sus listeners nativos, pero eso no detiene la
+    // propagación — el touchend sigue burbujeando hasta aquí, y un trazo con
+    // desplazamiento horizontal largo (habitual al dibujar) se confundía con
+    // un swipe de cambio de pestaña y sacaba al usuario a mitad de trazo.
+    if (hideNav) return;
+
     // Ignorar si el gesto es más vertical que horizontal
     if (Math.abs(dy) > Math.abs(dx)) return;
     // Mínimo 60px de desplazamiento horizontal
@@ -97,7 +105,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, re
       const prev = NAV_TABS[idx - 1];
       if (prev) onNavigate(prev);
     }
-  }, [activeScreen, onNavigate]);
+  }, [activeScreen, onNavigate, hideNav]);
 
   return (
     <>

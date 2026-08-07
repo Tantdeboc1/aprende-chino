@@ -20,7 +20,8 @@
     "split-i18n": "node scripts/split-i18n-data.mjs",
     "copy-hanzi-data": "node scripts/copy-hanzi-data.mjs",
     "predev": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs",
-    "prebuild": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs"
+    "prebuild": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/noto-sans-sc": "^5.2.9",
@@ -53,6 +54,7 @@
     "eslint-plugin-react-refresh": "^0.4.22",
     "ffmpeg-static": "^5.3.0",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "postcss": "^8.5.6",
     "sharp": "^0.35.3",

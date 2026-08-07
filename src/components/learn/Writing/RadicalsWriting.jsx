@@ -29,13 +29,19 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
     }));
 
   const currentRadical = validRadicals[currentIndex];
+  // Clave primitiva estable: validRadicals se recrea con .filter()/.map() en
+  // cada render, así que currentRadical es un objeto nuevo cada vez. Usar el
+  // carácter como dependencia (mismo patrón que HanziWriting.jsx) evita que
+  // el useEffect destruya y recree el HanziWriter en cada re-render del
+  // padre — lo que podía interrumpir un trazo a medio dibujar.
+  const radicalKey = currentRadical?.char;
 
   // Efecto principal - VERSIÓN SIMPLIFICADA
   useEffect(() => {
     let mounted = true;
 
     const initWriter = async () => {
-      if (!currentRadical || !writerRef.current || !mounted) return;
+      if (!radicalKey || !writerRef.current || !mounted) return;
 
 
       try {
@@ -69,14 +75,14 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           // llega a Sentry. El try/catch de abajo NO lo atrapa: la carga es
           // asíncrona y ocurre después de que create() retorne.
           onLoadCharDataError: (err) => {
-            console.warn('[RadicalsWriting] no se pudieron cargar los trazos de', currentRadical.char, err);
+            console.warn('[RadicalsWriting] no se pudieron cargar los trazos de', radicalKey, err);
           },
         };
 
         // Crear instancia
         const writer = HanziWriter.default.create(
           writerRef.current,
-          currentRadical.char,
+          radicalKey,
           options
         );
 
@@ -103,7 +109,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       mounted = false;
       clearTimeout(timer);
     };
-  }, [currentRadical, activeTab]);
+  }, [radicalKey, activeTab]);
 
   // ANIMACIÓN DE VER ORDEN - VERSIÓN ROBUSTA
   const animateCharacter = async () => {

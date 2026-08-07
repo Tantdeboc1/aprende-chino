@@ -8,11 +8,12 @@ import { ArrowLeft, Volume2 } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
-import { hapticSuccess, hapticError } from '@/utils/haptic.js';
 import { shuffle as shuffleArray } from '@/utils/arrayUtils.js';
 import { shouldShowIntro } from '@/utils/gameIntroPrefs.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
 import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
+import { useAnswerFeedback } from '@/utils/useAnswerFeedback.js';
+import { useDelayedRun } from '@/utils/useDelayedRun.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 
@@ -41,11 +42,12 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
   // startGame() (genera la primera ronda además de cambiar de fase).
   const { isIntro, isFinished, start, finish } = useGamePhase('tones-ear', { autoSkip: false });
   const [round, setRound] = useState(0);
-  const [score, setScore] = useState(0);
-  const [wrongCount, setWrongCount] = useState(0);
   const [question, setQuestion] = useState(null);   // { char }
-  const [feedback, setFeedback] = useState(null);    // 'correct' | 'incorrect' | null
-  const [selected, setSelected] = useState(null);    // tono elegido
+  const {
+    feedback, selected, correctCount: score, wrongCount,
+    answer, resetCounts, nextQuestion,
+  } = useAnswerFeedback(); // `selected` = tono elegido
+  const scheduleNext = useDelayedRun();
   const speakingRef = useRef(false);
 
   const playAudio = useCallback(async (charObj) => {
@@ -68,18 +70,16 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
     const q = generateQuestion();
     if (!q) { finish(); return; }
     setQuestion(q);
-    setFeedback(null);
-    setSelected(null);
+    nextQuestion();
     setTimeout(() => playAudio(q.char), 350);
-  }, [generateQuestion, playAudio, finish]);
+  }, [generateQuestion, playAudio, finish, nextQuestion]);
 
   const startGame = useCallback(() => {
-    setScore(0);
-    setWrongCount(0);
+    resetCounts();
     setRound(1);
     start();
     nextRound();
-  }, [nextRound, start]);
+  }, [nextRound, start, resetCounts]);
 
   useEffect(() => {
     if (!shouldShowIntro('tones-ear')) startGame();
@@ -88,20 +88,11 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
 
   const handleAnswer = (toneOpt) => {
     if (feedback) return;
-    setSelected(toneOpt.tone);
     const isCorrect = toneOpt.tone === question.char.tone;
-    if (isCorrect) {
-      setScore(s => s + 1);
-      setFeedback('correct');
-      hapticSuccess();
-    } else {
-      setWrongCount(w => w + 1);
-      setFeedback('incorrect');
-      hapticError();
-    }
+    answer(toneOpt.tone, isCorrect);
     onTrackResult?.(question.char, isCorrect);
 
-    setTimeout(() => {
+    scheduleNext(() => {
       if (round >= TOTAL_ROUNDS) {
         finish();
       } else {
@@ -161,7 +152,7 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
 
   // ── Pantalla de juego ───────────────────────────────────────────────
   return (
-    <div className="min-h-screen p-4" style={{ background: J.paper }}>
+    <div className="min-h-screen p-4 pb-24" style={{ background: J.paper }}>
       <Container>
         <div className="mb-6">
           <button onClick={goBack} className="flex items-center transition-colors"

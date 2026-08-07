@@ -75,6 +75,7 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
 
   let pinyin = '';
   let hanzi = '';
+  let pinyinNumeric = '';
 
   // Extraer pinyin y hanzi del input
   if (typeof keyOrObj === 'string') {
@@ -83,6 +84,7 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
   } else if (keyOrObj && typeof keyOrObj === 'object') {
     pinyin = keyOrObj.pinyin || '';
     hanzi = keyOrObj.hanzi || '';
+    pinyinNumeric = keyOrObj.pinyinNumeric || '';
   }
 
   // Validar que tengamos algo para reproducir
@@ -107,8 +109,18 @@ export async function speakChineseEnhanced(keyOrObj, opts = {}) {
     // marcas de tono "nǐ hǎo" — el regex anterior no casaba con ninguno.)
     if (pinyin && looksLikePinyin(pinyin)) {
 
-      // Dividir en sílabas
-      const syllables = pinyin.split(/[\s-]+/).filter(Boolean);
+      // Dividir en sílabas. El pinyin numérico ("xie4xie") o marcado
+      // ("xièxie") de palabras multi-carácter llega CONCATENADO sin espacio
+      // entre sílabas (así está el dato fuente) — dividir por espacios/guiones
+      // deja una sola "sílaba" y la palabra entera cae siempre al fallback de
+      // TTS del navegador (silencioso si no hay voz zh-CN instalada). Si hay
+      // tonos numéricos disponibles (en `pinyinNumeric` o en el propio
+      // `pinyin`), los usamos para trocear sin ambigüedad: cada sílaba
+      // termina en un dígito 1-4 o en el fin de la cadena/siguiente sílaba.
+      const numericSource = pinyinNumeric || (/\d/.test(pinyin) ? pinyin : '');
+      const syllables = numericSource
+        ? (numericSource.match(/[a-züv]+[1-4]?/gi) || []).filter(Boolean)
+        : pinyin.split(/[\s-]+/).filter(Boolean);
 
       if (syllables.length > 1) {
         let allFound = true;

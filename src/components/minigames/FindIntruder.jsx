@@ -147,7 +147,7 @@ export default function FindIntruder({ goBack, selectedLesson }) {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--paper)] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-24">
       {/* Header */}
       <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${accent.border} px-4 pt-10 pb-4`}>
         <button onClick={goBack} className="flex items-center gap-1.5 text-[var(--mute)] hover:text-[var(--ink)] text-sm mb-3 transition-colors">

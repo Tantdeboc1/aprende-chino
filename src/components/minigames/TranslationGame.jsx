@@ -471,7 +471,7 @@ export default function TranslationGame({ goBack, selectedLesson }) {
   const progress = ((currentIdx + (result ? 1 : 0)) / rounds.length) * 100;
 
   return (
-    <div className="min-h-screen bg-[var(--paper)] pb-8">
+    <div className="min-h-screen bg-[var(--paper)] pb-24">
 
       {/* Header */}
       <div className={`bg-[var(--paper-hi)] border-b border-[rgba(28,24,19,0.10)] border-l-4 ${ACCENT_COLOR.border} px-4 pt-10 pb-4`}>
