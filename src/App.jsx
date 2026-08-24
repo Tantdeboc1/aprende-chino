@@ -34,6 +34,7 @@ import { fetchJsonCached } from './utils/dataCache.js';
 import { initAudioForIOS } from './utils/audio';
 import { useNavigation } from './utils/navigation.js';
 import { MINIGAME_IDS } from './components/minigames/registry.js';
+import { sanitizeUserName } from './utils/nameModeration.js';
 
 // ── Loader animado (reemplaza el spinner estático en Suspense) ────────────────
 function AnimatedLoader() {
@@ -96,8 +97,17 @@ function AnimatedLoader() {
 
 // ── Persistencia ──────────────────────────────────────────────────────────────
 const LS_USERNAME = STORAGE_KEYS.USERNAME;
-function loadUserName() { return localStorage.getItem(LS_USERNAME) || ''; }
-function saveUserName(n) { if (n) localStorage.setItem(LS_USERNAME, n); else localStorage.removeItem(LS_USERNAME); }
+function loadUserName() {
+  const raw = localStorage.getItem(LS_USERNAME) || '';
+  const safe = sanitizeUserName(raw, '');
+  if (raw !== safe) saveUserName(safe);
+  return safe;
+}
+function saveUserName(n) {
+  const safe = sanitizeUserName(n, '');
+  if (safe) localStorage.setItem(LS_USERNAME, safe);
+  else localStorage.removeItem(LS_USERNAME);
+}
 
 // ── Historial del navegador (hash routing) ────────────────────────────────────
 // Cada pantalla se refleja en location.hash y el botón atrás del sistema

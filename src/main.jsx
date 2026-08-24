@@ -43,9 +43,15 @@ const updateSW = registerSW({
     // cada 5 min mientras la app sigue abierta, en vez de obligar a cerrar
     // y reabrir para enterarse.
     const CHECK_INTERVAL_MS = 5 * 60 * 1000;
-    setInterval(() => registration.update(), CHECK_INTERVAL_MS);
+    // update() puede rechazar durante una transición de ciclo de vida
+    // (pestaña restaurada/cerrándose o Service Worker reemplazándose). No es
+    // un fallo de la app: la comprobación se puede reintentar más tarde. Si
+    // dejamos la promesa sin capturar, el handler global de Sentry lo reporta
+    // como unhandledrejection (InvalidStateError).
+    const safeUpdate = () => registration.update().catch(() => {});
+    setInterval(safeUpdate, CHECK_INTERVAL_MS);
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') registration.update();
+      if (document.visibilityState === 'visible') safeUpdate();
     });
   },
   onNeedRefresh() {

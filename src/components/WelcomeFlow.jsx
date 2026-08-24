@@ -7,6 +7,7 @@ import { AVATARS, getAvatarsByGender, isAvatarUnlocked, DEFAULT_AVATAR_ID } from
 import { setDailyGoal, DAILY_GOAL_PRESETS, getStreak } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { APP_NAME } from '@/utils/appInfo.js';
+import { getNameModerationKey } from '@/utils/nameModeration.js';
 
 const STEPS = 4;
 
@@ -31,8 +32,9 @@ export default function WelcomeFlow({ onComplete }) {
   }, [gender]);
 
   const trimmedName = name.trim();
+  const nameError = trimmedName ? getNameModerationKey(trimmedName) : null;
   const canNext =
-    step === 0 ? !!trimmedName :
+    step === 0 ? !!trimmedName && !nameError :
     step === 1 ? !!gender :
     step === 2 ? !!avatarId :
     true; // paso 3 (meta) siempre tiene valor preseleccionado
@@ -102,6 +104,11 @@ export default function WelcomeFlow({ onComplete }) {
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlur={e => e.target.style.borderColor = J.hair}
             />
+            {nameError && (
+              <p role="alert" style={{ color: J.red, fontSize: '0.8rem', margin: '8px 2px 0' }}>
+                {t(nameError, 'Ese nombre no está permitido. Elige otro.')}
+              </p>
+            )}
           </div>
         )}
 

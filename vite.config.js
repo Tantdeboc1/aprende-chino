@@ -65,7 +65,9 @@ export default defineConfig(({ mode }) => ({
         description: 'Learn Chinese with interactive exercises',
         lang: 'en',
         display: 'standalone',
-        orientation: 'portrait',
+        // No bloquear la app en vertical: Google Play recomienda permitir
+        // rotación y redimensionado en tablets y pantallas grandes.
+        orientation: 'any',
         theme_color: '#2f6b4a',
         background_color: '#f4ecdc',
         icons: [

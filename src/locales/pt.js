@@ -1124,6 +1124,7 @@ export default {
           settings_xp_to_next: "Faltam {{xp}} XP para subir",
           settings_max_level: "Nível máximo alcançado",
           settings_label_nick: "APELIDO",
+          name_not_allowed: "Esse nome não é permitido. Escolha outro.",
           settings_label_gender: "GÉNERO",
           settings_label_avatar: "AVATAR",
           settings_avatar_change_hint: "Toca para mudar",

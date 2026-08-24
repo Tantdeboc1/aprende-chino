@@ -18,6 +18,7 @@ import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 import { getStreak, getWeeklyXP } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { loadUserProfile } from '@/utils/userProfile.js';
+import { sanitizeUserName } from '@/utils/nameModeration.js';
 
 let _fsPromise = null;
 function loadFirestore() {
@@ -138,7 +139,7 @@ export async function syncPublicProfile({ uid, photoURL }) {
     fs.doc(db, 'publicProfiles', uid),
     {
       uid,
-      displayName: (readLocalUserName() || '').slice(0, 100),
+      displayName: sanitizeUserName(readLocalUserName(), ''),
       avatarId: profile?.avatarId || null,
       photoURL: useGoogle ? photoURL : null,
       level,
@@ -156,7 +157,9 @@ export async function syncPublicProfile({ uid, photoURL }) {
 export async function fetchPublicProfile(uid) {
   const { fs, db } = await loadFirestore();
   const snap = await fs.getDoc(fs.doc(db, 'publicProfiles', uid));
-  return snap.exists() ? snap.data() : null;
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  return { ...data, displayName: sanitizeUserName(data.displayName, '') };
 }
 
 // Resuelve un código de amigo a su uid (o null si no existe).

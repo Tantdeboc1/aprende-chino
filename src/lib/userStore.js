@@ -3,6 +3,7 @@
 // `users/{uid}` en Firestore. El modo invitado NO pasa por aquí — sigue
 // usando localStorage directamente vía utils/progress.js y utils/userProfile.js.
 import { STORAGE_KEYS, SYNCED_EXTRA_KEYS } from '@/utils/storageKeys.js';
+import { sanitizeUserName } from '@/utils/nameModeration.js';
 
 // Firestore Y firebase.js (initializeApp) se importan dinámicamente: así el
 // SDK de Firebase no entra en el bundle de arranque. Solo se descarga cuando
@@ -49,7 +50,7 @@ const LS_EXTRA_KEYS = SYNCED_EXTRA_KEYS;
 
 function readLocalSnapshot() {
   let profile = null, progress = {}, userName = '';
-  try { userName = localStorage.getItem(LS_USERNAME) || ''; } catch {}
+  try { userName = sanitizeUserName(localStorage.getItem(LS_USERNAME) || '', ''); } catch {}
   try { const raw = localStorage.getItem(LS_PROFILE);  if (raw) profile  = JSON.parse(raw); } catch {}
   try { const raw = localStorage.getItem(LS_PROGRESS); if (raw) progress = JSON.parse(raw); } catch {}
   const extra = {};
@@ -67,7 +68,8 @@ function writeLocalSnapshot({ userName, profile, progress, extra }) {
     // userName vacío también se aplica (borra el local): si el remoto no
     // tiene nombre, este dispositivo no debe conservar el del usuario anterior.
     if (typeof userName === 'string') {
-      if (userName) localStorage.setItem(LS_USERNAME, userName);
+      const safeName = sanitizeUserName(userName, '');
+      if (safeName) localStorage.setItem(LS_USERNAME, safeName);
       else localStorage.removeItem(LS_USERNAME);
     }
     if (profile)  localStorage.setItem(LS_PROFILE,  JSON.stringify(profile));

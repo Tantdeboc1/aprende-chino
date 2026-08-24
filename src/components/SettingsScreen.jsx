@@ -23,6 +23,7 @@ import { checkForUpdate } from '@/utils/pwaUpdate.js';
 import { getSoundPrefs, setSoundPrefs } from '@/utils/soundPrefs.js';
 import { assetUrl } from '@/utils/assets';
 import { APP_NAME } from '@/utils/appInfo.js';
+import { getNameModerationKey } from '@/utils/nameModeration.js';
 
 const LANGUAGES = [
   { code: 'es', name: 'Español',   cn: '西' },
@@ -296,7 +297,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
   const handleNameBlur = () => {
     const trimmed = nameInput.trim();
-    if (trimmed && trimmed !== userName) onUserNameChange(trimmed);
+    if (trimmed && !getNameModerationKey(trimmed) && trimmed !== userName) onUserNameChange(trimmed);
   };
 
   const handleReset = () => {
@@ -411,6 +412,11 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               onFocus={e => e.target.style.borderColor = J.jade}
               onBlurCapture={e => e.target.style.borderColor = J.hair}
             />
+            {nameInput.trim() && getNameModerationKey(nameInput.trim()) && (
+              <p role="alert" style={{ color: J.red, fontSize: '0.75rem', margin: '6px 2px 0' }}>
+                {t('name_not_allowed', 'Ese nombre no está permitido. Elige otro.')}
+              </p>
+            )}
           </div>
 
           {/* Género */}

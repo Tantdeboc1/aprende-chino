@@ -1327,6 +1327,7 @@ export default {
           settings_xp_to_next: "{{xp}} XP to level up",
           settings_max_level: "Max level reached",
           settings_label_nick: "NICKNAME",
+          name_not_allowed: "That name is not allowed. Choose another one.",
           settings_label_gender: "GENDER",
           settings_label_avatar: "AVATAR",
           settings_avatar_change_hint: "Tap to change",
