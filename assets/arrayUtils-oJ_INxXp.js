@@ -1,0 +1,1 @@
+function l(e){const n=[...e];for(let t=n.length-1;t>0;t--){const o=Math.floor(Math.random()*(t+1));[n[t],n[o]]=[n[o],n[t]]}return n}function r(e,n){if(!Array.isArray(e)||e.length===0)return[];const t=[];for(;t.length<n;)t.push(...l(e).slice(0,n-t.length));return t}export{r as p,l as s};
