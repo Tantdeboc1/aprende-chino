@@ -8,6 +8,9 @@ import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
 import '@/i18n';
 
 vi.mock('@/utils/arrayUtils.js', () => ({ shuffle: (arr) => arr }));
+// El confeti es un efecto visual; jsdom no implementa el contexto 2D de
+// canvas y no aporta nada a estas pruebas de puntuación y navegación.
+vi.mock('@/components/ui/ConfettiCelebration.jsx', () => ({ default: () => null }));
 
 import GlobalExam from './GlobalExam.jsx';
 
