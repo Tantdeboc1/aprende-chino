@@ -8,6 +8,9 @@ import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
 import '@/i18n';
 
 vi.mock('@/utils/arrayUtils.js', () => ({ shuffle: (arr) => arr }));
+// El confeti solo adorna el aprobado. jsdom no ofrece un canvas 2D real;
+// esta prueba verifica puntuación y guardado, no el efecto visual.
+vi.mock('@/components/ui/ConfettiCelebration.jsx', () => ({ default: () => null }));
 
 import LevelExam from './LevelExam.jsx';
 
