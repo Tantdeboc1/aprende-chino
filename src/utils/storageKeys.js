@@ -22,6 +22,7 @@ export const STORAGE_KEYS = {
   DAILY_PROGRESS:   'dailyProgress_v1',
   LEVEL_EXAM:       'aprende-chino-level-exam-v1',
   CEFR_EXAM:        'aprende-chino-cefr-exam-v1',
+  LAST_LESSON:      'aprende-chino-last-lesson',
 
   // Solo locales (no se suben a la nube)
   DAILY_INDEX:      'dailyIndex_v1',
@@ -53,4 +54,5 @@ export const SYNCED_EXTRA_KEYS = [
   STORAGE_KEYS.DAILY_PROGRESS,
   STORAGE_KEYS.LEVEL_EXAM,
   STORAGE_KEYS.CEFR_EXAM,
+  STORAGE_KEYS.LAST_LESSON,
 ];

@@ -196,6 +196,10 @@ export default function App() {
 
   // Usuario
   const [userName, setUserName] = useState(loadUserName);
+  const [lastLesson, setLastLesson] = useState(() => {
+    const n = Number(localStorage.getItem(STORAGE_KEYS.LAST_LESSON));
+    return Number.isInteger(n) && n >= 1 && n <= 8 ? n : null;
+  });
 
   const handleSetUserName = (name) => {
     setUserName(name);
@@ -231,11 +235,25 @@ export default function App() {
   const handleProgressChange = useCallback((updated) => {
     progressRef.current = updated; // sincronía inmediata para getProgress()
     setProgress(updated);
-    saveProgress(updated);
+    const saved = saveProgress(updated);
+    window.dispatchEvent(new CustomEvent('progress-save-status', { detail: saved ? (modeRef.current === 'google' ? 'syncing' : 'saved') : 'error' }));
     if (modeRef.current === 'google') {
       clearTimeout(pushTimerRef.current);
-      pushTimerRef.current = setTimeout(() => pushSnapshotRef.current(), 1500);
+      if (saved) pushTimerRef.current = setTimeout(async () => {
+        const synced = await pushSnapshotRef.current();
+        window.dispatchEvent(new CustomEvent('progress-save-status', { detail: synced ? 'synced' : 'offline' }));
+      }, 1500);
     }
+  }, []);
+  useEffect(() => {
+    const retrySync = async () => {
+      if (modeRef.current !== 'google') return;
+      window.dispatchEvent(new CustomEvent('progress-save-status', { detail: 'syncing' }));
+      const synced = await pushSnapshotRef.current();
+      window.dispatchEvent(new CustomEvent('progress-save-status', { detail: synced ? 'synced' : 'offline' }));
+    };
+    window.addEventListener('online', retrySync);
+    return () => window.removeEventListener('online', retrySync);
   }, []);
 
   // Deep link inicial (#/lesson/3, #/stories…): solo si ya hay perfil creado.
@@ -263,6 +281,8 @@ export default function App() {
       const next = loadProgress();
       return JSON.stringify(prev) === JSON.stringify(next) ? prev : next;
     });
+    const recent = Number(localStorage.getItem(STORAGE_KEYS.LAST_LESSON));
+    setLastLesson(Number.isInteger(recent) && recent >= 1 && recent <= 8 ? recent : null);
     // Solo forzamos 'welcome' si aún no se eligió pantalla; respetamos la
     // navegación actual cuando llega un sync remoto a media sesión.
     setScreen(s => (s === 'welcome' && remoteName) ? 'home' : s);
@@ -277,6 +297,7 @@ export default function App() {
     const name = loadUserName();
     setUserName(name);
     setProgress(loadProgress());
+    setLastLesson(null);
     // Tras signOut el nombre quedó borrado → 'welcome'. Usuarios antiguos
     // (con nombre pero sin modo elegido aún) conservan su 'home'.
     setScreen(name ? 'home' : 'welcome');
@@ -536,6 +557,9 @@ export default function App() {
   // Navegar al detalle de lección
   const goToLesson = (num) => {
     setSelectedLesson(num);
+    setLastLesson(num);
+    try { localStorage.setItem(STORAGE_KEYS.LAST_LESSON, String(num)); } catch { /* la lección sigue accesible en esta sesión */ }
+    if (mode === 'google') pushSnapshot();
     setLessonDetailTab('vocab'); // reset pestaña al entrar a una lección nueva
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
@@ -700,6 +724,7 @@ export default function App() {
           allCharacters={allCharacters}
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
+          lastLesson={lastLesson}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
           onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}
         />

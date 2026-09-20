@@ -17,8 +17,10 @@ export function loadProgress() {
 export function saveProgress(data) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    return true;
   } catch (e) {
     console.warn('No se pudo guardar progreso:', e);
+    return false;
   }
 }
 

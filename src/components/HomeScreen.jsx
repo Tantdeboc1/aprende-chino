@@ -322,7 +322,7 @@ function CollapsibleSection({ id, label, count, open, onToggle, children }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onOpenProfile, onOpenChinaMap }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onOpenProfile, onOpenChinaMap, lastLesson }) {
   const { t, i18n } = useTranslation();
   // Una sola pasada sobre allCharacters en vez de 4 llamadas a getLessonStats
   // (cada una filtra la lista completa 3 veces para devolver total/seen/mastered,
@@ -461,6 +461,21 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
       {/* Contenido */}
       <div className="px-4 pt-5 space-y-6 j-rise">
+
+        {lastLesson && (
+          <button onClick={() => onSelectLesson(lastLesson)} className="w-full flex items-center gap-4 p-4 text-left active:scale-[0.99] transition-transform"
+            style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderRadius: 18 }}>
+            <span className="font-cn flex h-12 w-12 shrink-0 items-center justify-center text-xl font-bold"
+              style={{ background: J.jadeBg, color: J.jadeDeep, borderRadius: 14 }}>续</span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-xs font-bold uppercase tracking-wider" style={{ color: J.jade }}>{t('home_continue', 'Continuar donde lo dejaste')}</span>
+              <span className="block truncate text-sm font-semibold" style={{ color: J.ink }}>
+                {t('home_continue_lesson', 'Lección {{number}}', { number: lastLesson })} · {t(LESSONS[lastLesson]?.titleKey || '')}
+              </span>
+            </span>
+            <span aria-hidden="true" className="font-bold" style={{ color: J.jade }}>→</span>
+          </button>
+        )}
 
         {/* Carácter del día — solo informativo. Antes abría el hub de retos
             diarios, pero el Home ya tenía demasiadas puertas: el hub se entra

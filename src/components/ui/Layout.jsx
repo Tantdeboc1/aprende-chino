@@ -6,6 +6,7 @@ import GuidedTour from './GuidedTour.jsx';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 import { isTourPending } from '@/utils/tour.js';
 import { useLocalSnapshot, bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
+import { useTranslation } from 'react-i18next';
 
 // Tabs del BottomNav en orden izquierda→derecha. 'practice' es la pestaña que
 // agrupa Destrezas e Historias; 'profile' incluye Amigos.
@@ -42,6 +43,32 @@ function getEnterOffset(fromScreen, toScreen) {
 }
 
 export default function Layout({ children, activeScreen, onNavigate, hideNav, reviewDue = 0 }) {
+  const { t } = useTranslation();
+  const [saveStatus, setSaveStatus] = useState(() => (typeof navigator !== 'undefined' && !navigator.onLine ? 'disconnected' : null));
+  const statusTimer = useRef(null);
+  useEffect(() => {
+    const update = (event) => {
+      clearTimeout(statusTimer.current);
+      setSaveStatus(event.detail);
+      if (event.detail === 'saved' || event.detail === 'synced') statusTimer.current = setTimeout(() => setSaveStatus(null), 4000);
+    };
+    const offline = () => update({ detail: 'disconnected' });
+    window.addEventListener('progress-save-status', update);
+    window.addEventListener('offline', offline);
+    return () => {
+      clearTimeout(statusTimer.current);
+      window.removeEventListener('progress-save-status', update);
+      window.removeEventListener('offline', offline);
+    };
+  }, []);
+  const saveLabels = {
+    saved: t('progress_saved_local', 'Progreso guardado en este dispositivo'),
+    syncing: t('progress_syncing', 'Guardado aquí · sincronizando…'),
+    synced: t('progress_synced', 'Progreso sincronizado'),
+    offline: t('progress_offline', 'Guardado aquí · sincronización pendiente'),
+    disconnected: t('progress_disconnected', 'Sin conexión · tu progreso se guarda aquí'),
+    error: t('progress_save_error', 'No se pudo guardar el progreso'),
+  };
   // bumpLocalDataRev al cerrarlo hace que el Home vuelva a leer el estado y
   // destape racha y retos sin necesidad de recargar.
   const tourPending = useLocalSnapshot(isTourPending);
@@ -130,6 +157,10 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, re
         {children}
       </main>
       {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} reviewDue={reviewDue} />}
+      {saveStatus && <div role="status" className="fixed left-1/2 z-50 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full px-4 py-2 text-center text-xs font-semibold shadow-sm"
+        style={{ bottom: hideNav ? 18 : 84, background: J.paperHi, color: saveStatus === 'error' ? J.redDeep : J.inkSoft, border: `1px solid ${J.hair}` }}>
+        {saveLabels[saveStatus]}
+      </div>}
 
       {/* El tutorial se monta aquí y no en App a propósito: Layout envuelve
           todas las pantallas reales (no el splash, el login ni el registro) y

@@ -85,6 +85,13 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
             </div>
           )}
 
+          <div className="mb-5 rounded-2xl p-3 text-left text-sm" style={{ background: wrong > 0 || !good ? J.sandBg : J.jadeBg, color: J.ink }}>
+            <span className="font-bold">{t('results_next_step', 'Siguiente paso')}: </span>
+            {wrong > 0 || !good
+              ? t('results_retry_hint', 'Repite la actividad para practicar lo que te costó.')
+              : t('results_continue_hint', 'Buen trabajo. Elige otra actividad para seguir practicando.')}
+          </div>
+
           <div className="flex gap-3">
             <button
               // Envolvemos en arrow para NO pasar el evento de clic como
@@ -92,16 +99,16 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
               // (p. ej. initGame(filter)) y recibir el evento los rompía.
               onClick={() => onPlayAgain?.()}
               className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"
-              style={{ background: J.red, color: J.onAccent, border: 0, cursor: 'pointer' }}
+              style={{ background: wrong > 0 || !good ? J.jade : J.paperHi, color: wrong > 0 || !good ? J.onAccent : J.inkSoft, border: wrong > 0 || !good ? 0 : `1px solid ${J.hair}`, cursor: 'pointer', order: wrong > 0 || !good ? 0 : 1 }}
             >
               {t('minigames_play_again_button')}
             </button>
             <button
               onClick={onBack}
               className="flex-1 py-3 rounded-xl font-medium text-sm transition-colors"
-              style={{ background: J.paperHi, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
+              style={{ background: wrong > 0 || !good ? J.paperHi : J.jade, color: wrong > 0 || !good ? J.inkSoft : J.onAccent, border: wrong > 0 || !good ? `1px solid ${J.hair}` : 0, cursor: 'pointer', order: wrong > 0 || !good ? 1 : 0 }}
             >
-              {t('exam_back_button')}
+              {wrong > 0 || !good ? t('exam_back_button') : t('results_choose_activity', 'Elegir otra actividad')}
             </button>
           </div>
         </div>

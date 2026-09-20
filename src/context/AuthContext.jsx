@@ -248,9 +248,11 @@ export function AuthProvider({ children }) {
   }, [mode, user, signOut]);
 
   const pushSnapshot = useCallback(async () => {
-    if (mode !== 'google' || !user) return;
+    if (mode !== 'google' || !user) return false;
+    let synced = false;
     try {
       await pushRemoteUser(user.uid, snapshotLocal());
+      synced = true;
     } catch (e) {
       console.warn('Push remoto falló:', e);
     }
@@ -261,6 +263,7 @@ export function AuthProvider({ children }) {
     } catch (e) {
       console.warn('Sync perfil público falló:', e);
     }
+    return synced;
   }, [mode, user]);
 
   // value memoizado: todas las funciones ya son estables (useCallback), así

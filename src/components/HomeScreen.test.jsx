@@ -72,6 +72,12 @@ describe('HomeScreen', () => {
     expect(props.onOpenProfile).toHaveBeenCalledTimes(1);
   });
 
+  it('Continuar abre la última lección guardada', () => {
+    const props = setup({ lastLesson: 2 });
+    fireEvent.click(screen.getByRole('button', { name: /continue where|continuar donde/i }));
+    expect(props.onSelectLesson).toHaveBeenCalledWith(2);
+  });
+
   it('sin onOpenChinaMap, la sección Cultura no se muestra', () => {
     setup({ onOpenChinaMap: undefined });
     expect(screen.queryByText(/explore china/i)).toBeNull();
