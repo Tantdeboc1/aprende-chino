@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { markWritingPractice, getWritingCount } from '@/utils/progress.js';
 import { addXP } from '@/utils/streak.js';
 import { hanziCharDataLoader, runWriterOp } from '@/utils/hanziCharData.js';
+import { J, resolveColor } from '@/styles/tokens';
 
 export default function HanziWriting({ goBack, characters, speakChinese, progress, onProgressChange }) {
   const { t } = useTranslation();
@@ -54,10 +55,10 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           width: 200,
           height: 200,
           padding: 10,
-          strokeColor: '#ef4444',
+          strokeColor: resolveColor(J.jade),
           strokeAnimationSpeed: 1.5,
           delayBetweenStrokes: 600,
-          radicalColor: '#3b82f6',
+          radicalColor: resolveColor(J.red),
           showOutline: true,
           // Sin este handler, un fallo al cargar los datos de trazos (carácter
           // sin JSON, corte de red…) se propaga como unhandled rejection y
@@ -74,7 +75,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         } else {
           options.showCharacter = false;
           options.highlightOnComplete = true;
-          options.highlightColor = '#10b981';
+          options.highlightColor = resolveColor(J.sand);
         }
 
         // Crear NUEVA instancia
@@ -216,7 +217,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         </div>
 
         {/* Pestañas */}
-        <div className="flex border-b border-[rgba(28,24,19,0.18)] mb-6">
+        <div className="flex border-b border-[var(--hair-s)] mb-6">
           <button
             onClick={() => handleTabChange('view')}
             className={`flex-1 py-3 font-semibold transition-colors ${
@@ -240,7 +241,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
         </div>
 
         {/* Área de escritura - CON FONDO TRANSPARENTE */}
-        <div className="bg-white dark:bg-[var(--paper-hi)] rounded-2xl p-8 shadow-lg mb-6">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-8 shadow-sm mb-6 border border-[var(--hair)]">
           <div
             ref={writerRef}
             className="mx-auto mb-6 flex justify-center items-center"

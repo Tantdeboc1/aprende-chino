@@ -101,7 +101,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
   if (!quizStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
+      <div className="min-h-screen bg-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="mb-8">
@@ -117,7 +117,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
         </div>
 
         {/* Instrucciones */}
-        <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)] mb-6">
           <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
           <div className="space-y-3 text-[var(--ink-soft)]">
             <div className="flex items-start">
@@ -142,7 +142,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
         {/* Botón empezar */}
         <button
           onClick={startQuiz}
-          className="w-full bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
+          className="w-full bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-2xl transition text-lg"
         >
           {t('radicals_start_quiz_button')}
         </button>
@@ -153,7 +153,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
   if (quizFinished) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
+      <div className="min-h-screen bg-[var(--paper)] p-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="mb-8">
@@ -167,7 +167,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
           </div>
 
           {/* Resultados */}
-          <div className="bg-[var(--paper-hi)] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] text-center">
+          <div className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)] text-center">
             <div className="text-6xl mb-4"></div>
             <h2 className="text-3xl font-bold text-[var(--ink)] mb-4">{t('radicals_quiz_completed_title')}</h2>
 
@@ -204,7 +204,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
 
   if (quizQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--paper)] p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4"></div>
           <h2 className="text-xl font-bold text-[var(--ink)]">{t('radicals_loading_questions')}</h2>
@@ -216,7 +216,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
   // currentQ ya está declarado arriba (junto al hook de teclado).
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
+    <div className="min-h-screen bg-[var(--paper)] p-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -245,7 +245,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
         </div>
 
         {/* Pregunta */}
-        <div className="bg-[var(--paper-hi)] rounded-xl p-8 border border-[rgba(28,24,19,0.10)] mb-6 text-center">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)] mb-6 text-center">
           <h3 className="text-lg text-[var(--mute)] mb-4">{t('radicals_meaning_question_header')}</h3>
 
           {/* Radical objetivo */}
@@ -268,7 +268,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
               const isCorrect = option === currentQ.correctAnswer;
               const isSelected = selectedAnswer === option;
 
-              let buttonClass = "bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] border-[rgba(28,24,19,0.18)] text-left";
+              let buttonClass = "bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] border-[var(--hair-s)] text-left";
 
               if (isAnswered) {
                 if (isCorrect) {
@@ -276,7 +276,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
                 } else if (isSelected && !isCorrect) {
                   buttonClass = "bg-[var(--red)] border-[var(--red)] text-left";
                 } else {
-                  buttonClass = "bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] opacity-50 text-left";
+                  buttonClass = "bg-[var(--paper-hi2)] border-[var(--hair-s)] opacity-50 text-left";
                 }
               }
 
@@ -285,7 +285,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
                   key={`opt-${option}`}
                   onClick={() => handleAnswerSelect(option)}
                   disabled={isAnswered}
-                  className={`${buttonClass} border-2 rounded-xl p-4 text-lg font-semibold text-[var(--ink)] transition disabled:cursor-not-allowed w-full text-center`}
+                  className={`${buttonClass} border-2 rounded-2xl p-4 text-lg font-semibold text-[var(--ink)] transition disabled:cursor-not-allowed w-full text-center`}
                 >
                   {option}
                 </button>
@@ -298,7 +298,7 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
         {isAnswered && (
           <button
             onClick={handleNextQuestion}
-            className="w-full bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-2xl transition text-lg"
           >
             {currentQuestion < 9 ? t('radicals_next_question_button') : t('radicals_view_results_button')}
           </button>

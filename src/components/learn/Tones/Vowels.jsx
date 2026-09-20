@@ -84,7 +84,7 @@ export default function Vowels({ goBack, speakChinese }) {
           </div>
         )}
 
-        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 border border-[var(--hair)]">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[var(--ink)] mb-2">{t('tones_vowels_with_tones_title')}</h2>
             <p className="text-[var(--ink-soft)]">{t('tones_click_to_listen_each_tone')}</p>
@@ -97,7 +97,7 @@ export default function Vowels({ goBack, speakChinese }) {
               {vowels.map((vowel, idx) => {
                 const v = vowel.char; // 'a','o','e','i','u','ü'
                 return (
-                  <div key={idx} className="bg-gradient-to-br from-[var(--paper-hi2)] to-gray-600 rounded-xl p-6 hover:shadow-lg transition border border-[rgba(28,24,19,0.18)]">
+                  <div key={idx} className="bg-[var(--paper-hi)] rounded-2xl p-6 shadow-sm transition border border-[var(--hair)]">
                     <div className="text-center mb-4">
                       {/* Botón grande: 1º tono */}
                       <button

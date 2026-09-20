@@ -113,7 +113,7 @@ export default function QuizTone({ goBack, speakChinese }) {
             <p className="text-[var(--mute)] text-center">{t('tones_quiz_auditory_identification')}</p>
           </div>
 
-          <div className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)] mb-6">
+          <div className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)] mb-6">
             <h2 className="text-xl font-bold text-[var(--ink)] mb-4">{t('quiz_instructions_title')}</h2>
             <div className="space-y-3 text-[var(--ink-soft)]">
               <div className="flex items-start">
@@ -137,7 +137,7 @@ export default function QuizTone({ goBack, speakChinese }) {
 
           <button
             onClick={initQuiz}
-            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-xl transition text-lg"
+            className="w-full bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-bold py-4 px-6 rounded-2xl transition text-lg"
           >
             {t('radicals_start_quiz_button')}
           </button>
@@ -149,7 +149,7 @@ export default function QuizTone({ goBack, speakChinese }) {
   if (!questions.length) {
     return (
       <div className="min-h-screen bg-[var(--paper)] p-4 flex items-center justify-center">
-        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[var(--hair)]">
           <p className="text-[var(--ink-soft)] mb-6">{t('tones_quiz_loading')}</p>
           <button onClick={goBack} className="w-full bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] font-semibold py-3 rounded-lg transition">
             {t('radicals_back_button')}
@@ -170,7 +170,7 @@ export default function QuizTone({ goBack, speakChinese }) {
   if (idx >= questions.length) {
     return (
       <div className="min-h-screen bg-[var(--paper)] flex items-center justify-center p-4">
-        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 max-w-md w-full text-center border border-[var(--hair)]">
           <div className="text-6xl mb-4"></div>
           <h2 className="text-3xl font-bold text-[var(--ink)] mb-4">{t('tones_quiz_completed_title')}</h2>
           <p className="text-5xl font-bold text-[var(--red)] mb-6">{score}/{questions.length}</p>
@@ -229,7 +229,7 @@ export default function QuizTone({ goBack, speakChinese }) {
           </button>
         </div>
 
-        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 text-center border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 text-center border border-[var(--hair)]">
           <h2 className="text-2xl font-bold text-[var(--ink)] mb-4">{t('tones_what_tone_do_you_hear')}</h2>
           <p className="text-[var(--ink-soft)] mb-6">
             {t('tones_quiz_prompt')}
@@ -237,7 +237,7 @@ export default function QuizTone({ goBack, speakChinese }) {
 
           <button
             onClick={listen}
-            className="mx-auto mb-8 px-8 py-5 rounded-xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] text-xl font-bold shadow-lg transition transform hover:scale-105"
+            className="mx-auto mb-8 px-8 py-5 rounded-2xl bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] text-xl font-bold shadow-sm transition transform hover:scale-105"
           >
             {t('tones_listen_button')}
           </button>

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { hanziCharDataLoader, runWriterOp } from '@/utils/hanziCharData.js';
+import { J, resolveColor } from '@/styles/tokens';
 
 export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const { t } = useTranslation();
@@ -66,8 +67,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           width: 200,
           height: 200,
           padding: 5,
-          strokeColor: '#10b981',
-          radicalColor: '#8b5cf6',
+          strokeColor: resolveColor(J.jade),
+          radicalColor: resolveColor(J.red),
           strokeAnimationSpeed: 2,
           delayBetweenStrokes: 400,
           // Sin este handler, un fallo al cargar los datos de trazos (radical
@@ -257,7 +258,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-[rgba(28,24,19,0.18)] mb-6">
+        <div className="flex border-b border-[var(--hair-s)] mb-6">
           <button
             onClick={() => handleTabChange('view')}
             className={`flex-1 py-3 font-semibold transition-colors ${
@@ -281,7 +282,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         </div>
 
         {/* Writing Area */}
-        <div className="bg-white dark:bg-[var(--paper-hi)] rounded-2xl p-8 shadow-lg mb-6">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-8 shadow-sm mb-6 border border-[var(--hair)]">
           <div
             ref={writerRef}
             className="mx-auto mb-6 flex justify-center items-center bg-transparent rounded-lg"
@@ -334,7 +335,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
         </div>
 
         {/* Radical Info */}
-        <div className="bg-[var(--paper-hi)] rounded-xl p-6 mb-6">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-6 mb-6">
           <h3 className="text-xl font-bold text-[var(--ink)] mb-3">{t('writing_radical_info_header')}</h3>
           <div className="grid md:grid-cols-2 gap-4 text-[var(--ink-soft)]">
             <div>
@@ -347,7 +348,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             </div>
           </div>
           {currentRadical.examples && (
-            <div className="mt-4 pt-4 border-t border-[rgba(28,24,19,0.10)]">
+            <div className="mt-4 pt-4 border-t border-[var(--hair)]">
               <p className="text-[var(--ink)]"><strong>{t('writing_examples_label')}</strong> {currentRadical.examples}</p>
             </div>
           )}

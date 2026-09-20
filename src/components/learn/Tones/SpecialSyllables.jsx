@@ -82,7 +82,7 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
           </div>
         )}
 
-        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl shadow-sm p-8 border border-[var(--hair)]">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[var(--ink)] mb-1">{t('tones_special_syllables_title')}</h2>
             <p className="text-[var(--ink-soft)]">{t('tones_click_to_listen_each_syllable')}</p>
@@ -96,7 +96,7 @@ export default function SpecialSyllables({ goBack, speakChinese }) {
                 <button
                   key={idx}
                   onClick={() => play(it.pinyin)}
-                  className="bg-gradient-to-br from-[var(--paper-hi2)] to-gray-600 rounded-xl p-6 hover:shadow-lg transition text-center border border-[rgba(28,24,19,0.18)]"
+                  className="bg-[var(--paper-hi)] rounded-2xl p-6 shadow-sm transition text-center border border-[var(--hair)]"
                   title={t('tones_listen_syllable_tooltip')}
                 >
                   <div className="text-4xl font-extrabold text-[var(--ink)] mb-2 select-none">{it.pinyin}</div>

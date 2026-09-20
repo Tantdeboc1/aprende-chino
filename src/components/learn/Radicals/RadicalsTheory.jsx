@@ -52,7 +52,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--paper-hi)] to-[var(--paper)] p-4">
+    <div className="min-h-screen bg-[var(--paper)] p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-6 flex justify-between items-center">
@@ -98,7 +98,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
         </div>
 
         {/* Información introductoria */}
-        <div className="bg-[var(--paper-hi)] rounded-xl p-6 mb-8 border border-[rgba(28,24,19,0.10)]">
+        <div className="bg-[var(--paper-hi)] rounded-2xl p-6 mb-8 border border-[var(--hair)]">
           <h2 className="text-2xl font-bold text-[var(--ink)] mb-4">{t('radicals_what_are_radicals')}</h2>
           <div className="grid md:grid-cols-2 gap-6 text-[var(--ink-soft)]">
             <div>
@@ -146,7 +146,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
         {/* Lista de radicales */}
         <div className="space-y-8">
           {sortedGroups.map(([groupName, groupRadicals]) => (
-            <div key={groupName} className="bg-[var(--paper-hi)] rounded-xl p-6 border border-[rgba(28,24,19,0.10)]">
+            <div key={groupName} className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)]">
               <h3 className="text-xl font-bold text-[var(--ink)] mb-4 flex items-center">
                 <span className="w-3 h-3 bg-[var(--jade)] rounded-full mr-3"></span>
                 {t('radicals_stroke_group', { count: groupName.replace('Trazo ', '') })}
@@ -159,7 +159,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                 {groupRadicals.map((radical) => (
                   <div
                     key={radical.radical}
-                    className="bg-[var(--paper-hi2)] rounded-lg p-4 hover:bg-[var(--mute2)] transition cursor-pointer border border-[rgba(28,24,19,0.18)]"
+                    className="bg-[var(--paper-hi2)] rounded-lg p-4 hover:bg-[var(--mute2)] transition cursor-pointer border border-[var(--hair-s)]"
                     onClick={() => setSelectedRadical(selectedRadical?.radical === radical.radical ? null : radical)}
                   >
                     <div className="flex items-start justify-between mb-3">
@@ -187,7 +187,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
                       {radical.examples?.slice(0, 6).map((exampleChar, charIndex) => (
                         <div
                           key={charIndex}
-                          className="bg-[var(--paper-hi)] rounded px-2 py-1 text-xs border border-[rgba(28,24,19,0.18)]"
+                          className="bg-[var(--paper-hi)] rounded px-2 py-1 text-xs border border-[var(--hair-s)]"
                           title={exampleChar}
                         >
                           <span className="text-[var(--ink)] font-semibold">{exampleChar}</span>
@@ -204,7 +204,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
 
                     {/* Detalles expandidos - AHORA FUNCIONA */}
                     {selectedRadical?.radical === radical.radical && (
-                      <div className="mt-4 pt-4 border-t border-[rgba(28,24,19,0.18)]">
+                      <div className="mt-4 pt-4 border-t border-[var(--hair-s)]">
                         <h4 className="text-sm font-semibold text-[var(--ink)] mb-2">
                           {t('radicals_characters_using_radical', { count: radical.examples?.length || 0 })}
                         </h4>
@@ -253,7 +253,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
         )}
 
         {/* Resumen final */}
-        <div className="bg-[var(--jade-bg)]/20 rounded-xl p-6 mt-8 border border-[var(--jade)]/30">
+        <div className="bg-[var(--jade-bg)]/20 rounded-2xl p-6 mt-8 border border-[var(--jade)]/30">
           <h3 className="text-xl font-bold text-[var(--ink)] mb-3">{t('radicals_study_tip_title')}</h3>
           <p className="text-[var(--jade)]">
             {t('radicals_study_tip_text')}
