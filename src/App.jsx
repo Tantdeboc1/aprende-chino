@@ -506,9 +506,13 @@ export default function App() {
         };
 
         setSplashProgress(25);
-        // Caché versionada: tras la primera visita estos JSON salen de
-        // localStorage sin tocar la red (se invalidan al subir APP_VERSION).
-        const data = await fetchJsonCached('libro-data', assetUrl('data/libro-data.json'));
+        // Ambos catálogos son independientes: iniciar sus lecturas a la vez
+        // evita que la primera visita espere una descarga después de la otra.
+        // fetchJsonCached sirve las visitas posteriores desde Cache API.
+        const [data, radicalsDataRaw] = await Promise.all([
+          fetchJsonCached('libro-data', assetUrl('data/libro-data.json')),
+          fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json')),
+        ]);
         setSplashProgress(55);
 
         const enriched = [];
@@ -531,7 +535,6 @@ export default function App() {
         const lessonsMeta = data.lessons.map(l => ({ lesson: l.lesson, titleZh: l.titleZh, titleEs: l.titleEs, titleTr: l.titleTr || null }));
         setSplashProgress(70);
 
-        const radicalsDataRaw = await fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json'));
         setSplashProgress(88);
         const radicalsEnriched = Object.entries(radicalsDataRaw.radicals).map(([radical, details]) => ({ radical, ...details }));
 
