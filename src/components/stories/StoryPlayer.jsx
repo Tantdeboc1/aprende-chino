@@ -221,8 +221,6 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
         <TopBar onExit={onExit} title={storyTitle} subtitle={t('stories_exercises', 'Ejercicios')} />
         <ExerciseBlock
           ejercicios={story.ejercicios}
-          lesson={story.tema}
-          evidence={escenas.map(scene => interpolate(scene.chino, displayName) + ' — ' + interpolate(trField(scene.traduccion, scene.traduccionTr, baseLang(i18n.language)), displayName)).join('\n')}
           onComplete={handleExercisesDone}
           presentador={presentador}
         />

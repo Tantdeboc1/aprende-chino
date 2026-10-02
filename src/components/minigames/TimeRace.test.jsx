@@ -44,6 +44,7 @@ describe('TimeRace', () => {
     start();
     fireEvent.click(screen.getByRole('button', { name: 'good' }));
     expect(screen.getByText('✕ 1')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
   });
 
   it('tras responder, la siguiente pregunta se genera pasados 800ms', () => {
@@ -67,7 +68,8 @@ describe('TimeRace', () => {
     act(() => { vi.advanceTimersByTime(60000); });
     expect(screen.getByText('Review your mistakes (1)')).toBeTruthy();
     expect(screen.getByText((_, el) => el.tagName === 'P' && el.textContent === 'Your answer: good')).toBeTruthy();
-    expect(screen.getByText(/Compare with your choice/)).toBeTruthy();
+    expect(screen.getByText('Correct answer:').parentElement.textContent).toContain('你 · you');
+    expect(screen.queryByText('Why this answer')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /play again/i }));
     expect(screen.queryByText(/Review your mistakes/)).toBeNull();
     expect(screen.getByRole('button', { name: 'you' }).disabled).toBe(false);

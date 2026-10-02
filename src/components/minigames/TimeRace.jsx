@@ -1,6 +1,5 @@
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
@@ -209,7 +208,6 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
             </div>
           </div>
         )}
-        {feedback && currentQuestion && <LearningExplanation word={currentQuestion.charObj} />}
       </Container>
     </div>
   );

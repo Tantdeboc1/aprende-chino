@@ -1,4 +1,3 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/EchoSpeaking.jsx
 // Repite la frase / shadowing (expresión oral): suena una frase en chino y hay
 // que REPETIRLA de oído, SIN verla. Es el hermano "ciego" de Pronunciación:
@@ -367,7 +366,6 @@ export default function EchoSpeaking({ goBack, selectedLesson }) {
           </div>
         )}
 
-        {scoreInfo && <LearningExplanation kind="speech" />}
         {/* Error */}
         {errorMsg && (
           <div className="bg-[var(--red-bg)] border border-[var(--red)] rounded-xl p-3 text-sm text-[var(--red-deep)]">

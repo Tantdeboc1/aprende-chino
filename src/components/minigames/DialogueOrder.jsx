@@ -1,4 +1,3 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/DialogueOrder.jsx
 // Minijuego: Ordena el diálogo — pon las líneas en el orden correcto
 import { useState, useEffect, useCallback } from 'react';
@@ -279,7 +278,6 @@ export default function DialogueOrder({ goBack, selectedLesson }) {
           </div>
         )}
 
-        {result && <LearningExplanation kind="dialogue" evidence={current.lines.map((line, i) =>           line.speaker + ': ' + line.text + ' — ' + (current.translations?.[lang]?.[i] || current.translations?.en?.[i] || '')).join('\n')} />}
 
         {/* Botones */}
         <div className="flex gap-3">

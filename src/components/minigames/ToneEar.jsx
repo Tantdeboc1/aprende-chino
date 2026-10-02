@@ -241,7 +241,7 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
             )}
           </div>
         )}
-        {feedback && question && <LearningExplanation kind="sound" tone={question.char.tone} chosenTone={selected} />}
+        {feedback === 'incorrect' && question && <LearningExplanation kind="sound" tone={question.char.tone} chosenTone={selected} />}
         {feedback === 'incorrect' && <button onClick={handleContinue} className="w-full rounded-xl bg-[var(--jade)] text-[var(--on-accent)] py-3 font-semibold">{t('answer_explanation_continue')}</button>}
       </Container>
     </div>

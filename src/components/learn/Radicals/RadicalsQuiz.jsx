@@ -1,4 +1,4 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 // src/components/learn/Radicals/RadicalsQuiz.jsx (VERSIÓN CORREGIDA)
 import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
@@ -320,7 +320,7 @@ export default function RadicalsQuiz({ goBack, radicals }) {
           </div>
         </div>
 
-        {isAnswered && <LearningExplanation kind="radical" word={radicals.find(r => r.radical === currentQ.correctAnswer)} answer={currentQ.targetChar} />}
+        {isAnswered && selectedAnswer !== currentQ.correctAnswer && <AnswerCorrection word={radicals.find(r => r.radical === currentQ.correctAnswer)} />}
         {/* Botón siguiente */}
         {isAnswered && (
           <button

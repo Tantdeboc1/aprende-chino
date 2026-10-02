@@ -67,6 +67,7 @@ describe('ReadingComprehension', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /yes/i }));
     expect(screen.getByText('Correct!')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
 
     fireEvent.click(screen.getByRole('button', { name: /see results/i }));
     expect(screen.getByText('Correct').previousSibling.textContent).toBe('1');
@@ -76,6 +77,8 @@ describe('ReadingComprehension', () => {
     await playThroughToTest();
     fireEvent.click(screen.getByRole('button', { name: /no$/i }));
     expect(screen.getByText('Incorrect')).toBeTruthy();
+    expect(screen.getByText(/The correct answer is:/).textContent).toContain('Yes');
+    expect(screen.queryByText('Why this answer')).toBeNull();
   });
 
   it('el botón atrás del selector llama a goBack', async () => {

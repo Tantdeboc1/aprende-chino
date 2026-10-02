@@ -1,4 +1,3 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/ReadingComprehension.jsx
 // Minijuego: Comprensión lectora — lectura del texto (con audio TTS y
 // tap-to-define por palabra), elección de tipo de ejercicio y corrección.
@@ -335,7 +334,6 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           )}
         </div>
 
-        {resultado && <LearningExplanation kind="evidence" answer={loc(opcionCorrecta, lang)} evidence={story.hanzi + '\n' + loc(story.traduccion, lang)} />}
         {resultado && (
           <button
             onClick={handleSiguiente}
@@ -469,7 +467,12 @@ function OrderEventsExercise({ story, onBack, onFinish, t }) {
           </div>
         )}
 
-        {comprobado && <LearningExplanation kind="order" evidence={eventos.map((line, i) => (i + 1) + '. ' + line).join('\n')} />}
+        {comprobado && aciertos !== total && <div role="status" className="rounded-xl p-3 space-y-1" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
+          <p className="text-xs font-semibold" style={{ color: J.inkSoft }}>{t('reading_correct_answer_is', 'La respuesta correcta es:')}</p>
+          <ol className="list-decimal pl-5 text-sm" style={{ color: J.ink }}>
+            {eventos.map((line, i) => <li key={i}>{line}</li>)}
+          </ol>
+        </div>}
         {comprobado && (
           <button
             onClick={() => onFinish(aciertos, total)}
@@ -589,12 +592,13 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           {resultado === 'incorrect' && (
             <div className="rounded-xl p-3 flex items-center gap-2 animate-fade-in" style={{ background: J.redBg, border: `1px solid ${J.red}` }}>
               <span className="text-xl">✗</span>
-              <p className="text-sm font-bold" style={{ color: J.redDeep }}>{t('reading_incorrect', 'Incorrecto')}</p>
+              <p className="text-sm" style={{ color: J.redDeep }}>
+                {t('reading_correct_answer_is', 'La respuesta correcta es:')} <strong>{item.correcta ? t('reading_true', 'Verdadero') : t('reading_false', 'Falso')}</strong>
+              </p>
             </div>
           )}
         </div>
 
-        {resultado && <LearningExplanation kind="evidence" evidence={story.hanzi + '\n' + loc(story.traduccion, lang)} />}
         {resultado && (
           <button
             onClick={siguiente}
@@ -737,7 +741,6 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
           )}
         </div>
 
-        {resultado && <LearningExplanation kind="sentence" answer={item.texto.replace('＿＿', correcta)} evidence={story.hanzi} />}
         {resultado && (
           <button
             onClick={siguiente}

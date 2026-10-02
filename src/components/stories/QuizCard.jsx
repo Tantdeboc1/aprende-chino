@@ -8,8 +8,6 @@ import { J } from '@/styles/tokens';
 import { useTranslation } from 'react-i18next';
 import { loc } from '@/utils/loc.js';
 import feedbackText from '@/data/feedbackText.js';
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
-import AnswerExplanation from '@/components/minigames/AnswerExplanation.jsx';
 
 
 // Fisher–Yates: devuelve [shuffledOptions, nuevoIndiceCorrecto].
@@ -31,8 +29,6 @@ export default function QuizCard({
   correcta,            // índice de la opción correcta
   onAnswer,            // callback(boolean) tras feedback
   variant = 'normal',  // 'chinese' para opciones grandes en chino, 'normal' para texto en español
-  explanation,
-  sentenceItem,
 }) {
   const { i18n } = useTranslation();
   const [selected, setSelected] = useState(null);
@@ -126,8 +122,9 @@ export default function QuizCard({
         })}
       </div>
       {answered && <>
-        <LearningExplanation {...explanation} chosen={shuffledOptions[selected]} answer={explanation?.answer || shuffledOptions[shuffledCorrecta]} />
-        {sentenceItem && <AnswerExplanation item={sentenceItem} incorrect={selected !== shuffledCorrecta} />}
+        {selected !== shuffledCorrecta && <p role="status" style={{ margin: '12px 0', fontSize: 14 }}>
+          {loc(feedbackText.correctAnswer, i18n.language)}: <strong>{shuffledOptions[shuffledCorrecta]}</strong>
+        </p>}
         <button onClick={() => onAnswer(selected === shuffledCorrecta)}
           className="w-full rounded-xl py-3 font-semibold" style={{ background: J.jade, color: J.onAccent }}>
           {loc(feedbackText.next, i18n.language)}

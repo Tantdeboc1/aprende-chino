@@ -6,7 +6,7 @@ import QuizCard from './QuizCard.jsx';
 import { shouldShowExercisePinyin } from '@/utils/storyDifficulty.js';
 import { trField, baseLang } from '@/utils/loc.js';
 
-export default function ExTranslation({ item, onAnswer, lesson }) {
+export default function ExTranslation({ item, onAnswer }) {
   const { i18n } = useTranslation();
   const lang = baseLang(i18n.language);
   const showPinyin = shouldShowExercisePinyin();
@@ -16,8 +16,6 @@ export default function ExTranslation({ item, onAnswer, lesson }) {
       subprompt={showPinyin ? item.pinyin : undefined}
       options={trField(item.opciones, item.opcionesTr, lang)}
       correcta={item.correcta}
-      explanation={{ kind: 'sentence', evidence: item.chino + ' · ' + item.pinyin }}
-      sentenceItem={{ sentence: item.chino, lesson }}
       onAnswer={onAnswer}
       variant="normal"
     />

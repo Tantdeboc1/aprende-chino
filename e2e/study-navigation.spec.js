@@ -20,16 +20,8 @@ test('estudiar tiene pestaña propia y volver nunca muestra el menú antiguo', a
   await page.getByRole('button', { name: /quiz rápido/i }).click();
   await page.getByRole('button', { name: /comenzar quiz/i }).click();
   await page.locator('div.grid.grid-cols-2 button').first().click();
-  const explanation = page.locator('section[aria-live="polite"]');
-  await expect(explanation).toBeVisible();
-  expect(await explanation.evaluate(el => {
-    const probe = document.createElement('div');
-    probe.style.borderColor = 'var(--red)';
-    document.body.appendChild(probe);
-    const matches = getComputedStyle(el).borderColor === getComputedStyle(probe).borderColor;
-    probe.remove();
-    return matches;
-  })).toBe(true);
+  await expect(page.locator('div.grid.grid-cols-2 button').first()).toBeDisabled();
+  await expect(page.getByText('Por qué esta respuesta', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: /volver/i }).click();
   await expect(page.getByRole('button', { name: /^ejercicios$/i })).toBeVisible();
   await page.goBack();

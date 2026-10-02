@@ -56,12 +56,13 @@ describe('DictationGame', () => {
     expect(screen.getByText('2 / 10')).toBeTruthy();
   });
 
-  it('a mistake waits for Continue so the explanation can be read', () => {
+  it('a mistake waits for Continue so the correction can be read', () => {
     start();
     fireEvent.click(screen.getByRole('button', { name: '好' }));
     act(() => { vi.advanceTimersByTime(5000); });
     expect(screen.getByText('1 / 10')).toBeTruthy();
-    expect(screen.getByText('Why this answer')).toBeTruthy();
+    expect(screen.getByText('Correct answer:')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(screen.getByText('2 / 10')).toBeTruthy();
     expect(screen.queryByText('Why this answer')).toBeNull();

@@ -34,7 +34,7 @@ test('Progreso por destrezas: persiste un intento y abre prácticas desde el per
     const options = page.locator('div.grid.grid-cols-2 button');
     await expect(options).toHaveCount(4);
     await options.first().click();
-    await expect(page.getByText('Por qué esta respuesta')).toBeVisible();
+    await expect(page.getByRole('status')).toContainText(/correct/i);
     await page.getByRole('button', { name: /siguiente|ver resultados/i }).click();
   }
 

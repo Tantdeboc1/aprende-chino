@@ -44,7 +44,13 @@ test('Completa la Frase: jugar hasta el resultado y "Jugar de nuevo" reinicia', 
     const options = page.locator('div.grid.grid-cols-2 button');
     await expect(options).toHaveCount(4);
     await options.first().click();
-    await expect(page.getByText('Por qué esta respuesta')).toBeVisible();
+    const feedback = page.getByRole('status');
+    await expect(feedback).toContainText(/correct/i);
+    if (/incorrect/i.test(await feedback.innerText())) {
+      await expect(page.getByText('Por qué esta respuesta')).toBeVisible();
+    } else {
+      await expect(page.getByText('Por qué esta respuesta')).toHaveCount(0);
+    }
     await page.getByRole('button', { name: /siguiente|ver resultados/i }).click();
   }
 

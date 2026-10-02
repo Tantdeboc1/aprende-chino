@@ -1,4 +1,3 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/daily/RadicalsDaily.jsx
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
@@ -355,7 +354,6 @@ export default function RadicalsDaily({ goBack, radicals }) {
             })}
           </div>
 
-          {isAnswered && <LearningExplanation kind="radical" word={radicals.find(r => r.radical === currentQ.correctAnswer)} answer={currentQ.targetChar} />}
           {/* Feedback y siguiente */}
           {isAnswered && (
             <div className="mt-6">

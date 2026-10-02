@@ -267,7 +267,7 @@ export default function QuizTone({ goBack, speakChinese }) {
             })}
           </div>
 
-          {showResult && <LearningExplanation kind="sound" tone={q.tone} chosenTone={selected} />}
+          {showResult && selected !== q.tone && <LearningExplanation kind="sound" tone={q.tone} chosenTone={selected} />}
           {showResult && (
             <div className="mt-6">
               <p className="text-lg mb-3">

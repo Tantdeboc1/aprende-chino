@@ -340,7 +340,7 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
           </div>
         )}
 
-        {result && <AnswerExplanation item={current} incorrect={result === 'incorrect'} />}
+        {result === 'incorrect' && <AnswerExplanation item={current} incorrect />}
 
         {/* Botones de acción */}
         <div className="flex gap-3">

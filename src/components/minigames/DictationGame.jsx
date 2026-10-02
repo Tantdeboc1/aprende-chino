@@ -1,6 +1,6 @@
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 // src/components/minigames/DictationGame.jsx
 // Dictado (comprensión auditiva): suena el audio de una palabra y hay que
 // elegir el carácter correcto entre 4. Entrena la destreza inversa a los
@@ -239,7 +239,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
             </div>
           </div>
         )}
-        {feedback && question && <LearningExplanation word={question.correct} chosenWord={feedback === 'incorrect' ? question.options.find(opt => opt.char === selected) : null} />}
+        {feedback === 'incorrect' && question && <AnswerCorrection word={question.correct} />}
         {feedback === 'incorrect' && <button onClick={handleContinue} className="w-full rounded-xl bg-[var(--jade)] text-[var(--on-accent)] py-3 font-semibold">{t('answer_explanation_continue')}</button>}
       </Container>
     </div>

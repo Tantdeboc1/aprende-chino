@@ -28,6 +28,7 @@ describe('CompleteSentence', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '好' }));
     expect(screen.getByText('✓ Correct!')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
     expect(screen.getByText('1')).toBeTruthy();
   });
 

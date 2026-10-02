@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import QuizCard from './QuizCard.jsx';
 import { trField, baseLang } from '@/utils/loc.js';
 
-export default function ExComprehension({ item, onAnswer, evidence }) {
+export default function ExComprehension({ item, onAnswer }) {
   const { i18n } = useTranslation();
   const lang = baseLang(i18n.language);
   // Si las opciones son nombres chinos cortos, usar variant chinese; si no, normal.
@@ -15,7 +15,6 @@ export default function ExComprehension({ item, onAnswer, evidence }) {
       prompt={trField(item.pregunta, item.preguntaTr, lang)}
       options={trField(item.opciones, item.opcionesTr, lang)}
       correcta={item.correcta}
-      explanation={{ kind: 'evidence', evidence }}
       onAnswer={onAnswer}
       variant={isChinese ? 'chinese' : 'normal'}
     />

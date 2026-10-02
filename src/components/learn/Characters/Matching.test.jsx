@@ -71,7 +71,8 @@ describe('Matching (emparejar carácter-significado)', () => {
     expect(screen.getByText('Pairs: 0/6')).toBeTruthy();
     // Ninguna de las dos queda deshabilitada: no se dio por resuelta.
     expect(screen.getByRole('button', { name: char.char }).disabled).toBe(false);
-    expect(screen.getByText('Why this answer')).toBeTruthy();
+    expect(screen.getByText('Correct answer:')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
   });
 
   it('pulsar dos veces la misma tarjeta la deselecciona sin resolver nada', () => {

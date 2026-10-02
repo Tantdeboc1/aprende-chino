@@ -228,9 +228,6 @@ export default function FindIntruder({ goBack, selectedLesson }) {
                 <span className="text-2xl"></span>
                 <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
               </div>
-              <p className="text-[var(--ink-soft)] text-xs">
-                {t('intruder_explanation', { group: current.category?.[lang] || current.category?.es })}
-              </p>
             </div>
           )}
           {result === 'incorrect' && (

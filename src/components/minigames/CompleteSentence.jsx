@@ -264,7 +264,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
           )}
         </div>
 
-        {result && <AnswerExplanation item={current} incorrect={result === 'incorrect'} />}
+        {result === 'incorrect' && <AnswerExplanation item={current} incorrect />}
 
         {/* Botones */}
         <div className="flex gap-3">

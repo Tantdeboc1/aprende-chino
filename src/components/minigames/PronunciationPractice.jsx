@@ -1,4 +1,3 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/PronunciationPractice.jsx
 // Mini-juego: pronuncia la frase en chino. Usa Web Speech API para reconocer
 // la voz del usuario y compara con la frase esperada (algoritmo Levenshtein
@@ -342,7 +341,6 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
           </div>
         )}
 
-        {scoreInfo && <LearningExplanation kind="speech" />}
         {/* Error */}
         {errorMsg && (
           <div className="bg-[var(--red-bg)] border border-[var(--red)] rounded-xl p-3 text-sm text-[var(--red-deep)]">

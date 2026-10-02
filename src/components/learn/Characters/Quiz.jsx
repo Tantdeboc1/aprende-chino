@@ -1,5 +1,5 @@
 import { useSkillSession } from '@/hooks/useSkillSession.js';
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 // src/components/learn/Characters/Quiz.jsx
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -279,7 +279,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
             ))}
           </div>
 
-          {showResult && <LearningExplanation word={question.correct} chosenWord={selected} />}
+          {showResult && selected?.char !== question.correct.char && <AnswerCorrection word={question.correct} />}
           {showResult && (
             <button
               onClick={next}

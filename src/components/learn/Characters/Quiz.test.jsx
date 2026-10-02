@@ -105,6 +105,8 @@ describe('Quiz de caracteres — acierto/fallo determinista', () => {
 
     fireEvent.click(optionButtons()[3]);
     expect(onTrackResult).toHaveBeenCalledWith(protagonist, true);
+    expect(screen.queryByText('Why this answer')).toBeNull();
+    expect(screen.queryByText('Correct answer:')).toBeNull();
   });
 
   it('pulsar una opción incorrecta notifica onTrackResult(char, false)', () => {
@@ -115,6 +117,8 @@ describe('Quiz de caracteres — acierto/fallo determinista', () => {
 
     fireEvent.click(optionButtons()[0]); // no es la correcta
     expect(onTrackResult).toHaveBeenCalledWith(protagonist, false);
+    expect(screen.getByText('Correct answer:').parentElement.textContent).toContain(protagonist.pinyin);
+    expect(screen.queryByText('Why this answer')).toBeNull();
   });
 
   it('completar las 10 preguntas acertando todas muestra el marcador final 10/10', () => {

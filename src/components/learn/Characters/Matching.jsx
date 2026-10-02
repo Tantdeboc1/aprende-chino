@@ -1,4 +1,4 @@
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 // src/components/learn/Characters/Matching.jsx
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -179,7 +179,7 @@ export default function Matching({
         </div>
 
         <div className="bg-[var(--paper-hi)] rounded-xl shadow-sm p-6 border border-[rgba(28,24,19,0.10)]">
-          {correction && <LearningExplanation {...correction} />}
+          {correction && <AnswerCorrection {...correction} />}
           {done ? (
             <div className="text-center py-8">
               <div className="text-5xl mb-4"></div>

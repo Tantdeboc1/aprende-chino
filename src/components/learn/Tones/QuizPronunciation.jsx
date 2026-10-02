@@ -307,7 +307,7 @@ export default function QuizPronunciation({ goBack }) {
             })}
           </div>
 
-          {showResult && <LearningExplanation kind="sound" sound={q.correct} chosen={selected} />}
+          {showResult && selected !== q.correct && <LearningExplanation kind="sound" sound={q.correct} chosen={selected} />}
           {showResult && (
             <button onClick={next} className="w-full mt-6 bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition">
               {idx + 1 >= questions.length ? t('radicals_view_results_button') : t('radicals_next_question_button')}

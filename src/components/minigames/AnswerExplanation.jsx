@@ -4,6 +4,7 @@ import { getSentenceExplanation } from '@/utils/sentenceExplanation.js';
 
 export default function AnswerExplanation({ item, incorrect = false }) {
   const { t, i18n } = useTranslation();
+  if (!incorrect) return null;
   const detail = getSentenceExplanation(item);
   if (!detail) return null;
   return (

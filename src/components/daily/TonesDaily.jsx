@@ -341,7 +341,7 @@ export default function TonesDaily({ goBack, speakChinese }) {
             })}
           </div>
 
-          {isAnswered && <LearningExplanation kind="sound" tone={currentQ.tone} chosenTone={selectedAnswer} />}
+          {isAnswered && selectedAnswer !== currentQ.tone && <LearningExplanation kind="sound" tone={currentQ.tone} chosenTone={selectedAnswer} />}
           {/* Feedback y siguiente */}
           {isAnswered && (
             <div className="mt-6">

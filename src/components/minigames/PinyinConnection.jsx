@@ -1,6 +1,6 @@
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
-import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
@@ -192,7 +192,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
             </div>
           </div>
         )}
-        {feedback && currentQuestion && <LearningExplanation word={currentQuestion.charObj} />}
+        {feedback === 'incorrect' && currentQuestion && <AnswerCorrection word={currentQuestion.charObj} />}
       </Container>
     </div>
   );
