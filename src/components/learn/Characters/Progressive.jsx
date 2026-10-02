@@ -1,9 +1,11 @@
+import WordExamples from '@/components/ui/WordExamples.jsx';
 // src/components/learn/Characters/Progressive.jsx
 import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Progressive({
   goBack,
+  embedded = false,
   characters = [],
   speakChinese,
   onTrackSeen,
@@ -28,12 +30,12 @@ export default function Progressive({
   }, [current]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="min-h-screen bg-[var(--paper)] p-4">
-      <div className="max-w-4xl mx-auto pt-8 pb-8">
+    <div className={embedded ? "bg-[var(--paper)] rounded-2xl" : "min-h-screen bg-[var(--paper)] p-4"}>
+      <div className={embedded ? "mx-auto py-2" : "max-w-4xl mx-auto pt-8 pb-8"}>
         <div className="mb-6 flex justify-between items-center">
-          <button onClick={goBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]">
+          {!embedded && <button onClick={goBack} className="flex items-center text-[var(--ink-soft)] hover:text-[var(--ink)]">
             ← {t('lessons_back_button')}
-          </button>
+          </button>}
           <span className="text-[var(--ink-soft)] font-semibold">{t('lessons_page_of', { current: current + 1, total: Math.max(1, lessons.length) })}</span>
         </div>
 
@@ -62,6 +64,7 @@ export default function Progressive({
                     <p className="text-[var(--ink)] font-semibold text-center text-lg">{char.meaning}</p>
                   </div>
                 </div>
+                <WordExamples word={char} />
                 {typeof speakChinese === 'function' && (
                   <div className="mt-4 text-center">
                     <button

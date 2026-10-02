@@ -1,3 +1,4 @@
+import WordExamples from '@/components/ui/WordExamples.jsx';
 // src/components/LessonDetail.jsx
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
@@ -11,13 +12,13 @@ import { toggleWordDifficult, isWordDifficult, isLeech, getNextReviewInfo } from
 // Cargas perezosas: estos componentes/módulos arrastran bastante peso (datos
 // multi-idioma, librería de partículas) y solo se necesitan al abrir su tab
 // o al alcanzar el 100% de la lección. Salen del chunk principal de LessonDetail.
+const StudyTab = lazyWithRetry(() => import('./learn/Characters/Progressive.jsx'));
 const GrammarTab   = lazyWithRetry(() => import('./GrammarTab.jsx'));
 const CulturalTab  = lazyWithRetry(() => import('./CulturalTab.jsx'));
 const Confetti     = lazyWithRetry(() => import('react-confetti'));
 
 /* CJK exercise icons — reemplazan emojis */
 const EXERCISE_DEFS = [
-  { key: 'learn',    cn: '学', labelKey: 'exercise_study',    descKey: 'exercise_study_desc',    bg: J.jadeBg, fg: J.jadeDeep },
   { key: 'quiz',     cn: '考', labelKey: 'exercise_quiz',     descKey: 'exercise_quiz_desc',     bg: J.redBg,  fg: J.redDeep  },
   { key: 'matching', cn: '连', labelKey: 'exercise_matching', descKey: 'exercise_matching_desc', bg: J.sandBg, fg: J.sandDeep },
   { key: 'writing',  cn: '写', labelKey: 'exercise_writing',  descKey: 'exercise_writing_desc',  bg: J.jadeBg, fg: J.jadeDeep },
@@ -40,6 +41,7 @@ export default function LessonDetail({
   speakChinese,
   defaultTab = 'vocab',
   onTabChange,
+  onTrackSeen,
 }) {
   const [tab, setTab] = useState(defaultTab);
   const { width, height } = useWindowSize();
@@ -162,6 +164,7 @@ export default function LessonDetail({
       <div className="flex gap-2 px-4 pt-4 pb-2 overflow-x-auto">
         {[
           { id: 'vocab',     label: `${t('lesson_tab_vocab')} (${stats.total})` },
+          { id: 'study', label: t('exercise_study') },
           { id: 'exercises', label: t('lesson_tab_practice') },
           { id: 'grammar',   label: t('lesson_tab_grammar') },
           { id: 'culture',   label: t('lesson_tab_culture') },
@@ -363,21 +366,18 @@ export default function LessonDetail({
                       </button>
                     </div>
 
-                    {isOpen && word.examples && word.examples.length > 0 && (
-                      <div className="px-3 pb-3 pt-2" style={{ borderTop: `1px solid ${J.hair}` }}>
-                        <p className="text-xs mb-1.5" style={{ color: J.mute }}>Ejemplos:</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {word.examples.map((ex, i) => (
-                            <span key={i} className="text-sm px-2.5 py-1 rounded-lg" style={{ background: J.paper, color: J.ink }}>{ex}</span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    {isOpen && <WordExamples word={word} />}
                   </div>
                 );
               })}
             </div>
           </div>
+        )}
+
+        {tab === 'study' && (
+          <Suspense fallback={<div className="pt-6 text-center text-sm" style={{ color: J.mute }}>…</div>}>
+            <StudyTab embedded characters={mainWords} speakChinese={speakChinese} onTrackSeen={onTrackSeen} goBack={() => handleTabChange('vocab')} />
+          </Suspense>
         )}
 
         {/* Tab Gramatica */}

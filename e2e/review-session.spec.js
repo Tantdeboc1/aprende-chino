@@ -1,6 +1,6 @@
 // e2e/review-session.spec.js
 // Golden path del Repaso (SRS) de principio a fin:
-//   invitado → Lección 1 → Ejercicios → "Estudiar" (marca el primer grupo de
+//   invitado → Lección 1 → pestaña "Estudiar" (marca el primer grupo de
 //   hasta 6 palabras como vistas nada más entrar, ver el useEffect de
 //   Progressive.jsx → onTrackSeen → markWordSeen → initSRSCard, que deja
 //   nextReview = ahora mismo) → Repaso → modo "Repaso del día" → voltear y
@@ -35,14 +35,13 @@ test('Repaso: completar una sesión de "Repaso del día" tras generar tarjetas S
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
   await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();
 
-  // ── Generar tarjetas SRS: Lección 1 → Ejercicios → Estudiar ──────────────
+  // ── Generar tarjetas SRS: Lección 1 → pestaña Estudiar ──────────────────
   await page.getByRole('button', { name: /lección 1/i }).first().click();
-  await page.getByRole('button', { name: /^ejercicios$/i }).click();
-  await page.getByRole('button', { name: 'Estudiar' }).click();
+  await page.getByRole('button', { name: 'Estudiar', exact: true }).click();
   await expect(page.getByText('Página 1 de', { exact: false })).toBeVisible();
 
   // Volver a la lección y de ahí a Repaso (la barra inferior sigue visible aquí).
-  await page.getByRole('button', { name: /volver/i }).click();
+  await page.getByRole('button', { name: /^vocabulario \(/i }).click();
   await page.getByRole('button', { name: 'Repaso' }).click();
   await expect(page.getByRole('heading', { name: 'Repaso', level: 1 })).toBeVisible();
 

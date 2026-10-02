@@ -7,7 +7,7 @@ export default function AnswerExplanation({ item, incorrect = false }) {
   const detail = getSentenceExplanation(item);
   if (!detail) return null;
   return (
-    <div className="rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] p-4 space-y-2" aria-live="polite">
+    <div className="rounded-xl border border-[var(--red)] bg-[var(--paper-hi)] p-4 space-y-2" aria-live="polite">
       <p className="font-semibold text-sm text-[var(--ink)]">{t('answer_explanation_title')}</p>
       {incorrect && item.answer && <p className="text-xs text-[var(--mute)]">{t('answer_explanation_context')}</p>}
       <p className="text-sm leading-relaxed text-[var(--ink-soft)]">{loc(detail.explanation, i18n.language)}</p>

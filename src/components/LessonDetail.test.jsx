@@ -85,7 +85,9 @@ describe('LessonDetail', () => {
     setup();
     expect(screen.queryByText('你好')).toBeNull();
     fireEvent.click(screen.getByText('你').closest('div'));
-    expect(screen.getByText('你好')).toBeTruthy();
+    expect(screen.getByText('你好！')).toBeTruthy();
+    expect(screen.getByText('Nǐ hǎo!')).toBeTruthy();
+    expect(screen.getByText('Hello!')).toBeTruthy();
   });
 
   it('tab Ejercicios: cada tarjeta dispara onStartExercise con su key, incluido el examen', () => {
@@ -97,8 +99,8 @@ describe('LessonDetail', () => {
 
     // Los botones combinan el icono CJK con el texto (p.ej. "学Study Review
     // words…") como nombre accesible — sin anclar al inicio.
-    fireEvent.click(screen.getByRole('button', { name: /study/i }));
-    expect(props.onStartExercise).toHaveBeenCalledWith('learn');
+    expect(screen.getAllByRole('button', { name: /study/i })).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /study/i }).closest('div').className).toContain('overflow-x-auto');
 
     fireEvent.click(screen.getByRole('button', { name: /quick quiz/i }));
     expect(props.onStartExercise).toHaveBeenCalledWith('quiz');

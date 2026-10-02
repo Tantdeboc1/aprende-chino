@@ -8,10 +8,12 @@ afterEach(cleanup);
 
 describe('learning feedback', () => {
   it('contrasts the selected word with the correct word and its example', () => {
-    render(<LearningExplanation word={{ char: '你', pinyin: 'nǐ', meaning: 'you', examples: [{ zh: '你好', translation: { en: 'Hello' } }] }} chosenWord={{ char: '我', pinyin: 'wǒ', meaning: 'I' }} />);
+    render(<LearningExplanation word={{ char: '你', pinyin: 'nǐ', meaning: 'you', examples: [{ zh: '你好', pinyin: 'nǐ hǎo', translation: { en: 'Hello' } }] }} chosenWord={{ char: '我', pinyin: 'wǒ', meaning: 'I' }} />);
     expect(screen.getByText(/nǐ.*you/)).toBeTruthy();
     expect(screen.getByText(/wǒ.*I/)).toBeTruthy();
-    expect(screen.getByText(/你好.*Hello/)).toBeTruthy();
+    expect(screen.getByText('你好')).toBeTruthy();
+    expect(screen.getByText('nǐ hǎo')).toBeTruthy();
+    expect(screen.getByText('Hello')).toBeTruthy();
   });
 
   it('explains the difference between the correct and selected tones', () => {

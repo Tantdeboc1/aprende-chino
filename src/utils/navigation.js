@@ -1,5 +1,5 @@
 // src/utils/navigation.js
-import { useMemo, useCallback, useRef } from 'react';
+import { useMemo, useCallback, useRef, useEffect } from 'react';
 import { lazyWithRetry } from './lazyWithRetry.js';
 import { markWordResult, markWordSeen } from './progress.js';
 import { updateChallengeProgress } from './dailyChallenges.js';
@@ -9,7 +9,6 @@ import { addXP } from './streak.js';
 // ── Lazy-loaded components — cada uno genera su propio chunk ────────────────
 const Dictionary       = lazyWithRetry(() => import('@/components/Dictionary.jsx'));
 const MiniGames        = lazyWithRetry(() => import('@/components/MiniGames.jsx'));
-const LearnMenu        = lazyWithRetry(() => import('@/components/learn/LearnMenu.jsx'));
 const WritingMenu      = lazyWithRetry(() => import('@/components/learn/Writing/index.jsx'));
 const HanziWriting     = lazyWithRetry(() => import('@/components/learn/Writing/HanziWriting.jsx'));
 const RadicalsWriting  = lazyWithRetry(() => import('@/components/learn/Writing/RadicalsWriting.jsx'));
@@ -32,6 +31,11 @@ const TonesDaily       = lazyWithRetry(() => import('@/components/daily/TonesDai
 // hace solo allí y aquí no hay que tocar nada.
 import { findMinigame } from '@/components/minigames/registry.js';
 
+function ReturnToLesson({ goBack }) {
+  useEffect(() => { goBack?.(); }, [goBack]);
+  return null;
+}
+
 export function useNavigation(
   screen,
   learnSection,
@@ -46,7 +50,6 @@ export function useNavigation(
     radicals,
     speak,
     navigateTo,
-    setLearnSection,
     setCharacterSection,
     setToneSection,
     setRadicalSection,
@@ -160,11 +163,9 @@ export function useNavigation(
 
     // === APRENDIZAJE - MENÚS PRINCIPALES ===
     if (screen === 'learn' && learnSection === null) {
-      Component = LearnMenu;
+      Component = ReturnToLesson;
       props = {
         goBack: hubOr(goBack),
-        setLearnSection,
-        setToneSection
       };
     }
 
@@ -343,7 +344,7 @@ export function useNavigation(
     screen, learnSection, writingSection, radicalSection,
     characterSection, toneSection, dailySection,
     characters, allCharacters, radicals, speak, navigateTo,
-    setLearnSection, setCharacterSection, setToneSection, setRadicalSection,
+    setCharacterSection, setToneSection, setRadicalSection,
     setWritingSection, setScreen,
     searchTerm, setSearchTerm,
     selectedLesson, setSelectedLesson, showSupplementary, setShowSupplementary,

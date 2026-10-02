@@ -1,14 +1,15 @@
+import WordExamples from '@/components/ui/WordExamples.jsx';
 import { useTranslation } from 'react-i18next';
 import { loc } from '@/utils/loc.js';
 import text from '@/data/feedbackText.js';
 
 function Word({ word, lang }) {
+  const { t } = useTranslation();
   if (!word) return null;
-  const examples = word.examples || [];
   return <div className="space-y-1">
     <p><strong className="font-cn">{word.char || word.radical}</strong>{word.pinyin && <> · {word.pinyin}</>}{(loc(word.meanings, lang) || word.meaning) && <> · {loc(word.meanings, lang) || word.meaning}</>}</p>
-    {word.radical && word.char && <p className="text-xs">部首: {word.radical}</p>}
-    {examples.slice(0, 2).map((ex, i) => <p key={i} className="text-sm">{typeof ex === 'string' ? ex : <>{ex.zh || ex.hanzi} {ex.pinyin} {loc(ex.translation || ex.translations, lang)}</>}</p>)}
+    {word.radical && word.char && <p className="text-xs">{t('dictionary_radical')}: {word.radical}</p>}
+    <WordExamples word={word} />
   </div>;
 }
 
@@ -22,9 +23,9 @@ export default function LearningExplanation({ kind = 'word', word, chosenWord, t
     : ['m','n','l'].includes(sound) ? 'nasal'
     : ['f','h'].includes(sound) ? 'friction'
     : ({ a: 'vowelA', o: 'vowelO', e: 'vowelE', i: 'vowelI' })[sound];
-  return <section aria-live="polite" className="my-3 rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] p-4 text-left text-sm text-[var(--ink-soft)] space-y-2">
+  return <section aria-live="polite" className="my-3 rounded-xl border border-[var(--red)] bg-[var(--paper-hi)] p-4 text-left text-sm text-[var(--ink-soft)] space-y-2">
     <p className="font-semibold text-[var(--ink)]">{t('answer_explanation_title')}</p>
-    <p>{explanation || copy(kind)}</p>
+    {!(kind === 'word' && word && !explanation) && <p>{explanation || copy(kind)}</p>}
     {word && <Word word={word} lang={lang} />}
     {chosenWord && chosenWord.char !== word?.char && <><p>{copy('contrast')}</p><Word word={chosenWord} lang={lang} /></>}
     {tone !== undefined && <p>{copy(`tone${tone === 5 ? 0 : tone}`)}</p>}

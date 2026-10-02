@@ -1,0 +1,41 @@
+import { test, expect } from '@playwright/test';
+
+test('estudiar tiene pestaña propia y volver nunca muestra el menú antiguo', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /invitado/i }).click();
+  await page.getByPlaceholder(/cómo te llamas/i).fill('Tester Estudio');
+  await page.getByRole('button', { name: /siguiente/i }).click();
+  await page.getByRole('button', { name: /hombre/i }).click();
+  await page.getByRole('button', { name: /siguiente/i }).click();
+  await page.locator('button:has(img)').first().click();
+  await page.getByRole('button', { name: /siguiente/i }).click();
+  await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
+  await page.getByRole('button', { name: /saltar tutorial/i }).click();
+  await page.getByRole('button', { name: /lección 1/i }).first().click();
+  await page.getByRole('button', { name: 'Estudiar', exact: true }).click();
+  await expect(page.getByText('Página 1 de', { exact: false })).toBeVisible();
+  await page.getByRole('button', { name: /^ejercicios$/i }).click();
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toHaveCount(1);
+  await page.getByRole('button', { name: /quiz rápido/i }).click();
+  await page.getByRole('button', { name: /comenzar quiz/i }).click();
+  await page.locator('div.grid.grid-cols-2 button').first().click();
+  const explanation = page.locator('section[aria-live="polite"]');
+  await expect(explanation).toBeVisible();
+  expect(await explanation.evaluate(el => {
+    const probe = document.createElement('div');
+    probe.style.borderColor = 'var(--red)';
+    document.body.appendChild(probe);
+    const matches = getComputedStyle(el).borderColor === getComputedStyle(probe).borderColor;
+    probe.remove();
+    return matches;
+  })).toBe(true);
+  await page.getByRole('button', { name: /volver/i }).click();
+  await expect(page.getByRole('button', { name: /^ejercicios$/i })).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole('button', { name: /^ejercicios$/i })).toBeVisible();
+  await expect(page.getByText('Xuéxí - Aprender', { exact: true })).toHaveCount(0);
+  await page.goto('/?legacy=1#/exercise');
+  await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();
+  await expect(page.getByText('Xuéxí - Aprender', { exact: true })).toHaveCount(0);
+});

@@ -1,3 +1,4 @@
+import WordExamples from '@/components/ui/WordExamples.jsx';
 // src/components/Dictionary.jsx
 import { useCallback, useEffect, useMemo, useState, memo } from "react";
 import Card from "@/components/ui/Card.jsx";
@@ -137,17 +138,7 @@ const DictionaryCard = memo(function DictionaryCard({ char, srsData, isFav, onSe
           </div>
         )}
 
-        {/* Ejemplos */}
-        {char.examples?.length > 0 && (
-          <div className="pt-1">
-            <p className="text-xs mb-1" style={{ color: J.mute }}>{t('dictionary_examples')}:</p>
-            <div className="flex flex-wrap gap-1">
-              {char.examples.map((ex, i) => (
-                <span key={i} className="text-xs px-2 py-0.5 rounded-md" style={{ background: J.paper, color: J.ink }}>{ex}</span>
-              ))}
-            </div>
-          </div>
-        )}
+        <WordExamples word={char} />
       </div>
     </Card>
   );

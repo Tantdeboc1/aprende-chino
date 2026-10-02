@@ -1,3 +1,4 @@
+import { exerciseReturnScreen } from '@/utils/exerciseReturn.js';
 import { assetUrl } from './utils/assets';
 import { hanziCharDataLoader } from './utils/hanziCharData.js';
 import { useState, useEffect, useMemo, useCallback, Suspense, useRef } from "react";
@@ -26,7 +27,7 @@ import { baseLang } from './utils/loc.js';
 import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { J, resolveColor } from '@/styles/tokens';
-import { loadProgress, saveProgress } from './utils/progress.js';
+import { loadProgress, saveProgress, markWordSeen } from './utils/progress.js';
 import { getDueCount } from './utils/srs.js';
 import { armTour } from './utils/tour.js';
 import { STORAGE_KEYS } from './utils/storageKeys.js';
@@ -245,6 +246,9 @@ export default function App() {
       }, 1500);
     }
   }, []);
+  const handleStudySeen = useCallback((word) => {
+    if (word?.char && word?.lesson) handleProgressChange(markWordSeen(progressRef.current, word.lesson, word.char));
+  }, [handleProgressChange]);
   useEffect(() => {
     const retrySync = async () => {
       if (modeRef.current !== 'google') return;
@@ -335,9 +339,12 @@ export default function App() {
   // real y que el propio botón "Volver" del hub no acabe apuntando al
   // minijuego que se acaba de abandonar.
   const hubOriginRef = useRef('home');
+  const exerciseOriginRef = useRef('home');
 
   // Lección seleccionada (para lesson-detail y ejercicios)
   const [selectedLesson, setSelectedLesson] = useState(initialNav?.lesson ?? 1);
+  const selectedLessonRef = useRef(selectedLesson);
+  useEffect(() => { selectedLessonRef.current = selectedLesson; }, [selectedLesson]);
   // Pestaña activa en LessonDetail (para restaurarla al volver)
   const [lessonDetailTab, setLessonDetailTab] = useState('vocab');
 
@@ -393,8 +400,12 @@ export default function App() {
     const onPop = () => {
       const parsed = parseHash(window.location.hash);
       if (!parsed || !loadUserName()) return;
-      // Mismo reset de sub-secciones que la navegación normal: al volver a
-      // #/exercise no hay estado en la URL, así que se muestra su menú.
+      if (parsed.screen === 'exercise') {
+        parsed.screen = exerciseReturnScreen(exerciseOriginRef.current);
+        if (parsed.screen === 'lesson-detail') parsed.lesson = selectedLessonRef.current || 1;
+        history.replaceState(null, '', screenToHash(parsed.screen, parsed.lesson));
+      }
+      // La URL de ejercicio no conserva sub-secciones: vuelve a su origen.
       setLearnSection(null); setCharacterSection(null); setToneSection(null);
       setRadicalSection(null); setWritingSection(null); setDailySection(null);
       if (parsed.lesson != null) setSelectedLesson(parsed.lesson);
@@ -619,11 +630,12 @@ export default function App() {
 
   // Iniciar ejercicio desde LessonDetail
   const handleStartExercise = (exerciseKey) => {
+    exerciseOriginRef.current = 'lesson-detail';
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setPrevScreen('lesson-detail');
     if (exerciseKey === 'exam') { setScreen('exam'); return; }
-    if (exerciseKey === 'learn')          { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('lessons'); }
+    if (exerciseKey === 'learn')          { setLessonDetailTab('study'); setScreen('lesson-detail'); }
     else if (exerciseKey === 'quiz')      { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('quiz'); }
     else if (exerciseKey === 'matching')  { setScreen('exercise'); setLearnSection('characters'); setCharacterSection('matching'); }
     else if (exerciseKey === 'writing')   { setScreen('exercise'); setLearnSection('writing'); setWritingSection('hanzi'); }
@@ -632,6 +644,7 @@ export default function App() {
 
   // Iniciar ejercicio desde intro
   const handleStartIntroExercise = (exerciseKey) => {
+    exerciseOriginRef.current = 'intro-detail';
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setPrevScreen('intro-detail');
@@ -655,7 +668,7 @@ export default function App() {
   const goBackToLesson = useCallback(() => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
-    setScreen(prevScreenRef.current || 'home');
+    setScreen(exerciseReturnScreen(screenRef.current === 'exercise' ? exerciseOriginRef.current : prevScreenRef.current));
   }, []);
 
   const navigateTo = useCallback((key) => {
@@ -803,6 +816,7 @@ export default function App() {
               speakChinese={speak}
               defaultTab={lessonDetailTab}
               onTabChange={setLessonDetailTab}
+              onTrackSeen={handleStudySeen}
             />
           </Suspense>
         </ErrorBoundary>
@@ -939,7 +953,7 @@ export default function App() {
               onPractice={(activity) => {
                 hubOriginRef.current = 'profile';
                 setSelectedLesson(null);
-                if (activity === 'handwriting') { setPrevScreen('profile'); setLearnSection('writing'); setWritingSection('hanzi'); setScreen('exercise'); }
+                if (activity === 'handwriting') { exerciseOriginRef.current = 'profile'; setPrevScreen('profile'); setLearnSection('writing'); setWritingSection('hanzi'); setScreen('exercise'); }
                 else navigateTo(activity);
               }}
               onOpenSettings={() => { setPrevScreen('profile'); setScreen('settings'); }}
