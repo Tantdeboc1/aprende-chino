@@ -49,6 +49,7 @@ describe('SOVGame', () => {
 
     expect(screen.getByText(/incorrect/i)).toBeTruthy();
     expect(screen.getByText('你好吗')).toBeTruthy(); // frase correcta revelada
+    expect(screen.getByText('Why this answer')).toBeTruthy();
   });
 
   it('al fallar, se llama a speakChinese con la frase correcta', () => {

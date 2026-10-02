@@ -1,5 +1,9 @@
 // src/locales/it.js — Italiano
 export default {
+  answer_explanation_continue: 'Continua',
+  answer_explanation_title: "Perché questa risposta",
+  answer_explanation_context: "La risposta corrisponde al significato e all’indizio dell’esercizio. Alcune alternative possono formare altre frasi valide.",
+  answer_explanation_example: "Un altro esempio",
   // ── Explora China (accesibilidad / controles) ──
   china_a11y_map: "Mappa della Cina per province",
   china_zoom_in: "Ingrandisci",

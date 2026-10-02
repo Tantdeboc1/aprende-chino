@@ -21,6 +21,7 @@ async function onboardAsGuest(page, name) {
   await page.getByRole('button', { name: /siguiente/i }).click();
 
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
 
   await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();

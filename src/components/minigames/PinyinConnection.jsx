@@ -1,3 +1,6 @@
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
@@ -16,6 +19,7 @@ import GameResults from './GameResults.jsx';
 // --- Componente Principal ---
 export default function PinyinConnection({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera pregunta además de cambiar de fase).
   const { isIntro, isPlaying, isFinished, start, finish } = useGamePhase('pinyin-connection', { autoSkip: false });
@@ -53,10 +57,11 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   const startGame = useCallback(() => {
     setScore(0);
     resetCounts();
+    clearMistakes();
     resetClock();
     start();
     generateQuestion();
-  }, [generateQuestion, start, resetClock, resetCounts]);
+  }, [generateQuestion, start, resetClock, resetCounts, clearMistakes]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -73,6 +78,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
     if (isCorrect) setScore(s => s + 10);
     else penalize(2);
     onTrackResult?.(currentQuestion.charObj, isCorrect);
+    if (!isCorrect) recordMistake({ word: currentQuestion.charObj, chosen: selectedPinyin });
 
     const capturedTime = timeLeftRef.current;
     scheduleRetry(() => {
@@ -113,6 +119,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
   if (isFinished) {
     return (
       <GameResults
+        mistakes={mistakes}
         gameId="pinyin-connection"
         title={t('minigames_time_up_message')}
         subtitle={t('minigames_pinyin_connection_title')}
@@ -185,6 +192,7 @@ export default function PinyinConnection({ goBack, characters = [], onTrackResul
             </div>
           </div>
         )}
+        {feedback && currentQuestion && <LearningExplanation word={currentQuestion.charObj} />}
       </Container>
     </div>
   );

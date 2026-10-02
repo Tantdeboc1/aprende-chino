@@ -1,3 +1,4 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
 // src/components/minigames/GameResults.jsx
 // Pantalla de resultados compartida por los minijuegos, con el mismo estilo
 // que la de GlobalExam: aciertos en verde, fallos en rojo y precisión.
@@ -7,8 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { recordMinigameScore } from '@/utils/minigameScores.js';
 import { useCountUp } from '@/hooks/useCountUp.js';
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
 
-export default function GameResults({ gameId, title, subtitle, correct, wrong, score, scoreLabel, onPlayAgain, onBack }) {
+export default function GameResults({ gameId, title, subtitle, correct, wrong, score, scoreLabel, onPlayAgain, onBack, mistakes }) {
   const { t } = useTranslation();
   // Con aciertos/fallos la precisión sale de ellos; si el juego solo tiene
   // una nota 0-100 (p. ej. pronunciación), esa nota hace de precisión.
@@ -25,6 +27,7 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
   useEffect(() => {
     if (gameId) recordMinigameScore(gameId, pct);
   }, [gameId, pct]);
+  useSkillSession(true, { activity: gameId, correct, total, score, mistakes });
   const celebrate = hasCounts ? correct > 0 : good;
 
   // Números animados (0 → valor) con un pop al asentarse el principal.
@@ -92,6 +95,7 @@ export default function GameResults({ gameId, title, subtitle, correct, wrong, s
               : t('results_continue_hint', 'Buen trabajo. Elige otra actividad para seguir practicando.')}
           </div>
 
+          <MistakeReview items={mistakes} />
           <div className="flex gap-3">
             <button
               // Envolvemos en arrow para NO pasar el evento de clic como

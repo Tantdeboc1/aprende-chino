@@ -1,3 +1,4 @@
+import SkillProgress from '@/components/SkillProgress.jsx';
 // src/components/ProfileScreen.jsx
 // Pantalla de "perfil del usuario": stats y gamificación. Aquí muestra lo
 // que motiva (nivel, XP, racha, progreso). La configuración real vive en
@@ -52,7 +53,7 @@ function GearIcon({ size = 22 }) {
   );
 }
 
-export default function ProfileScreen({ userName, progress, allCharacters, onOpenSettings, onOpenFriends }) {
+export default function ProfileScreen({ userName, progress, allCharacters, onOpenSettings, onOpenFriends, onPractice }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language; // loc() ya normaliza los códigos regionales
   const { mode, user } = useAuth();
@@ -399,6 +400,8 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           <ProfileRow l={t('settings_progress_accuracy')} v={`${accuracy}%`} tag={accuracy >= 80 ? t('settings_progress_accuracy_good') : t('settings_progress_accuracy_meh')} accent="jade" />
           <ProfileRow l={t('settings_progress_chars_mastered')} v={totalMastered} tag={t('settings_progress_record_tag')} accent="red" />
         </JCard>
+
+        <SkillProgress progress={progress} onPractice={onPractice} />
 
         {/* ─── Insignias ──────────────────────────────────────────────── */}
         <div className="flex items-baseline justify-between" style={{ marginTop: 20, marginBottom: 6 }}>

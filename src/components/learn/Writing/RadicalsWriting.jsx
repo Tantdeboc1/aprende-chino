@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/learn/Writing/RadicalsWriting.jsx
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
@@ -10,6 +11,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [strokeMistake, setStrokeMistake] = useState(false);
   const [activeTab, setActiveTab] = useState('view');
   const writerRef = useRef(null);
   const writerInstanceRef = useRef(null);
@@ -116,6 +118,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const animateCharacter = async () => {
     if (!writerInstanceRef.current || activeTab !== 'view') return;
 
+    setStrokeMistake(false);
+
     setIsPlaying(true);
 
     try {
@@ -134,10 +138,12 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       // 5. Ejecutar animación
       runWriterOp(() => writerInstanceRef.current.animateCharacter({
         onComplete: () => {
+          setStrokeMistake(false);
           setIsPlaying(false);
         }
       }));
     } catch (error) {
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -145,6 +151,8 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   // MODO PRÁCTICA - VERSIÓN ROBUSTA
   const startPractice = async () => {
     if (!writerInstanceRef.current || activeTab !== 'practice') return;
+
+    setStrokeMistake(false);
 
     setIsPlaying(true);
 
@@ -158,7 +166,10 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
 
       // 3. Iniciar quiz
       runWriterOp(() => writerInstanceRef.current.quiz({
+        showHintAfterMisses: 1,
+        onCorrectStroke: () => setStrokeMistake(false),
         onComplete: () => {
+          setStrokeMistake(false);
           setIsPlaying(false);
           // Mostrar carácter completo al finalizar
           setTimeout(() => {
@@ -168,11 +179,13 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
           }, 500);
         },
         onMistake: () => {
+          setStrokeMistake(true);
         },
         onStrokeStatusChange: () => {
         }
       }));
     } catch (error) {
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -182,6 +195,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       writerInstanceRef.current.cancelQuiz();
       runWriterOp(() => writerInstanceRef.current.hideCharacter());
       runWriterOp(() => writerInstanceRef.current.showOutline());
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -189,6 +203,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const nextRadical = () => {
     if (currentIndex < validRadicals.length - 1) {
       setCurrentIndex(prev => prev + 1);
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -196,11 +211,13 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
   const prevRadical = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
 
   const handleTabChange = (tab) => {
+    setStrokeMistake(false);
     setActiveTab(tab);
     setIsPlaying(false);
   };
@@ -292,6 +309,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             }}
           />
 
+          {activeTab === 'practice' && strokeMistake && <LearningExplanation kind="stroke" />}
           {/* Buttons */}
           {activeTab === 'view' ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

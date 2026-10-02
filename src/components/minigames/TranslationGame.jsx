@@ -1,3 +1,5 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerExplanation from './AnswerExplanation.jsx';
 // src/components/minigames/TranslationGame.jsx
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -608,6 +610,10 @@ export default function TranslationGame({ goBack, selectedLesson }) {
         )}
 
         {/* Feedback */}
+        {result && <>
+          <LearningExplanation kind="sentence" chosen={built.join('')} answer={current.hanzi} evidence={current.pinyin + ' — ' + loc(current.translations, i18n.language)} />
+          <AnswerExplanation item={{ sentence: current.hanzi, lesson: current.lesson }} incorrect={result === 'incorrect'} />
+        </>}
         {result === 'correct' && (
           <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3 animate-fade-in">
             <span className="text-2xl">&#x2705;</span>

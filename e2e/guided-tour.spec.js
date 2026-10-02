@@ -21,6 +21,7 @@ test('el tutorial guiado bloquea fuera del objetivo y termina en Fundamentos', a
   await page.locator('button:has(img)').first().click();
   await page.getByRole('button', { name: /siguiente/i }).click();
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
 
   // ── Paso 1: bienvenida, sin elemento resaltado ───────────────────────────
   const dialog = page.getByRole('dialog');

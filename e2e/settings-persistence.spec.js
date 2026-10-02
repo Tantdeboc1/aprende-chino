@@ -21,6 +21,7 @@ test('Ajustes: activar "Alto contraste" persiste tras recargar la página', asyn
   await page.locator('button:has(img)').first().click();
   await page.getByRole('button', { name: /siguiente/i }).click();
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
 
   // ── Perfil → Ajustes ──────────────────────────────────────────────────────

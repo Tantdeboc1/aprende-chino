@@ -1,3 +1,6 @@
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/DictationGame.jsx
 // Dictado (comprensión auditiva): suena el audio de una palabra y hay que
 // elegir el carácter correcto entre 4. Entrena la destreza inversa a los
@@ -20,6 +23,7 @@ const TOTAL_ROUNDS = 10;
 
 export default function DictationGame({ goBack, characters = [], speak, onTrackResult }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera ronda además de cambiar de fase).
   const { isIntro, isFinished, start, finish } = useGamePhase('dictation-game', { autoSkip: false });
@@ -80,10 +84,11 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
 
   const startGame = useCallback(() => {
     resetCounts();
+    clearMistakes();
     setRound(1);
     start();
     nextRound();
-  }, [nextRound, start, resetCounts]);
+  }, [nextRound, start, resetCounts, clearMistakes]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -96,19 +101,23 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     const isCorrect = option.char === question.correct.char;
     answer(option.char, isCorrect);
     onTrackResult?.(question.correct, isCorrect);
+    if (!isCorrect) recordMistake({ word: question.correct, chosenWord: option });
 
-    scheduleNext(() => {
+    if (isCorrect) scheduleNext(handleContinue, 1100);
+  };
+
+  const handleContinue = () => {
       if (round >= TOTAL_ROUNDS) {
         finish();
       } else {
         setRound(r => r + 1);
         nextRound();
       }
-    }, 1100);
   };
 
-  // Accesibilidad: teclas 1-4 eligen el carácter (avanza solo, sin Enter).
+  // Teclas 1-4 responden; tras un fallo, Enter permite continuar al leer la ayuda.
   useKeyAnswers({
+    onNext: !isIntro && !isFinished && feedback === 'incorrect' ? handleContinue : null,
     count: question?.options.length || 0,
     onSelect: !isIntro && !isFinished && question && !feedback
       ? (i) => handleAnswer(question.options[i]) : null,
@@ -142,6 +151,7 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
     const pct = Math.round((score / TOTAL_ROUNDS) * 100);
     return (
       <GameResults
+        mistakes={mistakes}
         gameId="dictation-game"
         title={pct >= 70
           ? t('minigames_dictation_good_ear', '¡Buen oído!')
@@ -229,6 +239,8 @@ export default function DictationGame({ goBack, characters = [], speak, onTrackR
             </div>
           </div>
         )}
+        {feedback && question && <LearningExplanation word={question.correct} chosenWord={feedback === 'incorrect' ? question.options.find(opt => opt.char === selected) : null} />}
+        {feedback === 'incorrect' && <button onClick={handleContinue} className="w-full rounded-xl bg-[var(--jade)] text-[var(--on-accent)] py-3 font-semibold">{t('answer_explanation_continue')}</button>}
       </Container>
     </div>
   );

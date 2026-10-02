@@ -31,6 +31,7 @@ test('Repaso: completar una sesión de "Repaso del día" tras generar tarjetas S
   await page.locator('button:has(img)').first().click();
   await page.getByRole('button', { name: /siguiente/i }).click();
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
   await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();
 

@@ -1,3 +1,6 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
 // src/components/GlobalExam.jsx
 // Modo examen cronometrado global — mezcla todas las lecciones HSK1
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
@@ -15,6 +18,7 @@ const QUESTIONS_PER_ROUND = 20;
 
 export default function GlobalExam({ goBack, allCharacters }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   const [phase, setPhase] = useState('ready'); // 'ready' | 'playing' | 'finished'
   const [questions, setQuestions]   = useState([]);
   const [qIndex, setQIndex]         = useState(0);
@@ -40,14 +44,14 @@ export default function GlobalExam({ goBack, allCharacters }) {
     // misma lógica estaba duplicada aquí). Devuelve { correct, answer, options }.
     setQuestions(buildMeaningQuestions(pool, QUESTIONS_PER_ROUND));
     setQIndex(0);
-    setScore(0);
+    setScore(0); clearMistakes();
     setWrong(0);
     setTimeLeft(TOTAL_TIME);
     timeRef.current = TOTAL_TIME;
     setSelected(null);
     setFeedback(null);
     setPhase('playing');
-  }, [pool]);
+  }, [pool, clearMistakes]);
 
   useEffect(() => {
     if (phase !== 'playing') return;
@@ -80,6 +84,8 @@ export default function GlobalExam({ goBack, allCharacters }) {
     }
   }, [phase, score, wrong, questions.length]);
 
+  useSkillSession(phase === 'finished', { activity: 'global-exam', correct: score, total: score + wrong, mistakes });
+
   const handleAnswer = (opt) => {
     if (feedback) return;
     setSelected(opt);
@@ -87,7 +93,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     if (isCorrect) hapticSuccess(); else hapticError();
     if (isCorrect) setScore(s => s + 1);
-    else setWrong(w => w + 1);
+    else { setWrong(w => w + 1); recordMistake({ word: questions[qIndex].correct, chosen: opt }); }
 
     const capturedTime = timeRef.current;
     setTimeout(() => {
@@ -203,6 +209,7 @@ export default function GlobalExam({ goBack, allCharacters }) {
               <span>100%</span>
             </div>
 
+            <MistakeReview items={mistakes} />
             <div className="flex gap-3">
               <button
                 onClick={startGame}

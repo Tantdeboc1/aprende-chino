@@ -1,3 +1,4 @@
+import startingGuideCopy from '@/data/startingGuideText.js';
 // src/components/HomeScreen.jsx
 import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -343,6 +344,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const { mode, user } = useAuth();
   // useLocalSnapshot: si llega un sync remoto, el perfil se relee.
   const profile     = useLocalSnapshot(loadUserProfile);
+  const startingText = startingGuideCopy[baseLang(i18n.language)] || startingGuideCopy.en;
+  const startingLesson = profile.startingRecommendation?.lesson;
   const avatar      = useMemo(
     () => getAvatarById(profile.avatarId) || getAvatarById(DEFAULT_AVATAR_ID),
     [profile.avatarId]
@@ -461,6 +464,13 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
 
       {/* Contenido */}
       <div className="px-4 pt-5 space-y-6 j-rise">
+
+        {!lastLesson && [1, 3, 6].includes(startingLesson) && (
+          <button onClick={() => onSelectLesson(startingLesson)} className="w-full p-4 text-left" style={{ background: J.jadeBg, border: `1px solid ${J.jadeMid}`, borderRadius: 18, color: J.jadeDeep }}>
+            <span className="block text-xs font-bold">{startingText.result}</span>
+            <span className="block font-bold mt-1">{startingText.lesson} {startingLesson} · {startingText.start} →</span>
+          </button>
+        )}
 
         {lastLesson && (
           <button onClick={() => onSelectLesson(lastLesson)} className="w-full flex items-center gap-4 p-4 text-left active:scale-[0.99] transition-transform"

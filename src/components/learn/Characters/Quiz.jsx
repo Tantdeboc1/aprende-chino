@@ -1,3 +1,5 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/learn/Characters/Quiz.jsx
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -56,6 +58,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
   // Estado derivado (antes de los early-returns, para poder colgar el hook
   // de teclado — los hooks no pueden ir tras un return condicional).
   const inPlay  = !showInstructions && questions.length > 0 && index < questions.length;
+  useSkillSession(!showInstructions && questions.length > 0 && index >= questions.length, { activity: 'character-quiz', correct: score, total: questions.length });
   const current = inPlay ? questions[index] : null;
 
   const handleAnswer = (opt) => {
@@ -276,17 +279,7 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
             ))}
           </div>
 
-          {/* Ejemplo de uso en fallo */}
-          {showResult && selected?.char !== question.correct.char && question.correct.examples?.length > 0 && (
-            <div className="mt-4 p-3 bg-[var(--red-bg)]/20 border border-[var(--red)]/40 rounded-xl text-left animate-fade-in">
-              <p className="text-xs text-[var(--mute)] mb-1.5">Ejemplo de uso:</p>
-              <p className="text-sm text-[var(--ink)] leading-relaxed">{question.correct.examples[0]}</p>
-              {question.correct.examples[1] && (
-                <p className="text-sm text-[var(--ink-soft)] leading-relaxed mt-1">{question.correct.examples[1]}</p>
-              )}
-            </div>
-          )}
-
+          {showResult && <LearningExplanation word={question.correct} chosenWord={selected} />}
           {showResult && (
             <button
               onClick={next}

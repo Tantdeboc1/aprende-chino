@@ -1,12 +1,16 @@
 // src/components/stories/QuizCard.jsx
 // Tarjeta base reutilizable para los 3 bloques de ejercicios.
 // Muestra: prompt principal (+ opcional subprompt) + 4 opciones.
-// Cuando el usuario pulsa una opción → feedback visual (verde/rojo) y avance.
+// Tras responder, muestra la corrección y espera a Continuar.
 
 import { useState, useEffect, useMemo } from 'react';
 import { J } from '@/styles/tokens';
+import { useTranslation } from 'react-i18next';
+import { loc } from '@/utils/loc.js';
+import feedbackText from '@/data/feedbackText.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
+import AnswerExplanation from '@/components/minigames/AnswerExplanation.jsx';
 
-const FEEDBACK_MS = 1100;
 
 // Fisher–Yates: devuelve [shuffledOptions, nuevoIndiceCorrecto].
 // Determinístico para un par (options, correcta) gracias al useMemo en el componente.
@@ -27,7 +31,10 @@ export default function QuizCard({
   correcta,            // índice de la opción correcta
   onAnswer,            // callback(boolean) tras feedback
   variant = 'normal',  // 'chinese' para opciones grandes en chino, 'normal' para texto en español
+  explanation,
+  sentenceItem,
 }) {
+  const { i18n } = useTranslation();
   const [selected, setSelected] = useState(null);
   const answered = selected !== null;
 
@@ -42,11 +49,6 @@ export default function QuizCard({
   // Resetea al cambiar de pregunta (por si no hay remount)
   useEffect(() => { setSelected(null); }, [prompt]);
 
-  useEffect(() => {
-    if (!answered) return;
-    const t = setTimeout(() => onAnswer(selected === shuffledCorrecta), FEEDBACK_MS);
-    return () => clearTimeout(t);
-  }, [answered, selected, shuffledCorrecta, onAnswer]);
 
   const handleSelect = (idx) => {
     if (answered) return;
@@ -123,6 +125,14 @@ export default function QuizCard({
           );
         })}
       </div>
+      {answered && <>
+        <LearningExplanation {...explanation} chosen={shuffledOptions[selected]} answer={explanation?.answer || shuffledOptions[shuffledCorrecta]} />
+        {sentenceItem && <AnswerExplanation item={sentenceItem} incorrect={selected !== shuffledCorrecta} />}
+        <button onClick={() => onAnswer(selected === shuffledCorrecta)}
+          className="w-full rounded-xl py-3 font-semibold" style={{ background: J.jade, color: J.onAccent }}>
+          {loc(feedbackText.next, i18n.language)}
+        </button>
+      </>}
     </div>
   );
 }

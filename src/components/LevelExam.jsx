@@ -1,3 +1,6 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
 // src/components/LevelExam.jsx
 // Examen Final del nivel (certificación HSK-1).
 //  - Bloqueado hasta dominar UNLOCK_MASTERY_PCT % del vocabulario.
@@ -48,6 +51,7 @@ function buildExam(pool, count) {
 
 export default function LevelExam({ goBack, allCharacters = [], progress }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   const pool = useMemo(
     () => allCharacters.filter(c => c.char && c.meaning && !c.isSupplementary),
     [allCharacters],
@@ -76,12 +80,14 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
   const startExam = useCallback(() => {
     const count = Math.min(TOTAL_QUESTIONS, pool.length);
     setQuestions(buildExam(pool, count));
-    setQIndex(0); setScore(0); setWrong(0);
+    setQIndex(0); clearMistakes(); setScore(0); setWrong(0);
     setSelected(null); setFeedback(null);
     resetClock();
     setOutcome(null);
     setPhase('playing');
-  }, [pool, resetClock]);
+  }, [pool, resetClock, clearMistakes]);
+
+  useSkillSession(phase === 'finished', { activity: 'level-exam', correct: score, total: outcome?.total, mistakes });
 
   const finish = useCallback((finalCorrect, finalWrong) => {
     const answered = finalCorrect + finalWrong;
@@ -107,7 +113,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
     if (isCorrect) hapticSuccess(); else hapticError();
     const nextScore = score + (isCorrect ? 1 : 0);
     const nextWrong = wrong + (isCorrect ? 0 : 1);
-    if (isCorrect) setScore(nextScore); else setWrong(nextWrong);
+    if (isCorrect) setScore(nextScore); else { setWrong(nextWrong); recordMistake({ word: pool.find(c => c.char === questions[qIndex].correctKey), chosen: questions[qIndex].options.find(o => o.key === optKey)?.label }); }
 
     setTimeout(() => {
       if (timeLeftRef.current <= 0) return;
@@ -245,6 +251,7 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
               </p>
             )}
 
+            <MistakeReview items={mistakes} />
             <div className="flex gap-3">
               <button onClick={startExam}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-colors"

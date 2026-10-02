@@ -37,6 +37,8 @@ describe('CompleteSentence', () => {
 
     expect(screen.getByText('✗ Incorrect')).toBeTruthy();
     expect(screen.getByText('你好吗？')).toBeTruthy();
+    expect(screen.getByText('Why this answer')).toBeTruthy();
+    expect(screen.getByText(/The particle 吗/)).toBeTruthy();
   });
 
   it('tras el resultado, "Next" pasa a la ronda 2 (frase distinta)', () => {
@@ -46,5 +48,6 @@ describe('CompleteSentence', () => {
 
     expect(screen.queryByText('Are you ___?')).toBeNull();
     expect(screen.getByText('___ am very busy.')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
   });
 });

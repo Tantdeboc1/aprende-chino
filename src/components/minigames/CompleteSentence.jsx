@@ -16,6 +16,7 @@ import { useKeyAnswers } from '@/utils/useKeyAnswers.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 import LessonFilterBar from './LessonFilterBar.jsx';
+import AnswerExplanation from './AnswerExplanation.jsx';
 
 import { LESSON_COLORS } from '@/styles/lessonColors.js';
 const DEFAULT_COLOR = { bg: 'bg-[var(--jade)]', border: 'border-[var(--jade)]', text: 'text-[var(--jade)]' };
@@ -64,7 +65,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
   const handleSelect = (option) => {
     if (result) return;
     setSelected(option);
-    const correct = option === current.answer;
+    const correct = (current.acceptedAnswers || [current.answer]).includes(option);
     setResult(correct ? 'correct' : 'incorrect');
     if (correct) {
       setScore(s => s + 1);
@@ -213,7 +214,7 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
           <div className="grid grid-cols-2 gap-3">
             {shuffledOptions.map((option, i) => {
               const isSelected = selected === option;
-              const isCorrectAnswer = option === current.answer;
+              const isCorrectAnswer = (current.acceptedAnswers || [current.answer]).includes(option);
               let btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--ink)] hover:bg-[var(--mute2)]';
               let animClass = '';
               if (result) {
@@ -262,6 +263,8 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
             </div>
           )}
         </div>
+
+        {result && <AnswerExplanation item={current} incorrect={result === 'incorrect'} />}
 
         {/* Botones */}
         <div className="flex gap-3">

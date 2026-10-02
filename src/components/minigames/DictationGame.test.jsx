@@ -56,6 +56,17 @@ describe('DictationGame', () => {
     expect(screen.getByText('2 / 10')).toBeTruthy();
   });
 
+  it('a mistake waits for Continue so the explanation can be read', () => {
+    start();
+    fireEvent.click(screen.getByRole('button', { name: '好' }));
+    act(() => { vi.advanceTimersByTime(5000); });
+    expect(screen.getByText('1 / 10')).toBeTruthy();
+    expect(screen.getByText('Why this answer')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByText('2 / 10')).toBeTruthy();
+    expect(screen.queryByText('Why this answer')).toBeNull();
+  });
+
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<DictationGame goBack={goBack} characters={CHARACTERS} speak={vi.fn()} />);

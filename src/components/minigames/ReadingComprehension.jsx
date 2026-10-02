@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/ReadingComprehension.jsx
 // Minijuego: Comprensión lectora — lectura del texto (con audio TTS y
 // tap-to-define por palabra), elección de tipo de ejercicio y corrección.
@@ -334,6 +335,7 @@ function TestExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           )}
         </div>
 
+        {resultado && <LearningExplanation kind="evidence" answer={loc(opcionCorrecta, lang)} evidence={story.hanzi + '\n' + loc(story.traduccion, lang)} />}
         {resultado && (
           <button
             onClick={handleSiguiente}
@@ -467,6 +469,7 @@ function OrderEventsExercise({ story, onBack, onFinish, t }) {
           </div>
         )}
 
+        {comprobado && <LearningExplanation kind="order" evidence={eventos.map((line, i) => (i + 1) + '. ' + line).join('\n')} />}
         {comprobado && (
           <button
             onClick={() => onFinish(aciertos, total)}
@@ -591,6 +594,7 @@ function TrueFalseExercise({ story, dict, maxLen, onBack, onFinish, t, lang }) {
           )}
         </div>
 
+        {resultado && <LearningExplanation kind="evidence" evidence={story.hanzi + '\n' + loc(story.traduccion, lang)} />}
         {resultado && (
           <button
             onClick={siguiente}
@@ -733,6 +737,7 @@ function ClozeExercise({ story, onBack, onFinish, t }) {
           )}
         </div>
 
+        {resultado && <LearningExplanation kind="sentence" answer={item.texto.replace('＿＿', correcta)} evidence={story.hanzi} />}
         {resultado && (
           <button
             onClick={siguiente}

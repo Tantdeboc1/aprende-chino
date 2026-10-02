@@ -35,6 +35,18 @@ beforeEach(() => { vi.useFakeTimers(); createMock.mockClear(); fakeWriter.animat
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 
 describe('HanziWriting', () => {
+  it('explains a stroke mistake, shows a hint immediately and clears it after a correct stroke', async () => {
+    await start();
+    fireEvent.click(screen.getByRole('button', { name: /^practice$/i }));
+    await act(async () => { await vi.advanceTimersByTimeAsync(150); });
+    fireEvent.click(screen.getByRole('button', { name: /start practice/i }));
+    const options = fakeWriter.quiz.mock.calls.at(-1)[0];
+    expect(options.showHintAfterMisses).toBe(1);
+    act(() => options.onMistake());
+    expect(screen.getByText(/Repeat the highlighted stroke/)).toBeTruthy();
+    act(() => options.onCorrectStroke());
+    expect(screen.queryByText(/Repeat the highlighted stroke/)).toBeNull();
+  });
   it('arranca en la pestaña "Ver orden" mostrando el 1er carácter (你)', async () => {
     await start();
     expect(screen.getByText('你')).toBeTruthy();

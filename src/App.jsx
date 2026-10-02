@@ -256,6 +256,21 @@ export default function App() {
     return () => window.removeEventListener('online', retrySync);
   }, []);
 
+  // Skill-only activities do not necessarily update character progress.
+  // Queue their history through the same debounced account snapshot.
+  useEffect(() => {
+    const syncSkills = () => {
+      if (modeRef.current !== 'google') return;
+      clearTimeout(pushTimerRef.current);
+      pushTimerRef.current = setTimeout(async () => {
+        const synced = await pushSnapshotRef.current();
+        window.dispatchEvent(new CustomEvent('progress-save-status', { detail: synced ? 'synced' : 'offline' }));
+      }, 1500);
+    };
+    window.addEventListener('skill-progress-saved', syncSkills);
+    return () => window.removeEventListener('skill-progress-saved', syncSkills);
+  }, []);
+
   // Deep link inicial (#/lesson/3, #/stories…): solo si ya hay perfil creado.
   const [initialNav] = useState(() => (loadUserName() ? parseHash(window.location.hash) : null));
 
@@ -705,13 +720,16 @@ export default function App() {
   if (screen === 'welcome') {
     return (
       <WelcomeFlow
-        onComplete={(name) => {
+        characters={allCharacters}
+        onComplete={(name, recommendation, startLesson) => {
           handleSetUserName(name);
           // Único punto donde se arma el tutorial: quien ya tiene nombre no
           // vuelve a pasar por aquí, así que a los usuarios existentes nunca
           // se les muestra.
-          armTour();
-          setScreen('home');
+          if (startLesson && recommendation) {
+            setPrevScreen('home');
+            goToLesson(recommendation.lesson);
+          } else { armTour(); setScreen('home'); }
         }}
       />
     );
@@ -918,6 +936,12 @@ export default function App() {
               userName={userName}
               progress={progress}
               allCharacters={allCharacters}
+              onPractice={(activity) => {
+                hubOriginRef.current = 'profile';
+                setSelectedLesson(null);
+                if (activity === 'handwriting') { setPrevScreen('profile'); setLearnSection('writing'); setWritingSection('hanzi'); setScreen('exercise'); }
+                else navigateTo(activity);
+              }}
               onOpenSettings={() => { setPrevScreen('profile'); setScreen('settings'); }}
               onOpenFriends={() => { setPrevScreen('profile'); setScreen('friends'); }}
             />

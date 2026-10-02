@@ -1,3 +1,6 @@
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import Container from "@/components/ui/Container.jsx";
@@ -16,6 +19,7 @@ import GameResults from './GameResults.jsx';
 // --- Componente Principal ---
 export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera pregunta además de cambiar de fase).
   const { isIntro, isPlaying, isFinished, start, finish } = useGamePhase('time-race', { autoSkip: false });
@@ -63,10 +67,11 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   const startGame = useCallback(() => {
     setScore(0);
     resetCounts();
+    clearMistakes();
     resetClock();
     start();
     generateQuestion();
-  }, [generateQuestion, start, resetClock, resetCounts]);
+  }, [generateQuestion, start, resetClock, resetCounts, clearMistakes]);
 
   // Saltar la explicación si el usuario marcó "no volver a mostrar"
   useEffect(() => {
@@ -83,6 +88,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
     if (isCorrect) setScore(s => s + 10); // +10 puntos por acierto
     else penalize(2); // Penalización de 2 segundos
     onTrackResult?.(currentQuestion.charObj, isCorrect);
+    if (!isCorrect) recordMistake({ word: currentQuestion.charObj, chosen: selectedMeaning, chosenWord: characters.find(c => c.meaning === selectedMeaning) });
 
     // Pasa a la siguiente pregunta después de un breve feedback visual
     const capturedTime = timeLeftRef.current;
@@ -126,6 +132,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
   if (isFinished) {
     return (
       <GameResults
+        mistakes={mistakes}
         gameId="time-race"
         title={t('minigames_time_up_message')}
         subtitle={t('minigames_time_race_title')}
@@ -202,6 +209,7 @@ export default function TimeRace({ goBack, characters = [], onTrackResult }) {
             </div>
           </div>
         )}
+        {feedback && currentQuestion && <LearningExplanation word={currentQuestion.charObj} />}
       </Container>
     </div>
   );

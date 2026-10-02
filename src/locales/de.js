@@ -1,5 +1,9 @@
 // src/locales/de.js
 export default {
+  answer_explanation_continue: 'Weiter',
+  answer_explanation_title: "Warum diese Antwort",
+  answer_explanation_context: "Die Antwort passt zur Bedeutung und zum Hinweis dieser Aufgabe. Manche Alternativen können andere gültige Sätze bilden.",
+  answer_explanation_example: "Ein weiteres Beispiel",
   // ── Explora China (accesibilidad / controles) ──
   china_a11y_map: "Karte Chinas nach Provinzen",
   china_zoom_in: "Vergrößern",

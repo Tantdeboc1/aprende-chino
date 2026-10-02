@@ -1,3 +1,6 @@
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/minigames/ToneEar.jsx
 // Tonos al oído (comprensión auditiva): suena una sílaba y hay que identificar
 // su TONO (1-4), no el carácter. Entrena justo lo que más cuesta en chino:
@@ -38,6 +41,7 @@ function isSingleToned(c) {
 
 export default function ToneEar({ goBack, characters = [], speak, onTrackResult }) {
   const { t } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   // autoSkip:false → la intro se salta desde el efecto de abajo, que llama a
   // startGame() (genera la primera ronda además de cambiar de fase).
   const { isIntro, isFinished, start, finish } = useGamePhase('tones-ear', { autoSkip: false });
@@ -76,10 +80,11 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
 
   const startGame = useCallback(() => {
     resetCounts();
+    clearMistakes();
     setRound(1);
     start();
     nextRound();
-  }, [nextRound, start, resetCounts]);
+  }, [nextRound, start, resetCounts, clearMistakes]);
 
   useEffect(() => {
     if (!shouldShowIntro('tones-ear')) startGame();
@@ -91,19 +96,23 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
     const isCorrect = toneOpt.tone === question.char.tone;
     answer(toneOpt.tone, isCorrect);
     onTrackResult?.(question.char, isCorrect);
+    if (!isCorrect) recordMistake({ kind: 'sound', word: question.char, tone: question.char.tone, chosenTone: toneOpt.tone });
 
-    scheduleNext(() => {
+    if (isCorrect) scheduleNext(handleContinue, 1200);
+  };
+
+  const handleContinue = () => {
       if (round >= TOTAL_ROUNDS) {
         finish();
       } else {
         setRound(r => r + 1);
         nextRound();
       }
-    }, 1200);
   };
 
-  // Accesibilidad: teclas 1-4 = tono 1..4 (avanza solo, sin Enter).
+  // Teclas 1-4 responden; tras un fallo, Enter permite continuar al leer la ayuda.
   useKeyAnswers({
+    onNext: !isIntro && !isFinished && feedback === 'incorrect' ? handleContinue : null,
     count: TONES.length,
     onSelect: !isIntro && !isFinished && question && !feedback
       ? (i) => handleAnswer(TONES[i]) : null,
@@ -137,6 +146,7 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
     const pct = Math.round((score / TOTAL_ROUNDS) * 100);
     return (
       <GameResults
+        mistakes={mistakes}
         gameId="tones-ear"
         title={pct >= 70
           ? t('tones_ear_good_ear', '¡Oído fino!')
@@ -231,6 +241,8 @@ export default function ToneEar({ goBack, characters = [], speak, onTrackResult 
             )}
           </div>
         )}
+        {feedback && question && <LearningExplanation kind="sound" tone={question.char.tone} chosenTone={selected} />}
+        {feedback === 'incorrect' && <button onClick={handleContinue} className="w-full rounded-xl bg-[var(--jade)] text-[var(--on-accent)] py-3 font-semibold">{t('answer_explanation_continue')}</button>}
       </Container>
     </div>
   );

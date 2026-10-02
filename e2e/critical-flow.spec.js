@@ -29,6 +29,7 @@ test('usuario nuevo completa onboarding y responde una pregunta del quiz', async
 
   // Paso 4: meta diaria (viene preseleccionada) → Comenzar
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
 
   // ── Tutorial guiado ───────────────────────────────────────────────────────
   // Se arma solo al terminar el registro (GuidedTour) y su máscara bloquea

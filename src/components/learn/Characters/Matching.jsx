@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/learn/Characters/Matching.jsx
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,7 @@ export default function Matching({
   onTrackSeen,
 }) {
   const { t } = useTranslation();
+  const [correction, setCorrection] = useState(null);
   const [pairs, setPairs] = useState([]);
   const [selected, setSelected] = useState([]);
   const [matched, setMatched] = useState([]);
@@ -33,6 +35,7 @@ export default function Matching({
     const meanings = sample.map((c, i) => ({ id: `meaning-${i}`, type: 'meaning', content: c.meaning, match: i, data: c }));
     const all = shuffle([...chars, ...meanings]);
     setPairs(all);
+    setCorrection(null);
     setSelected([]);
     setMatched([]);
     setIncorrectPair(null);
@@ -66,9 +69,11 @@ export default function Matching({
         setMatched(m => [...m, item.match]);
         setSelected([]);
         setIncorrectPair(null);
+        setCorrection(null);
         const matchedChar = first.type === 'char' ? first.data : item.data;
         onTrackSeen?.(matchedChar);
       } else {
+        setCorrection({ word: first.type === 'char' ? first.data : item.data, chosenWord: first.type === 'meaning' ? first.data : item.data });
         // Incorrecto - mostrar en rojo
         setIncorrectPair({ firstId: first.id, secondId: item.id });
         if (incorrectTimerRef.current) clearTimeout(incorrectTimerRef.current);
@@ -174,6 +179,7 @@ export default function Matching({
         </div>
 
         <div className="bg-[var(--paper-hi)] rounded-xl shadow-sm p-6 border border-[rgba(28,24,19,0.10)]">
+          {correction && <LearningExplanation {...correction} />}
           {done ? (
             <div className="text-center py-8">
               <div className="text-5xl mb-4"></div>

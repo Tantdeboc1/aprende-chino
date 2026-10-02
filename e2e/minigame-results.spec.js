@@ -24,6 +24,7 @@ test('Completa la Frase: jugar hasta el resultado y "Jugar de nuevo" reinicia', 
   await page.locator('button:has(img)').first().click();
   await page.getByRole('button', { name: /siguiente/i }).click();
   await page.getByRole('button', { name: /comenzar/i }).click();
+  await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
 
   // ── Destrezas → Completa la Frase → intro ────────────────────────────────
@@ -43,6 +44,7 @@ test('Completa la Frase: jugar hasta el resultado y "Jugar de nuevo" reinicia', 
     const options = page.locator('div.grid.grid-cols-2 button');
     await expect(options).toHaveCount(4);
     await options.first().click();
+    await expect(page.getByText('Por qué esta respuesta')).toBeVisible();
     await page.getByRole('button', { name: /siguiente|ver resultados/i }).click();
   }
 

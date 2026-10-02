@@ -10,7 +10,7 @@ import ExFillBlank from './ExFillBlank.jsx';
 import ExComprehension from './ExComprehension.jsx';
 import CharacterDisplay from './CharacterDisplay.jsx';
 
-export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
+export default function ExerciseBlock({ ejercicios, onComplete, presentador, evidence, lesson }) {
   const { t } = useTranslation();
   const blocks = [
     {
@@ -148,7 +148,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
 
       {/* Cuadro de pregunta — por encima del personaje */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <Component key={`${blockIdx}-${qIdx}`} item={currentItem} onAnswer={handleAnswer} />
+        <Component key={`${blockIdx}-${qIdx}`} item={currentItem} onAnswer={handleAnswer} evidence={evidence} lesson={lesson} />
       </div>
     </div>
   );

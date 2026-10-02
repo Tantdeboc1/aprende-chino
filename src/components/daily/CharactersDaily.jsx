@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 import { useEffect, useMemo, useState } from 'react';
 import Container from "@/components/ui/Container.jsx";
 import Button from "@/components/ui/Button.jsx";
@@ -327,6 +328,7 @@ function Daily({ goBack }) {
                       </div>
                     </>
                   )}
+                  <LearningExplanation word={dailyChar} />
                   <div className="flex gap-3 justify-center">
                     <button onClick={resetToday} className="bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink)] font-semibold py-3 px-6 rounded-lg transition">
                       {t('daily_reset_button')}

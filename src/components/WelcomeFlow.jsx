@@ -1,3 +1,4 @@
+import StartingGuide from '@/components/StartingGuide.jsx';
 // src/components/WelcomeFlow.jsx
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,9 +10,9 @@ import { getLevelInfo } from '@/utils/leveling.js';
 import { APP_NAME } from '@/utils/appInfo.js';
 import { getNameModerationKey } from '@/utils/nameModeration.js';
 
-const STEPS = 4;
+const STEPS = 5;
 
-export default function WelcomeFlow({ onComplete }) {
+export default function WelcomeFlow({ onComplete, characters }) {
   const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
@@ -43,18 +44,22 @@ export default function WelcomeFlow({ onComplete }) {
     if (!canNext) return;
     if (step < STEPS - 1) {
       setStep(s => s + 1);
-    } else {
+    }
+  };
+
+  const finish = (recommendation, startLesson) => {
       // El usuario eligió un avatar de forma explícita en el onboarding: ese
       // avatar manda. Desactivamos la foto de Google (si entra con Google)
       // para que se vea lo que ha elegido — si la prefiere, la reactiva con el
       // interruptor de Ajustes. Mismo criterio que al elegir avatar en Ajustes.
-      updateUserProfile({ gender, avatarId: avatarId || DEFAULT_AVATAR_ID, useGooglePhoto: false });
+      updateUserProfile({ gender, avatarId: avatarId || DEFAULT_AVATAR_ID, useGooglePhoto: false, startingRecommendation: recommendation });
       setDailyGoal(goalXp);
-      onComplete(trimmedName);
-    }
+      onComplete(trimmedName, recommendation, startLesson);
   };
 
   const goBack = () => setStep(s => Math.max(0, s - 1));
+
+  if (step === 4) return <StartingGuide characters={characters} onFinish={finish} onBack={goBack} />;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ background: J.paper }}>
@@ -253,7 +258,7 @@ export default function WelcomeFlow({ onComplete }) {
               boxShadow: canNext ? '0 4px 12px -4px rgba(31,74,51,0.4)' : 'none',
             }}
           >
-            {step < STEPS - 1 ? t('welcome_next_button') : t('welcome_start_button')}
+            {step < 3 ? t('welcome_next_button') : t('welcome_start_button')}
           </button>
         </div>
       </div>

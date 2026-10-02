@@ -59,4 +59,17 @@ describe('TimeRace', () => {
     fireEvent.click(screen.getByRole('button', { name: /back to skills/i }));
     expect(goBack).toHaveBeenCalledTimes(1);
   });
+
+  it('retains the wrong choice for review after time runs out and clears it on replay', () => {
+    start();
+    fireEvent.click(screen.getByRole('button', { name: 'good' }));
+    act(() => { vi.advanceTimersByTime(800); });
+    act(() => { vi.advanceTimersByTime(60000); });
+    expect(screen.getByText('Review your mistakes (1)')).toBeTruthy();
+    expect(screen.getByText((_, el) => el.tagName === 'P' && el.textContent === 'Your answer: good')).toBeTruthy();
+    expect(screen.getByText(/Compare with your choice/)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    expect(screen.queryByText(/Review your mistakes/)).toBeNull();
+    expect(screen.getByRole('button', { name: 'you' }).disabled).toBe(false);
+  });
 });

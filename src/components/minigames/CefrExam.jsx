@@ -1,3 +1,6 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
 // src/components/minigames/CefrExam.jsx
 // Examen estilo MCER (A1) por destrezas: 听 comprensión oral · 读 comprensión
 // escrita · 写 expresión escrita. Reutiliza el TTS (speak), el catálogo de
@@ -38,6 +41,7 @@ function buildQuestions(allCharacters, lang) {
   for (const s of shuffle([...completeSentenceData]).slice(0, PER_SKILL)) {
     out.push({
       skill: 'writing',
+      ...s,
       sentence: s.sentence,
       translation: s.translations?.[lang] || s.translations?.es || '',
       answer: s.answer,
@@ -74,6 +78,7 @@ function SkillBar({ label, cn, correct, total }) {
 
 export default function CefrExam({ goBack, speak, allCharacters }) {
   const { t, i18n } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   const lang = i18n.language?.split('-')[0] || 'es';
 
   const [phase, setPhase] = useState('intro'); // 'intro' | 'playing' | 'results'
@@ -88,12 +93,16 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
 
   const start = useCallback(() => {
     setQuestions(buildQuestions(allCharacters, lang));
-    setQIndex(0);
+    setQIndex(0); clearMistakes();
     setSelected(null);
     setLocked(false);
     setPerSkill({});
     setPhase('playing');
-  }, [allCharacters, lang]);
+  }, [allCharacters, lang, clearMistakes]);
+
+  useSkillSession(phase === 'results', { activity: 'cefr-listening', correct: perSkill.listening?.correct, total: perSkill.listening?.total });
+  useSkillSession(phase === 'results', { activity: 'cefr-reading', correct: perSkill.reading?.correct, total: perSkill.reading?.total });
+  useSkillSession(phase === 'results', { activity: 'cefr-grammar', correct: perSkill.writing?.correct, total: perSkill.writing?.total });
 
   const current = questions[qIndex];
 
@@ -109,7 +118,10 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
     if (locked) return;
     setSelected(opt);
     setLocked(true);
-    const ok = opt === current.answer;
+    const ok = (current.acceptedAnswers || [current.answer]).includes(opt);
+    if (!ok) recordMistake(current.skill === 'writing'
+      ? { kind: 'sentence', chosen: opt, answer: current.sentence.replace('___', current.answer), sentenceItem: current }
+      : { word: { char: current.char, pinyin: current.pinyin, meaning: current.answer }, chosen: opt });
     if (ok) hapticSuccess(); else hapticError();
 
     const sk = current.skill;
@@ -246,7 +258,8 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
               ))}
             </div>
 
-            <div className="flex gap-3">
+            <MistakeReview items={mistakes} />
+          <div className="flex gap-3">
               <button onClick={start}
                 style={{ flex: 1, padding: '13px', borderRadius: 14, border: 0, background: J.red,
                          color: J.onAccent, fontSize: '0.875rem', fontWeight: 800, cursor: 'pointer' }}>
@@ -322,7 +335,7 @@ export default function CefrExam({ goBack, speak, allCharacters }) {
       {/* Opciones */}
       <div className="grid grid-cols-1 gap-2.5" style={{ gridTemplateColumns: current.skill === 'writing' ? '1fr 1fr' : '1fr' }}>
         {current.options.map((opt, i) => {
-          const isAnswer = opt === current.answer;
+          const isAnswer = (current.acceptedAnswers || [current.answer]).includes(opt);
           const isPicked = opt === selected;
           let bg = J.paperHi, color = J.ink, border = J.hairS;
           if (locked && isAnswer) { bg = J.jadeBg; color = J.jadeDeep; border = J.jade; }

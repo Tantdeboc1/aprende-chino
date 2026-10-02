@@ -58,7 +58,7 @@ describe('WelcomeFlow', () => {
     expect(screen.getByRole('button', { name: /next/i }).disabled).toBe(false);
   });
 
-  it('completar los 4 pasos llama a updateUserProfile, setDailyGoal y onComplete con el nombre', () => {
+  it('saltar la orientación completa el perfil y llama a updateUserProfile, setDailyGoal y onComplete con el nombre', () => {
     const onComplete = vi.fn();
     render(<WelcomeFlow onComplete={onComplete} />);
     goToAvatarStep();
@@ -70,10 +70,13 @@ describe('WelcomeFlow', () => {
     expect(screen.getByText('How much do you want to practice each day?')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: /start/i }));
 
+    expect(onComplete).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Skip and explore' }));
+
     expect(updateUserProfileMock).toHaveBeenCalledWith(
       expect.objectContaining({ gender: 'm', useGooglePhoto: false })
     );
     expect(setDailyGoalMock).toHaveBeenCalledWith(120);
-    expect(onComplete).toHaveBeenCalledWith('Ana');
+    expect(onComplete).toHaveBeenCalledWith('Ana', null, false);
   });
 });

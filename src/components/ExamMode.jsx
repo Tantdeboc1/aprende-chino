@@ -1,3 +1,6 @@
+import { useSkillSession } from '@/hooks/useSkillSession.js';
+import MistakeReview from '@/components/ui/MistakeReview.jsx';
+import { useMistakeReview } from '@/hooks/useMistakeReview.js';
 // src/components/ExamMode.jsx
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -113,7 +116,7 @@ function HistoryScreen({ history, lessonNum, onBack, onNewExam, t, language }) {
 
 // ── Pantalla de resultados ───────────────────────────────────────────────────
 
-function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
+function ResultsScreen({ mistakes, score, total, wrongChars, onRetry, onBack, t }) {
   const pct = Math.round((score / total) * 100);
   const g = gradeStyle(pct);
 
@@ -160,6 +163,7 @@ function ResultsScreen({ score, total, wrongChars, onRetry, onBack, t }) {
         )}
 
         {/* Botones */}
+        <MistakeReview items={mistakes} />
         <div className="flex gap-3">
           <button
             onClick={onRetry}
@@ -193,6 +197,7 @@ export default function ExamMode({
   goBack,
 }) {
   const { t, i18n } = useTranslation();
+  const { mistakes, recordMistake, clearMistakes } = useMistakeReview();
   const language = i18n.language || 'es';
 
   const [phase, setPhase] = useState('exam'); // 'exam' | 'results' | 'history'
@@ -215,16 +220,19 @@ export default function ExamMode({
     setQIndex(0);
     setSelected(null);
     setFeedback(null);
-    setWrongChars([]);
+    setWrongChars([]); clearMistakes();
     setScore(0);
     setPhase('exam');
-  }, [characters]);
+  }, [characters, clearMistakes]);
+
+  useSkillSession(phase === 'results', { activity: 'lesson-exam', correct: score, total, mistakes });
 
   const handleSelect = (option) => {
     if (feedback) return;
     setSelected(option.char);
     const isCorrect = option.char === current.correct.char;
     setFeedback(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) recordMistake({ word: current.correct, chosenWord: option });
     if (isCorrect) hapticSuccess(); else hapticError();
 
     const newScore = isCorrect ? score + 1 : score;
@@ -276,7 +284,7 @@ export default function ExamMode({
   // ── Resultados ──
   if (phase === 'results') {
     return (
-      <ResultsScreen
+      <ResultsScreen mistakes={mistakes}
         score={score}
         total={total}
         wrongChars={wrongChars}

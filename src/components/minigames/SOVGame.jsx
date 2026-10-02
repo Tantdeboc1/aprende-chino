@@ -10,6 +10,7 @@ import { useGamePhase } from '@/utils/useGamePhase.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
 import LessonFilterBar from './LessonFilterBar.jsx';
+import AnswerExplanation from './AnswerExplanation.jsx';
 
 // Filtra frases por lección y prepara estado inicial
 function buildRound(lessonFilter) {
@@ -338,6 +339,8 @@ export default function SOVGame({ goBack, selectedLesson, speakChinese }) {
             <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence}</p>
           </div>
         )}
+
+        {result && <AnswerExplanation item={current} incorrect={result === 'incorrect'} />}
 
         {/* Botones de acción */}
         <div className="flex gap-3">

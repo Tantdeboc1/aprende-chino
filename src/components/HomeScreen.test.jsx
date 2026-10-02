@@ -39,6 +39,13 @@ beforeEach(() => {
 afterEach(() => cleanup());
 
 describe('HomeScreen', () => {
+  it('conserva la recomendación al explorar y abre la lección sugerida', () => {
+    localStorage.setItem('aprende-chino-profile', JSON.stringify({ startingRecommendation: { lesson: 3, source: 'sample' } }));
+    const props = setup();
+    fireEvent.click(screen.getByRole('button', { name: /your starting point/i }));
+    expect(props.onSelectLesson).toHaveBeenCalledWith(3);
+  });
+
   it('saluda por el nombre y lista las lecciones con su progreso', () => {
     setup();
     expect(screen.getByText(/Tester/)).toBeTruthy();

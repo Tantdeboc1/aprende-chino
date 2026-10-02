@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/daily/TonosDaily.jsx
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock, Volume2 } from "lucide-react";
@@ -340,6 +341,7 @@ export default function TonesDaily({ goBack, speakChinese }) {
             })}
           </div>
 
+          {isAnswered && <LearningExplanation kind="sound" tone={currentQ.tone} chosenTone={selectedAnswer} />}
           {/* Feedback y siguiente */}
           {isAnswered && (
             <div className="mt-6">

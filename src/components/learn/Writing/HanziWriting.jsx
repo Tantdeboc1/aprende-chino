@@ -1,3 +1,4 @@
+import LearningExplanation from '@/components/ui/LearningExplanation.jsx';
 // src/components/learn/Writing/HanziWriting.jsx
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from "lucide-react";
@@ -12,6 +13,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [strokeMistake, setStrokeMistake] = useState(false);
   const [activeTab, setActiveTab] = useState('view');
   const writerRef = useRef(null);
   const writerInstanceRef = useRef(null);
@@ -117,6 +119,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
 
   const animateCharacter = () => {
     if (writerInstanceRef.current && activeTab === 'view') {
+      setStrokeMistake(false);
       setIsPlaying(true);
       runWriterOp(() => writerInstanceRef.current.animateCharacter({}));
     }
@@ -124,9 +127,13 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
 
   const startPractice = () => {
     if (writerInstanceRef.current && activeTab === 'practice') {
+      setStrokeMistake(false);
       setIsPlaying(true);
       runWriterOp(() => writerInstanceRef.current.quiz({
+        showHintAfterMisses: 1,
+        onCorrectStroke: () => setStrokeMistake(false),
         onComplete: () => {
+          setStrokeMistake(false);
           setIsPlaying(false);
           // Registrar práctica completada
           if (onProgressChange) {
@@ -141,6 +148,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
           }, 1000);
         },
         onMistake: () => {
+          setStrokeMistake(true);
         }
       }));
     }
@@ -150,6 +158,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
     if (writerInstanceRef.current && activeTab === 'practice') {
       writerInstanceRef.current.cancelQuiz();
       writerInstanceRef.current.showOutline();
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -157,6 +166,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
   const nextCharacter = () => {
     if (currentIndex < writableChars.length - 1) {
       setCurrentIndex(prev => prev + 1);
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
@@ -164,11 +174,13 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
   const prevCharacter = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
+      setStrokeMistake(false);
       setIsPlaying(false);
     }
   };
 
   const handleTabChange = (tab) => {
+    setStrokeMistake(false);
     setActiveTab(tab);
     setIsPlaying(false);
   };
@@ -255,6 +267,7 @@ export default function HanziWriting({ goBack, characters, speakChinese, progres
             {/* Este texto debería desaparecer cuando HanziWriter carga */}
           </div>
 
+          {activeTab === 'practice' && strokeMistake && <LearningExplanation kind="stroke" />}
           {/* Botones según la pestaña activa */}
           {activeTab === 'view' ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
