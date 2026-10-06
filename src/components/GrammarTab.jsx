@@ -61,6 +61,120 @@ function PatternCard({ pattern }) {
               ))}
             </div>
           )}
+          {pattern.practice?.questions?.length > 0 && (
+            <PatternPractice practice={pattern.practice} ruleExplanation={pattern.explanation} />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PatternPractice({ practice, ruleExplanation }) {
+  const { t } = useTranslation();
+  const [started, setStarted] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState(0);
+  const questions = practice.questions;
+  const finished = started && questionIndex >= questions.length;
+  const answeredCorrectly = selected !== null && selected === questions[questionIndex]?.answerIndex;
+
+  function restart() {
+    setStarted(true);
+    setQuestionIndex(0);
+    setSelected(null);
+    setScore(0);
+  }
+
+  function chooseOption(optionIndex) {
+    if (selected !== null) return;
+    setSelected(optionIndex);
+    if (optionIndex === questions[questionIndex].answerIndex) {
+      setScore(current => current + 1);
+    }
+  }
+
+  function nextQuestion() {
+    setQuestionIndex(current => current + 1);
+    setSelected(null);
+  }
+
+  return (
+    <div className="rounded-xl p-3 space-y-3" style={{ background: J.jadeBg, border: answeredCorrectly ? `2px solid ${J.red}` : `1px solid ${J.hair}` }}>
+      {!started ? (
+        <button
+          type="button"
+          onClick={restart}
+          className="rounded-lg px-3 py-2 text-sm font-semibold"
+          style={{ color: J.jadeDeep, background: J.paperHi, border: `1px solid ${J.hair}` }}
+        >
+          {t('grammar_practice_start', 'Practice this rule')}
+        </button>
+      ) : finished ? (
+        <div className="flex flex-wrap items-center justify-between gap-2" aria-live="polite">
+          <p className="text-sm font-semibold" style={{ color: J.ink }}>
+            {t('grammar_practice_result', 'Score: {{score}} / {{total}}', { score, total: questions.length })}
+          </p>
+          <button
+            type="button"
+            onClick={restart}
+            className="rounded-lg px-3 py-2 text-sm font-semibold"
+            style={{ color: J.jadeDeep, background: J.paperHi, border: `1px solid ${J.hair}` }}
+          >
+            {t('grammar_practice_again', 'Try again')}
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <p className="text-xs font-semibold" style={{ color: J.jadeDeep }}>
+            {t('grammar_practice_progress', 'Question {{current}} of {{total}}', { current: questionIndex + 1, total: questions.length })}
+          </p>
+          <p className="text-sm font-medium" style={{ color: J.ink }}>{questions[questionIndex].prompt}</p>
+          <div className="grid gap-2">
+            {questions[questionIndex].options.map((option, optionIndex) => {
+              const isAnswer = optionIndex === questions[questionIndex].answerIndex;
+              const isSelected = optionIndex === selected;
+              const answered = selected !== null;
+              return (
+                <button
+                  key={`${questionIndex}-${optionIndex}`}
+                  type="button"
+                  disabled={answered}
+                  aria-pressed={isSelected}
+                  onClick={() => chooseOption(optionIndex)}
+                  className="rounded-lg px-3 py-2 text-left text-base font-medium transition-colors disabled:cursor-default"
+                  style={{
+                    color: answered && isAnswer ? J.jadeDeep : answered && isSelected ? J.redDeep : J.ink,
+                    background: answered && isAnswer ? J.jadeBg : answered && isSelected ? J.redBg : J.paperHi,
+                    border: `1px solid ${answered && isAnswer ? J.jade : answered && isSelected ? J.red : J.hair}`,
+                  }}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+          {selected !== null && (
+            <div className="space-y-2" aria-live="polite">
+              <p className="text-sm font-semibold" style={{ color: selected === questions[questionIndex].answerIndex ? J.jadeDeep : J.redDeep }}>
+                {selected === questions[questionIndex].answerIndex
+                  ? t('grammar_practice_correct', 'Correct!')
+                  : t('grammar_practice_incorrect', 'The correct answer is {{answer}}.', { answer: questions[questionIndex].options[questions[questionIndex].answerIndex] })}
+              </p>
+              <p className="text-sm leading-relaxed" style={{ color: J.inkSoft }}>
+                {questions[questionIndex].explanation ?? ruleExplanation}
+              </p>
+              <button
+                type="button"
+                onClick={nextQuestion}
+                className="rounded-lg px-3 py-2 text-sm font-semibold"
+                style={{ color: J.onAccent, background: J.jadeDeep }}
+              >
+                {t('grammar_practice_next', 'Next')}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

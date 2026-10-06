@@ -579,6 +579,13 @@ export default {
           lesson_tab_grammar: "Grammar",
           grammar_section_patterns: "Key Patterns",
           grammar_section_structures: "Sentence Structures",
+          grammar_practice_start: "Practice this rule",
+          grammar_practice_progress: "Question {{current}} of {{total}}",
+          grammar_practice_correct: "Correct!",
+          grammar_practice_incorrect: "The correct answer is {{answer}}.",
+          grammar_practice_next: "Next",
+          grammar_practice_result: "Score: {{score}} of {{total}}",
+          grammar_practice_again: "Try again",
           grammar_not_available: "Grammar content not available yet.",
           lesson_extra_vocab: "★ Extra vocabulary",
           lesson_mastered_label: "mastered",
@@ -795,7 +802,7 @@ export default {
           // --- Cultural Notes ---
           lesson_tab_culture: "Culture",
           culture_not_available: "Cultural notes coming soon.",
-          culture_intro_text: "Discover the culture and customs behind the words you learn.",
+          culture_intro_text: "These cards share cultural examples; practices can vary by region, generation, and person.",
           // --- SRS Stats (Settings) ---
           settings_srs_title: "Spaced Repetition (SRS)",
           settings_srs_learned: "Words in review",

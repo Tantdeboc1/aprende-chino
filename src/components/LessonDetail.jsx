@@ -39,7 +39,7 @@ export default function LessonDetail({
   goBack,
   onStartExercise,
   speakChinese,
-  defaultTab = 'vocab',
+  defaultTab = 'study',
   onTabChange,
   onTrackSeen,
 }) {
@@ -163,10 +163,10 @@ export default function LessonDetail({
       {/* Tabs */}
       <div className="flex gap-2 px-4 pt-4 pb-2 overflow-x-auto">
         {[
+          { id: 'study',     label: t('exercise_study') },
           { id: 'vocab',     label: `${t('lesson_tab_vocab')} (${stats.total})` },
-          { id: 'study', label: t('exercise_study') },
-          { id: 'exercises', label: t('lesson_tab_practice') },
           { id: 'grammar',   label: t('lesson_tab_grammar') },
+          { id: 'exercises', label: t('lesson_tab_practice') },
           { id: 'culture',   label: t('lesson_tab_culture') },
         ].map(tabItem => {
           const on = tab === tabItem.id;

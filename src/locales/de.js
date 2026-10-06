@@ -239,6 +239,13 @@ export default {
           lesson_tab_grammar: "Grammatik",
           grammar_section_patterns: "Schlüsselmuster",
           grammar_section_structures: "Satzstrukturen",
+          grammar_practice_start: "Diese Regel üben",
+          grammar_practice_progress: "Frage {{current}} von {{total}}",
+          grammar_practice_correct: "Richtig!",
+          grammar_practice_incorrect: "Die richtige Antwort ist {{answer}}.",
+          grammar_practice_next: "Weiter",
+          grammar_practice_result: "Ergebnis: {{score}} von {{total}}",
+          grammar_practice_again: "Noch einmal",
           grammar_not_available: "Grammatikinhalt noch nicht verfügbar.",
           lesson_extra_vocab: "★ Zusatzvokabular",
           lesson_mastered_label: "beherrscht",
@@ -429,7 +436,7 @@ export default {
           // --- Kulturelle Notizen ---
           lesson_tab_culture: "Kultur",
           culture_not_available: "Kulturelle Hinweise in Kürze.",
-          culture_intro_text: "Entdecke die Kultur und die Gepflogenheiten hinter den Wörtern, die du lernst.",
+          culture_intro_text: "Diese Karten zeigen kulturelle Beispiele; Bräuche können je nach Region, Generation und Person variieren.",
           // --- SRS Stats (Einstellungen) ---
           settings_srs_title: "Spaced Repetition (SRS)",
           settings_srs_learned: "Wörter in Wiederholung",

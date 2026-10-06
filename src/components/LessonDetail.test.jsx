@@ -40,7 +40,7 @@ afterEach(() => cleanup());
 
 describe('LessonDetail', () => {
   it('lista el vocabulario principal de la lección (sin el extra) y el botón atrás llama a goBack', () => {
-    const props = setup();
+    const props = setup({ defaultTab: 'vocab' });
     expect(screen.getByText('你')).toBeTruthy();
     expect(screen.getByText('好')).toBeTruthy();
     expect(screen.queryByText('谢谢')).toBeNull();
@@ -50,13 +50,13 @@ describe('LessonDetail', () => {
   });
 
   it('el toggle de vocabulario extra muestra las palabras suplementarias', () => {
-    setup();
+    setup({ defaultTab: 'vocab' });
     fireEvent.click(screen.getByRole('button', { name: /extra vocabulary/i }));
     expect(screen.getByText('谢谢')).toBeTruthy();
   });
 
   it('marcar una palabra como dominada llama a onProgressChange con mastered:true', () => {
-    const props = setup();
+    const props = setup({ defaultTab: 'vocab' });
     // Botón de estado (○/◑/★) es el primero dentro de la fila de 你.
     fireEvent.click(screen.getByText('你').closest('div').querySelector('button'));
 
@@ -66,14 +66,14 @@ describe('LessonDetail', () => {
   });
 
   it('marcar una palabra como difícil llama a onProgressChange', () => {
-    const props = setup();
+    const props = setup({ defaultTab: 'vocab' });
     const markDifficult = screen.getAllByTitle(/mark as hard/i)[0];
     fireEvent.click(markDifficult);
     expect(props.onProgressChange).toHaveBeenCalledTimes(1);
   });
 
   it('el botón de altavoz de una palabra llama a speakChinese con pinyinNumeric', () => {
-    const props = setup();
+    const props = setup({ defaultTab: 'vocab' });
     const row = screen.getByText('你').closest('div');
     const speakBtn = Array.from(row.querySelectorAll('button')).find(b => b.textContent === '声');
     fireEvent.click(speakBtn);
@@ -82,7 +82,7 @@ describe('LessonDetail', () => {
   });
 
   it('pulsar una tarjeta despliega sus ejemplos', () => {
-    setup();
+    setup({ defaultTab: 'vocab' });
     expect(screen.queryByText('你好')).toBeNull();
     fireEvent.click(screen.getByText('你').closest('div'));
     expect(screen.getByText('你好！')).toBeTruthy();

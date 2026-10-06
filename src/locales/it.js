@@ -484,6 +484,13 @@ export default {
   lesson_tab_grammar: "Grammatica",
   grammar_section_patterns: "Strutture chiave",
   grammar_section_structures: "Strutture della frase",
+  grammar_practice_start: "Esercitati su questa regola",
+  grammar_practice_progress: "Domanda {{current}} di {{total}}",
+  grammar_practice_correct: "Corretto!",
+  grammar_practice_incorrect: "La risposta corretta è {{answer}}.",
+  grammar_practice_next: "Avanti",
+  grammar_practice_result: "Risultato: {{score}} su {{total}}",
+  grammar_practice_again: "Riprova",
   grammar_not_available: "Contenuto grammaticale non ancora disponibile.",
   lesson_extra_vocab: "★ Vocabolario extra",
   lesson_mastered_label: "padroneggiate",
@@ -671,7 +678,7 @@ export default {
   // --- Cultural Notes ---
   lesson_tab_culture: "Cultura",
   culture_not_available: "Note culturali in arrivo.",
-  culture_intro_text: "Scopri la cultura e le usanze dietro le parole che impari.",
+  culture_intro_text: "Queste schede presentano esempi culturali; le usanze possono variare in base alla regione, alla generazione e alla persona.",
   // --- SRS Stats ---
   settings_srs_title: "Ripetizione spaziata (SRS)",
   settings_srs_learned: "Parole in ripasso",

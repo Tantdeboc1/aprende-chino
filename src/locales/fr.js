@@ -495,6 +495,13 @@ export default {
           lesson_tab_grammar: "Grammaire",
           grammar_section_patterns: "Structures Clés",
           grammar_section_structures: "Constructions de Phrases",
+          grammar_practice_start: "Pratiquer cette règle",
+          grammar_practice_progress: "Question {{current}} sur {{total}}",
+          grammar_practice_correct: "Correct !",
+          grammar_practice_incorrect: "La bonne réponse est {{answer}}.",
+          grammar_practice_next: "Suivant",
+          grammar_practice_result: "Résultat : {{score}} sur {{total}}",
+          grammar_practice_again: "Recommencer",
           grammar_not_available: "Contenu grammatical pas encore disponible.",
           lesson_extra_vocab: "★ Vocabulaire supplémentaire",
           lesson_mastered_label: "maîtrisés",
@@ -685,7 +692,7 @@ export default {
           // --- Notes Culturelles ---
           lesson_tab_culture: "Culture",
           culture_not_available: "Notes culturelles à venir.",
-          culture_intro_text: "Découvre la culture et les coutumes derrière les mots que tu apprends.",
+          culture_intro_text: "Ces fiches présentent des exemples culturels ; les pratiques varient selon les régions, les générations et les personnes.",
           // --- SRS Stats (Paramètres) ---
           settings_srs_title: "Répétition Espacée (SRS)",
           settings_srs_learned: "Mots en révision",

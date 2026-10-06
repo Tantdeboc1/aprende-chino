@@ -43,6 +43,22 @@ const grammarData = {
           { zh: '他好吗？', pinyin: 'Tā hǎo ma?', translation: T('¿Está él bien?', 'Is he well?', 'Va-t-il bien ?', 'Geht es ihm gut?', 'Sta bene lui?', 'Está ele bem?') },
           { zh: '你妈妈好吗？', pinyin: 'Nǐ māma hǎo ma?', translation: T('¿Está bien tu mamá?', 'Is your mum well?', 'Ta maman va bien ?', 'Geht es deiner Mama gut?', 'Sta bene tua mamma?', 'A tua mãe está bem?') },
         ],
+        practice: {
+          questions: [
+            {
+              prompt: T('Añade 吗 al final para convertir «你好» en una pregunta de sí/no.', 'Add 吗 at the end to turn “你好” into a yes/no question.', 'Ajoute 吗 à la fin pour transformer « 你好 » en question oui/non.', 'Füge 吗 am Ende hinzu, um aus „你好“ eine Ja/Nein-Frage zu machen.', 'Aggiungi 吗 alla fine per trasformare «你好» in una domanda sì/no.', 'Acrescenta 吗 no fim para transformar «你好» numa pergunta de sim/não.'),
+              options: ['你好吗？', '你吗好？', '吗你好？'],
+              answerIndex: 0,
+              explanation: T('吗 va al final de la frase afirmativa; el orden de las demás palabras se conserva.', '吗 goes at the end of the affirmative sentence; the other words stay in the same order.', '吗 se place à la fin de la phrase affirmative ; les autres mots gardent le même ordre.', '吗 steht am Ende des Aussagesatzes; die übrigen Wörter bleiben in derselben Reihenfolge.', '吗 va alla fine della frase affermativa; le altre parole mantengono lo stesso ordine.', '吗 fica no fim da frase afirmativa; as outras palavras mantêm a mesma ordem.'),
+            },
+            {
+              prompt: T('¿Cuál pregunta si él está bien?', 'Which question asks whether he is well?', 'Quelle question demande s’il va bien ?', 'Welche Frage fragt, ob es ihm gut geht?', 'Quale domanda chiede se sta bene?', 'Qual pergunta se ele está bem?'),
+              options: ['他好吗？', '他吗好？', '吗他好？'],
+              answerIndex: 0,
+              explanation: T('La frase 他好 se convierte en pregunta al añadir 吗 al final: 他好吗？', 'Turn 他好 into a question by adding 吗 at the end: 他好吗？', 'La phrase 他好 devient une question en ajoutant 吗 à la fin : 他好吗？', 'Aus 他好 wird eine Frage, indem 吗 am Ende steht: 他好吗？', 'La frase 他好 diventa una domanda aggiungendo 吗 alla fine: 他好吗？', 'A frase 他好 passa a pergunta ao acrescentar 吗 no fim: 他好吗？'),
+            },
+          ],
+        },
       },
       {
         id: 'p2',
@@ -69,6 +85,22 @@ const grammarData = {
           { zh: '她很忙。', pinyin: 'Tā hěn máng.', translation: T('Ella está muy ocupada.', 'She is very busy.', 'Elle est très occupée.', 'Sie ist sehr beschäftigt.', 'Lei è molto occupata.', 'Ela está muito ocupada.') },
           { zh: '天气很好。', pinyin: 'Tiānqì hěn hǎo.', translation: T('El tiempo está muy bien.', 'The weather is very nice.', 'Il fait très beau.', 'Das Wetter ist sehr schön.', 'Il tempo è molto bello.', 'O tempo está muito bom.') },
         ],
+        practice: {
+          questions: [
+            {
+              prompt: T('¿Cómo se dice «Ella está ocupada»?', 'How do you say “She is busy”?', 'Comment dit-on « Elle est occupée » ?', 'Wie sagt man „Sie ist beschäftigt“?', 'Come si dice «Lei è impegnata»?', 'Como se diz «Ela está ocupada»?'),
+              options: ['她很忙。', '她是忙。', '她忙很。'],
+              answerIndex: 0,
+              explanation: T('很 va delante del adjetivo 忙. En esta estructura, 很 une el sujeto con el adjetivo.', '很 goes before the adjective 忙. In this pattern, 很 links the subject to the adjective.', '很 se place avant l’adjectif 忙. Dans cette structure, 很 relie le sujet à l’adjectif.', '很 steht vor dem Adjektiv 忙. In dieser Struktur verbindet 很 das Subjekt mit dem Adjektiv.', '很 precede l’aggettivo 忙. In questa struttura, 很 collega il soggetto all’aggettivo.', '很 vem antes do adjetivo 忙. Nesta estrutura, 很 liga o sujeito ao adjetivo.'),
+            },
+            {
+              prompt: T('¿Cómo se dice «Estoy bien»?', 'How do you say “I am well”?', 'Comment dit-on « Je vais bien » ?', 'Wie sagt man „Mir geht es gut“?', 'Come si dice «Sto bene»?', 'Como se diz «Estou bem»?'),
+              options: ['我很好。', '我是好。', '我好很。'],
+              answerIndex: 0,
+              explanation: T('Con un adjetivo como 好, usa 很 delante: 我很好。', 'With an adjective such as 好, put 很 before it: 我很好。', 'Avec un adjectif comme 好, place 很 devant : 我很好。', 'Bei einem Adjektiv wie 好 steht 很 davor: 我很好。', 'Con un aggettivo come 好, metti 很 prima: 我很好。', 'Com um adjetivo como 好, coloca 很 antes: 我很好。'),
+            },
+          ],
+        },
       },
       {
         id: 'p3',
@@ -95,6 +127,22 @@ const grammarData = {
           { zh: '他不忙。', pinyin: 'Tā bù máng.', translation: T('Él no está ocupado.', "He is not busy.", "Il n'est pas occupé.", 'Er ist nicht beschäftigt.', 'Lui non è occupato.', 'Ele não está ocupado.') },
           { zh: '我不累。', pinyin: 'Wǒ bù lèi.', translation: T('No estoy cansado/a.', "I am not tired.", 'Je ne suis pas fatigué/e.', 'Ich bin nicht müde.', 'Non sono stanco/a.', 'Não estou cansado/a.') },
         ],
+        practice: {
+          questions: [
+            {
+              prompt: T('¿Cómo se dice «No estoy cansado/a»?', 'How do you say “I am not tired”?', 'Comment dit-on « Je ne suis pas fatigué(e) » ?', 'Wie sagt man „Ich bin nicht müde“?', 'Come si dice «Non sono stanco/a»?', 'Como se diz «Não estou cansado/a»?'),
+              options: ['我不累。', '我累不。', '我很累。'],
+              answerIndex: 0,
+              explanation: T('不 va inmediatamente delante del adjetivo que niega: 不累.', '不 goes immediately before the adjective it negates: 不累.', '不 se place juste avant l’adjectif nié : 不累.', '不 steht direkt vor dem verneinten Adjektiv: 不累.', '不 va subito prima dell’aggettivo negato: 不累.', '不 fica imediatamente antes do adjetivo que nega: 不累.'),
+            },
+            {
+              prompt: T('¿Cómo se dice «Él no está ocupado»?', 'How do you say “He is not busy”?', 'Comment dit-on « Il n’est pas occupé » ?', 'Wie sagt man „Er ist nicht beschäftigt“?', 'Come si dice «Lui non è occupato»?', 'Como se diz «Ele não está ocupado»?'),
+              options: ['他不忙。', '他忙不。', '他很忙。'],
+              answerIndex: 0,
+              explanation: T('不 se coloca antes del adjetivo 忙 para negarlo: 他不忙。', 'Place 不 before the adjective 忙 to negate it: 他不忙。', 'Place 不 avant l’adjectif 忙 pour le nier : 他不忙。', '不 steht vor dem Adjektiv 忙, um es zu verneinen: 他不忙。', 'Metti 不 prima dell’aggettivo 忙 per negarlo: 他不忙。', 'Coloca 不 antes do adjetivo 忙 para o negar: 他不忙。'),
+            },
+          ],
+        },
       },
       {
         id: 'p4',
@@ -121,6 +169,22 @@ const grammarData = {
           { zh: '工作怎么样？', pinyin: 'Gōngzuò zěnmeyàng?', translation: T('¿Qué tal el trabajo?', "How is work?", 'Comment va le travail ?', 'Wie läuft die Arbeit?', 'Come va il lavoro?', 'Que tal o trabalho?') },
           { zh: '最近不太好。', pinyin: 'Zuìjìn bù tài hǎo.', translation: T('Últimamente no muy bien.', 'Not very well lately.', 'Pas très bien ces derniers temps.', 'In letzter Zeit nicht so gut.', 'Ultimamente non molto bene.', 'Ultimamente não muito bem.') },
         ],
+        practice: {
+          questions: [
+            {
+              prompt: T('Completa: 你最近___？', 'Complete: 你最近___?', 'Complète : 你最近___ ?', 'Ergänze: 你最近___?', 'Completa: 你最近___?', 'Completa: 你最近___?'),
+              options: ['怎么样', '什么', '谁'],
+              answerIndex: 0,
+              explanation: T('怎么样 significa «¿cómo?» o «¿qué tal?» y pregunta por el estado general.', '怎么样 means “how?” or “how is it?” and asks about someone’s general state.', '怎么样 signifie « comment ? » ou « quoi de neuf ? » et demande l’état général.', '怎么样 bedeutet „wie?“ oder „wie läuft es?“ und fragt nach dem allgemeinen Befinden.', '怎么样 significa «come?» o «come va?» e chiede dello stato generale.', '怎么样 significa «como?» ou «que tal?» e pergunta pelo estado geral.'),
+            },
+            {
+              prompt: T('¿Qué frase pregunta «¿Qué tal el trabajo?»', 'Which sentence asks “How is work going?”', 'Quelle phrase demande « Comment va le travail ? »', 'Welcher Satz fragt „Wie läuft die Arbeit?“', 'Quale frase chiede «Come va il lavoro?»', 'Que frase pergunta «Como vai o trabalho?»'),
+              options: ['工作怎么样？', '工作什么？', '工作谁？'],
+              answerIndex: 0,
+              explanation: T('怎么样 se coloca después del tema por el que preguntas: 工作怎么样？', '怎么样 follows the topic you are asking about: 工作怎么样？', '怎么样 vient après le sujet sur lequel tu poses la question : 工作怎么样？', '怎么样 steht nach dem Thema, nach dem du fragst: 工作怎么样？', '怎么样 segue l’argomento della domanda: 工作怎么样？', '怎么样 vem depois do tema da pergunta: 工作怎么样？'),
+            },
+          ],
+        },
       },
     ],
     structures: [
@@ -1577,5 +1641,146 @@ const grammarData = {
   },
 
 };
+
+// Práctica breve ligada a cada patrón de las lecciones 2–8. Las frases usan
+// vocabulario de los listados de temas 1–8; la explicación de cada patrón se
+// reutiliza como corrección para mantenerla alineada con la teoría.
+const practiceQuestion = (prompt, options, answerIndex = 0) => ({ prompt, options, answerIndex });
+
+const additionalPractice = {
+  2: {
+    p1: [
+      practiceQuestion(T('¿Qué pregunta significa «¿De qué país eres?»', 'Which question means “What country are you from?”', 'Quelle question signifie « De quel pays viens-tu ? »', 'Welche Frage bedeutet „Aus welchem Land kommst du?“', 'Quale domanda significa «Di che paese sei?»', 'Qual pergunta significa «De que país és?»'), ['你是哪国人？', '你是国人哪？', '哪你是国人？']),
+      practiceQuestion(T('¿Cómo preguntas de qué país es él?', 'How do you ask what country he is from?', 'Comment demandes-tu de quel pays il vient ?', 'Wie fragst du, aus welchem Land er kommt?', 'Come chiedi di quale paese è lui?', 'Como perguntas de que país ele é?'), ['他是哪国人？', '他是国人哪？', '哪国人他是？']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Cómo se dice «Soy español/a»?', 'How do you say “I am Spanish”?', 'Comment dit-on « Je suis espagnol(e) » ?', 'Wie sagt man „Ich bin Spanier/in“?', 'Come si dice «Sono spagnolo/a»?', 'Como se diz «Sou espanhol/a»?'), ['我是西班牙人。', '我西班牙是人。', '我是西班牙。']),
+      practiceQuestion(T('Completa: 我是法国___。', 'Complete: 我是法国___.', 'Complète : 我是法国___.', 'Ergänze: 我是法国___.', 'Completa: 我是法国___.', 'Completa: 我是法国___.'), ['人', '国', '的']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo se dice «Yo también soy estudiante»?', 'How do you say “I am a student too”?', 'Comment dit-on « Moi aussi, je suis étudiant(e) » ?', 'Wie sagt man „Ich bin auch Student/in“?', 'Come si dice «Anch’io sono studente»?', 'Como se diz «Eu também sou estudante»?'), ['我也是学生。', '我也学生是。', '我是也学生。']),
+      practiceQuestion(T('¿Cómo se dice «Ella también es china»?', 'How do you say “She is Chinese too”?', 'Comment dit-on « Elle aussi est chinoise » ?', 'Wie sagt man „Sie ist auch Chinesin“?', 'Come si dice «Anche lei è cinese»?', 'Como se diz «Ela também é chinesa»?'), ['她也是中国人。', '她中国人也是。', '她是也中国人。']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Cómo se dice «No soy japonés/a»?', 'How do you say “I am not Japanese”?', 'Comment dit-on « Je ne suis pas japonais(e) » ?', 'Wie sagt man „Ich bin kein/e Japaner/in“?', 'Come si dice «Non sono giapponese»?', 'Como se diz «Não sou japonês/a»?'), ['我不是日本人。', '我不日本人。', '我是日本不人。']),
+      practiceQuestion(T('¿Cómo se dice «Él no es profesor»?', 'How do you say “He is not a teacher”?', 'Comment dit-on « Il n’est pas professeur » ?', 'Wie sagt man „Er ist kein Lehrer“?', 'Come si dice «Lui non è insegnante»?', 'Como se diz «Ele não é professor»?'), ['他不是老师。', '他不老师。', '他是老师不。']),
+    ],
+  },
+  3: {
+    p1: [
+      practiceQuestion(T('¿Qué frase pregunta cuántas personas hay en tu familia?', 'Which sentence asks how many people are in your family?', 'Quelle phrase demande combien de personnes compte ta famille ?', 'Welcher Satz fragt, wie viele Personen zu deiner Familie gehören?', 'Quale frase chiede quante persone ci sono nella tua famiglia?', 'Que frase pergunta quantas pessoas há na tua família?'), ['你家有几口人？', '你家几有口人？', '你家有几个人口？']),
+      practiceQuestion(T('¿Cómo dices «En mi familia hay cuatro personas» usando 口?', 'How do you say “There are four people in my family” using 口?', 'Comment dire « Ma famille compte quatre personnes » avec 口 ?', 'Wie sagt man „Meine Familie hat vier Personen“ mit 口?', 'Come dici «Nella mia famiglia ci sono quattro persone» usando 口?', 'Como dizes «Na minha família há quatro pessoas» usando 口?'), ['我家有四口人。', '我家有口四人。', '我家四有口人。']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Cómo se dice «No tengo hermanos menores»?', 'How do you say “I do not have younger siblings”?', 'Comment dit-on « Je n’ai pas de frères et sœurs plus jeunes » ?', 'Wie sagt man „Ich habe keine jüngeren Geschwister“?', 'Come si dice «Non ho fratelli o sorelle minori»?', 'Como se diz «Não tenho irmãos mais novos»?'), ['我没有弟弟妹妹。', '我不有弟弟妹妹。', '我没弟弟妹妹有。']),
+      practiceQuestion(T('¿Qué frase afirma «Hay alguien en casa»?', 'Which sentence says “There is someone at home”?', 'Quelle phrase signifie « Il y a quelqu’un à la maison » ?', 'Welcher Satz bedeutet „Jemand ist zu Hause“?', 'Quale frase significa «C’è qualcuno a casa»?', 'Que frase significa «Há alguém em casa»?'), ['家里有人。', '家里有吗人。', '家里人有。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Qué frase usa 两 correctamente antes del clasificador?', 'Which sentence correctly uses 两 before the measure word?', 'Quelle phrase emploie correctement 两 avant le classificateur ?', 'Welcher Satz verwendet 两 korrekt vor dem Zählwort?', 'Quale frase usa 两 correttamente prima del classificatore?', 'Que frase usa 两 corretamente antes do classificador?'), ['我家有两口人。', '我家有二口人。', '我家有两人个。']),
+      practiceQuestion(T('¿Cómo se dice «lección número dos»?', 'How do you say “lesson two”?', 'Comment dit-on « leçon numéro deux » ?', 'Wie sagt man „Lektion zwei“?', 'Come si dice «lezione numero due»?', 'Como se diz «lição número dois»?'), ['第二课', '第两课', '两第课']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Qué clasificador completa «tres niños»: 三___孩子?', 'Which measure word completes “three children”: 三___孩子?', 'Quel classificateur complète « trois enfants » : 三___孩子 ?', 'Welches Zählwort ergänzt „drei Kinder“: 三___孩子?', 'Quale classificatore completa «tre bambini»: 三___孩子?', 'Que classificador completa «três crianças»: 三___孩子?'), ['个', '口', '张']),
+      practiceQuestion(T('¿Cómo se dice «un amigo»?', 'How do you say “one friend”?', 'Comment dit-on « un ami » ?', 'Wie sagt man „ein Freund“?', 'Come si dice «un amico»?', 'Como se diz «um amigo»?'), ['一个朋友', '一口朋友', '一张朋友']),
+    ],
+  },
+  4: {
+    p1: [
+      practiceQuestion(T('¿Qué pregunta significa «¿Qué hora es ahora?»', 'Which question means “What time is it now?”', 'Quelle question signifie « Quelle heure est-il ? »', 'Welche Frage bedeutet „Wie spät ist es jetzt?“', 'Quale domanda significa «Che ore sono adesso?»', 'Que pergunta significa «Que horas são agora?»'), ['现在几点？', '现在点几？', '几点现在？']),
+      practiceQuestion(T('¿Cómo dices «Hay clase a las ocho y media»?', 'How do you say “There is class at half past eight”?', 'Comment dit-on « Il y a cours à huit heures et demie » ?', 'Wie sagt man „Um halb neun ist Unterricht“?', 'Come dici «C’è lezione alle otto e mezza»?', 'Como dizes «Há aula às oito e meia»?'), ['八点半有课。', '八半点有课。', '八点有半课。']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Qué frase dice «Ayer él no tuvo clase»?', 'Which sentence says “He had no class yesterday”?', 'Quelle phrase signifie « Il n’avait pas cours hier » ?', 'Welcher Satz bedeutet „Gestern hatte er keinen Unterricht“?', 'Quale frase significa «Ieri lui non aveva lezione»?', 'Que frase significa «Ontem ele não teve aula»?'), ['昨天他没有课。', '明天他没有课。', '昨天他有课。']),
+      practiceQuestion(T('¿Qué frase dice «Hoy estoy ocupado/a»?', 'Which sentence says “I am busy today”?', 'Quelle phrase signifie « Je suis occupé(e) aujourd’hui » ?', 'Welcher Satz bedeutet „Heute bin ich beschäftigt“?', 'Quale frase significa «Oggi sono occupato/a»?', 'Que frase significa «Hoje estou ocupado/a»?'), ['我今天很忙。', '我昨天很忙。', '我明天很忙。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo dices «Esta tarde no tengo clase»?', 'How do you say “I do not have class this afternoon”?', 'Comment dit-on « Je n’ai pas cours cet après-midi » ?', 'Wie sagt man „Heute Nachmittag habe ich keinen Unterricht“?', 'Come dici «Questo pomeriggio non ho lezione»?', 'Como dizes «Esta tarde não tenho aula»?'), ['我下午没有课。', '我下午不有课。', '我上午没有课。']),
+      practiceQuestion(T('¿Cómo preguntas «¿Tienes clase mañana?»', 'How do you ask “Do you have class tomorrow?”', 'Comment demander « Tu as cours demain ? » ?', 'Wie fragt man „Hast du morgen Unterricht?“?', 'Come chiedi «Hai lezione domani?»', 'Como perguntas «Tens aula amanhã?»'), ['你明天有课吗？', '你明天课有吗？', '明天你课有吗？']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Cómo dices «Hay clase a las nueve de la mañana»?', 'How do you say “There is class at nine in the morning”?', 'Comment dit-on « Il y a cours à neuf heures du matin » ?', 'Wie sagt man „Um neun Uhr morgens ist Unterricht“?', 'Come dici «C’è lezione alle nove del mattino»?', 'Como dizes «Há aula às nove da manhã»?'), ['上午九点有课。', '九点上午有课。', '上午有课九点。']),
+      practiceQuestion(T('¿Cómo dices «A las dos y media de la tarde»?', 'How do you say “At half past two in the afternoon”?', 'Comment dit-on « À deux heures et demie de l’après-midi » ?', 'Wie sagt man „Um halb drei am Nachmittag“?', 'Come dici «Alle due e mezza del pomeriggio»?', 'Como dizes «Às duas e meia da tarde»?'), ['下午两点半', '两点半下午', '下午半两点']),
+    ],
+  },
+  5: {
+    p1: [
+      practiceQuestion(T('¿Cómo felicitas a alguien diciendo «¡Feliz cumpleaños!»?', 'How do you wish someone “Happy birthday”?', 'Comment souhaiter « Joyeux anniversaire » à quelqu’un ?', 'Wie wünschst du jemandem „Alles Gute zum Geburtstag“?', 'Come auguri a qualcuno «Buon compleanno»?', 'Como desejas a alguém «Feliz aniversário»?'), ['祝你生日快乐！', '生日祝你快乐！', '你祝生日快乐！']),
+      practiceQuestion(T('¿Cómo deseas a todos un feliz año nuevo?', 'How do you wish everyone a happy new year?', 'Comment souhaiter une bonne année à tout le monde ?', 'Wie wünschst du allen ein frohes neues Jahr?', 'Come auguri a tutti un felice anno nuovo?', 'Como desejas a todos um feliz ano novo?'), ['祝大家新年快乐！', '大家祝新年快乐！', '祝新年大家？']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Qué pregunta significa «¿Qué día es hoy?» (mes y fecha)?', 'Which question asks for today’s month and date?', 'Quelle question demande le mois et la date d’aujourd’hui ?', 'Welche Frage fragt nach dem heutigen Monat und Datum?', 'Quale domanda chiede il mese e la data di oggi?', 'Que pergunta pede o mês e a data de hoje?'), ['今天几月几号？', '今天几号几月？', '今天多少月多少号？']),
+      practiceQuestion(T('¿Cómo dices «Hoy es 12 de mayo»?', 'How do you say “Today is May 12”?', 'Comment dit-on « Aujourd’hui, nous sommes le 12 mai » ?', 'Wie sagt man „Heute ist der 12. Mai“?', 'Come dici «Oggi è il 12 maggio»?', 'Como dizes «Hoje é 12 de maio»?'), ['今天五月十二号。', '今天十二月五号。', '今天五号十二月。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo preguntas «¿Cuántos años tienes este año?»', 'How do you ask “How old are you this year?”', 'Comment demander « Quel âge as-tu cette année ? » ?', 'Wie fragt man „Wie alt bist du dieses Jahr?“?', 'Come chiedi «Quanti anni hai quest’anno?»', 'Como perguntas «Quantos anos tens este ano?»'), ['你今年多大？', '你今年多月？', '你今年多号？']),
+      practiceQuestion(T('Completa: 我今年二十一___。', 'Complete: 我今年二十一___.', 'Complète : 我今年二十一___.', 'Ergänze: 我今年二十一___.', 'Completa: 我今年二十一___.', 'Completa: 我今年二十一___.'), ['岁', '年', '月']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Cómo dices «Soy del signo del dragón»?', 'How do you say “I was born in the Year of the Dragon”?', 'Comment dit-on « Je suis du signe du dragon » ?', 'Wie sagt man „Ich bin im Jahr des Drachen geboren“?', 'Come dici «Sono del segno del drago»?', 'Como dizes «Sou do signo do dragão»?'), ['我属龙。', '我是龙。', '我龙属。']),
+      practiceQuestion(T('¿Cómo preguntas el signo zodiacal de alguien?', 'How do you ask someone’s Chinese zodiac sign?', 'Comment demander le signe astrologique chinois de quelqu’un ?', 'Wie fragt man nach dem chinesischen Tierkreiszeichen?', 'Come chiedi il segno zodiacale cinese di qualcuno?', 'Como perguntas o signo do zodíaco chinês de alguém?'), ['你属什么？', '你什么属？', '什么你属？']),
+    ],
+  },
+  6: {
+    p1: [
+      practiceQuestion(T('¿Cómo dices «La biblioteca está al norte del comedor»?', 'How do you say “The library is north of the cafeteria”?', 'Comment dit-on « La bibliothèque est au nord du réfectoire » ?', 'Wie sagt man „Die Bibliothek liegt nördlich der Mensa“?', 'Come dici «La biblioteca è a nord della mensa»?', 'Como dizes «A biblioteca fica a norte do refeitório»?'), ['图书馆在食堂北边。', '图书馆食堂在北边。', '北边在食堂图书馆。']),
+      practiceQuestion(T('¿Cómo dices «El banco está al lado de la escuela»?', 'How do you say “The bank is next to the school”?', 'Comment dit-on « La banque est à côté de l’école » ?', 'Wie sagt man „Die Bank ist neben der Schule“?', 'Come dici «La banca è accanto alla scuola»?', 'Como dizes «O banco fica ao lado da escola»?'), ['银行在学校旁边。', '银行学校在旁边。', '学校银行旁边在。']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Cómo dices «El libro está encima de la mesa»?', 'How do you say “The book is on the table”?', 'Comment dit-on « Le livre est sur la table » ?', 'Wie sagt man „Das Buch liegt auf dem Tisch“?', 'Come dici «Il libro è sul tavolo»?', 'Como dizes «O livro está em cima da mesa»?'), ['书在桌子上边。', '书桌子在上边。', '上边在桌子书。']),
+      practiceQuestion(T('¿Cómo dices «El dormitorio está al oeste»?', 'How do you say “The dormitory is to the west”?', 'Comment dit-on « Le dortoir est à l’ouest » ?', 'Wie sagt man „Das Wohnheim liegt im Westen“?', 'Come dici «Il dormitorio è a ovest»?', 'Como dizes «O dormitório fica a oeste»?'), ['宿舍在西边。', '宿舍西在边。', '西边宿舍在。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo dices «Voy al comedor con un compañero»?', 'How do you say “I am going to the cafeteria with a classmate”?', 'Comment dit-on « Je vais au réfectoire avec un camarade » ?', 'Wie sagt man „Ich gehe mit einem Mitschüler in die Mensa“?', 'Come dici «Vado in mensa con un compagno»?', 'Como dizes «Vou ao refeitório com um colega»?'), ['我跟同学一起去食堂。', '我一起同学跟去食堂。', '我跟一起同学食堂去。']),
+      practiceQuestion(T('¿Cómo dices «Ella estudia chino junto con el profesor»?', 'How do you say “She studies Chinese together with the teacher”?', 'Comment dit-on « Elle étudie le chinois avec le professeur » ?', 'Wie sagt man „Sie lernt zusammen mit dem Lehrer Chinesisch“?', 'Come dici «Lei studia cinese insieme all’insegnante»?', 'Como dizes «Ela estuda chinês juntamente com o professor»?'), ['她跟老师一起学汉语。', '她学跟老师汉语。', '她跟学老师汉语。']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Cómo dices «No vayas allí»?', 'How do you say “Do not go there”?', 'Comment dit-on « N’y va pas » ?', 'Wie sagt man „Geh nicht dorthin“?', 'Come dici «Non andare lì»?', 'Como dizes «Não vás para ali»?'), ['别去那儿。', '不去那儿。', '去别那儿。']),
+      practiceQuestion(T('¿Cómo dices «No te preocupes»?', 'How do you say “Don’t worry”?', 'Comment dit-on « Ne t’inquiète pas » ?', 'Wie sagt man „Mach dir keine Sorgen“?', 'Come dici «Non preoccuparti»?', 'Como dizes «Não te preocupes»?'), ['别着急。', '不着急。', '着急别。']),
+    ],
+  },
+  7: {
+    p1: [
+      practiceQuestion(T('¿Cómo preguntas «¿Cuánto cuesta esta camisa?»?', 'How do you ask “How much is this shirt?”', 'Comment demander « Combien coûte cette chemise ? » ?', 'Wie fragt man „Wie viel kostet dieses Hemd?“?', 'Come chiedi «Quanto costa questa camicia?»', 'Como perguntas «Quanto custa esta camisa?»'), ['这件衬衫多少钱？', '这件衬衫什么钱？', '这多少钱件衬衫？']),
+      practiceQuestion(T('¿Cómo preguntas «¿Cuánto cuesta todo en total?»?', 'How do you ask “How much is everything altogether?”', 'Comment demander « Combien coûte le tout ? » ?', 'Wie fragt man „Wie viel kostet alles zusammen?“?', 'Come chiedi «Quanto costa tutto in totale?»', 'Como perguntas «Quanto custa tudo ao todo?»'), ['一共多少钱？', '多少钱一共？', '一共多少？钱']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Cómo dices «Quiero comprar unas manzanas»?', 'How do you say “I want to buy some apples”?', 'Comment dit-on « Je veux acheter des pommes » ?', 'Wie sagt man „Ich möchte Äpfel kaufen“?', 'Come dici «Voglio comprare delle mele»?', 'Como dizes «Quero comprar maçãs»?'), ['我想买点儿苹果。', '我买想点儿苹果。', '我想苹果买点儿。']),
+      practiceQuestion(T('¿Cómo dices «No quiero ir»?', 'How do you say “I do not want to go”?', 'Comment dit-on « Je ne veux pas y aller » ?', 'Wie sagt man „Ich möchte nicht gehen“?', 'Come dici «Non voglio andare»?', 'Como dizes «Não quero ir»?'), ['我不想去。', '我想不去。', '我不去想。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo preguntas «¿Puedo probarlo?»?', 'How do you ask “May I try it?”', 'Comment demander « Est-ce que je peux goûter ? » ?', 'Wie fragt man „Darf ich es probieren?“?', 'Come chiedi «Posso assaggiarlo?»', 'Como perguntas «Posso provar?»'), ['可以尝一下吗？', '可以一下尝吗？', '可以吗尝一下？']),
+      practiceQuestion(T('¿Qué frase responde «Por supuesto que sí»?', 'Which sentence means “Of course you can”?', 'Quelle phrase signifie « Bien sûr » ?', 'Welcher Satz bedeutet „Natürlich kannst du“?', 'Quale frase significa «Certo che puoi»?', 'Que frase significa «Claro que sim»?'), ['当然可以。', '可以当然。', '当然不可以。']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Qué clasificador se usa para una camisa: 一___衬衫?', 'Which measure word is used for one shirt: 一___衬衫?', 'Quel classificateur utilise-t-on pour une chemise : 一___衬衫 ?', 'Welches Zählwort verwendet man für ein Hemd: 一___衬衫?', 'Quale classificatore si usa per una camicia: 一___衬衫?', 'Que classificador se usa para uma camisa: 一___衬衫?'), ['件', '条', '斤']),
+      practiceQuestion(T('¿Cómo dices «tres jin de manzanas»?', 'How do you say “three jin of apples”?', 'Comment dit-on « trois jin de pommes » ?', 'Wie sagt man „drei Jin Äpfel“?', 'Come dici «tre jin di mele»?', 'Como dizes «três jin de maçãs»?'), ['三斤苹果', '三件苹果', '三条苹果']),
+    ],
+  },
+  8: {
+    p1: [
+      practiceQuestion(T('¿Cómo preguntas «¿Dónde te encuentras mal?»?', 'How do you ask “Where do you feel unwell?”', 'Comment demander « Où as-tu mal ? » ?', 'Wie fragt man „Wo fühlst du dich unwohl?“?', 'Come chiedi «Dove ti senti male?»', 'Como perguntas «Onde te sentes mal?»'), ['你哪儿不舒服？', '你什么儿不舒服？', '你不舒服哪儿？']),
+      practiceQuestion(T('¿Cómo dices «Me duele la cabeza»?', 'How do you say “My head hurts”?', 'Comment dit-on « J’ai mal à la tête » ?', 'Wie sagt man „Mein Kopf tut weh“?', 'Come dici «Mi fa male la testa»?', 'Como dizes «Dói-me a cabeça»?'), ['我头疼。', '我疼头。', '我不头疼。']),
+    ],
+    p2: [
+      practiceQuestion(T('¿Cómo dices «Deberías ir al hospital»?', 'How do you say “You should go to the hospital”?', 'Comment dit-on « Tu devrais aller à l’hôpital » ?', 'Wie sagt man „Du solltest ins Krankenhaus gehen“?', 'Come dici «Dovresti andare in ospedale»?', 'Como dizes «Deverias ir ao hospital»?'), ['你应该去医院。', '你不应该去医院。', '你去应该医院。']),
+      practiceQuestion(T('¿Cómo dices «No deberías comer demasiado»?', 'How do you say “You should not eat too much”?', 'Comment dit-on « Tu ne devrais pas trop manger » ?', 'Wie sagt man „Du solltest nicht zu viel essen“?', 'Come dici «Non dovresti mangiare troppo»?', 'Como dizes «Não devias comer demasiado»?'), ['不应该吃太多。', '不吃应该太多。', '太多不应该吃。']),
+    ],
+    p3: [
+      practiceQuestion(T('¿Cómo preguntas «¿Quieres té o café?» usando 还是?', 'How do you ask “Would you like tea or coffee?” using 还是?', 'Comment demander « Tu veux du thé ou du café ? » avec 还是 ?', 'Wie fragt man mit 还是 „Möchtest du Tee oder Kaffee?“?', 'Come chiedi «Vuoi tè o caffè?» usando 还是?', 'Como perguntas «Queres chá ou café?» usando 还是?'), ['你喝茶还是咖啡？', '你喝茶和咖啡？', '你还是喝茶咖啡？']),
+      practiceQuestion(T('¿Cómo preguntas «¿Vamos hoy o mañana?»?', 'How do you ask “Are we going today or tomorrow?”', 'Comment demander « On y va aujourd’hui ou demain ? » ?', 'Wie fragt man „Gehen wir heute oder morgen?“?', 'Come chiedi «Andiamo oggi o domani?»', 'Como perguntas «Vamos hoje ou amanhã?»'), ['今天去还是明天去？', '今天还是去明天？', '今天去也明天去？']),
+    ],
+    p4: [
+      practiceQuestion(T('¿Cómo dices «Estoy un poco cansado/a»?', 'How do you say “I am a little tired”?', 'Comment dit-on « Je suis un peu fatigué(e) » ?', 'Wie sagt man „Ich bin ein bisschen müde“?', 'Come dici «Sono un po’ stanco/a»?', 'Como dizes «Estou um pouco cansado/a»?'), ['我有点儿累。', '我累有点儿。', '我有点儿一点儿累。']),
+      practiceQuestion(T('¿Cómo pides «Un poco más barato, por favor»?', 'How do you ask for something “A little cheaper, please”?', 'Comment demander « Un peu moins cher, s’il te plaît » ?', 'Wie bittet man um „ein bisschen billiger“?', 'Come chiedi «Un po’ più economico, per favore»?', 'Como pedes «Um pouco mais barato, por favor»?'), ['便宜点儿吧！', '点儿便宜吧！', '有点儿便宜吧！']),
+    ],
+  },
+};
+
+for (const [lessonNumber, patterns] of Object.entries(additionalPractice)) {
+  for (const [patternId, questions] of Object.entries(patterns)) {
+    const pattern = grammarData[lessonNumber].patterns.find(item => item.id === patternId);
+    if (pattern) pattern.practice = { questions };
+  }
+}
 
 export default grammarData;

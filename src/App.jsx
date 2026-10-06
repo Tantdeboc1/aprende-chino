@@ -346,7 +346,7 @@ export default function App() {
   const selectedLessonRef = useRef(selectedLesson);
   useEffect(() => { selectedLessonRef.current = selectedLesson; }, [selectedLesson]);
   // Pestaña activa en LessonDetail (para restaurarla al volver)
-  const [lessonDetailTab, setLessonDetailTab] = useState('vocab');
+  const [lessonDetailTab, setLessonDetailTab] = useState('study');
 
   // Sub-navegación de ejercicios (reutiliza navigation.js)
   const [learnSection,     setLearnSection]     = useState(null);
@@ -589,7 +589,7 @@ export default function App() {
     setLastLesson(num);
     try { localStorage.setItem(STORAGE_KEYS.LAST_LESSON, String(num)); } catch { /* la lección sigue accesible en esta sesión */ }
     if (mode === 'google') pushSnapshot();
-    setLessonDetailTab('vocab'); // reset pestaña al entrar a una lección nueva
+    setLessonDetailTab('study'); // empieza la lección por el bloque de estudio
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setScreen('lesson-detail');
