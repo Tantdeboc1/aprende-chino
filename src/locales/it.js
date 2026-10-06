@@ -1,5 +1,6 @@
 // src/locales/it.js — Italiano
 export default {
+  friends_unverified_hint: "Confronto informale: gli XP sono dichiarati da ogni utente e non sono verificati.",
   answer_explanation_continue: 'Continua',
   answer_explanation_title: "Perché questa risposta",
   answer_explanation_context: "La risposta corrisponde al significato e all’indizio dell’esercizio. Alcune alternative possono formare altre frasi valide.",

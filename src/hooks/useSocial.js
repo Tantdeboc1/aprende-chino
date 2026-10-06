@@ -198,7 +198,7 @@ export function useSocial() {
     if (!toUid) { const e = new Error('not-found'); e.code = 'not-found'; throw e; }
     if (toUid === uid) { const e = new Error('self'); e.code = 'self'; throw e; }
     if (friendUidSet.has(toUid)) { const e = new Error('already-friends'); e.code = 'already-friends'; throw e; }
-    const profile = await m.fetchPublicProfile(toUid);
+    const profile = await m.fetchSocialIdentity(toUid);
     // Si esa persona ya te invitó, no tiene sentido crear una segunda
     // invitación cruzada: la pantalla ofrecerá aceptar la suya.
     return { uid: toUid, profile, theyInvitedYou: incomingUidSet.has(toUid) };

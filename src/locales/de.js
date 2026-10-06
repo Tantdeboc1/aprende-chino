@@ -1,5 +1,6 @@
 // src/locales/de.js
 export default {
+  friends_unverified_hint: "Informeller Vergleich: XP werden von jedem Nutzer selbst gemeldet und sind nicht geprüft.",
   answer_explanation_continue: 'Weiter',
   answer_explanation_title: "Warum diese Antwort",
   answer_explanation_context: "Die Antwort passt zur Bedeutung und zum Hinweis dieser Aufgabe. Manche Alternativen können andere gültige Sätze bilden.",

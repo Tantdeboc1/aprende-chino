@@ -1,151 +1,135 @@
 rules_version = '2';
-
-// Reglas: cada usuario solo puede leer/escribir su propio documento
-// users/{uid}. Nadie puede listar la colección entera ni leer la de otro.
-// Además validamos esquema y tamaños para evitar que una cuenta escriba
-// campos arbitrarios o documentos gigantes (abuso de almacenamiento/cuota).
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    function isOwner(uid) {
-      return request.auth != null && request.auth.uid == uid;
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function socialReader(uid) {
+      let me = request.auth.uid;
+      let pair = me < uid ? me + '_' + uid : uid + '_' + me;
+      return me == uid
+        || exists(/databases/$(database)/documents/friendships/$(pair))
+        || exists(/databases/$(database)/documents/friendRequests/$(uid + '_' + me));
     }
-
-    // Valida la forma del documento que se intenta escribir. Solo permitimos
-    // las claves que la app realmente usa (userStore.js) y acotamos tipos y
-    // tamaños. `progress` y `extra` son mapas libres (subsistemas internos),
-    // pero el límite de 1 MB por documento de Firestore sigue aplicando.
-    function isValidUser() {
+    function validPhoto(photo) {
+      return photo == null || (photo is string && photo.size() <= 500
+        && photo.matches('https://[a-zA-Z0-9.-]+[.]googleusercontent[.]com/.*'));
+    }
+    function validIdentity(d, uid) {
+      return d.uid == uid && d.displayName is string && d.displayName.size() <= 100
+        && (d.avatarId == null || (d.avatarId is string && d.avatarId.size() <= 50))
+        && validPhoto(d.photoURL);
+    }
+    function validUser() {
       let d = request.resource.data;
-      return d.keys().hasOnly(
-               ['userName', 'profile', 'progress', 'extra', 'clientId', 'updatedAt'])
-        && (!d.keys().hasAny(['userName']) || (d.userName is string && d.userName.size() <= 100))
-        && (!d.keys().hasAny(['profile'])  || d.profile is map)
-        && (!d.keys().hasAny(['progress']) || d.progress is map)
-        && (!d.keys().hasAny(['extra'])    || d.extra is map)
-        && (!d.keys().hasAny(['clientId']) || (d.clientId is string && d.clientId.size() <= 100));
+      return d.keys().hasOnly(['userName', 'profile', 'progress', 'extra', 'clientId', 'updatedAt'])
+        && (!('userName' in d) || (d.userName is string && d.userName.size() <= 100))
+        && (!('profile' in d) || d.profile is map)
+        && (!('progress' in d) || d.progress is map)
+        && (!('extra' in d) || d.extra is map)
+        && (!('clientId' in d) || (d.clientId is string && d.clientId.size() <= 100))
+        && d.updatedAt == request.time;
     }
-
+    function validProfile(uid) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid','displayName','avatarId','photoURL','level','totalXP','weeklyXP','currentStreak','friendCode','updatedAt'])
+        && validIdentity(d, uid) && d.updatedAt == request.time
+        && d.friendCode is string && d.friendCode.matches('[A-Z0-9]{6}')
+        && getAfter(/databases/$(database)/documents/friendCodes/$(d.friendCode)).data.uid == uid
+        && d.level is int && d.level >= 1 && d.level <= 100
+        && d.totalXP is int && d.totalXP >= 0 && d.totalXP <= 10000000
+        && d.weeklyXP is int && d.weeklyXP >= 0 && d.weeklyXP <= d.totalXP
+        && d.currentStreak is int && d.currentStreak >= 0 && d.currentStreak <= 20000;
+    }
     match /users/{uid} {
-      allow read:  if isOwner(uid);
-      // create/update validan esquema; delete va aparte (en un delete no hay
-      // request.resource.data y isValidUser() lo bloquearía). Necesario para
-      // el borrado de cuenta desde Ajustes.
-      allow create, update: if isOwner(uid) && isValidUser();
+      allow get: if isOwner(uid);
+      allow create, update: if isOwner(uid) && validUser();
       allow delete: if isOwner(uid);
     }
-
-    // ─── Capa social (amistades) ──────────────────────────────────────────
-    // Valida el contenido del perfil público. Estos documentos los LEEN los
-    // amigos, así que un campo sin acotar no solo permite hacer trampas en el
-    // ranking: permite colar un string enorme o un mapa anidado que infla el
-    // documento y rompe la UI de otra persona.
-    //
-    // `is number` y no `is int` a propósito: el XP hoy siempre es entero, pero
-    // si algún día se sumara medio punto, `is int` haría que syncPublicProfile
-    // empezara a fallar en silencio (el error se traga con un console.warn) y
-    // el ranking se congelaría sin que nadie se entere. `is number` acotado
-    // bloquea igual el abuso real (tipos raros y documentos gigantes).
-    //
-    // Los topes son holgados a posta: el nivel máximo hoy es 30 (216 000 XP),
-    // así que nada de esto estorba a un usuario real ni al añadir niveles.
-    function isValidPublicProfile(uid) {
-      let d = request.resource.data;
-      return d.keys().hasOnly(
-               ['uid', 'displayName', 'avatarId', 'photoURL',
-                'level', 'totalXP', 'weeklyXP', 'currentStreak', 'friendCode', 'updatedAt'])
-        && d.uid == uid
-        && d.displayName is string && d.displayName.size() <= 100
-        && (d.avatarId   == null || (d.avatarId   is string && d.avatarId.size()   <= 50))
-        && (d.photoURL   == null || (d.photoURL   is string && d.photoURL.size()   <= 500))
-        && (d.friendCode == null || (d.friendCode is string && d.friendCode.size() <= 20))
-        && (d.level          is number && d.level          >= 0 && d.level          <= 100)
-        && (d.totalXP        is number && d.totalXP        >= 0 && d.totalXP        <= 10000000)
-        && (d.weeklyXP       is number && d.weeklyXP       >= 0 && d.weeklyXP       <= 10000000)
-        && (d.currentStreak  is number && d.currentStreak  >= 0 && d.currentStreak  <= 20000);
-    }
-
-    // Perfil PÚBLICO: solo los campos mínimos que se comparten con amigos
-    // (nombre, avatar, nivel, XP, racha, código). Solo el dueño lo escribe.
-    // El doc privado users/{uid} NO se toca aquí.
-    //
-    // `get` y NO `read`: `read` = get + list, y con list cualquier cuenta
-    // autenticada podría volcar la colección entera (nombre, foto, nivel,
-    // racha y código de amigo de TODOS los usuarios). La app solo lee perfiles
-    // sueltos por uid (socialStore.fetchPublicProfile), nunca consulta la
-    // colección, así que `get` cubre todos los casos reales.
+    // Informal XP is self-reported; only owner, friends and invitation receivers can read it.
     match /publicProfiles/{uid} {
-      allow get: if request.auth != null;
-      allow create, update: if isOwner(uid) && isValidPublicProfile(uid);
-      // Borrado de cuenta desde Ajustes.
+      allow get: if signedIn() && socialReader(uid);
+      allow create: if isOwner(uid) && validProfile(uid);
+      allow update: if isOwner(uid) && validProfile(uid)
+        && request.resource.data.friendCode == resource.data.friendCode;
+      allow delete: if isOwner(uid)
+        && !existsAfter(/databases/$(database)/documents/friendCodes/$(resource.data.friendCode));
+    }
+    // Discovery exposes identity only, never personal progress or scores.
+    match /socialIdentities/{uid} {
+      allow get: if signedIn();
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['uid','displayName','avatarId','photoURL'])
+        && validIdentity(request.resource.data, uid);
       allow delete: if isOwner(uid);
     }
-
-    // Lookup código→uid. create() falla si el código ya existe, lo que
-    // garantiza unicidad sin transacciones. Solo el dueño reserva/borra.
-    // `get` y no `read`, por lo mismo que publicProfiles: con `list` se podría
-    // volcar el mapa completo código→uid y, con él, invitar a toda la base de
-    // usuarios. Resolver un código es siempre un get por id.
     match /friendCodes/{code} {
-      allow get: if request.auth != null;
-      allow create: if request.auth != null
+      allow get: if signedIn();
+      allow create: if signedIn() && code.matches('[A-Z0-9]{6}')
+        && request.resource.data.keys().hasOnly(['uid','createdAt'])
         && request.resource.data.uid == request.auth.uid
-        && request.resource.data.keys().hasOnly(['uid', 'createdAt']);
-      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+        && request.resource.data.createdAt == request.time
+        && (!exists(/databases/$(database)/documents/publicProfiles/$(request.auth.uid))
+          || get(/databases/$(database)/documents/publicProfiles/$(request.auth.uid)).data.friendCode == code)
+        && getAfter(/databases/$(database)/documents/publicProfiles/$(request.auth.uid)).data.friendCode == code;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
     }
-
-    // Invitaciones pendientes. Id determinista "{from}_{to}" → evita duplicados.
-    // Solo emisor y receptor pueden verla; solo el emisor la crea; ambos la
-    // borran (rechazar / cancelar). No hay update: aceptar = crear amistad +
-    // borrar invitación (ver friendships).
-    match /friendRequests/{reqId} {
-      allow read: if request.auth != null
-        && (request.auth.uid == resource.data.from || request.auth.uid == resource.data.to);
-      allow create: if request.auth != null
-        && request.resource.data.from == request.auth.uid
-        && request.resource.data.from != request.resource.data.to
-        && reqId == request.resource.data.from + '_' + request.resource.data.to
-        && request.resource.data.keys().hasOnly(
-             ['from', 'to', 'fromName', 'fromAvatarId', 'fromPhotoURL',
-              'toName', 'toAvatarId', 'toPhotoURL', 'createdAt'])
-        && request.resource.data.fromName is string
-        && request.resource.data.fromName.size() <= 100
-        && (!request.resource.data.keys().hasAny(['toName'])
-            || (request.resource.data.toName is string
-                && request.resource.data.toName.size() <= 100));
-      allow delete: if request.auth != null
-        && (request.auth.uid == resource.data.from || request.auth.uid == resource.data.to);
-    }
-
-    // Amistad confirmada. members = los dos uid. Solo un miembro la lee/borra.
-    // Crear solo si soy uno de los miembros Y el OTRO me había enviado una
-    // invitación pendiente (así nadie se autoañade a la lista de otro).
-    match /friendships/{pairId} {
-      function otherMember(members) {
-        return members[0] == request.auth.uid ? members[1] : members[0];
+    // Atomic invitation counter: 20 per rolling day, at least 20 seconds apart.
+    // Clients cannot reset or delete the counter. It contains no identity or progress.
+    match /socialLimits/{uid} {
+      function validLimit() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['count','windowStart','lastInviteAt','lastRequestId'])
+          && d.count is int && d.count >= 1 && d.count <= 20
+          && d.lastRequestId is string && d.lastRequestId.size() <= 257
+          && d.windowStart is timestamp && d.lastInviteAt == request.time;
       }
-      // `read` (get + list) sí hace falta: la app consulta con
-      // where('members','array-contains',uid), y una query sin ese filtro
-      // fallaría igualmente al evaluar la regla documento a documento.
-      allow read: if request.auth != null && request.auth.uid in resource.data.members;
-      allow delete: if request.auth != null && request.auth.uid in resource.data.members;
-      allow create: if request.auth != null
-        && request.resource.data.keys().hasOnly(['members', 'createdAt'])
-        && request.resource.data.members is list
-        && request.resource.data.members.size() == 2
-        && request.auth.uid in request.resource.data.members
-        // members ordenados y pairId derivado de ellos: el id es determinista,
-        // así que no se pueden crear dos documentos para la misma pareja ni una
-        // amistad con el id "del revés" que removeFriend luego no sabría borrar.
+      allow get: if isOwner(uid);
+      allow create: if isOwner(uid) && validLimit()
+        && request.resource.data.count == 1 && request.resource.data.windowStart == request.time;
+      allow update: if isOwner(uid) && validLimit()
+        && request.time >= resource.data.lastInviteAt + duration.value(20, 's')
+        && ((request.time < resource.data.windowStart + duration.value(1, 'd')
+             && request.resource.data.windowStart == resource.data.windowStart
+             && request.resource.data.count == resource.data.count + 1)
+          || (request.time >= resource.data.windowStart + duration.value(1, 'd')
+             && request.resource.data.windowStart == request.time && request.resource.data.count == 1));
+    }
+    match /friendRequests/{reqId} {
+      function validRequest() {
+        let d = request.resource.data;
+        let limit = getAfter(/databases/$(database)/documents/socialLimits/$(request.auth.uid)).data;
+        return d.keys().hasOnly(['from','to','fromName','fromAvatarId','fromPhotoURL','toName','toAvatarId','toPhotoURL','createdAt'])
+          && d.from == request.auth.uid && d.to is string && d.to.size() > 0 && d.to.size() <= 128
+          && d.from != d.to && reqId == d.from + '_' + d.to
+          && d.createdAt == request.time && limit.lastInviteAt == request.time && limit.lastRequestId == reqId
+          && exists(/databases/$(database)/documents/publicProfiles/$(d.to))
+          && d.fromName is string && d.fromName.size() <= 100
+          && d.toName is string && d.toName.size() <= 100
+          && (d.fromAvatarId == null || (d.fromAvatarId is string && d.fromAvatarId.size() <= 50))
+          && (d.toAvatarId == null || (d.toAvatarId is string && d.toAvatarId.size() <= 50))
+          && validPhoto(d.fromPhotoURL) && validPhoto(d.toPhotoURL);
+      }
+      allow get: if signedIn() && (reqId.matches(request.auth.uid + '_.*') || reqId.matches('.*_' + request.auth.uid));
+      allow list, delete: if signedIn() && (request.auth.uid == resource.data.from || request.auth.uid == resource.data.to);
+      allow create: if signedIn() && validRequest();
+    }
+    match /friendships/{pairId} {
+      function myPair() {
+        return pairId.matches(request.auth.uid + '_.*') || pairId.matches('.*_' + request.auth.uid);
+      }
+      allow get: if signedIn() && myPair();
+      allow list, delete: if signedIn() && request.auth.uid in resource.data.members;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['members','createdAt'])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.members is list && request.resource.data.members.size() == 2
+        && request.resource.data.members[0] is string && request.resource.data.members[1] is string
         && request.resource.data.members[0] < request.resource.data.members[1]
+        && request.auth.uid in request.resource.data.members
         && pairId == request.resource.data.members[0] + '_' + request.resource.data.members[1]
         && exists(/databases/$(database)/documents/friendRequests/$(
-             otherMember(request.resource.data.members) + '_' + request.auth.uid));
+          (request.resource.data.members[0] == request.auth.uid ? request.resource.data.members[1] : request.resource.data.members[0]) + '_' + request.auth.uid));
     }
-
-    // Todo lo demás queda denegado por defecto.
-    match /{document=**} {
-      allow read, write: if false;
-    }
+    match /{document=**} { allow read, write: if false; }
   }
 }

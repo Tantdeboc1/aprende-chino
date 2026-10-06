@@ -42,6 +42,13 @@ beforeEach(() => localStorage.clear());
 afterEach(() => cleanup());
 
 describe('FriendsScreen', () => {
+  it('conserva el ranking informal y avisa de que el XP no está verificado', () => {
+    setup({ friends: [{ uid: 'friend1', profile: { displayName: 'Ana', totalXP: 123, weeklyXP: 12 } }] });
+    expect(screen.getByText(/not verified|no está verificado/i)).toBeTruthy();
+    expect(screen.getByText('Ana')).toBeTruthy();
+    expect(screen.getByText('12 XP')).toBeTruthy();
+    expect(screen.queryByText(/Earn verified XP|Ganar XP verificado/i)).toBeNull();
+  });
   it('modo invitado (enabled: false): muestra la invitación a iniciar sesión, sin formularios', () => {
     setup({ enabled: false });
     expect(screen.getByText(/sign in with google|inicia sesión/i)).toBeTruthy();

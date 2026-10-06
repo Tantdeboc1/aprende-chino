@@ -1,5 +1,6 @@
 // src/locales/es.js
 export default {
+  friends_unverified_hint: "Comparación informal: el XP lo declara cada usuario y no está verificado.",
   answer_explanation_continue: 'Continuar',
   answer_explanation_title: "Por qué esta respuesta",
   answer_explanation_context: "La respuesta corresponde al significado pedido y a la pista de este ejercicio. Algunas alternativas pueden formar otras frases válidas.",

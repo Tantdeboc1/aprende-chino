@@ -56,14 +56,14 @@ const appCheckSiteKey = envSiteKey !== undefined
 // para que ninguna salga sin token.
 export const appCheckReady = appCheckSiteKey
   ? import('firebase/app-check')
-      .then(({ initializeAppCheck, ReCaptchaV3Provider }) => {
+      .then(({ initializeAppCheck, ReCaptchaEnterpriseProvider }) => {
         // En desarrollo reCAPTCHA no puede validar localhost: el SDK imprime
         // en consola un token de depuración que hay que registrar en
         // Firebase → App Check → Apps → Gestionar tokens de depuración.
         // Solo en DEV: en producción esto sería una puerta trasera.
         if (import.meta.env.DEV) self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
         return initializeAppCheck(firebaseApp, {
-          provider: new ReCaptchaV3Provider(appCheckSiteKey),
+          provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey),
           isTokenAutoRefreshEnabled: true,
         });
       })

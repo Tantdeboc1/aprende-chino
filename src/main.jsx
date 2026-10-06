@@ -70,7 +70,11 @@ const Spinner = () => (
 );
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  window.self !== window.top ? (
+    <main style={{ padding: 24 }}>
+      <a href={window.location.href} target="_blank" rel="noopener noreferrer">Abrir HanyuPath / Open HanyuPath</a>
+    </main>
+  ) : <StrictMode>
     <ErrorBoundary>
       <AuthProvider>
         <MusicProvider>

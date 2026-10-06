@@ -1,59 +1,40 @@
 name: CI
-
-# Barrera de calidad: lint + tests + build en cada push y pull request.
-# El deploy (deploy-pages.yml) sigue corriendo solo en main; esto cubre
-# también las ramas y PRs para cazar regresiones antes de fusionar.
 on:
-  push:
-    branches: [ main ]
   pull_request:
   workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-
-      # Reintentos ante fallos de red transitorios (ECONNRESET) del registro npm.
+      - name: Setup Java for isolated security tests
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: 21
       - name: Install dependencies
         run: |
-          for i in 1 2 3; do
-            npm ci --fetch-retries=5 --fetch-retry-mintimeout=10000 --fetch-retry-maxtimeout=60000 && exit 0
-            echo "npm ci falló (intento $i); reintentando en 15s…" >&2
-            sleep 15
-          done
-          echo "npm ci falló tras 3 intentos" >&2
-          exit 1
-
-      # Vulnerabilidades conocidas en lo que SÍ viaja al usuario.
-      # --omit=dev deja fuera las de tiempo de build (sharp, ejs vía
-      # vite-plugin-pwa): no se sirven a nadie y bloquearían todos los PRs sin
-      # mejorar la seguridad de la app. --audit-level=high evita que un aviso
-      # menor en una transitiva pare el trabajo.
-      - name: Audit de dependencias de producción
-        run: npm audit --omit=dev --audit-level=high
-
+          npm ci
+      - name: Audit all dependencies, including build tools
+        run: npm run audit:security
       - name: Lint
         run: npm run lint
-
-      - name: Tests
+      - name: Unit tests
         run: npm test
-
-      # Los datos multi-idioma (src/data/{grammar,cultural}/<lang>.js) están
-      # gitignorados; el build los necesita generados primero.
-      - name: Generate i18n data
-        run: node scripts/split-i18n-data.mjs
-
-      - name: Copy HanziWriter stroke data
-        run: node scripts/copy-hanzi-data.mjs
-
+      - name: Firebase security rules tests
+        run: npm run test:security
       - name: Build
-        run: npx vite build
+        run: npm run build

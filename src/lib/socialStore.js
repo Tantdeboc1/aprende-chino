@@ -4,10 +4,12 @@
 // users/{uid}) porque aquí se cruzan datos entre usuarios distintos.
 //
 // Modelo en Firestore (todo controlado por firestore.rules, sin Cloud Functions):
-//   publicProfiles/{uid}   → datos mínimos visibles por cualquier autenticado
+//   publicProfiles/{uid}   → progreso informal visible por dueño, amigos y receptores de invitación
 //                            (nombre, avatar, nivel, XP, racha, código).
 //   friendCodes/{code}     → { uid }. Lookup código→uid. Crear-si-no-existe
 //                            garantiza unicidad del código.
+//   socialIdentities/{uid} → identidad mínima para buscar amigos, sin progreso.
+//   socialLimits/{uid}     → contador de invitaciones validado por las reglas.
 //   friendRequests/{from_to} → { from, to, ... }. Invitación pendiente.
 //   friendships/{pairId}   → { members:[a,b] }. Amistad confirmada (pairId =
 //                            los dos uid ordenados y unidos por '_').
@@ -88,7 +90,7 @@ function readLocalUserName() {
 
 // Garantiza que el usuario tiene un código único y devuelve dicho código.
 // Reusa el existente (en publicProfile o caché); si no hay, genera uno nuevo
-// reservándolo en friendCodes con create (que falla si ya existe → reintenta).
+// reservándolo junto al perfil en un batch (si existe → reintenta).
 async function ensureFriendCode(uid) {
   if (_codeCache[uid]) return _codeCache[uid];
   const { fs, db } = await loadFirestore();
@@ -103,15 +105,16 @@ async function ensureFriendCode(uid) {
     }
   } catch { /* sin perfil aún: generamos abajo */ }
 
-  // Genera y reserva un código libre. create() falla si el doc ya existe, lo
-  // que nos da unicidad sin transacciones.
+  // El batch vincula la reserva al único código del perfil. Las reglas impiden
+  // sobrescribir una reserva o acumular códigos adicionales por cuenta.
   for (let attempt = 0; attempt < 6; attempt++) {
     const code = randomCode();
     try {
-      await fs.setDoc(
-        fs.doc(db, 'friendCodes', code),
-        { uid, createdAt: fs.serverTimestamp() },
-      );
+      const batch = fs.writeBatch(db);
+      batch.set(fs.doc(db, 'friendCodes', code), { uid, createdAt: fs.serverTimestamp() });
+      batch.set(fs.doc(db, 'publicProfiles', uid), { ...publicProfileData(uid, code, null), updatedAt: fs.serverTimestamp() });
+      batch.set(fs.doc(db, 'socialIdentities', uid), identityData(uid));
+      await batch.commit();
       _codeCache[uid] = code;
       return code;
     } catch {
@@ -124,20 +127,14 @@ async function ensureFriendCode(uid) {
 // Sube/actualiza el perfil público con el estado actual (lee de localStorage).
 // `photoURL` es la foto de Google del usuario (o null); decidimos aquí si se
 // expone según su preferencia useGooglePhoto.
-export async function syncPublicProfile({ uid, photoURL }) {
-  if (!uid) return;
-  const { fs, db } = await loadFirestore();
-  const code = await ensureFriendCode(uid);
-
+function publicProfileData(uid, code, photoURL) {
   const streak = getStreak();
   const totalXP = streak.totalXP || 0;
   const level = getLevelInfo(totalXP).level;
   const profile = loadUserProfile();
   const useGoogle = profile?.useGooglePhoto !== false && !!photoURL;
 
-  await fs.setDoc(
-    fs.doc(db, 'publicProfiles', uid),
-    {
+  return {
       uid,
       displayName: sanitizeUserName(readLocalUserName(), ''),
       avatarId: profile?.avatarId || null,
@@ -147,10 +144,24 @@ export async function syncPublicProfile({ uid, photoURL }) {
       weeklyXP: getWeeklyXP(),
       currentStreak: streak.currentStreak || 0,
       friendCode: code,
-      updatedAt: fs.serverTimestamp(),
-    },
-    { merge: true },
-  );
+    };
+}
+
+function identityData(uid, photoURL = null) {
+  const p = loadUserProfile();
+  return { uid, displayName: sanitizeUserName(readLocalUserName(), ''),
+    avatarId: p?.avatarId || null,
+    photoURL: p?.useGooglePhoto !== false ? photoURL : null };
+}
+
+export async function syncPublicProfile({ uid, photoURL }) {
+  if (!uid) return;
+  const { fs, db } = await loadFirestore();
+  const code = await ensureFriendCode(uid);
+  const batch = fs.writeBatch(db);
+  batch.set(fs.doc(db, 'publicProfiles', uid), { ...publicProfileData(uid, code, photoURL), updatedAt: fs.serverTimestamp() });
+  batch.set(fs.doc(db, 'socialIdentities', uid), identityData(uid, photoURL));
+  await batch.commit();
   return code;
 }
 
@@ -160,6 +171,12 @@ export async function fetchPublicProfile(uid) {
   if (!snap.exists()) return null;
   const data = snap.data();
   return { ...data, displayName: sanitizeUserName(data.displayName, '') };
+}
+
+export async function fetchSocialIdentity(uid) {
+  const { fs, db } = await loadFirestore();
+  const snap = await fs.getDoc(fs.doc(db, 'socialIdentities', uid));
+  return snap.exists() ? { ...snap.data(), displayName: sanitizeUserName(snap.data().displayName, '') } : null;
 }
 
 // Resuelve un código de amigo a su uid (o null si no existe).
@@ -196,9 +213,18 @@ export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }
   const existing = await fs.getDoc(reqRef);
   if (existing.exists()) return 'already-pending';
 
-  await fs.setDoc(
-    reqRef,
-    {
+  await fs.runTransaction(db, async transaction => {
+    const limitRef = fs.doc(db, 'socialLimits', fromUid);
+    const limitSnap = await transaction.get(limitRef);
+    const limit = limitSnap.exists() ? limitSnap.data() : null;
+    const expired = !limit || Date.now() - limit.windowStart.toMillis() >= 86400000;
+    transaction.set(limitRef, {
+      windowStart: expired ? fs.serverTimestamp() : limit.windowStart,
+      count: expired ? 1 : limit.count + 1,
+      lastInviteAt: fs.serverTimestamp(),
+      lastRequestId: requestId(fromUid, toUid),
+    });
+    transaction.set(reqRef, {
       from: fromUid,
       to: toUid,
       fromName: (fromPublic?.displayName || '').slice(0, 100),
@@ -208,8 +234,8 @@ export async function sendFriendRequest({ fromUid, toUid, fromPublic, toPublic }
       toAvatarId: toPublic?.avatarId || null,
       toPhotoURL: toPublic?.photoURL || null,
       createdAt: fs.serverTimestamp(),
-    },
-  );
+    });
+  });
   return 'created';
 }
 
@@ -277,6 +303,7 @@ export async function deleteAccountData(uid) {
   // 4. Perfil público y doc privado (al final: si algo de arriba falla,
   //    reintentar el borrado completo sigue siendo posible con la sesión viva).
   await attempt(() => fs.deleteDoc(fs.doc(db, 'publicProfiles', uid)));
+  await attempt(() => fs.deleteDoc(fs.doc(db, 'socialIdentities', uid)));
   await attempt(() => fs.deleteDoc(fs.doc(db, 'users', uid)));
 
   clearSocialCache();

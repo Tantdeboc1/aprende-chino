@@ -432,6 +432,9 @@ export default function FriendsScreen({ userName, onBack, initialCode, onCodeCon
         {/* ─── Ranking de amigos ───────────────────────────────────────────── */}
         <JSection label={t('friends_ranking', 'Clasificación')} cn="排行榜"
           right={<span style={{ fontSize: '0.75rem', fontWeight: 700, color: J.mute }}>{friends.length} {t('friends_count', 'amigos')}</span>} />
+        <p style={{ fontSize: '0.8125rem', color: J.inkSoft, marginBottom: 10 }}>
+          {t('friends_unverified_hint')}
+        </p>
 
         {/* Toggle de métrica: XP de los últimos 7 días vs total histórico */}
         <div className="flex gap-2" style={{ marginBottom: 10 }}>
