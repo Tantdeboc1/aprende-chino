@@ -24,16 +24,17 @@ Se ha retirado la propuesta anterior con backend. Sus archivos se conservan úni
 
 Las pruebas de reglas usan exclusivamente el emulador local y un proyecto `demo-*`, con datos inventados. Requieren Java 21; el JAR oficial descargado se valida con SHA-256. No modifican cuentas ni datos de producción.
 
-Resultado local de esta versión: 692 pruebas de la app superadas en la suite completa, más una prueba nueva del aviso de ranking (las 11 pruebas de Amigos pasan); 9 pruebas de reglas y 14 pruebas de navegador superadas. Auditoría npm: 0 vulnerabilidades conocidas. Compilación correcta; lint con 0 errores y 16 avisos existentes.
+Resultado local: 695 pruebas de la app, 9 pruebas de reglas y 14 pruebas de navegador superadas. Auditoría npm: 0 vulnerabilidades conocidas. Compilación correcta; lint con 0 errores y 16 avisos existentes. Dependabot detectó posteriormente una alerta adicional en sharp; la dependencia se actualizó a 0.35.5, la versión corregida indicada por GitHub.
 
-## Pendiente antes de publicar
+## Estado del despliegue y verificación pendiente
 
 La consola consultada el 6 de octubre de 2026 mantiene **Spark**. El usuario ha registrado la app web `Hsk Academy` con **Fraud Defense / reCAPTCHA Enterprise**. Se corrigió el campo de clave de sitio para usar la clave pública de la configuración existente, cuyo dominio es `tantdeboc1.github.io`. El cliente local utiliza ahora `ReCaptchaEnterpriseProvider`. No se ha activado facturación. El registro no confirma por sí solo el funcionamiento ni activa enforcement: debe publicarse el cliente compatible y comprobar tráfico verificado antes de exigirlo. La clave secreta no se guarda en el código ni en esta guía.
 
-1. Publicar el cliente compatible con el proveedor ya registrado y comprobar que obtiene tokens válidos. Respetar las cuotas gratuitas; no habilitar facturación como parte de este trabajo.
+Las reglas se desplegaron correctamente en el proyecto `hsk-academy-53806` y las correcciones se publican en `main` con autorización del titular. GitHub Pages publica el cliente únicamente cuando termina CI con éxito.
+
+1. Comprobar que el cliente publicado obtiene tokens válidos del proveedor ya registrado. Respetar las cuotas gratuitas; no habilitar facturación como parte de este trabajo.
 2. Registrar los tokens de depuración solo para desarrollo. Comprobar tráfico válido antes de exigir App Check; activarlo antes bloquearía los clientes actuales. App Check dificulta abuso, pero no verifica el XP calculado por el cliente.
-3. Desplegar las reglas y probar la sección Amigos con dos cuentas de prueba dentro de Spark. Verificar búsqueda, invitación, aceptación, consulta, eliminación de amistad y borrado de cuenta. Las reglas nuevas requieren el cliente nuevo para reservar códigos y enviar invitaciones; los clientes antiguos abiertos tendrán que actualizarse.
-4. Publicar el frontend tras esas comprobaciones. No se ha subido ni desplegado esta versión.
+3. Probar la sección Amigos con dos cuentas de prueba dentro de Spark. Verificar búsqueda, invitación, aceptación, consulta, eliminación de amistad y borrado de cuenta. Las reglas nuevas requieren el cliente nuevo para reservar códigos y enviar invitaciones; los clientes antiguos abiertos tendrán que actualizarse. Esos casos se han comprobado en el emulador con cuentas inventadas; no se han creado cuentas reales para pruebas destructivas.
 
 Spark tiene cuotas gratuitas y puede interrumpir el servicio al agotarlas. Los controles reducen abuso por cuenta, pero no impiden cuentas múltiples ni garantizan disponibilidad frente a ataques. Cero alertas npm significa cero vulnerabilidades conocidas en esa auditoría, no una certificación de seguridad total. Los contadores de invitaciones se conservan para impedir que borrar el perfil reinicie los límites; no contienen nombre, foto ni progreso.
 
