@@ -19,6 +19,7 @@ const ReviewSession = lazyWithRetry(() => import('./components/ReviewSession.jsx
 import SplashScreen from './components/SplashScreen.jsx';
 const StoriesPage = lazyWithRetry(() => import('./components/stories/StoriesPage.jsx'));
 const ChinaMap = lazyWithRetry(() => import('./components/china/ChinaMap.jsx'));
+const ClassifiersScreen = lazyWithRetry(() => import('./components/ClassifiersScreen.jsx'));
 const LoginScreen = lazyWithRetry(() => import('./components/LoginScreen.jsx'));
 import Layout from './components/ui/Layout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
@@ -117,7 +118,7 @@ function saveUserName(n) {
 // El estado interno de los ejercicios (sub-secciones) no se codifica en la URL:
 // volver a #/exercise tras recargar muestra el menú de ejercicios.
 const HASH_SCREENS = new Set([
-  'home', 'review', 'stories', 'dictionary', 'minigames', 'friends',
+  'home', 'review', 'stories', 'dictionary', 'minigames', 'friends', 'classifiers',
   'profile', 'settings', 'intro-detail', 'exam', 'global-exam',
   // 'daily' (hub de retos) faltaba: al no entrar en el historial, el botón
   // atrás del sistema cerraba la app en vez de volver al Home.
@@ -758,10 +759,24 @@ export default function App() {
           allCharacters={allCharacters}
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
+          onSelectClassifiers={() => setScreen('classifiers')}
           lastLesson={lastLesson}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
           onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}
         />
+      </Layout>
+    );
+  }
+
+  // ── CLASSIFIERS ─────────────────────────────────────────────────────────────
+  if (screen === 'classifiers') {
+    return (
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
+        <ErrorBoundary>
+          <Suspense fallback={<AnimatedLoader />}>
+            <ClassifiersScreen goBack={() => setScreen('home')} />
+          </Suspense>
+        </ErrorBoundary>
       </Layout>
     );
   }

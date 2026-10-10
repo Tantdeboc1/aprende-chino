@@ -19,7 +19,7 @@ function getTabIndex(screen) {
   const direct = NAV_TABS.indexOf(screen);
   if (direct !== -1) return direct;
   // Pantallas que "pertenecen" a un tab pero no están en el array
-  if (['lesson-detail', 'intro-detail', 'exam', 'exercise'].includes(screen)) return 0; // home
+  if (['lesson-detail', 'intro-detail', 'classifiers', 'exam', 'exercise'].includes(screen)) return 0; // home
   // Destrezas, historias y cualquier minijuego (+ examen global) → Practicar.
   if (screen === 'minigames' || screen === 'stories' || screen === 'daily') return PRACTICE_IDX;
   if (MINIGAME_IDS.has(screen) || screen === 'global-exam') return PRACTICE_IDX;

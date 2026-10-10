@@ -62,7 +62,7 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0 }) {
   ];
 
   const isActive = (key) => {
-    if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail';
+    if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail' || activeScreen === 'classifiers';
     if (key === 'practice') {
       return activeScreen === 'minigames' || activeScreen === 'stories'
         || activeScreen === 'daily' || activeScreen === 'global-exam'
