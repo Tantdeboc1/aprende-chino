@@ -42,7 +42,7 @@ function getEnterOffset(fromScreen, toScreen) {
   return 'translateY(14px)';
 }
 
-export default function Layout({ children, activeScreen, onNavigate, hideNav, reviewDue = 0 }) {
+export default function Layout({ children, activeScreen, onNavigate, hideNav, disableSwipe = false, reviewDue = 0 }) {
   const { t } = useTranslation();
   const [saveStatus, setSaveStatus] = useState(() => (typeof navigator !== 'undefined' && !navigator.onLine ? 'disconnected' : null));
   const statusTimer = useRef(null);
@@ -113,7 +113,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, re
     // propagación — el touchend sigue burbujeando hasta aquí, y un trazo con
     // desplazamiento horizontal largo (habitual al dibujar) se confundía con
     // un swipe de cambio de pestaña y sacaba al usuario a mitad de trazo.
-    if (hideNav) return;
+    if (hideNav || disableSwipe) return;
 
     // Ignorar si el gesto es más vertical que horizontal
     if (Math.abs(dy) > Math.abs(dx)) return;
@@ -132,7 +132,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, re
       const prev = NAV_TABS[idx - 1];
       if (prev) onNavigate(prev);
     }
-  }, [activeScreen, onNavigate, hideNav]);
+  }, [activeScreen, onNavigate, hideNav, disableSwipe]);
 
   return (
     <>

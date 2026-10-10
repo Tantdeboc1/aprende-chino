@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { baseLang } from './utils/loc.js';
 import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
+import { useScrollMemory } from './hooks/useScrollMemory.js';
 import { J, resolveColor } from '@/styles/tokens';
 import { loadProgress, saveProgress, markWordSeen } from './utils/progress.js';
 import { getDueCount } from './utils/srs.js';
@@ -348,6 +349,24 @@ export default function App() {
   useEffect(() => { selectedLessonRef.current = selectedLesson; }, [selectedLesson]);
   // Pestaña activa en LessonDetail (para restaurarla al volver)
   const [lessonDetailTab, setLessonDetailTab] = useState('study');
+  const classifierViewRef = useRef(null);
+  const lessonViewsRef = useRef(new Map());
+  const scrollPositionsRef = useRef(new Map());
+  const [classifierActivity, setClassifierActivity] = useState(false);
+  const rememberClassifierView = useCallback(value => { classifierViewRef.current = value; }, []);
+  const rememberLessonView = useCallback((lesson, value) => { lessonViewsRef.current.set(lesson, value); }, []);
+  useEffect(() => {
+    if (mode === null) {
+      classifierViewRef.current = null;
+      lessonViewsRef.current.clear();
+      scrollPositionsRef.current.clear();
+    }
+  }, [mode]);
+  useEffect(() => {
+    const original = history.scrollRestoration;
+    history.scrollRestoration = 'manual';
+    return () => { history.scrollRestoration = original; };
+  }, []);
 
   // Sub-navegación de ejercicios (reutiliza navigation.js)
   const [learnSection,     setLearnSection]     = useState(null);
@@ -358,6 +377,11 @@ export default function App() {
   const [dailySection,     setDailySection]     = useState(null);
   const [searchTerm,       setSearchTerm]       = useState('');
   const [showSupplementary, setShowSupplementary] = useState(true);
+  const scrollKey = screen === 'lesson-detail' ? `lesson:${selectedLesson}:${lessonDetailTab}`
+    : screen === 'exam' ? `exam:${selectedLesson}`
+    : screen === 'exercise' ? `exercise:${selectedLesson}:${learnSection}:${characterSection}:${toneSection}:${radicalSection}:${writingSection}`
+    : screen === 'daily' ? `daily:${dailySection}` : screen;
+  useScrollMemory(scrollKey, { enabled: splashDone && mode !== null && mode !== 'loading' && screen !== 'classifiers', positions: scrollPositionsRef.current });
 
   // Sincroniza pantalla → location.hash. La primera vez usa replaceState para
   // no crear una entrada extra al arrancar; después, cada cambio de pantalla
@@ -379,20 +403,20 @@ export default function App() {
     if (window.location.hash === target) {
       // Deep link/recarga: el hash ya es el destino. Sembrar Home debajo.
       if (first && target !== '#/home') {
-        history.replaceState(null, '', '#/home');
-        history.pushState(null, '', target);
+        history.replaceState({ appParent: null }, '', '#/home');
+        history.pushState({ appParent: '#/home' }, '', target);
       }
       return; // (resto de casos: cambio venido de popstate)
     }
     if (first) {
       if (target !== '#/home') {
-        history.replaceState(null, '', '#/home');
-        history.pushState(null, '', target);
+        history.replaceState({ appParent: null }, '', '#/home');
+        history.pushState({ appParent: '#/home' }, '', target);
       } else {
-        history.replaceState(null, '', target);
+        history.replaceState({ appParent: null }, '', target);
       }
     } else {
-      history.pushState(null, '', target);
+      history.pushState({ appParent: window.location.hash }, '', target);
     }
   }, [screen, selectedLesson]);
 
@@ -404,7 +428,7 @@ export default function App() {
       if (parsed.screen === 'exercise') {
         parsed.screen = exerciseReturnScreen(exerciseOriginRef.current);
         if (parsed.screen === 'lesson-detail') parsed.lesson = selectedLessonRef.current || 1;
-        history.replaceState(null, '', screenToHash(parsed.screen, parsed.lesson));
+        history.replaceState(history.state, '', screenToHash(parsed.screen, parsed.lesson));
       }
       // La URL de ejercicio no conserva sub-secciones: vuelve a su origen.
       setLearnSection(null); setCharacterSection(null); setToneSection(null);
@@ -665,17 +689,28 @@ export default function App() {
     : MINIGAME_IDS.has(screen) ? screen
     : null;
 
+  // In-app Back consumes the same entry as Android/browser Back. Recording
+  // the parent per entry avoids a single prevScreen being overwritten by hubs.
+  const backToOrigin = useCallback((fallback = 'home') => {
+    const parent = history.state?.appParent;
+    if (parent && parent !== window.location.hash && parseHash(parent)) {
+      history.back();
+      return;
+    }
+    setScreen(fallback);
+  }, []);
+
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
   const goBackToLesson = useCallback(() => {
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
-    setScreen(exerciseReturnScreen(screenRef.current === 'exercise' ? exerciseOriginRef.current : prevScreenRef.current));
-  }, []);
+    backToOrigin(exerciseReturnScreen(screenRef.current === 'exercise' ? exerciseOriginRef.current : prevScreenRef.current));
+  }, [backToOrigin]);
 
   const navigateTo = useCallback((key) => {
     // Cualquier mini-juego del registro: vuelve al listado de minijuegos al salir.
     if (MINIGAME_IDS.has(key)) {
-      setPrevScreen('minigames');
+      setPrevScreen(screenRef.current);
       setScreen(key);
       return;
     }
@@ -771,10 +806,10 @@ export default function App() {
   // ── CLASSIFIERS ─────────────────────────────────────────────────────────────
   if (screen === 'classifiers') {
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={classifierActivity} disableSwipe>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
-            <ClassifiersScreen goBack={() => setScreen('home')} />
+            <ClassifiersScreen goBack={() => backToOrigin('home')} initialState={classifierViewRef.current} onStateChange={rememberClassifierView} onActivityChange={setClassifierActivity} />
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -787,7 +822,7 @@ export default function App() {
       <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
-            <ChinaMap goBack={() => setScreen(prevScreen || 'home')} speakChinese={speak} />
+            <ChinaMap goBack={() => backToOrigin(prevScreen || 'home')} speakChinese={speak} />
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -804,7 +839,7 @@ export default function App() {
               allCharacters={allCharacters}
               progress={progress}
               onProgressChange={handleProgressChange}
-              goBack={() => setScreen(prevScreen || 'home')}
+              goBack={() => backToOrigin(prevScreen || 'home')}
               speakChinese={speak}
             />
           </Suspense>
@@ -817,16 +852,19 @@ export default function App() {
   if (screen === 'lesson-detail') {
     const activeLessonData = lessonsData.find(l => l.lesson === selectedLesson);
     return (
-      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount}>
+      <Layout activeScreen="home" onNavigate={handleBottomNav} reviewDue={dueCount} disableSwipe>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <LessonDetail
+              key={selectedLesson}
+              initialState={lessonViewsRef.current.get(selectedLesson)}
+              onStateChange={rememberLessonView}
               lessonNum={selectedLesson}
               lessonData={activeLessonData}
               characters={allCharacters}
               progress={progress}
               onProgressChange={handleProgressChange}
-              goBack={() => setScreen('home')}
+              goBack={() => backToOrigin('home')}
               onStartExercise={handleStartExercise}
               speakChinese={speak}
               defaultTab={lessonDetailTab}
@@ -898,7 +936,7 @@ export default function App() {
             lessonData={activeLessonData}
             progress={progress}
             onProgressChange={handleProgressChange}
-            goBack={() => setScreen('lesson-detail')}
+            goBack={() => backToOrigin('lesson-detail')}
           />
         </Suspense>
       </ErrorBoundary>
@@ -914,7 +952,7 @@ export default function App() {
             allCharacters={allCharacters}
             progress={progress}
             onProgressChange={handleProgressChange}
-            goBack={() => setScreen(prevScreen || 'home')}
+            goBack={() => backToOrigin(prevScreen || 'home')}
           />
         </Suspense>
       </ErrorBoundary>
@@ -928,7 +966,7 @@ export default function App() {
           <LevelExam
             allCharacters={allCharacters}
             progress={progress}
-            goBack={() => setScreen(prevScreen || 'home')}
+            goBack={() => backToOrigin(prevScreen || 'home')}
           />
         </Suspense>
       </ErrorBoundary>
@@ -944,7 +982,7 @@ export default function App() {
             <StoriesPage
               userName={userName}
               speak={speak}
-              onExit={() => setScreen('home')}
+              onExit={() => backToOrigin('minigames')}
               progress={progress}
               onProgressChange={handleProgressChange}
               allCharacters={allCharacters}
@@ -1027,7 +1065,7 @@ export default function App() {
     const hideNav = screen === 'exercise';
     if (!CurrentComponent) {
       return (
-        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav}>
+        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav} disableSwipe={MINIGAME_IDS.has(screen) || screen === 'daily'}>
           <div className="min-h-screen flex items-center justify-center">
             <p style={{ color: J.mute }}>{t('fallback_section_unavailable', 'Sección no disponible.')}</p>
           </div>
@@ -1035,7 +1073,7 @@ export default function App() {
       );
     }
     return (
-      <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav}>
+      <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav} disableSwipe={MINIGAME_IDS.has(screen) || screen === 'daily'}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <CurrentComponent {...componentProps} />

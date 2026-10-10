@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { ArrowLeft, RotateCcw } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, RotateCcw, Search, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import SpeakButton from '@/components/ui/SpeakButton.jsx';
 import { J } from '@/styles/tokens';
 import { baseLang } from '@/utils/loc.js';
-import { classifierText, classifierUi, classifiers } from '@/data/classifierData.js';
+import { classifierText, classifierUi, classifiers, filterClassifiers } from '@/data/classifierData.js';
+import { useScrollMemory } from '@/hooks/useScrollMemory.js';
 
 const ALL_IDS = classifiers.map(item => item.id);
 
@@ -17,17 +18,57 @@ function shuffled(items) {
   return result;
 }
 
-export default function ClassifiersScreen({ goBack }) {
+export default function ClassifiersScreen({ goBack, initialState, onStateChange, onActivityChange }) {
   const { i18n } = useTranslation();
   const lang = baseLang(i18n.language);
   const text = (key, replacements) => classifierText(classifierUi[key], lang, replacements);
-  const [selectedIds, setSelectedIds] = useState(() => new Set(ALL_IDS));
-  const [session, setSession] = useState(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [chosenId, setChosenId] = useState(null);
-  const [score, setScore] = useState(0);
+  const [mode, setMode] = useState(initialState?.mode || 'study');
+  const [query, setQuery] = useState(initialState?.query || '');
+  const [selectedIds, setSelectedIds] = useState(() => new Set(initialState?.selectedIds || ALL_IDS));
+  const [session, setSession] = useState(initialState?.session || null);
+  const [questionIndex, setQuestionIndex] = useState(initialState?.questionIndex || 0);
+  const [chosenId, setChosenId] = useState(initialState?.chosenId ?? null);
+  const [score, setScore] = useState(initialState?.score || 0);
+  const [inActivity, setInActivity] = useState(Boolean(initialState?.session && history.state?.classifierActivity));
+  const sessionRef = useRef(session);
+  const scrollPositions = useRef(initialState?.scrollPositions || new Map());
+  const visibleClassifiers = filterClassifiers(query, lang);
+  useScrollMemory(inActivity ? 'activity' : `${mode}:${query}`, { positions: scrollPositions.current });
+
+  useEffect(() => {
+    sessionRef.current = session;
+    onStateChange?.({ mode, query, selectedIds: [...selectedIds], session, questionIndex, chosenId, score, scrollPositions: scrollPositions.current });
+  }, [mode, query, selectedIds, session, questionIndex, chosenId, score, onStateChange]);
+
+  useEffect(() => {
+    onActivityChange?.(inActivity);
+    return () => onActivityChange?.(false);
+  }, [inActivity, onActivityChange]);
+
+  useEffect(() => {
+    const onPop = () => {
+      if (window.location.hash === '#/classifiers') {
+        setInActivity(Boolean(history.state?.classifierActivity && sessionRef.current));
+      }
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  const enterActivity = () => {
+    if (!history.state?.classifierActivity) {
+      history.pushState({ ...history.state, classifierActivity: true }, '', window.location.href);
+    }
+    setInActivity(true);
+  };
+
+  const leaveActivity = () => {
+    if (history.state?.classifierActivity) history.back();
+    else setInActivity(false);
+  };
 
   const startPractice = () => {
+    if (selectedIds.size === 0) return;
     const questions = classifiers
       .filter(item => selectedIds.has(item.id))
       .flatMap(item => item.examples.map(example => {
@@ -42,6 +83,9 @@ export default function ClassifiersScreen({ goBack }) {
     setQuestionIndex(0);
     setChosenId(null);
     setScore(0);
+    scrollPositions.current.set('activity', 0);
+    if (inActivity) window.scrollTo({ top: 0, behavior: 'instant' });
+    enterActivity();
   };
 
   const toggleSelection = (id) => {
@@ -70,15 +114,15 @@ export default function ClassifiersScreen({ goBack }) {
   const answerIsCorrect = chosenId !== null && chosenId === current?.classifierId;
 
   return (
-    <main className="min-h-screen pb-24" style={{ background: J.paper }}>
-      <header style={{ background: J.jade, borderLeft: `4px solid ${J.jadeDeep}`, padding: '40px 16px 20px' }}>
+    <div className="min-h-screen pb-24" style={{ background: J.paper }}>
+      <header style={{ background: J.jade, borderLeft: `4px solid ${J.jadeDeep}`, padding: '20px 16px' }}>
         <div className="mx-auto max-w-3xl">
           <button
-            onClick={session ? () => setSession(null) : goBack}
+            onClick={inActivity ? leaveActivity : goBack}
             className="mb-4 inline-flex items-center gap-1.5 rounded-lg text-sm font-semibold"
             style={{ color: 'rgba(255,255,255,0.9)', background: 'rgba(0,0,0,0.12)', border: 0, cursor: 'pointer', padding: '8px 11px' }}
           >
-            <ArrowLeft size={16} /> {session ? text('backToStudy') : text('backHome')}
+            <ArrowLeft size={16} /> {inActivity ? text('backToSelection') : text('backHome')}
           </button>
           <div className="flex items-end gap-3">
             <span className="font-cn flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl font-bold" style={{ color: J.jadeDeep, background: J.butter }}>量</span>
@@ -90,8 +134,27 @@ export default function ClassifiersScreen({ goBack }) {
         </div>
       </header>
 
+      {!inActivity && (
+        <div className="sticky top-0 z-20 border-b px-4 py-3" style={{ background: J.paper, borderColor: J.hair }}>
+          <div className="mx-auto max-w-3xl space-y-3">
+            <div role="group" aria-label={text('modesLabel')} className="grid grid-cols-2 gap-1 rounded-xl p-1" style={{ background: J.hair }}>
+              {['study', 'practice'].map(value => (
+                <button key={value} type="button" aria-pressed={mode === value} onClick={() => setMode(value)} className="min-h-11 rounded-lg px-3 py-2 text-sm font-bold" style={{ background: mode === value ? J.jade : 'transparent', color: mode === value ? J.onAccent : J.inkSoft }}>
+                  {value === 'study' ? text('study') : text('practiceTitle')}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 rounded-xl border px-3" style={{ background: J.paperHi, borderColor: J.hair }}>
+              <Search size={18} aria-hidden="true" style={{ color: J.mute }} />
+              <input type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label={text('searchLabel')} placeholder={text('searchPlaceholder')} className="min-h-11 min-w-0 flex-1 bg-transparent py-2 text-base outline-none" style={{ color: J.ink }} />
+              {query && <button type="button" onClick={() => setQuery('')} aria-label={text('clearSearch')} className="flex h-11 w-11 items-center justify-center"><X size={18} /></button>}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mx-auto max-w-3xl space-y-5 px-4 py-5">
-        {session ? (
+        {inActivity && session ? (
           finished ? (
             <section className="rounded-2xl p-6 text-center" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
               <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl font-cn text-3xl font-bold" style={{ color: J.jadeDeep, background: J.jadeBg }}>学</div>
@@ -101,8 +164,8 @@ export default function ClassifiersScreen({ goBack }) {
                 <button onClick={startPractice} className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold" style={{ background: J.jade, color: J.onAccent, border: 0, cursor: 'pointer' }}>
                   <RotateCcw size={16} /> {text('again')}
                 </button>
-                <button onClick={() => setSession(null)} className="rounded-xl px-4 py-3 text-sm font-bold" style={{ background: J.paper, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}>
-                  {text('backToStudy')}
+                <button onClick={leaveActivity} className="rounded-xl px-4 py-3 text-sm font-bold" style={{ background: J.paper, color: J.inkSoft, border: `1px solid ${J.hair}`, cursor: 'pointer' }}>
+                  {text('backToSelection')}
                 </button>
               </div>
             </section>
@@ -156,6 +219,7 @@ export default function ClassifiersScreen({ goBack }) {
           )
         ) : (
           <>
+            {mode === 'study' && <>
             <section className="rounded-2xl p-4 sm:p-5" style={{ background: J.jadeBg, border: `1px solid ${J.jadeMid}` }}>
               <h2 className="text-sm font-bold uppercase tracking-wide" style={{ color: J.jadeDeep }}>{text('ruleTitle')}</h2>
               <p className="mt-2 text-sm leading-relaxed" style={{ color: J.inkSoft }}>{text('rule')}</p>
@@ -164,11 +228,11 @@ export default function ClassifiersScreen({ goBack }) {
 
             <section>
               <div className="mb-3">
-                <h2 className="text-lg font-bold" style={{ color: J.ink }}>{text('examplesTitle', { count: classifiers.length })}</h2>
+                <h2 className="text-lg font-bold" style={{ color: J.ink }}>{text('examplesTitle', { count: visibleClassifiers.length })}</h2>
                 <p className="mt-0.5 text-xs" style={{ color: J.mute }}>{text('examplesHint')}</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                {classifiers.map(item => (
+                {visibleClassifiers.map(item => (
                   <article key={item.id} className="rounded-2xl p-4" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
                     <div className="flex items-start gap-3">
                       <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl font-cn" style={{ background: J.sandBg, color: J.sandDeep }}>
@@ -197,13 +261,17 @@ export default function ClassifiersScreen({ goBack }) {
             </section>
 
             <p className="rounded-xl px-4 py-3 text-xs leading-relaxed" style={{ background: J.sandBg, color: J.sandDeep }}>{text('note')}</p>
+            </>}
 
+            {mode === 'practice' && (
             <section className="rounded-2xl p-4 sm:p-5" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
               <h2 className="text-lg font-bold" style={{ color: J.ink }}>{text('practiceTitle')}</h2>
               <p className="mt-1 text-sm" style={{ color: J.inkSoft }}>{text('practiceDescription')}</p>
+              {session && questionIndex < session.length && <button type="button" onClick={enterActivity} className="mt-3 min-h-11 w-full rounded-xl border px-3 py-2 text-sm font-bold" style={{ borderColor: J.jadeMid, color: J.jadeDeep, background: J.jadeBg }}>{text('resume', { current: questionIndex + 1, total: session.length })}</button>}
               <div className="mt-3 flex flex-wrap gap-2">
                 <button type="button" aria-pressed={selectedIds.size === ALL_IDS.length} onClick={() => toggleSelection('all')} className="rounded-full px-3 py-2 text-xs font-bold" style={{ background: selectedIds.size === ALL_IDS.length ? J.ink : J.paper, color: selectedIds.size === ALL_IDS.length ? J.paperHi : J.inkSoft, border: `1px solid ${selectedIds.size === ALL_IDS.length ? J.ink : J.hair}`, cursor: 'pointer' }}>{text('all')}</button>
-                {classifiers.map(item => {
+                {query && visibleClassifiers.length > 0 && <button type="button" onClick={() => setSelectedIds(new Set(visibleClassifiers.map(item => item.id)))} className="min-h-11 rounded-full border px-3 py-2 text-xs font-bold" style={{ borderColor: J.jadeMid, color: J.jadeDeep }}>{text('onlyResults')}</button>}
+                {visibleClassifiers.map(item => {
                   const selected = selectedIds.has(item.id);
                   return <button key={item.id} type="button" aria-pressed={selected} onClick={() => toggleSelection(item.id)} className="rounded-full px-3 py-2 text-xs font-bold" style={{ background: selected ? J.jadeBg : J.paper, color: selected ? J.jadeDeep : J.inkSoft, border: `1px solid ${selected ? J.jadeMid : J.hair}`, cursor: 'pointer' }}>{item.short || item.character} · {item.pinyin}</button>;
                 })}
@@ -212,9 +280,11 @@ export default function ClassifiersScreen({ goBack }) {
                 {text('practiceCount', { count: selectedIds.size })}
               </button>
             </section>
+            )}
+            {visibleClassifiers.length === 0 && <p role="status" className="rounded-xl border px-4 py-5 text-sm" style={{ borderColor: J.hair, color: J.inkSoft }}>{text('noResults')}</p>}
           </>
         )}
       </div>
-    </main>
+    </div>
   );
 }

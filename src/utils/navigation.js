@@ -103,7 +103,10 @@ export function useNavigation(
 
   // Botón "atrás" estable para los minijuegos (vuelve al listado). Evita que
   // cada recomputación fabrique un goBack nuevo que rompería el React.memo.
-  const goBackMinigames = useCallback(() => { navigateTo('minigames'); }, [navigateTo]);
+  const goBackMinigames = useCallback(() => {
+    if (goBack) goBack();
+    else navigateTo('minigames');
+  }, [goBack, navigateTo]);
 
   const { CurrentComponent, componentProps } = useMemo(() => {
     let Component = null;

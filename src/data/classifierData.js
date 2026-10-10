@@ -13,6 +13,15 @@ export const classifierUi = {
   homeTitle: T('Clasificadores', 'Classifiers', 'Classificateurs', 'Zählwörter', 'Classificatori', 'Classificadores'),
   homeDescription: T('Repasa los clasificadores y unidades de las lecciones.', 'Review the classifiers and units from your lessons.', 'Révise les classificateurs et unités des leçons.', 'Wiederhole die Zählwörter und Maßeinheiten aus den Lektionen.', 'Ripassa i classificatori e le unità delle lezioni.', 'Revê os classificadores e unidades das lições.'),
   backHome: T('Inicio', 'Home', 'Accueil', 'Startseite', 'Home', 'Início'),
+  study: T('Estudiar', 'Study', 'Étudier', 'Lernen', 'Studiare', 'Estudar'),
+  modesLabel: T('Modo de clasificadores', 'Classifier mode', 'Mode des classificateurs', 'Zählwort-Modus', 'Modalità classificatori', 'Modo dos classificadores'),
+  searchLabel: T('Buscar clasificadores', 'Search classifiers', 'Rechercher des classificateurs', 'Zählwörter suchen', 'Cerca classificatori', 'Pesquisar classificadores'),
+  searchPlaceholder: T('Carácter, pinyin o uso: libro, dinero…', 'Character, pinyin or use: book, money…', 'Caractère, pinyin ou usage : livre, argent…', 'Zeichen, Pinyin oder Verwendung: Buch, Geld…', 'Carattere, pinyin o uso: libro, denaro…', 'Caráter, pinyin ou uso: livro, dinheiro…'),
+  clearSearch: T('Borrar búsqueda', 'Clear search', 'Effacer la recherche', 'Suche löschen', 'Cancella ricerca', 'Limpar pesquisa'),
+  noResults: T('No hay resultados. Prueba otro carácter, pinyin o uso.', 'No results. Try another character, pinyin or use.', 'Aucun résultat. Essaie un autre caractère, pinyin ou usage.', 'Keine Treffer. Versuche ein anderes Zeichen, Pinyin oder eine Verwendung.', 'Nessun risultato. Prova un altro carattere, pinyin o uso.', 'Sem resultados. Experimenta outro caráter, pinyin ou uso.'),
+  onlyResults: T('Solo resultados', 'Only results', 'Seulement les résultats', 'Nur Treffer', 'Solo risultati', 'Só resultados'),
+  backToSelection: T('Volver a la selección', 'Back to selection', 'Retour à la sélection', 'Zurück zur Auswahl', 'Torna alla selezione', 'Voltar à seleção'),
+  resume: T('Continuar práctica · pregunta {{current}} de {{total}}', 'Resume practice · question {{current}} of {{total}}', 'Reprendre · question {{current}} sur {{total}}', 'Übung fortsetzen · Frage {{current}} von {{total}}', 'Riprendi · domanda {{current}} di {{total}}', 'Continuar prática · pergunta {{current}} de {{total}}'),
   pageTitle: T('Clasificadores', 'Classifiers', 'Classificateurs', 'Zählwörter', 'Classificatori', 'Classificadores'),
   pageSubtitle: T('量词 · clasificadores y unidades', '量词 · classifiers and units', '量词 · classificateurs et unités', '量词 · Zählwörter und Maßeinheiten', '量词 · classificatori e unità', '量词 · classificadores e unidades'),
   ruleTitle: T('Patrones y usos', 'Patterns and uses', 'Structures et usages', 'Muster und Verwendung', 'Strutture e usi', 'Padrões e usos'),
@@ -228,3 +237,13 @@ export const classifiers = [
     ],
   },
 ];
+
+export function filterClassifiers(query, language = 'es') {
+  const normalize = value => String(value).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim();
+  const needle = normalize(query);
+  if (!needle) return classifiers;
+  return classifiers.filter(item => normalize([
+    item.character, item.short, item.pinyin, classifierText(item.use, language),
+    ...item.examples.flatMap(example => [example.phrase, example.pinyin, classifierText(example.meaning, language)]),
+  ].filter(Boolean).join(' ')).includes(needle));
+}

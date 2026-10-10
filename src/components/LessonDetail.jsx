@@ -42,6 +42,8 @@ export default function LessonDetail({
   defaultTab = 'study',
   onTabChange,
   onTrackSeen,
+  initialState,
+  onStateChange,
 }) {
   const [tab, setTab] = useState(defaultTab);
   const { width, height } = useWindowSize();
@@ -53,9 +55,12 @@ export default function LessonDetail({
     onTabChange?.(id);
   };
   const { t } = useTranslation();
-  const [showSupp, setShowSupp] = useState(false);
-  const [showLegend, setShowLegend] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [showSupp, setShowSupp] = useState(initialState?.showSupp || false);
+  const [showLegend, setShowLegend] = useState(initialState?.showLegend || false);
+  const [selectedCard, setSelectedCard] = useState(initialState?.selectedCard || null);
+  useEffect(() => {
+    onStateChange?.(lessonNum, { showSupp, showLegend, selectedCard });
+  }, [lessonNum, showSupp, showLegend, selectedCard, onStateChange]);
 
   const mainWords = useMemo(() => characters.filter(c => c.lesson === lessonNum && !c.isSupplementary), [characters, lessonNum]);
   const suppWords  = useMemo(() => characters.filter(c => c.lesson === lessonNum && c.isSupplementary),  [characters, lessonNum]);
