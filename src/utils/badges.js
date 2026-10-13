@@ -133,8 +133,21 @@ export function computeBadges(progress, allCharacters) {
     totalAnswers, accuracy, writingCount,
   };
 
+  const bestStreak = Math.max(streak.longestStreak || 0, streak.currentStreak || 0);
+  const ratios = {
+    'first-step': srsStats.learned,
+    apprentice: srsStats.learned / 25, scholar: srsStats.learned / 100,
+    'mature-50': srsStats.mature / 50, centurion: totalMastered / 100,
+    'streak-3': bestStreak / 3, 'streak-7': bestStreak / 7, 'streak-30': bestStreak / 30,
+    perfectionist: Math.min(totalAnswers / 50, accuracy / 90),
+    'four-seasons': lessonsHalfDone / 4,
+    'level-5': (levelInfo.level - 1) / 4, 'level-10': (levelInfo.level - 1) / 9,
+    writer: writingCount / 50,
+  };
+
   return BADGE_DEFS.map(b => ({
     id: b.id, icon: b.icon, title: b.title, desc: b.desc,
     earned: !!b.when(ctx),
+    progressPct: Math.min(100, Math.max(0, Math.round((ratios[b.id] || 0) * 100))),
   }));
 }

@@ -1,3 +1,4 @@
+import { recordSyncStatus } from '@/utils/syncStatus.js';
 // src/context/AuthContext.jsx
 // Contexto global de autenticación. Tres estados posibles para `mode`:
 //   - 'loading'  → aún resolviendo onAuthStateChanged (mostrar splash/loader)
@@ -77,6 +78,7 @@ export function AuthProvider({ children }) {
       if (fbUser) {
         const isMigrating = pendingMigrationRef.current;
         pendingMigrationRef.current = false;
+        recordSyncStatus(fbUser.uid, 'syncing');
         try {
           const remote = await fetchRemoteUser(fbUser.uid);
           if (isMigrating && remoteHasProgress(remote)) {
@@ -100,7 +102,9 @@ export function AuthProvider({ children }) {
             // (sea de invitado o de un dispositivo vacío).
             await pushRemoteUser(fbUser.uid, snapshotLocal());
           }
+          recordSyncStatus(fbUser.uid, 'synced');
         } catch (e) {
+          recordSyncStatus(fbUser.uid, 'pending');
           console.warn('Sync inicial falló:', e);
         }
         // Publica el perfil social (código de amigo + stats visibles). Best
@@ -249,6 +253,7 @@ export function AuthProvider({ children }) {
 
   const pushSnapshot = useCallback(async () => {
     if (mode !== 'google' || !user) return false;
+    recordSyncStatus(user.uid, 'syncing');
     let synced = false;
     try {
       await pushRemoteUser(user.uid, snapshotLocal());
@@ -256,6 +261,7 @@ export function AuthProvider({ children }) {
     } catch (e) {
       console.warn('Push remoto falló:', e);
     }
+    recordSyncStatus(user.uid, synced ? 'synced' : 'pending');
     // Mantiene el perfil público (nivel, XP, racha) al día para los amigos.
     try {
       const s = await import('@/lib/socialStore.js');

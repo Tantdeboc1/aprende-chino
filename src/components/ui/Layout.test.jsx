@@ -8,13 +8,14 @@
 // swipe de cambio de pestaña y sacaba al usuario a mitad de trazo.
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import '@/i18n';
+import i18n from '@/i18n';
 
 vi.mock('@/context/AuthContext.jsx', () => ({
   useAuth: () => ({ mode: 'guest', user: null }),
 }));
 
 import Layout from './Layout.jsx';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
 function swipeLeft(container, { startX = 300, endX = 200, startY = 100, endY = 100 } = {}) {
   fireEvent.touchStart(container, { touches: [{ clientX: startX, clientY: startY }] });
@@ -24,6 +25,22 @@ function swipeLeft(container, { startX = 300, endX = 200, startY = 100, endY = 1
 afterEach(() => cleanup());
 
 describe('Layout — swipe de navegación entre pestañas', () => {
+  it('permite plegar el menú, seguir navegando y recuperar la preferencia al montar', () => {
+    localStorage.removeItem(STORAGE_KEYS.NAV_COLLAPSED);
+    const onNavigate = vi.fn();
+    const view = render(<Layout activeScreen="home" onNavigate={onNavigate}>contenido</Layout>);
+    fireEvent.click(screen.getByRole('button', { name: i18n.t('nav_collapse') }));
+    expect(screen.getByRole('button', { name: i18n.t('nav_expand') }).getAttribute('aria-expanded')).toBe('false');
+    expect(document.querySelector('main').classList.contains('app-navigation-collapsed')).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: i18n.t('nav_review') }));
+    expect(onNavigate).toHaveBeenCalledWith('review');
+    view.unmount();
+    render(<Layout activeScreen="home" onNavigate={onNavigate}>contenido</Layout>);
+    expect(screen.getByRole('button', { name: i18n.t('nav_expand') }).getAttribute('aria-expanded')).toBe('false');
+    fireEvent.click(screen.getByRole('button', { name: i18n.t('nav_expand') }));
+    expect(localStorage.getItem(STORAGE_KEYS.NAV_COLLAPSED)).toBe('0');
+    localStorage.removeItem(STORAGE_KEYS.NAV_COLLAPSED);
+  });
   it('con la nav visible, un swipe horizontal largo navega a la pestaña siguiente', () => {
     const onNavigate = vi.fn();
     render(

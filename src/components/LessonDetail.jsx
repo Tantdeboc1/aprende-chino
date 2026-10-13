@@ -1,8 +1,10 @@
+import ReadingAid from '@/components/ui/ReadingAid.jsx';
+import { motionReduced } from '@/utils/learningPrefs.js';
+import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 import WordExamples from '@/components/ui/WordExamples.jsx';
 // src/components/LessonDetail.jsx
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
-import { useMedia } from 'react-use';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
@@ -48,7 +50,7 @@ export default function LessonDetail({
   const [tab, setTab] = useState(defaultTab);
   const { width, height } = useWindowSize();
   // Accesibilidad: respeta "reducir movimiento" — sin confetti animado.
-  const reduceMotion = useMedia('(prefers-reduced-motion: reduce)', false);
+  const reduceMotion = useLocalSnapshot(motionReduced);
 
   const handleTabChange = (id) => {
     setTab(id);
@@ -296,7 +298,7 @@ export default function LessonDetail({
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm" style={{ color: J.jade, fontWeight: 700 }}>{word.pinyin}</span>
+                          <ReadingAid kind="pinyin" className="text-sm" style={{ color: J.jade, fontWeight: 700 }}>{word.pinyin}</ReadingAid>
                           {word.type && (
                             <span style={{
                               fontSize: '0.6875rem', padding: '2px 6px', borderRadius: 6, fontWeight: 600,
@@ -348,7 +350,7 @@ export default function LessonDetail({
                             </span>
                           )}
                         </div>
-                        <p className="text-sm font-medium mt-0.5 truncate" style={{ color: J.ink }}>{word.meaning}</p>
+                        <ReadingAid kind="translation" className="block text-sm font-medium mt-0.5 truncate" style={{ color: J.ink }}>{word.meaning}</ReadingAid>
                       </div>
 
                       <button

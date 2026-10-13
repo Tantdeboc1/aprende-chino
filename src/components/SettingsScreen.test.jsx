@@ -23,6 +23,7 @@ import { getHighContrast } from '@/utils/highContrast.js';
 import { getSoundPrefs } from '@/utils/soundPrefs.js';
 import { getStreak } from '@/utils/streak.js';
 import { introsEnabled } from '@/utils/gameIntroPrefs.js';
+import { getMotionPref, getLearningPrefs } from '@/utils/learningPrefs.js';
 
 function setup(overrides = {}) {
   const props = {
@@ -52,6 +53,21 @@ function prefToggleFor(labelText) {
 afterEach(() => cleanup());
 
 describe('SettingsScreen — persistencia de preferencias', () => {
+  it('guarda movimiento reducido y ayudas de lectura desde sus bloques', () => {
+    setup();
+    fireEvent.click(screen.getByRole('button', { name: 'Reduce motion' }));
+    expect(getMotionPref()).toBe('reduced');
+    const reading = screen.getByRole('region', { name: 'Learning' });
+    const pinyin = within(reading).getByText('Pinyin').parentElement;
+    fireEvent.click(within(pinyin).getByRole('button', { name: 'Reveal on tap' }));
+    expect(getLearningPrefs().pinyin).toBe('tap');
+  });
+  it('agrupa controles y deja el reinicio en un bloque separado', () => {
+    setup();
+    expect(screen.getByRole('navigation', { name: 'Settings sections' })).toBeTruthy();
+    expect(screen.getByText(/Your progress is stored only on this device/)).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Reset or delete data' })).toBeTruthy();
+  });
   it('cambiar el tema a "Dark" persiste en localStorage', () => {
     setup();
     expect(getThemePref()).toBe('light'); // valor por defecto

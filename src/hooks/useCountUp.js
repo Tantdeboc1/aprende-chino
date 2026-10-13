@@ -1,3 +1,4 @@
+import { motionReduced } from '@/utils/learningPrefs.js';
 // src/hooks/useCountUp.js
 // Contador animado 0 → target con easing-out, para pantallas de resultados
 // (puntuación, aciertos, XP…). Devuelve { value, done }:
@@ -16,7 +17,7 @@ export function useCountUp(target, { duration = 600, delay = 120 } = {}) {
   const rafRef = useRef(null);
 
   useEffect(() => {
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const reduce = motionReduced();
     if (reduce || n === 0) {
       setValue(n);
       setDone(true);

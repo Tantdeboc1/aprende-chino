@@ -1,5 +1,6 @@
 // src/components/ui/BottomNav.jsx
 import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@/utils/appInfo.js';
 import { J } from '@/styles/tokens';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 import { useIncomingRequestCount } from '@/hooks/useIncomingRequestCount.js';
@@ -42,7 +43,7 @@ const ProfileIcon = () => (
   </svg>
 );
 
-export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0 }) {
+export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, collapsed = false, onToggle }) {
   const { t } = useTranslation();
   // Invitaciones de amistad recibidas → badge en "Perfil", que es desde donde
   // se llega a Amigos (0 para invitados).
@@ -62,55 +63,52 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0 }) {
   ];
 
   const isActive = (key) => {
-    if (key === 'home') return activeScreen === 'home' || activeScreen === 'lesson-detail' || activeScreen === 'classifiers';
+    if (key === 'home') return ['home', 'lesson-detail', 'intro-detail', 'classifiers', 'exam', 'exercise', 'chinaMap'].includes(activeScreen);
     if (key === 'practice') {
       return activeScreen === 'minigames' || activeScreen === 'stories'
-        || activeScreen === 'daily' || activeScreen === 'global-exam'
+        || activeScreen === 'daily' || activeScreen === 'global-exam' || activeScreen === 'level-exam'
         || MINIGAME_IDS.has(activeScreen);
     }
-    if (key === 'profile') return activeScreen === 'profile' || activeScreen === 'friends';
+    if (key === 'profile') return ['profile', 'friends', 'settings'].includes(activeScreen);
     return activeScreen === key;
   };
 
-  // Cultural color logic: review gets sand accent, rest get jade (red reserved for achievement)
-  const activeAccent = (key) => {
-    if (key === 'review') return { color: J.sand, bg: J.sandBg };
-    if (key === 'practice') return { color: J.red, bg: J.redBg };
-    return { color: J.jade, bg: J.jadeBg };
-  };
-
   return (
-    <nav
-      aria-label={t('nav_primary_label', 'Navegación principal')}
-      className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm"
-      style={{
-        background: `color-mix(in srgb, ${J.paperHi} 95%, transparent)`,
-        borderTop: `1px solid ${J.hair}`,
-      }}
-    >
-      {/* Tamaños FIJOS en px (no rem): la barra es chrome de navegación y con 7
-          pestañas no cabría si escalara con el ajuste de tamaño de texto. El
-          contenido de lectura sí escala; aquí priorizamos que la nav siga
-          usable a cualquier escala. */}
-      <div className="w-full max-w-lg mx-auto flex justify-around items-end" style={{ paddingTop: 4, paddingBottom: 12, paddingLeft: 2, paddingRight: 2 }}>
+    <nav aria-label={t('nav_primary_label', 'Navegación principal')} className={`app-navigation${collapsed ? ' is-collapsed' : ''}`}>
+      <div className="app-navigation-brand" aria-hidden="true">
+        <span className="app-navigation-mark">汉</span>
+        <div><strong>{APP_NAME}</strong><span>{t('app_tagline', 'Aprende chino')}</span></div>
+      </div>
+      <button type="button" className="app-navigation-toggle" onClick={onToggle}
+        aria-expanded={!collapsed} aria-controls="app-navigation-items"
+        aria-label={t(collapsed ? 'nav_expand' : 'nav_collapse', collapsed ? 'Ampliar menú' : 'Minimizar menú')}
+        title={t(collapsed ? 'nav_expand' : 'nav_collapse', collapsed ? 'Ampliar menú' : 'Minimizar menú')}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3" /><path d="M9 3v18" />
+          <path d={collapsed ? 'm13 9 3 3-3 3' : 'm16 9-3 3 3 3'} />
+        </svg>
+        <span>{t('nav_collapse', 'Minimizar menú')}</span>
+      </button>
+      <div id="app-navigation-items" className="app-navigation-items">
         {items.map((item) => {
           const { key, label, Icon } = item;
           const active  = isActive(key);
-          const accent  = activeAccent(key);
+          const accent = { color: J.jade, bg: J.jadeBg };
           return (
             <button
               key={key}
+              aria-label={label}
+              title={label}
               onClick={() => onNavigate(key)}
               aria-current={active ? 'page' : undefined}
               data-tour={`nav-${key}`}
-              className="flex flex-col items-center transition-all duration-200 active:scale-95"
-              style={{ background: 'none', border: 0, cursor: 'pointer', gap: 2, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4, minWidth: 46 }}
+              className={`app-navigation-button${active ? ' is-active' : ''}`}
             >
               <span
-                className="flex items-center justify-center rounded-full transition-all duration-200"
+                className="app-navigation-icon"
                 style={{ background: active ? accent.bg : 'transparent', position: 'relative', width: 44, height: 28 }}
               >
-                <span style={{ color: active ? accent.color : J.mute2, transition: 'color 200ms' }}>
+                <span style={{ color: active ? accent.color : J.inkSoft, transition: 'color 200ms' }}>
                   <Icon />
                 </span>
                 {key === 'profile' && incomingCount > 0 && (
@@ -144,22 +142,10 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0 }) {
                 )}
               </span>
               <span
-                className="font-semibold leading-none transition-colors duration-200"
-                style={{ color: active ? accent.color : J.mute2, fontSize: 10 }}
+                className="app-navigation-label"
               >
                 {label}
               </span>
-              {/* Siempre montado: escala 0→1 con rebote al activarse (si fuera
-                  render condicional aparecería de golpe, sin transición). */}
-              <span
-                className="rounded-full"
-                style={{
-                  width: 4, height: 4, marginTop: 2,
-                  background: accent.color,
-                  transform: active ? 'scale(1)' : 'scale(0)',
-                  transition: 'transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                }}
-              />
             </button>
           );
         })}

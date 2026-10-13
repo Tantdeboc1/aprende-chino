@@ -74,6 +74,7 @@ function seedLocalGuest() {
   localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify({ lesson_1: { done: 5 } }));
   localStorage.setItem(STORAGE_KEYS.STREAK, JSON.stringify({ currentStreak: 3 }));
   localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(['你']));
+  localStorage.setItem(STORAGE_KEYS.PRACTICE_FAVORITES, JSON.stringify(['tones-ear']));
 }
 
 beforeEach(() => {
@@ -89,12 +90,14 @@ describe('snapshotLocal ↔ hydrateLocalFromRemote', () => {
 
     clearLocalUserData();
     expect(localStorage.getItem(STORAGE_KEYS.PROGRESS)).toBeNull();
+    expect(localStorage.getItem(STORAGE_KEYS.PRACTICE_FAVORITES)).toBeNull();
 
     hydrateLocalFromRemote(snap);
     expect(localStorage.getItem(STORAGE_KEYS.USERNAME)).toBe('Ana');
     expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS))).toEqual({ lesson_1: { done: 5 } });
     expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.STREAK))).toEqual({ currentStreak: 3 });
     expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.FAVORITES))).toEqual(['你']);
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.PRACTICE_FAVORITES))).toEqual(['tones-ear']);
   });
 
   it('un remoto sin nombre borra el nombre local (no hereda el del usuario anterior)', () => {

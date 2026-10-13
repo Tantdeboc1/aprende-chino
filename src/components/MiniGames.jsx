@@ -1,5 +1,8 @@
+import { useScrollMemory } from '@/hooks/useScrollMemory.js';
+import { loadSkillSessions } from '@/utils/skillProgress.js';
+import { PRACTICE_CATEGORY_KEY, PRACTICE_ACTIVITIES, loadPracticeFavorites, savePracticeFavorites, recommendPractice, rememberPracticeCategory, practiceScrollPositions } from '@/utils/practiceNavigation.js';
 // src/components/MiniGames.jsx
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
@@ -7,6 +10,7 @@ import ProfileBadge from "@/components/ui/ProfileBadge.jsx";
 import { loadMinigameScores } from "@/utils/minigameScores.js";
 import { getLevelMastery, loadLevelExamResult, UNLOCK_MASTERY_PCT } from "@/utils/levelExam.js";
 import { useLocalSnapshot } from "@/hooks/useLocalSnapshot.js";
+import { useAuth } from '@/context/AuthContext.jsx';
 
 const GAME_STYLES = {
   red:    { bg: J.redBg,   fg: J.redDeep,  border: J.red },
@@ -51,6 +55,27 @@ const SECTIONS = [
 
 export default function MiniGames({ goBack, navigateTo, progress, allCharacters = [] }) {
   const { t } = useTranslation();
+  const { pushSnapshot } = useAuth();
+  const [category, setCategory] = useState(() => {
+    try { const saved = sessionStorage.getItem(PRACTICE_CATEGORY_KEY); return SECTIONS.some(s => s.cat === saved) ? saved : null; }
+    catch { return null; }
+  });
+  const selectCategory = (cat) => {
+    setCategory(cat);
+    rememberPracticeCategory(cat);
+  };
+
+  useScrollMemory('practice:' + (category || 'all'), { positions: practiceScrollPositions });
+  const favorites = useLocalSnapshot(loadPracticeFavorites);
+  const [favoriteLimit, setFavoriteLimit] = useState(false);
+  const toggleFavorite = (id) => {
+    if (!favorites.includes(id) && favorites.length >= 3) { setFavoriteLimit(true); return; }
+    const next = favorites.includes(id) ? favorites.filter(item => item !== id) : [...favorites, id];
+    savePracticeFavorites(next); setFavoriteLimit(false);
+    pushSnapshot();
+  };
+  const sessions = useLocalSnapshot(loadSkillSessions);
+  const recommendation = useMemo(() => recommendPractice(sessions), [sessions]);
 
   // Certificación HSK 1: vivía en el Home, pero su sitio natural es la sección
   // Examen, junto al MCER y al examen global. Se desbloquea al dominar
@@ -107,11 +132,8 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
       cn: '考',
       color: 'yellow',
       badges: [t('badge_90s'), t('badge_hard'), t('badge_hsk1')],
-      // Vivía en 'examen' y se llamaba "Examen HSK1", justo al lado de la
-      // certificación: dos cosas con el mismo nombre y sentidos distintos.
-      // Es una prueba cronometrada de 90 s sin aprobado ni desbloqueo, así
-      // que su sitio es Base lingüística, con el resto de contrarrelojes.
-      categorias: ['base'],
+      // Las pruebas de nivel se reúnen en Exámenes.
+      categorias: ['examen'],
     },
     {
       id: 'translation-game',
@@ -138,7 +160,7 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
       cn: '话',
       color: 'blue',
       badges: [t('badge_medium'), t('badge_grammar')],
-      categorias: ['lectura', 'escritura'],
+      categorias: ['lectura'],
     },
     {
       id: 'find-intruder',
@@ -147,7 +169,7 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
       cn: '找',
       color: 'red',
       badges: [t('badge_easy'), t('badge_vocabulary')],
-      categorias: ['lectura', 'base'],
+      categorias: ['base'],
     },
     {
       id: 'pronunciation-practice',
@@ -196,33 +218,70 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
     },
   ], [t]);
 
+  const catalog = [...games, ...DAILY_GAMES.map(g => ({ ...g, title: t(g.titleKey), description: t(g.descKey), color: 'yellow', categorias: ['base'], badges: g.daily ? [t('badge_daily', 'Diario')] : [] }))];
+  const openActivity = (id) => { rememberPracticeCategory(PRACTICE_ACTIVITIES[id]?.[0]); navigateTo(id); };
+  const renderGame = (game) => {
+    const c = GAME_STYLES[game.color];
+    const best = scores[game.id]?.best;
+    const favorite = favorites.includes(game.id);
+    return <div key={game.id} className="rounded-2xl overflow-hidden" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+      <button onClick={() => openActivity(game.id)} className="w-full p-5 text-left flex gap-4 items-start" style={{ cursor: 'pointer', color: J.ink }}>
+        <span aria-hidden="true" className="font-cn rounded-xl w-12 h-12 flex items-center justify-center text-2xl shrink-0" style={{ background: c.bg, color: c.fg }}>{game.cn}</span>
+        <span className="flex-1 min-w-0">
+          <span className="block font-bold">{game.title}</span>
+          <span className="block text-xs mt-1 mb-3" style={{ color: J.inkSoft }}>{game.description}</span>
+          <span className="flex flex-wrap gap-1.5">{game.badges.map((b, i) => <Badge key={i} text={b} color={c} />)}</span>
+          {typeof best === 'number' && <span className="block text-xs mt-2">{t('minigames_best_score', 'Mejor')} {best}%</span>}
+        </span><span aria-hidden="true">→</span>
+      </button>
+      <button onClick={() => toggleFavorite(game.id)} aria-pressed={favorite}
+        aria-label={t(favorite ? 'practice_remove_favorite' : 'practice_add_favorite', { activity: game.title })}
+        className="w-full text-left px-5 py-3 text-xs font-semibold" style={{ color: J.inkSoft, borderTop: `1px solid ${J.hair}`, cursor: 'pointer' }}>
+        <span aria-hidden="true">{favorite ? '★' : '☆'} </span>{t(favorite ? 'practice_favorite_saved' : 'practice_favorite_save')}
+      </button>
+    </div>;
+  };
+
   return (
     <div className="min-h-screen p-4 pb-24" style={{ background: J.paper }}>
       <Container>
         <div className="mb-6 flex items-start justify-between">
           <button
-            onClick={goBack}
+            onClick={() => category ? selectCategory(null) : goBack()}
             className="flex items-center gap-1.5 text-sm transition-colors"
             style={{ color: J.inkSoft, background: 'none', border: 0, cursor: 'pointer', fontWeight: 600 }}
           >
-            <span>←</span> {t('dictionary_back_to_menu')}
+            <span>←</span> {category ? t('practice_all_categories') : t('intro_back_home')}
           </button>
           <ProfileBadge variant="light" />
         </div>
 
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold font-cn mb-1" style={{ color: J.ink }}>
-            技能
+            {t('nav_practice')}
           </h1>
-          <p className="text-lg" style={{ color: J.inkSoft }}>{t('minigames_practice_by_skill', 'Practica por destrezas')}</p>
+          <p className="text-lg" style={{ color: J.inkSoft }}>{t('practice_choose')}</p>
           <p className="text-sm mt-1" style={{ color: J.mute }}>{t('minigames_subtitle')}</p>
         </div>
 
         <div className="max-w-4xl mx-auto space-y-8 j-rise">
+          {favoriteLimit && <p role="status" className="text-sm" style={{ color: J.inkSoft }}>{t('practice_favorite_limit')}</p>}
+          {!category && <>
+            <section className="rounded-2xl p-5" style={{ background: J.jadeBg, color: J.jadeDeep }}>
+              <h2 className="font-bold">{t('practice_recommended')}</h2>
+              <p className="text-sm mt-2">{t(recommendation.personalized ? 'practice_reason_errors' : 'practice_reason_start', { activity: t(PRACTICE_ACTIVITIES[recommendation.id][1]), pct: recommendation.pct })}</p>
+              <button onClick={() => openActivity(recommendation.id)} className="mt-3 font-bold underline underline-offset-4">{t(PRACTICE_ACTIVITIES[recommendation.id][1])} →</button>
+            </section>
+            <section><h2 className="font-bold mb-3" style={{ color: J.ink }}>{t('practice_favorites')}</h2>
+              {favorites.length ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{favorites.map(id => catalog.find(g => g.id === id)).filter(Boolean).map(renderGame)}</div>
+                : <p className="text-sm" style={{ color: J.inkSoft }}>{t('practice_favorites_empty')}</p>}
+            </section>
+          </>}
+
           {/* Historias: dejó de tener pestaña propia al pasar la barra de 7 a
               5, y vive aquí porque también es práctica. Va la primera por ser
               la actividad más guiada de todas. */}
-          <section>
+          {!category && <section>
             <div className="flex items-center gap-2.5 mb-3 px-1">
               <span className="font-cn text-2xl leading-none" style={{ color: J.red }}>故</span>
               <h3 className="text-lg font-bold" style={{ color: J.ink }}>{t('nav_stories')}</h3>
@@ -246,9 +305,18 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
               </div>
               <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
             </button>
-          </section>
+          </section>}
 
-          {SECTIONS.map((section) => {
+          {!category && <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {SECTIONS.map(section => <button key={section.cat} aria-label={t('practice_' + section.cat)} onClick={() => selectCategory(section.cat)}
+              className="rounded-2xl p-5 text-left transition-transform active:scale-[0.98]"
+              style={{ background: J.paperHi, border: `1px solid ${J.hair}`, color: J.ink, cursor: 'pointer' }}>
+              <span aria-hidden="true" className="font-cn block text-3xl mb-3" style={{ color: J.jade }}>{section.cn}</span>
+              <span className="block font-bold">{t('practice_' + section.cat)}</span>
+              <span className="block text-xs mt-2" style={{ color: J.mute }}>{t('practice_' + section.cat + '_hint')}</span>
+            </button>)}
+          </div>}
+          {SECTIONS.filter(section => section.cat === category).map((section) => {
             const sectionGames = games.filter((g) => g.categorias.includes(section.cat));
             if (sectionGames.length === 0) return null;
             return (
@@ -263,37 +331,7 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
                   {/* Los tres juegos que vivían tras el hub "Desafíos Diarios"
                       (ver DAILY_GAMES arriba). Antes se entraba desde el
                       carácter del día del Home, que ahora es solo informativo. */}
-                  {section.cat === 'base' && DAILY_GAMES.map((g) => (
-                    <button
-                      key={g.id}
-                      onClick={() => navigateTo(g.id)}
-                      className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
-                      style={{ background: J.paperHi, border: `1px solid ${J.hair}`, cursor: 'pointer' }}
-                    >
-                      <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
-                        style={{ background: J.sandBg, color: J.sandDeep, fontWeight: 700 }}>
-                        {g.cn}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h4 className="text-base font-bold leading-tight" style={{ color: J.ink }}>
-                            {t(g.titleKey)}
-                          </h4>
-                          {/* Solo el de caracteres cambia de verdad cada día. */}
-                          {g.daily && (
-                            <span className="text-[0.6875rem] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
-                              style={{ background: J.sandBg, color: J.sandDeep, border: `1px solid ${J.sand}` }}>
-                              {t('badge_daily', 'Diario')}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs leading-snug" style={{ color: J.inkSoft }}>
-                          {t(g.descKey)}
-                        </p>
-                      </div>
-                      <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
-                    </button>
-                  ))}
+                  {section.cat === 'base' && catalog.filter(g => g.id.startsWith('daily-')).map(renderGame)}
                   {/* Certificación de nivel: primera del bloque Examen. */}
                   {section.cat === 'examen' && (
                     <button
@@ -335,48 +373,7 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
                       <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
                     </button>
                   )}
-                  {sectionGames.map((game) => {
-                    const c = GAME_STYLES[game.color];
-                    const bestEntry = scores[game.id];
-                    const best = typeof bestEntry?.best === 'number' ? bestEntry.best : null;
-                    return (
-                      <button
-                        key={`${section.cat}-${game.id}`}
-                        onClick={() => navigateTo(game.id)}
-                        className="rounded-2xl p-5 text-left flex gap-4 items-start transition-all duration-200 active:scale-[0.98]"
-                        style={{
-                          background: J.paperHi, border: `1px solid ${J.hair}`,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <div className="font-cn rounded-xl w-14 h-14 flex items-center justify-center text-2xl flex-shrink-0"
-                          style={{ background: c.bg, color: c.fg, fontWeight: 700 }}>
-                          {game.cn}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <h4 className="text-base font-bold leading-tight" style={{ color: J.ink }}>{game.title}</h4>
-                            {best !== null && (
-                              <span
-                                className="text-[0.6875rem] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
-                                style={{ background: J.jadeBg, color: J.jadeDeep, border: `1px solid ${J.jadeMid}` }}
-                              >
-                                {t('minigames_best_score', 'Mejor')} {best}%
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs leading-snug mb-3" style={{ color: J.inkSoft }}>{game.description}</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {game.badges.map((b, i) => (
-                              <Badge key={i} text={b} color={c} />
-                            ))}
-                          </div>
-                        </div>
-                        <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0, marginTop: 4 }}>→</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                  {sectionGames.map(renderGame)}                </div>
               </section>
             );
           })}

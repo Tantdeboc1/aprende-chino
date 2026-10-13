@@ -53,6 +53,7 @@ const ACCENTS = [
 
 export default function StoriesPage({
   userName,
+  onExit,
   speak,
   progress: lessonProgress,           // progreso de lecciones (vino de App)
   onProgressChange,                   // setter del progreso de lecciones
@@ -134,6 +135,7 @@ export default function StoriesPage({
 
   return (
     <div className="min-h-screen pb-24" style={{ background: J.paper }}>
+      <div className="px-4 pt-4"><button onClick={onExit} className="text-sm font-semibold" style={{ color: J.inkSoft }}>← {t('minigames_back_to_minigames')}</button></div>
       {/* Header */}
       <div style={{
         background: J.jade, color: J.onAccent,

@@ -2,11 +2,13 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { J } from '@/styles/tokens';
 import BottomNav from './BottomNav.jsx';
+import PracticeBreadcrumb from './PracticeBreadcrumb.jsx';
 import GuidedTour from './GuidedTour.jsx';
 import { MINIGAME_IDS } from '@/components/minigames/registry.js';
 import { isTourPending } from '@/utils/tour.js';
 import { useLocalSnapshot, bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 import { useTranslation } from 'react-i18next';
+import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
 // Tabs del BottomNav en orden izquierda→derecha. 'practice' es la pestaña que
 // agrupa Destrezas e Historias; 'profile' incluye Amigos.
@@ -22,7 +24,7 @@ function getTabIndex(screen) {
   if (['lesson-detail', 'intro-detail', 'classifiers', 'exam', 'exercise'].includes(screen)) return 0; // home
   // Destrezas, historias y cualquier minijuego (+ examen global) → Practicar.
   if (screen === 'minigames' || screen === 'stories' || screen === 'daily') return PRACTICE_IDX;
-  if (MINIGAME_IDS.has(screen) || screen === 'global-exam') return PRACTICE_IDX;
+  if (MINIGAME_IDS.has(screen) || screen === 'global-exam' || screen === 'level-exam') return PRACTICE_IDX;
   if (screen === 'friends') return PROFILE_IDX;
   return -1; // swipe deshabilitado en esta pantalla
 }
@@ -42,8 +44,18 @@ function getEnterOffset(fromScreen, toScreen) {
   return 'translateY(14px)';
 }
 
-export default function Layout({ children, activeScreen, onNavigate, hideNav, disableSwipe = false, reviewDue = 0 }) {
+export default function Layout({ children, activeScreen, onNavigate, hideNav, disableSwipe = false, reviewDue = 0, breadcrumbActivity }) {
   const { t } = useTranslation();
+  const [navCollapsed, setNavCollapsed] = useState(() => {
+    try { return localStorage.getItem(STORAGE_KEYS.NAV_COLLAPSED) === '1'; }
+    catch { return false; }
+  });
+  const toggleNavigation = () => {
+    const next = !navCollapsed;
+    setNavCollapsed(next);
+    try { localStorage.setItem(STORAGE_KEYS.NAV_COLLAPSED, next ? '1' : '0'); }
+    catch { /* Keep the toggle usable when storage is unavailable. */ }
+  };
   const [saveStatus, setSaveStatus] = useState(() => (typeof navigator !== 'undefined' && !navigator.onLine ? 'disconnected' : null));
   const statusTimer = useRef(null);
   useEffect(() => {
@@ -140,7 +152,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, di
           principal" en cada pantalla (la nav inferior es su propio <nav>). */}
       <main
         id="main-content"
-        className="min-h-screen"
+        className={`min-h-screen${hideNav ? '' : ' app-with-navigation'}${!hideNav && navCollapsed ? ' app-navigation-collapsed' : ''}`}
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? 'none' : enterOffset.current,
@@ -154,11 +166,12 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, di
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
+        <PracticeBreadcrumb activity={breadcrumbActivity || activeScreen} onNavigate={onNavigate} />
         {children}
       </main>
-      {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} reviewDue={reviewDue} />}
+      {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} reviewDue={reviewDue} collapsed={navCollapsed} onToggle={toggleNavigation} />}
       {saveStatus && <div role="status" className="fixed left-1/2 z-50 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full px-4 py-2 text-center text-xs font-semibold shadow-sm"
-        style={{ bottom: hideNav ? 18 : 84, background: J.paperHi, color: saveStatus === 'error' ? J.redDeep : J.inkSoft, border: `1px solid ${J.hair}` }}>
+        style={{ bottom: hideNav ? 18 : 'calc(100px + env(safe-area-inset-bottom, 0px))', background: J.paperHi, color: saveStatus === 'error' ? J.redDeep : J.inkSoft, border: `1px solid ${J.hair}` }}>
         {saveLabels[saveStatus]}
       </div>}
 

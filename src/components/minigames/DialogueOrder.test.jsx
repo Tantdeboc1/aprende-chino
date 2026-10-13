@@ -60,7 +60,7 @@ describe('DialogueOrder', () => {
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<DialogueOrder goBack={goBack} selectedLesson={null} />);
-    fireEvent.click(screen.getByRole('button', { name: /back to skills/i }));
+    fireEvent.click(screen.getByRole('button', { name: /back to practise/i }));
     expect(goBack).toHaveBeenCalledTimes(1);
   });
 });

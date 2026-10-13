@@ -85,7 +85,7 @@ describe('ReadingComprehension', () => {
     const goBack = vi.fn();
     render(<ReadingComprehension goBack={goBack} speak={vi.fn()} characters={[]} />);
     await screen.findByText('小猫');
-    fireEvent.click(screen.getByRole('button', { name: /skills/i }));
+    fireEvent.click(screen.getByRole('button', { name: /back to practise/i }));
     expect(goBack).toHaveBeenCalledTimes(1);
   });
 });

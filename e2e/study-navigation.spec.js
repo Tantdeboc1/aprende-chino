@@ -24,8 +24,10 @@ test('estudiar tiene pestaña propia y volver nunca muestra el menú antiguo', a
   await expect(page.getByText('Por qué esta respuesta', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: /volver/i }).click();
   await expect(page.getByRole('button', { name: /^ejercicios$/i })).toBeVisible();
+  // El regreso dentro de la app ya consumió la entrada del ejercicio.
+  // El siguiente atrás del navegador continúa hacia Inicio.
   await page.goBack();
-  await expect(page.getByRole('button', { name: /^ejercicios$/i })).toBeVisible();
+  await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();
   await expect(page.getByText('Xuéxí - Aprender', { exact: true })).toHaveCount(0);
   await page.goto('/?legacy=1#/exercise');
   await expect(page.getByText('¿Qué aprendemos hoy?')).toBeVisible();

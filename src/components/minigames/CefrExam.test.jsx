@@ -82,7 +82,7 @@ describe('CefrExam', () => {
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<CefrExam goBack={goBack} speak={vi.fn()} allCharacters={[]} />);
-    fireEvent.click(screen.getByRole('button', { name: /back to skills/i }));
+    fireEvent.click(screen.getByRole('button', { name: /back to practise/i }));
     expect(goBack).toHaveBeenCalledTimes(1);
   });
 });

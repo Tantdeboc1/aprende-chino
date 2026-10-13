@@ -20,6 +20,13 @@ describe('buildBackup', () => {
 });
 
 describe('restoreBackup', () => {
+  it('conserva los ejercicios favoritos al exportar y restaurar', () => {
+    localStorage.setItem(STORAGE_KEYS.PRACTICE_FAVORITES, JSON.stringify(['tones-ear', 'sov-game']));
+    const backup = JSON.stringify(buildBackup());
+    localStorage.clear();
+    restoreBackup(backup);
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.PRACTICE_FAVORITES))).toEqual(['tones-ear', 'sov-game']);
+  });
   it('restaura un backup válido (round-trip)', () => {
     localStorage.setItem(STORAGE_KEYS.USERNAME, 'Test');
     localStorage.setItem(STORAGE_KEYS.PROGRESS, '{"1":{"visto":true}}');

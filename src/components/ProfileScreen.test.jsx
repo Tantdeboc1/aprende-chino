@@ -34,6 +34,28 @@ beforeEach(() => localStorage.clear());
 afterEach(() => { cleanup(); vi.doUnmock('@/hooks/useIncomingRequestCount.js'); });
 
 describe('ProfileScreen', () => {
+  it('el acceso visible Editar perfil abre la personalización existente', () => {
+    const props = setup();
+    fireEvent.click(screen.getByRole('button', { name: 'Edit profile' }));
+    expect(props.onOpenSettings).toHaveBeenCalledTimes(1);
+  });
+  it('calcula la precisión desde respuestas reales y conserva el acceso a todas las insignias', () => {
+    setup({ progress: { lesson_1: { '你': { correct: 3, incorrect: 1 } } } });
+    fireEvent.click(screen.getByText('Detailed statistics and level'));
+    expect(screen.getByText('75%')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'View all' }));
+    expect(screen.getAllByRole('button', { expanded: false }).length).toBeGreaterThan(3);
+    fireEvent.click(screen.getByRole('button', { name: 'Show less' }));
+    expect(screen.getByRole('button', { name: 'View all' })).toBeTruthy();
+  });
+  it('con historial vacío muestra siete días sin actividad y un objetivo sin completar', () => {
+    setup();
+    expect(screen.getByText('You studied on 0 of the last 7 days')).toBeTruthy();
+    expect(screen.getByText('Daily goal reached on 0 days')).toBeTruthy();
+    expect(screen.getByRole('progressbar', { name: 'Your goal today' }).getAttribute('aria-valuenow')).toBe('0');
+    fireEvent.click(screen.getByText('Detailed statistics and level'));
+    expect(screen.getByText('No answers yet')).toBeTruthy();
+  });
   it('muestra el nombre de usuario y el botón de ajustes llama a onOpenSettings', () => {
     const props = setup();
     expect(screen.getByText(/Tester/)).toBeTruthy();
@@ -47,9 +69,9 @@ describe('ProfileScreen', () => {
     expect(props.onOpenFriends).toHaveBeenCalledTimes(1);
   });
 
-  it('sin racha activa, no muestra la tarjeta de racha', () => {
+  it('sin racha activa, mantiene el resumen visible con cero días', () => {
     setup();
-    expect(screen.queryByText(/current streak|racha/i)).toBeNull();
+    expect(screen.getByText(/current streak/i).parentElement.textContent).toContain('0');
   });
 
   it('con racha activa, muestra los días consecutivos', () => {
@@ -62,6 +84,7 @@ describe('ProfileScreen', () => {
 
   it('pulsar una insignia despliega su descripción', () => {
     setup();
+    fireEvent.click(screen.getByRole('button', { name: 'View all' }));
     const badgeButtons = screen.getAllByRole('button', { expanded: false });
     // El primer botón desplegable es una insignia (no ajustes/amigos, que no tienen aria-expanded).
     const badgeBtn = badgeButtons.find(b => b.getAttribute('aria-expanded') !== null);

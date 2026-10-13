@@ -1,7 +1,10 @@
+import { getLearningPrefs, setLearningPrefs, getMotionPref, setMotionPref } from '@/utils/learningPrefs.js';
+import { getSyncStatus } from '@/utils/syncStatus.js';
+import { speakChineseEnhanced, cancelSpeak } from '@/utils/tts-enhanced.js';
 // src/components/SettingsScreen.jsx
 // Configuración (no stats). Perfil editable, idioma, música, cuenta y
 // datos. Las estadísticas y la racha viven en ProfileScreen.
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
@@ -11,7 +14,7 @@ import { getStreak, setDailyGoal, DAILY_GOAL_PRESETS } from '@/utils/streak.js';
 import { getLevelInfo } from '@/utils/leveling.js';
 import { introsEnabled, setIntrosEnabled } from '@/utils/gameIntroPrefs.js';
 import { restartTour } from '@/utils/tour.js';
-import { bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
+import { bumpLocalDataRev, useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 import { useMusic } from '@/context/MusicContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { APP_VERSION } from '@/utils/version.js';
@@ -46,6 +49,7 @@ function PrefToggle({ label, hint, value, onChange, first = false }) {
         {hint && <p style={{ margin: 0, fontSize: '0.6875rem', color: J.mute }}>{hint}</p>}
       </div>
       <button
+        aria-label={label}
         onClick={onChange}
         aria-pressed={value}
         style={{
@@ -227,6 +231,26 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const { t, i18n } = useTranslation();
   const music = useMusic();
   const { mode, user, signOut, migrateGuestToGoogle, pushSnapshot, deleteAccount } = useAuth();
+  const [motion, setMotion] = useState(getMotionPref);
+  const aids = useLocalSnapshot(getLearningPrefs);
+  const sync = useLocalSnapshot(() => getSyncStatus(user?.uid), [user?.uid]);
+  const [online, setOnline] = useState(() => navigator.onLine);
+  const [voicePreview, setVoicePreview] = useState('idle');
+  const voiceBusy = useRef(false);
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    window.addEventListener('online', update); window.addEventListener('offline', update);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); if (voiceBusy.current) cancelSpeak(); };
+  }, []);
+  const previewVoice = async () => {
+    if (voiceBusy.current) return;
+    if (!window.speechSynthesis) { setVoicePreview('unavailable'); return; }
+    voiceBusy.current = true; setVoicePreview('playing');
+    let failed = false;
+    try { await speakChineseEnhanced({ hanzi: '你好！今天我们一起学习中文。' }, { onError: () => { failed = true; } }); }
+    catch { failed = true; }
+    finally { voiceBusy.current = false; setVoicePreview(failed ? 'unavailable' : 'idle'); }
+  };
   const [migrating, setMigrating] = useState(false);
   const [nameInput, setNameInput] = useState(userName || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -364,7 +388,7 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
   const effectiveAvatar = resolveAvatarSrc(profile, mode, user?.photoURL, currentAvatar.src);
 
   return (
-    <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
+    <div className="settings-shell" style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
       <JTopBar
         left={
           onBack ? (
@@ -392,6 +416,9 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
 
       <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
 
+<h1 className="text-2xl font-bold" style={{ color: J.ink }}>{t('nav_settings')}</h1>
+        <nav aria-label={t('settings_index')} className="settings-index">{['profile','learning','appearance','audio','account'].map(id => <a key={id} href={'#settings-' + id} onClick={e => { e.preventDefault(); document.getElementById('settings-' + id)?.scrollIntoView({ behavior: 'auto', block: 'start' }); }}>{t('settings_group_' + id)}</a>)}</nav>
+        <section id="settings-profile" className="settings-group" aria-labelledby="settings-title-profile"><h2 id="settings-title-profile" className="settings-group-title">{t('settings_group_profile')}</h2>
         {/* ─── Perfil (nick + género + avatar) ─────────────────────────── */}
         <JSection label={t('settings_section_profile')} cn="个人资料" />
         <JCard padding="0">
@@ -504,6 +531,8 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
           )}
         </JCard>
 
+        </section>
+        <section id="settings-learning" className="settings-group" aria-labelledby="settings-title-learning"><h2 id="settings-title-learning" className="settings-group-title">{t('settings_group_learning')}</h2>
         {/* ─── Meta diaria ─────────────────────────────────────────────── */}
         <JSection label={t('settings_daily_goal', 'Meta diaria')} cn="目标" />
         <JCard padding="14px 18px">
@@ -618,6 +647,19 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         </JCard>
 
         {/* ─── Apariencia (tema claro/oscuro) ──────────────────────────── */}
+
+        <JSection label={t('settings_reading_aids')} cn="读" />
+        <JCard padding="18px">
+          <p className="text-xs mb-4" style={{ color: J.inkSoft }}>{t('settings_reading_aids_hint')}</p>
+          {['pinyin', 'translation'].map(kind => <div key={kind} className="mb-4">
+            <p className="text-sm font-semibold mb-2" style={{ color: J.ink }}>{t('settings_aid_' + kind)}</p>
+            <div className="flex flex-wrap gap-2">{['activity', 'always', 'tap'].map(value => <button key={value} aria-pressed={aids[kind] === value}
+              onClick={() => setLearningPrefs({ [kind]: value })} className="rounded-xl px-3 py-2 text-xs font-semibold"
+              style={{ background: aids[kind] === value ? J.jadeBg : J.paper, color: J.inkSoft, border: `1px solid ${J.hair}` }}>{t('settings_aid_' + value)}</button>)}</div>
+          </div>)}
+        </JCard>
+        </section>
+        <section id="settings-appearance" className="settings-group" aria-labelledby="settings-title-appearance"><h2 id="settings-title-appearance" className="settings-group-title">{t('settings_group_appearance')}</h2>
         <JSection label={t('settings_appearance', 'Apariencia')} cn="外观" />
         <JCard padding="14px 18px">
           <div className="flex flex-wrap gap-2">
@@ -694,6 +736,15 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         </JCard>
 
         {/* ─── Música ──────────────────────────────────────────────────── */}
+
+        <JSection label={t('settings_motion')} cn="动" />
+        <JCard padding="18px"><div className="flex flex-wrap gap-2">{['system', 'reduced', 'full'].map(value => <button key={value} aria-pressed={motion === value}
+          onClick={() => { setMotionPref(value); setMotion(value); }} className="rounded-xl px-3 py-2 text-xs font-semibold"
+          style={{ background: motion === value ? J.jadeBg : J.paper, color: J.inkSoft, border: `1px solid ${J.hair}` }}>{t('settings_motion_' + value)}</button>)}</div>
+          <p className="text-xs mt-3" style={{ color: J.inkSoft }}>{t('settings_motion_hint')}</p>
+        </JCard>
+        </section>
+        <section id="settings-audio" className="settings-group" aria-labelledby="settings-title-audio"><h2 id="settings-title-audio" className="settings-group-title">{t('settings_group_audio')}</h2>
         {music && (
           <>
             <JSection label={t('settings_music_title')} cn="音乐" />
@@ -784,9 +835,24 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               {t('settings_voice_rate_hint', 'Afecta a la pronunciación leída por voz (TTS).')}
             </p>
           </div>
+          <div className="px-4 pb-4"><button onClick={previewVoice} disabled={voicePreview === 'playing'} className="rounded-xl px-4 py-3 text-sm font-semibold" style={{ background: J.jadeBg, color: J.jadeDeep }}>{t(voicePreview === 'playing' ? 'settings_voice_playing' : 'settings_voice_preview')}</button>
+            <p className="text-xs mt-2" style={{ color: J.inkSoft }}>你好！今天我们一起学习中文。</p>
+            {voicePreview === 'unavailable' && <p role="status" className="text-xs mt-2">{t('settings_voice_unavailable')}</p>}
+          </div>
         </JCard>
 
         {/* ─── Cuenta ─────────────────────────────────────────────────── */}
+        </section>
+        <section id="settings-account" className="settings-group" aria-labelledby="settings-title-account"><h2 id="settings-title-account" className="settings-group-title">{t('settings_group_account')}</h2>
+
+          <JCard padding="18px"><h3 className="font-bold mb-2" style={{ color: J.ink }}>{t('settings_storage_status')}</h3>
+            <p className="text-sm" style={{ color: J.inkSoft }}>{t(mode === 'google' ? 'settings_storage_cloud' : 'settings_storage_local')}</p>
+            {mode === 'google' && <>
+              <p role="status" className="text-sm mt-2">{t(!online ? 'settings_sync_offline' : 'settings_sync_' + sync.status)}</p>
+              <p className="text-xs mt-2">{sync.lastSuccess ? t('settings_sync_last', { date: new Date(sync.lastSuccess).toLocaleString(i18n.language) }) : t('settings_sync_never')}</p>
+              <button onClick={() => pushSnapshot()} disabled={!online || sync.status === 'syncing'} className="mt-3 rounded-xl px-3 py-2 text-sm font-semibold" style={{ background: J.jadeBg, color: J.jadeDeep }}>{t('settings_sync_now')}</button>
+            </>}
+          </JCard>
         <JSection label={t('settings_section_account', 'Cuenta')} cn="账户" />
         <JCard padding="14px 18px">
           {mode === 'google' && (
@@ -810,53 +876,6 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
                 {t('settings_sign_out', 'Cerrar sesión')}
               </button>
 
-              {/* Eliminar cuenta y todos los datos (requisito de Google Play).
-                  Doble confirmación: primero desplegar, luego confirmar. */}
-              {!showDeleteConfirm ? (
-                <button
-                  onClick={() => setShowDeleteConfirm(true)}
-                  style={{
-                    width: '100%', marginTop: 10, padding: '10px 16px', borderRadius: 14,
-                    border: 0, background: 'transparent',
-                    color: J.mute, fontSize: '0.78125rem', fontWeight: 700, cursor: 'pointer',
-                  }}
-                >
-                  {t('settings_delete_account', 'Eliminar cuenta y datos')}
-                </button>
-              ) : (
-                <div className="space-y-3" style={{ marginTop: 12 }}>
-                  <p style={{ fontSize: '0.8125rem', color: J.redDeep, textAlign: 'center', fontWeight: 600, lineHeight: 1.45 }}>
-                    {t('settings_delete_account_confirm',
-                      'Se borrará tu progreso de la nube, tus amistades y tu cuenta. Esto no se puede deshacer. ¿Seguro?')}
-                  </p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setShowDeleteConfirm(false)}
-                      disabled={deleting}
-                      style={{
-                        flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
-                        background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
-                      }}
-                    >
-                      {t('settings_cancel')}
-                    </button>
-                    <button
-                      onClick={handleDeleteAccount}
-                      disabled={deleting}
-                      style={{
-                        flex: 1, padding: '12px', borderRadius: 99, border: 0,
-                        background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700,
-                        cursor: deleting ? 'default' : 'pointer', opacity: deleting ? 0.6 : 1,
-                        boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
-                      }}
-                    >
-                      {deleting
-                        ? t('settings_delete_account_busy', 'Borrando…')
-                        : t('settings_delete_account_do', 'Borrar todo')}
-                    </button>
-                  </div>
-                </div>
-              )}
             </>
           )}
           {mode === 'guest' && (
@@ -937,43 +956,6 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
               {importMsg.text}
             </p>
           )}
-          {!showResetConfirm ? (
-            <button
-              onClick={() => setShowResetConfirm(true)}
-              style={{
-                width: '100%', padding: '12px 16px', borderRadius: 14,
-                border: `1px solid ${J.sandBg}`, background: 'transparent',
-                color: J.sandDeep, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
-              }}
-            >
-              {t('settings_reset')}
-            </button>
-          ) : (
-            <div className="space-y-3">
-              <p style={{ fontSize: '0.875rem', color: J.ink, textAlign: 'center' }}>{t('settings_reset_confirm')}</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setShowResetConfirm(false)}
-                  style={{
-                    flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
-                    background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
-                  }}
-                >
-                  {t('settings_cancel')}
-                </button>
-                <button
-                  onClick={handleReset}
-                  style={{
-                    flex: 1, padding: '12px', borderRadius: 99, border: 0,
-                    background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
-                    boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
-                  }}
-                >
-                  {t('settings_confirm_reset')}
-                </button>
-              </div>
-            </div>
-          )}
         </JCard>
 
         {/* ─── Actualizaciones ─────────────────────────────────────────── */}
@@ -1038,6 +1020,98 @@ export default function SettingsScreen({ userName, onUserNameChange, onProgressC
         </JCard>
 
         {/* ─── Acerca de (footer compacto) ────────────────────────────── */}
+        </section>
+        <section className="settings-group" aria-labelledby="settings-danger-title"><h2 id="settings-danger-title" className="settings-group-title">{t('settings_danger_actions')}</h2>
+          <JCard padding="18px">
+          {!showResetConfirm ? (
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              style={{
+                width: '100%', padding: '12px 16px', borderRadius: 14,
+                border: `1px solid ${J.sandBg}`, background: 'transparent',
+                color: J.sandDeep, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
+              }}
+            >
+              {t('settings_reset')}
+            </button>
+          ) : (
+            <div className="space-y-3">
+              <p style={{ fontSize: '0.875rem', color: J.ink, textAlign: 'center' }}>{t('settings_reset_confirm')}</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  style={{
+                    flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
+                    background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
+                  }}
+                >
+                  {t('settings_cancel')}
+                </button>
+                <button
+                  onClick={handleReset}
+                  style={{
+                    flex: 1, padding: '12px', borderRadius: 99, border: 0,
+                    background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
+                    boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
+                  }}
+                >
+                  {t('settings_confirm_reset')}
+                </button>
+              </div>
+            </div>
+          )}
+
+            {mode === 'google' && <>
+              {/* Eliminar cuenta y todos los datos (requisito de Google Play).
+                  Doble confirmación: primero desplegar, luego confirmar. */}
+              {!showDeleteConfirm ? (
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  style={{
+                    width: '100%', marginTop: 10, padding: '10px 16px', borderRadius: 14,
+                    border: 0, background: 'transparent',
+                    color: J.mute, fontSize: '0.78125rem', fontWeight: 700, cursor: 'pointer',
+                  }}
+                >
+                  {t('settings_delete_account', 'Eliminar cuenta y datos')}
+                </button>
+              ) : (
+                <div className="space-y-3" style={{ marginTop: 12 }}>
+                  <p style={{ fontSize: '0.8125rem', color: J.redDeep, textAlign: 'center', fontWeight: 600, lineHeight: 1.45 }}>
+                    {t('settings_delete_account_confirm',
+                      'Se borrará tu progreso de la nube, tus amistades y tu cuenta. Esto no se puede deshacer. ¿Seguro?')}
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setShowDeleteConfirm(false)}
+                      disabled={deleting}
+                      style={{
+                        flex: 1, padding: '12px', borderRadius: 99, border: `1px solid ${J.hair}`,
+                        background: J.paperHi, color: J.ink, fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
+                      }}
+                    >
+                      {t('settings_cancel')}
+                    </button>
+                    <button
+                      onClick={handleDeleteAccount}
+                      disabled={deleting}
+                      style={{
+                        flex: 1, padding: '12px', borderRadius: 99, border: 0,
+                        background: J.red, color: J.onAccent, fontSize: '0.875rem', fontWeight: 700,
+                        cursor: deleting ? 'default' : 'pointer', opacity: deleting ? 0.6 : 1,
+                        boxShadow: '0 4px 12px -4px rgba(200,57,47,0.5)',
+                      }}
+                    >
+                      {deleting
+                        ? t('settings_delete_account_busy', 'Borrando…')
+                        : t('settings_delete_account_do', 'Borrar todo')}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>}
+          </JCard>
+        </section>
         <p style={{
           marginTop: 18, textAlign: 'center', fontSize: '0.71875rem',
           color: J.mute, fontWeight: 500, letterSpacing: '0.02em',

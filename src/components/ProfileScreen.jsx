@@ -6,7 +6,7 @@ import SkillProgress from '@/components/SkillProgress.jsx';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
-import { JTopBar, JMark, JLabel, JCard, JSection } from '@/components/jade';
+import { JTopBar, JMark, JCard, JSection } from '@/components/jade';
 import { getLessonStats } from '@/utils/progress.js';
 import { getSRSStats } from '@/utils/srs.js';
 import { getStreak } from '@/utils/streak.js';
@@ -105,14 +105,19 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     return Math.round(ms / 60000);
   }, [progress]);
 
-  const accuracy = useMemo(() => {
-    const srs = progress?.__srs || {};
+  const answerStats = useMemo(() => {
     let correct = 0, total = 0;
-    for (const d of Object.values(srs)) {
-      if (d.reviews) { total += d.reviews; correct += d.correct || 0; }
+    for (const [key, lesson] of Object.entries(progress || {})) {
+      if (!key.startsWith('lesson_') || !lesson || typeof lesson !== 'object') continue;
+      for (const [char, word] of Object.entries(lesson)) {
+        if (char.startsWith('__') || !word || typeof word !== 'object') continue;
+        correct += word.correct || 0;
+        total += (word.correct || 0) + (word.incorrect || 0);
+      }
     }
-    return total > 0 ? Math.round((correct / total) * 100) : 0;
+    return { total, accuracy: total ? Math.round(correct / total * 100) : null };
   }, [progress]);
+  const accuracy = answerStats.accuracy;
 
   const totalMastered = useMemo(() => {
     // Lecciones presentes en los datos (8 hoy; si se añaden más, esto
@@ -131,7 +136,16 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
     () => computeBadges(progress, allCharacters),
     [progress, allCharacters],
   );
-  const earnedCount = badges.filter(b => b.earned).length;
+  const earnedBadges = badges.filter(b => b.earned);
+  const earnedCount = earnedBadges.length;
+  const [showAllBadges, setShowAllBadges] = useState(false);
+  const nextBadge = badges.filter(b => !b.earned).sort((a, b) => b.progressPct - a.progressPct)[0];
+  const visibleBadges = showAllBadges ? badges : earnedBadges.slice(-3);
+  const studiedDays = weeklyXp.filter(d => d.xp > 0 || (streak.activityDates || []).includes(d.key)).length;
+  const goalDays = weeklyXp.filter(d => d.xp >= (streak.dailyGoal || 120)).length;
+  const todayXP = weeklyXp[6]?.xp || 0;
+  const dailyGoal = streak.dailyGoal || 120;
+  const goalPct = Math.min(100, Math.round(todayXP / dailyGoal * 100));
   // Insignia abierta: su requisito se muestra bajo la rejilla (ver más abajo).
   const [openBadge, setOpenBadge] = useState(null);
   const openBadgeDef = badges.find(b => b.id === openBadge) || null;
@@ -165,26 +179,11 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
 
   return (
     <div style={{ minHeight: '100vh', background: J.paper, paddingBottom: 90 }}>
-      <JTopBar
-        left={<JMark />}
-        right={
-          <button
-            onClick={onOpenSettings}
-            aria-label={t('nav_settings')}
-            style={{
-              background: 'transparent', border: 0, padding: 6, borderRadius: 10,
-              color: J.inkSoft, cursor: 'pointer', display: 'flex', alignItems: 'center',
-            }}
-          >
-            <GearIcon />
-          </button>
-        }
-      />
-
-      <div className="j-rise" style={{ padding: '6px 20px 24px' }}>
-
+      <div className="profile-shell">
+        <JTopBar left={<JMark />} right={<button onClick={onOpenSettings} aria-label={t('nav_settings')} className="profile-settings-button"><GearIcon /></button>} />
+        <div className="j-rise profile-content">
         {/* ─── Cabecera con avatar + nombre ──────────────────────────────── */}
-        <div style={{ marginTop: 8, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 16 }}>
+        <div style={{ marginTop: 8, marginBottom: 18, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
           <span style={{
             background: J.paperHi,
             border: `3px solid ${J.jade}`,
@@ -217,159 +216,57 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
               </p>
             )}
           </div>
+          <button onClick={onOpenSettings} className="profile-edit-button">{t('profile_edit')}</button>
         </div>
 
-        {/* ─── Amigos ────────────────────────────────────────────────────
-            Amigos dejó de tener pestaña propia al pasar la barra de 7 a 5;
-            se entra desde aquí, que es donde vive el resto de lo social. */}
-        <button
-          onClick={onOpenFriends}
-          style={{
-            width: '100%', marginBottom: 18,
-            padding: '14px 16px', borderRadius: 14,
-            border: `1px solid ${incomingCount > 0 ? J.red : J.hair}`,
-            background: incomingCount > 0 ? J.redBg : J.paperHi,
-            cursor: 'pointer', textAlign: 'left',
-            display: 'flex', alignItems: 'center', gap: 12,
-          }}
-        >
-          <span className="font-cn" style={{
-            width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-            background: J.jadeBg, color: J.jadeDeep, fontWeight: 700,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem',
-          }}>友</span>
-          <span style={{ flex: 1, minWidth: 0 }}>
-            <span style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', color: J.ink }}>
-              {t('nav_friends', 'Amigos')}
-            </span>
-            <span style={{ display: 'block', fontSize: '0.75rem', color: J.mute, marginTop: 2 }}>
-              {incomingCount > 0
-                ? t('profile_friends_pending', '{{count}} invitaciones te esperan', { count: incomingCount })
-                : t('profile_friends_hint', 'Compara tu progreso y compite en el ranking')}
-            </span>
-          </span>
-          {incomingCount > 0 && (
-            <span style={{
-              minWidth: 20, height: 20, padding: '0 6px', borderRadius: 99,
-              background: J.red, color: '#fff', fontSize: '0.6875rem', fontWeight: 800,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>{incomingCount > 9 ? '9+' : incomingCount}</span>
-          )}
-          <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0 }}>→</span>
-        </button>
 
-        {/* ─── Nivel y XP ────────────────────────────────────────────────── */}
-        <JSection label={t('settings_section_level')} cn="等级" />
-        <div style={{
-          background: J.jade, color: J.onAccent,
-          borderRadius: 18, padding: '18px 20px',
-          marginBottom: 4,
-          position: 'relative', overflow: 'hidden',
-          boxShadow: '0 6px 16px -6px rgba(31,74,51,0.5)',
-        }}>
-          <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, borderRadius: '50%', background: J.jadeDeep, opacity: 0.45 }} />
-          <div style={{ position: 'relative' }}>
-            <div className="flex items-end justify-between">
-              <div>
-                <JLabel color={J.butter}>{t('settings_level_current')}</JLabel>
-                <div className="flex items-baseline gap-2" style={{ marginTop: 4 }}>
-                  <span style={{ fontSize: '3.5rem', fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
-                    {levelInfo.level}
-                  </span>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>
-                    Lv.
-                  </span>
-                </div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: '0.65625rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                  {t('settings_xp_total')}
-                </span>
-                <div style={{ fontSize: '1.375rem', fontWeight: 800, color: J.onAccent, marginTop: 4, letterSpacing: '-0.02em' }}>
-                  {(streak.totalXP || 0).toLocaleString()}
-                </div>
-              </div>
-            </div>
-
-            {!levelInfo.isMaxLevel ? (
-              <div style={{ marginTop: 14 }}>
-                <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
-                  <span style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    Lv.{levelInfo.level}
-                  </span>
-                  <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.30)' }}>
-                    <div className="h-full rounded-full transition-all duration-500"
-                      style={{ width: `${levelInfo.progress}%`, background: J.butter }} />
-                  </div>
-                  <span style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    Lv.{levelInfo.level + 1}
-                  </span>
-                </div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center' }}>
-                  {t('settings_xp_to_next', { xp: levelInfo.xpForNext - levelInfo.xpInLevel })}
-                </div>
-              </div>
-            ) : (
-              <div style={{ marginTop: 14, fontSize: '0.8125rem', color: J.butter, fontWeight: 800, textAlign: 'center' }}>
-                ★ {t('settings_max_level')}
-              </div>
-            )}
+          <div className="grid grid-cols-3 gap-3 mb-6" aria-label={t('profile_summary')}>
+            {[
+              { label: t('settings_level_current'), value: levelInfo.level },
+              { label: t('settings_progress_chars_mastered'), value: totalMastered },
+              { label: t('settings_streak_current'), value: streak.currentStreak },
+            ].map(item => <div key={item.label} className="profile-summary-card"><span className="block text-xs" style={{ color: J.inkSoft }}>{item.label}</span><strong className="block text-2xl mt-2" style={{ color: J.ink }}>{item.value}</strong></div>)}
           </div>
-        </div>
+          <div className="profile-columns">
+            <div className="min-w-0">
+              <SkillProgress progress={progress} onPractice={onPractice} />
+              <details className="mt-5 profile-details"><summary className="font-semibold cursor-pointer">{t('profile_detailed_stats')}</summary>
+        {/* ─── Progreso general ─────────────────────────────────────────── */}
+        <JSection label={t('settings_progress')} cn="进步" />
+        <JCard padding="0">
+          <ProfileRow l={t('settings_progress_chars_learned')} v={srsStats.learned} tag={t('settings_progress_hsk_tag')} first />
+          <ProfileRow l={t('settings_progress_study_time')} v={totalStudyMin > 0 ? `${Math.floor(totalStudyMin / 60)}h ${totalStudyMin % 60}m` : '0m'} tag={t('settings_progress_pace_tag')} />
+          <ProfileRow l={t('settings_progress_accuracy')} v={accuracy === null ? '—' : `${accuracy}%`} tag={accuracy === null ? t('profile_no_answers') : accuracy >= 80 ? t('settings_progress_accuracy_good') : t('settings_progress_accuracy_meh')} accent="jade" />
+          <ProfileRow l={t('settings_progress_chars_mastered')} v={totalMastered} tag={t('settings_progress_record_tag')} accent="red" />
+        </JCard>
 
-        {/* ─── Streak hero ─────────────────────────────────────────────── */}
-        {streak.currentStreak > 0 && (
-          <div style={{
-            background: J.red, color: J.onAccent, borderRadius: 22,
-            padding: '20px 22px 18px', position: 'relative', overflow: 'hidden',
-            marginTop: 14, marginBottom: 18, boxShadow: '0 8px 24px rgba(200,57,47,0.30)',
-          }}>
-            <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: J.redDeep, opacity: 0.5 }} />
-            <div style={{ position: 'relative' }}>
-              <div className="flex justify-between items-start">
-                <div>
-                  <JLabel color={J.butter}>{t('settings_streak_current')} · 连续</JLabel>
-                  <div className="flex items-baseline gap-2" style={{ marginTop: 8 }}>
-                    <span style={{ fontSize: '4rem', fontWeight: 800, color: J.butter, letterSpacing: '-0.04em', lineHeight: 0.9 }}>
-                      {streak.currentStreak}
-                    </span>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{t('settings_day', { count: streak.currentStreak })}</span>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '0.65625rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700 }}>
-                    {t('settings_streak_record')}
-                  </span>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: J.onAccent, marginTop: 6, letterSpacing: '-0.02em' }}>
-                    {streak.longestStreak || streak.currentStreak}
-                  </div>
-                </div>
-              </div>
 
-              <div className="grid gap-1" style={{ marginTop: 18, gridTemplateColumns: 'repeat(15, 1fr)' }}>
-                {days.map((d, i) => (
-                  <div key={i} style={{
-                    aspectRatio: '1 / 1', borderRadius: 4,
-                    background: d === 'on' ? J.butter : 'rgba(255,255,255,0.12)',
-                  }} />
-                ))}
-              </div>
-              <div style={{ marginTop: 10, fontSize: '0.6875rem', color: 'rgba(255,255,255,0.65)', fontWeight: 600, letterSpacing: '0.04em' }}>
-                {t('settings_streak_last_30')}
-              </div>
+                <JSection label={t('settings_section_level')} cn="等级" />
+                <JCard padding="18px"><p className="font-bold" style={{ color: J.ink }}>{t('settings_xp_total')}: {(streak.totalXP || 0).toLocaleString()}</p>
+                  {levelInfo.isMaxLevel ? <p className="text-sm mt-2">{t('settings_max_level')}</p> : <>
+                    <div role="progressbar" aria-label={t('settings_section_level')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={levelInfo.progress} className="h-2 rounded-full mt-3 overflow-hidden" style={{ background: J.hair }}><div style={{ width: levelInfo.progress + '%', height: '100%', background: J.jade }} /></div>
+                    <p className="text-xs mt-2">{t('settings_xp_to_next', { xp: levelInfo.xpForNext - levelInfo.xpInLevel })}</p>
+                  </>}
+                </JCard>
+              </details>
             </div>
-          </div>
-        )}
-
+            <div className="min-w-0">
+              <JSection label={t('profile_today_goal')} cn="今日" />
+              <JCard padding="18px"><p className="font-bold" style={{ color: J.ink }}>{todayXP} / {dailyGoal} XP</p>
+                <div role="progressbar" aria-label={t('profile_today_goal')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={goalPct} className="h-2 rounded-full mt-3 overflow-hidden" style={{ background: J.hair }}><div style={{ width: goalPct + '%', height: '100%', background: J.jade }} /></div>
+                <p className="text-xs mt-2" style={{ color: J.inkSoft }}>{t(goalPct === 100 ? 'profile_goal_done' : 'profile_goal_remaining', { xp: Math.max(0, dailyGoal - todayXP) })}</p>
+              </JCard>
         {/* ─── XP semanal ──────────────────────────────────────────────── */}
-        <JSection label={t('profile_weekly_xp', 'XP esta semana')} cn="周XP" />
+        <JSection label={t('profile_weekly_activity')} cn="周XP" />
         <JCard padding="16px 18px 12px">
+          <p className="font-bold mb-1" style={{ color: J.ink }}>{t('profile_studied_days', { count: studiedDays })}</p>
+          <p className="text-xs mb-5" style={{ color: J.inkSoft }}>{t('profile_goal_days', { count: goalDays })}</p>
           <div className="flex items-end justify-between" style={{ height: 100, gap: 6 }}>
             {weeklyXp.map((d) => {
               const barH = Math.max(4, Math.round((d.xp / weeklyXpMax) * 76));
               const hitGoal = d.xp >= (streak.dailyGoal || 120);
               return (
-                <div key={d.key} className="flex flex-col items-center" style={{ flex: 1, minWidth: 0 }}>
+                <div key={d.key} aria-label={`${new Date(d.key + 'T12:00:00').toLocaleDateString(lang, { weekday: 'long' })}: ${d.xp} XP`} className="flex flex-col items-center" style={{ flex: 1, minWidth: 0 }}>
                   <span style={{ fontSize: '0.625rem', fontWeight: 700, color: hitGoal ? J.jadeDeep : J.mute, marginBottom: 4, height: 14 }}>
                     {d.xp > 0 ? d.xp : ''}
                   </span>
@@ -392,17 +289,13 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           </p>
         </JCard>
 
-        {/* ─── Progreso general ─────────────────────────────────────────── */}
-        <JSection label={t('settings_progress')} cn="进步" />
-        <JCard padding="0">
-          <ProfileRow l={t('settings_progress_chars_learned')} v={srsStats.learned} tag={t('settings_progress_hsk_tag')} first />
-          <ProfileRow l={t('settings_progress_study_time')} v={totalStudyMin > 0 ? `${Math.floor(totalStudyMin / 60)}h ${totalStudyMin % 60}m` : '0m'} tag={t('settings_progress_pace_tag')} />
-          <ProfileRow l={t('settings_progress_accuracy')} v={`${accuracy}%`} tag={accuracy >= 80 ? t('settings_progress_accuracy_good') : t('settings_progress_accuracy_meh')} accent="jade" />
-          <ProfileRow l={t('settings_progress_chars_mastered')} v={totalMastered} tag={t('settings_progress_record_tag')} accent="red" />
-        </JCard>
 
-        <SkillProgress progress={progress} onPractice={onPractice} />
-
+              <details className="profile-details mt-4"><summary className="text-sm font-semibold cursor-pointer">{t('settings_streak_last_30')}</summary>
+                <div className="grid grid-cols-10 gap-1 mt-3" aria-label={t('settings_streak_last_30')}>
+                  {days.map((d, i) => <span key={i} className="aspect-square rounded" aria-label={t(d === 'on' ? 'profile_day_active' : 'profile_day_rest')} style={{ background: d === 'on' ? J.jade : J.hair }} />)}
+                </div>
+                <p className="text-xs mt-3">{t('settings_streak_record')}: {streak.longestStreak || 0}</p>
+              </details>
         {/* ─── Insignias ──────────────────────────────────────────────── */}
         <div className="flex items-baseline justify-between" style={{ marginTop: 20, marginBottom: 6 }}>
           <JSection label={t('profile_badges', 'Insignias')} cn="徽章" />
@@ -411,12 +304,24 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           </span>
         </div>
         <JCard padding="14px 14px 16px">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <span className="text-xs font-semibold" style={{ color: J.inkSoft }}>{t('profile_featured_badges')}</span>
+            <button className="text-xs font-bold underline underline-offset-4" style={{ color: J.jade }} onClick={() => { setShowAllBadges(!showAllBadges); setOpenBadge(null); }}>{t(showAllBadges ? 'profile_show_less' : 'profile_show_all')}</button>
+          </div>
+          {!visibleBadges.length && <p className="text-sm mb-3" style={{ color: J.inkSoft }}>{t('profile_badges_empty')}</p>}
+          {nextBadge && !showAllBadges && <div className="rounded-xl p-4 mb-4" style={{ background: J.paper, border: `1px solid ${J.hair}` }}>
+            <p className="text-xs font-semibold" style={{ color: J.mute }}>{t('profile_next_badge')}</p>
+            <p className="font-bold mt-1" style={{ color: J.ink }}>{nextBadge.icon} {loc(nextBadge.title, lang)}</p>
+            <p className="text-xs mt-1" style={{ color: J.inkSoft }}>{loc(nextBadge.desc, lang)}</p>
+            <div role="progressbar" aria-label={loc(nextBadge.title, lang)} aria-valuemin={0} aria-valuemax={100} aria-valuenow={nextBadge.progressPct} className="h-1.5 rounded-full mt-3 overflow-hidden" style={{ background: J.hair }}><div style={{ width: nextBadge.progressPct + '%', height: '100%', background: J.jade }} /></div>
+            <p className="text-xs mt-1" style={{ color: J.mute }}>{nextBadge.progressPct}%</p>
+          </div>}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(74px, 1fr))',
             gap: 10,
           }}>
-            {badges.map(b => {
+            {visibleBadges.map(b => {
               const bTitle = loc(b.title, lang);
               const open = openBadge === b.id;
               return (
@@ -465,15 +370,56 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
           </div>
         </JCard>
 
+
+        {/* ─── Amigos ────────────────────────────────────────────────────
+            Amigos dejó de tener pestaña propia al pasar la barra de 7 a 5;
+            se entra desde aquí, que es donde vive el resto de lo social. */}
+        <button
+          onClick={onOpenFriends}
+          style={{
+            width: '100%', marginBottom: 18,
+            padding: '14px 16px', borderRadius: 14,
+            border: `1px solid ${incomingCount > 0 ? J.red : J.hair}`,
+            background: incomingCount > 0 ? J.redBg : J.paperHi,
+            cursor: 'pointer', textAlign: 'left',
+            display: 'flex', alignItems: 'center', gap: 12,
+          }}
+        >
+          <span className="font-cn" style={{
+            width: 40, height: 40, borderRadius: 12, flexShrink: 0,
+            background: J.jadeBg, color: J.jadeDeep, fontWeight: 700,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem',
+          }}>友</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', color: J.ink }}>
+              {t('nav_friends', 'Amigos')}
+            </span>
+            <span style={{ display: 'block', fontSize: '0.75rem', color: J.mute, marginTop: 2 }}>
+              {incomingCount > 0
+                ? t('profile_friends_pending', '{{count}} invitaciones te esperan', { count: incomingCount })
+                : t('profile_friends_hint', 'Compara tu progreso y compite en el ranking')}
+            </span>
+          </span>
+          {incomingCount > 0 && (
+            <span style={{
+              minWidth: 20, height: 20, padding: '0 6px', borderRadius: 99,
+              background: J.red, color: '#fff', fontSize: '0.6875rem', fontWeight: 800,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            }}>{incomingCount > 9 ? '9+' : incomingCount}</span>
+          )}
+          <span style={{ color: J.mute, fontWeight: 700, flexShrink: 0 }}>→</span>
+        </button>
+
+
         {/* ─── Compartir perfil ───────────────────────────────────────── */}
         <button
           onClick={handleShare}
           style={{
             width: '100%', marginTop: 18,
-            padding: '14px 18px', borderRadius: 14, border: 0,
-            background: J.red, color: J.onAccent,
+            padding: '14px 18px', borderRadius: 14, border: `1px solid ${J.hair}`,
+            background: J.paperHi, color: J.inkSoft,
             fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer',
-            boxShadow: '0 4px 12px -4px rgba(200,57,47,0.45)',
+
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           }}
         >
@@ -487,6 +433,10 @@ export default function ProfileScreen({ userName, progress, allCharacters, onOpe
             : t('profile_share', 'Compartir mi perfil')}
         </button>
 
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

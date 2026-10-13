@@ -40,6 +40,12 @@ describe('BADGE_DEFS — traducciones', () => {
 });
 
 describe('computeBadges', () => {
+  it('calcula el avance hacia el siguiente logro usando sus requisitos', () => {
+    const badges = computeBadges({ __writing: { 你: 49 } }, characters);
+    expect(badge(badges, 'writer').progressPct).toBe(98);
+    expect(badge(badges, 'writer').earned).toBe(false);
+    expect(badge(badges, 'level-5').progressPct).toBe(0);
+  });
   it('sin progreso no hay ninguna ganada', () => {
     const badges = computeBadges({}, characters);
     expect(badges).toHaveLength(BADGE_DEFS.length);

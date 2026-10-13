@@ -1,3 +1,4 @@
+import { getLearningPrefs, aidInitiallyVisible, motionReduced } from '@/utils/learningPrefs.js';
 // src/components/stories/DialogueBox.jsx
 // Caja de diálogo estilo novela visual.
 // - Efecto typewriter para el chino
@@ -32,10 +33,12 @@ export default function DialogueBox({
   speak,                  // (text, opts) => Promise — TTS de la app
 }) {
   const { t } = useTranslation();
+  const aids = getLearningPrefs();
+  const reduceMotion = motionReduced();
   const [shown, setShown] = useState('');
   const [done, setDone] = useState(false);
-  const [showPinyin, setShowPinyin] = useState(dificultad === 'facil');
-  const [showEs, setShowEs] = useState(false);
+  const [showPinyin, setShowPinyin] = useState(dificultad === 'facil' || (dificultad === 'normal' && aidInitiallyVisible(aids.pinyin, false)));
+  const [showEs, setShowEs] = useState(aidInitiallyVisible(aids.translation, false));
   const [playing, setPlaying] = useState(false);
   const timerRef = useRef(null);
 
@@ -43,13 +46,14 @@ export default function DialogueBox({
     // reset al cambiar de frase
     setShown('');
     setDone(false);
-    setShowPinyin(dificultad === 'facil');
-    setShowEs(false);
+    setShowPinyin(dificultad === 'facil' || (dificultad === 'normal' && aidInitiallyVisible(aids.pinyin, false)));
+    setShowEs(aidInitiallyVisible(aids.translation, false));
     setPlaying(false);
 
     // Cancelar cualquier TTS en curso al cambiar de frase
     try { window.speechSynthesis?.cancel?.(); } catch {}
 
+    if (reduceMotion) { setShown(chino || ''); setDone(true); return; }
     let i = 0;
     const chars = Array.from(chino || '');
     const tick = () => {
@@ -67,7 +71,7 @@ export default function DialogueBox({
       clearTimeout(timerRef.current);
       try { window.speechSynthesis?.cancel?.(); } catch {}
     };
-  }, [chino, dificultad]);
+  }, [chino, dificultad, aids.pinyin, aids.translation, reduceMotion]);
 
   const handlePlay = async (e) => {
     e.stopPropagation();

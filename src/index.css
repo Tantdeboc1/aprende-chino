@@ -1,5 +1,96 @@
 @import "tailwindcss";
 
+.profile-shell { max-width: 1200px; margin: 0 auto; }
+.profile-content { padding: 6px 20px 24px; }
+.profile-columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.profile-summary-card { padding: 16px 12px; background: var(--paper-hi); border: 1px solid var(--hair); border-radius: 16px; }
+.profile-edit-button { padding: 10px 14px; min-height: 44px; border: 1px solid var(--jade-mid); border-radius: 12px; background: var(--jade-bg); color: var(--jade-deep); font-size: 13px; font-weight: 700; cursor: pointer; }
+.profile-settings-button { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border-radius: 12px; color: var(--ink-soft); cursor: pointer; }
+.profile-details { border: 1px solid var(--hair); border-radius: 16px; padding: 16px; color: var(--ink-soft); background: var(--paper-hi); }
+@media (min-width: 1100px) {
+  .profile-columns { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; }
+  .profile-content { padding: 6px 28px 32px; }
+}
+
+/* Shared navigation: compact dock on phones, a persistent rail on desktop. */
+.app-with-navigation {
+  padding-bottom: calc(94px + env(safe-area-inset-bottom, 0px));
+}
+.app-navigation {
+  position: fixed;
+  z-index: 50;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: color-mix(in srgb, var(--paper-hi) 96%, transparent);
+  border-top: 1px solid var(--hair);
+  backdrop-filter: blur(16px);
+  padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+}
+.app-navigation-brand { display: none; }
+.app-navigation-toggle { display: none; }
+.app-navigation-items {
+  display: flex;
+  max-width: 560px;
+  margin: 0 auto;
+  gap: 3px;
+}
+.app-navigation-button {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 62px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 2px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+.app-navigation-button:hover { background: var(--paper-hi2); }
+.app-navigation-button.is-active {
+  background: color-mix(in srgb, var(--jade) 10%, var(--paper-hi));
+  border-color: color-mix(in srgb, var(--jade) 22%, transparent);
+  color: var(--ink);
+}
+.app-navigation-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.app-navigation-icon { display: flex; align-items: center; justify-content: center; border-radius: 10px; }
+.app-navigation-label { font-size: 11px; font-weight: 650; line-height: 1.2; }
+@media (min-width: 1024px) {
+  .app-with-navigation { padding-left: 224px; padding-bottom: 24px; }
+  .app-navigation {
+    top: 0;
+    right: auto;
+    width: 224px;
+    border-top: 0;
+    border-right: 1px solid var(--hair);
+    padding: 32px 16px;
+  }
+  .app-navigation-brand { display: flex; align-items: center; gap: 10px; margin: 0 4px 40px; color: var(--ink); }
+  .app-navigation-mark { display: grid; place-items: center; width: 40px; height: 44px; border-radius: 14px; background: var(--jade); color: var(--on-accent); font-size: 26px; }
+  .app-navigation-brand strong { display: block; font-size: 18px; letter-spacing: -0.5px; }
+  .app-navigation-brand div > span { display: block; color: var(--mute); font-size: 12px; margin-top: 2px; }
+  .app-navigation-items { flex-direction: column; gap: 8px; }
+  .app-navigation-button { flex: none; flex-direction: row; justify-content: flex-start; gap: 12px; min-height: 56px; padding: 10px 12px; border-radius: 14px; }
+  .app-navigation-label { font-size: 14px; }
+  .app-navigation-toggle { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; margin-bottom: 20px; padding: 10px 12px; border: 1px solid var(--hair); border-radius: 12px; background: transparent; color: var(--ink-soft); font-size: 12px; cursor: pointer; }
+  .app-navigation-toggle:hover { background: var(--paper-hi2); }
+  .app-navigation-toggle:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .app-with-navigation.app-navigation-collapsed { padding-left: 88px; }
+  .app-navigation.is-collapsed { width: 88px; padding: 32px 10px; }
+  .app-navigation.is-collapsed .app-navigation-brand { justify-content: center; margin-left: 0; margin-right: 0; }
+  .app-navigation.is-collapsed .app-navigation-brand div,
+  .app-navigation.is-collapsed .app-navigation-label,
+  .app-navigation.is-collapsed .app-navigation-toggle span { display: none; }
+  .app-navigation.is-collapsed .app-navigation-button,
+  .app-navigation.is-collapsed .app-navigation-toggle { justify-content: center; padding-left: 0; padding-right: 0; }
+}
+
 /* ─── Tema claro (Jade Pop) ────────────────────────────────────────────────
    Origen de verdad de TODOS los colores. styles/tokens.js (`J`) referencia
    estas variables, así que los ~1500 estilos inline heredan el tema solo.
@@ -256,7 +347,7 @@ button:active:not(:disabled) { transform: scale(0.97); }
    transiciones de Layout/BottomNav) para usuarios con sensibilidad al
    movimiento. El confetti (JS) se desactiva aparte en ConfettiCelebration. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  :root:not(.motion-full) *, :root:not(.motion-full) *::before, :root:not(.motion-full) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -279,3 +370,10 @@ button:active:not(:disabled) { transform: scale(0.97); }
 :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus:not(:focus-visible) {
   outline: none;
 }
+
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+.settings-shell { max-width: 980px; margin: 0 auto; }
+.settings-group { margin: 24px 0; scroll-margin-top: 20px; }
+.settings-group-title { font-size: 20px; font-weight: 750; color: var(--ink); margin-bottom: 4px; }
+.settings-index { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 24px; }
+.settings-index a { padding: 9px 12px; border: 1px solid var(--hair); border-radius: 12px; background: var(--paper-hi); color: var(--ink-soft); font-size: 13px; }

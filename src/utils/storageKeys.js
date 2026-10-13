@@ -20,6 +20,7 @@ export const STORAGE_KEYS = {
   SKILL_PROGRESS: 'aprende-chino-skill-progress-v1',
   MINIGAME_SCORES:  'aprende-chino-minigame-scores',
   FAVORITES:        'aprende-chino-favorites',
+  PRACTICE_FAVORITES: 'aprende-chino-practice-favorites',
   DAILY_PROGRESS:   'dailyProgress_v1',
   LEVEL_EXAM:       'aprende-chino-level-exam-v1',
   CEFR_EXAM:        'aprende-chino-cefr-exam-v1',
@@ -35,6 +36,10 @@ export const STORAGE_KEYS = {
   FONT_SCALE:       'aprende-chino-font-scale', // 'normal' | 'large' | 'xlarge' (accesibilidad)
   HIGH_CONTRAST:    'aprende-chino-high-contrast', // '1' | '0' (accesibilidad)
   HOME_SECTIONS:    'aprende-chino-home-sections', // qué secciones del Home están abiertas
+  NAV_COLLAPSED:    'aprende-chino-nav-collapsed',
+  LEARNING_PREFS: 'aprende-chino-learning-prefs',
+  MOTION: 'aprende-chino-motion',
+  SYNC_STATUS: 'aprende-chino-sync-status',
   TOUR:             'aprende-chino-tour-v1',       // tutorial guiado del primer arranque
 
   // Prefijo para la caché de datos versionada (se concatena con el nombre)
@@ -53,6 +58,7 @@ export const SYNCED_EXTRA_KEYS = [
   STORAGE_KEYS.MINIGAME_SCORES,
   STORAGE_KEYS.SKILL_PROGRESS,
   STORAGE_KEYS.FAVORITES,
+  STORAGE_KEYS.PRACTICE_FAVORITES,
   STORAGE_KEYS.DAILY_PROGRESS,
   STORAGE_KEYS.LEVEL_EXAM,
   STORAGE_KEYS.CEFR_EXAM,

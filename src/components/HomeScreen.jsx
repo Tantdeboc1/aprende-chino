@@ -274,7 +274,7 @@ const SECTIONS_KEY = STORAGE_KEYS.HOME_SECTIONS;
 
 // Abierta de inicio solo "Lecciones": es el camino de aprendizaje y esconderlo
 // dejaría el Home sin su contenido principal.
-const SECTION_DEFAULTS = { basics: false, lessons: true, culture: false };
+const SECTION_DEFAULTS = { basics: false, lessons: true, culture: false, extras: false };
 
 function loadSections() {
   try {
@@ -332,7 +332,7 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   const totalMastered = useMemo(() => {
     let total = 0;
     for (const c of allCharacters) {
-      if (c.isSupplementary || c.lesson < 1 || c.lesson > 4) continue;
+      if (c.isSupplementary) continue;
       if (progress?.[`lesson_${c.lesson}`]?.[c.char]?.mastered) total++;
     }
     return total;
@@ -473,42 +473,20 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           </button>
         )}
 
-        {lastLesson && (
-          <button onClick={() => onSelectLesson(lastLesson)} className="w-full flex items-center gap-4 p-4 text-left active:scale-[0.99] transition-transform"
-            style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderRadius: 18 }}>
+        {(lastLesson || ![1, 3, 6].includes(startingLesson)) && (
+          <button onClick={() => onSelectLesson(lastLesson || 1)} className="w-full flex items-center gap-4 p-6 text-left active:scale-[0.99] transition-transform"
+            style={{ background: J.jadeBg, border: `1px solid ${J.jadeMid}`, borderRadius: 18 }}>
             <span className="font-cn flex h-12 w-12 shrink-0 items-center justify-center text-xl font-bold"
               style={{ background: J.jadeBg, color: J.jadeDeep, borderRadius: 14 }}>续</span>
             <span className="min-w-0 flex-1">
-              <span className="block text-xs font-bold uppercase tracking-wider" style={{ color: J.jade }}>{t('home_continue', 'Continuar donde lo dejaste')}</span>
+              <span className="block text-xs font-bold uppercase tracking-wider" style={{ color: J.jade }}>{t(lastLesson ? 'home_continue' : 'home_start_learning')}</span>
               <span className="block truncate text-sm font-semibold" style={{ color: J.ink }}>
-                {t('home_continue_lesson', 'Lección {{number}}', { number: lastLesson })} · {t(LESSONS[lastLesson]?.titleKey || '')}
+                {t('home_continue_lesson', 'Lección {{number}}', { number: lastLesson || 1 })} · {t(LESSONS[lastLesson || 1]?.titleKey || '')}
               </span>
             </span>
             <span aria-hidden="true" className="font-bold" style={{ color: J.jade }}>→</span>
           </button>
         )}
-
-        {/* Carácter del día — solo informativo. Antes abría el hub de retos
-            diarios, pero el Home ya tenía demasiadas puertas: el hub se entra
-            ahora desde Destrezas. Sin onOpen el componente se pinta como div. */}
-        <DailyCharacter allCharacters={allCharacters} />
-
-        {/* Racha y retos diarios: se reservan hasta que el usuario termina (o
-            salta) el tutorial. Quien acaba de registrarse tiene bastante con
-            aprender a moverse; la gamificación llega después, intacta. */}
-        {!tourPending && (
-          <>
-            {/* Panel de racha + XP */}
-            <StreakPanel streak={streak} />
-
-            {/* Retos diarios */}
-            <DailyChallenges />
-          </>
-        )}
-
-        {/* El Repaso tenía aquí su propia tarjeta. Ahora el aviso es el punto
-            rojo de la pestaña Repaso (BottomNav), visible desde cualquier
-            pantalla en vez de solo al abrir el Home. */}
 
         {/* Introducción */}
         <CollapsibleSection
@@ -600,6 +578,30 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
           </CollapsibleSection>
         )}
 
+        <CollapsibleSection id="extras" label={t('home_daily_details')} open={sections.extras} onToggle={toggleSection}>
+        {/* Carácter del día — solo informativo. Antes abría el hub de retos
+            diarios, pero el Home ya tenía demasiadas puertas: el hub se entra
+            ahora desde Destrezas. Sin onOpen el componente se pinta como div. */}
+        <DailyCharacter allCharacters={allCharacters} />
+
+        {/* Racha y retos diarios: se reservan hasta que el usuario termina (o
+            salta) el tutorial. Quien acaba de registrarse tiene bastante con
+            aprender a moverse; la gamificación llega después, intacta. */}
+        {!tourPending && (
+          <>
+            {/* Panel de racha + XP */}
+            <StreakPanel streak={streak} />
+
+            {/* Retos diarios */}
+            <DailyChallenges />
+          </>
+        )}
+
+        {/* El Repaso tenía aquí su propia tarjeta. Ahora el aviso es el punto
+            rojo de la pestaña Repaso (BottomNav), visible desde cualquier
+            pantalla en vez de solo al abrir el Home. */}
+
+        </CollapsibleSection>
       </div>
     </div>
   );

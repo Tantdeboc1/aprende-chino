@@ -27,9 +27,10 @@ test('Completa la Frase: jugar hasta el resultado y "Jugar de nuevo" reinicia', 
   await page.getByRole('button', { name: 'Saltar y explorar', exact: true }).click();
   await page.getByRole('button', { name: /saltar tutorial/i }).click();
 
-  // ── Destrezas → Completa la Frase → intro ────────────────────────────────
+  // ── Practicar → Escribir → Completa la Frase → intro ────────────────────────────────
   await page.getByRole('button', { name: 'Practicar' }).click();
-  await expect(page.getByText('Practica por destrezas')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Practicar', exact: true, level: 1 })).toBeVisible();
+  await page.getByRole('button', { name: 'Escribir', exact: true }).click();
   await page.locator('button, [role="button"]').filter({ hasText: 'Completa la Frase' }).first().click();
   await page.getByRole('button', { name: 'Comenzar juego' }).click();
 

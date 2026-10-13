@@ -1,7 +1,8 @@
+import { motionReduced } from '@/utils/learningPrefs.js';
+import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
 // src/components/ui/ConfettiCelebration.jsx
 import { useState, useEffect, Suspense } from "react";
 import { lazyWithRetry } from "@/utils/lazyWithRetry.js";
-import { useMedia } from "react-use";
 import { useWindowSize } from "@/hooks/useWindowSize.js";
 
 // react-confetti es relativamente pesado (~30 kB). Lo cargamos dinámicamente
@@ -13,7 +14,7 @@ export default function ConfettiCelebration() {
   const [showConfetti, setShowConfetti] = useState(true);
   // Accesibilidad: si el usuario pide reducir movimiento (WCAG 2.3.3), no
   // lanzamos el confetti animado (cientos de partículas en movimiento).
-  const reduceMotion = useMedia("(prefers-reduced-motion: reduce)", false);
+  const reduceMotion = useLocalSnapshot(motionReduced);
 
   useEffect(() => {
     const timer = setTimeout(() => {

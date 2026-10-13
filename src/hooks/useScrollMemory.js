@@ -52,6 +52,7 @@ export function useScrollMemory(key, { enabled = true, positions } = {}) {
       timer = setTimeout(finish, 2500);
     }
     return () => {
+      save();
       stopWaiting();
       window.removeEventListener('scroll', save);
       window.removeEventListener('wheel', interrupt);

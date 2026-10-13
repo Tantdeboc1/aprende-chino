@@ -39,6 +39,17 @@ beforeEach(() => {
 afterEach(() => cleanup());
 
 describe('HomeScreen', () => {
+  it('cuenta también las lecciones 5 a 8 y excluye el vocabulario suplementario', () => {
+    setup({ allCharacters: [
+      { char: '你', lesson: 1 }, { char: '茶', lesson: 5 },
+      { char: '书', lesson: 8 }, { char: '山', lesson: 8, isSupplementary: true },
+    ], progress: {
+      lesson_1: { 你: { mastered: true } },
+      lesson_5: { 茶: { mastered: true } },
+      lesson_8: { 书: { mastered: true }, 山: { mastered: true } },
+    } });
+    expect(screen.getByText('100%')).toBeTruthy();
+  });
   it('conserva la recomendación al explorar y abre la lección sugerida', () => {
     localStorage.setItem('aprende-chino-profile', JSON.stringify({ startingRecommendation: { lesson: 3, source: 'sample' } }));
     const props = setup();

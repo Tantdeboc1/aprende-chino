@@ -1,3 +1,4 @@
+import PracticeBreadcrumb from './components/ui/PracticeBreadcrumb.jsx';
 import { exerciseReturnScreen } from '@/utils/exerciseReturn.js';
 import { assetUrl } from './utils/assets';
 import { hanziCharDataLoader } from './utils/hanziCharData.js';
@@ -381,7 +382,7 @@ export default function App() {
     : screen === 'exam' ? `exam:${selectedLesson}`
     : screen === 'exercise' ? `exercise:${selectedLesson}:${learnSection}:${characterSection}:${toneSection}:${radicalSection}:${writingSection}`
     : screen === 'daily' ? `daily:${dailySection}` : screen;
-  useScrollMemory(scrollKey, { enabled: splashDone && mode !== null && mode !== 'loading' && screen !== 'classifiers', positions: scrollPositionsRef.current });
+  useScrollMemory(scrollKey, { enabled: splashDone && mode !== null && mode !== 'loading' && screen !== 'classifiers' && screen !== 'minigames', positions: scrollPositionsRef.current });
 
   // Sincroniza pantalla → location.hash. La primera vez usa replaceState para
   // no crear una entrada extra al arrancar; después, cada cambio de pantalla
@@ -697,13 +698,16 @@ export default function App() {
       history.back();
       return;
     }
+    setLearnSection(null); setCharacterSection(null); setToneSection(null);
+    setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setScreen(fallback);
   }, []);
 
   // Volver a la pantalla anterior (lesson-detail, intro-detail, home, etc.)
   const goBackToLesson = useCallback(() => {
-    setLearnSection(null); setCharacterSection(null); setToneSection(null);
-    setRadicalSection(null); setWritingSection(null); setDailySection(null);
+    // Clear subsections when the destination is applied (popstate or fallback).
+    // Clearing them before history.back() mounts ReturnToLesson briefly, which
+    // calls this callback again and consumes a second history entry.
     backToOrigin(exerciseReturnScreen(screenRef.current === 'exercise' ? exerciseOriginRef.current : prevScreenRef.current));
   }, [backToOrigin]);
 
@@ -948,6 +952,7 @@ export default function App() {
     return (
       <ErrorBoundary>
         <Suspense fallback={<AnimatedLoader />}>
+          <PracticeBreadcrumb activity="global-exam" onNavigate={handleBottomNav} />
           <GlobalExam
             allCharacters={allCharacters}
             progress={progress}
@@ -963,6 +968,7 @@ export default function App() {
     return (
       <ErrorBoundary>
         <Suspense fallback={<AnimatedLoader />}>
+          <PracticeBreadcrumb activity="level-exam" onNavigate={handleBottomNav} />
           <LevelExam
             allCharacters={allCharacters}
             progress={progress}
@@ -1065,7 +1071,7 @@ export default function App() {
     const hideNav = screen === 'exercise';
     if (!CurrentComponent) {
       return (
-        <Layout activeScreen={navScreen} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav} disableSwipe={MINIGAME_IDS.has(screen) || screen === 'daily'}>
+        <Layout activeScreen={navScreen} breadcrumbActivity={screen === 'daily' ? `daily-${dailySection}` : undefined} onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={hideNav} disableSwipe={MINIGAME_IDS.has(screen) || screen === 'daily'}>
           <div className="min-h-screen flex items-center justify-center">
             <p style={{ color: J.mute }}>{t('fallback_section_unavailable', 'Sección no disponible.')}</p>
           </div>

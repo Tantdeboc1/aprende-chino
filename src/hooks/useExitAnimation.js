@@ -1,3 +1,4 @@
+import { motionReduced } from '@/utils/learningPrefs.js';
 // src/hooks/useExitAnimation.js
 // Cierre animado para modales/sheets: mantiene el componente montado mientras
 // dura la animación de salida y llama a onClose al terminar.
@@ -24,7 +25,7 @@ export function useExitAnimation(onClose, duration = 200) {
     setClosing(prev => {
       if (prev) return prev; // ya cerrándose: ignorar dobles clics
       const reduce = typeof window !== 'undefined'
-        && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+        && motionReduced();
       timerRef.current = setTimeout(() => onCloseRef.current?.(), reduce ? 0 : duration);
       return true;
     });

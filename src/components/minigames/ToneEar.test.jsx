@@ -61,7 +61,7 @@ describe('ToneEar', () => {
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<ToneEar goBack={goBack} characters={CHARACTERS} speak={vi.fn()} />);
-    fireEvent.click(screen.getByRole('button', { name: /back to skills/i }));
+    fireEvent.click(screen.getByRole('button', { name: /back to practise/i }));
     expect(goBack).toHaveBeenCalledTimes(1);
   });
 });
