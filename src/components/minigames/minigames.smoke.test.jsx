@@ -22,6 +22,7 @@ import EchoSpeaking from './EchoSpeaking.jsx';
 import ToneEar from './ToneEar.jsx';
 import ReadingComprehension from './ReadingComprehension.jsx';
 import CefrExam from './CefrExam.jsx';
+import WordSearch from './WordSearch.jsx';
 import { MINIGAMES } from './registry.js';
 
 // El micrófono no existe en jsdom: los dos juegos de habla comprueban el
@@ -75,6 +76,7 @@ const GAMES = [
   { id: 'tones-ear', C: ToneEar, props: { goBack: noop, characters: CHARS, speak: noop, onTrackResult: noop } },
   { id: 'reading-comprehension', C: ReadingComprehension, props: { goBack: noop, speak: noop, characters: CHARS } },
   { id: 'cefr-exam', C: CefrExam, props: { goBack: noop, speak: noop, allCharacters: CHARS } },
+  { id: 'word-search', C: WordSearch, props: { goBack: noop } },
 ];
 
 /** El botón de empezar de GameIntro es el último de la pantalla. */
@@ -116,7 +118,7 @@ describe('smoke de los minijuegos', () => {
 
   // ReadingComprehension y CefrExam no usan GameIntro (tienen su propia
   // portada), así que el "empezar = último botón" no aplica.
-  const withIntro = GAMES.filter(g => !['reading-comprehension', 'cefr-exam'].includes(g.id));
+  const withIntro = GAMES.filter(g => !['reading-comprehension', 'cefr-exam', 'word-search'].includes(g.id));
 
   it.each(withIntro)('$id arranca desde la intro sin errores', async (game) => {
     const Game = game.C;

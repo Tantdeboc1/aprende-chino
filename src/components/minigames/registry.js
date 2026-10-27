@@ -35,6 +35,11 @@ const CefrExam              = memo(lazyWithRetry(() => import('./CefrExam.jsx'))
 /** Mini-juegos disponibles, en el orden lógico. */
 export const MINIGAMES = [
   {
+    id: 'word-search',
+    component: memo(lazyWithRetry(() => import('./WordSearch.jsx'))),
+    buildProps: (ctx) => ({ goBack: () => ctx.navigateTo('minigames'), characters: ctx.allCharacters }),
+  },
+  {
     id: 'sov-game',
     component: SOVGame,
     buildProps: (ctx) => ({

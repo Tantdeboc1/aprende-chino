@@ -90,6 +90,15 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
 
   const games = useMemo(() => [
     {
+      id: 'word-search',
+      title: t('word_search_title'),
+      description: t('word_search_description'),
+      cn: '字',
+      color: 'green',
+      badges: [t('word_search_no_timer')],
+      categorias: ['base'],
+    },
+    {
       id: 'sov-game',
       title: t('minigames_sov_title'),
       description: t('minigames_sov_description'),

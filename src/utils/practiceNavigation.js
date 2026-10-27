@@ -3,6 +3,7 @@ import { bumpLocalDataRev } from '@/hooks/useLocalSnapshot.js';
 
 // Activity names and destinations shared by recommendations and breadcrumbs.
 export const PRACTICE_ACTIVITIES = {
+  'word-search': ['base', 'word_search_title'],
   'sov-game': ['escritura', 'minigames_sov_title'],
   'translation-game': ['escritura', 'minigames_translation_title'],
   'complete-sentence': ['escritura', 'minigames_complete_title'],
