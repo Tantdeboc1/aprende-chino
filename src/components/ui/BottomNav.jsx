@@ -44,7 +44,7 @@ const ProfileIcon = () => (
 );
 
 export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, collapsed = false, onToggle }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // Invitaciones de amistad recibidas → badge en "Perfil", que es desde donde
   // se llega a Amigos (0 para invitados).
   const incomingCount = useIncomingRequestCount();
@@ -59,6 +59,7 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, col
     { key: 'review',     label: t('nav_review'),     Icon: ReviewIcon },
     { key: 'practice',   label: t('nav_practice', 'Practicar'), Icon: GamesIcon },
     { key: 'dictionary', label: t('nav_dictionary'), Icon: DictIcon },
+    ...(i18n.resolvedLanguage?.split('-')[0] === 'es' ? [{ key: 'library', label: 'Biblioteca', Icon: LibraryIcon }] : []),
     { key: 'profile',    label: t('nav_profile', 'Perfil'), Icon: ProfileIcon },
   ];
 
@@ -74,7 +75,7 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, col
   };
 
   return (
-    <nav aria-label={t('nav_primary_label', 'Navegación principal')} className={`app-navigation${collapsed ? ' is-collapsed' : ''}`}>
+    <nav aria-label={t('nav_primary_label', 'Navegación principal')} className={`app-navigation${collapsed ? ' is-collapsed' : ''}${items.length > 5 ? ' has-six-items' : ''}`}>
       <div className="app-navigation-brand" aria-hidden="true">
         <span className="app-navigation-mark">汉</span>
         <div><strong>{APP_NAME}</strong><span>{t('app_tagline', 'Aprende chino')}</span></div>
@@ -152,4 +153,8 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, col
       </div>
     </nav>
   );
+}
+
+function LibraryIcon() {
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4zM16 5l3-1 3 15-3 1z" /></svg>;
 }

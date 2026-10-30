@@ -9,6 +9,18 @@ import { getLearningPrefs, aidInitiallyVisible, motionReduced } from '@/utils/le
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
+import { loc } from '@/utils/loc.js';
+
+const WORD_HELP = {
+  '你好': ['nǐ hǎo', { es: 'hola', en: 'hello', fr: 'bonjour', de: 'hallo', it: 'ciao', pt: 'olá' }],
+  '名字': ['míngzi', { es: 'nombre', en: 'name', fr: 'prénom', de: 'Name', it: 'nome', pt: 'nome' }],
+  '请问': ['qǐngwèn', { es: 'disculpa, ¿puedo preguntar?', en: 'excuse me, may I ask?', fr: 'excusez-moi', de: 'Entschuldigung', it: 'scusa', pt: 'com licença' }],
+  '认识': ['rènshi', { es: 'conocer', en: 'to meet', fr: 'connaître', de: 'kennenlernen', it: 'conoscere', pt: 'conhecer' }],
+  '高兴': ['gāoxìng', { es: 'contento', en: 'happy', fr: 'content', de: 'glücklich', it: 'felice', pt: 'contente' }],
+  '什么': ['shénme', { es: 'qué', en: 'what', fr: 'quoi', de: 'was', it: 'cosa', pt: 'o que' }],
+  '叫': ['jiào', { es: 'llamarse', en: 'to be called', fr: 's’appeler', de: 'heißen', it: 'chiamarsi', pt: 'chamar-se' }],
+  '姓': ['xìng', { es: 'apellidarse', en: 'surname', fr: 'nom de famille', de: 'Nachname', it: 'cognome', pt: 'apelido' }],
+};
 
 const TYPE_SPEED_MS = 35;
 // Cadencia natural: tras un signo de puntuación el typewriter respira antes
@@ -31,8 +43,10 @@ export default function DialogueBox({
   onAdvance,
   isLast = false,
   speak,                  // (text, opts) => Promise — TTS de la app
+  wordHelp = false,
+  vocabulary = [],
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const aids = getLearningPrefs();
   const reduceMotion = motionReduced();
   const [shown, setShown] = useState('');
@@ -40,6 +54,7 @@ export default function DialogueBox({
   const [showPinyin, setShowPinyin] = useState(dificultad === 'facil' || (dificultad === 'normal' && aidInitiallyVisible(aids.pinyin, false)));
   const [showEs, setShowEs] = useState(aidInitiallyVisible(aids.translation, false));
   const [playing, setPlaying] = useState(false);
+  const [selectedWord, setSelectedWord] = useState(null);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -108,13 +123,22 @@ export default function DialogueBox({
 
   const pinyinVisible = dificultad === 'facil' || (dificultad === 'normal' && showPinyin);
   const pinyinAllowed = dificultad !== 'dificil';
+  const helpEntries = Object.entries(WORD_HELP).map(([word, [pronunciation, meanings]]) => ({ word, pronunciation, meaning: loc(meanings, i18n.language) }));
+  for (const entry of vocabulary) {
+    if (entry.char && entry.meaning && chino.includes(entry.char) && !helpEntries.some(item => item.word === entry.char)) {
+      helpEntries.push({ word: entry.char, pronunciation: entry.pinyin, meaning: entry.meaning });
+    }
+  }
+  const matches = helpEntries.filter(item => chino.includes(item.word)).sort((a, b) => b.word.length - a.word.length);
+  const visibleWords = matches.filter(item => !matches.some(other => other.word !== item.word && other.word.includes(item.word))).slice(0, 6);
+  const selectedEntry = visibleWords.find(item => item.word === selectedWord);
 
   return (
     <div
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+      onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); handleClick(); } }}
       style={{
         background: 'rgba(20, 16, 12, 0.78)',
         border: `1px solid ${J.hairS}`,
@@ -200,6 +224,18 @@ export default function DialogueBox({
           <span style={{ opacity: 0.7, marginLeft: 2, animation: 'story-caret 0.9s steps(2) infinite' }}>▍</span>
         )}
       </p>
+
+      {wordHelp && done && visibleWords.length > 0 && (
+        <div onClick={e => e.stopPropagation()} style={{ marginTop: 10 }}>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {visibleWords.map(({ word }) => <button key={word} onClick={() => setSelectedWord(word)} style={{ border: '1px solid rgba(240,200,98,.5)', borderRadius: 20, padding: '4px 10px', color: J.butter, background: 'rgba(255,255,255,.08)', cursor: 'pointer' }}>{word}</button>)}
+          </div>
+          {selectedEntry && <div style={{ marginTop: 8, color: J.onAccent, fontSize: 14 }} role="status">
+            <strong>{selectedEntry.word}</strong> · {selectedEntry.pronunciation} · {selectedEntry.meaning}
+            {speak && <button onClick={() => speak({ hanzi: selectedEntry.word, pinyin: selectedEntry.pronunciation }, { category: 'pronunciation' })} aria-label={t('story_listen_word', 'Escuchar palabra')} style={{ marginLeft: 8, color: J.butter, background: 'transparent', border: 0, cursor: 'pointer' }}>🔊</button>}
+          </div>}
+        </div>
+      )}
 
       {/* Pinyin */}
       {pinyinAllowed && (

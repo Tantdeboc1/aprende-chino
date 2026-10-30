@@ -5,7 +5,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 import { useTranslation } from 'react-i18next';
-import { loc, baseLang } from '@/utils/loc.js';
+import { loc, baseLang, trField } from '@/utils/loc.js';
 import { J } from '@/styles/tokens';
 import ProfileBadge from '@/components/ui/ProfileBadge.jsx';
 import { STORIES, getStoryById } from '@/data/stories/index.js';
@@ -16,6 +16,8 @@ import {
 } from '@/utils/storyProgress.js';
 import { markWordSeen } from '@/utils/progress.js';
 import { backgroundByStoryId } from './storyBackgroundUrls.js';
+import firstStoryCover from '@/assets/fondos/story/manga-t1h1-2.webp';
+import { mangaCoverFor } from './mangaPanels.js';
 
 // StoryPlayer arrastra mucho código (escenarios, diálogos, ejercicios). Solo
 // se necesita al reproducir una historia concreta — el listado no lo usa.
@@ -73,7 +75,7 @@ export default function StoriesPage({
     if (!activeStory) setStoryProgress(loadStoryProgress());
   }, [activeStory]);
 
-  // Precarga en segundo plano los fondos de las historias no bloqueadas:
+  // Precarga en segundo plano los fondos de las historias:
   // sin esto, la imagen empezaba a bajar justo al abrir el player (+ lazy
   // chunk), y se veía un flash de negro antes de que cargara. El listado es
   // tiempo muerto perfecto para adelantar la descarga (el SW ya cachea
@@ -83,7 +85,6 @@ export default function StoriesPage({
     const cancelIdle = window.cancelIdleCallback || clearTimeout;
     const id = idle(() => {
       for (const s of STORIES) {
-        if (statuses[s.id] === 'bloqueada') continue;
         const url = backgroundByStoryId(s.id);
         if (url) new Image().src = url;
       }
@@ -124,6 +125,7 @@ export default function StoriesPage({
           onExit={handleExitFromPlayer}
           onFinish={handleStoryFinish}
           resultMeta={lastResultMeta}
+              allCharacters={allCharacters}
         />
       </Suspense>
     );
@@ -174,8 +176,19 @@ export default function StoriesPage({
             {t('stories_map_title', 'Mapa de historias')}
           </p>
 
-          <div className="space-y-3 j-rise">
-            {STORIES.map((s, i) => {
+          <div className="space-y-6 j-rise">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map(lesson => {
+              const stories = STORIES.filter(s => s.tema === lesson);
+              const lessonDone = stories.filter(s => statuses[s.id] === 'completada').length;
+              return <section key={lesson} aria-label={t('exam_lesson_label', { num: lesson })}>
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: ACCENTS[(lesson - 1) % ACCENTS.length].text }}>{t('exam_lesson_label', { num: lesson })}</p>
+                    <h2 className="font-bold" style={{ color: J.ink }}>{t(`lesson_${lesson}_subtitle`)}</h2>
+                  </div>
+                  {stories.length > 0 && <span className="text-xs font-semibold whitespace-nowrap" style={{ color: J.mute }}>{lessonDone}/{stories.length}</span>}
+                </div>
+                {stories.length === 0 ? <p className="rounded-xl p-4 text-sm" style={{ background: J.paperHi, color: J.mute, border: `1px dashed ${J.hair}` }}>{t('stories_more_coming')}</p> : <div className="grid grid-cols-2 gap-3">{stories.map((s) => {
               const status = statuses[s.id];
               const accent = ACCENTS[(s.tema - 1) % ACCENTS.length];
               const data = storyProgress[s.id];
@@ -183,13 +196,15 @@ export default function StoriesPage({
                 <StoryCard
                   key={s.id}
                   story={s}
-                  index={i}
+                  index={s.historia - 1}
                   status={status}
                   accent={accent}
                   data={data}
                   onClick={() => status !== 'bloqueada' && setActiveStoryId(s.id)}
                 />
               );
+            })}</div>}
+              </section>;
             })}
           </div>
         </div>
@@ -220,6 +235,12 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
   const isDone = status === 'completada';
   // Título localizado (tituloTr {es,en,...}); cae al titulo legado si falta.
   const storyTitle = loc(story.tituloTr, baseLang(i18n.language)) || story.titulo;
+  const cover = story.id === 't1-h1' ? firstStoryCover : mangaCoverFor(story.id) || backgroundByStoryId(story.id);
+  const labels = {
+    es: ['Historia', 'Completada', 'Disponible', 'Bloqueada'], en: ['Story', 'Completed', 'Available', 'Locked'],
+    fr: ['Histoire', 'Terminée', 'Disponible', 'Verrouillée'], de: ['Geschichte', 'Abgeschlossen', 'Verfügbar', 'Gesperrt'],
+    it: ['Storia', 'Completata', 'Disponibile', 'Bloccata'], pt: ['História', 'Concluída', 'Disponível', 'Bloqueada'],
+  }[baseLang(i18n.language)] || ['Story', 'Completed', 'Available', 'Locked'];
 
   const pct = data && data.maxPuntuacion > 0
     ? Math.round((data.mejorPuntuacion / data.maxPuntuacion) * 100)
@@ -229,28 +250,23 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
     <button
       onClick={onClick}
       disabled={isLocked}
-      className="w-full rounded-xl p-4 flex items-center gap-3 transition-all text-left"
+      className="story-map-card w-full text-left"
       style={{
-        background: J.paperHi,
+        background: J.paperHi, overflow: 'hidden', borderRadius: 18,
         border: `1px solid ${J.hair}`,
-        borderLeftWidth: 4,
-        borderLeftColor: isLocked ? J.mute2 : accent.border,
         cursor: isLocked ? 'default' : 'pointer',
-        opacity: isLocked ? 0.55 : 1,
       }}
     >
-      <div className="font-cn w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-base"
-        style={{
-          background: isLocked ? J.mute2 : (isDone ? J.jade : accent.icon),
-          color: isLocked ? J.paperHi : (isDone ? J.paperHi : accent.text),
-          fontWeight: 700,
-        }}>
-        {isLocked ? '🔒' : isDone ? '✓' : index + 1}
+      <div className="story-map-cover" style={{ position:'relative', minHeight: 138, background: accent.icon, overflow:'hidden' }}>
+        {cover && <img src={cover} alt="" loading="lazy" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', filter: isLocked ? 'saturate(.6) brightness(.7)' : 'none' }} />}
+        <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg, rgba(18,25,22,.12), rgba(18,25,22,.72))' }} />
+        <span style={{ position:'absolute', top:10, left:10, color:'#fff', background:'rgba(20,25,20,.72)', padding:'5px 10px', borderRadius:99, fontSize:11, fontWeight:700 }}>{labels[0]} {index + 1}</span>
+        <span style={{ position:'absolute', bottom:10, left:12, color:'#fff', fontWeight:700, fontSize:12 }}>{isLocked ? '🔒 ' + labels[3] : isDone ? '✓ ' + labels[1] : '▶ ' + labels[2]}</span>
       </div>
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between gap-2 mb-0.5">
-          <span className="font-semibold text-sm truncate" style={{ color: isLocked ? J.mute : J.ink }}>
+      <div className="min-w-0 p-4">
+        <div className="flex flex-wrap items-start justify-between gap-x-2 gap-y-1 mb-0.5">
+          <span className="font-semibold text-sm" style={{ color: isLocked ? J.mute : J.ink, overflowWrap: 'anywhere' }}>
             {storyTitle}
           </span>
           <span className="text-[0.625rem] font-bold flex-shrink-0"
@@ -261,6 +277,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
         <p className="font-cn text-xs truncate" style={{ color: J.mute }}>
           {story.subtitulo}
         </p>
+        {!isLocked && <p className="text-xs mt-2" style={{ color: J.inkSoft, lineHeight: 1.45 }}>{trField(story.resumen, story.resumenTr, baseLang(i18n.language))}</p>}
 
         {/* Mejor puntuación si está completada */}
         {isDone && data && (
@@ -282,10 +299,7 @@ function StoryCard({ story, index, status, accent, data, onClick }) {
           </p>
         )}
       </div>
-
-      <span style={{ color: isLocked ? J.mute2 : J.mute, fontWeight: 700 }}>
-        {isLocked ? '' : '→'}
-      </span>
+      <style>{`.story-map-card { transition:transform .2s ease, box-shadow .2s ease; } .story-map-card:not(:disabled):hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,.13); } .story-map-card:focus-visible { outline:3px solid ${J.jade}; outline-offset:3px; } .reduce-motion .story-map-card { transition:none; } @media (min-width:768px) { .story-map-card { display:grid; grid-template-columns: minmax(140px, 34%) 1fr; } .story-map-cover { min-height:150px !important; } } @media (max-width:420px) { .story-map-cover { min-height:110px !important; } }`}</style>
     </button>
   );
 }

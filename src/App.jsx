@@ -30,6 +30,7 @@ import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { useScrollMemory } from './hooks/useScrollMemory.js';
 import { J, resolveColor } from '@/styles/tokens';
+import Library from '@/components/Library.jsx';
 import { loadProgress, saveProgress, markWordSeen } from './utils/progress.js';
 import { getDueCount } from './utils/srs.js';
 import { armTour } from './utils/tour.js';
@@ -120,7 +121,7 @@ function saveUserName(n) {
 // El estado interno de los ejercicios (sub-secciones) no se codifica en la URL:
 // volver a #/exercise tras recargar muestra el menú de ejercicios.
 const HASH_SCREENS = new Set([
-  'home', 'review', 'stories', 'dictionary', 'minigames', 'friends', 'classifiers',
+  'home', 'review', 'stories', 'dictionary', 'library', 'minigames', 'friends', 'classifiers',
   'profile', 'settings', 'intro-detail', 'exam', 'global-exam',
   // 'daily' (hub de retos) faltaba: al no entrar en el historial, el botón
   // atrás del sistema cerraba la app en vez de volver al Home.
@@ -284,6 +285,9 @@ export default function App() {
   // Pantalla activa
   // 'welcome' | 'home' | 'lesson-detail' | 'intro-detail' | 'exam' | 'exercise' | 'dictionary' | 'minigames' | 'settings'
   const [screen, setScreen] = useState(() => initialNav?.screen || (loadUserName() ? 'home' : 'welcome'));
+  useEffect(() => {
+    if (screen === 'library' && lang !== 'es') setScreen('home');
+  }, [screen, lang]);
 
   // Código de amigo llegado por enlace compartido. Se consume una sola vez:
   // FriendsScreen avisa al usarlo para que un "atrás" no lo vuelva a disparar.
@@ -648,6 +652,7 @@ export default function App() {
     else if (key === 'practice')   { hubOriginRef.current = screenRef.current; setScreen('minigames'); }
     else if (key === 'stories')    setScreen('stories');
     else if (key === 'dictionary') setScreen('dictionary');
+    else if (key === 'library') setScreen('library');
     else if (key === 'minigames')  { hubOriginRef.current = screenRef.current; setScreen('minigames'); }
     else if (key === 'friends')    setScreen('friends');
     else if (key === 'profile')    setScreen('profile');
@@ -995,6 +1000,14 @@ export default function App() {
             />
           </Suspense>
         </ErrorBoundary>
+      </Layout>
+    );
+  }
+
+  if (screen === 'library' && lang === 'es') {
+    return (
+      <Layout activeScreen="library" onNavigate={handleBottomNav} reviewDue={dueCount}>
+        <Library />
       </Layout>
     );
   }

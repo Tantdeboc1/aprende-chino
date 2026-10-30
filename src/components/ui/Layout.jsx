@@ -12,7 +12,7 @@ import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 
 // Tabs del BottomNav en orden izquierda→derecha. 'practice' es la pestaña que
 // agrupa Destrezas e Historias; 'profile' incluye Amigos.
-const NAV_TABS = ['home', 'review', 'practice', 'dictionary', 'profile'];
+const NAV_TABS = ['home', 'review', 'practice', 'dictionary', 'library', 'profile'];
 const PRACTICE_IDX = NAV_TABS.indexOf('practice');
 const PROFILE_IDX  = NAV_TABS.indexOf('profile');
 
@@ -45,7 +45,7 @@ function getEnterOffset(fromScreen, toScreen) {
 }
 
 export default function Layout({ children, activeScreen, onNavigate, hideNav, disableSwipe = false, reviewDue = 0, breadcrumbActivity }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [navCollapsed, setNavCollapsed] = useState(() => {
     try { return localStorage.getItem(STORAGE_KEYS.NAV_COLLAPSED) === '1'; }
     catch { return false; }
@@ -137,14 +137,14 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, di
 
     if (dx < 0) {
       // Swipe izquierda → tab siguiente
-      const next = NAV_TABS[idx + 1];
+      const next = NAV_TABS[idx + 1] === 'library' && i18n.resolvedLanguage?.split('-')[0] !== 'es' ? 'profile' : NAV_TABS[idx + 1];
       if (next) onNavigate(next);
     } else {
       // Swipe derecha → tab anterior
-      const prev = NAV_TABS[idx - 1];
+      const prev = NAV_TABS[idx - 1] === 'library' && i18n.resolvedLanguage?.split('-')[0] !== 'es' ? 'dictionary' : NAV_TABS[idx - 1];
       if (prev) onNavigate(prev);
     }
-  }, [activeScreen, onNavigate, hideNav, disableSwipe]);
+  }, [activeScreen, onNavigate, hideNav, disableSwipe, i18n.resolvedLanguage]);
 
   return (
     <>
@@ -166,7 +166,7 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, di
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <PracticeBreadcrumb activity={breadcrumbActivity || activeScreen} onNavigate={onNavigate} />
+        {!(activeScreen === 'stories' && hideNav) && <PracticeBreadcrumb activity={breadcrumbActivity || activeScreen} onNavigate={onNavigate} />}
         {children}
       </main>
       {!hideNav && <BottomNav activeScreen={activeScreen} onNavigate={onNavigate} reviewDue={reviewDue} collapsed={navCollapsed} onToggle={toggleNavigation} />}

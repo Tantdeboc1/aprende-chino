@@ -39,6 +39,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
   const [blockIdx, setBlockIdx] = useState(0);
   const [qIdx, setQIdx] = useState(0);
   const [score, setScore] = useState(0);
+  const [mistakes, setMistakes] = useState([]);
   const [showingTransition, setShowingTransition] = useState(true);
 
   const totalQuestions = blocks.reduce((s, b) => s + b.items.length, 0);
@@ -47,6 +48,8 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
   const answeredSoFar = blocks.slice(0, blockIdx).reduce((s, b) => s + b.items.length, 0) + qIdx;
 
   const handleAnswer = (correct) => {
+    const nextMistakes = correct ? mistakes : [...mistakes, { block: currentBlock.key, item: currentItem }];
+    setMistakes(nextMistakes);
     const newScore = score + (correct ? 1 : 0);
     setScore(newScore);
 
@@ -57,7 +60,7 @@ export default function ExerciseBlock({ ejercicios, onComplete, presentador }) {
       setQIdx(0);
       setShowingTransition(true);
     } else {
-      onComplete(newScore, totalQuestions);
+      onComplete(newScore, totalQuestions, nextMistakes);
     }
   };
 

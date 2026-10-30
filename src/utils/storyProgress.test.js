@@ -72,14 +72,12 @@ describe('recordStoryResult', () => {
   });
 });
 
-describe('getStoryStatus / getAllStatuses (desbloqueo secuencial)', () => {
+describe('getStoryStatus / getAllStatuses (acceso libre)', () => {
   it('la primera historia siempre está disponible', () => {
     expect(getStoryStatus('t1-h1')).toBe('disponible');
   });
 
-  it('la segunda historia está bloqueada hasta que se completa la primera', () => {
-    expect(getStoryStatus('t1-h2')).toBe('bloqueada');
-    recordStoryResult('t1-h1', 12, 12);
+  it('la segunda historia está disponible sin completar la primera', () => {
     expect(getStoryStatus('t1-h2')).toBe('disponible');
   });
 
@@ -92,10 +90,9 @@ describe('getStoryStatus / getAllStatuses (desbloqueo secuencial)', () => {
     expect(getStoryStatus('id-inventado')).toBe('bloqueada');
   });
 
-  it('getAllStatuses refleja la cadena de desbloqueo completa', () => {
-    expect(getAllStatuses()).toEqual({ 't1-h1': 'disponible', 't1-h2': 'bloqueada', 't1-h3': 'bloqueada' });
-    recordStoryResult('t1-h1', 12, 12);
+  it('getAllStatuses mantiene el progreso al completar historias en cualquier orden', () => {
+    expect(getAllStatuses()).toEqual({ 't1-h1': 'disponible', 't1-h2': 'disponible', 't1-h3': 'disponible' });
     recordStoryResult('t1-h2', 12, 12);
-    expect(getAllStatuses()).toEqual({ 't1-h1': 'completada', 't1-h2': 'completada', 't1-h3': 'disponible' });
+    expect(getAllStatuses()).toEqual({ 't1-h1': 'disponible', 't1-h2': 'completada', 't1-h3': 'disponible' });
   });
 });

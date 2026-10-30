@@ -84,18 +84,7 @@ export function recordStoryResult(storyId, score, total) {
 // Devuelve el estado de UNA historia: 'bloqueada' | 'disponible' | 'completada'
 export function getStoryStatus(storyId, progress = null) {
   const p = progress ?? loadStoryProgress();
-  const idx = STORIES.findIndex(s => s.id === storyId);
-  if (idx === -1) return 'bloqueada';
-
-  // La primera siempre está disponible
-  if (idx === 0) {
-    return p[storyId]?.completada ? 'completada' : 'disponible';
-  }
-
-  // Para el resto: requiere que la anterior esté completada
-  const prevStory = STORIES[idx - 1];
-  const prevCompletada = !!p[prevStory.id]?.completada;
-  if (!prevCompletada) return 'bloqueada';
+  if (!STORIES.some(s => s.id === storyId)) return 'bloqueada';
   return p[storyId]?.completada ? 'completada' : 'disponible';
 }
 

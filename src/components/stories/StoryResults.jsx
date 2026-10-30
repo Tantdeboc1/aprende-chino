@@ -14,7 +14,7 @@ function getValoracion(pct, t) {
   return                  { cn: '加油!', titulo: t('story_grade_low', '¡Tú puedes!'),   color: J.red,    descr: t('story_grade_low_desc', 'Repasa el diálogo y prueba otra vez.') };
 }
 
-export default function StoryResults({ story, score, total, xpGanado = 0, isFirstTime = false, onRetry, onExit }) {
+export default function StoryResults({ story, score, total, xpGanado = 0, isFirstTime = false, onRetry, onExit, onReview }) {
   const { t, i18n } = useTranslation();
   const pct = total > 0 ? Math.round((score / total) * 100) : 0;
   const v = getValoracion(pct, t);
@@ -96,6 +96,9 @@ export default function StoryResults({ story, score, total, xpGanado = 0, isFirs
 
         {/* Acciones */}
         <div style={{ marginTop: 22, display: 'grid', gap: 8 }}>
+          {onReview && <button onClick={onReview} style={{ background: J.red, color: J.onAccent, border: 0, borderRadius: 14, padding: '13px 18px', fontWeight: 700, cursor: 'pointer' }}>
+            {loc({ es: 'Repasar preguntas falladas', en: 'Review missed questions', fr: 'Revoir les questions ratées', de: 'Falsche Antworten üben', it: 'Ripassa le domande sbagliate', pt: 'Rever perguntas erradas' }, i18n.language)}
+          </button>}
           <button
             onClick={onExit}
             style={{

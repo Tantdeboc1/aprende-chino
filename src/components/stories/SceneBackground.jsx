@@ -12,6 +12,7 @@
 // y se le aplica una viñeta sutil encima para que el personaje destaque.
 
 import { backgroundByStoryId } from './storyBackgroundUrls.js';
+import { motionReduced } from '@/utils/learningPrefs.js';
 
 // Fondos SVG por escena. Estilo plano, paleta cálida coherente con la app.
 // Se usan como fallback cuando no hay imagen propia para la historia.
@@ -485,8 +486,8 @@ const SCENES = {
   ),
 };
 
-export default function SceneBackground({ escenario = 'default', storyId }) {
-  const bgImage = backgroundByStoryId(storyId);
+export default function SceneBackground({ escenario = 'default', storyId, imageOverride, shot }) {
+  const bgImage = imageOverride || backgroundByStoryId(storyId);
 
   // Si hay imagen propia para la historia, la usamos (preferente)
   if (bgImage) {
@@ -500,6 +501,10 @@ export default function SceneBackground({ escenario = 'default', storyId }) {
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
             objectFit: 'cover',
+            transform: shot ? 'scale(1.12)' : undefined,
+            transformOrigin: shot === 'user' ? '35% center' : shot === 'dong-ao' ? '65% center' : undefined,
+            objectPosition: shot === 'user' ? '35% center' : shot === 'dong-ao' ? '65% center' : undefined,
+            transition: motionReduced() ? 'none' : 'transform 900ms ease, object-position 900ms ease',
             display: 'block',
           }}
         />

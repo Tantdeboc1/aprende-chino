@@ -14,6 +14,16 @@ import SceneBackground from './SceneBackground.jsx';
 import ExerciseBlock from './ExerciseBlock.jsx';
 import StoryResults from './StoryResults.jsx';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
+import comicCampus from '@/assets/fondos/story/campus-comic.webp';
+import mangaArrival from '@/assets/fondos/story/manga-t1h1-1.webp';
+import mangaGreeting from '@/assets/fondos/story/manga-t1h1-2.webp';
+import mangaQuestion from '@/assets/fondos/story/manga-t1h1-3.webp';
+import mangaThinking from '@/assets/fondos/story/manga-t1h1-4.webp';
+import mangaIntroduction from '@/assets/fondos/story/manga-t1h1-5.webp';
+import mangaFriends from '@/assets/fondos/story/manga-t1h1-6.webp';
+import { mangaPanelsFor } from './mangaPanels.js';
+
+const MANGA_PANELS = [mangaGreeting, mangaGreeting, mangaQuestion, mangaThinking, mangaIntroduction, mangaFriends, mangaFriends];
 
 const LS_DIFFICULTY = STORAGE_KEYS.STORY_DIFFICULTY;
 const DIFFICULTIES = [
@@ -36,7 +46,7 @@ function interpolate(text, name) {
   return text.replace(/\{userName\}/g, name);
 }
 
-export default function StoryPlayer({ story, userName, speak, onExit, onFinish, resultMeta }) {
+export default function StoryPlayer({ story, userName, speak, onExit, onFinish, resultMeta, allCharacters = [] }) {
   const { t, i18n } = useTranslation();
   // Nombre a mostrar en las historias; si el usuario no tiene nombre, cae al
   // genérico localizado ("Tú"/"You"/…).
@@ -47,9 +57,30 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
   const [phase, setPhase] = useState('intro'); // intro | dialogue | exercises | results
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState({ score: 0, total: 0 });
+  const [resume, setResume] = useState(() => {
+    try {
+      const drafts = JSON.parse(localStorage.getItem(STORAGE_KEYS.STORY_DRAFT) || '{}');
+      const legacy = story.id === 't1-h1' ? JSON.parse(localStorage.getItem(STORAGE_KEYS.STORY_DRAFT_LEGACY) || 'null') : null;
+      const saved = drafts[story.id] || legacy;
+      return Number.isInteger(saved?.idx) && saved.idx >= 0 && saved.idx < story.escenas.length ? saved : null;
+    } catch { return null; }
+  });
+  const [choiceResult, setChoiceResult] = useState(null);
+  const [mistakes, setMistakes] = useState([]);
+  const [reviewing, setReviewing] = useState(false);
 
   // Asegurar persistencia
   useEffect(() => { saveDifficulty(difficulty); }, [difficulty]);
+  useEffect(() => {
+    try {
+      if (!['dialogue', 'exercises', 'results'].includes(phase) || reviewing) return;
+      const drafts = JSON.parse(localStorage.getItem(STORAGE_KEYS.STORY_DRAFT) || '{}');
+      if (phase === 'results') { delete drafts[story.id]; setResume(null); }
+      else drafts[story.id] = { idx, phase };
+      localStorage.setItem(STORAGE_KEYS.STORY_DRAFT, JSON.stringify(drafts));
+      if (story.id === 't1-h1') localStorage.removeItem(STORAGE_KEYS.STORY_DRAFT_LEGACY);
+    } catch { /* Storage may be unavailable. */ }
+  }, [story.id, phase, idx, reviewing]);
 
   // Avisa a App.jsx de que entramos/salimos del modo historia para ocultar la
   // bottom nav (rompía inmersión y se solapaba con el cuadro de diálogo).
@@ -58,9 +89,33 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     return () => window.dispatchEvent(new CustomEvent('story-mode-exit'));
   }, []);
 
-  const escenas = story?.escenas || [];
+  const escenas = story.escenas;
   const escena  = escenas[idx];
   const total   = escenas.length;
+  const mangaPanels = story.id === 't1-h1' ? MANGA_PANELS : mangaPanelsFor(story.id);
+  // Two short comprehension decisions are placed within every other story.
+  // Prefer the learner's own lines when available, then use other dialogue.
+  const choiceIndexes = useMemo(() => {
+    if (story.id === 't1-h1') return [];
+    const candidates = escenas.map((scene, index) => ({ scene, index })).filter(({ index }) => index > 0);
+    // Prefer replies to questions, especially the learner's own replies.
+    candidates.sort((a, b) => {
+      const rank = ({ scene, index }) => (/[？?]/.test(escenas[index - 1].chino) ? 2 : 0) + (scene.personaje === 'user' ? 1 : 0);
+      return rank(b) - rank(a) || a.index - b.index;
+    });
+    return candidates.slice(0, 2).map(({ index }) => index);
+  }, [story.id, escenas]);
+  const isChoice = choiceIndexes.includes(idx);
+  const choiceOptions = useMemo(() => {
+    if (!isChoice) return [];
+    const correct = escena.chino;
+    const candidates = escenas.filter((_, index) => index !== idx && index !== idx - 1).map(scene => scene.chino);
+    const sameKind = text => /[？?]/.test(text) === /[？?]/.test(correct);
+    const others = [...new Set([...candidates.filter(sameKind), ...candidates.filter(text => !sameKind(text))])].filter(text => text !== correct).slice(0, 2);
+    const options = [...others];
+    options.splice(idx % (others.length + 1), 0, correct);
+    return options;
+  }, [isChoice, escena, escenas, idx]);
 
   const speaker = useMemo(
     () => (escena ? getCharacter(escena.personaje, userName) : null),
@@ -68,6 +123,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
   );
 
   const handleAdvance = () => {
+    setChoiceResult(null);
     if (idx < total - 1) {
       setIdx(idx + 1);
     } else {
@@ -81,10 +137,12 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
     }
   };
 
-  const handleExercisesDone = (s, t) => {
-    setScore({ score: s, total: t });
+  const handleExercisesDone = (s, t, errors = []) => {
+    if (!reviewing) setScore({ score: s, total: t });
+    setMistakes(errors);
     setPhase('results');
-    onFinish?.({ score: s, total: t });
+    if (!reviewing) onFinish?.({ score: s, total: t });
+    setReviewing(false);
   };
 
   const handleRetry = () => {
@@ -105,13 +163,14 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '24px 20px 110px',
+          padding: '24px 20px 40px',
         }}>
           <div style={{
-            background: 'rgba(20,16,12,0.78)',
+            background: 'linear-gradient(155deg, rgba(16,47,39,.94), rgba(20,16,12,.94))',
             borderRadius: 22,
             padding: '24px 22px',
-            border: `1px solid ${J.hairS}`,
+            border: '1px solid rgba(240,200,98,.35)',
+            boxShadow: '0 24px 70px rgba(0,0,0,.35)',
             maxWidth: 420,
             width: '100%',
             color: J.onAccent,
@@ -127,6 +186,9 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             <p style={{ marginTop: 14, fontSize: '0.84375rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.55 }}>
               {trField(story.resumen, story.resumenTr, baseLang(i18n.language))}
             </p>
+            {story.id === 't1-h1' && <p style={{ color: J.butter, fontSize: '0.8rem', marginTop: 12 }}>
+              {t('exam_lesson_label', { num: story.tema })} · 你好 · 叫 · 名字 · 认识
+            </p>}
 
             {/* Personajes */}
             <div style={{ marginTop: 16 }}>
@@ -186,7 +248,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
 
             {/* Start */}
             <button
-              onClick={() => setPhase('dialogue')}
+              onClick={() => setPhase(story.id === 't1-h1' ? 'opening' : 'dialogue')}
               style={{
                 marginTop: 20,
                 width: '100%',
@@ -203,10 +265,26 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             >
               开始 · {t('story_start_button', 'Empezar historia')} →
             </button>
+            {resume && <button onClick={() => { setIdx(resume.idx); setPhase(resume.phase === 'exercises' ? 'exercises' : 'dialogue'); }} style={{ width: '100%', marginTop: 8, padding: 12, borderRadius: 14, border: '1px solid rgba(255,255,255,.3)', background: 'rgba(255,255,255,.12)', color: J.onAccent, cursor: 'pointer', fontWeight: 700 }}>
+              {loc({ es: 'Continuar historia', en: 'Continue story', fr: 'Continuer l’histoire', de: 'Geschichte fortsetzen', it: 'Continua la storia', pt: 'Continuar história' }, i18n.language)}
+            </button>}
           </div>
         </div>
       </div>
     );
+  }
+
+  if (phase === 'opening') {
+    return <div style={shellStyle}>
+      <SceneBackground escenario={story.escenario} storyId={story.id} imageOverride={comicCampus} />
+      <TopBar onExit={onExit} title={storyTitle} subtitle={story.subtitulo} />
+      <MangaPanel src={mangaArrival} />
+      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: '12px 16px max(24px, env(safe-area-inset-bottom))' }}>
+        <button onClick={() => setPhase('dialogue')} style={{ width: '100%', padding: '18px', textAlign: 'left', background: 'rgba(20,16,12,.88)', color: J.onAccent, border: `1px solid ${J.hairS}`, borderRadius: 18, cursor: 'pointer' }}>
+          {loc({ es: 'Llegas al campus. Hoy comienza una nueva aventura.', en: 'You arrive on campus. A new adventure begins today.', fr: 'Tu arrives sur le campus. Une nouvelle aventure commence.', de: 'Du kommst auf dem Campus an. Ein neues Abenteuer beginnt.', it: 'Arrivi al campus. Oggi inizia una nuova avventura.', pt: 'Chegas ao campus. Hoje começa uma nova aventura.' }, i18n.language)} <span style={{ float: 'right', color: J.butter }}>→</span>
+        </button>
+      </div>
+    </div>;
   }
 
   // ── EXERCISES ──────────────────────────────────────────────────────────────
@@ -220,7 +298,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
         <SceneBackground escenario={story.escenario} storyId={story.id} />
         <TopBar onExit={onExit} title={storyTitle} subtitle={t('stories_exercises', 'Ejercicios')} />
         <ExerciseBlock
-          ejercicios={story.ejercicios}
+          ejercicios={reviewing ? Object.fromEntries(['traduccion', 'completar', 'comprension'].map(key => [key, mistakes.filter(m => m.block === key).map(m => m.item)])) : story.ejercicios}
           onComplete={handleExercisesDone}
           presentador={presentador}
         />
@@ -242,6 +320,7 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
           isFirstTime={resultMeta?.isFirstTime || false}
           onRetry={handleRetry}
           onExit={onExit}
+          onReview={mistakes.length ? () => { setReviewing(true); setPhase('exercises'); } : undefined}
         />
       </div>
     );
@@ -250,11 +329,11 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
   // ── DIALOGUE ────────────────────────────────────────────────────────────────
   return (
     <div style={shellStyle}>
-      <SceneBackground escenario={story.escenario} storyId={story.id} />
+      <SceneBackground escenario={story.escenario} storyId={story.id} imageOverride={story.id === 't1-h1' ? comicCampus : undefined} shot={story.id === 't1-h1' ? escena.personaje : undefined} />
       <TopBar onExit={onExit} title={storyTitle} subtitle={story.subtitulo} progress={(idx + 1) / total} />
 
       {/* Mitad superior: personaje (centrado, ocupa todo el ancho disponible) */}
-      <div style={{
+      {mangaPanels[idx] ? <MangaPanel src={mangaPanels[idx]} /> : <div style={{
         flex: '1 1 auto',
         display: 'flex',
         alignItems: 'flex-end',
@@ -270,11 +349,25 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
             variant="dialogue"
           />
         </div>
-      </div>
+      </div>}
 
       {/* Mitad inferior: diálogo */}
-      <div style={{ padding: '8px 16px 24px', flexShrink: 0 }}>
-        <DialogueBox
+      <div style={{ padding: '8px 16px max(24px, env(safe-area-inset-bottom))', flexShrink: 0, width: '100%', maxWidth: 720, margin: '0 auto' }}>
+        {story.id === 't1-h1' && (idx === 3 || idx === 5) && choiceResult !== true ? (
+          <div style={{ maxWidth: 540, margin: 'auto', padding: 20, borderRadius: 20, background: 'rgba(20,16,12,.92)', border: '1px solid rgba(255,255,255,.2)' }}>
+            <p style={{ color: J.butter, fontWeight: 700 }}>{loc({ es: '¿Cómo respondes?', en: 'How do you reply?', fr: 'Que réponds-tu ?', de: 'Wie antwortest du?', it: 'Come rispondi?', pt: 'Como respondes?' }, i18n.language)}</p>
+            {(idx === 3 ? [`我叫${displayName}。`, '你叫东奥。', '我很好。'] : ['认识你很高兴。', '你叫什么名字？', '我姓东。']).map((option, i) => <button key={option} onClick={() => setChoiceResult(i === 0)} className="font-cn" style={{ display: 'block', width: '100%', textAlign: 'left', marginTop: 8, padding: 12, borderRadius: 12, border: '1px solid rgba(255,255,255,.2)', background: 'rgba(255,255,255,.09)', color: J.onAccent, fontSize: 18, cursor: 'pointer' }}>{option}</button>)}
+            {choiceResult === false && <p role="status" style={{ marginTop: 10, color: J.butter }}>{idx === 3 ? loc({ es: 'Prueba otra vez: di cómo te llamas.', en: 'Try again: say your name.', fr: 'Réessaie : dis ton nom.', de: 'Versuche es noch einmal: Sage deinen Namen.', it: 'Riprova: dì come ti chiami.', pt: 'Tenta novamente: diz o teu nome.' }, i18n.language) : loc({ es: 'Busca la frase para decir que te alegra conocerle.', en: 'Choose the phrase for saying you are happy to meet him.', fr: 'Choisis la phrase pour dire que tu es ravi de le rencontrer.', de: 'Wähle den Satz, mit dem du dich über das Kennenlernen freust.', it: 'Scegli la frase per dire che sei felice di conoscerlo.', pt: 'Escolhe a frase para dizer que estás contente por conhecê-lo.' }, i18n.language)}</p>}
+          </div>
+        ) : isChoice && choiceResult !== true ? (
+          <div style={{ maxWidth: 540, margin: 'auto', padding: 20, borderRadius: 20, background: 'rgba(20,16,12,.92)', border: '1px solid rgba(255,255,255,.2)' }}>
+            <p className="font-cn" style={{ color: 'rgba(255,255,255,.7)', margin: '0 0 8px', fontSize: 15 }}>{interpolate(escenas[idx - 1].chino, displayName)}</p>
+            <p style={{ color: J.butter, fontWeight: 700, marginTop: 0 }}>{loc({ es: 'Elige la frase en chino', en: 'Choose the Chinese sentence', fr: 'Choisis la phrase en chinois', de: 'Wähle den chinesischen Satz', it: 'Scegli la frase in cinese', pt: 'Escolhe a frase em chinês' }, i18n.language)}</p>
+            <p style={{ color: J.onAccent }}>{interpolate(trField(escena.traduccion, escena.traduccionTr, baseLang(i18n.language)), displayName)}</p>
+            {choiceOptions.map(option => <button key={option} onClick={() => setChoiceResult(option === escena.chino)} className="font-cn" style={{ display: 'block', width: '100%', textAlign: 'left', marginTop: 8, padding: 12, borderRadius: 12, border: '1px solid rgba(255,255,255,.2)', background: 'rgba(255,255,255,.09)', color: J.onAccent, fontSize: 18, cursor: 'pointer' }}>{interpolate(option, displayName)}</button>)}
+            {choiceResult === false && <p role="status" style={{ marginTop: 10, color: J.butter }}>{loc({ es: 'No es esa. Vuelve a intentarlo.', en: 'Not quite. Try again.', fr: 'Ce n’est pas ça. Réessaie.', de: 'Das stimmt noch nicht. Versuche es erneut.', it: 'Non è questa. Riprova.', pt: 'Não é essa. Tenta novamente.' }, i18n.language)}</p>}
+          </div>
+        ) : <DialogueBox
           key={escena.id}
           speakerName={`${speaker?.nombre || ''}${speaker?.pinyin ? '  ·  ' + speaker.pinyin : ''}`}
           chino={interpolate(escena.chino, displayName)}
@@ -284,10 +377,27 @@ export default function StoryPlayer({ story, userName, speak, onExit, onFinish, 
           onAdvance={handleAdvance}
           isLast={idx === total - 1}
           speak={speak}
-        />
+          wordHelp
+          vocabulary={allCharacters}
+        />}
       </div>
     </div>
   );
+}
+
+function MangaPanel({ src }) {
+  return <div className="manga-stage" aria-hidden="true">
+    <div className="manga-frame"><img key={src} src={src} alt="" draggable={false} className="manga-image" /></div>
+    <style>{`
+      .manga-stage { flex:1 1 auto; min-height:260px; display:flex; align-items:center; justify-content:center; padding:12px 16px 0; }
+      .manga-frame { width:min(100%, 560px); aspect-ratio:1; max-height: min(58vh, 560px); position:relative; overflow:hidden; border:4px solid #fff8e8; outline:2px solid #30251c; box-shadow:5px 6px 0 rgba(26,20,16,.6); background:#24201b; }
+      .manga-image { width:100%; height:100%; object-fit:cover; display:block; animation:manga-appear .45s ease-out both; }
+      @keyframes manga-appear { from { opacity:.4; transform:scale(1.035); } to { opacity:1; transform:scale(1); } }
+      .reduce-motion .manga-image { animation:none !important; }
+      @media (prefers-reduced-motion: reduce) { html:not(.motion-full) .manga-image { animation:none !important; } }
+      @media (max-width:480px) { .manga-stage { min-height:210px; padding:10px 16px 0; } .manga-frame { width:min(100%, 44vh); max-height:44vh; border-width:3px; } }
+    `}</style>
+  </div>;
 }
 
 // ── UI helpers ───────────────────────────────────────────────────────────────

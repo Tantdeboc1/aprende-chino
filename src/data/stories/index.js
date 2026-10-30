@@ -1,5 +1,5 @@
 // src/data/stories/index.js
-// Índice de historias. El orden define el desbloqueo secuencial.
+// Índice de historias. El orden define su presentación en el mapa.
 
 import { storyT1H1 } from './story-t1-h1.js';
 import { storyT1H2 } from './story-t1-h2.js';
@@ -9,6 +9,7 @@ import { storyT3H1 } from './story-t3-h1.js';
 import { storyT3H2 } from './story-t3-h2.js';
 import { storyT4H1 } from './story-t4-h1.js';
 import { storyT4H2 } from './story-t4-h2.js';
+import { newStories } from './stories-themes5-8.js';
 
 export const STORIES = [
   storyT1H1,
@@ -19,6 +20,7 @@ export const STORIES = [
   storyT3H2,
   storyT4H1,
   storyT4H2,
+  ...newStories,
 ];
 
 export const STORIES_BY_ID = Object.fromEntries(STORIES.map(s => [s.id, s]));

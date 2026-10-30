@@ -19,6 +19,45 @@ const GrammarTab   = lazyWithRetry(() => import('./GrammarTab.jsx'));
 const CulturalTab  = lazyWithRetry(() => import('./CulturalTab.jsx'));
 const Confetti     = lazyWithRetry(() => import('react-confetti'));
 
+const VIDEO_TEXT = {
+  es: ['Vídeos', 'Vídeos de la lección', 'Texto en español · audio en chino', 'Ver vídeo', 'Ver en YouTube', 'Necesitas conexión a internet para ver los vídeos.', 'Saludos y presentaciones', 'Hola y gracias', 'Tú, yo y él', '¿Quién?', 'La pronunciación de 你好'],
+  en: ['Videos', 'Lesson videos', 'Spanish text · Chinese audio', 'Watch video', 'Watch on YouTube', 'An internet connection is needed to watch videos.', 'Greetings and introductions', 'Hello and thank you', 'You, I and he', 'Who?', 'Pronouncing 你好'],
+  fr: ['Vidéos', 'Vidéos de la leçon', 'Texte en espagnol · audio en chinois', 'Voir la vidéo', 'Voir sur YouTube', 'Une connexion Internet est nécessaire.', 'Salutations et présentations', 'Bonjour et merci', 'Tu, je et il', 'Qui ?', 'Prononcer 你好'],
+  de: ['Videos', 'Videos zur Lektion', 'Spanischer Text · chinesischer Ton', 'Video ansehen', 'Auf YouTube ansehen', 'Für Videos ist eine Internetverbindung erforderlich.', 'Begrüßung und Vorstellung', 'Hallo und danke', 'Du, ich und er', 'Wer?', '你好 aussprechen'],
+  it: ['Video', 'Video della lezione', 'Testo in spagnolo · audio in cinese', 'Guarda il video', 'Guarda su YouTube', 'È necessaria una connessione Internet.', 'Saluti e presentazioni', 'Ciao e grazie', 'Tu, io e lui', 'Chi?', 'Pronunciare 你好'],
+  pt: ['Vídeos', 'Vídeos da lição', 'Texto em espanhol · áudio em chinês', 'Ver vídeo', 'Ver no YouTube', 'É necessária uma ligação à internet.', 'Saudações e apresentações', 'Olá e obrigado', 'Tu, eu e ele', 'Quem?', 'Pronunciar 你好'],
+};
+const VIDEO_CATALOG = {
+  hDaUVtohzpI: { titleIndex: 6, long: true }, PLIbUwqvygM: { titleIndex: 7 }, RnaLDNhxRXI: { titleIndex: 8 }, j87Aar4lTQQ: { titleIndex: 9 }, qKqAzA535Cs: { titleIndex: 10 },
+  kaeSpYJc2yQ: { long: true, titles: ['La comida', 'Food', 'La nourriture', 'Essen', 'Il cibo', 'A comida'] },
+  '4TchQ916IB8': { titles: ['Preguntas con 吗', 'Questions with 吗', 'Questions avec 吗', 'Fragen mit 吗', 'Domande con 吗', 'Perguntas com 吗'] },
+  '7mupSld_dJ8': { titles: ['是 y 不是', '是 and 不是', '是 et 不是', '是 und 不是', '是 e 不是', '是 e 不是'] },
+  T1bzrwG_y0A: { long: true, titles: ['La familia', 'Family', 'La famille', 'Familie', 'La famiglia', 'A família'] },
+  p6KrQJZcdzU: { long: true, titles: ['Números del 1 al 99', 'Numbers from 1 to 99', 'Les nombres de 1 à 99', 'Zahlen von 1 bis 99', 'Numeri da 1 a 99', 'Números de 1 a 99'] },
+  aVcEnCyVWa0: { titles: ['Números del 1 al 5', 'Numbers from 1 to 5', 'Les nombres de 1 à 5', 'Zahlen von 1 bis 5', 'Numeri da 1 a 5', 'Números de 1 a 5'] },
+  vikeh0US4G8: { titles: ['Números del 6 al 10', 'Numbers from 6 to 10', 'Les nombres de 6 à 10', 'Zahlen von 6 bis 10', 'Numeri da 6 a 10', 'Números de 6 a 10'] },
+  'YDr-OrLGp20': { titles: ['Tener y no tener: 有 / 没有', 'Have and have not: 有 / 没有', 'Avoir et ne pas avoir : 有 / 没有', 'Haben und nicht haben: 有 / 没有', 'Avere e non avere: 有 / 没有', 'Ter e não ter: 有 / 没有'] },
+  IOzvpsgs8Ms: { titles: ['Dos: 二 o 两', 'Two: 二 or 两', 'Deux : 二 ou 两', 'Zwei: 二 oder 两', 'Due: 二 o 两', 'Dois: 二 ou 两'] },
+  '-WwrGQxjDfo': { long: true, titles: ['Hora, días y fechas', 'Time, days and dates', 'Heure, jours et dates', 'Uhrzeit, Tage und Daten', 'Ora, giorni e date', 'Horas, dias e datas'] },
+  f8I6hEbKYa4: { long: true, titles: ['Transporte y direcciones', 'Transport and directions', 'Transport et directions', 'Verkehr und Wegbeschreibung', 'Trasporti e indicazioni', 'Transportes e direções'] },
+  qJa7Fo2A9rs: { long: true, titles: ['Comida y precios', 'Food and prices', 'Nourriture et prix', 'Essen und Preise', 'Cibo e prezzi', 'Comida e preços'] },
+};
+const LESSON_VIDEOS = {
+  1: ['hDaUVtohzpI', 'PLIbUwqvygM', 'RnaLDNhxRXI', 'j87Aar4lTQQ', 'qKqAzA535Cs'],
+  2: ['kaeSpYJc2yQ', '4TchQ916IB8', '7mupSld_dJ8'],
+  3: ['T1bzrwG_y0A', 'p6KrQJZcdzU', 'aVcEnCyVWa0', 'vikeh0US4G8', 'YDr-OrLGp20', 'IOzvpsgs8Ms'],
+  4: ['-WwrGQxjDfo', 'aVcEnCyVWa0', 'vikeh0US4G8'],
+  5: ['-WwrGQxjDfo', 'p6KrQJZcdzU'],
+  6: ['f8I6hEbKYa4'],
+  7: ['qJa7Fo2A9rs', 'p6KrQJZcdzU', 'IOzvpsgs8Ms'],
+};
+const VIDEO_LANGUAGES = ['es', 'en', 'fr', 'de', 'it', 'pt'];
+const VIDEO_FORMATS = {
+  es: ['Lección completa', 'Vídeo corto'], en: ['Full lesson', 'Short video'],
+  fr: ['Leçon complète', 'Vidéo courte'], de: ['Vollständige Lektion', 'Kurzes Video'],
+  it: ['Lezione completa', 'Video breve'], pt: ['Lição completa', 'Vídeo curto'],
+};
+
 /* CJK exercise icons — reemplazan emojis */
 const EXERCISE_DEFS = [
   { key: 'quiz',     cn: '考', labelKey: 'exercise_quiz',     descKey: 'exercise_quiz_desc',     bg: J.redBg,  fg: J.redDeep  },
@@ -56,7 +95,12 @@ export default function LessonDetail({
     setTab(id);
     onTabChange?.(id);
   };
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const videoText = VIDEO_TEXT[i18n.resolvedLanguage?.split('-')[0]] || VIDEO_TEXT.en;
+  const videoLanguage = Math.max(0, VIDEO_LANGUAGES.indexOf(i18n.resolvedLanguage?.split('-')[0] || 'en'));
+  const videoFormats = VIDEO_FORMATS[VIDEO_LANGUAGES[videoLanguage]];
+  const lessonVideos = LESSON_VIDEOS[lessonNum] || [];
+  const [activeVideo, setActiveVideo] = useState(null);
   const [showSupp, setShowSupp] = useState(initialState?.showSupp || false);
   const [showLegend, setShowLegend] = useState(initialState?.showLegend || false);
   const [selectedCard, setSelectedCard] = useState(initialState?.selectedCard || null);
@@ -175,6 +219,7 @@ export default function LessonDetail({
           { id: 'grammar',   label: t('lesson_tab_grammar') },
           { id: 'exercises', label: t('lesson_tab_practice') },
           { id: 'culture',   label: t('lesson_tab_culture') },
+          ...(lessonVideos.length ? [{ id: 'videos', label: videoText[0] }] : []),
         ].map(tabItem => {
           const on = tab === tabItem.id;
           return (
@@ -196,6 +241,32 @@ export default function LessonDetail({
       </div>
 
       <div className="px-4 pb-6">
+
+        {tab === 'videos' && lessonVideos.length > 0 && (
+          <section aria-label={videoText[1]} className="pt-3 space-y-3">
+            <h2 className="text-lg font-bold" style={{ color: J.ink }}>{videoText[1]}</h2>
+            <p className="text-sm" style={{ color: J.inkSoft }}>{videoText[2]} · {videoText[5]}</p>
+            {lessonVideos.map((id) => {
+              const video = VIDEO_CATALOG[id];
+              const title = video.titles?.[videoLanguage] || videoText[video.titleIndex];
+              return (
+              <div key={id} className="rounded-xl p-4" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
+                <span className="inline-block rounded-full px-2.5 py-1 mb-2 text-xs font-bold" style={{ background: video.long ? J.jadeBg : J.sandBg, color: video.long ? J.jadeDeep : J.sandDeep }}>
+                  {videoFormats[video.long ? 0 : 1]}
+                </span>
+                <h3 className="font-bold" style={{ color: J.ink }}>{title}</h3>
+                {activeVideo === id ? (
+                  <div className="mt-3">
+                    <iframe title={title} src={`https://www.youtube-nocookie.com/embed/${id}`} style={{ width: '100%', aspectRatio: video.long ? '16 / 9' : '9 / 16', maxHeight: 560, border: 0 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+                    <a href={`https://www.youtube.com/watch?v=${id}`} target="_blank" rel="noopener noreferrer" className="text-sm underline" style={{ color: J.jadeDeep }}>{videoText[4]}</a>
+                  </div>
+                ) : (
+                  <button onClick={() => setActiveVideo(id)} className="mt-3 rounded-full px-4 py-2 font-bold text-sm" style={{ background: J.jade, color: J.onAccent }}>{videoText[3]}</button>
+                )}
+              </div>
+            ); })}
+          </section>
+        )}
 
         {/* Tab Vocabulario */}
         {tab === 'vocab' && (

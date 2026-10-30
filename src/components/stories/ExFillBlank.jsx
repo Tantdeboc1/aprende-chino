@@ -13,7 +13,7 @@ export default function ExFillBlank({ item, onAnswer }) {
   const traduccion = trField(item.traduccion, item.traduccionTr, lang);
   // En modo difícil/normal el subprompt se queda solo con la traducción;
   // en fácil mostramos pinyin + traducción.
-  const subprompt = showPinyin
+  const subprompt = showPinyin && item.pinyin
     ? `${item.pinyin}  ·  ${traduccion}`
     : traduccion;
   return (

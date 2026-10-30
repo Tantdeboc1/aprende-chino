@@ -35,10 +35,11 @@ export default function CharacterDisplay({
   character,
   expresion = 'normal',
   variant = 'dialogue',
+  imageOverride,
 }) {
   const [entered, setEntered] = useState(false);
 
-  const png = useMemo(() => getCharacterPng(character?.id), [character?.id]);
+  const png = useMemo(() => imageOverride || getCharacterPng(character?.id), [character?.id, imageOverride]);
 
   // Pop-in cada vez que cambia el personaje
   useEffect(() => {
@@ -131,6 +132,8 @@ export default function CharacterDisplay({
           animation: story-breathe 3.8s ease-in-out infinite;
           transform-origin: center bottom;
         }
+        .reduce-motion .story-breathe { animation: none !important; }
+        @media (prefers-reduced-motion: reduce) { html:not(.motion-full) .story-breathe { animation: none !important; } }
       `}</style>
     </div>
   );
