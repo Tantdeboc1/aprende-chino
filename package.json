@@ -15,7 +15,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:security": "node scripts/run-firestore-security-tests.mjs",
-    "audit:security": "npm audit --audit-level=low",
+    "audit:security": "node scripts/audit-security.mjs",
     "preview": "vite preview",
     "predeploy": "node scripts/split-i18n-data.mjs && node scripts/copy-hanzi-data.mjs && vite build --base=/aprende-chino/",
     "deploy": "node scripts/deploy-pages.mjs",
