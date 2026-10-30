@@ -37,6 +37,7 @@ export default {
   china_tourism: "Tourist spots",
   china_home_hint: "Food, dialects and tourism by province",
   home_section_explore: "Culture",
+  home_support_button: "Will you buy me a coffee?",
   common_back: "Back",
   common_close: "Close",
   app_tagline: "Learn Chinese",

@@ -37,6 +37,7 @@ export default {
   china_tourism: "Zonas turísticas",
   china_home_hint: "Gastronomia, dialetos e turismo por província",
   home_section_explore: "Cultura",
+  home_support_button: "Ofereces-me um café?",
   common_back: "Voltar",
   common_close: "Fechar",
   app_tagline: "Aprende chinês",

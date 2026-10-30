@@ -19,6 +19,33 @@ import { loc, baseLang } from '@/utils/loc.js';
 import { STORAGE_KEYS } from '@/utils/storageKeys.js';
 import { classifierText, classifierUi } from '@/data/classifierData.js';
 
+function KoFiCupIcon() {
+  return (
+    <svg className="flex-shrink-0" width="28" height="20" viewBox="0 0 64 44" aria-hidden="true" focusable="false">
+      <path
+        d="M41 9h5a10 10 0 0 1 0 20h-5v-7h5a3 3 0 0 0 0-6h-5z"
+        fill="#171717"
+        stroke="#fff"
+        strokeWidth="4.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 6h39v22a11 11 0 0 1-11 11H19A11 11 0 0 1 8 28z"
+        fill="#171717"
+        stroke="#fff"
+        strokeWidth="6"
+        strokeLinejoin="round"
+      />
+      <path d="M12 10h31v18a7 7 0 0 1-7 7H19a7 7 0 0 1-7-7z" fill="#fff" />
+      <path d="M12 10h31" stroke="#171717" strokeWidth="2.4" strokeLinecap="round" />
+      <path
+        d="M27.5 31C25.6 29.2 17.3 23.2 17.3 18.4c0-3.1 2.2-5.2 5-5.2 2.2 0 4.2 1.2 5.2 3.1 1-1.9 3-3.1 5.2-3.1 2.8 0 5 2.1 5 5.2 0 4.8-8.3 10.8-10.2 12.6Z"
+        fill="#ff7545"
+      />
+    </svg>
+  );
+}
+
 
 // ── Carácter del día con HanziWriter ──────────────────────────────────────────
 function DailyCharacter({ allCharacters }) {
@@ -373,13 +400,28 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
         borderLeft: `4px solid ${J.jadeDeep}`,
         padding: '40px 16px 16px',
       }}>
-        <div className="flex items-center gap-2">
-          <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: '0.875rem' }}>
-            路
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="font-cn w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: J.red, color: J.onAccent, fontWeight: 700, fontSize: '0.875rem' }}>
+              路
+            </div>
+            {/* La marca no se traduce; el tagline sí (app_tagline) */}
+            <span className="font-bold text-base truncate" style={{ color: J.onAccent }}>{APP_NAME}</span>
           </div>
-          {/* La marca no se traduce; el tagline sí (app_tagline) */}
-          <span className="font-bold text-base" style={{ color: J.onAccent }}>{APP_NAME}</span>
+          <a
+            href="https://ko-fi.com/hanyupath"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('home_support_button')}
+            className="group inline-flex h-10 w-max max-w-[calc(100vw-96px)] flex-shrink-0 flex-row-reverse items-center justify-start gap-0 overflow-hidden rounded-full px-2 text-xs font-bold transition-[gap,transform] duration-300 ease-out hover:gap-2 focus-visible:gap-2 hover:brightness-110 active:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            style={{ background: J.red, color: J.onAccent, border: `1px solid ${J.butter}`, textDecoration: 'none' }}
+          >
+            <KoFiCupIcon />
+            <span className="inline-block max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[230px] group-hover:opacity-100 group-focus-visible:max-w-[230px] group-focus-visible:opacity-100">
+              {t('home_support_button')}
+            </span>
+          </a>
         </div>
 
         <div className="mt-3 flex items-center gap-3">
