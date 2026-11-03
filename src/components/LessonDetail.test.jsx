@@ -39,16 +39,15 @@ beforeEach(() => {
 afterEach(() => cleanup());
 
 describe('LessonDetail', () => {
-  it('muestra los vídeos de cada lección y oculta la pestaña cuando no hay vídeos', () => {
+  it('oculta los vídeos mientras la sección está suspendida, incluso al solicitar su pestaña', () => {
     const { unmount } = render(<LessonDetail lessonNum={3} lessonData={{}} characters={WORDS} progress={{}} goBack={vi.fn()} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Videos' }));
-    expect(screen.getByText('Family')).toBeTruthy();
-    expect(screen.queryByText('Greetings and introductions')).toBeNull();
-    fireEvent.click(screen.getAllByRole('button', { name: 'Watch video' })[0]);
-    expect(screen.getByTitle('Family').getAttribute('src')).toContain('T1bzrwG_y0A');
-    unmount();
-    setup({ lessonNum: 8 });
     expect(screen.queryByRole('button', { name: 'Videos' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Watch video' })).toBeNull();
+    expect(document.querySelector('iframe')).toBeNull();
+    unmount();
+    setup({ lessonNum: 3, defaultTab: 'videos' });
+    expect(screen.queryByRole('button', { name: 'Videos' })).toBeNull();
+    expect(document.querySelector('iframe')).toBeNull();
   });
   it('lista el vocabulario principal de la lección (sin el extra) y el botón atrás llama a goBack', () => {
     const props = setup({ defaultTab: 'vocab' });
