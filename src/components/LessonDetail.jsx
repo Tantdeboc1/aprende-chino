@@ -27,6 +27,8 @@ const VIDEO_TEXT = {
   it: ['Video', 'Video della lezione', 'Testo in spagnolo · audio in cinese', 'Guarda il video', 'Guarda su YouTube', 'È necessaria una connessione Internet.', 'Saluti e presentazioni', 'Ciao e grazie', 'Tu, io e lui', 'Chi?', 'Pronunciare 你好'],
   pt: ['Vídeos', 'Vídeos da lição', 'Texto em espanhol · áudio em chinês', 'Ver vídeo', 'Ver no YouTube', 'É necessária uma ligação à internet.', 'Saudações e apresentações', 'Olá e obrigado', 'Tu, eu e ele', 'Quem?', 'Pronunciar 你好'],
 };
+// Pausa temporal: los vídeos se conservan y se pueden reactivar cambiando esta opción.
+const SHOW_LESSON_VIDEOS = false;
 const VIDEO_CATALOG = {
   hDaUVtohzpI: { titleIndex: 6, long: true }, PLIbUwqvygM: { titleIndex: 7 }, RnaLDNhxRXI: { titleIndex: 8 }, j87Aar4lTQQ: { titleIndex: 9 }, qKqAzA535Cs: { titleIndex: 10 },
   kaeSpYJc2yQ: { long: true, titles: ['La comida', 'Food', 'La nourriture', 'Essen', 'Il cibo', 'A comida'] },
@@ -99,7 +101,7 @@ export default function LessonDetail({
   const videoText = VIDEO_TEXT[i18n.resolvedLanguage?.split('-')[0]] || VIDEO_TEXT.en;
   const videoLanguage = Math.max(0, VIDEO_LANGUAGES.indexOf(i18n.resolvedLanguage?.split('-')[0] || 'en'));
   const videoFormats = VIDEO_FORMATS[VIDEO_LANGUAGES[videoLanguage]];
-  const lessonVideos = LESSON_VIDEOS[lessonNum] || [];
+  const lessonVideos = SHOW_LESSON_VIDEOS ? (LESSON_VIDEOS[lessonNum] || []) : [];
   const [activeVideo, setActiveVideo] = useState(null);
   const [showSupp, setShowSupp] = useState(initialState?.showSupp || false);
   const [showLegend, setShowLegend] = useState(initialState?.showLegend || false);

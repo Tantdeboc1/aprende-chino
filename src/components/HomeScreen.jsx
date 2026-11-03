@@ -384,6 +384,8 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
   // Mientras el tutorial esté sin hacer, el Home aparta la gamificación.
   const tourPending = useLocalSnapshot(isTourPending);
   const [sections, setSections] = useState(loadSections);
+  const [supportExpanded, setSupportExpanded] = useState(false);
+  const supportTouchRef = useRef(false);
   const toggleSection = useCallback((id) => {
     setSections(prev => {
       const next = { ...prev, [id]: !prev[id] };
@@ -414,11 +416,22 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t('home_support_button')}
-            className="group inline-flex h-10 w-max max-w-[calc(100vw-96px)] flex-shrink-0 flex-row-reverse items-center justify-start gap-0 overflow-hidden rounded-full px-2 text-xs font-bold transition-[gap,transform] duration-300 ease-out hover:gap-2 focus-visible:gap-2 hover:brightness-110 active:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            aria-expanded={supportExpanded}
+            data-expanded={supportExpanded}
+            onPointerDown={(event) => { supportTouchRef.current = event.pointerType === 'touch'; }}
+            onClick={(event) => {
+              const wasTouch = supportTouchRef.current;
+              supportTouchRef.current = false;
+              if (wasTouch && !supportExpanded) {
+                event.preventDefault();
+                setSupportExpanded(true);
+              }
+            }}
+            className={`group inline-flex h-10 w-max max-w-[calc(100vw-96px)] flex-shrink-0 flex-row-reverse items-center justify-start gap-0 overflow-hidden rounded-full px-2 text-xs font-bold transition-[gap,transform] duration-300 ease-out hover:gap-2 focus-visible:gap-2 hover:brightness-110 active:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${supportExpanded ? 'gap-2' : ''}`}
             style={{ background: J.red, color: J.onAccent, border: `1px solid ${J.butter}`, textDecoration: 'none' }}
           >
             <KoFiCupIcon />
-            <span className="inline-block max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[230px] group-hover:opacity-100 group-focus-visible:max-w-[230px] group-focus-visible:opacity-100">
+            <span className={`inline-block max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[230px] group-hover:opacity-100 group-focus-visible:max-w-[230px] group-focus-visible:opacity-100 ${supportExpanded ? 'max-w-[230px] opacity-100' : ''}`}>
               {t('home_support_button')}
             </span>
           </a>

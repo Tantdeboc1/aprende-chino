@@ -1,8 +1,17 @@
 import { J } from '@/styles/tokens';
+import coloreaHanziCover from '@/assets/books/colorea-hanzi-vol1-cover.png';
 import mapasCover from '@/assets/books/mapas-visuales.webp';
 import sopasCover from '@/assets/books/sopas-tomo-1.webp';
 
 const books = [
+  {
+    title: 'Colorea y escribe 100 caracteres chinos: HSK 1',
+    eyebrow: 'PINTA Y ESCRIBE HANZI · HSK 1',
+    cover: coloreaHanziCover,
+    description: 'Practica 100 caracteres chinos simplificados del HSK 1 con su orden de trazos, pinyin y significado en español. Incluye modelos para repasar y casillas para practicar de memoria.',
+    details: ['100 caracteres HSK 1', 'Pinyin y significado en español', '112 páginas · 800 casillas'],
+    links: [{ label: 'Ver en papel', url: 'https://amzn.eu/d/01p1jA1w' }],
+  },
   {
     title: 'Mapas visuales para aprender chino',
     eyebrow: 'APRENDE CON CONEXIONES',
