@@ -81,6 +81,18 @@ describe('EchoSpeaking', () => {
     expect(screen.getByText(/didn't hear/i)).toBeTruthy();
   });
 
+  it('un reintento sustituye la puntuación anterior de la ronda', async () => {
+    recognizeMock.mockResolvedValue({ transcript: '你好0' });
+    scorePronunciationMock.mockReturnValueOnce({ score: 80, level: 'good', normRecognized: '你好0', charMatches: [true, true, true] })
+      .mockReturnValueOnce({ score: 90, level: 'good', normRecognized: '你好0', charMatches: [true, true, true] });
+    start();
+    await act(async () => { fireEvent.click(recordButton()); await vi.runOnlyPendingTimersAsync(); });
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
+    await act(async () => { fireEvent.click(recordButton()); await vi.runOnlyPendingTimersAsync(); });
+    expect(screen.getByText('90')).toBeTruthy();
+    expect(screen.queryByText('170')).toBeNull();
+  });
+
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<EchoSpeaking goBack={goBack} selectedLesson={null} />);

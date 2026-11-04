@@ -1,0 +1,11 @@
+{
+  "version": "v0.9.4",
+  "notes": {
+    "es": ["Ampliamos la guía y los ejercicios de radicales.", "Añadimos 22 patrones de conectores con explicaciones y actividades en seis idiomas.", "Añadimos una práctica oral sin reconocimiento de voz y aclaramos la corrección.", "Mejoramos la navegación al volver entre menús.", "El aviso de futuras actualizaciones permite consultar las novedades."],
+    "en": ["Expanded the radicals guide and exercises.", "Added 22 connector patterns with explanations and exercises in six languages.", "Added speaking practice without voice recognition and clarified feedback.", "Improved back navigation between menus.", "Future update alerts can show what’s new."],
+    "fr": ["Guide et exercices des radicaux enrichis.", "Ajout de 22 structures de connecteurs avec explications et exercices en six langues.", "Ajout d’une pratique orale sans reconnaissance vocale et clarification des résultats.", "Navigation de retour entre les menus améliorée.", "Les alertes des futures mises à jour pourront afficher les nouveautés."],
+    "de": ["Radikale-Leitfaden und Übungen erweitert.", "22 Konnektoren-Muster mit Erklärungen und Übungen in sechs Sprachen hinzugefügt.", "Sprechübung ohne Spracherkennung hinzugefügt und Rückmeldung erläutert.", "Navigation zwischen Menüs beim Zurückgehen verbessert.", "Künftige Update-Hinweise können Neuerungen anzeigen."],
+    "it": ["Guida ed esercizi sui radicali ampliati.", "Aggiunte 22 strutture di connettivi con spiegazioni ed esercizi in sei lingue.", "Aggiunta pratica orale senza riconoscimento vocale e chiarito il risultato.", "Migliorata la navigazione tra i menu tornando indietro.", "Gli avvisi dei prossimi aggiornamenti possono mostrare le novità."],
+    "pt": ["Guia e exercícios de radicais ampliados.", "Adicionados 22 padrões de conectores com explicações e exercícios em seis idiomas.", "Adicionada prática oral sem reconhecimento de voz e esclarecido o resultado.", "Melhorada a navegação ao voltar entre menus.", "Os avisos de futuras atualizações podem mostrar as novidades."]
+  }
+}

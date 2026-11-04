@@ -5,6 +5,9 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@/i18n'; // inicializa i18next (UpdateToast usa useTranslation)
 import UpdateToast from './UpdateToast.jsx';
 import { setNeedRefresh } from '@/utils/pwaUpdate.js';
+import { loadReleaseNotes } from '@/utils/releaseNotes.js';
+
+vi.mock('@/utils/releaseNotes.js', () => ({ loadReleaseNotes: vi.fn() }));
 
 describe('UpdateToast', () => {
   it('aparece al llegar el aviso y el botón dispara la actualización', () => {
@@ -36,5 +39,27 @@ describe('UpdateToast', () => {
     fireEvent.click(closeBtn);
     expect(screen.queryByRole('status')).toBeNull();
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it('muestra el resumen publicado sin activar la actualización', async () => {
+    loadReleaseNotes.mockResolvedValueOnce({ version: 'v1.2.3', notes: ['A new feature'] });
+    const update = vi.fn();
+    render(<UpdateToast />);
+    act(() => setNeedRefresh(update));
+    fireEvent.click(screen.getByRole('button', { name: /see what.s new/i }));
+    expect(await screen.findByText('A new feature')).toBeTruthy();
+    expect(screen.getByText(/v1\.2\.3/)).toBeTruthy();
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  it('permite actualizar aunque no se pueda descargar el resumen', async () => {
+    loadReleaseNotes.mockRejectedValueOnce(new Error('offline'));
+    const update = vi.fn();
+    render(<UpdateToast />);
+    act(() => setNeedRefresh(update));
+    fireEvent.click(screen.getByRole('button', { name: /see what.s new/i }));
+    expect(await screen.findByText(/could not load the release notes/i)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /^update$/i }));
+    expect(update).toHaveBeenCalledOnce();
   });
 });

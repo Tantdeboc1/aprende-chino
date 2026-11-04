@@ -1,8 +1,9 @@
 import { useScrollMemory } from '@/hooks/useScrollMemory.js';
+import { useHistorySubmenu } from '@/hooks/useHistorySubmenu.js';
 import { loadSkillSessions } from '@/utils/skillProgress.js';
 import { PRACTICE_CATEGORY_KEY, PRACTICE_ACTIVITIES, loadPracticeFavorites, savePracticeFavorites, recommendPractice, rememberPracticeCategory, practiceScrollPositions } from '@/utils/practiceNavigation.js';
 // src/components/MiniGames.jsx
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Container from "@/components/ui/Container.jsx";
 import { useTranslation } from "react-i18next";
 import { J } from '@/styles/tokens';
@@ -60,10 +61,14 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
     try { const saved = sessionStorage.getItem(PRACTICE_CATEGORY_KEY); return SECTIONS.some(s => s.cat === saved) ? saved : null; }
     catch { return null; }
   });
-  const selectCategory = (cat) => {
-    setCategory(cat);
-    rememberPracticeCategory(cat);
-  };
+  const selectCategory = useHistorySubmenu('practice-category', category, setCategory, 'minigames');
+  useEffect(() => { rememberPracticeCategory(category); }, [category]);
+  useEffect(() => {
+    if (category && window.location.hash === '#/minigames' && history.state?.internalNavigation?.key !== 'practice-category') {
+      history.replaceState({ ...history.state, internalNavigation: { screen: 'minigames', key: 'practice-category', value: null } }, '', window.location.href);
+      history.pushState({ ...history.state, internalNavigation: { screen: 'minigames', key: 'practice-category', value: category } }, '', window.location.href);
+    }
+  }, [category]); // La categoría guardada también necesita una entrada para volver al listado.
 
   useScrollMemory('practice:' + (category || 'all'), { positions: practiceScrollPositions });
   const favorites = useLocalSnapshot(loadPracticeFavorites);

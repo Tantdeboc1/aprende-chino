@@ -24,6 +24,7 @@ function setup(overrides = {}) {
     allCharacters: CHARS,
     onSelectLesson: vi.fn(),
     onSelectIntro: vi.fn(),
+    onSelectConnectors: vi.fn(),
     onOpenProfile: vi.fn(),
     onOpenChinaMap: vi.fn(),
     ...overrides,
@@ -82,6 +83,13 @@ describe('HomeScreen', () => {
 
     // Ahora debe haber una tarjeta extra con el icono "入" de introducción.
     expect(screen.getByText('入')).toBeTruthy();
+  });
+
+  it('abre conectores desde Fundamentos', () => {
+    const props = setup();
+    fireEvent.click(screen.getByRole('button', { name: /basics/i }));
+    fireEvent.click(screen.getByRole('button', { name: /connectors/i }));
+    expect(props.onSelectConnectors).toHaveBeenCalledOnce();
   });
 
   it('pulsar el avatar llama a onOpenProfile', () => {

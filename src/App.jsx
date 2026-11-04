@@ -29,6 +29,7 @@ import { baseLang } from './utils/loc.js';
 import { wordTypeLabel } from './utils/wordType.js';
 import { useLocalDataRev } from './hooks/useLocalSnapshot.js';
 import { useScrollMemory } from './hooks/useScrollMemory.js';
+import { useHistorySubmenu } from './hooks/useHistorySubmenu.js';
 import { J, resolveColor } from '@/styles/tokens';
 import Library from '@/components/Library.jsx';
 import { loadProgress, saveProgress, markWordSeen } from './utils/progress.js';
@@ -375,11 +376,16 @@ export default function App() {
 
   // Sub-navegación de ejercicios (reutiliza navigation.js)
   const [learnSection,     setLearnSection]     = useState(null);
+  const learnSectionRef = useRef(learnSection);
+  learnSectionRef.current = learnSection;
   const [characterSection, setCharacterSection] = useState(null);
   const [toneSection,      setToneSection]      = useState(null);
   const [radicalSection,   setRadicalSection]   = useState(null);
   const [writingSection,   setWritingSection]   = useState(null);
   const [dailySection,     setDailySection]     = useState(null);
+  const navigateRadicalSection = useHistorySubmenu('radicals', radicalSection, setRadicalSection, 'exercise');
+  const navigateToneSection = useHistorySubmenu('tones', toneSection, setToneSection, 'exercise');
+  const navigateWritingSection = useHistorySubmenu('writing', writingSection, setWritingSection, 'exercise');
   const [searchTerm,       setSearchTerm]       = useState('');
   const [showSupplementary, setShowSupplementary] = useState(true);
   const scrollKey = screen === 'lesson-detail' ? `lesson:${selectedLesson}:${lessonDetailTab}`
@@ -430,6 +436,11 @@ export default function App() {
     const onPop = () => {
       const parsed = parseHash(window.location.hash);
       if (!parsed || !loadUserName()) return;
+      // Las vistas internas de conectores comparten #/exercise. Su propio
+      // historial gestiona estos pasos sin desmontar la sección.
+      if (history.state?.internalNavigation?.screen === parsed.screen && screenRef.current === parsed.screen) return;
+      if (parsed.screen === 'exercise' && screenRef.current === 'exercise' &&
+          learnSectionRef.current === 'connectors' && history.state?.connectorNavigation) return;
       if (parsed.screen === 'exercise') {
         parsed.screen = exerciseReturnScreen(exerciseOriginRef.current);
         if (parsed.screen === 'lesson-detail') parsed.lesson = selectedLessonRef.current || 1;
@@ -567,7 +578,7 @@ export default function App() {
         // fetchJsonCached sirve las visitas posteriores desde Cache API.
         const [data, radicalsDataRaw] = await Promise.all([
           fetchJsonCached('libro-data', assetUrl('data/libro-data.json')),
-          fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json')),
+          fetchJsonCached('radicals-data', assetUrl('data/radicals-data.json') + '?revision=3'),
         ]);
         setSplashProgress(55);
 
@@ -684,6 +695,13 @@ export default function App() {
     else if (exerciseKey === 'writing')        { setScreen('exercise'); setLearnSection('writing'); setWritingSection('radicals'); }
   };
 
+  const handleStartConnectors = () => {
+    exerciseOriginRef.current = 'home';
+    setLearnSection('connectors'); setCharacterSection(null); setToneSection(null);
+    setRadicalSection(null); setWritingSection(null); setDailySection(null);
+    setPrevScreen('home'); setScreen('exercise');
+  };
+
   // navigation.js maneja ejercicios (reutilizamos la lógica existente)
   // Si hay dailySection activo, navegar a 'daily'; si no, a 'learn'
   const navScreen = screen === 'exercise'
@@ -747,8 +765,8 @@ export default function App() {
     characterSection, toneSection, dailySection,
     {
       userName, characters, allCharacters, radicals: radicalsData, speak, navigateTo,
-      setLearnSection, setCharacterSection, setToneSection, setRadicalSection,
-      setWritingSection, setDailySection, setScreen,
+      setLearnSection, setCharacterSection, setToneSection: navigateToneSection, setRadicalSection: navigateRadicalSection,
+      setWritingSection: navigateWritingSection, setDailySection, setScreen,
       searchTerm, setSearchTerm,
       selectedLesson, setSelectedLesson,
       showSupplementary, setShowSupplementary,
@@ -804,6 +822,7 @@ export default function App() {
           onSelectLesson={goToLesson}
           onSelectIntro={goToIntro}
           onSelectClassifiers={() => setScreen('classifiers')}
+          onSelectConnectors={handleStartConnectors}
           lastLesson={lastLesson}
           onOpenProfile={() => { setPrevScreen('home'); setScreen('profile'); }}
           onOpenChinaMap={() => { setPrevScreen('home'); setScreen('chinaMap'); }}

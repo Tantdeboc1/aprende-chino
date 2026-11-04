@@ -351,7 +351,7 @@ function CollapsibleSection({ id, label, count, open, onToggle, children }) {
   );
 }
 
-export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onSelectClassifiers, onOpenProfile, onOpenChinaMap, lastLesson }) {
+export default function HomeScreen({ userName, progress, allCharacters, onSelectLesson, onSelectIntro, onSelectClassifiers, onSelectConnectors, onOpenProfile, onOpenChinaMap, lastLesson }) {
   const { t, i18n } = useTranslation();
   // Una sola pasada sobre allCharacters en vez de 4 llamadas a getLessonStats
   // (cada una filtra la lista completa 3 veces para devolver total/seen/mastered,
@@ -562,6 +562,18 @@ export default function HomeScreen({ userName, progress, allCharacters, onSelect
                 t={t}
               />
             </div>
+            <button
+              onClick={onSelectConnectors}
+              className="w-full rounded-xl p-4 flex items-center gap-3 text-left transition-all active:scale-[0.99]"
+              style={{ background: J.paperHi, border: `1px solid ${J.hair}`, borderLeftWidth: 4, borderLeftColor: J.jade, cursor: 'pointer' }}
+            >
+              <div className="font-cn flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-base font-bold" style={{ background: J.jadeBg, color: J.jadeDeep }}>连</div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold" style={{ color: J.ink }}>{t('connectors_title')}</p>
+                <p className="mt-0.5 text-xs leading-snug" style={{ color: J.inkSoft }}>{t('connectors_intro')}</p>
+              </div>
+              <span aria-hidden="true" style={{ color: J.mute, fontWeight: 700 }}>→</span>
+            </button>
             <button
               onClick={onSelectClassifiers}
               className="w-full rounded-xl p-4 flex items-center gap-3 text-left transition-all active:scale-[0.99]"

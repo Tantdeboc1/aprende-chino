@@ -23,8 +23,10 @@ import { speakChineseEnhanced } from '@/utils/tts-enhanced.js';
 import { LESSON_COLORS, LESSON_NUMBERS, DEFAULT_LESSON_COLOR } from '@/styles/lessonColors.js';
 import { useLessonFilter } from '@/utils/lessonFilter.js';
 import { useGamePhase } from '@/utils/useGamePhase.js';
+import { useHistorySubmenu } from '@/hooks/useHistorySubmenu.js';
 import GameIntro from './GameIntro.jsx';
 import GameResults from './GameResults.jsx';
+import ListenRepeat from './ListenRepeat.jsx';
 
 const ROUNDS = 6;
 
@@ -61,6 +63,8 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   const [status, setStatus]           = useState('idle');   // idle | listening | processing | result | error
   const [scoreInfo, setScoreInfo]     = useState(null);     // { score, level, charMatches, normRecognized, ... }
   const [errorMsg, setErrorMsg]       = useState(null);
+  const [freePractice, setFreePractice] = useState(null);
+  const navigateFreePractice = useHistorySubmenu('voice-free', freePractice, setFreePractice, 'pronunciation-practice');
   const [totalScore, setTotalScore]   = useState(0);
   const [lessonFilter, setLessonFilter] = useLessonFilter(selectedLesson);
 
@@ -69,6 +73,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   // Controles de la grabación en curso ({ stop, abort }); permiten terminar
   // la grabación pulsando de nuevo el botón, sin esperar al timeout.
   const controlsRef = useRef(null);
+  const roundScoreRef = useRef(0);
   useEffect(() => () => { aliveRef.current = false; controlsRef.current?.abort(); }, []);
 
   // Frases del idioma activo (chunk por idioma); null mientras carga.
@@ -83,6 +88,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
     setErrorMsg(null);
     setStatus('idle');
     setTotalScore(0);
+    roundScoreRef.current = 0;
   }, [lessonFilter, phrases]);
 
   useEffect(() => { startGame(); }, [startGame]);
@@ -109,7 +115,9 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
       const info = scorePronunciation(current.hanzi, transcript);
       setScoreInfo(info);
       setStatus('result');
-      setTotalScore(prev => prev + info.score);
+      const previousScore = roundScoreRef.current;
+      roundScoreRef.current = info.score;
+      setTotalScore(prev => prev - previousScore + info.score);
 
       // Feedback háptico + sonido + XP
       if (info.level === 'perfect' || info.level === 'good') {
@@ -137,6 +145,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
       return;
     }
     setCurrentIdx(i => i + 1);
+    roundScoreRef.current = 0;
     setScoreInfo(null);
     setErrorMsg(null);
     setStatus('idle');
@@ -149,6 +158,8 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
   };
 
   // ── Soporte no disponible ─────────────────────────────────────────
+  if (freePractice) return <ListenRepeat phrases={phrases ? rounds : null} onBack={() => navigateFreePractice(null)} />;
+
   if (!supported) {
     return (
       <div className="min-h-screen bg-[var(--paper)] flex flex-col items-center justify-center p-6 text-center">
@@ -161,6 +172,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
             {t('pronunciation_unsupported_body',
               'Esta actividad necesita el reconocimiento de voz del navegador. Funciona en Chrome, Edge y Safari. Si estás en Firefox, prueba con otro navegador.')}
           </p>
+          <button onClick={() => navigateFreePractice(true)} className="mb-3 w-full rounded-xl bg-[var(--jade)] py-3 font-bold text-[var(--on-accent)]">{t('voice_free_title')}</button>
           <button onClick={goBack}
             className="w-full py-3 rounded-xl bg-[var(--red)] hover:bg-[var(--red-deep)] text-[var(--on-accent)] font-bold transition-colors">
             {t('translation_back', 'Volver')}
@@ -181,7 +193,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
         steps={[
           t('pronunciation_intro_1', 'Lee la frase en chino que aparece en pantalla.'),
           t('pronunciation_intro_2', 'Pulsa el micrófono y dila en voz alta.'),
-          t('pronunciation_intro_3', 'Recibirás una nota según lo bien que se te entienda; puedes escuchar la frase correcta.'),
+          t('voice_match_intro'),
           t('pronunciation_intro_4', 'Son 6 frases por ronda. Necesitas dar permiso de micrófono.'),
         ]}
         onStart={start}
@@ -197,9 +209,9 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
       <GameResults
         gameId="pronunciation-practice"
         title={t('pronunciation_results_title', 'Resultado')}
-        subtitle={t('pronunciation_results_subtitle', 'Tu nota media de pronunciación')}
+        subtitle={t('voice_match_results')}
         score={avg}
-        scoreLabel={t('pronunciation_avg_label', 'Nota media')}
+        scoreLabel={t('voice_match_average')}
         onPlayAgain={() => { restart(); startGame(); }}
         onBack={goBack}
       />
@@ -320,12 +332,12 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
             (scoreInfo.level === 'perfect' || scoreInfo.level === 'good') ? 'j-pop' : 'animate-fade-in'
           }`}>
             <div className="flex items-baseline justify-between mb-2">
-              <p className="text-xs text-[var(--mute)]">{t('pronunciation_you_said', 'Has dicho')}</p>
+              <p className="text-xs text-[var(--mute)]">{t('voice_recognized_text')}</p>
               <p className={`text-xl font-bold ${
                 scoreInfo.level === 'perfect' ? 'text-[var(--jade)]' :
                 scoreInfo.level === 'good' ? 'text-[var(--jade-mid)]' :
                 scoreInfo.level === 'partial' ? 'text-[var(--sand)]' : 'text-[var(--red)]'
-              }`}>{scoreInfo.score}</p>
+              }`}>{t('voice_match_score', { score: scoreInfo.score })}</p>
             </div>
             <p className="text-lg text-[var(--ink)] mb-1">{scoreInfo.normRecognized || '—'}</p>
             <p className="text-xs italic" style={{
@@ -333,11 +345,12 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
                      scoreInfo.level === 'good' ? '#5a8f72' :
                      scoreInfo.level === 'partial' ? '#b88a3e' : '#c8392f'
             }}>
-              {scoreInfo.level === 'perfect' && t('pronunciation_level_perfect', '¡Perfecto!')}
+              {scoreInfo.level === 'perfect' && t('voice_match_exact')}
               {scoreInfo.level === 'good' && t('pronunciation_level_good', 'Muy bien.')}
               {scoreInfo.level === 'partial' && t('pronunciation_level_partial', 'Casi. Repite con más claridad.')}
               {scoreInfo.level === 'fail' && t('pronunciation_level_fail', 'No coincide. Inténtalo otra vez.')}
             </p>
+            <p className="mt-2 text-xs text-[var(--mute)]">{t('voice_match_limit')}</p>
           </div>
         )}
 
@@ -345,6 +358,7 @@ export default function PronunciationPractice({ goBack, selectedLesson }) {
         {errorMsg && (
           <div className="bg-[var(--red-bg)] border border-[var(--red)] rounded-xl p-3 text-sm text-[var(--red-deep)]">
             {errorMsg}
+            <button onClick={() => navigateFreePractice(true)} className="mt-3 block font-semibold underline">{t('voice_free_title')}</button>
           </div>
         )}
 

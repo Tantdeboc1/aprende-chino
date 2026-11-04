@@ -26,7 +26,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
       meaning: radical.meaning || '',
       examples: Array.isArray(radical.examples) ? radical.examples.join(', ') : '',
       strokeCount: radical.strokeCount || 0,
-      frequency: radical.frequency || 'media'
+      frequency: radical.frequency || ''
     }));
 
   const currentRadical = validRadicals[currentIndex];
@@ -345,7 +345,7 @@ export default function RadicalsWriting({ goBack, radicals, speakChinese }) {
             </div>
             <div>
               <p><strong>{t('writing_strokes_label')}</strong> {currentRadical.strokeCount}</p>
-              <p><strong>{t('writing_frequency_label')}</strong> {currentRadical.frequency}</p>
+              {currentRadical.frequency && <p><strong>{t('writing_frequency_label')}</strong> {currentRadical.frequency}</p>}
             </div>
           </div>
           {currentRadical.examples && (

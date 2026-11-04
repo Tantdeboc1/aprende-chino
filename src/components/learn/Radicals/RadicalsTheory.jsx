@@ -7,6 +7,7 @@ export default function RadicalsTheory({ goBack, radicals }) {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRadical, setSelectedRadical] = useState(null);
+  const [sortBy, setSortBy] = useState('strokes');
 
   // Filtrar radicales basado en la búsqueda - COMPATIBLE CON TU JSON
   const filteredRadicals = radicals.filter(radical => {
@@ -22,6 +23,8 @@ export default function RadicalsTheory({ goBack, radicals }) {
 
     // Buscar en pinyin del radical
     if (radical.pinyin?.toLowerCase().includes(searchLower)) return true;
+
+    if (radical.variants?.some(variant => variant.toLowerCase().includes(searchLower))) return true;
 
     // Buscar en ejemplos (caracteres)
     if (radical.examples?.some(example =>
@@ -45,11 +48,15 @@ export default function RadicalsTheory({ goBack, radicals }) {
   }, {});
 
   // Ordenar los grupos por número de trazos
-  const sortedGroups = Object.entries(groupedRadicals).sort(([keyA], [keyB]) => {
+  const strokeGroups = Object.entries(groupedRadicals).sort(([keyA], [keyB]) => {
     const numA = parseInt(keyA.replace('Trazo ', ''));
     const numB = parseInt(keyB.replace('Trazo ', ''));
     return numA - numB;
   });
+  const sortedGroups = sortBy === 'strokes' ? strokeGroups : [[
+    'frequency', [...filteredRadicals].sort((a, b) =>
+      (b.vocabularyCount || 0) - (a.vocabularyCount || 0) || a.strokeCount - b.strokeCount),
+  ]];
 
   return (
     <div className="min-h-screen bg-[var(--paper)] p-4">
@@ -143,13 +150,22 @@ export default function RadicalsTheory({ goBack, radicals }) {
           </div>
         </div>
 
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <label htmlFor="radical-sort" className="text-sm font-semibold text-[var(--ink)]">{t('radicals_sort_label')}</label>
+          <select id="radical-sort" value={sortBy} onChange={event => setSortBy(event.target.value)} className="rounded-lg border border-[var(--hair)] bg-[var(--paper-hi)] px-3 py-2 text-[var(--ink)]">
+            <option value="strokes">{t('radicals_sort_strokes')}</option>
+            <option value="frequency">{t('radicals_sort_frequency')}</option>
+          </select>
+          {sortBy === 'frequency' && <span className="text-sm text-[var(--mute)]">{t('radicals_frequency_basis')}</span>}
+        </div>
+
         {/* Lista de radicales */}
         <div className="space-y-8">
           {sortedGroups.map(([groupName, groupRadicals]) => (
             <div key={groupName} className="bg-[var(--paper-hi)] rounded-2xl p-6 border border-[var(--hair)]">
               <h3 className="text-xl font-bold text-[var(--ink)] mb-4 flex items-center">
                 <span className="w-3 h-3 bg-[var(--jade)] rounded-full mr-3"></span>
-                {t('radicals_stroke_group', { count: groupName.replace('Trazo ', '') })}
+                {groupName === 'frequency' ? t('radicals_sort_frequency') : t('radicals_stroke_group', { count: groupName.replace('Trazo ', '') })}
                 <span className="ml-2 text-sm text-[var(--mute)] bg-[var(--paper-hi2)] px-2 py-1 rounded">
                   {t('radicals_count', { count: groupRadicals.length })}
                 </span>
@@ -181,6 +197,16 @@ export default function RadicalsTheory({ goBack, radicals }) {
                     <div className="text-sm text-[var(--mute)] mb-3">
                       {radical.meaning}
                     </div>
+                    {sortBy === 'frequency' && <div className="text-xs text-[var(--mute)] mb-2">{t('radicals_vocabulary_count', { count: radical.vocabularyCount || 0 })}</div>}
+                    {(() => {
+                      const related = [...new Set([
+                        ...(radical.variants || []),
+                        ...radicals.filter(item => item.radical !== radical.radical &&
+                          item.variants?.some(variant => variant.split(' ')[0] === radical.radical))
+                          .map(item => item.radical),
+                      ])];
+                      return related.length > 0 && <div className="text-xs text-[var(--mute)] mb-2">{t('radicals_related_forms')} {related.join(', ')}</div>;
+                    })()}
 
                     {/* Ejemplos de caracteres */}
                     <div className="flex flex-wrap gap-2 mb-3">
@@ -224,11 +250,6 @@ export default function RadicalsTheory({ goBack, radicals }) {
                           {radical.frequency && (
                             <div className="text-[var(--mute)]">
                               {t('radicals_frequency')} <span className="text-[var(--ink)]">{radical.frequency}</span>
-                            </div>
-                          )}
-                          {radical.variants && radical.variants.length > 0 && (
-                            <div className="text-[var(--mute)]">
-                              {t('radicals_variants')} <span className="text-[var(--ink)]">{radical.variants.join(', ')}</span>
                             </div>
                           )}
                         </div>

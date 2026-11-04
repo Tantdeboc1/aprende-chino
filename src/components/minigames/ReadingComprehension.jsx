@@ -2,6 +2,7 @@
 // Minijuego: Comprensión lectora — lectura del texto (con audio TTS y
 // tap-to-define por palabra), elección de tipo de ejercicio y corrección.
 import { useState, useMemo, useEffect } from 'react';
+import { useHistorySubmenu } from '@/hooks/useHistorySubmenu.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { loc } from '@/utils/loc.js';
@@ -870,7 +871,9 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
   const { t, i18n } = useTranslation();
   const lang = (i18n.language || 'es').split('-')[0];
   const [historiaActiva, setHistoriaActiva] = useState(null);
-  const [fase, setFase] = useState('selector'); // 'selector' | 'lectura' | 'tipo' | 'test' | 'orden' | 'resultado'
+  const [step, setStep] = useState(null);
+  const fase = step || 'selector';
+  const navigateStep = useHistorySubmenu('reading-step', step, setStep, 'reading-comprehension');
   const [resultados, setResultados] = useState({ correctas: 0, total: 0 });
 
   // Diccionario para el tap-to-define (a partir del vocabulario de la app).
@@ -885,18 +888,16 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
     return { dict: m, maxLen: max };
   }, [characters]);
 
-  const handleSeleccionar = (story) => { setHistoriaActiva(story); setFase('lectura'); };
+  const handleSeleccionar = (story) => { setHistoriaActiva(story); navigateStep('lectura'); };
 
   const handleFinish = (correctas, total) => {
     if (historiaActiva) recordReadingResult(historiaActiva.id, correctas, total);
     setResultados({ correctas, total });
-    setFase('resultado');
+    navigateStep('resultado');
   };
 
   const handleVolver = () => {
-    setHistoriaActiva(null);
-    setFase('selector');
-    setResultados({ correctas: 0, total: 0 });
+    navigateStep(null);
   };
 
   if (fase === 'selector') {
@@ -924,7 +925,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
         maxLen={maxLen}
         speak={speak}
         onBack={handleVolver}
-        onContinue={() => setFase('tipo')}
+        onContinue={() => navigateStep('tipo')}
       />
     );
   }
@@ -935,8 +936,8 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
         story={historiaActiva}
         t={t}
         lang={lang}
-        onBack={() => setFase('lectura')}
-        onChoose={(tipo) => setFase(tipo)}
+        onBack={() => navigateStep('lectura')}
+        onChoose={(tipo) => navigateStep(tipo)}
       />
     );
   }
@@ -949,7 +950,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
         maxLen={maxLen}
         t={t}
         lang={lang}
-        onBack={() => setFase('tipo')}
+        onBack={() => navigateStep('tipo')}
         onFinish={handleFinish}
       />
     );
@@ -960,7 +961,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
       <OrderEventsExercise
         story={historiaActiva}
         t={t}
-        onBack={() => setFase('tipo')}
+        onBack={() => navigateStep('tipo')}
         onFinish={handleFinish}
       />
     );
@@ -974,7 +975,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
         maxLen={maxLen}
         t={t}
         lang={lang}
-        onBack={() => setFase('tipo')}
+        onBack={() => navigateStep('tipo')}
         onFinish={handleFinish}
       />
     );
@@ -985,7 +986,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
       <ClozeExercise
         story={historiaActiva}
         t={t}
-        onBack={() => setFase('tipo')}
+        onBack={() => navigateStep('tipo')}
         onFinish={handleFinish}
       />
     );
@@ -999,7 +1000,7 @@ export default function ReadingComprehension({ goBack, speak, characters }) {
         subtitle={historiaActiva?.titulo}
         correct={resultados.correctas}
         wrong={resultados.total - resultados.correctas}
-        onPlayAgain={() => setFase('tipo')}
+        onPlayAgain={() => navigateStep('tipo')}
         onBack={handleVolver}
       />
     );

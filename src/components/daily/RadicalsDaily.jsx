@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { shuffle } from "@/utils/arrayUtils.js";
+import { generateRadicalQuestions } from "@/utils/radicalQuestions.js";
 import { useKeyAnswers } from "@/utils/useKeyAnswers.js";
 
 const TOTAL_QUESTIONS = 10;
@@ -21,68 +21,7 @@ export default function RadicalsDaily({ goBack, radicals }) {
 
   const timerRef = useRef(null);
 
-  // Generar preguntas del quiz
-  const generateQuestions = () => {
-    const questions = [];
-    const usedRadicals = new Set();
-
-    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
-      // Seleccionar un radical aleatorio que no se haya usado como RESPUESTA CORRECTA
-      let availableRadicals = radicals.filter(r => !usedRadicals.has(r.radical));
-      if (availableRadicals.length === 0) {
-        usedRadicals.clear();
-        availableRadicals = radicals;
-      }
-
-      const correctRadical = availableRadicals[Math.floor(Math.random() * availableRadicals.length)];
-      usedRadicals.add(correctRadical.radical);
-
-      // Seleccionar un carácter de ejemplo
-      const exampleChars = correctRadical.examples || [];
-      const targetChar = exampleChars.length > 0
-        ? exampleChars[Math.floor(Math.random() * exampleChars.length)]
-        : correctRadical.radical;
-
-      // Generar opciones incorrectas
-      const allPossibleDistractors = shuffle(
-        radicals.filter(r => r.radical !== correctRadical.radical)
-      );
-
-      const otherRadicals = allPossibleDistractors
-        .slice(0, Math.min(3, allPossibleDistractors.length))
-        .map(r => r.radical);
-
-      // Completar opciones si es necesario
-      const neededDistractors = 3 - otherRadicals.length;
-      if (neededDistractors > 0) {
-        const extraDistractors = allPossibleDistractors
-          .slice(3, 3 + neededDistractors)
-          .map(r => r.radical);
-        otherRadicals.push(...extraDistractors);
-      }
-
-      // Garantizar opciones únicas
-      const uniqueOptions = [...new Set([correctRadical.radical, ...otherRadicals])];
-
-      while (uniqueOptions.length < 4) {
-        const randomRadical = radicals[Math.floor(Math.random() * radicals.length)].radical;
-        if (!uniqueOptions.includes(randomRadical)) {
-          uniqueOptions.push(randomRadical);
-        }
-      }
-
-      const allOptions = shuffle(uniqueOptions);
-
-      questions.push({
-        id: i,
-        targetChar: targetChar,
-        correctAnswer: correctRadical.radical,
-        options: allOptions,
-      });
-    }
-
-    return questions;
-  };
+  const generateQuestions = () => generateRadicalQuestions(radicals, TOTAL_QUESTIONS);
 
   // Inicializar quiz
   const initQuiz = () => {

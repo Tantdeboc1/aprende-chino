@@ -77,6 +77,28 @@ describe('PronunciationPractice', () => {
     expect(screen.getByText(/didn't hear/i)).toBeTruthy();
   });
 
+  it('ofrece escuchar y repetir cuando se deniega el micrófono', async () => {
+    recognizeMock.mockRejectedValue({ code: SpeechErrorCode.NO_PERMISSION });
+    start();
+    await act(async () => { fireEvent.click(recordButton()); await vi.runOnlyPendingTimersAsync(); });
+    fireEvent.click(screen.getByRole('button', { name: /listen and repeat/i }));
+    expect(screen.getByText(/does not record or score/i)).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /^record$/i })).toBeNull();
+  });
+
+  it('un reintento sustituye la puntuación de la ronda y aclara sus límites', async () => {
+    recognizeMock.mockResolvedValue({ transcript: '你好0' });
+    scorePronunciationMock.mockReturnValueOnce({ score: 80, level: 'good', normRecognized: '你好0', charMatches: [true, true, true] })
+      .mockReturnValueOnce({ score: 90, level: 'good', normRecognized: '你好0', charMatches: [true, true, true] });
+    start();
+    await act(async () => { fireEvent.click(recordButton()); await vi.runOnlyPendingTimersAsync(); });
+    expect(screen.getByText(/does not assess tones/i)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
+    await act(async () => { fireEvent.click(recordButton()); await vi.runOnlyPendingTimersAsync(); });
+    expect(screen.getByText('90')).toBeTruthy();
+    expect(screen.queryByText('170')).toBeNull();
+  });
+
   it('el botón atrás de la intro llama a goBack', () => {
     const goBack = vi.fn();
     render(<PronunciationPractice goBack={goBack} selectedLesson={null} />);

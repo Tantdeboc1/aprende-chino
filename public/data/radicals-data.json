@@ -8,10 +8,13 @@
       "explanation": "La línea horizontal más básica. Representa el número uno o una línea recta.",
       "frequency": "muy alta",
       "examples": [
-        "一",
         "七",
         "三",
-        "上"
+        "上",
+        "不",
+        "两",
+        "下",
+        "东"
       ],
       "meaningTr": {
         "en": "one, horizontal line",
@@ -33,7 +36,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 5,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "丨": {
       "meaning": "línea vertical",
@@ -44,8 +49,8 @@
       "frequency": "alta",
       "examples": [
         "中",
-        "十",
-        "丰"
+        "丰",
+        "个"
       ],
       "meaningTr": {
         "en": "vertical line",
@@ -67,7 +72,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "丶": {
       "meaning": "punto, gota",
@@ -79,7 +86,7 @@
       "examples": [
         "丸",
         "主",
-        "永"
+        "为"
       ],
       "meaningTr": {
         "en": "dot, drop",
@@ -101,7 +108,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "丿": {
       "meaning": "trazo inclinado",
@@ -111,9 +120,9 @@
       "explanation": "Trazo que cae hacia la izquierda. Representa movimiento.",
       "frequency": "alta",
       "examples": [
-        "九",
         "乎",
-        "年"
+        "乂",
+        "乃"
       ],
       "meaningTr": {
         "en": "slanted stroke",
@@ -135,7 +144,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "乙": {
       "meaning": "segundo, gancho",
@@ -143,14 +154,15 @@
       "pinyin": "yǐ",
       "variants": [
         "乛",
-        "㇆"
+        "㇆",
+        "乚"
       ],
       "explanation": "El segundo de los Diez Tallos Celestiales. Forma de gancho.",
       "frequency": "media",
       "examples": [
-        "乙",
-        "飞",
-        "乞"
+        "乞",
+        "也",
+        "书"
       ],
       "meaningTr": {
         "en": "second, hook",
@@ -172,7 +184,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "二": {
       "meaning": "dos",
@@ -182,7 +196,6 @@
       "explanation": "Dos líneas horizontales. Representa el número dos.",
       "frequency": "alta",
       "examples": [
-        "二",
         "五",
         "云",
         "些"
@@ -207,7 +220,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "亠": {
       "meaning": "cubierta, tapa",
@@ -241,7 +256,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "人": {
       "meaning": "persona, gente",
@@ -253,12 +270,13 @@
       "explanation": "Persona de pie vista de lado. Uno de los radicales más comunes.",
       "frequency": "muy alta",
       "examples": [
-        "人",
         "你",
         "他",
         "们",
         "什",
-        "今"
+        "今",
+        "做",
+        "件"
       ],
       "meaningTr": {
         "en": "person, people",
@@ -280,7 +298,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 7,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "儿": {
       "meaning": "niño, piernas",
@@ -290,7 +310,6 @@
       "explanation": "Representa las piernas de un niño o persona caminando.",
       "frequency": "alta",
       "examples": [
-        "儿",
         "兄",
         "先",
         "元"
@@ -315,7 +334,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "入": {
       "meaning": "entrar",
@@ -325,9 +346,9 @@
       "explanation": "Representa entrar en un lugar.",
       "frequency": "media",
       "examples": [
-        "入",
-        "内",
-        "全"
+        "全",
+        "內",
+        "氽"
       ],
       "meaningTr": {
         "en": "to enter",
@@ -349,20 +370,23 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "八": {
       "meaning": "ocho, dividir",
       "strokeCount": 2,
       "pinyin": "bā",
-      "variants": [],
+      "variants": [
+        "丷"
+      ],
       "explanation": "Originalmente representaba dividir. Ahora significa ocho.",
       "frequency": "alta",
       "examples": [
-        "八",
         "六",
         "公",
-        "分"
+        "兮"
       ],
       "meaningTr": {
         "en": "eight, to divide",
@@ -384,7 +408,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "冂": {
       "meaning": "frontera, borde",
@@ -395,8 +421,8 @@
       "frequency": "media",
       "examples": [
         "内",
-        "用",
-        "周"
+        "円",
+        "冈"
       ],
       "meaningTr": {
         "en": "border, edge",
@@ -418,7 +444,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "冫": {
       "meaning": "hielo, frío",
@@ -453,7 +481,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "几": {
       "meaning": "mesa pequeña, casi",
@@ -463,9 +493,9 @@
       "explanation": "Representa una mesa pequeña o taburete.",
       "frequency": "media",
       "examples": [
-        "几",
-        "机",
-        "风"
+        "凡",
+        "凤",
+        "処"
       ],
       "meaningTr": {
         "en": "small table, almost",
@@ -487,7 +517,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "凵": {
       "meaning": "recipiente, contenedor",
@@ -499,7 +531,7 @@
       "examples": [
         "凶",
         "出",
-        "画"
+        "击"
       ],
       "meaningTr": {
         "en": "open container",
@@ -521,7 +553,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "刀": {
       "meaning": "cuchillo, cortar",
@@ -533,11 +567,11 @@
       "explanation": "Representa un cuchillo. Usado en caracteres relacionados con cortar.",
       "frequency": "alta",
       "examples": [
-        "刀",
         "分",
         "到",
         "别",
-        "前"
+        "前",
+        "刚"
       ],
       "meaningTr": {
         "en": "knife, to cut",
@@ -559,7 +593,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 5,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "力": {
       "meaning": "fuerza, poder",
@@ -569,7 +605,6 @@
       "explanation": "Representa un músculo o fuerza física.",
       "frequency": "alta",
       "examples": [
-        "力",
         "加",
         "动",
         "助"
@@ -594,7 +629,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "勹": {
       "meaning": "envolver, contener",
@@ -628,7 +665,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "匕": {
       "meaning": "cuchara, cuchillo",
@@ -662,7 +701,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "匚": {
       "meaning": "caja, contenedor",
@@ -672,9 +713,9 @@
       "explanation": "Representa una caja o contenedor cuadrado.",
       "frequency": "baja",
       "examples": [
-        "区",
-        "医",
-        "匹"
+        "匛",
+        "匝",
+        "匠"
       ],
       "meaningTr": {
         "en": "box, container",
@@ -696,7 +737,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "十": {
       "meaning": "diez, completo",
@@ -706,10 +749,10 @@
       "explanation": "Una cruz que representa el número diez o completitud.",
       "frequency": "alta",
       "examples": [
-        "十",
         "南",
-        "古",
-        "华"
+        "华",
+        "半",
+        "千"
       ],
       "meaningTr": {
         "en": "ten, complete",
@@ -731,7 +774,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "卜": {
       "meaning": "adivinación",
@@ -741,9 +786,9 @@
       "explanation": "Representa grietas en huesos usados para adivinación.",
       "frequency": "media",
       "examples": [
-        "卜",
         "占",
-        "卦"
+        "卦",
+        "卡"
       ],
       "meaningTr": {
         "en": "divination",
@@ -765,7 +810,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "卩": {
       "meaning": "sello, rodilla",
@@ -799,7 +846,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "厂": {
       "meaning": "acantilado, fábrica",
@@ -809,7 +858,6 @@
       "explanation": "Representa un acantilado o precipicio.",
       "frequency": "media",
       "examples": [
-        "厂",
         "历",
         "压",
         "原"
@@ -834,7 +882,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "厶": {
       "meaning": "privado, personal",
@@ -844,9 +894,9 @@
       "explanation": "Representa algo privado o personal.",
       "frequency": "media",
       "examples": [
-        "私",
         "去",
-        "参"
+        "参",
+        "厷"
       ],
       "meaningTr": {
         "en": "private, personal",
@@ -868,7 +918,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "又": {
       "meaning": "mano derecha, otra vez",
@@ -878,10 +930,10 @@
       "explanation": "Representa una mano derecha. También significa 'otra vez'.",
       "frequency": "alta",
       "examples": [
-        "又",
         "友",
         "反",
-        "取"
+        "取",
+        "难"
       ],
       "meaningTr": {
         "en": "right hand, again",
@@ -903,7 +955,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "口": {
       "meaning": "boca, entrada",
@@ -913,7 +967,6 @@
       "explanation": "Representa una boca abierta. Uno de los radicales más comunes.",
       "frequency": "muy alta",
       "examples": [
-        "口",
         "叫",
         "吃",
         "喝",
@@ -922,7 +975,15 @@
         "吧",
         "右",
         "后",
-        "名"
+        "名",
+        "哪",
+        "和",
+        "啊",
+        "听",
+        "只",
+        "唱",
+        "号",
+        "员"
       ],
       "meaningTr": {
         "en": "mouth, opening",
@@ -944,7 +1005,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 18,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "囗": {
       "meaning": "recinto, cercado",
@@ -957,7 +1020,8 @@
         "国",
         "四",
         "回",
-        "园"
+        "园",
+        "困"
       ],
       "meaningTr": {
         "en": "enclosure",
@@ -979,7 +1043,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "土": {
       "meaning": "tierra, suelo",
@@ -989,7 +1055,6 @@
       "explanation": "Representa un montículo de tierra.",
       "frequency": "alta",
       "examples": [
-        "土",
         "地",
         "在",
         "场",
@@ -1015,7 +1080,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "士": {
       "meaning": "estudioso, caballero",
@@ -1025,10 +1092,9 @@
       "explanation": "Representa a un estudioso o caballero educado.",
       "frequency": "media",
       "examples": [
-        "士",
         "声",
         "壮",
-        "吉"
+        "壬"
       ],
       "meaningTr": {
         "en": "scholar, gentleman",
@@ -1050,7 +1116,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "夂": {
       "meaning": "llegar, seguir",
@@ -1060,9 +1128,9 @@
       "explanation": "Representa llegar o seguir desde atrás.",
       "frequency": "baja",
       "examples": [
-        "各",
-        "条",
-        "备"
+        "备",
+        "処",
+        "处"
       ],
       "meaningTr": {
         "en": "to arrive, to follow",
@@ -1084,7 +1152,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "夕": {
       "meaning": "atardecer, noche",
@@ -1094,7 +1164,6 @@
       "explanation": "Representa la luna creciente al atardecer.",
       "frequency": "media",
       "examples": [
-        "夕",
         "多",
         "外",
         "夜"
@@ -1119,7 +1188,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "大": {
       "meaning": "grande, adulto",
@@ -1129,7 +1200,6 @@
       "explanation": "Representa a una persona con los brazos extendidos, significando grande.",
       "frequency": "alta",
       "examples": [
-        "大",
         "天",
         "太",
         "头"
@@ -1154,7 +1224,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "女": {
       "meaning": "mujer, femenino",
@@ -1164,12 +1236,10 @@
       "explanation": "Representa a una mujer arrodillada.",
       "frequency": "alta",
       "examples": [
-        "女",
         "好",
         "她",
         "妈",
-        "姓",
-        "要"
+        "姓"
       ],
       "meaningTr": {
         "en": "woman, female",
@@ -1191,7 +1261,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "子": {
       "meaning": "niño, semilla",
@@ -1201,11 +1273,9 @@
       "explanation": "Representa a un niño o bebé.",
       "frequency": "alta",
       "examples": [
-        "子",
         "字",
         "学",
-        "孩",
-        "好"
+        "孩"
       ],
       "meaningTr": {
         "en": "child, seed",
@@ -1227,7 +1297,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "宀": {
       "meaning": "techo, casa",
@@ -1239,12 +1311,9 @@
       "examples": [
         "家",
         "安",
-        "字",
         "宿",
         "宝",
-        "它",
-        "写",
-        "家"
+        "它"
       ],
       "meaningTr": {
         "en": "roof, house",
@@ -1266,7 +1335,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "寸": {
       "meaning": "pulgada, medida",
@@ -1276,7 +1347,6 @@
       "explanation": "Representa una mano mostrando el punto de pulso, usado como medida.",
       "frequency": "media",
       "examples": [
-        "寸",
         "对",
         "封",
         "导"
@@ -1301,7 +1371,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "小": {
       "meaning": "pequeño",
@@ -1311,7 +1383,6 @@
       "explanation": "Representa partículas pequeñas o algo diminuto.",
       "frequency": "alta",
       "examples": [
-        "小",
         "少",
         "尔",
         "尘"
@@ -1336,7 +1407,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "尢": {
       "meaning": "cojo, débil",
@@ -1370,7 +1443,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "尸": {
       "meaning": "cuerpo, cadáver",
@@ -1380,10 +1455,10 @@
       "explanation": "Representa un cuerpo reclinado o cadáver.",
       "frequency": "media",
       "examples": [
-        "尸",
         "尺",
         "居",
-        "层"
+        "层",
+        "属"
       ],
       "meaningTr": {
         "en": "body, corpse",
@@ -1405,7 +1480,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "屮": {
       "meaning": "hierba brotando",
@@ -1415,9 +1492,8 @@
       "explanation": "Representa hierba brotando de la tierra.",
       "frequency": "baja",
       "examples": [
-        "草",
-        "卉",
-        "茻"
+        "屯",
+        "屰"
       ],
       "meaningTr": {
         "en": "sprouting grass",
@@ -1439,7 +1515,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "山": {
       "meaning": "montaña",
@@ -1449,7 +1527,6 @@
       "explanation": "Representa picos de montaña.",
       "frequency": "alta",
       "examples": [
-        "山",
         "岁",
         "岸",
         "峰"
@@ -1474,7 +1551,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "川": {
       "meaning": "río, corriente",
@@ -1484,9 +1563,9 @@
       "explanation": "Representa el flujo de un río.",
       "frequency": "media",
       "examples": [
-        "川",
         "州",
-        "顺"
+        "巠",
+        "巡"
       ],
       "meaningTr": {
         "en": "river, stream",
@@ -1508,7 +1587,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "工": {
       "meaning": "trabajo, herramienta",
@@ -1518,10 +1599,9 @@
       "explanation": "Representa una herramienta de carpintero o trabajo.",
       "frequency": "alta",
       "examples": [
-        "工",
         "左",
-        "功",
-        "式"
+        "差",
+        "巧"
       ],
       "meaningTr": {
         "en": "work, tool",
@@ -1543,7 +1623,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "己": {
       "meaning": "uno mismo",
@@ -1553,10 +1635,9 @@
       "explanation": "Representa a uno mismo o identidad personal.",
       "frequency": "media",
       "examples": [
-        "己",
-        "记",
-        "起",
-        "改"
+        "巴",
+        "㠯",
+        "巷"
       ],
       "meaningTr": {
         "en": "oneself",
@@ -1578,7 +1659,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "巾": {
       "meaning": "paño, tela",
@@ -1588,10 +1671,10 @@
       "explanation": "Representa un trozo de tela colgando.",
       "frequency": "media",
       "examples": [
-        "巾",
         "市",
         "布",
-        "帅"
+        "帅",
+        "常"
       ],
       "meaningTr": {
         "en": "cloth, towel",
@@ -1613,7 +1696,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "干": {
       "meaning": "escudo, secar",
@@ -1623,7 +1708,6 @@
       "explanation": "Representa un escudo antiguo.",
       "frequency": "media",
       "examples": [
-        "干",
         "平",
         "年",
         "并"
@@ -1648,7 +1732,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "幺": {
       "meaning": "pequeño, fino",
@@ -1658,7 +1744,6 @@
       "explanation": "Representa un hilo fino o algo muy pequeño.",
       "frequency": "media",
       "examples": [
-        "幺",
         "幼",
         "幻",
         "幽"
@@ -1683,7 +1768,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "广": {
       "meaning": "estructura con techo",
@@ -1693,10 +1780,10 @@
       "explanation": "Representa un edificio con techo pero sin paredes laterales.",
       "frequency": "media",
       "examples": [
-        "广",
         "店",
         "床",
-        "座"
+        "座",
+        "度"
       ],
       "meaningTr": {
         "en": "roofed structure",
@@ -1718,7 +1805,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "廴": {
       "meaning": "caminar largo",
@@ -1752,7 +1841,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "廾": {
       "meaning": "dos manos",
@@ -1786,7 +1877,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "弋": {
       "meaning": "arponear, atacar",
@@ -1796,10 +1889,8 @@
       "explanation": "Representa un arpón o lanza con cuerda.",
       "frequency": "baja",
       "examples": [
-        "弋",
         "式",
-        "代",
-        "试"
+        "甙"
       ],
       "meaningTr": {
         "en": "to shoot, dart",
@@ -1821,7 +1912,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "弓": {
       "meaning": "arco",
@@ -1831,7 +1924,6 @@
       "explanation": "Representa un arco para disparar flechas.",
       "frequency": "media",
       "examples": [
-        "弓",
         "引",
         "张",
         "强"
@@ -1856,7 +1948,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "彐": {
       "meaning": "cabeza de cerdo",
@@ -1868,10 +1962,9 @@
       "explanation": "Representa la cabeza de un cerdo.",
       "frequency": "baja",
       "examples": [
-        "彐",
         "归",
         "当",
-        "寻"
+        "刍"
       ],
       "meaningTr": {
         "en": "pig’s head",
@@ -1893,7 +1986,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "彡": {
       "meaning": "pelo, decoración",
@@ -1905,8 +2000,7 @@
       "examples": [
         "形",
         "彩",
-        "影",
-        "须"
+        "影"
       ],
       "meaningTr": {
         "en": "hair, decoration",
@@ -1928,7 +2022,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "心": {
       "meaning": "corazón, mente",
@@ -1941,12 +2037,11 @@
       "explanation": "Representa el corazón. Fundamental para emociones y pensamientos.",
       "frequency": "muy alta",
       "examples": [
-        "心",
         "想",
         "忙",
-        "爱",
         "您",
-        "意"
+        "意",
+        "快"
       ],
       "meaningTr": {
         "en": "heart, mind",
@@ -1968,7 +2063,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 4,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "戈": {
       "meaning": "alabarda, lanza",
@@ -2002,23 +2099,27 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "水": {
       "meaning": "agua",
       "strokeCount": 4,
       "pinyin": "shuǐ",
       "variants": [
-        "氵"
+        "氵",
+        "氺"
       ],
       "explanation": "Representa el agua que fluye. Esencial para caracteres relacionados con líquidos.",
       "frequency": "muy alta",
       "examples": [
-        "水",
         "海",
         "河",
         "汁",
-        "汤"
+        "汤",
+        "渴",
+        "没"
       ],
       "meaningTr": {
         "en": "water",
@@ -2040,7 +2141,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "火": {
       "meaning": "fuego",
@@ -2052,7 +2155,6 @@
       "explanation": "Representa una llama de fuego. Asociado con calor, luz y cocina.",
       "frequency": "alta",
       "examples": [
-        "火",
         "灯",
         "热",
         "炒"
@@ -2077,7 +2179,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "木": {
       "meaning": "árbol, madera",
@@ -2087,11 +2191,14 @@
       "explanation": "Representa un árbol. Relacionado con plantas, madera y objetos de madera.",
       "frequency": "alta",
       "examples": [
-        "木",
         "林",
         "森",
         "树",
-        "校"
+        "校",
+        "杯",
+        "来",
+        "楼",
+        "条"
       ],
       "meaningTr": {
         "en": "tree, wood",
@@ -2113,7 +2220,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 4,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "日": {
       "meaning": "sol, día",
@@ -2123,11 +2232,12 @@
       "explanation": "Representa el sol. Relacionado con el tiempo, la luz y la claridad.",
       "frequency": "alta",
       "examples": [
-        "日",
         "明",
         "是",
         "时",
-        "晴"
+        "晴",
+        "早",
+        "晚"
       ],
       "meaningTr": {
         "en": "sun, day",
@@ -2149,7 +2259,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "月": {
       "meaning": "luna, mes",
@@ -2161,9 +2273,7 @@
       "explanation": "Representa la luna. También puede representar carne o partes del cuerpo.",
       "frequency": "alta",
       "examples": [
-        "月",
         "有",
-        "明",
         "期",
         "服"
       ],
@@ -2187,14 +2297,17 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 5,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "襾": {
       "meaning": "cubrir, oeste",
       "strokeCount": 6,
       "pinyin": "yà",
       "variants": [
-        "西"
+        "西",
+        "覀"
       ],
       "explanation": "Representa algo que cubre. Es la forma tradicional del radical para 'oeste'.",
       "frequency": "baja",
@@ -2223,7 +2336,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "白": {
       "meaning": "blanco, claro",
@@ -2233,7 +2348,6 @@
       "explanation": "Representa el color blanco o la claridad. También puede significar 'en vano'.",
       "frequency": "alta",
       "examples": [
-        "白",
         "的",
         "百",
         "皂"
@@ -2258,7 +2372,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "艹": {
       "meaning": "hierba, planta",
@@ -2294,7 +2410,9 @@
         "de": "sehr hoch",
         "it": "molto alta",
         "pt": "muito alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "车": {
       "meaning": "carro, vehículo",
@@ -2304,10 +2422,9 @@
       "explanation": "Representa un carro visto desde arriba. Relacionado con vehículos y transporte.",
       "frequency": "alta",
       "examples": [
-        "车",
-        "军",
         "轮",
-        "软"
+        "软",
+        "軋"
       ],
       "meaningTr": {
         "en": "cart, vehicle",
@@ -2329,7 +2446,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "讠": {
       "meaning": "discurso",
@@ -2344,7 +2463,10 @@
         "请",
         "谢",
         "让",
-        "谁"
+        "谁",
+        "课",
+        "试",
+        "该"
       ],
       "meaningTr": {
         "en": "speech",
@@ -2366,7 +2488,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 6,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "辶": {
       "meaning": "caminar",
@@ -2379,7 +2503,11 @@
         "这",
         "还",
         "远",
-        "近"
+        "近",
+        "进",
+        "送",
+        "边",
+        "过"
       ],
       "meaningTr": {
         "en": "to walk",
@@ -2401,7 +2529,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 6,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "扌": {
       "meaning": "mano",
@@ -2411,7 +2541,9 @@
       "explanation": "Radical que representa la mano y acciones manuales.",
       "frequency": "alta",
       "examples": [
-        "找"
+        "找",
+        "挂",
+        "扎"
       ],
       "meaningTr": {
         "en": "hand",
@@ -2433,7 +2565,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "纟": {
       "meaning": "seda",
@@ -2443,7 +2577,9 @@
       "explanation": "Radical relacionado con la seda o hilos.",
       "frequency": "media",
       "examples": [
-        "给"
+        "给",
+        "绿",
+        "累"
       ],
       "meaningTr": {
         "en": "silk",
@@ -2465,7 +2601,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "钅": {
       "meaning": "metal",
@@ -2476,7 +2614,8 @@
       "frequency": "media",
       "examples": [
         "错",
-        "钱"
+        "钱",
+        "针"
       ],
       "meaningTr": {
         "en": "metal",
@@ -2498,7 +2637,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "彳": {
       "meaning": "paso",
@@ -2508,7 +2649,9 @@
       "explanation": "Radical que representa un paso o caminar.",
       "frequency": "media",
       "examples": [
-        "很"
+        "很",
+        "彷",
+        "彸"
       ],
       "meaningTr": {
         "en": "step",
@@ -2530,7 +2673,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 2,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "禾": {
       "meaning": "grano",
@@ -2540,7 +2685,9 @@
       "explanation": "Radical que representa cereales o grano.",
       "frequency": "media",
       "examples": [
-        "和"
+        "科",
+        "禿",
+        "秀"
       ],
       "meaningTr": {
         "en": "grain",
@@ -2562,7 +2709,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "目": {
       "meaning": "ojo",
@@ -2573,7 +2722,8 @@
       "frequency": "alta",
       "examples": [
         "看",
-        "真"
+        "真",
+        "睡"
       ],
       "meaningTr": {
         "en": "eye",
@@ -2595,7 +2745,9 @@
         "de": "hoch",
         "it": "alta",
         "pt": "alta"
-      }
+      },
+      "vocabularyCount": 3,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "贝": {
       "meaning": "concha",
@@ -2605,7 +2757,9 @@
       "explanation": "Radical relacionado con conchas, dinero o objetos de valor.",
       "frequency": "media",
       "examples": [
-        "贵"
+        "贵",
+        "貞",
+        "負"
       ],
       "meaningTr": {
         "en": "shell",
@@ -2627,7 +2781,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "斤": {
       "meaning": "hacha",
@@ -2637,7 +2793,9 @@
       "explanation": "Radical que representa un hacha o una unidad de peso.",
       "frequency": "media",
       "examples": [
-        "新"
+        "新",
+        "斥",
+        "斦"
       ],
       "meaningTr": {
         "en": "axe",
@@ -2659,7 +2817,9 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 1,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "矢": {
       "meaning": "flecha",
@@ -2669,7 +2829,9 @@
       "explanation": "Radical que representa una flecha.",
       "frequency": "baja",
       "examples": [
-        "短"
+        "短",
+        "矣",
+        "知"
       ],
       "meaningTr": {
         "en": "arrow",
@@ -2691,7 +2853,9 @@
         "de": "niedrig",
         "it": "bassa",
         "pt": "baixa"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
     },
     "黑": {
       "meaning": "negro",
@@ -2701,7 +2865,9 @@
       "explanation": "Radical que representa el color negro.",
       "frequency": "media",
       "examples": [
-        "点"
+        "墨",
+        "黔",
+        "默"
       ],
       "meaningTr": {
         "en": "black",
@@ -2723,7 +2889,2955 @@
         "de": "mittel",
         "it": "media",
         "pt": "média"
-      }
+      },
+      "vocabularyCount": 0,
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "亅": {
+      "meaning": "gancho vertical",
+      "strokeCount": 1,
+      "pinyin": "jué",
+      "variants": [],
+      "examples": [
+        "了",
+        "争",
+        "事"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "vertical hook",
+        "fr": "crochet vertical",
+        "de": "senkrechter Haken",
+        "it": "uncino verticale",
+        "pt": "gancho vertical"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "冖": {
+      "meaning": "cubierta",
+      "strokeCount": 2,
+      "pinyin": "mì",
+      "variants": [],
+      "examples": [
+        "写",
+        "冗",
+        "军"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "cover",
+        "fr": "couvercle",
+        "de": "Abdeckung",
+        "it": "copertura",
+        "pt": "cobertura"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "匸": {
+      "meaning": "recinto oculto",
+      "strokeCount": 2,
+      "pinyin": "xì",
+      "variants": [],
+      "examples": [
+        "匹",
+        "区",
+        "医"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "hidden enclosure",
+        "fr": "enceinte cachée",
+        "de": "verborgene Umfriedung",
+        "it": "recinto nascosto",
+        "pt": "recinto oculto"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "夊": {
+      "meaning": "caminar lentamente",
+      "strokeCount": 3,
+      "pinyin": "suī",
+      "variants": [],
+      "examples": [
+        "夋",
+        "夔"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "walk slowly",
+        "fr": "marcher lentement",
+        "de": "langsam gehen",
+        "it": "camminare lentamente",
+        "pt": "caminhar lentamente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "巛": {
+      "meaning": "río; corriente",
+      "strokeCount": 3,
+      "pinyin": "chuān",
+      "variants": [
+        "川"
+      ],
+      "examples": [
+        "州",
+        "巠",
+        "巡"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "river; stream",
+        "fr": "rivière; courant",
+        "de": "Fluss; Strömung",
+        "it": "fiume; corrente",
+        "pt": "rio; corrente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "戶": {
+      "meaning": "puerta de una hoja",
+      "strokeCount": 4,
+      "pinyin": "hù",
+      "variants": [
+        "户"
+      ],
+      "examples": [
+        "启",
+        "戽",
+        "戾"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "single door",
+        "fr": "porte à un battant",
+        "de": "einflügelige Tür",
+        "it": "porta a un battente",
+        "pt": "porta de uma folha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "手": {
+      "meaning": "mano",
+      "strokeCount": 4,
+      "pinyin": "shǒu",
+      "variants": [
+        "扌"
+      ],
+      "examples": [
+        "找",
+        "挂",
+        "扎"
+      ],
+      "vocabularyCount": 2,
+      "meaningTr": {
+        "en": "hand",
+        "fr": "main",
+        "de": "Hand",
+        "it": "mano",
+        "pt": "mão"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "支": {
+      "meaning": "rama; apoyo",
+      "strokeCount": 4,
+      "pinyin": "zhī",
+      "variants": [],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "branch; support",
+        "fr": "branche; soutien",
+        "de": "Ast; Stütze",
+        "it": "ramo; sostegno",
+        "pt": "ramo; apoio"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "攴": {
+      "meaning": "golpear suavemente",
+      "strokeCount": 4,
+      "pinyin": "pū",
+      "variants": [
+        "攵"
+      ],
+      "examples": [
+        "教",
+        "收",
+        "攸"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "tap; strike lightly",
+        "fr": "frapper légèrement",
+        "de": "leicht schlagen",
+        "it": "colpire leggermente",
+        "pt": "bater levemente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "文": {
+      "meaning": "escritura; dibujo",
+      "strokeCount": 4,
+      "pinyin": "wén",
+      "variants": [],
+      "examples": [
+        "斋",
+        "斌",
+        "斐"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "writing; pattern",
+        "fr": "écriture; dessin",
+        "de": "Schrift; Muster",
+        "it": "scrittura; disegno",
+        "pt": "escrita; desenho"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "斗": {
+      "meaning": "cazo; cucharón",
+      "strokeCount": 4,
+      "pinyin": "dǒu",
+      "variants": [],
+      "examples": [
+        "料",
+        "斛",
+        "斜"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ladle",
+        "fr": "louche",
+        "de": "Schöpfkelle",
+        "it": "mestolo",
+        "pt": "concha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "方": {
+      "meaning": "cuadrado; dirección",
+      "strokeCount": 4,
+      "pinyin": "fāng",
+      "variants": [],
+      "examples": [
+        "於",
+        "施",
+        "斿"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "square; direction",
+        "fr": "carré; direction",
+        "de": "Quadrat; Richtung",
+        "it": "quadrato; direzione",
+        "pt": "quadrado; direção"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "无": {
+      "meaning": "no tener; ausencia",
+      "strokeCount": 4,
+      "pinyin": "wú",
+      "variants": [
+        "旡"
+      ],
+      "examples": [
+        "既"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "absence; not have",
+        "fr": "absence; ne pas avoir",
+        "de": "Abwesenheit; nicht haben",
+        "it": "assenza; non avere",
+        "pt": "ausência; não ter"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "曰": {
+      "meaning": "decir",
+      "strokeCount": 4,
+      "pinyin": "yuē",
+      "variants": [],
+      "examples": [
+        "曱",
+        "曲",
+        "曳"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "say",
+        "fr": "dire",
+        "de": "sagen",
+        "it": "dire",
+        "pt": "dizer"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "欠": {
+      "meaning": "bostezar; faltar",
+      "strokeCount": 4,
+      "pinyin": "qiàn",
+      "variants": [],
+      "examples": [
+        "歌",
+        "次",
+        "欢"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "yawn; lack",
+        "fr": "bâiller; manquer",
+        "de": "gähnen; fehlen",
+        "it": "sbadigliare; mancare",
+        "pt": "bocejar; faltar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "止": {
+      "meaning": "detenerse",
+      "strokeCount": 4,
+      "pinyin": "zhǐ",
+      "variants": [],
+      "examples": [
+        "正",
+        "此",
+        "步"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "stop",
+        "fr": "arrêter",
+        "de": "anhalten",
+        "it": "fermarsi",
+        "pt": "parar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "歹": {
+      "meaning": "muerte; restos",
+      "strokeCount": 4,
+      "pinyin": "dǎi",
+      "variants": [],
+      "examples": [
+        "死",
+        "歼",
+        "殁"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "death; remains",
+        "fr": "mort; restes",
+        "de": "Tod; Überreste",
+        "it": "morte; resti",
+        "pt": "morte; restos"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "殳": {
+      "meaning": "arma contundente",
+      "strokeCount": 4,
+      "pinyin": "shū",
+      "variants": [],
+      "examples": [
+        "殴",
+        "段",
+        "殷"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "striking weapon",
+        "fr": "arme contondante",
+        "de": "Schlagwaffe",
+        "it": "arma contundente",
+        "pt": "arma contundente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "毋": {
+      "meaning": "no; prohibición",
+      "strokeCount": 4,
+      "pinyin": "wú",
+      "variants": [],
+      "examples": [
+        "每",
+        "毒"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "do not; prohibition",
+        "fr": "ne pas; interdiction",
+        "de": "nicht; Verbot",
+        "it": "non; divieto",
+        "pt": "não; proibição"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "比": {
+      "meaning": "comparar",
+      "strokeCount": 4,
+      "pinyin": "bǐ",
+      "variants": [],
+      "examples": [
+        "毕",
+        "㲋",
+        "毖"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "compare",
+        "fr": "comparer",
+        "de": "vergleichen",
+        "it": "confrontare",
+        "pt": "comparar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "毛": {
+      "meaning": "pelo; pelaje",
+      "strokeCount": 4,
+      "pinyin": "máo",
+      "variants": [],
+      "examples": [
+        "毡",
+        "毪",
+        "毫"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "hair; fur",
+        "fr": "poil; fourrure",
+        "de": "Haar; Fell",
+        "it": "pelo; pelliccia",
+        "pt": "pelo; pelagem"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "氏": {
+      "meaning": "clan; apellido",
+      "strokeCount": 4,
+      "pinyin": "shì",
+      "variants": [],
+      "examples": [
+        "氐",
+        "氓"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "clan; surname",
+        "fr": "clan; nom de famille",
+        "de": "Clan; Familienname",
+        "it": "clan; cognome",
+        "pt": "clã; apelido"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "气": {
+      "meaning": "aire; vapor",
+      "strokeCount": 4,
+      "pinyin": "qì",
+      "variants": [],
+      "examples": [
+        "氕",
+        "氖",
+        "氘"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "air; vapor",
+        "fr": "air; vapeur",
+        "de": "Luft; Dampf",
+        "it": "aria; vapore",
+        "pt": "ar; vapor"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "爪": {
+      "meaning": "garra; uña",
+      "strokeCount": 4,
+      "pinyin": "zhǎo",
+      "variants": [
+        "爫"
+      ],
+      "examples": [
+        "爬",
+        "爭",
+        "爯"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "claw; nail",
+        "fr": "griffe; ongle",
+        "de": "Klaue; Nagel",
+        "it": "artiglio; unghia",
+        "pt": "garra; unha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "父": {
+      "meaning": "padre",
+      "strokeCount": 4,
+      "pinyin": "fù",
+      "variants": [],
+      "examples": [
+        "爷",
+        "爸",
+        "爹"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "father",
+        "fr": "père",
+        "de": "Vater",
+        "it": "padre",
+        "pt": "pai"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "爻": {
+      "meaning": "líneas cruzadas; trigramas",
+      "strokeCount": 4,
+      "pinyin": "yáo",
+      "variants": [],
+      "examples": [
+        "爽",
+        "爾"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "crossed lines; trigrams",
+        "fr": "lignes croisées; trigrammes",
+        "de": "gekreuzte Linien; Trigramme",
+        "it": "linee incrociate; trigrammi",
+        "pt": "linhas cruzadas; trigramas"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "爿": {
+      "meaning": "mitad de tronco; tabla",
+      "strokeCount": 4,
+      "pinyin": "pán",
+      "variants": [
+        "丬"
+      ],
+      "examples": [
+        "妆",
+        "状",
+        "将"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "split wood; board",
+        "fr": "bois fendu; planche",
+        "de": "gespaltenes Holz; Brett",
+        "it": "legno spaccato; tavola",
+        "pt": "madeira partida; tábua"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "片": {
+      "meaning": "lámina; trozo",
+      "strokeCount": 4,
+      "pinyin": "piàn",
+      "variants": [],
+      "examples": [
+        "版",
+        "牌",
+        "牍"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "slice; piece",
+        "fr": "tranche; morceau",
+        "de": "Scheibe; Stück",
+        "it": "fetta; pezzo",
+        "pt": "fatia; pedaço"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "牙": {
+      "meaning": "colmillo; diente",
+      "strokeCount": 4,
+      "pinyin": "yá",
+      "variants": [],
+      "examples": [
+        "牚"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "fang; tooth",
+        "fr": "croc; dent",
+        "de": "Fangzahn; Zahn",
+        "it": "zanna; dente",
+        "pt": "presa; dente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "牛": {
+      "meaning": "buey; vaca",
+      "strokeCount": 4,
+      "pinyin": "niú",
+      "variants": [
+        "牜"
+      ],
+      "examples": [
+        "牝",
+        "牟",
+        "牠"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ox; cow",
+        "fr": "bœuf; vache",
+        "de": "Ochse; Kuh",
+        "it": "bue; mucca",
+        "pt": "boi; vaca"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "犬": {
+      "meaning": "perro",
+      "strokeCount": 4,
+      "pinyin": "quǎn",
+      "variants": [
+        "犭"
+      ],
+      "examples": [
+        "狗",
+        "猴",
+        "犮"
+      ],
+      "vocabularyCount": 2,
+      "meaningTr": {
+        "en": "dog",
+        "fr": "chien",
+        "de": "Hund",
+        "it": "cane",
+        "pt": "cão"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "玄": {
+      "meaning": "oscuro; misterioso",
+      "strokeCount": 5,
+      "pinyin": "xuán",
+      "variants": [],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "dark; mysterious",
+        "fr": "sombre; mystérieux",
+        "de": "dunkel; geheimnisvoll",
+        "it": "oscuro; misterioso",
+        "pt": "escuro; misterioso"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "玉": {
+      "meaning": "jade",
+      "strokeCount": 5,
+      "pinyin": "yù",
+      "variants": [
+        "王"
+      ],
+      "examples": [
+        "班",
+        "玎",
+        "玑"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "jade",
+        "fr": "jade",
+        "de": "Jade",
+        "it": "giada",
+        "pt": "jade"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "瓜": {
+      "meaning": "melón; calabaza",
+      "strokeCount": 5,
+      "pinyin": "guā",
+      "variants": [],
+      "examples": [
+        "㼌",
+        "瓞",
+        "瓠"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "melon; gourd",
+        "fr": "melon; courge",
+        "de": "Melone; Kürbis",
+        "it": "melone; zucca",
+        "pt": "melão; abóbora"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "瓦": {
+      "meaning": "teja",
+      "strokeCount": 5,
+      "pinyin": "wǎ",
+      "variants": [],
+      "examples": [
+        "瓮",
+        "瓯",
+        "瓴"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "roof tile",
+        "fr": "tuile",
+        "de": "Dachziegel",
+        "it": "tegola",
+        "pt": "telha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "甘": {
+      "meaning": "dulce",
+      "strokeCount": 5,
+      "pinyin": "gān",
+      "variants": [],
+      "examples": [
+        "甙",
+        "甚",
+        "甜"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "sweet",
+        "fr": "doux",
+        "de": "süß",
+        "it": "dolce",
+        "pt": "doce"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "生": {
+      "meaning": "nacer; vida",
+      "strokeCount": 5,
+      "pinyin": "shēng",
+      "variants": [],
+      "examples": [
+        "產",
+        "産",
+        "甤"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "birth; life",
+        "fr": "naissance; vie",
+        "de": "Geburt; Leben",
+        "it": "nascita; vita",
+        "pt": "nascimento; vida"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "用": {
+      "meaning": "usar",
+      "strokeCount": 5,
+      "pinyin": "yòng",
+      "variants": [],
+      "examples": [
+        "甪",
+        "甫",
+        "甬"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "use",
+        "fr": "utiliser",
+        "de": "benutzen",
+        "it": "usare",
+        "pt": "usar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "田": {
+      "meaning": "campo de cultivo",
+      "strokeCount": 5,
+      "pinyin": "tián",
+      "variants": [],
+      "examples": [
+        "男",
+        "甸",
+        "町"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "field",
+        "fr": "champ cultivé",
+        "de": "Feld",
+        "it": "campo coltivato",
+        "pt": "campo cultivado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "疋": {
+      "meaning": "rollo de tela; pie",
+      "strokeCount": 5,
+      "pinyin": "pǐ",
+      "variants": [],
+      "examples": [
+        "疌",
+        "疏",
+        "疐"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "bolt of cloth; foot",
+        "fr": "rouleau de tissu; pied",
+        "de": "Stoffballen; Fuß",
+        "it": "rotolo di stoffa; piede",
+        "pt": "rolo de tecido; pé"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "疒": {
+      "meaning": "enfermedad",
+      "strokeCount": 5,
+      "pinyin": "nè",
+      "variants": [],
+      "examples": [
+        "疼",
+        "病",
+        "疔"
+      ],
+      "vocabularyCount": 2,
+      "meaningTr": {
+        "en": "illness",
+        "fr": "maladie",
+        "de": "Krankheit",
+        "it": "malattia",
+        "pt": "doença"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "癶": {
+      "meaning": "piernas separadas",
+      "strokeCount": 5,
+      "pinyin": "bō",
+      "variants": [],
+      "examples": [
+        "癸",
+        "登",
+        "發"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "spread legs",
+        "fr": "jambes écartées",
+        "de": "gespreizte Beine",
+        "it": "gambe divaricate",
+        "pt": "pernas afastadas"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "皮": {
+      "meaning": "piel",
+      "strokeCount": 5,
+      "pinyin": "pí",
+      "variants": [],
+      "examples": [
+        "皰",
+        "皱",
+        "皲"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "skin",
+        "fr": "peau",
+        "de": "Haut",
+        "it": "pelle",
+        "pt": "pele"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "皿": {
+      "meaning": "recipiente; plato",
+      "strokeCount": 5,
+      "pinyin": "mǐn",
+      "variants": [],
+      "examples": [
+        "盒",
+        "盂",
+        "㿽"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "vessel; dish",
+        "fr": "récipient; plat",
+        "de": "Gefäß; Schale",
+        "it": "recipiente; piatto",
+        "pt": "recipiente; prato"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "矛": {
+      "meaning": "lanza",
+      "strokeCount": 5,
+      "pinyin": "máo",
+      "variants": [],
+      "examples": [
+        "矜",
+        "矞"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "spear",
+        "fr": "lance",
+        "de": "Speer",
+        "it": "lancia",
+        "pt": "lança"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "石": {
+      "meaning": "piedra",
+      "strokeCount": 5,
+      "pinyin": "shí",
+      "variants": [],
+      "examples": [
+        "矶",
+        "矸",
+        "矻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "stone",
+        "fr": "pierre",
+        "de": "Stein",
+        "it": "pietra",
+        "pt": "pedra"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "示": {
+      "meaning": "altar; manifestar",
+      "strokeCount": 5,
+      "pinyin": "shì",
+      "variants": [
+        "礻"
+      ],
+      "examples": [
+        "祝",
+        "礼",
+        "社"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "altar; show",
+        "fr": "autel; montrer",
+        "de": "Altar; zeigen",
+        "it": "altare; mostrare",
+        "pt": "altar; mostrar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "禸": {
+      "meaning": "huella de animal",
+      "strokeCount": 5,
+      "pinyin": "róu",
+      "variants": [],
+      "examples": [
+        "禹",
+        "禺",
+        "离"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "animal track",
+        "fr": "trace d’animal",
+        "de": "Tierspur",
+        "it": "impronta animale",
+        "pt": "pegada de animal"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "穴": {
+      "meaning": "cueva; cavidad",
+      "strokeCount": 5,
+      "pinyin": "xué",
+      "variants": [],
+      "examples": [
+        "穿",
+        "穵",
+        "究"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "cave; cavity",
+        "fr": "grotte; cavité",
+        "de": "Höhle; Hohlraum",
+        "it": "grotta; cavità",
+        "pt": "caverna; cavidade"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "立": {
+      "meaning": "estar de pie",
+      "strokeCount": 5,
+      "pinyin": "lì",
+      "variants": [],
+      "examples": [
+        "产",
+        "亲",
+        "竖"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "stand",
+        "fr": "se tenir debout",
+        "de": "stehen",
+        "it": "stare in piedi",
+        "pt": "estar de pé"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "竹": {
+      "meaning": "bambú",
+      "strokeCount": 6,
+      "pinyin": "zhú",
+      "variants": [
+        "⺮"
+      ],
+      "examples": [
+        "等",
+        "竺",
+        "竽"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "bamboo",
+        "fr": "bambou",
+        "de": "Bambus",
+        "it": "bambù",
+        "pt": "bambu"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "米": {
+      "meaning": "arroz",
+      "strokeCount": 6,
+      "pinyin": "mǐ",
+      "variants": [],
+      "examples": [
+        "籴",
+        "娄",
+        "类"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "rice",
+        "fr": "riz",
+        "de": "Reis",
+        "it": "riso",
+        "pt": "arroz"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "糸": {
+      "meaning": "seda; hilo",
+      "strokeCount": 6,
+      "pinyin": "mì",
+      "variants": [
+        "糹",
+        "纟"
+      ],
+      "examples": [
+        "累",
+        "给",
+        "绿"
+      ],
+      "vocabularyCount": 3,
+      "meaningTr": {
+        "en": "silk; thread",
+        "fr": "soie; fil",
+        "de": "Seide; Faden",
+        "it": "seta; filo",
+        "pt": "seda; fio"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "缶": {
+      "meaning": "vasija de barro",
+      "strokeCount": 6,
+      "pinyin": "fǒu",
+      "variants": [],
+      "examples": [
+        "缸",
+        "䍃",
+        "缺"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "earthenware vessel",
+        "fr": "vase en terre cuite",
+        "de": "Tongefäß",
+        "it": "vaso di terracotta",
+        "pt": "vaso de barro"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "网": {
+      "meaning": "red",
+      "strokeCount": 6,
+      "pinyin": "wǎng",
+      "variants": [
+        "罒",
+        "罓"
+      ],
+      "examples": [
+        "罔",
+        "罕",
+        "罗"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "net",
+        "fr": "filet",
+        "de": "Netz",
+        "it": "rete",
+        "pt": "rede"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "羊": {
+      "meaning": "oveja",
+      "strokeCount": 6,
+      "pinyin": "yáng",
+      "variants": [],
+      "examples": [
+        "羌",
+        "羍",
+        "美"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "sheep",
+        "fr": "mouton",
+        "de": "Schaf",
+        "it": "pecora",
+        "pt": "ovelha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "羽": {
+      "meaning": "pluma; ala",
+      "strokeCount": 6,
+      "pinyin": "yǔ",
+      "variants": [],
+      "examples": [
+        "羿",
+        "翁",
+        "翅"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "feather; wing",
+        "fr": "plume; aile",
+        "de": "Feder; Flügel",
+        "it": "piuma; ala",
+        "pt": "pena; asa"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "老": {
+      "meaning": "viejo; anciano",
+      "strokeCount": 6,
+      "pinyin": "lǎo",
+      "variants": [
+        "耂"
+      ],
+      "examples": [
+        "耄",
+        "者",
+        "耆"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "old; elderly",
+        "fr": "vieux; âgé",
+        "de": "alt; betagt",
+        "it": "vecchio; anziano",
+        "pt": "velho; idoso"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "而": {
+      "meaning": "barba; y",
+      "strokeCount": 6,
+      "pinyin": "ér",
+      "variants": [],
+      "examples": [
+        "耍",
+        "耐",
+        "耑"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "beard; and",
+        "fr": "barbe; et",
+        "de": "Bart; und",
+        "it": "barba; e",
+        "pt": "barba; e"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "耒": {
+      "meaning": "arado",
+      "strokeCount": 6,
+      "pinyin": "lěi",
+      "variants": [],
+      "examples": [
+        "耔",
+        "耕",
+        "耖"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "plow",
+        "fr": "charrue",
+        "de": "Pflug",
+        "it": "aratro",
+        "pt": "arado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "耳": {
+      "meaning": "oreja",
+      "strokeCount": 6,
+      "pinyin": "ěr",
+      "variants": [],
+      "examples": [
+        "耴",
+        "耵",
+        "耶"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ear",
+        "fr": "oreille",
+        "de": "Ohr",
+        "it": "orecchio",
+        "pt": "orelha"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "聿": {
+      "meaning": "pincel de escribir",
+      "strokeCount": 6,
+      "pinyin": "yù",
+      "variants": [],
+      "examples": [
+        "肃",
+        "肄",
+        "肅"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "writing brush",
+        "fr": "pinceau à écrire",
+        "de": "Schreibpinsel",
+        "it": "pennello per scrivere",
+        "pt": "pincel de escrita"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "肉": {
+      "meaning": "carne",
+      "strokeCount": 6,
+      "pinyin": "ròu",
+      "variants": [
+        "月 (comp.)"
+      ],
+      "examples": [
+        "胃",
+        "能",
+        "腰"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "meat",
+        "fr": "viande",
+        "de": "Fleisch",
+        "it": "carne",
+        "pt": "carne"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "臣": {
+      "meaning": "ministro; súbdito",
+      "strokeCount": 6,
+      "pinyin": "chén",
+      "variants": [],
+      "examples": [
+        "卧",
+        "臤",
+        "臥"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "minister; subject",
+        "fr": "ministre; sujet",
+        "de": "Minister; Untertan",
+        "it": "ministro; suddito",
+        "pt": "ministro; súbdito"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "自": {
+      "meaning": "uno mismo",
+      "strokeCount": 6,
+      "pinyin": "zì",
+      "variants": [],
+      "examples": [
+        "臬",
+        "臭",
+        "臱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "self",
+        "fr": "soi-même",
+        "de": "selbst",
+        "it": "se stesso",
+        "pt": "si mesmo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "至": {
+      "meaning": "llegar",
+      "strokeCount": 6,
+      "pinyin": "zhì",
+      "variants": [],
+      "examples": [
+        "致",
+        "臺",
+        "臻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "arrive",
+        "fr": "arriver",
+        "de": "ankommen",
+        "it": "arrivare",
+        "pt": "chegar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "臼": {
+      "meaning": "mortero",
+      "strokeCount": 6,
+      "pinyin": "jiù",
+      "variants": [],
+      "examples": [
+        "臽",
+        "臾",
+        "臿"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "mortar",
+        "fr": "mortier",
+        "de": "Mörser",
+        "it": "mortaio",
+        "pt": "almofariz"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "舌": {
+      "meaning": "lengua",
+      "strokeCount": 6,
+      "pinyin": "shé",
+      "variants": [],
+      "examples": [
+        "舍",
+        "敌",
+        "舐"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "tongue",
+        "fr": "langue",
+        "de": "Zunge",
+        "it": "lingua",
+        "pt": "língua"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "舛": {
+      "meaning": "opuesto; divergente",
+      "strokeCount": 6,
+      "pinyin": "chuǎn",
+      "variants": [],
+      "examples": [
+        "舞",
+        "舜"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "opposite; divergent",
+        "fr": "opposé; divergent",
+        "de": "entgegengesetzt; abweichend",
+        "it": "opposto; divergente",
+        "pt": "oposto; divergente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "舟": {
+      "meaning": "barca",
+      "strokeCount": 6,
+      "pinyin": "zhōu",
+      "variants": [],
+      "examples": [
+        "舡",
+        "舢",
+        "舣"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "boat",
+        "fr": "bateau",
+        "de": "Boot",
+        "it": "barca",
+        "pt": "barco"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "艮": {
+      "meaning": "límite; firmeza",
+      "strokeCount": 6,
+      "pinyin": "gèn",
+      "variants": [],
+      "examples": [
+        "良",
+        "艰",
+        "艱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "limit; firmness",
+        "fr": "limite; fermeté",
+        "de": "Grenze; Festigkeit",
+        "it": "limite; fermezza",
+        "pt": "limite; firmeza"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "色": {
+      "meaning": "color",
+      "strokeCount": 6,
+      "pinyin": "sè",
+      "variants": [],
+      "examples": [
+        "艳",
+        "艴",
+        "艷"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "color",
+        "fr": "couleur",
+        "de": "Farbe",
+        "it": "colore",
+        "pt": "cor"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "艸": {
+      "meaning": "hierba",
+      "strokeCount": 6,
+      "pinyin": "cǎo",
+      "variants": [
+        "艹"
+      ],
+      "examples": [
+        "茶",
+        "药",
+        "艺"
+      ],
+      "vocabularyCount": 2,
+      "meaningTr": {
+        "en": "grass",
+        "fr": "herbe",
+        "de": "Gras",
+        "it": "erba",
+        "pt": "erva"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "虍": {
+      "meaning": "tigre (cabeza)",
+      "strokeCount": 6,
+      "pinyin": "hū",
+      "variants": [],
+      "examples": [
+        "虏",
+        "虐",
+        "虑"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "tiger head",
+        "fr": "tête de tigre",
+        "de": "Tigerkopf",
+        "it": "testa di tigre",
+        "pt": "cabeça de tigre"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "虫": {
+      "meaning": "insecto",
+      "strokeCount": 6,
+      "pinyin": "chóng",
+      "variants": [],
+      "examples": [
+        "蛇",
+        "虬",
+        "虮"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "insect",
+        "fr": "insecte",
+        "de": "Insekt",
+        "it": "insetto",
+        "pt": "inseto"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "血": {
+      "meaning": "sangre",
+      "strokeCount": 6,
+      "pinyin": "xuè",
+      "variants": [],
+      "examples": [
+        "衄",
+        "衅",
+        "衆"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "blood",
+        "fr": "sang",
+        "de": "Blut",
+        "it": "sangue",
+        "pt": "sangue"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "行": {
+      "meaning": "caminar; desplazarse",
+      "strokeCount": 6,
+      "pinyin": "xíng",
+      "variants": [],
+      "examples": [
+        "街",
+        "衍",
+        "術"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "walk; travel",
+        "fr": "marcher; se déplacer",
+        "de": "gehen; sich bewegen",
+        "it": "camminare; spostarsi",
+        "pt": "caminhar; deslocar-se"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "衣": {
+      "meaning": "ropa; vestido",
+      "strokeCount": 6,
+      "pinyin": "yī",
+      "variants": [
+        "衤"
+      ],
+      "examples": [
+        "初",
+        "补",
+        "表"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "clothing",
+        "fr": "vêtement",
+        "de": "Kleidung",
+        "it": "vestito",
+        "pt": "roupa"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "見": {
+      "meaning": "ver",
+      "strokeCount": 7,
+      "pinyin": "jiàn",
+      "variants": [
+        "见"
+      ],
+      "examples": [
+        "观",
+        "規",
+        "覓"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "see",
+        "fr": "voir",
+        "de": "sehen",
+        "it": "vedere",
+        "pt": "ver"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "角": {
+      "meaning": "cuerno; ángulo",
+      "strokeCount": 7,
+      "pinyin": "jiǎo",
+      "variants": [],
+      "examples": [
+        "觖",
+        "觚",
+        "觞"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "horn; angle",
+        "fr": "corne; angle",
+        "de": "Horn; Winkel",
+        "it": "corno; angolo",
+        "pt": "chifre; ângulo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "言": {
+      "meaning": "habla; palabra",
+      "strokeCount": 7,
+      "pinyin": "yán",
+      "variants": [
+        "讠"
+      ],
+      "examples": [
+        "请",
+        "谁",
+        "课",
+        "说",
+        "试",
+        "该"
+      ],
+      "vocabularyCount": 6,
+      "meaningTr": {
+        "en": "speech; word",
+        "fr": "parole; mot",
+        "de": "Sprache; Wort",
+        "it": "parola; discorso",
+        "pt": "fala; palavra"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "谷": {
+      "meaning": "valle",
+      "strokeCount": 7,
+      "pinyin": "gǔ",
+      "variants": [],
+      "examples": [
+        "谿",
+        "豁"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "valley",
+        "fr": "vallée",
+        "de": "Tal",
+        "it": "valle",
+        "pt": "vale"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "豆": {
+      "meaning": "judía; legumbre",
+      "strokeCount": 7,
+      "pinyin": "dòu",
+      "variants": [],
+      "examples": [
+        "豇",
+        "豈",
+        "豉"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "bean; legume",
+        "fr": "haricot; légumineuse",
+        "de": "Bohne; Hülsenfrucht",
+        "it": "fagiolo; legume",
+        "pt": "feijão; leguminosa"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "豕": {
+      "meaning": "cerdo",
+      "strokeCount": 7,
+      "pinyin": "shǐ",
+      "variants": [],
+      "examples": [
+        "豖",
+        "豙",
+        "豚"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "pig",
+        "fr": "porc",
+        "de": "Schwein",
+        "it": "maiale",
+        "pt": "porco"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "豸": {
+      "meaning": "bestia salvaje",
+      "strokeCount": 7,
+      "pinyin": "zhì",
+      "variants": [],
+      "examples": [
+        "豹",
+        "豺",
+        "豻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "wild beast",
+        "fr": "bête sauvage",
+        "de": "wildes Tier",
+        "it": "bestia selvaggia",
+        "pt": "animal selvagem"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "貝": {
+      "meaning": "concha; moneda",
+      "strokeCount": 7,
+      "pinyin": "bèi",
+      "variants": [
+        "贝"
+      ],
+      "examples": [
+        "贵",
+        "貞",
+        "負"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "shell; currency",
+        "fr": "coquillage; monnaie",
+        "de": "Muschel; Geld",
+        "it": "conchiglia; moneta",
+        "pt": "concha; moeda"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "赤": {
+      "meaning": "rojo",
+      "strokeCount": 7,
+      "pinyin": "chì",
+      "variants": [],
+      "examples": [
+        "赦",
+        "赧",
+        "赫"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "red",
+        "fr": "rouge",
+        "de": "rot",
+        "it": "rosso",
+        "pt": "vermelho"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "走": {
+      "meaning": "caminar; correr",
+      "strokeCount": 7,
+      "pinyin": "zǒu",
+      "variants": [],
+      "examples": [
+        "赳",
+        "赴",
+        "赵"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "walk; run",
+        "fr": "marcher; courir",
+        "de": "gehen; laufen",
+        "it": "camminare; correre",
+        "pt": "caminhar; correr"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "足": {
+      "meaning": "pie",
+      "strokeCount": 7,
+      "pinyin": "zú",
+      "variants": [
+        "⻊"
+      ],
+      "examples": [
+        "跳",
+        "跟",
+        "路"
+      ],
+      "vocabularyCount": 3,
+      "meaningTr": {
+        "en": "foot",
+        "fr": "pied",
+        "de": "Fuß",
+        "it": "piede",
+        "pt": "pé"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "身": {
+      "meaning": "cuerpo",
+      "strokeCount": 7,
+      "pinyin": "shēn",
+      "variants": [],
+      "examples": [
+        "躬",
+        "躯",
+        "躲"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "body",
+        "fr": "corps",
+        "de": "Körper",
+        "it": "corpo",
+        "pt": "corpo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "車": {
+      "meaning": "carro; vehículo",
+      "strokeCount": 7,
+      "pinyin": "chē",
+      "variants": [
+        "车"
+      ],
+      "examples": [
+        "軋",
+        "轧",
+        "軌"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "cart; vehicle",
+        "fr": "char; véhicule",
+        "de": "Wagen; Fahrzeug",
+        "it": "carro; veicolo",
+        "pt": "carro; veículo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "辛": {
+      "meaning": "amargo; penoso",
+      "strokeCount": 7,
+      "pinyin": "xīn",
+      "variants": [],
+      "examples": [
+        "辜",
+        "辞",
+        "辟"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "bitter; hardship",
+        "fr": "amer; pénible",
+        "de": "bitter; mühsam",
+        "it": "amaro; penoso",
+        "pt": "amargo; penoso"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "辰": {
+      "meaning": "mañana; rama terrestre",
+      "strokeCount": 7,
+      "pinyin": "chén",
+      "variants": [],
+      "examples": [
+        "辱",
+        "農"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "morning; earthly branch",
+        "fr": "matin; branche terrestre",
+        "de": "Morgen; Erdzweig",
+        "it": "mattino; ramo terrestre",
+        "pt": "manhã; ramo terrestre"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "辵": {
+      "meaning": "movimiento; marcha",
+      "strokeCount": 7,
+      "pinyin": "chuò",
+      "variants": [
+        "辶"
+      ],
+      "examples": [
+        "进",
+        "这",
+        "还",
+        "送",
+        "边",
+        "过"
+      ],
+      "vocabularyCount": 6,
+      "meaningTr": {
+        "en": "movement; walking",
+        "fr": "mouvement; marche",
+        "de": "Bewegung; Gehen",
+        "it": "movimento; cammino",
+        "pt": "movimento; caminhada"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "邑": {
+      "meaning": "ciudad; población",
+      "strokeCount": 7,
+      "pinyin": "yì",
+      "variants": [
+        "阝 (dcha.)"
+      ],
+      "examples": [
+        "那",
+        "都",
+        "邓"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "city; settlement",
+        "fr": "ville; cité",
+        "de": "Stadt; Siedlung",
+        "it": "città; abitato",
+        "pt": "cidade; povoação"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "酉": {
+      "meaning": "jarra de vino",
+      "strokeCount": 7,
+      "pinyin": "yǒu",
+      "variants": [],
+      "examples": [
+        "酊",
+        "酋",
+        "酌"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "wine jar",
+        "fr": "jarre à vin",
+        "de": "Weinkrug",
+        "it": "giara da vino",
+        "pt": "jarro de vinho"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "釆": {
+      "meaning": "distinguir; separar",
+      "strokeCount": 7,
+      "pinyin": "biàn",
+      "variants": [],
+      "examples": [
+        "釉",
+        "释",
+        "釋"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "distinguish; separate",
+        "fr": "distinguer; séparer",
+        "de": "unterscheiden; trennen",
+        "it": "distinguere; separare",
+        "pt": "distinguir; separar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "里": {
+      "meaning": "aldea; unidad li",
+      "strokeCount": 7,
+      "pinyin": "lǐ",
+      "variants": [],
+      "examples": [
+        "量",
+        "重",
+        "野"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "village; li unit",
+        "fr": "village; unité li",
+        "de": "Dorf; Einheit Li",
+        "it": "villaggio; unità li",
+        "pt": "aldeia; unidade li"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "金": {
+      "meaning": "metal; oro",
+      "strokeCount": 8,
+      "pinyin": "jīn",
+      "variants": [
+        "钅"
+      ],
+      "examples": [
+        "钱",
+        "错",
+        "针"
+      ],
+      "vocabularyCount": 3,
+      "meaningTr": {
+        "en": "metal; gold",
+        "fr": "métal; or",
+        "de": "Metall; Gold",
+        "it": "metallo; oro",
+        "pt": "metal; ouro"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "長": {
+      "meaning": "largo",
+      "strokeCount": 8,
+      "pinyin": "cháng",
+      "variants": [
+        "长"
+      ],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "long",
+        "fr": "long",
+        "de": "lang",
+        "it": "lungo",
+        "pt": "longo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "門": {
+      "meaning": "puerta; portal",
+      "strokeCount": 8,
+      "pinyin": "mén",
+      "variants": [
+        "门"
+      ],
+      "examples": [
+        "门",
+        "问",
+        "閂"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "door; gate",
+        "fr": "porte; portail",
+        "de": "Tür; Tor",
+        "it": "porta; portale",
+        "pt": "porta; portão"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "阜": {
+      "meaning": "montículo; elevación",
+      "strokeCount": 8,
+      "pinyin": "fù",
+      "variants": [
+        "阝 (izda.)"
+      ],
+      "examples": [
+        "阞",
+        "队",
+        "阡"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "mound; hill",
+        "fr": "monticule; colline",
+        "de": "Hügel; Anhöhe",
+        "it": "tumulo; altura",
+        "pt": "montículo; elevação"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "隶": {
+      "meaning": "alcanzar; capturar",
+      "strokeCount": 8,
+      "pinyin": "dài",
+      "variants": [],
+      "examples": [
+        "隸"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "reach; capture",
+        "fr": "atteindre; capturer",
+        "de": "erreichen; fangen",
+        "it": "raggiungere; catturare",
+        "pt": "alcançar; capturar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "隹": {
+      "meaning": "ave de cola corta",
+      "strokeCount": 8,
+      "pinyin": "zhuī",
+      "variants": [],
+      "examples": [
+        "难",
+        "隺",
+        "隻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "short-tailed bird",
+        "fr": "oiseau à queue courte",
+        "de": "kurzschwänziger Vogel",
+        "it": "uccello dalla coda corta",
+        "pt": "ave de cauda curta"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "雨": {
+      "meaning": "lluvia",
+      "strokeCount": 8,
+      "pinyin": "yǔ",
+      "variants": [],
+      "examples": [
+        "零",
+        "雩",
+        "雪"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "rain",
+        "fr": "pluie",
+        "de": "Regen",
+        "it": "pioggia",
+        "pt": "chuva"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "靑": {
+      "meaning": "azul verdoso",
+      "strokeCount": 8,
+      "pinyin": "qīng",
+      "variants": [
+        "青"
+      ],
+      "examples": [
+        "靓",
+        "靖",
+        "静"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "blue-green",
+        "fr": "bleu-vert",
+        "de": "blaugrün",
+        "it": "blu-verde",
+        "pt": "azul-esverdeado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "非": {
+      "meaning": "no; equivocado",
+      "strokeCount": 8,
+      "pinyin": "fēi",
+      "variants": [],
+      "examples": [
+        "靠",
+        "靡"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "not; wrong",
+        "fr": "non; erroné",
+        "de": "nicht; falsch",
+        "it": "non; sbagliato",
+        "pt": "não; errado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "面": {
+      "meaning": "rostro; cara",
+      "strokeCount": 9,
+      "pinyin": "miàn",
+      "variants": [],
+      "examples": [
+        "靦"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "face",
+        "fr": "visage",
+        "de": "Gesicht",
+        "it": "viso",
+        "pt": "rosto"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "革": {
+      "meaning": "cuero sin curtir",
+      "strokeCount": 9,
+      "pinyin": "gé",
+      "variants": [],
+      "examples": [
+        "靳",
+        "靴",
+        "靶"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "untanned hide",
+        "fr": "peau non tannée",
+        "de": "ungegerbte Haut",
+        "it": "pelle non conciata",
+        "pt": "pele não curtida"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "韋": {
+      "meaning": "cuero curtido",
+      "strokeCount": 9,
+      "pinyin": "wéi",
+      "variants": [
+        "韦"
+      ],
+      "examples": [
+        "韌",
+        "韧",
+        "韓"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "tanned leather",
+        "fr": "cuir tanné",
+        "de": "gegerbtes Leder",
+        "it": "cuoio conciato",
+        "pt": "couro curtido"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "韭": {
+      "meaning": "cebollino chino",
+      "strokeCount": 9,
+      "pinyin": "jiǔ",
+      "variants": [],
+      "examples": [
+        "韰",
+        "韱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "Chinese chives",
+        "fr": "ciboulette chinoise",
+        "de": "chinesischer Schnittlauch",
+        "it": "erba cipollina cinese",
+        "pt": "cebolinho chinês"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "音": {
+      "meaning": "sonido",
+      "strokeCount": 9,
+      "pinyin": "yīn",
+      "variants": [],
+      "examples": [
+        "韵",
+        "韶",
+        "韻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "sound",
+        "fr": "son",
+        "de": "Klang",
+        "it": "suono",
+        "pt": "som"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "頁": {
+      "meaning": "cabeza; página",
+      "strokeCount": 9,
+      "pinyin": "yè",
+      "variants": [
+        "页"
+      ],
+      "examples": [
+        "頂",
+        "頃",
+        "顶"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "head; page",
+        "fr": "tête; page",
+        "de": "Kopf; Seite",
+        "it": "testa; pagina",
+        "pt": "cabeça; página"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "風": {
+      "meaning": "viento",
+      "strokeCount": 9,
+      "pinyin": "fēng",
+      "variants": [
+        "风"
+      ],
+      "examples": [
+        "颭",
+        "颯",
+        "颱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "wind",
+        "fr": "vent",
+        "de": "Wind",
+        "it": "vento",
+        "pt": "vento"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "飛": {
+      "meaning": "volar",
+      "strokeCount": 9,
+      "pinyin": "fēi",
+      "variants": [
+        "飞"
+      ],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "fly",
+        "fr": "voler",
+        "de": "fliegen",
+        "it": "volare",
+        "pt": "voar"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "食": {
+      "meaning": "comida; alimento",
+      "strokeCount": 9,
+      "pinyin": "shí",
+      "variants": [
+        "飠",
+        "饣"
+      ],
+      "examples": [
+        "饿",
+        "饭",
+        "飢"
+      ],
+      "vocabularyCount": 2,
+      "meaningTr": {
+        "en": "food",
+        "fr": "nourriture",
+        "de": "Nahrung",
+        "it": "cibo",
+        "pt": "comida"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "首": {
+      "meaning": "cabeza",
+      "strokeCount": 9,
+      "pinyin": "shǒu",
+      "variants": [],
+      "examples": [
+        "馗",
+        "馘"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "head",
+        "fr": "tête",
+        "de": "Kopf",
+        "it": "testa",
+        "pt": "cabeça"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "香": {
+      "meaning": "aroma; fragancia",
+      "strokeCount": 9,
+      "pinyin": "xiāng",
+      "variants": [],
+      "examples": [
+        "馥",
+        "馨"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "aroma; fragrance",
+        "fr": "arôme; parfum",
+        "de": "Duft; Aroma",
+        "it": "aroma; fragranza",
+        "pt": "aroma; fragrância"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "馬": {
+      "meaning": "caballo",
+      "strokeCount": 10,
+      "pinyin": "mǎ",
+      "variants": [
+        "马"
+      ],
+      "examples": [
+        "马",
+        "馭",
+        "馮"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "horse",
+        "fr": "cheval",
+        "de": "Pferd",
+        "it": "cavallo",
+        "pt": "cavalo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "骨": {
+      "meaning": "hueso",
+      "strokeCount": 10,
+      "pinyin": "gǔ",
+      "variants": [],
+      "examples": [
+        "骯",
+        "骰",
+        "骱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "bone",
+        "fr": "os",
+        "de": "Knochen",
+        "it": "osso",
+        "pt": "osso"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "高": {
+      "meaning": "alto; elevado",
+      "strokeCount": 10,
+      "pinyin": "gāo",
+      "variants": [],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "high; tall",
+        "fr": "haut; élevé",
+        "de": "hoch",
+        "it": "alto; elevato",
+        "pt": "alto; elevado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "髟": {
+      "meaning": "cabello largo",
+      "strokeCount": 10,
+      "pinyin": "biāo",
+      "variants": [],
+      "examples": [
+        "髡",
+        "髦",
+        "髫"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "long hair",
+        "fr": "cheveux longs",
+        "de": "langes Haar",
+        "it": "capelli lunghi",
+        "pt": "cabelo comprido"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鬥": {
+      "meaning": "lucha; combate",
+      "strokeCount": 10,
+      "pinyin": "dòu",
+      "variants": [],
+      "examples": [
+        "鬧",
+        "鬨",
+        "鬩"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "fight; combat",
+        "fr": "lutte; combat",
+        "de": "Kampf",
+        "it": "lotta; combattimento",
+        "pt": "luta; combate"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鬯": {
+      "meaning": "vino ritual",
+      "strokeCount": 10,
+      "pinyin": "chàng",
+      "variants": [],
+      "examples": [
+        "鬱"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ritual wine",
+        "fr": "vin rituel",
+        "de": "Ritualwein",
+        "it": "vino rituale",
+        "pt": "vinho ritual"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鬲": {
+      "meaning": "caldero de tres patas",
+      "strokeCount": 10,
+      "pinyin": "lì",
+      "variants": [],
+      "examples": [
+        "鬳",
+        "鬻"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "three-legged cauldron",
+        "fr": "chaudron à trois pieds",
+        "de": "dreibeiniger Kessel",
+        "it": "calderone a tre gambe",
+        "pt": "caldeirão de três pés"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鬼": {
+      "meaning": "fantasma; espíritu",
+      "strokeCount": 10,
+      "pinyin": "guǐ",
+      "variants": [],
+      "examples": [
+        "魁",
+        "魂",
+        "魃"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ghost; spirit",
+        "fr": "fantôme; esprit",
+        "de": "Geist; Gespenst",
+        "it": "fantasma; spirito",
+        "pt": "fantasma; espírito"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "魚": {
+      "meaning": "pez",
+      "strokeCount": 11,
+      "pinyin": "yú",
+      "variants": [
+        "鱼"
+      ],
+      "examples": [
+        "魝",
+        "魠",
+        "䰾"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "fish",
+        "fr": "poisson",
+        "de": "Fisch",
+        "it": "pesce",
+        "pt": "peixe"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鳥": {
+      "meaning": "ave; pájaro",
+      "strokeCount": 11,
+      "pinyin": "niǎo",
+      "variants": [
+        "鸟"
+      ],
+      "examples": [
+        "鸡",
+        "鳧",
+        "鳩"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "bird",
+        "fr": "oiseau",
+        "de": "Vogel",
+        "it": "uccello",
+        "pt": "ave"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鹵": {
+      "meaning": "sal; salina",
+      "strokeCount": 11,
+      "pinyin": "lǔ",
+      "variants": [
+        "卤"
+      ],
+      "examples": [
+        "鹹",
+        "鹾",
+        "鹼"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "salt; salt marsh",
+        "fr": "sel; saline",
+        "de": "Salz; Saline",
+        "it": "sale; salina",
+        "pt": "sal; salina"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鹿": {
+      "meaning": "ciervo",
+      "strokeCount": 11,
+      "pinyin": "lù",
+      "variants": [],
+      "examples": [
+        "麂",
+        "麃",
+        "麇"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "deer",
+        "fr": "cerf",
+        "de": "Hirsch",
+        "it": "cervo",
+        "pt": "veado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "麥": {
+      "meaning": "trigo",
+      "strokeCount": 11,
+      "pinyin": "mài",
+      "variants": [
+        "麦"
+      ],
+      "examples": [
+        "麩",
+        "麸",
+        "麯"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "wheat",
+        "fr": "blé",
+        "de": "Weizen",
+        "it": "grano",
+        "pt": "trigo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "麻": {
+      "meaning": "cáñamo",
+      "strokeCount": 11,
+      "pinyin": "má",
+      "variants": [],
+      "examples": [
+        "麼",
+        "麽",
+        "麾"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "hemp",
+        "fr": "chanvre",
+        "de": "Hanf",
+        "it": "canapa",
+        "pt": "cânhamo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "黃": {
+      "meaning": "amarillo",
+      "strokeCount": 12,
+      "pinyin": "huáng",
+      "variants": [
+        "黄"
+      ],
+      "examples": [
+        "黉"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "yellow",
+        "fr": "jaune",
+        "de": "gelb",
+        "it": "giallo",
+        "pt": "amarelo"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "黍": {
+      "meaning": "mijo",
+      "strokeCount": 12,
+      "pinyin": "shǔ",
+      "variants": [],
+      "examples": [
+        "黎",
+        "黏"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "millet",
+        "fr": "millet",
+        "de": "Hirse",
+        "it": "miglio",
+        "pt": "milhete"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "黹": {
+      "meaning": "bordado",
+      "strokeCount": 12,
+      "pinyin": "zhǐ",
+      "variants": [],
+      "examples": [
+        "黻",
+        "黼"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "embroidery",
+        "fr": "broderie",
+        "de": "Stickerei",
+        "it": "ricamo",
+        "pt": "bordado"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "黽": {
+      "meaning": "rana; anfibio",
+      "strokeCount": 13,
+      "pinyin": "mǐn",
+      "variants": [
+        "黾"
+      ],
+      "examples": [
+        "黿",
+        "鼂",
+        "鼉"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "frog; amphibian",
+        "fr": "grenouille; amphibien",
+        "de": "Frosch; Amphibie",
+        "it": "rana; anfibio",
+        "pt": "rã; anfíbio"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鼎": {
+      "meaning": "caldero trípode",
+      "strokeCount": 13,
+      "pinyin": "dǐng",
+      "variants": [],
+      "examples": [
+        "鼐"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "tripod cauldron",
+        "fr": "chaudron tripode",
+        "de": "dreibeiniger Kessel",
+        "it": "calderone tripode",
+        "pt": "caldeirão tripé"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鼓": {
+      "meaning": "tambor",
+      "strokeCount": 13,
+      "pinyin": "gǔ",
+      "variants": [],
+      "examples": [
+        "鼕",
+        "鼗",
+        "鼙"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "drum",
+        "fr": "tambour",
+        "de": "Trommel",
+        "it": "tamburo",
+        "pt": "tambor"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鼠": {
+      "meaning": "ratón; rata",
+      "strokeCount": 13,
+      "pinyin": "shǔ",
+      "variants": [],
+      "examples": [
+        "鼢",
+        "鼩",
+        "鼬"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "mouse; rat",
+        "fr": "souris; rat",
+        "de": "Maus; Ratte",
+        "it": "topo; ratto",
+        "pt": "rato"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "鼻": {
+      "meaning": "nariz",
+      "strokeCount": 14,
+      "pinyin": "bí",
+      "variants": [],
+      "examples": [
+        "鼽",
+        "鼾",
+        "齄"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "nose",
+        "fr": "nez",
+        "de": "Nase",
+        "it": "naso",
+        "pt": "nariz"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "齊": {
+      "meaning": "igual; uniforme",
+      "strokeCount": 14,
+      "pinyin": "qí",
+      "variants": [
+        "齐"
+      ],
+      "examples": [
+        "齋",
+        "齌",
+        "齎"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "equal; uniform",
+        "fr": "égal; uniforme",
+        "de": "gleich; einheitlich",
+        "it": "uguale; uniforme",
+        "pt": "igual; uniforme"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "齒": {
+      "meaning": "diente",
+      "strokeCount": 15,
+      "pinyin": "chǐ",
+      "variants": [
+        "齿"
+      ],
+      "examples": [
+        "龀",
+        "齙",
+        "齜"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "tooth",
+        "fr": "dent",
+        "de": "Zahn",
+        "it": "dente",
+        "pt": "dente"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "龍": {
+      "meaning": "dragón",
+      "strokeCount": 16,
+      "pinyin": "lóng",
+      "variants": [
+        "龙"
+      ],
+      "examples": [
+        "龙",
+        "龐",
+        "龔"
+      ],
+      "vocabularyCount": 1,
+      "meaningTr": {
+        "en": "dragon",
+        "fr": "dragon",
+        "de": "Drache",
+        "it": "drago",
+        "pt": "dragão"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "龜": {
+      "meaning": "tortuga",
+      "strokeCount": 16,
+      "pinyin": "guī",
+      "variants": [
+        "龟"
+      ],
+      "examples": [],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "turtle",
+        "fr": "tortue",
+        "de": "Schildkröte",
+        "it": "tartaruga",
+        "pt": "tartaruga"
+      },
+      "exampleSource": "unihan-kRSUnicode"
+    },
+    "龠": {
+      "meaning": "flauta antigua",
+      "strokeCount": 17,
+      "pinyin": "yuè",
+      "variants": [],
+      "examples": [
+        "龥"
+      ],
+      "vocabularyCount": 0,
+      "meaningTr": {
+        "en": "ancient flute",
+        "fr": "flûte ancienne",
+        "de": "alte Flöte",
+        "it": "flauto antico",
+        "pt": "flauta antiga"
+      },
+      "exampleSource": "unihan-kRSUnicode"
     }
   }
 }

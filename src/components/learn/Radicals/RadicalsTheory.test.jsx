@@ -26,6 +26,13 @@ describe('RadicalsTheory', () => {
     expect(screen.getByText('木')).toBeTruthy();
   });
 
+  it('permite ordenar por presencia en el vocabulario de la app', () => {
+    setup({ radicals: RADICALS.map((r, i) => ({ ...r, vocabularyCount: i })) });
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'frequency' } });
+    const cards = [...document.querySelectorAll('.cursor-pointer')];
+    expect(cards.map(card => card.textContent[0])).toEqual(['木', '亻', '氵']);
+  });
+
   it('buscar por significado filtra la lista', () => {
     setup();
     fireEvent.change(screen.getByPlaceholderText(/search|buscar/i), { target: { value: 'water' } });

@@ -3,6 +3,7 @@
 // Guarda el resultado al terminar una historia.
 
 import { useState, useEffect, Suspense } from 'react';
+import { useHistorySubmenu } from '@/hooks/useHistorySubmenu.js';
 import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 import { useTranslation } from 'react-i18next';
 import { loc, baseLang, trField } from '@/utils/loc.js';
@@ -63,6 +64,7 @@ export default function StoriesPage({
 }) {
   const { t } = useTranslation();
   const [activeStoryId, setActiveStoryId] = useState(null);
+  const navigateStory = useHistorySubmenu('story', activeStoryId, setActiveStoryId, 'stories');
   const [storyProgress, setStoryProgress] = useState(() => loadStoryProgress());
   // Metadata del último resultado (XP, primera vez, etc.) — viaja al player
   // para que StoryResults lo muestre. Se resetea al salir del player.
@@ -111,7 +113,7 @@ export default function StoriesPage({
   };
 
   const handleExitFromPlayer = () => {
-    setActiveStoryId(null);
+    navigateStory(null);
     setLastResultMeta(null);
   };
 
@@ -200,7 +202,7 @@ export default function StoriesPage({
                   status={status}
                   accent={accent}
                   data={data}
-                  onClick={() => status !== 'bloqueada' && setActiveStoryId(s.id)}
+                  onClick={() => status !== 'bloqueada' && navigateStory(s.id)}
                 />
               );
             })}</div>}

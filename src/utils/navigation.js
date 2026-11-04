@@ -16,6 +16,7 @@ const RadicalsIndex    = lazyWithRetry(() => import('@/components/learn/Radicals
 const RadicalsTheory   = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsTheory.jsx'));
 const RadicalsQuiz     = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsQuiz.jsx'));
 const RadicalsQuiz2    = lazyWithRetry(() => import('@/components/learn/Radicals/RadicalsQuiz2.jsx'));
+const Connectors       = lazyWithRetry(() => import('@/components/learn/Connectors/index.jsx'));
 const CharactersIndex  = lazyWithRetry(() => import('@/components/learn/Characters/index.jsx'));
 const Progressive      = lazyWithRetry(() => import('@/components/learn/Characters/Progressive.jsx'));
 const Quiz             = lazyWithRetry(() => import('@/components/learn/Characters/Quiz.jsx'));
@@ -202,6 +203,10 @@ export function useNavigation(
     }
 
     // === RADICALES ===
+    if (screen === 'learn' && learnSection === 'connectors') {
+      Component = Connectors;
+      props = { goBack: hubOr(goBack), speakChinese: speak };
+    }
     if (screen === 'learn' && learnSection === 'radicals' && radicalSection === null) {
       Component = RadicalsIndex;
       props = {

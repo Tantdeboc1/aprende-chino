@@ -29,11 +29,14 @@ export default function RadicalsQuiz2({ goBack, radicals }) {
       usedRadicals.add(correctRadical.radical);
 
       // Generar opciones incorrectas (otros significados de radicales)
-      const otherMeanings = shuffle(
-        radicals.filter(r => r.radical !== correctRadical.radical && r.meaning && !usedRadicals.has(r.radical))
-      )
-        .slice(0, 3)
-        .map(r => r.meaning);
+      const terms = value => value.toLocaleLowerCase().split(/[,;/]/).map(term => term.trim()).filter(Boolean);
+      const correctTerms = terms(correctRadical.meaning);
+      const related = new Set([correctRadical.radical, ...(correctRadical.variants || []).map(v => v.split(' ')[0])]);
+      const otherMeanings = shuffle([...new Set(
+        radicals.filter(r => r.meaning && !related.has(r.radical) &&
+          !(r.variants || []).some(v => related.has(v.split(' ')[0])) &&
+          !terms(r.meaning).some(term => correctTerms.includes(term))).map(r => r.meaning)
+      )]).slice(0, 3);
 
       const allOptions = shuffle([correctRadical.meaning, ...otherMeanings]);
 
