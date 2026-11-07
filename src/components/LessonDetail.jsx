@@ -5,6 +5,7 @@ import WordExamples from '@/components/ui/WordExamples.jsx';
 // src/components/LessonDetail.jsx
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
+import { trackEvent } from '@/utils/analytics.js';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
@@ -279,7 +280,7 @@ export default function LessonDetail({
                     <a href={`https://www.youtube.com/watch?v=${youtubeId}`} target="_blank" rel="noopener noreferrer" className="text-sm underline" style={{ color: J.jadeDeep }}>{videoText[4]}</a>
                   </div>
                 ) : (
-                  <button onClick={() => setActiveVideo(id)} className="mt-3 rounded-full px-4 py-2 font-bold text-sm" style={{ background: J.jade, color: J.onAccent }}>{videoText[3]}</button>
+                  <button onClick={() => { setActiveVideo(id); trackEvent('video_play', { lesson: lessonNum, videoId: youtubeId, language: i18n.resolvedLanguage }); }} className="mt-3 rounded-full px-4 py-2 font-bold text-sm" style={{ background: J.jade, color: J.onAccent }}>{videoText[3]}</button>
                 )}
               </div>
             ); })}

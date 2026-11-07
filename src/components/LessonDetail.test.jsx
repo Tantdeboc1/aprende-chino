@@ -4,6 +4,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import '@/i18n';
+import i18n from '@/i18n';
 import LessonDetail from './LessonDetail.jsx';
 
 const WORDS = [
@@ -36,7 +37,7 @@ beforeEach(() => {
   }));
 });
 
-afterEach(() => cleanup());
+afterEach(() => { cleanup(); i18n.changeLanguage('en'); });
 
 describe('LessonDetail', () => {
   it('muestra los vídeos de la lección y los reproduce al solicitar la pestaña', () => {
@@ -45,6 +46,18 @@ describe('LessonDetail', () => {
     unmount();
     setup({ lessonNum: 3, defaultTab: 'videos' });
     expect(screen.getByRole('button', { name: 'Videos' })).toBeTruthy();
+  });
+
+  it('usa el vídeo en inglés cuando el idioma de la app no es español', async () => {
+    await i18n.changeLanguage('en');
+    const { unmount } = render(<LessonDetail lessonNum={3} lessonData={{}} characters={WORDS} progress={{}} goBack={vi.fn()} defaultTab="videos" />);
+    const btn = screen.getAllByRole('button', { name: /watch video/i })[0];
+    fireEvent.click(btn);
+    const iframe = document.querySelector('iframe');
+    expect(iframe).toBeTruthy();
+    expect(iframe.getAttribute('src')).toContain('youtube-nocookie.com/embed/');
+    unmount();
+    await i18n.changeLanguage('en');
   });
   it('lista el vocabulario principal de la lección (sin el extra) y el botón atrás llama a goBack', () => {
     const props = setup({ defaultTab: 'vocab' });
