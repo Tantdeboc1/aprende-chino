@@ -159,6 +159,7 @@ export function useNavigation(
         selectedLesson,
         characters,
         allCharacters,
+        showSupplementary,
         onTrackResult,
         speak,
       });

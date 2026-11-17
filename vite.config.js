@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { fileURLToPath, URL } from 'node:url'
-import { APP_VERSION } from './src/utils/version.js'
+import { readFileSync } from 'node:fs'
+
+const { version: packageVersion } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
+const APP_VERSION = process.env.VITE_APP_VERSION || `v${packageVersion}`
 
 // Subida de sourcemaps a Sentry (solo build-time, cero peso en runtime).
 // Se activa SOLO si hay SENTRY_AUTH_TOKEN en el entorno (build de release/CI);
@@ -42,6 +45,9 @@ const sentryPlugins = process.env.SENTRY_AUTH_TOKEN
 
 export default defineConfig(({ mode }) => ({
   base: '/',
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(APP_VERSION),
+  },
   plugins: [
     stripWoffFallback,
     react(),

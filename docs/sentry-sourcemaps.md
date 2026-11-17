@@ -29,8 +29,8 @@ Variables de entorno al hacer el build de release:
 
 > El `release` (nombre) lo pone el plugin automáticamente = `APP_VERSION`
 > (`src/utils/version.js`). Debe coincidir con el que envía `errorTracking.js`.
-> **Al subir versión, actualiza `APP_VERSION` y vuelve a desplegar** para que los
-> mapas del nuevo release se suban.
+> El despliegue de GitHub Pages asigna la siguiente versión y la etiqueta Git
+> automáticamente; los mapas de ese release usan ese mismo valor.
 
 ## Uso
 

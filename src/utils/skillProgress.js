@@ -5,7 +5,7 @@ export const SKILL_ACTIVITIES = {
   listening: ['dictation-game', 'tones-ear', 'cefr-listening'],
   reading: ['reading-comprehension', 'dialogue-order', 'cefr-reading'],
   grammar: ['complete-sentence', 'sov-game', 'translation-game', 'cefr-grammar'],
-  vocabulary: ['time-race', 'pinyin-connection', 'find-intruder', 'global-exam', 'level-exam', 'lesson-exam', 'character-quiz'],
+  vocabulary: ['time-race', 'pinyin-connection', 'find-intruder', 'global-exam', 'level-exam', 'lesson-exam', 'character-quiz', 'vocabulary-writing'],
   speaking: ['pronunciation-practice', 'echo-speaking'],
 };
 const skillFor = activity => Object.keys(SKILL_ACTIVITIES).find(key => SKILL_ACTIVITIES[key].includes(activity));

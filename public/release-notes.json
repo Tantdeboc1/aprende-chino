@@ -1,11 +1,35 @@
 {
-  "version": "v0.9.4",
+  "version": "v0.9.5",
   "notes": {
-    "es": ["Ampliamos la guía y los ejercicios de radicales.", "Añadimos 22 patrones de conectores con explicaciones y actividades en seis idiomas.", "Añadimos una práctica oral sin reconocimiento de voz y aclaramos la corrección.", "Mejoramos la navegación al volver entre menús.", "El aviso de futuras actualizaciones permite consultar las novedades."],
-    "en": ["Expanded the radicals guide and exercises.", "Added 22 connector patterns with explanations and exercises in six languages.", "Added speaking practice without voice recognition and clarified feedback.", "Improved back navigation between menus.", "Future update alerts can show what’s new."],
-    "fr": ["Guide et exercices des radicaux enrichis.", "Ajout de 22 structures de connecteurs avec explications et exercices en six langues.", "Ajout d’une pratique orale sans reconnaissance vocale et clarification des résultats.", "Navigation de retour entre les menus améliorée.", "Les alertes des futures mises à jour pourront afficher les nouveautés."],
-    "de": ["Radikale-Leitfaden und Übungen erweitert.", "22 Konnektoren-Muster mit Erklärungen und Übungen in sechs Sprachen hinzugefügt.", "Sprechübung ohne Spracherkennung hinzugefügt und Rückmeldung erläutert.", "Navigation zwischen Menüs beim Zurückgehen verbessert.", "Künftige Update-Hinweise können Neuerungen anzeigen."],
-    "it": ["Guida ed esercizi sui radicali ampliati.", "Aggiunte 22 strutture di connettivi con spiegazioni ed esercizi in sei lingue.", "Aggiunta pratica orale senza riconoscimento vocale e chiarito il risultato.", "Migliorata la navigazione tra i menu tornando indietro.", "Gli avvisi dei prossimi aggiornamenti possono mostrare le novità."],
-    "pt": ["Guia e exercícios de radicais ampliados.", "Adicionados 22 padrões de conectores com explicações e exercícios em seis idiomas.", "Adicionada prática oral sem reconhecimento de voz e esclarecido o resultado.", "Melhorada a navegação ao voltar entre menus.", "Os avisos de futuras atualizações podem mostrar as novidades."]
+    "es": [
+      "Nuevo Juego de flashcards: escribe vocabulario chino a mano desde el castellano y practica también la traducción inversa.",
+      "Usa las pistas de pinyin y de trazos progresivos cuando necesites ayuda.",
+      "La app asigna automáticamente el número de versión y, al actualizarse, muestra la versión instalada y sus novedades."
+    ],
+    "en": [
+      "New flashcard game: write Chinese vocabulary by hand from English, or recall the English meaning from Chinese.",
+      "Use pinyin and progressive stroke hints when you need help.",
+      "The app now assigns version numbers automatically and shows the installed version and its changes after an update."
+    ],
+    "fr": [
+      "Nouveau jeu de flashcards : écrivez le vocabulaire chinois à la main à partir du français, ou retrouvez le sens français depuis le chinois.",
+      "Utilisez le pinyin et les indices de traits progressifs si besoin.",
+      "L’application attribue automatiquement le numéro de version et affiche la version installée ainsi que ses nouveautés après la mise à jour."
+    ],
+    "de": [
+      "Neues Vokabelkarten-Spiel: Schreibe chinesische Wörter ausgehend von der deutschen Bedeutung von Hand oder gib die deutsche Bedeutung zu chinesischen Wörtern ein.",
+      "Nutze bei Bedarf Pinyin- und schrittweise Strichhinweise.",
+      "Die App vergibt Versionsnummern automatisch und zeigt nach einem Update die installierte Version und ihre Neuerungen an."
+    ],
+    "it": [
+      "Nuovo gioco di flashcard: scrivi a mano il vocabolario cinese partendo dall’italiano o ricorda il significato italiano partendo dal cinese.",
+      "Usa gli aiuti di pinyin e i suggerimenti progressivi sui tratti quando ti servono.",
+      "L’app assegna automaticamente il numero di versione e, dopo l’aggiornamento, mostra la versione installata e le novità."
+    ],
+    "pt": [
+      "Novo jogo de flashcards: escreve vocabulário chinês à mão a partir do português ou recorda o significado em português a partir do chinês.",
+      "Usa as pistas de pinyin e de traços progressivos quando precisares de ajuda.",
+      "A app atribui automaticamente o número da versão e mostra a versão instalada e as novidades após a atualização."
+    ]
   }
 }

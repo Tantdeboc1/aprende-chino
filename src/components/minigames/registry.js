@@ -22,6 +22,7 @@ const SOVGame              = memo(lazyWithRetry(() => import('./SOVGame.jsx')));
 const TimeRace             = memo(lazyWithRetry(() => import('./TimeRace.jsx')));
 const PinyinConnection     = memo(lazyWithRetry(() => import('./PinyinConnection.jsx')));
 const TranslationGame      = memo(lazyWithRetry(() => import('./TranslationGame.jsx')));
+const VocabularyWriting    = memo(lazyWithRetry(() => import('./VocabularyWriting.jsx')));
 const CompleteSentence     = memo(lazyWithRetry(() => import('./CompleteSentence.jsx')));
 const DialogueOrder        = memo(lazyWithRetry(() => import('./DialogueOrder.jsx')));
 const FindIntruder         = memo(lazyWithRetry(() => import('./FindIntruder.jsx')));
@@ -72,6 +73,18 @@ export const MINIGAMES = [
     buildProps: (ctx) => ({
       goBack: ctx.goBackMinigames,
       selectedLesson: ctx.selectedLesson,
+    }),
+  },
+  {
+    id: 'vocabulary-writing',
+    component: VocabularyWriting,
+    buildProps: (ctx) => ({
+      goBack: ctx.goBackMinigames,
+      selectedLesson: ctx.selectedLesson,
+      allCharacters: ctx.allCharacters,
+      showSupplementary: ctx.showSupplementary,
+      speak: ctx.speak,
+      onTrackResult: ctx.onTrackResult,
     }),
   },
   {

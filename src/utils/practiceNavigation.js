@@ -6,6 +6,7 @@ export const PRACTICE_ACTIVITIES = {
   'word-search': ['base', 'word_search_title'],
   'sov-game': ['escritura', 'minigames_sov_title'],
   'translation-game': ['escritura', 'minigames_translation_title'],
+  'vocabulary-writing': ['escritura', 'minigames_vocab_write_title'],
   'complete-sentence': ['escritura', 'minigames_complete_title'],
   'dialogue-order': ['lectura', 'minigames_dialogue_title'],
   'reading-comprehension': ['lectura', 'minigames_reading_title'],

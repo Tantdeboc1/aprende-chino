@@ -17,7 +17,7 @@
 // resuelve el idioma activo con el mismo patrón que ya usa para meaningTr.
 //
 // Ejecutar:  node scripts/inject-secondary-i18n.mjs
-// OJO: tras cambiar los JSON hay que subir APP_VERSION (caché versionada).
+// La publicación de GitHub Pages asigna una APP_VERSION nueva automáticamente.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';

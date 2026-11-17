@@ -1,4 +1,3 @@
-// src/utils/version.js
-// Única fuente de verdad de la versión visible en la UI.
-// Mantener alineada con package.json al hacer release.
-export const APP_VERSION = 'v0.9.4';
+// La versión de producción llega desde el flujo de despliegue (VITE_APP_VERSION).
+// En desarrollo, Vite usa el valor base de package.json.
+export const APP_VERSION = import.meta.env.VITE_APP_VERSION;

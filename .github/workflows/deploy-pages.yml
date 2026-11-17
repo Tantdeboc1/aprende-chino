@@ -10,7 +10,9 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  # Termina la publicación activa; GitHub ejecuta después el push pendiente
+  # más reciente, sin cancelar Pages a mitad del despliegue.
+  cancel-in-progress: false
 
 jobs:
   security-checks:
@@ -18,16 +20,26 @@ jobs:
   build:
     needs: security-checks
     runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.release_version.outputs.app_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
+
+      - name: Determine the next app version
+        id: release_version
+        run: |
+          APP_VERSION="$(node scripts/compute-release-version.mjs)"
+          echo "app_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building $APP_VERSION"
 
       # Reintentos ante fallos de red transitorios (ECONNRESET) del registro npm.
       - name: Install dependencies
@@ -51,15 +63,46 @@ jobs:
         run: node scripts/copy-hanzi-data.mjs
 
       - name: Build
+        env:
+          VITE_APP_VERSION: ${{ steps.release_version.outputs.app_version }}
         run: npx vite build --base=/aprende-chino/
+
+      - name: Set release notes version
+        env:
+          APP_VERSION: ${{ steps.release_version.outputs.app_version }}
+        run: node scripts/set-release-notes-version.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: ./dist
 
-  deploy:
+  reserve-version:
     needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Reserve the app version with a Git tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APP_VERSION: ${{ needs.build.outputs.app_version }}
+        run: |
+          TAG_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${APP_VERSION}" --jq '.object.sha' 2>/dev/null || true)"
+          if [ -n "$TAG_SHA" ]; then
+            if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
+              echo "Tag $APP_VERSION already points to another commit ($TAG_SHA)." >&2
+              exit 1
+            fi
+            echo "Tag $APP_VERSION already marks this commit."
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/git/refs" \
+              -f "ref=refs/tags/${APP_VERSION}" \
+              -f "sha=${GITHUB_SHA}"
+          fi
+
+  deploy:
+    needs: [build, reserve-version]
     permissions:
       pages: write
       id-token: write

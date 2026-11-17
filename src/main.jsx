@@ -6,6 +6,7 @@ import App from './App.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LevelUpHost from './components/LevelUpHost.jsx';
 import UpdateToast from './components/ui/UpdateToast.jsx';
+import UpdateNoticeModal from './components/ui/UpdateNoticeModal.jsx';
 import { MusicProvider } from './context/MusicContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import './i18n';
@@ -87,6 +88,8 @@ createRoot(document.getElementById('root')).render(
           <LevelUpHost />
           {/* Aviso de nueva versión del SW (modo 'prompt') */}
           <UpdateToast />
+          {/* Confirmación de la versión instalada tras recargar la app */}
+          <UpdateNoticeModal />
         </MusicProvider>
       </AuthProvider>
     </ErrorBoundary>

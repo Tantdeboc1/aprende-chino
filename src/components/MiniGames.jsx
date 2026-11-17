@@ -159,6 +159,15 @@ export default function MiniGames({ goBack, navigateTo, progress, allCharacters 
       categorias: ['escritura'],
     },
     {
+      id: 'vocabulary-writing',
+      title: t('minigames_vocab_write_title'),
+      description: t('minigames_vocab_write_description'),
+      cn: '卡',
+      color: 'red',
+      badges: [t('badge_vocabulary', 'Vocabulario'), t('badge_writing', 'Escritura')],
+      categorias: ['escritura'],
+    },
+    {
       id: 'complete-sentence',
       title: t('minigames_complete_title'),
       description: t('minigames_complete_description'),
