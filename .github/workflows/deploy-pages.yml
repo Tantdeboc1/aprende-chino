@@ -88,8 +88,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           APP_VERSION: ${{ needs.build.outputs.app_version }}
         run: |
-          TAG_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${APP_VERSION}" --jq '.object.sha' 2>/dev/null || true)"
-          if [ -n "$TAG_SHA" ]; then
+          TAG_REF="repos/${GITHUB_REPOSITORY}/git/ref/tags/${APP_VERSION}"
+          if gh api "$TAG_REF" >/dev/null 2>&1; then
+            TAG_SHA="$(gh api "$TAG_REF" --jq '.object.sha')"
             if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
               echo "Tag $APP_VERSION already points to another commit ($TAG_SHA)." >&2
               exit 1
