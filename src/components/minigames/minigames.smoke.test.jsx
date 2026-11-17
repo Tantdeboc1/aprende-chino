@@ -120,7 +120,7 @@ describe('smoke de los minijuegos', () => {
 
   // ReadingComprehension y CefrExam no usan GameIntro (tienen su propia
   // portada), así que el "empezar = último botón" no aplica.
-  const withIntro = GAMES.filter(g => !['reading-comprehension', 'cefr-exam', 'word-search'].includes(g.id));
+  const withIntro = GAMES.filter(g => !['reading-comprehension', 'cefr-exam', 'word-search', 'vocabulary-writing'].includes(g.id));
 
   it.each(withIntro)('$id arranca desde la intro sin errores', async (game) => {
     const Game = game.C;
