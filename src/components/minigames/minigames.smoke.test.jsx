@@ -1,5 +1,5 @@
 // src/components/minigames/minigames.smoke.test.jsx
-// Smoke de los 13 minijuegos del registro: montar, arrancar y comprobar que la
+// Smoke de los 15 minijuegos del registro: montar, arrancar y comprobar que la
 // pantalla de juego aparece sin errores de React ni excepciones.
 //
 // Cubre la clase de bug más visible para el usuario (un juego que revienta al
@@ -13,6 +13,7 @@ import SOVGame from './SOVGame.jsx';
 import TimeRace from './TimeRace.jsx';
 import PinyinConnection from './PinyinConnection.jsx';
 import TranslationGame from './TranslationGame.jsx';
+import VocabularyWriting from './VocabularyWriting.jsx';
 import CompleteSentence from './CompleteSentence.jsx';
 import DialogueOrder from './DialogueOrder.jsx';
 import FindIntruder from './FindIntruder.jsx';
@@ -77,6 +78,7 @@ const GAMES = [
   { id: 'reading-comprehension', C: ReadingComprehension, props: { goBack: noop, speak: noop, characters: CHARS } },
   { id: 'cefr-exam', C: CefrExam, props: { goBack: noop, speak: noop, allCharacters: CHARS } },
   { id: 'word-search', C: WordSearch, props: { goBack: noop } },
+  { id: 'vocabulary-writing', C: VocabularyWriting, props: { goBack: noop, selectedLesson: null, allCharacters: CHARS, showSupplementary: false, speak: noop, onTrackResult: noop } },
 ];
 
 /** El botón de empezar de GameIntro es el último de la pantalla. */
