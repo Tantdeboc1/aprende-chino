@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app_version: ${{ steps.release_version.outputs.app_version }}
+      release_base: ${{ steps.release_version.outputs.release_base }}
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -37,7 +38,16 @@ jobs:
       - name: Determine the next app version
         id: release_version
         run: |
-          APP_VERSION="$(node scripts/compute-release-version.mjs)"
+          REUSE_VERSION="$(git log -1 --format='%(trailers:key=Release-Version,valueonly)')"
+          if [ -n "$REUSE_VERSION" ]; then
+            [[ "$REUSE_VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            RELEASE_BASE="$(git rev-parse HEAD^)"
+            test "$(git rev-parse "refs/tags/$REUSE_VERSION^{commit}")" = "$RELEASE_BASE"
+            APP_VERSION="$REUSE_VERSION"
+            echo "release_base=$RELEASE_BASE" >> "$GITHUB_OUTPUT"
+          else
+            APP_VERSION="$(node scripts/compute-release-version.mjs)"
+          fi
           echo "app_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
           echo "Building $APP_VERSION"
 
@@ -87,10 +97,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           APP_VERSION: ${{ needs.build.outputs.app_version }}
+          RELEASE_BASE: ${{ needs.build.outputs.release_base }}
         run: |
           TAG_REF="repos/${GITHUB_REPOSITORY}/git/ref/tags/${APP_VERSION}"
           if gh api "$TAG_REF" >/dev/null 2>&1; then
             TAG_SHA="$(gh api "$TAG_REF" --jq '.object.sha')"
+            if [ -n "$RELEASE_BASE" ] && [ "$TAG_SHA" = "$RELEASE_BASE" ]; then
+              echo "Keeping $APP_VERSION on its original release commit."
+              exit 0
+            fi
             if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
               echo "Tag $APP_VERSION already points to another commit ($TAG_SHA)." >&2
               exit 1

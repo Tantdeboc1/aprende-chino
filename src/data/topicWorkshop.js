@@ -26,6 +26,18 @@ export const workshopLabels = {
 };
 
 export const locationComparison = {
+  diagram: {
+    title: localized('Esquema de la pizarra|Classroom diagram|Schéma du tableau|Tafelübersicht|Schema della lavagna|Esquema do quadro'),
+    columns: [
+      localized('Inicio|First|Début|Anfang|Inizio|Início'),
+      localized('Verbo|Verb|Verbe|Verb|Verbo|Verbo'),
+      localized('Final|Last|Fin|Ende|Fine|Fim'),
+    ],
+    subject: localized('Sujeto|Subject|Sujet|Subjekt|Soggetto|Sujeito'),
+    place: localized('Localización|Location|Lieu|Ort|Luogo|Localização'),
+    indefinite: localized('Elemento indefinido («un»)|Indefinite item (“a”)|Élément indéfini (« un »)|Unbestimmtes Element („ein“)|Elemento indefinito («un»)|Elemento indefinido («um»)'),
+    definite: localized('Elemento definido («el»)|Definite item (“the”)|Élément défini (« le »)|Bestimmtes Element („der“)|Elemento definito («il»)|Elemento definido («o»)'),
+  },
   title: localized('El mismo lugar, tres formas de describirlo|One place, three ways to describe it|Un même lieu, trois façons de le décrire|Ein Ort, drei Beschreibungen|Lo stesso luogo, tre modi per descriverlo|O mesmo lugar, três formas de o descrever'),
   vocabulary: localized('超市 (chāoshì) = supermercado · 饭馆 (fànguǎn) = restaurante · 旁边 (pángbiān) = al lado|超市 (chāoshì) = supermarket · 饭馆 (fànguǎn) = restaurant · 旁边 (pángbiān) = next to|超市 (chāoshì) = supermarché · 饭馆 (fànguǎn) = restaurant · 旁边 (pángbiān) = à côté|超市 (chāoshì) = Supermarkt · 饭馆 (fànguǎn) = Restaurant · 旁边 (pángbiān) = neben|超市 (chāoshì) = supermercato · 饭馆 (fànguǎn) = ristorante · 旁边 (pángbiān) = accanto|超市 (chāoshì) = supermercado · 饭馆 (fànguǎn) = restaurante · 旁边 (pángbiān) = ao lado'),
   note: localized('«Un» y «el» ayudan a entender los ejemplos. Elige el verbo según lo que quieres comunicar: ubicar algo, decir qué hay o identificar qué ocupa ese lugar. En chino, 饭馆旁边 va en el orden «restaurante + al lado».|“A” and “the” help explain the examples. Choose the verb according to what you want to do: locate something, say what is there, or identify what occupies that spot. 饭馆旁边 puts “restaurant” before “next to”.|« Un » et « le » aident à comprendre les exemples. Choisis le verbe selon ton intention : situer, dire ce qu’il y a ou identifier ce qui occupe l’endroit. Dans 饭馆旁边, le repère 饭馆 vient avant 旁边.|„Ein“ und „der“ helfen beim Verständnis. Wähle das Verb danach, ob du etwas verorten, sein Vorhandensein ausdrücken oder es identifizieren möchtest. In 饭馆旁边 steht der Bezugspunkt 饭馆 vor 旁边.|«Un» e «il» aiutano a capire gli esempi. Scegli il verbo a seconda di ciò che vuoi fare: localizzare, dire che cosa c’è o identificare che cosa occupa quel posto. In 饭馆旁边 il riferimento 饭馆 precede 旁边.|«Um» e «o» ajudam a entender os exemplos. Escolhe o verbo consoante o que queres fazer: localizar algo, dizer o que há ou identificar o que ocupa o lugar. Em 饭馆旁边, a referência 饭馆 vem antes de 旁边.'),

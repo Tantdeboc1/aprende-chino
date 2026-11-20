@@ -8,10 +8,42 @@ import { locationComparison, topicWorkshop, workshopLabels } from '@/data/topicW
 import { loc } from '@/utils/loc.js';
 
 function LocationComparison({ language }) {
-  const { title, vocabulary, examples, note } = locationComparison;
+  const { title, diagram, vocabulary, examples, note } = locationComparison;
+  const roles = [
+    [diagram.subject, diagram.place],
+    [diagram.place, diagram.indefinite],
+    [diagram.place, diagram.definite],
+  ];
   return (
     <section className="space-y-3" aria-labelledby="location-comparison">
       <h3 id="location-comparison" className="font-bold">{loc(title, language)}</h3>
+      <div className="overflow-hidden rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)]">
+        <table className="w-full table-fixed border-collapse text-center text-sm">
+          <caption className="px-3 pt-3 pb-2 text-left font-semibold">{loc(diagram.title, language)}</caption>
+          <colgroup><col /><col className="w-16 sm:w-24" /><col /></colgroup>
+          <thead className="bg-[var(--paper-hi2)]">
+            <tr>{diagram.columns.map((label) => (
+              <th key={label.en} scope="col" className="px-1 py-2">{loc(label, language)}</th>
+            ))}</tr>
+          </thead>
+          <tbody>
+            {examples.map(({ verb, parts }, index) => (
+              <tr key={verb} className="border-t border-[var(--hair)]">
+                <td className={`px-1 py-2 wrap-break-word ${index === 0 ? 'bg-[var(--sand-bg)]' : 'bg-[var(--jade-bg)]'}`}>
+                  {loc(roles[index][0], language)}
+                </td>
+                <td className="px-1 py-2">
+                  <span lang="zh-Hans" className="block font-cn text-lg font-bold">{parts[1]}</span>
+                  <span lang="zh-Latn-pinyin">{verb.split(' · ')[1]}</span>
+                </td>
+                <td className={`px-1 py-2 wrap-break-word ${index === 0 ? 'bg-[var(--jade-bg)]' : 'bg-[var(--sand-bg)]'}`}>
+                  {loc(roles[index][1], language)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <p className="text-sm">{loc(vocabulary, language)}</p>
       {examples.map(({ verb, question, pattern, parts, pinyin, translation }) => (
         <article key={verb} className="rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] p-4 space-y-2">
