@@ -1,3 +1,4 @@
+import { PracticeOption } from '@/components/ui/PracticeControls.jsx';
 import { useSkillSession } from '@/hooks/useSkillSession.js';
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
@@ -366,43 +367,11 @@ export default function ExamMode({
         {/* Opciones */}
         <div className="grid grid-cols-2 gap-3">
           {current.options.map((opt, i) => {
-            const isSelected = selected === opt.char;
             const isCorrectOpt = opt.char === current.correct.char;
-
-            let bg = J.paperHi;
-            let border = J.hair;
-            let color = J.ink;
-
-            if (feedback && isSelected && isCorrectOpt) {
-              bg = J.jadeBg; border = J.jade; color = J.jadeDeep;
-            } else if (feedback && isSelected && !isCorrectOpt) {
-              bg = J.redBg; border = J.red; color = J.redDeep;
-            } else if (feedback && isCorrectOpt) {
-              bg = J.jadeBg; border = J.jade; color = J.jadeDeep;
-            } else if (feedback) {
-              color = J.mute2;
-            }
-
-            return (
-              <button
-                key={i}
-                onClick={() => handleSelect(opt)}
-                disabled={!!feedback}
-                className="relative p-4 rounded-xl text-center font-semibold transition-all duration-200"
-                style={{
-                  background: bg, border: `2px solid ${border}`, color,
-                  cursor: feedback ? 'default' : 'pointer',
-                }}
-              >
-                {feedback && isCorrectOpt && (
-                  <span className="absolute top-2 right-2 text-xs" style={{ color: J.jade }}>★</span>
-                )}
-                {feedback && isSelected && !isCorrectOpt && (
-                  <span className="absolute top-2 right-2 text-xs" style={{ color: J.red }}>✕</span>
-                )}
-                <span className="text-sm leading-snug">{opt.meaning}</span>
-              </button>
-            );
+            return <PracticeOption key={i} onClick={() => handleSelect(opt)} disabled={!!feedback} className="min-h-[60px] text-center"
+              state={!feedback ? 'idle' : isCorrectOpt ? 'correct' : selected === opt.char ? 'incorrect' : 'muted'}>
+              {opt.meaning}
+            </PracticeOption>;
           })}
         </div>
 

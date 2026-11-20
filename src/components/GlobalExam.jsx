@@ -1,3 +1,4 @@
+import { PracticeOption } from '@/components/ui/PracticeControls.jsx';
 import { useSkillSession } from '@/hooks/useSkillSession.js';
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
@@ -281,34 +282,10 @@ export default function GlobalExam({ goBack, allCharacters }) {
         {/* Opciones */}
         <div className="grid grid-cols-2 gap-2 sm:gap-3">
           {question.options.map((opt, i) => {
-            let bg = J.paperHi;
-            let border = J.hair;
-            let color = J.ink;
-
-            if (feedback) {
-              if (opt === question.correct.meaning) {
-                bg = J.jadeBg; border = J.jade; color = J.jadeDeep;
-              } else if (opt === selected) {
-                bg = J.redBg; border = J.red; color = J.redDeep;
-              } else {
-                color = J.mute2;
-              }
-            }
-
-            return (
-              <button
-                key={i}
-                onClick={() => handleAnswer(opt)}
-                disabled={!!feedback}
-                className="p-3 rounded-xl font-medium text-sm transition-colors min-h-[60px] sm:min-h-[68px] flex items-center justify-center text-center leading-tight"
-                style={{
-                  background: bg, border: `2px solid ${border}`, color,
-                  cursor: feedback ? 'default' : 'pointer',
-                }}
-              >
-                {opt}
-              </button>
-            );
+            return <PracticeOption key={i} onClick={() => handleAnswer(opt)} disabled={!!feedback} className="min-h-[60px] text-center text-sm"
+              state={!feedback ? 'idle' : opt === question.correct.meaning ? 'correct' : opt === selected ? 'incorrect' : 'muted'}>
+              {opt}
+            </PracticeOption>;
           })}
         </div>
       </div>

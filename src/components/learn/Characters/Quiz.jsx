@@ -1,3 +1,4 @@
+import { PracticeOption, PracticeNext } from '@/components/ui/PracticeControls.jsx';
 import { useSkillSession } from '@/hooks/useSkillSession.js';
 import AnswerCorrection from '@/components/ui/AnswerCorrection.jsx';
 // src/components/learn/Characters/Quiz.jsx
@@ -260,33 +261,19 @@ export default function Quiz({ goBack, characters = [], onTrackResult }) {
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {question.options.map((opt, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleAnswer(opt)}
-                disabled={showResult}
-                className={`p-4 rounded-lg text-lg font-semibold transition flex items-center justify-center min-h-[64px] ${
-                  showResult
-                    ? isCorrectOpt(opt)
-                      ? 'bg-[var(--jade)] text-[var(--on-accent)]'
-                      : opt === selected
-                      ? 'bg-[var(--red)] text-[var(--on-accent)]'
-                      : 'bg-[var(--paper-hi2)] text-[var(--mute)]'
-                    : 'bg-[var(--paper-hi2)] hover:bg-[var(--paper-hi2)] hover:border-[var(--mute)] text-[var(--ink)] border border-[rgba(28,24,19,0.10)]'
-                } ${showResult ? (isCorrectOpt(opt) ? 'j-pop' : opt === selected ? 'j-shake' : '') : ''}`}
-              >
+              <PracticeOption key={idx} onClick={() => handleAnswer(opt)} disabled={showResult}
+                className="text-lg min-h-[64px]"
+                state={!showResult ? 'idle' : isCorrectOpt(opt) ? 'correct' : opt === selected ? 'incorrect' : 'muted'}>
                 {optionLabel(opt)}
-              </button>
+              </PracticeOption>
             ))}
           </div>
 
           {showResult && selected?.char !== question.correct.char && <AnswerCorrection word={question.correct} />}
           {showResult && (
-            <button
-              onClick={next}
-              className="w-full mt-4 bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)] font-semibold py-3 rounded-lg transition"
-            >
+            <PracticeNext onClick={next} className="mt-4">
               {index + 1 >= questions.length ? t('quiz_results_button') : t('quiz_next_button')}
-            </button>
+            </PracticeNext>
           )}
         </div>
       </div>

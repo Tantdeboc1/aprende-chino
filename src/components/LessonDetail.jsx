@@ -1,3 +1,4 @@
+import { VIDEO_CATALOG, LESSON_VIDEOS } from '@/data/lessonVideos.js';
 import ReadingAid from '@/components/ui/ReadingAid.jsx';
 import { motionReduced } from '@/utils/learningPrefs.js';
 import { useLocalSnapshot } from '@/hooks/useLocalSnapshot.js';
@@ -8,6 +9,11 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry.js';
 import { trackEvent } from '@/utils/analytics.js';
 import { useWindowSize } from '@/hooks/useWindowSize.js';
 import { useTranslation } from 'react-i18next';
+import { loc } from '@/utils/loc.js';
+import { locationComparison, topicWorkshop } from '@/data/topicWorkshop.js';
+import { defaultLessonTab, introductionStories, introductionWorkshops, lessonActivities, lessonIntroductions } from '@/data/lessonIntroductions.js';
+import LessonIntroduction from '@/components/LessonIntroduction.jsx';
+import LessonStoryPreview from '@/components/LessonStoryPreview.jsx';
 import { J } from '@/styles/tokens';
 import { getLessonStats, toggleWordMastered } from '@/utils/progress.js';
 import { toggleWordDifficult, isWordDifficult, isLeech, getNextReviewInfo } from '@/utils/srs.js';
@@ -16,60 +22,79 @@ import { toggleWordDifficult, isWordDifficult, isLeech, getNextReviewInfo } from
 // multi-idioma, librería de partículas) y solo se necesitan al abrir su tab
 // o al alcanzar el 100% de la lección. Salen del chunk principal de LessonDetail.
 const StudyTab = lazyWithRetry(() => import('./learn/Characters/Progressive.jsx'));
+const LocationStudy = lazyWithRetry(() => import('./LocationStudy.jsx'));
+const locationIntro = {
+  tab: { es: 'Introducción', en: 'Introduction', fr: 'Introduction', de: 'Einführung', it: 'Introduzione', pt: 'Introdução' },
+  title: { es: '¿Qué vas a aprender?', en: 'What will you learn?', fr: 'Que vas-tu apprendre ?', de: 'Was lernst du?', it: 'Che cosa imparerai?', pt: 'O que vais aprender?' },
+  overview: {
+    es: 'Este tema trata de cómo hablamos de los lugares en chino. Aprenderás nombres de sitios del barrio y palabras para situarlos. Por ejemplo, con «al lado» o «a la izquierda» puedes dar una ubicación tomando otro lugar como referencia.',
+    en: 'This unit is about talking about places in Chinese. You’ll learn the names of places in a neighborhood and words for saying where they are. For example, “next to” and “to the left of” describe a location relative to another place.',
+    fr: 'Dans cette unité, tu apprends à parler des lieux en chinois. Tu découvriras des noms de lieux du quartier et des mots pour les situer. Par exemple, « à côté de » et « à gauche de » permettent de situer un lieu par rapport à un autre.',
+    de: 'In dieser Lektion lernst du, wie man auf Chinesisch über Orte spricht. Du lernst die Namen von Orten im Viertel und Wörter, um ihre Lage zu beschreiben. Mit „neben“ oder „links von“ kannst du etwa einen Ort im Verhältnis zu einem anderen beschreiben.',
+    it: 'In questa unità impari a parlare dei luoghi in cinese. Vedrai i nomi dei luoghi del quartiere e le parole per indicare dove si trovano. Per esempio, «accanto a» e «a sinistra di» permettono di situare un luogo rispetto a un altro.',
+    pt: 'Nesta unidade, aprendes a falar sobre lugares em chinês. Vais conhecer nomes de locais do bairro e palavras para os situar. Por exemplo, «ao lado de» e «à esquerda de» permitem indicar onde fica um lugar em relação a outro.',
+  },
+  connection: {
+    es: 'En la viñeta, 在 sitúa el banco tomando el supermercado como referencia. En la misma historia aparece 有 para decir que hay un banco a la entrada de la escuela. Con el plano practicarás también cómo usar 是 para identificar un edificio.',
+    en: 'In the panel, 在 tells you where the bank is relative to the supermarket. The story also uses 有 to say there’s a bank at the school entrance. With the map, you’ll also practice identifying a building with 是.',
+    fr: 'Dans la vignette, 在 situe la banque par rapport au supermarché. Dans la même histoire, 有 indique qu’il y a une banque à l’entrée de l’école. Avec le plan, tu t’entraîneras aussi à identifier un bâtiment avec 是.',
+    de: 'Im Bild zeigt 在, wo die Bank im Verhältnis zum Supermarkt liegt. In derselben Geschichte sagt 有, dass es am Schuleingang eine Bank gibt. Mit dem Plan übst du auch, ein Gebäude mit 是 zu benennen.',
+    it: 'Nella vignetta, 在 indica dove si trova la banca rispetto al supermercato. Nella stessa storia, 有 indica che c’è una banca all’ingresso della scuola. Con la mappa ti eserciterai anche a identificare un edificio con 是.',
+    pt: 'Na vinheta, 在 situa o banco em relação ao supermercado. Na mesma história, 有 indica que há um banco à entrada da escola. Com o mapa, também vais praticar como identificar um edifício com 是.',
+  },
+  goals: [
+    { es: 'Decir dónde está un lugar con 在.', en: 'Say where a place is using 在.', fr: 'Dire où se trouve un lieu avec 在.', de: 'Mit 在 sagen, wo ein Ort ist.', it: 'Dire dove si trova un luogo con 在.', pt: 'Dizer onde fica um lugar com 在.' },
+    { es: 'Contar qué hay cerca con 有.', en: 'Say what is nearby using 有.', fr: 'Dire ce qu’il y a à proximité avec 有.', de: 'Mit 有 sagen, was in der Nähe ist.', it: 'Dire che cosa c’è nelle vicinanze con 有.', pt: 'Dizer o que há por perto com 有.' },
+    { es: 'Identificar un edificio con 是.', en: 'Identify a building using 是.', fr: 'Identifier un bâtiment avec 是.', de: 'Mit 是 ein Gebäude identifizieren.', it: 'Identificare un edificio con 是.', pt: 'Identificar um edifício com 是.' },
+  ],
+  order: {
+    es: 'Fíjate en el orden: 饭馆旁边 se lee «restaurante + al lado». Con 在 empiezas por el supermercado. Con 有 o 是 empiezas por el lugar.',
+    en: 'Notice the order: 饭馆旁边 reads “restaurant + next to.” With 在, start with the supermarket. With 有 or 是, start with the location.',
+    fr: 'Observe l’ordre : 饭馆旁边 se lit « restaurant + à côté ». Avec 在, commence par le supermarché. Avec 有 ou 是, commence par le lieu.',
+    de: 'Achte auf die Reihenfolge: 饭馆旁边 heißt wörtlich „Restaurant + daneben“. Mit 在 beginnst du mit dem Supermarkt. Mit 有 oder 是 beginnst du mit dem Ort.',
+    it: 'Nota l’ordine: 饭馆旁边 si legge «ristorante + accanto». Con 在 inizi dal supermercato. Con 有 o 是 inizi dal luogo.',
+    pt: 'Repara na ordem: 饭馆旁边 lê-se «restaurante + ao lado». Com 在, começas pelo supermercado. Com 有 ou 是, começas pelo lugar.',
+  },
+  path: {
+    es: 'Prueba el plano. Si te falta una palabra, consulta Vocabulario. Si dudas entre dos estructuras, abre Gramática. En Practicar podrás comprobar si sabes aplicarlas en otras situaciones.',
+    en: 'Try the map. Look up words in Vocabulary and compare structures in Grammar. In Practice, check whether you can use them in other situations.',
+    fr: 'Essaie le plan. Consulte le vocabulaire pour chercher un mot et la grammaire pour comparer les structures. Entraîne-toi ensuite dans d’autres situations.',
+    de: 'Probiere den Plan aus. Wörter findest du im Wortschatz, Satzmuster in der Grammatik. Beim Üben kannst du die Muster auf andere Situationen übertragen.',
+    it: 'Prova la mappa. Cerca le parole nel vocabolario e confronta le strutture nella grammatica. Negli esercizi potrai usarle in altre situazioni.',
+    pt: 'Experimenta o mapa. Consulta o vocabulário para procurar palavras e a gramática para comparar estruturas. Nos exercícios podes aplicá-las a outras situações.',
+  },
+  vocabStudy: { es: 'Repasar vocabulario con fichas', en: 'Review vocabulary with flashcards', fr: 'Réviser le vocabulaire avec des cartes', de: 'Wortschatz mit Karten üben', it: 'Ripassa il vocabolario con le schede', pt: 'Rever vocabulário com cartões' },
+  generalPath: {
+    es: 'Si te falta una palabra, consulta Vocabulario. En Gramática puedes ver más ejemplos. Después, en Practicar, comprueba si sabes usar lo aprendido.',
+    en: 'Look up words in Vocabulary and find more examples in Grammar. Then use Practice to check what you’ve learned.',
+    fr: 'Cherche les mots dans Vocabulaire et d’autres exemples dans Grammaire. Ensuite, vérifie tes acquis dans les exercices.',
+    de: 'Schlage Wörter im Wortschatz nach und finde weitere Beispiele in der Grammatik. Überprüfe danach beim Üben, was du gelernt hast.',
+    it: 'Cerca le parole in Vocabolario e altri esempi in Grammatica. Poi verifica negli esercizi ciò che hai imparato.',
+    pt: 'Procura palavras no Vocabulário e mais exemplos na Gramática. Depois, verifica o que aprendeste nos exercícios.',
+  },
+};
 const GrammarTab   = lazyWithRetry(() => import('./GrammarTab.jsx'));
+const TopicPractice = lazyWithRetry(() => import('./TopicPractice.jsx'));
 const CulturalTab  = lazyWithRetry(() => import('./CulturalTab.jsx'));
 const Confetti     = lazyWithRetry(() => import('react-confetti'));
 
 const VIDEO_TEXT = {
-  es: ['Vídeos', 'Vídeos de la lección', 'Texto en español · audio en chino', 'Ver vídeo', 'Ver en YouTube', 'Necesitas conexión a internet para ver los vídeos.', 'Saludos y presentaciones', 'Hola y gracias', 'Tú, yo y él', '¿Quién?', 'La pronunciación de 你好'],
-  en: ['Videos', 'Lesson videos', 'Spanish text · Chinese audio', 'Watch video', 'Watch on YouTube', 'An internet connection is needed to watch videos.', 'Greetings and introductions', 'Hello and thank you', 'You, I and he', 'Who?', 'Pronouncing 你好'],
-  fr: ['Vidéos', 'Vidéos de la leçon', 'Texte en espagnol · audio en chinois', 'Voir la vidéo', 'Voir sur YouTube', 'Une connexion Internet est nécessaire.', 'Salutations et présentations', 'Bonjour et merci', 'Tu, je et il', 'Qui ?', 'Prononcer 你好'],
-  de: ['Videos', 'Videos zur Lektion', 'Spanischer Text · chinesischer Ton', 'Video ansehen', 'Auf YouTube ansehen', 'Für Videos ist eine Internetverbindung erforderlich.', 'Begrüßung und Vorstellung', 'Hallo und danke', 'Du, ich und er', 'Wer?', '你好 aussprechen'],
-  it: ['Video', 'Video della lezione', 'Testo in spagnolo · audio in cinese', 'Guarda il video', 'Guarda su YouTube', 'È necessaria una connessione Internet.', 'Saluti e presentazioni', 'Ciao e grazie', 'Tu, io e lui', 'Chi?', 'Pronunciare 你好'],
-  pt: ['Vídeos', 'Vídeos da lição', 'Texto em espanhol · áudio em chinês', 'Ver vídeo', 'Ver no YouTube', 'É necessária uma ligação à internet.', 'Saudações e apresentações', 'Olá e obrigado', 'Tu, eu e ele', 'Quem?', 'Pronunciar 你好'],
-};
-// Vídeos actualizados con los IDs actuales del canal HanyuPath en YouTube.
-const SHOW_LESSON_VIDEOS = true;
-const VIDEO_CATALOG = {
-  'VZy1esh-qms': { titleIndex: 6, long: true, idEn: 'yWgxlUaUQXA' },
-  'a9bSgfn8GOE': { titles: ['Los 4 tonos del chino', 'The 4 Chinese tones', 'Les 4 tons du chinois', 'Die 4 chinesischen Töne', 'I 4 toni cinesi', 'Os 4 tons do chinês'], long: true, idEn: 'AS-Zq0HvKC8' },
-  'UWGFt2JuvNk': { long: true, titles: ['La comida', 'Food', 'La nourriture', 'Essen', 'Il cibo', 'A comida'], idEn: 'mLi5VlclmKE' },
-  'qATsY0WM5oY': { titles: ['Preguntas en chino', 'Chinese questions', 'Questions en chinois', 'Fragen auf Chinesisch', 'Domande in cinese', 'Perguntas em chinês'], long: true, idEn: 'zpCqtbFjJF8' },
-  'UqI3LtdXFko': { long: true, titles: ['La familia', 'Family', 'La famille', 'Familie', 'La famiglia', 'A família'], idEn: '_oECWwhhpKw' },
-  'j--zHOuXFYY': { long: true, titles: ['Números del 1 al 99', 'Numbers from 1 to 99', 'Les nombres de 1 à 99', 'Zahlen von 1 bis 99', 'Numeri da 1 a 99', 'Números de 1 a 99'], idEn: 'pm-Lt2BGvZ8' },
-  'Z3LbmJDBZ_k': { long: true, titles: ['Hora, días y fechas', 'Time, days and dates', 'Heure, jours et dates', 'Uhrzeit, Tage und Daten', 'Ora, giorni e date', 'Horas, dias e datas'], idEn: 'ngh9kTsJCKI' },
-  '6DcBrM_8fqg': { long: true, titles: ['Transporte y direcciones', 'Transport and directions', 'Transport et directions', 'Verkehr und Wegbeschreibung', 'Trasporti e indicazioni', 'Transportes e direções'], idEn: 'FHGLTeWmkH4' },
-  'ZyNsYq4tjA0': { long: true, titles: ['Comida y precios', 'Food and prices', 'Nourriture et prix', 'Essen und Preise', 'Cibo e prezzi', 'Comida e preços'], idEn: 'X1gvxLWqCAU' },
-  'eaxvhNrVNvA': { long: false, titles: ['2 frases básicas en chino: hola y gracias', '2 Essential Chinese Phrases: Hello and Thank You', '2 Essential Chinese Phrases: Hello and Thank You', '2 Essential Chinese Phrases: Hello and Thank You', '2 Essential Chinese Phrases: Hello and Thank You', '2 Essential Chinese Phrases: Hello and Thank You'], idEn: 'tcVnZmv-wT4' },
-  'LlXFey3K5F0': { long: false, titles: ['¿Cómo suena “你好”? El tercer tono cambia al hablar', 'How Is “你好” Pronounced? The Third Tone Changes in Speech', 'How Is “你好” Pronounced? The Third Tone Changes in Speech', 'How Is “你好” Pronounced? The Third Tone Changes in Speech', 'How Is “你好” Pronounced? The Third Tone Changes in Speech', 'How Is “你好” Pronounced? The Third Tone Changes in Speech'], idEn: '91rL24j_-hM' },
-  'LIh1dG-Fark': { long: false, titles: ['Tú, yo y él en chino: nǐ, wǒ, tā', 'You, Me, and He in Chinese: nǐ, wǒ, tā', 'You, Me, and He in Chinese: nǐ, wǒ, tā', 'You, Me, and He in Chinese: nǐ, wǒ, tā', 'You, Me, and He in Chinese: nǐ, wǒ, tā', 'You, Me, and He in Chinese: nǐ, wǒ, tā'], idEn: 'Xzi9CrkC9DU' },
-  '849T4U39n1c': { long: false, titles: ['¿Cómo se dice “quién” en chino? | 谁 shéi', 'How to Say “Who?” in Chinese | 谁 shéi', 'How to Say “Who?” in Chinese | 谁 shéi', 'How to Say “Who?” in Chinese | 谁 shéi', 'How to Say “Who?” in Chinese | 谁 shéi', 'How to Say “Who?” in Chinese | 谁 shéi'], idEn: '4S5mG6CLS-s' },
-  'doVmExNEgu4': { long: false, titles: ['Los 4 tonos del chino con “ma”', 'The 4 Mandarin Tones with “ma”', 'The 4 Mandarin Tones with “ma”', 'The 4 Mandarin Tones with “ma”', 'The 4 Mandarin Tones with “ma”', 'The 4 Mandarin Tones with “ma”'], idEn: 'EYgwTWuiT54' },
-  'DNLArTjmqH0': { long: false, titles: ['¿Sabes diferenciar los 4 tonos del chino?', 'Can You Tell the 4 Chinese Tones Apart?', 'Can You Tell the 4 Chinese Tones Apart?', 'Can You Tell the 4 Chinese Tones Apart?', 'Can You Tell the 4 Chinese Tones Apart?', 'Can You Tell the 4 Chinese Tones Apart?'], idEn: 'iGKfwdKk1U4' },
-  'qhqMUppH9iY': { long: false, titles: ['Practica los 4 tonos del chino: ahora tú', 'Practice the 4 Mandarin Tones: Your Turn', 'Practice the 4 Mandarin Tones: Your Turn', 'Practice the 4 Mandarin Tones: Your Turn', 'Practice the 4 Mandarin Tones: Your Turn', 'Practice the 4 Mandarin Tones: Your Turn'], idEn: 'gNr-wiUMMSo' },
-  '3v5Peswz-Mg': { long: false, titles: ['¿Cómo decir “tengo” y “no tengo” en chino?', 'How to Say “I Have” and “I Don’t Have”', 'How to Say “I Have” and “I Don’t Have”', 'How to Say “I Have” and “I Don’t Have”', 'How to Say “I Have” and “I Don’t Have”', 'How to Say “I Have” and “I Don’t Have”'], idEn: 'oXBSzOy4ukc' },
-  '9HMdA3lFuMs': { long: false, titles: ['¿Cómo decir “soy” y “no soy” en chino?', 'How to Say “I Am” and “I’m Not”', 'How to Say “I Am” and “I’m Not”', 'How to Say “I Am” and “I’m Not”', 'How to Say “I Am” and “I’m Not”', 'How to Say “I Am” and “I’m Not”'], idEn: 'guQxOyFgZSk' },
-  'Jx0285M3AP0': { long: false, titles: ['¿Cómo formar preguntas con 吗?', 'How to Ask Yes-or-No Questions with 吗', 'How to Ask Yes-or-No Questions with 吗', 'How to Ask Yes-or-No Questions with 吗', 'How to Ask Yes-or-No Questions with 吗', 'How to Ask Yes-or-No Questions with 吗'], idEn: 'zW6-x2-ioSU' },
-  'jmBQ83F8ECk': { long: false, titles: ['Cómo decir “quiero” y “no quiero” en chino', 'How to Say “I Want” and “I Don’t Want”', 'How to Say “I Want” and “I Don’t Want”', 'How to Say “I Want” and “I Don’t Want”', 'How to Say “I Want” and “I Don’t Want”', 'How to Say “I Want” and “I Don’t Want”'], idEn: 'H29oegs5oT0' },
-  'UBo9QfNUQkU': { long: false, titles: ['Èr o liǎng: ¿cuándo se usa cada “dos”?', 'Èr or Liǎng? When to Use Each “Two”', 'Èr or Liǎng? When to Use Each “Two”', 'Èr or Liǎng? When to Use Each “Two”', 'Èr or Liǎng? When to Use Each “Two”', 'Èr or Liǎng? When to Use Each “Two”'], idEn: 'xq7hpF3uPZE' },
-  'IiNQvhFa0v0': { long: false, titles: ['¿Cómo contar gatos en chino? El clasificador 只', 'How to Count Cats in Chinese: The Classifier 只', 'How to Count Cats in Chinese: The Classifier 只', 'How to Count Cats in Chinese: The Classifier 只', 'How to Count Cats in Chinese: The Classifier 只', 'How to Count Cats in Chinese: The Classifier 只'], idEn: 'a8lv9HKk_xE' },
-  '0sIn6UEFbu8': { long: false, titles: ['Números en chino del 1 al 5', 'Chinese Numbers 1 to 5', 'Chinese Numbers 1 to 5', 'Chinese Numbers 1 to 5', 'Chinese Numbers 1 to 5', 'Chinese Numbers 1 to 5'], idEn: 'c_Q6z617jeg' },
-  'VqatnYoVvDs': { long: false, titles: ['Números en chino del 6 al 10', 'Chinese Numbers 6 to 10', 'Chinese Numbers 6 to 10', 'Chinese Numbers 6 to 10', 'Chinese Numbers 6 to 10', 'Chinese Numbers 6 to 10'], idEn: 'sQQNFNCo_bI' },
-  '6eVPbSnfluY': { long: false, titles: ['Dos terceros tonos seguidos', 'Two Third Tones in a Row', 'Two Third Tones in a Row', 'Two Third Tones in a Row', 'Two Third Tones in a Row', 'Two Third Tones in a Row'], idEn: 'V09A3gjRSBs' },
-  'u4yBcTKUMBQ': { long: false, titles: ['¿Bù o bú? La regla del 4º tono', 'Bù or Bú? The Fourth-Tone Rule', 'Bù or Bú? The Fourth-Tone Rule', 'Bù or Bú? The Fourth-Tone Rule', 'Bù or Bú? The Fourth-Tone Rule', 'Bù or Bú? The Fourth-Tone Rule'], idEn: 'ef_USYWrVUE' },
-  'Kgl7uaXcCyA': { long: false, titles: ['El tercer tono del chino en una frase', 'The Third Tone in Natural Chinese Speech', 'The Third Tone in Natural Chinese Speech', 'The Third Tone in Natural Chinese Speech', 'The Third Tone in Natural Chinese Speech', 'The Third Tone in Natural Chinese Speech'], idEn: 'lwUtJg-84v4' },
-  'swAb78XFmQI': { long: false, titles: ['¿Qué es el tono neutro en chino?', 'What Is the Neutral Tone in Chinese?', 'What Is the Neutral Tone in Chinese?', 'What Is the Neutral Tone in Chinese?', 'What Is the Neutral Tone in Chinese?', 'What Is the Neutral Tone in Chinese?'], idEn: 'W4gbi5X-mXs' },
-};
-const LESSON_VIDEOS = {
-  1: ['VZy1esh-qms', 'a9bSgfn8GOE', 'eaxvhNrVNvA', 'LlXFey3K5F0', 'LIh1dG-Fark', '849T4U39n1c', 'doVmExNEgu4', 'DNLArTjmqH0', 'qhqMUppH9iY'],
-  2: ['UWGFt2JuvNk', 'qATsY0WM5oY', '3v5Peswz-Mg', '9HMdA3lFuMs', 'Jx0285M3AP0', 'jmBQ83F8ECk'],
-  3: ['UqI3LtdXFko', 'j--zHOuXFYY', 'UBo9QfNUQkU', 'IiNQvhFa0v0', '0sIn6UEFbu8', 'VqatnYoVvDs'],
-  4: ['Z3LbmJDBZ_k', 'j--zHOuXFYY', '6eVPbSnfluY', 'u4yBcTKUMBQ', 'Kgl7uaXcCyA', 'swAb78XFmQI'],
-  5: ['Z3LbmJDBZ_k', 'j--zHOuXFYY', '6eVPbSnfluY', 'u4yBcTKUMBQ', 'Kgl7uaXcCyA', 'swAb78XFmQI'],
-  6: ['6DcBrM_8fqg'],
-  7: ['ZyNsYq4tjA0', 'j--zHOuXFYY', 'jmBQ83F8ECk', 'UBo9QfNUQkU', '0sIn6UEFbu8', 'VqatnYoVvDs'],
+  es: ['Vídeos', 'Vídeos de la lección', 'Ver vídeo', 'Ver en YouTube', 'Necesitas conexión a internet para ver los vídeos.'],
+  en: ['Videos', 'Lesson videos', 'Watch video', 'Watch on YouTube', 'An internet connection is needed to watch videos.'],
+  fr: ['Vidéos', 'Vidéos de la leçon', 'Voir la vidéo', 'Voir sur YouTube', 'Une connexion Internet est nécessaire.'],
+  de: ['Videos', 'Videos zur Lektion', 'Video ansehen', 'Auf YouTube ansehen', 'Für Videos ist eine Internetverbindung erforderlich.'],
+  it: ['Video', 'Video della lezione', 'Guarda il video', 'Guarda su YouTube', 'È necessaria una connessione Internet.'],
+  pt: ['Vídeos', 'Vídeos da lição', 'Ver vídeo', 'Ver no YouTube', 'É necessária uma ligação à internet.'],
 };
 const VIDEO_LANGUAGES = ['es', 'en', 'fr', 'de', 'it', 'pt'];
+const VIDEO_LANGUAGE_LABELS = {
+  es: ['Texto en español', 'Texto en inglés'],
+  en: ['Spanish text', 'English text'],
+  fr: ['Texte en espagnol', 'Texte en anglais'],
+  de: ['Spanischer Text', 'Englischer Text'],
+  it: ['Testo in spagnolo', 'Testo in inglese'],
+  pt: ['Texto em espanhol', 'Texto em inglês'],
+};
 const VIDEO_FORMATS = {
   es: ['Lección completa', 'Vídeo corto'], en: ['Full lesson', 'Short video'],
   fr: ['Leçon complète', 'Vidéo courte'], de: ['Vollständige Lektion', 'Kurzes Video'],
@@ -97,14 +122,21 @@ export default function LessonDetail({
   onProgressChange,
   goBack,
   onStartExercise,
+  onOpenStory,
   speakChinese,
-  defaultTab = 'study',
+  defaultTab,
   onTabChange,
   onTrackSeen,
   initialState,
   onStateChange,
 }) {
-  const [tab, setTab] = useState(defaultTab);
+  const hasIntro = defaultLessonTab(lessonNum) === 'intro';
+  const isLocation = Number(lessonNum) === 6;
+  const introduction = isLocation ? locationIntro : lessonIntroductions[lessonNum];
+  const introWorkshop = introductionWorkshops[lessonNum];
+  const storyPreview = introductionStories[lessonNum];
+  const activity = lessonActivities[lessonNum];
+  const [tab, setTab] = useState(defaultTab && (defaultTab !== 'intro' || hasIntro) ? defaultTab : (hasIntro ? 'intro' : 'study'));
   const { width, height } = useWindowSize();
   // Accesibilidad: respeta "reducir movimiento" — sin confetti animado.
   const reduceMotion = useLocalSnapshot(motionReduced);
@@ -117,7 +149,8 @@ export default function LessonDetail({
   const videoText = VIDEO_TEXT[i18n.resolvedLanguage?.split('-')[0]] || VIDEO_TEXT.en;
   const videoLanguage = Math.max(0, VIDEO_LANGUAGES.indexOf(i18n.resolvedLanguage?.split('-')[0] || 'en'));
   const videoFormats = VIDEO_FORMATS[VIDEO_LANGUAGES[videoLanguage]];
-  const lessonVideos = SHOW_LESSON_VIDEOS ? (LESSON_VIDEOS[lessonNum] || []) : [];
+  const videoLanguageLabels = VIDEO_LANGUAGE_LABELS[VIDEO_LANGUAGES[videoLanguage]];
+  const lessonVideos = LESSON_VIDEOS[lessonNum] || [];
   const [activeVideo, setActiveVideo] = useState(null);
   const [showSupp, setShowSupp] = useState(initialState?.showSupp || false);
   const [showLegend, setShowLegend] = useState(initialState?.showLegend || false);
@@ -232,14 +265,15 @@ export default function LessonDetail({
       {/* Tabs */}
       <div className="flex gap-2 px-4 pt-4 pb-2 overflow-x-auto">
         {[
-          { id: 'study',     label: t('exercise_study') },
+          ...(hasIntro ? [{ id: 'intro', label: loc(locationIntro.tab, i18n.language) }] : []),
+          ...(!hasIntro ? [{ id: 'study', label: t('exercise_study') }] : []),
           { id: 'vocab',     label: `${t('lesson_tab_vocab')} (${stats.total})` },
           { id: 'grammar',   label: t('lesson_tab_grammar') },
           { id: 'exercises', label: t('lesson_tab_practice') },
-          { id: 'culture',   label: t('lesson_tab_culture') },
           ...(lessonVideos.length ? [{ id: 'videos', label: videoText[0] }] : []),
+          { id: 'culture',   label: t('lesson_tab_culture') },
         ].map(tabItem => {
-          const on = tab === tabItem.id;
+          const on = tab === tabItem.id || (hasIntro && tab === 'study' && tabItem.id === 'vocab');
           return (
             <button
               key={tabItem.id}
@@ -263,24 +297,25 @@ export default function LessonDetail({
         {tab === 'videos' && lessonVideos.length > 0 && (
           <section aria-label={videoText[1]} className="pt-3 space-y-3">
             <h2 className="text-lg font-bold" style={{ color: J.ink }}>{videoText[1]}</h2>
-            <p className="text-sm" style={{ color: J.inkSoft }}>{videoText[2]} · {videoText[5]}</p>
+            <p className="text-sm" style={{ color: J.inkSoft }}>{videoText[4]}</p>
             {lessonVideos.map((id) => {
               const video = VIDEO_CATALOG[id];
-              const title = video.titles?.[videoLanguage] || videoText[video.titleIndex];
-              const youtubeId = videoLanguage === 0 ? id : (video.idEn || id);
+              const mediaLanguage = videoLanguage !== 0 && video.en ? 'en' : 'es';
+              const { id: youtubeId, title } = video[mediaLanguage];
               return (
               <div key={id} className="rounded-xl p-4" style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
                 <span className="inline-block rounded-full px-2.5 py-1 mb-2 text-xs font-bold" style={{ background: video.long ? J.jadeBg : J.sandBg, color: video.long ? J.jadeDeep : J.sandDeep }}>
                   {videoFormats[video.long ? 0 : 1]}
                 </span>
-                <h3 className="font-bold" style={{ color: J.ink }}>{title}</h3>
+                <h3 lang={mediaLanguage} className="font-bold" style={{ color: J.ink }}>{title}</h3>
+                <p className="text-xs" style={{ color: J.inkSoft }}>{videoLanguageLabels[mediaLanguage === 'es' ? 0 : 1]}</p>
                 {activeVideo === id ? (
                   <div className="mt-3">
                     <iframe title={title} src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} style={{ width: '100%', aspectRatio: video.long ? '16 / 9' : '9 / 16', maxHeight: 560, border: 0 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-                    <a href={`https://www.youtube.com/watch?v=${youtubeId}`} target="_blank" rel="noopener noreferrer" className="text-sm underline" style={{ color: J.jadeDeep }}>{videoText[4]}</a>
+                    <a href={`https://www.youtube.com/watch?v=${youtubeId}`} target="_blank" rel="noopener noreferrer" className="text-sm underline" style={{ color: J.jadeDeep }}>{videoText[3]}</a>
                   </div>
                 ) : (
-                  <button onClick={() => { setActiveVideo(id); trackEvent('video_play', { lesson: lessonNum, videoId: youtubeId, language: i18n.resolvedLanguage }); }} className="mt-3 rounded-full px-4 py-2 font-bold text-sm" style={{ background: J.jade, color: J.onAccent }}>{videoText[3]}</button>
+                  <button onClick={() => { setActiveVideo(id); trackEvent('video_play', { lesson: lessonNum, videoId: youtubeId, language: i18n.resolvedLanguage }); }} className="mt-3 rounded-full px-4 py-2 font-bold text-sm" style={{ background: J.jade, color: J.onAccent }}>{videoText[2]}</button>
                 )}
               </div>
             ); })}
@@ -290,6 +325,8 @@ export default function LessonDetail({
         {/* Tab Vocabulario */}
         {tab === 'vocab' && (
           <div>
+            {hasIntro && <button type="button" className="mb-3 block min-h-11 rounded-xl border border-[var(--hair)] px-4 py-2 font-semibold"
+              onClick={() => handleTabChange('study')}>{loc(locationIntro.vocabStudy, i18n.language)}</button>}
             {/* Leyenda de símbolos. Los círculos (○ ◑ ★) no se explicaban en
                 ninguna parte y las etiquetas SRS solo tenían un title=, que
                 con el dedo no se puede leer. */}
@@ -471,6 +508,34 @@ export default function LessonDetail({
           </div>
         )}
 
+        {tab === 'intro' && hasIntro && (
+          <LessonIntroduction
+            language={i18n.language}
+            opening={<LessonStoryPreview language={i18n.language} preview={storyPreview} onOpenStory={onOpenStory} />}
+            title={locationIntro.title}
+            overview={introduction.overview}
+            connection={isLocation ? locationIntro.connection : storyPreview.connection}
+            goals={introduction.goals}
+            vocabulary={isLocation ? locationComparison.vocabulary : undefined}
+            examples={isLocation
+              ? locationComparison.examples.map(({ question, parts, pinyin, translation, pattern }) => ({
+                heading: question, hanzi: parts.join('') + '。', parts, pinyin, translation, explanation: pattern,
+              }))
+              : introWorkshop.examples.map(([hanzi, pinyin, translation], i) => ({
+                heading: introduction.goals[i], hanzi, pinyin, translation, explanation: topicWorkshop[lessonNum][i].rule,
+              }))}
+            takeaway={isLocation ? locationIntro.order : undefined}
+            path={isLocation ? locationIntro.path : locationIntro.generalPath}
+            vocabularyLabel={t('lesson_tab_vocab')}
+            onVocabulary={() => handleTabChange('vocab')}
+          >
+            {isLocation
+              ? <LocationStudy title={loc(activity.title, i18n.language)} startLabel={loc(activity.start, i18n.language)} />
+              : <TopicPractice lesson={lessonNum} guided title={loc(activity.title, i18n.language)}
+                  description={loc(activity.intro, i18n.language)} startLabel={loc(activity.start, i18n.language)} />}
+          </LessonIntroduction>
+        )}
+
         {tab === 'study' && (
           <Suspense fallback={<div className="pt-6 text-center text-sm" style={{ color: J.mute }}>…</div>}>
             <StudyTab embedded characters={mainWords} speakChinese={speakChinese} onTrackSeen={onTrackSeen} goBack={() => handleTabChange('vocab')} />
@@ -508,6 +573,9 @@ export default function LessonDetail({
         {/* Tab Practicar */}
         {tab === 'exercises' && (
           <div className="space-y-3 pt-1">
+            <Suspense fallback={null}>
+              <TopicPractice key={lessonNum} lesson={lessonNum} />
+            </Suspense>
             <button
               onClick={() => onStartExercise('exam')}
               className="w-full flex items-center gap-4 p-4 rounded-xl text-left"

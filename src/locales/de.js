@@ -250,6 +250,11 @@ export default {
 
           nav_home: "Startseite",
           nav_dictionary: "Wörterbuch",
+          nav_library: "Bibliothek",
+          library_intro: "Übe weiter Chinesisch mit den Büchern von HanyuPath.",
+          library_language: "Sprache der Bücher",
+          library_paperback: "Taschenbuch ansehen",
+          library_kindle: "Kindle-Ausgabe ansehen",
           nav_games: "Fertigkeiten",
           nav_practice: "Üben",
           minigames_stories_card_title: "Interaktive Geschichten",

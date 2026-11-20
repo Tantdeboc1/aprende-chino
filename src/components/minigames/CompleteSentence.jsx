@@ -1,3 +1,4 @@
+import { PracticeOption, PracticeNext, PracticeProgress, PracticeFeedback } from '@/components/ui/PracticeControls.jsx';
 // src/components/minigames/CompleteSentence.jsx
 // Minijuego: Completa la frase — elige el carácter que falta
 import { useState, useEffect, useCallback, useMemo } from 'react';
@@ -165,12 +166,9 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${accent.text}`}>{score}</p>
-            <p className="text-xs text-[var(--mute)]">{currentIdx + 1}/{rounds.length}</p>
           </div>
         </div>
-        <div className="mt-3 h-1.5 bg-[var(--paper-hi2)] rounded-full overflow-hidden">
-          <div className={`h-full ${accent.bg} rounded-full transition-all duration-500`} style={{ width: `${((currentIdx + (result ? 1 : 0)) / rounds.length) * 100}%` }} />
-        </div>
+        <PracticeProgress question={currentIdx + 1} total={rounds.length} completed={currentIdx + Number(Boolean(result))} />
       </div>
 
       <div className="px-4 pt-5 max-w-lg mx-auto space-y-5">
@@ -215,54 +213,19 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
             {shuffledOptions.map((option, i) => {
               const isSelected = selected === option;
               const isCorrectAnswer = (current.acceptedAnswers || [current.answer]).includes(option);
-              let btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--ink)] hover:bg-[var(--mute2)]';
-              let animClass = '';
-              if (result) {
-                if (isCorrectAnswer) btnClass = 'bg-[var(--jade)] border-[var(--jade)] text-[var(--on-accent)]';
-                else if (isSelected && !isCorrectAnswer) btnClass = 'bg-[var(--red)] border-[var(--red)] text-[var(--on-accent)]';
-                else btnClass = 'bg-[var(--paper-hi2)] border-[rgba(28,24,19,0.18)] text-[var(--mute)]';
-                // Microanimación: rebote en la correcta (acierto o revelación),
-                // sacudida en la opción errónea elegida.
-                if (isSelected && !isCorrectAnswer) animClass = 'j-shake';
-                else if (isCorrectAnswer) animClass = 'j-pop';
-              }
-              return (
-                <button
-                  key={i}
-                  onClick={() => handleSelect(option)}
-                  disabled={!!result}
-                  className={`py-3 px-4 rounded-xl border-2 font-bold text-xl transition-all active:scale-95 ${btnClass} ${animClass}`}
-                >
-                  {option}
-                </button>
-              );
+              return <PracticeOption key={i} onClick={() => handleSelect(option)} disabled={!!result}
+                className="text-xl" state={!result ? 'idle' : isCorrectAnswer ? 'correct' : isSelected ? 'incorrect' : 'muted'}>
+                {option}
+              </PracticeOption>;
             })}
           </div>
         </div>
 
-        {/* Feedback (aria-live: la región vive siempre en el DOM para que los
-            lectores de pantalla anuncien el resultado al aparecer) */}
-        <div aria-live="polite" role="status">
-          {result === 'correct' && (
-            <div className="bg-[var(--jade-bg)]/30 border border-[var(--jade)] rounded-xl p-3 flex items-center gap-3 animate-fade-in">
-              <span className="text-2xl"></span>
-              <div>
-                <p className="text-[var(--jade)] font-bold text-sm">{t('sov_correct')}</p>
-                <p className="text-[var(--ink-soft)] text-sm">{current.sentence.replace('___', current.answer)}</p>
-              </div>
-            </div>
-          )}
-          {result === 'incorrect' && (
-            <div className="bg-[var(--red-bg)]/30 border border-[var(--red)] rounded-xl p-3 animate-fade-in">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl"></span>
-                <p className="text-[var(--red)] font-bold text-sm">{t('sov_incorrect')}</p>
-              </div>
-              <p className="text-xs text-[var(--mute)]">{t('sov_correct_answer')}</p>
-              <p className="text-[var(--ink)] font-bold text-base mt-0.5">{current.sentence.replace('___', current.answer)}</p>
-            </div>
-          )}
-        </div>
+        <PracticeFeedback correct={result ? result === 'correct' : null}>
+          <p className="font-bold">{t(result === 'correct' ? 'sov_correct' : 'sov_incorrect')}</p>
+          {result === 'incorrect' && <p className="text-sm">{t('sov_correct_answer')}</p>}
+          <p lang="zh-Hans">{current.sentence.replace('___', result === 'correct' ? selected : current.answer)}</p>
+        </PracticeFeedback>
 
         {result === 'incorrect' && <AnswerExplanation item={current} incorrect />}
 
@@ -274,9 +237,9 @@ export default function CompleteSentence({ goBack, selectedLesson }) {
             </button>
           )}
           {result && (
-            <button onClick={handleNext} className={`flex-1 py-3 rounded-xl font-bold text-sm transition-colors ${result === 'correct' ? 'bg-[var(--jade)] hover:bg-[var(--jade-deep)] text-[var(--on-accent)]' : 'bg-[var(--paper-hi2)] hover:bg-[var(--mute2)] text-[var(--ink-soft)]'}`}>
+            <PracticeNext onClick={handleNext} className="flex-1">
               {currentIdx + 1 >= rounds.length ? t('sov_see_results') : t('sov_next_button')} →
-            </button>
+            </PracticeNext>
           )}
         </div>
       </div>

@@ -2,7 +2,7 @@
 // El chunk es/*.js de i18next carga de forma diferida: en jsdom solo EN está
 // disponible de forma síncrona, así que las aserciones usan el texto inglés.
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import '@/i18n';
 import i18n from '@/i18n';
 import LessonDetail from './LessonDetail.jsx';
@@ -30,6 +30,7 @@ function setup(overrides = {}) {
 }
 
 beforeEach(() => {
+  localStorage.clear();
   // useMedia (react-use) — necesita matchMedia en jsdom.
   window.matchMedia = window.matchMedia || (() => ({
     matches: false, addEventListener: () => {}, removeEventListener: () => {},
@@ -40,6 +41,54 @@ beforeEach(() => {
 afterEach(() => { cleanup(); i18n.changeLanguage('en'); });
 
 describe('LessonDetail', () => {
+  it.each([
+    [1, 'Running into a classmate', 'Start the conversation', 'A studious friend', 't1-h2'],
+    [2, 'Meet someone in your class', 'Prepare my introduction', 'Where are you from?', 't2-h1'],
+    [3, 'A family photo', 'Talk about my family', "Xiaomin's family", 't3-h2'],
+    [4, 'Find a time in your schedule', 'Work out the schedule', "Marco's schedule", 't4-h2'],
+    [5, 'Plan a birthday', 'Prepare the birthday greeting', 'A surprise party', 't5-h1'],
+    [7, 'Shopping for clothes', 'Enter the shop', 'A new outfit', 't7-h2'],
+    [8, 'A conversation at the clinic', 'Practice the consultation', 'Visiting 马可', 't8-h2'],
+  ])('gives lesson %i a story, three worked examples and a tailored activity', async (lessonNum, title, start, storyTitle, storyId) => {
+    const onOpenStory = vi.fn();
+    setup({ lessonNum, onOpenStory });
+    expect(screen.getByRole('heading', { name: 'What will you learn?' })).toBeTruthy();
+    const scene = screen.getByRole('region', { name: `A scene from “${storyTitle}”` });
+    expect(scene.querySelector('img[src]')).toBeTruthy();
+    fireEvent.click(within(scene).getByRole('button', { name: 'Read the full story' }));
+    expect(onOpenStory).toHaveBeenCalledWith(storyId);
+    expect(screen.getAllByRole('article')).toHaveLength(3);
+    expect(await screen.findByRole('heading', { name: title })).toBeTruthy();
+    fireEvent.click(await screen.findByRole('button', { name: start }));
+    expect(screen.getByText('1/6')).toBeTruthy();
+    cleanup();
+    setup({ lessonNum });
+    fireEvent.click(await screen.findByRole('button', { name: 'Continue studying' }));
+    expect(screen.getByText('1/6')).toBeTruthy();
+  });
+
+  it('opens lesson six on its goals and starts the map from the introduction', async () => {
+    const onOpenStory = vi.fn();
+    setup({ lessonNum: 6, onOpenStory });
+    const scene = screen.getByRole('region', { name: 'A scene from “A walk around the neighborhood”' });
+    expect(screen.getByText('The bank is next to the supermarket.')).toBeTruthy();
+    fireEvent.click(within(scene).getByRole('button', { name: 'Read the full story' }));
+    expect(onOpenStory).toHaveBeenCalledWith('t6-h2');
+    expect(screen.getByRole('heading', { name: 'What will you learn?' })).toBeTruthy();
+    expect(screen.getByText('Say what is nearby using 有.')).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: 'A walk around the neighborhood' })).toBeTruthy();
+    fireEvent.click(await screen.findByRole('button', { name: 'Start with a map' }));
+    expect(await screen.findByText('With guidance')).toBeTruthy();
+    expect(screen.getByText('1/6')).toBeTruthy();
+    cleanup();
+    setup({ lessonNum: 6 });
+    fireEvent.click(await screen.findByRole('button', { name: 'Continue studying' }));
+    expect(screen.getByText('1/6')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'What will you learn?' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /vocabulary \(/i }));
+    expect(screen.getByRole('button', { name: 'Review vocabulary with flashcards' })).toBeTruthy();
+  });
+
   it('muestra los vídeos de la lección y los reproduce al solicitar la pestaña', () => {
     const { unmount } = render(<LessonDetail lessonNum={3} lessonData={{}} characters={WORDS} progress={{}} goBack={vi.fn()} />);
     expect(screen.getByRole('button', { name: 'Videos' })).toBeTruthy();
@@ -117,10 +166,7 @@ describe('LessonDetail', () => {
     fireEvent.click(screen.getByRole('button', { name: /final exam/i }));
     expect(props.onStartExercise).toHaveBeenCalledWith('exam');
 
-    // Los botones combinan el icono CJK con el texto (p.ej. "学Study Review
-    // words…") como nombre accesible — sin anclar al inicio.
-    expect(screen.getAllByRole('button', { name: /study/i })).toHaveLength(1);
-    expect(screen.getByRole('button', { name: /study/i }).closest('div').className).toContain('overflow-x-auto');
+    expect(screen.getByRole('button', { name: 'Introduction' }).closest('div').className).toContain('overflow-x-auto');
 
     fireEvent.click(screen.getByRole('button', { name: /quick quiz/i }));
     expect(props.onStartExercise).toHaveBeenCalledWith('quiz');

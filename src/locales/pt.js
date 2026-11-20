@@ -567,6 +567,11 @@ export default {
 
   nav_home: "Início",
   nav_dictionary: "Dicionário",
+  nav_library: "Biblioteca",
+  library_intro: "Continua a praticar chinês com os livros da HanyuPath.",
+  library_language: "Idioma dos livros",
+  library_paperback: "Ver em papel",
+  library_kindle: "Ver edição Kindle",
   nav_games: "Competências",
   nav_practice: "Praticar",
   minigames_stories_card_title: "Histórias interativas",

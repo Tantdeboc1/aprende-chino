@@ -4,6 +4,34 @@ import { useTranslation } from 'react-i18next';
 import { J } from '@/styles/tokens';
 import { loadGrammarData } from '@/utils/loadContent.js';
 import SpeakButton from '@/components/ui/SpeakButton.jsx';
+import { locationComparison, topicWorkshop, workshopLabels } from '@/data/topicWorkshop.js';
+import { loc } from '@/utils/loc.js';
+
+function LocationComparison({ language }) {
+  const { title, vocabulary, examples, note } = locationComparison;
+  return (
+    <section className="space-y-3" aria-labelledby="location-comparison">
+      <h3 id="location-comparison" className="font-bold">{loc(title, language)}</h3>
+      <p className="text-sm">{loc(vocabulary, language)}</p>
+      {examples.map(({ verb, question, pattern, parts, pinyin, translation }) => (
+        <article key={verb} className="rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] p-4 space-y-2">
+          <h4 className="font-semibold" lang="zh-Hans">{verb}</h4>
+          <p className="text-sm">{loc(question, language)}</p>
+          <p className="text-sm font-medium text-[var(--ink-soft)]">{loc(pattern, language)}</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="font-cn text-lg" lang="zh-Hans">
+              {parts[0]}<strong className="rounded bg-[var(--jade-bg)] text-[var(--jade-deep)] px-1">{parts[1]}</strong>{parts[2]}。
+            </p>
+            <SpeakButton text={parts.join('') + '。'} />
+          </div>
+          <p className="text-sm" lang="zh-Latn-pinyin">{pinyin}</p>
+          <p className="text-sm">{loc(translation, language)}</p>
+        </article>
+      ))}
+      <p className="rounded-lg bg-[var(--sand-bg)] p-3 text-sm leading-relaxed">{loc(note, language)}</p>
+    </section>
+  );
+}
 
 function PatternCard({ pattern }) {
   const [open, setOpen] = useState(false);
@@ -239,6 +267,33 @@ export default function GrammarTab({ lessonNum }) {
         <div className="rounded-xl p-4" style={{ background: J.paperHi, borderLeft: `4px solid ${J.jade}`, border: `1px solid ${J.hair}`, borderLeftWidth: 4, borderLeftColor: J.jade }}>
           <p className="text-sm leading-relaxed" style={{ color: J.inkSoft }}>{grammarData.intro}</p>
         </div>
+      )}
+
+      {Number(lessonNum) === 6 && <LocationComparison language={i18n.language} />}
+
+      {topicWorkshop[lessonNum]?.length > 0 && (
+        <section className="space-y-3" aria-labelledby="grammar-in-context">
+          <h3 id="grammar-in-context" className="font-bold">{loc(workshopLabels.grammar, i18n.language)}</h3>
+          {topicWorkshop[lessonNum].map(({ title, rule, example, tasks }) => (
+            <article key={title} className="rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] p-4 space-y-2">
+              <h4 className="font-semibold">{title}</h4>
+              <p className="text-sm leading-relaxed">{loc(rule, i18n.language)}</p>
+              <div className="flex flex-wrap items-center gap-2 rounded-lg bg-[var(--paper)] p-2">
+                {example.split(/\s+(?:→|\/)\s+/).map((phrase) => (
+                  <span key={phrase} className="inline-flex items-center gap-1">
+                    <span lang="zh-Hans" className="font-cn">{phrase}</span>
+                    {!phrase.includes('｜') && <SpeakButton text={phrase} />}
+                  </span>
+                ))}
+              </div>
+              <details className="text-sm">
+                <summary className="cursor-pointer">{loc(workshopLabels.model, i18n.language)}</summary>
+                <p className="mt-2">{loc(tasks[1].prompt, i18n.language)}</p>
+                <p lang="zh-Hans" className="font-cn mt-1">{tasks[1].forms[0]}</p>
+              </details>
+            </article>
+          ))}
+        </section>
       )}
 
       {/* Patrones gramaticales */}

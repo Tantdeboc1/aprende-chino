@@ -1,3 +1,4 @@
+import { PracticeOption, PracticeNext } from '@/components/ui/PracticeControls.jsx';
 // src/components/stories/QuizCard.jsx
 // Tarjeta base reutilizable para los 3 bloques de ejercicios.
 // Muestra: prompt principal (+ opcional subprompt) + 4 opciones.
@@ -79,56 +80,20 @@ export default function QuizCard({
         {shuffledOptions.map((opt, idx) => {
           const isSelected = selected === idx;
           const isCorrect = idx === shuffledCorrecta;
-          let bg = 'rgba(255,255,255,0.06)';
-          let border = 'rgba(255,255,255,0.12)';
-          let color = J.paperHi;
-          if (answered) {
-            if (isCorrect) {
-              bg = J.jade; border = J.jadeDeep; color = J.paperHi;
-            } else if (isSelected) {
-              bg = J.red; border = J.redDeep; color = J.paperHi;
-            } else {
-              bg = 'rgba(255,255,255,0.03)'; color = 'rgba(255,255,255,0.4)';
-            }
-          }
-          return (
-            <button
-              key={idx}
-              onClick={() => handleSelect(idx)}
-              disabled={answered}
-              className={variant === 'chinese' ? 'font-cn' : ''}
-              style={{
-                background: bg,
-                border: `1.5px solid ${border}`,
-                color,
-                borderRadius: 12,
-                padding: variant === 'chinese' ? '14px 14px' : '12px 14px',
-                fontSize: variant === 'chinese' ? 20 : 14,
-                fontWeight: 600,
-                cursor: answered ? 'default' : 'pointer',
-                textAlign: 'left',
-                transition: 'background 250ms ease, border 250ms ease, color 250ms ease',
-              }}
-            >
-              {opt}
-              {answered && isCorrect && (
-                <span style={{ float: 'right', fontWeight: 700 }}>✓</span>
-              )}
-              {answered && isSelected && !isCorrect && (
-                <span style={{ float: 'right', fontWeight: 700 }}>✗</span>
-              )}
-            </button>
-          );
+          return <PracticeOption key={idx} dark onClick={() => handleSelect(idx)} disabled={answered}
+            className={variant === 'chinese' ? 'font-cn text-left text-xl' : 'text-left text-sm'}
+            state={!answered ? 'idle' : isCorrect ? 'correct' : isSelected ? 'incorrect' : 'muted'}>
+            {opt}
+          </PracticeOption>;
         })}
       </div>
       {answered && <>
         {selected !== shuffledCorrecta && <p role="status" style={{ margin: '12px 0', fontSize: 14 }}>
           {loc(feedbackText.correctAnswer, i18n.language)}: <strong>{shuffledOptions[shuffledCorrecta]}</strong>
         </p>}
-        <button onClick={() => onAnswer(selected === shuffledCorrecta)}
-          className="w-full rounded-xl py-3 font-semibold" style={{ background: J.jade, color: J.onAccent }}>
+        <PracticeNext onClick={() => onAnswer(selected === shuffledCorrecta)}>
           {loc(feedbackText.next, i18n.language)}
-        </button>
+        </PracticeNext>
       </>}
     </div>
   );

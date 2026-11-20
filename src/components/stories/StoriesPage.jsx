@@ -61,10 +61,12 @@ export default function StoriesPage({
   progress: lessonProgress,           // progreso de lecciones (vino de App)
   onProgressChange,                   // setter del progreso de lecciones
   allCharacters,                      // para mapear vocab → lección
+  linkedStoryId,
 }) {
   const { t } = useTranslation();
-  const [activeStoryId, setActiveStoryId] = useState(null);
-  const navigateStory = useHistorySubmenu('story', activeStoryId, setActiveStoryId, 'stories');
+  const [selectedStoryId, setSelectedStoryId] = useState(null);
+  const navigateStory = useHistorySubmenu('story', selectedStoryId, setSelectedStoryId, 'stories');
+  const activeStoryId = linkedStoryId || selectedStoryId;
   const [storyProgress, setStoryProgress] = useState(() => loadStoryProgress());
   // Metadata del último resultado (XP, primera vez, etc.) — viaja al player
   // para que StoryResults lo muestre. Se resetea al salir del player.
@@ -113,7 +115,8 @@ export default function StoriesPage({
   };
 
   const handleExitFromPlayer = () => {
-    navigateStory(null);
+    if (linkedStoryId) onExit();
+    else navigateStory(null);
     setLastResultMeta(null);
   };
 

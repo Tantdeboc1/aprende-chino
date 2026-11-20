@@ -44,12 +44,11 @@ const ProfileIcon = () => (
 );
 
 export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, collapsed = false, onToggle }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   // Invitaciones de amistad recibidas → badge en "Perfil", que es desde donde
   // se llega a Amigos (0 para invitados).
   const incomingCount = useIncomingRequestCount();
 
-  // Cinco pestañas (antes siete: la barra iba apretadísima en móvil).
   // 'practice' agrupa Historias y Destrezas —ambas son práctica— y Amigos pasa
   // dentro de Perfil, que es donde vive el resto de lo social. Ninguna pantalla
   // desaparece: 'stories' y 'friends' siguen siendo rutas propias, solo cambia
@@ -59,7 +58,7 @@ export default function BottomNav({ activeScreen, onNavigate, reviewDue = 0, col
     { key: 'review',     label: t('nav_review'),     Icon: ReviewIcon },
     { key: 'practice',   label: t('nav_practice', 'Practicar'), Icon: GamesIcon },
     { key: 'dictionary', label: t('nav_dictionary'), Icon: DictIcon },
-    ...(i18n.resolvedLanguage?.split('-')[0] === 'es' ? [{ key: 'library', label: 'Biblioteca', Icon: LibraryIcon }] : []),
+    { key: 'library', label: t('nav_library'), Icon: LibraryIcon },
     { key: 'profile',    label: t('nav_profile', 'Perfil'), Icon: ProfileIcon },
   ];
 

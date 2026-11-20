@@ -2,34 +2,34 @@
   "version": "v0.9.5",
   "notes": {
     "es": [
-      "Nuevo Juego de flashcards: escribe vocabulario chino a mano desde el castellano y practica también la traducción inversa.",
-      "Usa las pistas de pinyin y de trazos progresivos cuando necesites ayuda.",
-      "La app asigna automáticamente el número de versión y, al actualizarse, muestra la versión instalada y sus novedades."
+      "Los ocho temas empiezan con una escena ilustrada, una frase con audio y acceso directo a la historia completa.",
+      "Practica con ejercicios más variados para cada tema, explicaciones de gramática ampliadas y un plano interactivo para distinguir 在, 有 y 是.",
+      "Actualizamos los vídeos y ampliamos la Biblioteca con libros en español e inglés."
     ],
     "en": [
-      "New flashcard game: write Chinese vocabulary by hand from English, or recall the English meaning from Chinese.",
-      "Use pinyin and progressive stroke hints when you need help.",
-      "The app now assigns version numbers automatically and shows the installed version and its changes after an update."
+      "All eight units now open with an illustrated scene, a line with audio, and a link to the full story.",
+      "Try more varied unit exercises, expanded grammar explanations, and an interactive map for practicing 在, 有, and 是.",
+      "We updated the videos and added Spanish and English books to the Library."
     ],
     "fr": [
-      "Nouveau jeu de flashcards : écrivez le vocabulaire chinois à la main à partir du français, ou retrouvez le sens français depuis le chinois.",
-      "Utilisez le pinyin et les indices de traits progressifs si besoin.",
-      "L’application attribue automatiquement le numéro de version et affiche la version installée ainsi que ses nouveautés après la mise à jour."
+      "Les huit unités s’ouvrent sur une scène illustrée, une phrase avec audio et un lien vers l’histoire complète.",
+      "Retrouve des exercices plus variés, des explications grammaticales enrichies et un plan interactif pour distinguer 在, 有 et 是.",
+      "Les vidéos ont été mises à jour et la bibliothèque accueille de nouveaux livres en espagnol et en anglais."
     ],
     "de": [
-      "Neues Vokabelkarten-Spiel: Schreibe chinesische Wörter ausgehend von der deutschen Bedeutung von Hand oder gib die deutsche Bedeutung zu chinesischen Wörtern ein.",
-      "Nutze bei Bedarf Pinyin- und schrittweise Strichhinweise.",
-      "Die App vergibt Versionsnummern automatisch und zeigt nach einem Update die installierte Version und ihre Neuerungen an."
+      "Alle acht Lektionen beginnen mit einer illustrierten Szene, einem Satz mit Audio und einem Link zur ganzen Geschichte.",
+      "Übe mit abwechslungsreicheren Aufgaben, ausführlicheren Grammatikerklärungen und einem interaktiven Stadtplan für 在, 有 und 是.",
+      "Die Videos wurden aktualisiert und die Bibliothek um spanische und englische Bücher erweitert."
     ],
     "it": [
-      "Nuovo gioco di flashcard: scrivi a mano il vocabolario cinese partendo dall’italiano o ricorda il significato italiano partendo dal cinese.",
-      "Usa gli aiuti di pinyin e i suggerimenti progressivi sui tratti quando ti servono.",
-      "L’app assegna automaticamente il numero di versione e, dopo l’aggiornamento, mostra la versione installata e le novità."
+      "Tutte e otto le unità si aprono con una scena illustrata, una frase con audio e un link alla storia completa.",
+      "Troverai esercizi più vari, spiegazioni grammaticali ampliate e una mappa interattiva per distinguere 在, 有 e 是.",
+      "Abbiamo aggiornato i video e aggiunto alla biblioteca nuovi libri in spagnolo e in inglese."
     ],
     "pt": [
-      "Novo jogo de flashcards: escreve vocabulário chinês à mão a partir do português ou recorda o significado em português a partir do chinês.",
-      "Usa as pistas de pinyin e de traços progressivos quando precisares de ajuda.",
-      "A app atribui automaticamente o número da versão e mostra a versão instalada e as novidades após a atualização."
+      "As oito unidades começam com uma cena ilustrada, uma frase com áudio e uma ligação para a história completa.",
+      "Pratica com exercícios mais variados, explicações de gramática mais completas e um mapa interativo para distinguir 在, 有 e 是.",
+      "Atualizámos os vídeos e acrescentámos à biblioteca livros em espanhol e em inglês."
     ]
   }
 }

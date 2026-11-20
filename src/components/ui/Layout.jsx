@@ -45,7 +45,7 @@ function getEnterOffset(fromScreen, toScreen) {
 }
 
 export default function Layout({ children, activeScreen, onNavigate, hideNav, disableSwipe = false, reviewDue = 0, breadcrumbActivity }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [navCollapsed, setNavCollapsed] = useState(() => {
     try { return localStorage.getItem(STORAGE_KEYS.NAV_COLLAPSED) === '1'; }
     catch { return false; }
@@ -137,14 +137,14 @@ export default function Layout({ children, activeScreen, onNavigate, hideNav, di
 
     if (dx < 0) {
       // Swipe izquierda → tab siguiente
-      const next = NAV_TABS[idx + 1] === 'library' && i18n.resolvedLanguage?.split('-')[0] !== 'es' ? 'profile' : NAV_TABS[idx + 1];
+      const next = NAV_TABS[idx + 1];
       if (next) onNavigate(next);
     } else {
       // Swipe derecha → tab anterior
-      const prev = NAV_TABS[idx - 1] === 'library' && i18n.resolvedLanguage?.split('-')[0] !== 'es' ? 'dictionary' : NAV_TABS[idx - 1];
+      const prev = NAV_TABS[idx - 1];
       if (prev) onNavigate(prev);
     }
-  }, [activeScreen, onNavigate, hideNav, disableSwipe, i18n.resolvedLanguage]);
+  }, [activeScreen, onNavigate, hideNav, disableSwipe]);
 
   return (
     <>

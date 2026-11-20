@@ -1,5 +1,6 @@
 import PracticeBreadcrumb from './components/ui/PracticeBreadcrumb.jsx';
 import { exerciseReturnScreen } from '@/utils/exerciseReturn.js';
+import { defaultLessonTab } from '@/data/lessonIntroductions.js';
 import { assetUrl } from './utils/assets';
 import { hanziCharDataLoader } from './utils/hanziCharData.js';
 import { useState, useEffect, useMemo, useCallback, Suspense, useRef } from "react";
@@ -129,8 +130,9 @@ const HASH_SCREENS = new Set([
   'level-exam', 'exercise', 'chinaMap', 'daily',
 ]);
 
-function screenToHash(screen, selectedLesson) {
+function screenToHash(screen, selectedLesson, storyId) {
   if (screen === 'lesson-detail') return `#/lesson/${selectedLesson}`;
+  if (screen === 'story-detail' && storyId) return `#/stories/${storyId}`;
   if (HASH_SCREENS.has(screen) || MINIGAME_IDS.has(screen)) return `#/${screen}`;
   return null; // welcome y pantallas gate no entran al historial
 }
@@ -141,6 +143,8 @@ function parseHash(hash) {
   const path = m[1];
   const lesson = path.match(/^lesson\/(\d{1,2})$/);
   if (lesson) return { screen: 'lesson-detail', lesson: Number(lesson[1]) };
+  const story = path.match(/^stories\/(t[1-8]-h[12])$/);
+  if (story) return { screen: 'story-detail', storyId: story[1] };
   // Invitación de amistad compartida: #/friends/add/ABC-DEF. Abre Amigos con
   // el código ya resuelto, para no obligar a teclearlo a mano. No envía nada
   // por su cuenta: la pantalla sigue pidiendo confirmación.
@@ -286,9 +290,7 @@ export default function App() {
   // Pantalla activa
   // 'welcome' | 'home' | 'lesson-detail' | 'intro-detail' | 'exam' | 'exercise' | 'dictionary' | 'minigames' | 'settings'
   const [screen, setScreen] = useState(() => initialNav?.screen || (loadUserName() ? 'home' : 'welcome'));
-  useEffect(() => {
-    if (screen === 'library' && lang !== 'es') setScreen('home');
-  }, [screen, lang]);
+  const [storyId, setStoryId] = useState(initialNav?.storyId ?? null);
 
   // Código de amigo llegado por enlace compartido. Se consume una sola vez:
   // FriendsScreen avisa al usarlo para que un "atrás" no lo vuelva a disparar.
@@ -354,7 +356,7 @@ export default function App() {
   const selectedLessonRef = useRef(selectedLesson);
   useEffect(() => { selectedLessonRef.current = selectedLesson; }, [selectedLesson]);
   // Pestaña activa en LessonDetail (para restaurarla al volver)
-  const [lessonDetailTab, setLessonDetailTab] = useState('study');
+  const [lessonDetailTab, setLessonDetailTab] = useState(() => defaultLessonTab(initialNav?.lesson ?? 1));
   const classifierViewRef = useRef(null);
   const lessonViewsRef = useRef(new Map());
   const scrollPositionsRef = useRef(new Map());
@@ -407,7 +409,7 @@ export default function App() {
   // comportamiento estándar de Android).
   const isFirstHashSyncRef = useRef(true);
   useEffect(() => {
-    const target = screenToHash(screen, selectedLesson);
+    const target = screenToHash(screen, selectedLesson, storyId);
     if (!target) return;
     const first = isFirstHashSyncRef.current;
     isFirstHashSyncRef.current = false;
@@ -429,7 +431,7 @@ export default function App() {
     } else {
       history.pushState({ appParent: window.location.hash }, '', target);
     }
-  }, [screen, selectedLesson]);
+  }, [screen, selectedLesson, storyId]);
 
   // Botón atrás del navegador/sistema → restaura la pantalla del hash.
   useEffect(() => {
@@ -449,8 +451,12 @@ export default function App() {
       // La URL de ejercicio no conserva sub-secciones: vuelve a su origen.
       setLearnSection(null); setCharacterSection(null); setToneSection(null);
       setRadicalSection(null); setWritingSection(null); setDailySection(null);
-      if (parsed.lesson != null) setSelectedLesson(parsed.lesson);
+      if (parsed.lesson != null) {
+        if (parsed.lesson !== selectedLessonRef.current) setLessonDetailTab(defaultLessonTab(parsed.lesson));
+        setSelectedLesson(parsed.lesson);
+      }
       if (parsed.friendCode) setPendingFriendCode(parsed.friendCode);
+      setStoryId(parsed.storyId ?? null);
       setScreen(parsed.screen);
     };
     window.addEventListener('popstate', onPop);
@@ -630,7 +636,7 @@ export default function App() {
     setLastLesson(num);
     try { localStorage.setItem(STORAGE_KEYS.LAST_LESSON, String(num)); } catch { /* la lección sigue accesible en esta sesión */ }
     if (mode === 'google') pushSnapshot();
-    setLessonDetailTab('study'); // empieza la lección por el bloque de estudio
+    setLessonDetailTab(defaultLessonTab(num));
     setLearnSection(null); setCharacterSection(null); setToneSection(null);
     setRadicalSection(null); setWritingSection(null); setDailySection(null);
     setScreen('lesson-detail');
@@ -894,6 +900,10 @@ export default function App() {
               onProgressChange={handleProgressChange}
               goBack={() => backToOrigin('home')}
               onStartExercise={handleStartExercise}
+              onOpenStory={(id) => {
+                setStoryId(id);
+                setScreen('story-detail');
+              }}
               speakChinese={speak}
               defaultTab={lessonDetailTab}
               onTabChange={setLessonDetailTab}
@@ -1004,12 +1014,14 @@ export default function App() {
   }
 
   // ── STORIES ──────────────────────────────────────────────────────────────────
-  if (screen === 'stories') {
+  if (screen === 'stories' || screen === 'story-detail') {
     return (
       <Layout activeScreen="stories" onNavigate={handleBottomNav} reviewDue={dueCount} hideNav={inStoryMode}>
         <ErrorBoundary>
           <Suspense fallback={<AnimatedLoader />}>
             <StoriesPage
+              key={screen === 'story-detail' ? storyId : 'index'}
+              linkedStoryId={screen === 'story-detail' ? storyId : null}
               userName={userName}
               speak={speak}
               onExit={() => backToOrigin('minigames')}
@@ -1023,7 +1035,7 @@ export default function App() {
     );
   }
 
-  if (screen === 'library' && lang === 'es') {
+  if (screen === 'library') {
     return (
       <Layout activeScreen="library" onNavigate={handleBottomNav} reviewDue={dueCount}>
         <Library />

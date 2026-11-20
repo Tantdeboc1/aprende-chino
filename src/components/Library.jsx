@@ -1,58 +1,61 @@
-import { J } from '@/styles/tokens';
-import coloreaHanziCover from '@/assets/books/colorea-hanzi-vol1-cover.png';
-import mapasCover from '@/assets/books/mapas-visuales.webp';
-import sopasCover from '@/assets/books/sopas-tomo-1.webp';
-
-const books = [
-  {
-    title: 'Colorea y escribe 100 caracteres chinos: HSK 1',
-    eyebrow: 'PINTA Y ESCRIBE HANZI · HSK 1',
-    cover: coloreaHanziCover,
-    description: 'Practica 100 caracteres chinos simplificados del HSK 1 con su orden de trazos, pinyin y significado en español. Incluye modelos para repasar y casillas para practicar de memoria.',
-    details: ['100 caracteres HSK 1', 'Pinyin y significado en español', '112 páginas · 800 casillas'],
-    links: [{ label: 'Ver en papel', url: 'https://amzn.eu/d/01p1jA1w' }],
-  },
-  {
-    title: 'Mapas visuales para aprender chino',
-    eyebrow: 'APRENDE CON CONEXIONES',
-    cover: mapasCover,
-    description: 'Descubre cómo se relacionan los caracteres con palabras y situaciones cotidianas a través de 50 mapas visuales.',
-    details: ['50 mapas visuales', 'Pinyin y español', 'Ejercicios y soluciones'],
-    links: [{ label: 'Ver en papel', url: 'https://amzn.eu/d/0c5RpoaS' }, { label: 'Ver en Kindle', url: 'https://amzn.eu/d/04OvXBjn' }],
-  },
-  {
-    title: 'Sopas de letras en chino',
-    eyebrow: 'CHINO COTIDIANO · VOLUMEN 1',
-    cover: sopasCover,
-    description: 'Practica vocabulario cotidiano con 50 sopas temáticas, desde la familia y la comida hasta los viajes.',
-    details: ['50 sopas temáticas', 'HSK 1–3', 'Pinyin, español y soluciones'],
-    links: [{ label: 'Ver en papel', url: 'https://amzn.eu/d/0bcxgoq1' }],
-  },
-];
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { libraryBooks } from '@/data/libraryBooks.js';
+import { baseLang, loc } from '@/utils/loc.js';
 
 export default function Library() {
-  return <div style={{ maxWidth: 1080, margin: '0 auto', padding: '36px 20px 64px' }}>
-    <p style={{ color: J.jadeDeep, fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase' }}>HanyuPath · Libros en español</p>
-    <h1 style={{ color: J.ink, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, margin: '8px 0 12px' }}>Biblioteca</h1>
-    <p style={{ color: J.inkSoft, lineHeight: 1.6, maxWidth: 650 }}>Otros caminos para aprender chino a tu ritmo. Descubre nuestros libros y elige el que mejor te acompañe.</p>
-    <div className="library-grid" style={{ marginTop: 28 }}>
-      {books.map(book => <article className="library-card" key={book.title} style={{ background: J.paperHi, border: `1px solid ${J.hair}` }}>
-        <div className="library-cover-wrap"><img className="library-cover" src={book.cover} alt={`Portada de ${book.title}`} loading="lazy" /></div>
-        <div className="library-card-content">
-          <p style={{ color: J.jadeDeep, fontSize: 11, fontWeight: 800, letterSpacing: '.1em', margin: 0 }}>{book.eyebrow}</p>
-          <h2 style={{ color: J.ink, fontSize: '1.4rem', fontWeight: 800, lineHeight: 1.2, margin: '9px 0 12px' }}>{book.title}</h2>
-          <p style={{ color: J.inkSoft, fontSize: 14, lineHeight: 1.6, margin: 0 }}>{book.description}</p>
-          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: 6, padding: 0, margin: '16px 0', listStyle: 'none' }}>
-            {book.details.map(detail => <li key={detail} style={{ borderRadius: 20, background: J.jadeBg, color: J.jadeDeep, padding: '5px 9px', fontSize: 11, fontWeight: 700 }}>{detail}</li>)}
-          </ul>
-          <div style={{ marginTop: 'auto' }}>
-            <p style={{ color: J.mute, fontSize: 12, margin: '0 0 8px' }}>Disponible en Amazon España</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {book.links.map((link, index) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`${link.label} en Amazon España: ${book.title}`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: 44, padding: '10px 14px', borderRadius: 12, background: index === 0 ? J.jade : 'transparent', border: `1px solid ${J.jade}`, color: index === 0 ? J.onAccent : J.jadeDeep, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>{link.label} ↗</a>)}
+  const { t, i18n } = useTranslation();
+  const language = i18n.resolvedLanguage || i18n.language;
+  const [selectedEdition, setSelectedEdition] = useState(null);
+  const edition = selectedEdition ?? (baseLang(language) === 'es' ? 'es' : 'en');
+  const market = edition === 'es' ? 'Amazon.es' : 'Amazon.com';
+
+  return (
+    <div className="mx-auto max-w-[1080px] px-5 pt-8 pb-16 text-[var(--ink)]">
+      <h1 className="text-3xl font-extrabold sm:text-5xl">{t('nav_library')}</h1>
+      <p className="mt-3 text-[var(--ink-soft)]">{t('library_intro')}</p>
+      <label className="mt-6 block text-sm font-semibold">
+        {t('library_language')}
+        <select
+          value={edition}
+          onChange={(event) => setSelectedEdition(event.target.value)}
+          className="ml-3 min-h-11 rounded-xl border border-[var(--hair)] bg-[var(--paper-hi)] px-3 text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--jade)]"
+        >
+          <option value="es" lang="es">Español</option>
+          <option value="en" lang="en">English</option>
+        </select>
+      </label>
+      <div className="library-grid mt-7">
+        {libraryBooks[edition].map((book) => (
+          <article className="library-card border border-[var(--hair)] bg-[var(--paper-hi)]" key={book.links.paperback}>
+            <div className="library-cover-wrap">
+              <img className="library-cover" src={book.cover} alt="" loading="lazy" />
             </div>
-          </div>
-        </div>
-      </article>)}
+            <div className="library-card-content">
+              <p className="text-xs font-bold tracking-wider text-[var(--jade-deep)]">{book.level}</p>
+              <h2 lang={edition} className="mt-2 text-xl leading-tight font-extrabold">{book.title}</h2>
+              <p className="mt-3 mb-4 text-sm leading-relaxed text-[var(--ink-soft)]">{loc(book.description, language)}</p>
+              <div className="mt-auto">
+                <p className="mb-2 text-xs text-[var(--ink-soft)]">{market}</p>
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(book.links).map(([format, url]) => (
+                    <a
+                      key={format}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${t(`library_${format}`)} · ${book.title} · ${market}`}
+                      className={`inline-flex min-h-11 items-center gap-1 rounded-xl border border-[var(--jade)] px-3 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--jade)] ${format === 'paperback' ? 'bg-[var(--jade)] text-[var(--on-accent)]' : 'text-[var(--jade-deep)]'}`}
+                    >
+                      {t(`library_${format}`)} <span aria-hidden="true">↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
-  </div>;
+  );
 }

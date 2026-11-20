@@ -1,3 +1,4 @@
+import { PracticeOption } from '@/components/ui/PracticeControls.jsx';
 import { useSkillSession } from '@/hooks/useSkillSession.js';
 import MistakeReview from '@/components/ui/MistakeReview.jsx';
 import { useMistakeReview } from '@/hooks/useMistakeReview.js';
@@ -316,20 +317,10 @@ export default function LevelExam({ goBack, allCharacters = [], progress }) {
         {/* Opciones */}
         <div className="grid grid-cols-1 gap-3">
           {q.options.map((opt) => {
-            let bg = J.paperHi, border = J.hair, color = J.ink;
-            if (feedback) {
-              if (opt.key === q.correctKey) { bg = J.jadeBg; border = J.jade; color = J.jadeDeep; }
-              else if (opt.key === selected) { bg = J.redBg; border = J.red; color = J.redDeep; }
-              else { color = J.mute2; }
-            }
-            return (
-              <button key={opt.key} onClick={() => handleAnswer(opt.key)} disabled={!!feedback}
-                className={`rounded-xl px-4 py-3 text-left transition-colors ${opt.cn ? 'font-cn' : ''}`}
-                style={{ background: bg, border: `2px solid ${border}`, color,
-                  fontSize: opt.cn ? 28 : 15, fontWeight: 600, cursor: feedback ? 'default' : 'pointer' }}>
-                {opt.label}
-              </button>
-            );
+            return <PracticeOption key={opt.key} onClick={() => handleAnswer(opt.key)} disabled={!!feedback} className={opt.cn ? 'font-cn text-2xl text-left' : 'text-sm text-left'}
+              state={!feedback ? 'idle' : opt.key === q.correctKey ? 'correct' : opt.key === selected ? 'incorrect' : 'muted'}>
+              {opt.label}
+            </PracticeOption>;
           })}
         </div>
       </div>
